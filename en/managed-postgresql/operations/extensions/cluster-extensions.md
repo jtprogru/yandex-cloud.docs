@@ -4,7 +4,7 @@
 
 {% note warning %}
 
-In {{ mpg-short-name }} clusters, you can't manage {{ PG }} extensions using SQL commands.
+In {{ mpg-short-name }} clusters, you cannot manage {{ PG }} extensions using SQL commands.
 
 {% endnote %}
 
@@ -33,9 +33,9 @@ Enabling a shared library will cause {{ PG }} to restart on the master host.
 
 - Management console
 
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click on the name of the cluster you need and select the **Databases** section.
-   1. In the **PostgreSQL extensions** column, you'll see a list of extensions enabled for each database.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.postgresql.cluster.switch_databases }}** section.
+   1. In the **{{ ui-key.yacloud.mdb.cluster.databases.column_extensions }}** column, you will see a list of extensions enabled for each database.
 
 - CLI
 
@@ -67,10 +67,10 @@ Enabling a shared library will cause {{ PG }} to restart on the master host.
 
 - Management console
 
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click on the name of the cluster you need and select the **Databases** tab.
-   1. In the row with the desired database, click ![options](../../../_assets/horizontal-ellipsis.svg) and select **Configure PostgreSQL extensions**.
-   1. Select the extensions you need and click **Edit**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.postgresql.cluster.switch_databases }}** tab.
+   1. In the required database row, click ![options](../../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.databases.button_action-manage-extensions }}**.
+   1. Select the extensions you need and click **{{ ui-key.yacloud.postgresql.databases.dialog.button_submit }}**.
 
 - CLI
 
@@ -117,7 +117,7 @@ Enabling a shared library will cause {{ PG }} to restart on the master host.
 
       {% include [terraform-validate](../../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../../_includes/mdb/terraform/apply.md) %}
 
@@ -194,7 +194,7 @@ Enabling a shared library will cause {{ PG }} to restart on the master host.
 || <p>[seg]({{ pg-docs }}/static/seg.html)</p><p>Implements the `seg` data type for representing line segments or floating point intervals.</p> | 1.3 | 1.3 | 1.3 | 1.4 | 1.4 ||
 || <p>[smlar](http://sigaev.ru/git/gitweb.cgi?p=smlar.git;a=blob;hb=HEAD;f=README)</p><p>Provides a set of functions for computing similarity of two arrays.</p> | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 ||
 || <p>[tablefunc](https://www.postgresql.org/docs/current/static/tablefunc.html)</p><p>Provides a set of functions that return tables, i.e., multiple rows.</p> | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 ||
-|| <p>[timescaledb](https://github.com/timescale/timescaledb)</p><p>Supports automatic partitioning across time and space (partitioning key), yet retains the standard {{ PG }} interface for data. This makes {{ PG }} scalable for time-series.</p><p>Requires enabling the `timescaledb` [shared library](#libraries-connection).</p> | 2.3.1 | 2.4.2 | 2.5.2 | 2.6.1 | 2.9.0 ||
+|| <p>[timescaledb](https://github.com/timescale/timescaledb)</p><p>Supports automatic partitioning across time and space (partitioning key), yet retains the standard {{ PG }} interface for data. This makes {{ PG }} scalable for time-series.</p><p>Requires enabling the `timescaledb` [shared library](#libraries-connection).</p><p>The TimescaleDB edition installed for the service is TimescaleDB Apache 2 Edition. It has limited functionality compared to TimescaleDB Community Edition. You cannot change the edition. For more information about the limitations, see the [TimescaleDB documentation](https://docs.timescale.com/about/latest/timescaledb-editions/).</p> | 2.3.1 | 2.4.2 | 2.5.2 | 2.6.1 | 2.9.0 ||
 || <p>[unaccent]({{ pg-docs }}/static/unaccent.html)</p><p>Provides a text search dictionary that removes diacritic signs.</p> | 1.1 | 1.1 | 1.1 | 1.1 | 1.1 ||
 || <p>[uuid-ossp]({{ pg-docs }}/static/uuid-ossp.html)</p><p>Provides functions to generate universally unique identifiers (UUIDs) using standard algorithms.</p> | 1.1 | 1.1 | 1.1 | 1.1 | 1.1 ||
 || <p>[xml2]({{ pg-docs }}/static/xml2.html)</p><p> Provides XPath querying and XSLT (Extensible Stylesheet Language Transformations) functionality.</p> | 1.1 | 1.1 | 1.1 | 1.1 | 1.1 ||

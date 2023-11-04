@@ -29,6 +29,9 @@ A set of methods for managing Instance resources.
 | [ListOperations](#ListOperations) | Lists operations for the specified instance. |
 | [Move](#Move) | Moves the specified instance to another folder of the same cloud. |
 | [Relocate](#Relocate) | Moves the specified instance to another availability zone <br>Running instance will be restarted during this operation. |
+| [ListAccessBindings](#ListAccessBindings) | Lists access bindings for the instance. |
+| [SetAccessBindings](#SetAccessBindings) | Sets access bindings for the instance. |
+| [UpdateAccessBindings](#UpdateAccessBindings) | Updates access bindings for the instance. |
 
 ## Calls InstanceService {#calls}
 
@@ -73,6 +76,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy)**<br>Scheduling poli
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources}
@@ -189,6 +194,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule}
@@ -213,7 +219,8 @@ Field | Description
 folder_id | **string**<br>Required. ID of the Folder to list instances in. To get the folder ID, use a [yandex.cloud.resourcemanager.v1.FolderService.List](/docs/resource-manager/api-ref/grpc/folder_service#List) request. The maximum string length in characters is 50.
 page_size | **int64**<br>The maximum number of results per page to return. If the number of available results is larger than `page_size`, the service returns a [ListInstancesResponse.next_page_token](#ListInstancesResponse) that can be used to get the next page of results in subsequent list requests. The maximum value is 1000.
 page_token | **string**<br>Page token. To get the next page of results, set `page_token` to the [ListInstancesResponse.next_page_token](#ListInstancesResponse) returned by a previous list request. The maximum string length in characters is 100.
-filter | **string**<br>A filter expression that filters resources listed in the response. The expression must specify: <ol><li>The field name. Currently you can use filtering only on the [Instance.name](#Instance1) field. </li><li>An `=` operator. </li><li>The value in double quotes (`"`). Must be 3-63 characters long and match the regular expression `[a-z]([-a-z0-9]{,61}[a-z0-9])?`.</li></ol> The maximum string length in characters is 1000.
+filter | **string**<br>A filter expression that filters resources listed in the response. The expression consists of one or more conditions united by `AND` operator: `<condition1> [AND <condition2> [<...> AND <conditionN>]]`. <br>Each condition has the form `<field> <operator> <value>`, where: <ol><li>`<field>` is the field name. Currently you can use filtering only on the limited number of fields. </li><li>`<operator>` is a logical operator, one of `=`, `!=`, `IN`, `NOT IN`. </li><li>`<value>` represents a value. </li></ol>String values should be written in double (`"`) or single (`'`) quotes. C-style escape sequences are supported (`\"` turns to `"`, `\'` to `'`, `\\` to backslash). The maximum string length in characters is 1000.
+order_by | **string**<br>By which column the listing should be ordered and in which direction, format is "createdAt desc". "id asc" if omitted. The default sorting order is ascending The maximum string length in characters is 100.
 
 
 ### ListInstancesResponse {#ListInstancesResponse}
@@ -251,6 +258,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy1)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings1)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy1)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources1}
@@ -367,6 +376,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule1)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule1}
@@ -550,6 +560,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule2)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule2}
@@ -611,6 +622,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy3)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings3)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy3)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources2}
@@ -752,6 +765,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule3)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule3}
@@ -820,6 +834,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy4)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings4)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy4)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources3}
@@ -1015,6 +1031,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy4)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings4)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy4)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources4}
@@ -1131,6 +1149,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule4)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule4}
@@ -1270,6 +1289,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy5)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings5)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy5)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources5}
@@ -1386,6 +1407,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule5)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule5}
@@ -1541,6 +1563,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy6)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings6)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy6)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources6}
@@ -1657,6 +1681,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule6)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule6}
@@ -1739,6 +1764,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy7)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings7)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy7)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources7}
@@ -1855,6 +1882,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule7)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule7}
@@ -1944,6 +1972,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy8)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings8)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy8)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources8}
@@ -2060,6 +2090,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule8)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule8}
@@ -2142,6 +2173,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy9)**<br>Scheduling pol
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings9)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy9)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources9}
@@ -2258,6 +2291,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule9)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule9}
@@ -2358,6 +2392,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy10)**<br>Scheduling po
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings10)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy10)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources10}
@@ -2474,6 +2510,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule10)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule10}
@@ -2554,6 +2591,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy11)**<br>Scheduling po
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings11)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy11)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources11}
@@ -2670,6 +2709,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule11)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule11}
@@ -2783,6 +2823,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy12)**<br>Scheduling po
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings12)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy12)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources12}
@@ -2899,6 +2941,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule12)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule12}
@@ -3019,6 +3062,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy13)**<br>Scheduling po
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings13)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy13)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources13}
@@ -3135,6 +3180,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule13)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule13}
@@ -3162,6 +3208,45 @@ Field | Description
 --- | ---
 instance_id | **string**<br>Required. ID of the instance to move. <br>To get the instance ID, make a [InstanceService.List](#List) request. The maximum string length in characters is 50.
 destination_zone_id | **string**<br>Required. ID of the availability zone to move the instance to. <br>To get the zone ID, make a [ZoneService.List](./zone_service#List) request. The maximum string length in characters is 50.
+network_interface_specs[] | **[NetworkInterfaceSpec](#NetworkInterfaceSpec)**<br>Required. Network configuration for the instance. Specifies how the network interface is configured to interact with other services on the internal network and on the internet. Currently only one network interface is supported per instance. The number of elemets must be exactly 1.
+
+
+### NetworkInterfaceSpec {#NetworkInterfaceSpec1}
+
+Field | Description
+--- | ---
+subnet_id | **string**<br>Required. ID of the subnet. The maximum string length in characters is 50.
+primary_v4_address_spec | **[PrimaryAddressSpec](#PrimaryAddressSpec)**<br>Primary IPv4 address that will be assigned to the instance for this network interface. 
+primary_v6_address_spec | **[PrimaryAddressSpec](#PrimaryAddressSpec)**<br>Primary IPv6 address that will be assigned to the instance for this network interface. IPv6 not available yet. 
+security_group_ids[] | **string**<br>ID's of security groups attached to the interface 
+
+
+### PrimaryAddressSpec {#PrimaryAddressSpec2}
+
+Field | Description
+--- | ---
+address | **string**<br>An IPv4 internal network address that is assigned to the instance for this network interface. If not specified by the user, an unused internal IP is assigned by the system. 
+one_to_one_nat_spec | **[OneToOneNatSpec](#OneToOneNatSpec)**<br>An external IP address configuration. If not specified, then this instance will have no external internet access. 
+dns_record_specs[] | **[DnsRecordSpec](#DnsRecordSpec)**<br>Internal DNS configuration 
+
+
+### OneToOneNatSpec {#OneToOneNatSpec3}
+
+Field | Description
+--- | ---
+ip_version | enum **IpVersion**<br>External IP address version. <ul><li>`IPV4`: IPv4 address, for example 192.0.2.235.</li><li>`IPV6`: IPv6 address. Not available yet.</li></ul>
+address | **string**<br> 
+dns_record_specs[] | **[DnsRecordSpec](#DnsRecordSpec)**<br>External DNS configuration 
+
+
+### DnsRecordSpec {#DnsRecordSpec3}
+
+Field | Description
+--- | ---
+fqdn | **string**<br>Required. FQDN (required) 
+dns_zone_id | **string**<br>DNS zone id (optional, if not set, private zone used) 
+ttl | **int64**<br>DNS record ttl, values in 0-86400 (optional) Acceptable values are 0 to 86400, inclusive.
+ptr | **bool**<br>When set to true, also create PTR DNS record (optional) 
 
 
 ### Operation {#Operation16}
@@ -3216,6 +3301,8 @@ scheduling_policy | **[SchedulingPolicy](#SchedulingPolicy14)**<br>Scheduling po
 service_account_id | **string**<br>ID of the service account to use for [authentication inside the instance](/docs/compute/operations/vm-connect/auth-inside-vm). To get the service account ID, use a [yandex.cloud.iam.v1.ServiceAccountService.List](/docs/iam/api-ref/grpc/service_account_service#List) request. 
 network_settings | **[NetworkSettings](#NetworkSettings14)**<br>Network Settings 
 placement_policy | **[PlacementPolicy](#PlacementPolicy14)**<br>Placement policy configuration. 
+host_group_id | **string**<br>ID of the dedicated host group that the instance belongs to. 
+host_id | **string**<br>ID of the dedicated host that the instance belongs to. 
 
 
 ### Resources {#Resources14}
@@ -3332,6 +3419,7 @@ Field | Description
 --- | ---
 placement_group_id | **string**<br>Placement group ID. 
 host_affinity_rules[] | **[HostAffinityRule](#HostAffinityRule14)**<br>List of affinity rules. Scheduler will attempt to allocate instances according to order of rules. 
+placement_group_partition | **int64**<br>Placement group partition 
 
 
 ### HostAffinityRule {#HostAffinityRule14}
@@ -3341,5 +3429,166 @@ Field | Description
 key | **string**<br>Affinity label or one of reserved values - 'yc.hostId', 'yc.hostGroupId' 
 op | enum **Operator**<br>Include or exclude action 
 values[] | **string**<br>Affinity value or host ID or host group ID 
+
+
+## ListAccessBindings {#ListAccessBindings}
+
+Lists access bindings for the instance.
+
+**rpc ListAccessBindings ([ListAccessBindingsRequest](#ListAccessBindingsRequest)) returns ([ListAccessBindingsResponse](#ListAccessBindingsResponse))**
+
+### ListAccessBindingsRequest {#ListAccessBindingsRequest}
+
+Field | Description
+--- | ---
+resource_id | **string**<br>Required. ID of the resource to list access bindings for. <br>To get the resource ID, use a corresponding List request. For example, use the [yandex.cloud.resourcemanager.v1.CloudService.List](/docs/resource-manager/api-ref/grpc/cloud_service#List) request to get the Cloud resource ID. The maximum string length in characters is 50.
+page_size | **int64**<br>The maximum number of results per page that should be returned. If the number of available results is larger than `page_size`, the service returns a [ListAccessBindingsResponse.next_page_token](#ListAccessBindingsResponse) that can be used to get the next page of results in subsequent list requests. Default value: 100. The maximum value is 1000.
+page_token | **string**<br>Page token. Set `page_token` to the [ListAccessBindingsResponse.next_page_token](#ListAccessBindingsResponse) returned by a previous list request to get the next page of results. The maximum string length in characters is 100.
+
+
+### ListAccessBindingsResponse {#ListAccessBindingsResponse}
+
+Field | Description
+--- | ---
+access_bindings[] | **[AccessBinding](#AccessBinding)**<br>List of access bindings for the specified resource. 
+next_page_token | **string**<br>This token allows you to get the next page of results for list requests. If the number of results is larger than [ListAccessBindingsRequest.page_size](#ListAccessBindingsRequest), use the `next_page_token` as the value for the [ListAccessBindingsRequest.page_token](#ListAccessBindingsRequest) query parameter in the next list request. Each subsequent list request will have its own `next_page_token` to continue paging through the results. 
+
+
+### AccessBinding {#AccessBinding}
+
+Field | Description
+--- | ---
+role_id | **string**<br>Required. ID of the `yandex.cloud.iam.v1.Role` that is assigned to the `subject`. The maximum string length in characters is 50.
+subject | **[Subject](#Subject)**<br>Required. Identity for which access binding is being created. It can represent an account with a unique ID or several accounts with a system identifier. 
+
+
+### Subject {#Subject}
+
+Field | Description
+--- | ---
+id | **string**<br>Required. ID of the subject. <br>It can contain one of the following values: <ul><li>`allAuthenticatedUsers`: A special system identifier that represents anyone </li></ul>who is authenticated. It can be used only if the `type` is `system`. <ul><li>`allUsers`: A special system identifier that represents anyone. No authentication is required. </li></ul>For example, you don't need to specify the IAM token in an API query. <ul><li>`<cloud generated id>`: An identifier that represents a user account. </li></ul>It can be used only if the `type` is `userAccount`, `federatedUser` or `serviceAccount`. The maximum string length in characters is 50.
+type | **string**<br>Required. Type of the subject. <br>It can contain one of the following values: <ul><li>`userAccount`: An account on Yandex or Yandex.Connect, added to Yandex.Cloud. </li><li>`serviceAccount`: A service account. This type represents the `yandex.cloud.iam.v1.ServiceAccount` resource. </li><li>`federatedUser`: A federated account. This type represents a user from an identity federation, like Active Directory. </li><li>`system`: System group. This type represents several accounts with a common system identifier. </li></ul><br>For more information, see [Subject to which the role is assigned](/docs/iam/concepts/access-control/#subject). The maximum string length in characters is 100.
+
+
+## SetAccessBindings {#SetAccessBindings}
+
+Sets access bindings for the instance.
+
+**rpc SetAccessBindings ([SetAccessBindingsRequest](#SetAccessBindingsRequest)) returns ([operation.Operation](#Operation17))**
+
+Metadata and response of Operation:<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[SetAccessBindingsMetadata](#SetAccessBindingsMetadata)<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;Operation.response:[AccessBindingsOperationResult](#AccessBindingsOperationResult)<br>
+
+### SetAccessBindingsRequest {#SetAccessBindingsRequest}
+
+Field | Description
+--- | ---
+resource_id | **string**<br>Required. ID of the resource for which access bindings are being set. <br>To get the resource ID, use a corresponding List request. The maximum string length in characters is 50.
+access_bindings[] | **[AccessBinding](#AccessBinding)**<br>Required. Access bindings to be set. For more information, see [Access Bindings](/docs/iam/concepts/access-control/#access-bindings). 
+
+
+### AccessBinding {#AccessBinding1}
+
+Field | Description
+--- | ---
+role_id | **string**<br>Required. ID of the `yandex.cloud.iam.v1.Role` that is assigned to the `subject`. The maximum string length in characters is 50.
+subject | **[Subject](#Subject)**<br>Required. Identity for which access binding is being created. It can represent an account with a unique ID or several accounts with a system identifier. 
+
+
+### Subject {#Subject1}
+
+Field | Description
+--- | ---
+id | **string**<br>Required. ID of the subject. <br>It can contain one of the following values: <ul><li>`allAuthenticatedUsers`: A special system identifier that represents anyone </li></ul>who is authenticated. It can be used only if the `type` is `system`. <ul><li>`allUsers`: A special system identifier that represents anyone. No authentication is required. </li></ul>For example, you don't need to specify the IAM token in an API query. <ul><li>`<cloud generated id>`: An identifier that represents a user account. </li></ul>It can be used only if the `type` is `userAccount`, `federatedUser` or `serviceAccount`. The maximum string length in characters is 50.
+type | **string**<br>Required. Type of the subject. <br>It can contain one of the following values: <ul><li>`userAccount`: An account on Yandex or Yandex.Connect, added to Yandex.Cloud. </li><li>`serviceAccount`: A service account. This type represents the `yandex.cloud.iam.v1.ServiceAccount` resource. </li><li>`federatedUser`: A federated account. This type represents a user from an identity federation, like Active Directory. </li><li>`system`: System group. This type represents several accounts with a common system identifier. </li></ul><br>For more information, see [Subject to which the role is assigned](/docs/iam/concepts/access-control/#subject). The maximum string length in characters is 100.
+
+
+### Operation {#Operation17}
+
+Field | Description
+--- | ---
+id | **string**<br>ID of the operation. 
+description | **string**<br>Description of the operation. 0-256 characters long. 
+created_at | **[google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp)**<br>Creation timestamp. 
+created_by | **string**<br>ID of the user or service account who initiated the operation. 
+modified_at | **[google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp)**<br>The time when the Operation resource was last modified. 
+done | **bool**<br>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available. 
+metadata | **[google.protobuf.Any](https://developers.google.com/protocol-buffers/docs/proto3#any)<[SetAccessBindingsMetadata](#SetAccessBindingsMetadata)>**<br>Service-specific metadata associated with the operation. It typically contains the ID of the target resource that the operation is performed on. Any method that returns a long-running operation should document the metadata type, if any. 
+result | **oneof:** `error` or `response`<br>The operation result. If `done == false` and there was no failure detected, neither `error` nor `response` is set. If `done == false` and there was a failure detected, `error` is set. If `done == true`, exactly one of `error` or `response` is set.
+&nbsp;&nbsp;error | **[google.rpc.Status](https://cloud.google.com/tasks/docs/reference/rpc/google.rpc#status)**<br>The error result of the operation in case of failure or cancellation. 
+&nbsp;&nbsp;response | **[google.protobuf.Any](https://developers.google.com/protocol-buffers/docs/proto3#any)<[AccessBindingsOperationResult](#AccessBindingsOperationResult)>**<br>if operation finished successfully. 
+
+
+### SetAccessBindingsMetadata {#SetAccessBindingsMetadata}
+
+Field | Description
+--- | ---
+resource_id | **string**<br>ID of the resource for which access bindings are being set. 
+
+
+## UpdateAccessBindings {#UpdateAccessBindings}
+
+Updates access bindings for the instance.
+
+**rpc UpdateAccessBindings ([UpdateAccessBindingsRequest](#UpdateAccessBindingsRequest)) returns ([operation.Operation](#Operation18))**
+
+Metadata and response of Operation:<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[UpdateAccessBindingsMetadata](#UpdateAccessBindingsMetadata)<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;Operation.response:[AccessBindingsOperationResult](#AccessBindingsOperationResult)<br>
+
+### UpdateAccessBindingsRequest {#UpdateAccessBindingsRequest}
+
+Field | Description
+--- | ---
+resource_id | **string**<br>Required. ID of the resource for which access bindings are being updated. The maximum string length in characters is 50.
+access_binding_deltas[] | **[AccessBindingDelta](#AccessBindingDelta)**<br>Required. Updates to access bindings. The number of elements must be greater than 0.
+
+
+### AccessBindingDelta {#AccessBindingDelta}
+
+Field | Description
+--- | ---
+action | enum **AccessBindingAction**<br>Required. The action that is being performed on an access binding. <ul><li>`ADD`: Addition of an access binding.</li><li>`REMOVE`: Removal of an access binding.</li></ul>
+access_binding | **[AccessBinding](#AccessBinding)**<br>Required. Access binding. For more information, see [Access Bindings](/docs/iam/concepts/access-control/#access-bindings). 
+
+
+### AccessBinding {#AccessBinding2}
+
+Field | Description
+--- | ---
+role_id | **string**<br>Required. ID of the `yandex.cloud.iam.v1.Role` that is assigned to the `subject`. The maximum string length in characters is 50.
+subject | **[Subject](#Subject)**<br>Required. Identity for which access binding is being created. It can represent an account with a unique ID or several accounts with a system identifier. 
+
+
+### Subject {#Subject2}
+
+Field | Description
+--- | ---
+id | **string**<br>Required. ID of the subject. <br>It can contain one of the following values: <ul><li>`allAuthenticatedUsers`: A special system identifier that represents anyone </li></ul>who is authenticated. It can be used only if the `type` is `system`. <ul><li>`allUsers`: A special system identifier that represents anyone. No authentication is required. </li></ul>For example, you don't need to specify the IAM token in an API query. <ul><li>`<cloud generated id>`: An identifier that represents a user account. </li></ul>It can be used only if the `type` is `userAccount`, `federatedUser` or `serviceAccount`. The maximum string length in characters is 50.
+type | **string**<br>Required. Type of the subject. <br>It can contain one of the following values: <ul><li>`userAccount`: An account on Yandex or Yandex.Connect, added to Yandex.Cloud. </li><li>`serviceAccount`: A service account. This type represents the `yandex.cloud.iam.v1.ServiceAccount` resource. </li><li>`federatedUser`: A federated account. This type represents a user from an identity federation, like Active Directory. </li><li>`system`: System group. This type represents several accounts with a common system identifier. </li></ul><br>For more information, see [Subject to which the role is assigned](/docs/iam/concepts/access-control/#subject). The maximum string length in characters is 100.
+
+
+### Operation {#Operation18}
+
+Field | Description
+--- | ---
+id | **string**<br>ID of the operation. 
+description | **string**<br>Description of the operation. 0-256 characters long. 
+created_at | **[google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp)**<br>Creation timestamp. 
+created_by | **string**<br>ID of the user or service account who initiated the operation. 
+modified_at | **[google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp)**<br>The time when the Operation resource was last modified. 
+done | **bool**<br>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available. 
+metadata | **[google.protobuf.Any](https://developers.google.com/protocol-buffers/docs/proto3#any)<[UpdateAccessBindingsMetadata](#UpdateAccessBindingsMetadata)>**<br>Service-specific metadata associated with the operation. It typically contains the ID of the target resource that the operation is performed on. Any method that returns a long-running operation should document the metadata type, if any. 
+result | **oneof:** `error` or `response`<br>The operation result. If `done == false` and there was no failure detected, neither `error` nor `response` is set. If `done == false` and there was a failure detected, `error` is set. If `done == true`, exactly one of `error` or `response` is set.
+&nbsp;&nbsp;error | **[google.rpc.Status](https://cloud.google.com/tasks/docs/reference/rpc/google.rpc#status)**<br>The error result of the operation in case of failure or cancellation. 
+&nbsp;&nbsp;response | **[google.protobuf.Any](https://developers.google.com/protocol-buffers/docs/proto3#any)<[AccessBindingsOperationResult](#AccessBindingsOperationResult)>**<br>if operation finished successfully. 
+
+
+### UpdateAccessBindingsMetadata {#UpdateAccessBindingsMetadata}
+
+Field | Description
+--- | ---
+resource_id | **string**<br>ID of the resource for which access bindings are being updated. 
 
 

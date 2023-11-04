@@ -37,7 +37,7 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
 - {{ mkf-name }}
 
-   [Create a user](../../managed-kafka/operations/cluster-accounts.md#create-account) with the `ACCESS_ROLE_CONSUMER` role for the source topic.
+   1. [Create a user](../../managed-kafka/operations/cluster-accounts.md#create-account) with the `ACCESS_ROLE_CONSUMER` role for the source topic.
 
 - {{ KF }}
 
@@ -47,7 +47,18 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
    1. [Configure user access rights](https://kafka.apache.org/documentation/#multitenancy-security) to the topic you need.
 
-   1. (Optional) To log in with username and password, [configure SASL authentication](https://kafka.apache.org/documentation/#security_sasl).
+   1. Grant the `READ` permissions to the consumer group whose ID matches the transfer ID.
+
+      ```text
+      bin/kafka-acls --bootstrap-server localhost:9092 \
+        --command-config adminclient-configs.conf \
+        --add \
+        --allow-principal User:username \
+        --operation Read \
+        --group <transfer_id>
+      ```
+
+   1. (Optional) To use username and password authorization, configure [SASL authentication](https://kafka.apache.org/documentation/#security_sasl).
 
 {% endlist %}
 
@@ -73,6 +84,12 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
 ### {{ GP }} source {#source-gp}
 
+{% note info %}
+
+{% include [matview limits](../../_includes/data-transfer/pg-gp-matview.md) %}
+
+{% endnote %}
+
 {% list tabs %}
 
 
@@ -84,9 +101,9 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
       CREATE ROLE <username> LOGIN ENCRYPTED PASSWORD '<password>';
       ```
 
-   1. Configure the source cluster to enable the user you created to connect to all the cluster's [master hosts](../../managed-greenplum/concepts/index.md).
+   1. Configure the source cluster to enable the user you created to connect to all the cluster [master hosts](../../managed-greenplum/concepts/index.md).
 
-   1. If you are planning to use [sharded copy](../concepts/sharded.md), configure the source cluster to enable the user you created to connect to all the cluster's [segment hosts](../../managed-greenplum/concepts/index.md) in utility mode. To do this, make sure that the "Access from {{ data-transfer-name }}" setting is enabled for the cluster.
+   1. If you are going to use [parallel copy](../concepts/sharded.md), configure the source cluster to enable the user you created to connect to all the cluster's [segment hosts](../../managed-greenplum/concepts/index.md) in utility mode. To do this, make sure that the "Access from {{ data-transfer-name }}" setting is enabled for the cluster.
 
    1. Grant the user you created the `SELECT` privilege for the tables to be transferred and the `USAGE` privilege for the schemas these tables belong to.
 
@@ -97,8 +114,8 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
       This example issues privileges to all the tables in the selected schema:
 
       ```pgsql
-      GRANT SELECT ON ALL TABLES IN SCHEMA <schema name> TO <username>;
-      GRANT USAGE ON SCHEMA <schema name> TO <username>;
+      GRANT SELECT ON ALL TABLES IN SCHEMA <schema_name> TO <username>;
+      GRANT USAGE ON SCHEMA <schema_name> TO <username>;
       ```
 
 
@@ -112,9 +129,9 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
       CREATE ROLE <username> LOGIN ENCRYPTED PASSWORD '<password>';
       ```
 
-   1. Configure the source cluster to enable the user you created to connect to all the cluster's [master hosts](../../managed-greenplum/concepts/index.md).
+   1. Configure the source cluster to enable the user you created to connect to all the cluster [master hosts](../../managed-greenplum/concepts/index.md).
 
-   1. If you are planning to use [sharded copy](../concepts/sharded.md), configure the source cluster to enable the user you created to connect to all the cluster's [segment hosts](../../managed-greenplum/concepts/index.md) in utility mode.
+   1. If you are going to use [parallel copy](../concepts/sharded.md), configure the source cluster to enable the user you created to connect to all the cluster [segment hosts](../../managed-greenplum/concepts/index.md) in utility mode.
 
    1. Grant the user you created the `SELECT` privilege for the tables to be transferred and the `USAGE` privilege for the schemas these tables belong to.
 
@@ -125,13 +142,14 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
       This example grants privileges to all the database tables:
 
       ```pgsql
-      GRANT SELECT ON ALL TABLES IN SCHEMA <schema name> TO <username>;
-      GRANT USAGE ON SCHEMA <schema name> TO <username>;
+      GRANT SELECT ON ALL TABLES IN SCHEMA <schema_name> TO <username>;
+      GRANT USAGE ON SCHEMA <schema_name> TO <username>;
       ```
 
 {% endlist %}
 
 {{ data-transfer-name }} works with {{ GP }} differently depending on the transfer configuration and the source cluster contents. Detailed information is available in the section on [{{ GP }} source endpoint settings](../operations/endpoint/source/greenplum.md).
+
 
 ### {{ MG }} source {#source-mg}
 
@@ -140,17 +158,19 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
 - {{ mmg-name }}
 
-   1. Estimate the total number of databases for transfer and the total {{ mmg-name }} workload. If database workload exceeds 10,000 writes per second, create several endpoints and transfers. For more information, see [{#T}](../../data-transfer/operations/endpoint/source/mongodb.md).
-   1. [Create a user](../../managed-mongodb/operations/cluster-users.md#adduser) with the `readWrite` role for each source database to be replicated. The `readWrite` role is required so that a transfer can write data to the `__dt_cluster_time` service collection.
+   1. Estimate the total number of databases for transfer and the total {{ mmg-name }} workload. If the workload on the database exceeds 10,000 writes per second, create multiple endpoints and transfers. For more information, see [{#T}](../../data-transfer/operations/endpoint/source/mongodb.md).
+   1. [Create a user](../../managed-mongodb/operations/cluster-users.md#adduser) with the `readWrite` role for each source database to be replicated. The `readWrite` role is required so that a transfer can write data to the `__data_transfer.__dt_cluster_time` service collection.
 
 
 - {{ MG }}
 
-   1. Estimate the total number of databases for transfer and the total {{ MG }} workload. If database workload exceeds 10,000 writes per second, create several endpoints and transfers. For more information, see [{#T}](../../data-transfer/operations/endpoint/source/mongodb.md).
+   1. Estimate the total number of databases for transfer and the total {{ MG }} workload. If the workload on the database exceeds 10,000 writes per second, create multiple endpoints and transfers. For more information, see [{#T}](../../data-transfer/operations/endpoint/source/mongodb.md).
 
    1. {% include notitle [White IP list](../../_includes/data-transfer/configure-white-ip.md) %}
 
    1. Make sure that the {{ MG }} version on the target is `4.0` or higher.
+
+   1. {% include [mondodb cluster requirement](../../_includes/data-transfer/mongodb-cluster-requirement.md) %}
 
    1. [Configure access to the source cluster from {{ yandex-cloud }}](../concepts/network.md#source-external). To configure a [source cluster](https://docs.mongodb.com/manual/core/security-mongodb-configuration/) for connections from the internet:
 
@@ -169,13 +189,13 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
          sudo systemctl restart mongod.service
          ```
 
-   1. If the source cluster doesn't use replication, enable replication:
+   1. If the source cluster does not use replication, enable it:
 
       1. Add replication settings to the `/etc/mongod.conf` configuration file:
 
          ```yaml
          replication:
-           replSetName: <replica set name>
+           replSetName: <replica_set_name>
          ```
 
       1. Restart the `mongod` service:
@@ -188,10 +208,10 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
          ```javascript
          rs.initiate({
-             _id: "<replica set name>",
+             _id: "<replica_set_name>",
              members: [{
                  _id: 0,
-                 host: "<IP address listening to mongod>:<port>"
+                 host: "<IP_address_listening_to_{{ MG }}>:<port>"
              }]
          });
          ```
@@ -206,11 +226,11 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
           mechanisms: ["SCRAM-SHA-1"],
           roles: [
               {
-                  db: "<name of source database 1>",
+                  db: "<source_database_1_name>",
                   role: "readWrite"
               },
               {
-                  db: "<name of source database 2>",
+                  db: "<source_database_2_name>",
                   role: "readWrite"
               },
               ...
@@ -218,11 +238,11 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
       });
       ```
 
-      Once started, the transfer will connect to the source on behalf of this user. The `readWrite` role is required so that a transfer can write data to the `__dt_cluster_time` service collection.
+      Once started, the transfer will connect to the source on behalf of this user. The `readWrite` role is required so that a transfer can write data to the `__data_transfer.__dt_cluster_time` service collection.
 
       {% note info %}
 
-      For {{ MG }} 3.6 or older, it's enough to assign the created user the [`read`](https://www.mongodb.com/docs/manual/reference/built-in-roles/#mongodb-authrole-read) role for databases to replicate.
+      For {{ MG }} 3.6 or older, it is enough to assign the created user the [`read`](https://www.mongodb.com/docs/manual/reference/built-in-roles/#mongodb-authrole-read) role for databases to replicate.
 
       {% endnote %}
 
@@ -245,7 +265,7 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
    1. [Enable full binary logging](../../managed-mysql/operations/update.md#change-mysql-config) on the source by setting the [**Binlog row image** parameter](https://dev.mysql.com/doc/refman/5.7/en/replication-options-binary-log.html#sysvar_binlog_row_image) to `FULL` or `NOBLOB`.
 
-   1. (optional) [Set a limit](../../managed-mysql/operations/update.md#change-mysql-config) on the size of data chunks to be sent using the **Max allowed packet** parameter.
+   1. (Optional) [Set a limit](../../managed-mysql/operations/update.md#change-mysql-config) on the size of data chunks to be sent using the **Max allowed packet** parameter.
 
    1. [Create a user](../../managed-mysql/operations/cluster-users.md#adduser) for connecting to the source.
 
@@ -277,15 +297,15 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
       If it is not possible to enable GTID mode for any reason, make sure the binary log name template contains the host name.
 
-      In both cases, this lets replication continue even after changing the master host.
+      In both cases, this will allow replication to continue even after changing the master host.
 
-   1. (optional) [Set a limit](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_max_allowed_packet) on the size of data chunks to be sent using the `max_allowed_packet` parameter.
+   1. (Optional) [Set a limit](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_max_allowed_packet) on the size of data chunks to be sent using the `max_allowed_packet` parameter.
 
    1. Create a user to connect to the source and grant them the required privileges:
 
       ```sql
       CREATE USER '<username>'@'%' IDENTIFIED BY '<password>';
-      GRANT ALL PRIVILEGES ON <database name>.* TO '<username>'@'%';
+      GRANT ALL PRIVILEGES ON <database_name>.* TO '<username>'@'%';
       GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO '<username>'@'%';
       ```
 
@@ -303,13 +323,21 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
 ### Oracle source {#source-oracle}
 
+{% note info %}
+
+Some versions of Oracle use `V_$` instead of `V$` as the prefix for system objects. For example, `V_$DATABASE` instead of `V$DATABASE`.
+
+If you get an error like "`can only select from fixed tables/views`" when granting permissions to system objects, try changing the prefixes.
+
+{% endnote %}
+
 {% list tabs %}
 
 - Oracle
 
    * To prepare the source for the _{{ dt-type-copy }}_ transfer:
 
-      1. Create a user account the transfer will utilize to connect to the source:
+      1. Create a user account the transfer will use to connect to the source:
 
          ```sql
          CREATE USER <username> IDENTIFIED BY <password>;
@@ -318,107 +346,107 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
       1. Grant privileges to the created user:
 
-           ```sql
-           GRANT SELECT ON V$DATABASE TO <username>;
-           GRANT SELECT ON DBA_EXTENTS TO <username>;
-           GRANT SELECT ON DBA_OBJECTS TO <username>;
-           GRANT FLASHBACK ANY TABLE TO <username>;
-           ```
+         ```sql
+         GRANT SELECT ON V$DATABASE TO <username>;
+         GRANT SELECT ON DBA_EXTENTS TO <username>;
+         GRANT SELECT ON DBA_OBJECTS TO <username>;
+         GRANT FLASHBACK ANY TABLE TO <username>;
+         ```
 
-           If required, you can only grant the `FLASHBACK` privileges to the tables you need to copy rather than to `ANY TABLE`.
+         If required, you can only grant the `FLASHBACK` privileges to the tables you need to copy rather than to `ANY TABLE`.
 
       1. Grant the user the [privilege to read the tables](https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/GRANT.html) to be copied.
 
    * To prepare the source for the _{{ dt-type-repl }}_ transfer:
 
-      1. Create a user account the transfer will utilize to connect to the source:
+      1. Create a user account the transfer will use to connect to the source:
 
-           ```sql
-           CREATE USER <username> IDENTIFIED BY <password>;
-           ALTER USER <username> DEFAULT tablespace USERS TEMPORARY tablespace TEMP;
-           ALTER USER <username> quote unlimited on USERS;
+         ```sql
+         CREATE USER <username> IDENTIFIED BY <password>;
+         ALTER USER <username> DEFAULT tablespace USERS TEMPORARY tablespace TEMP;
+         ALTER USER <username> quote unlimited on USERS;
 
-           GRANT
-               CREATE SESSION,
-               execute_catalog_role,
-               SELECT ANY TRANSACTION,
-               SELECT ANY DISCTIONARY,
-               CREATE PROCEDURE,
-               LOGMINING
-           TO <username>;
-           ```
+         GRANT
+             CREATE SESSION,
+             execute_catalog_role,
+             SELECT ANY TRANSACTION,
+             SELECT ANY DISCTIONARY,
+             CREATE PROCEDURE,
+             LOGMINING
+         TO <username>;
+         ```
 
       1. Grant privileges to the created user:
 
-           ```sql
-            GRANT SELECT ON V$DATABASE TO <username>;
-            GRANT SELECT ON V$LOG TO <username>;
-            GRANT SELECT ON V$LOGFILE TO <username>;
-            GRANT SELECT ON V$ARCHIVED_LOG TO <username>;
+         ```sql
+         GRANT SELECT ON V$DATABASE TO <username>;
+         GRANT SELECT ON V$LOG TO <username>;
+         GRANT SELECT ON V$LOGFILE TO <username>;
+         GRANT SELECT ON V$ARCHIVED_LOG TO <username>;
 
-            GRANT SELECT ON dba_objects TO <username>;
-            GRANT SELECT ON dba_extents TO <username>;
+         GRANT SELECT ON dba_objects TO <username>;
+         GRANT SELECT ON dba_extents TO <username>;
 
-            GRANT EXECUTE ON SYS.DBMS_LOGMNR TO <username>;
-            GRANT SELECT ON SYSTEM.LOGMNR_COL$ TO <username>;
-            GRANT SELECT ON SYSTEM.LOGMNR_OBJ$ TO <username>;
-            GRANT SELECT ON SYSTEM.LOGMNR_USER$ TO <username>;
-            GRANT SELECT ON SYSTEM.LOGMNR_UID$ TO <username>;
-           ```
+         GRANT EXECUTE ON SYS.DBMS_LOGMNR TO <username>;
+         GRANT SELECT ON SYSTEM.LOGMNR_COL$ TO <username>;
+         GRANT SELECT ON SYSTEM.LOGMNR_OBJ$ TO <username>;
+         GRANT SELECT ON SYSTEM.LOGMNR_USER$ TO <username>;
+         GRANT SELECT ON SYSTEM.LOGMNR_UID$ TO <username>;
+         ```
 
-        1. Grant the user the [privilege to read the tables](https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/GRANT.html) to be replicated.
-        1. Enable [Minimal Supplemental Logging](https://docs.oracle.com/database/121/SUTIL/GUID-D2DDD67C-E1CC-45A6-A2A7-198E4C142FA3.htm#SUTIL1583) with primary keys as follows:
+      1. Grant the user the [privilege to read the tables](https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/GRANT.html) to be replicated.
+      1. Enable [Minimal Supplemental Logging](https://docs.oracle.com/database/121/SUTIL/GUID-D2DDD67C-E1CC-45A6-A2A7-198E4C142FA3.htm#SUTIL1583) with primary keys as follows:
 
-            ```sql
-            ALTER DATABASE ADD SUPPLEMENTAL LOG DATA (PRIMARY KEY) COLUMNS;
-            ```
+         ```sql
+         ALTER DATABASE ADD SUPPLEMENTAL LOG DATA (PRIMARY KEY) COLUMNS;
+         ```
 
-    * If you are using the [CDB environment](https://docs.oracle.com/database/121/CNCPT/cdbovrvw.htm#CNCPT89234), configure the following settings:
+   * If you are using the [CDB environment](https://docs.oracle.com/database/121/CNCPT/cdbovrvw.htm#CNCPT89234), configure the following settings:
 
-        1. Create a [user](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/overview-of-managing-a-multitenant-environment.html#GUID-7D303718-2D59-495F-90FB-E51A377B1AD2) `Common User`:
+      1. Create a [user](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/overview-of-managing-a-multitenant-environment.html#GUID-7D303718-2D59-495F-90FB-E51A377B1AD2) `Common User`:
 
-            ```sql
-            CREATE USER C##<username> IDENTIFIED BY <password> CONTAINER=all;
-            ALTER USER C##<username> DEFAULT TABLESPACE USERS temporary tablespace TEMP CONTAINER=all;
-            ALTER USER C##<username> quota unlimited on USERS CONTAINER=all;
-            ALTER USER C##<username> SET container_data = (cdb$root, <your PCB name>) CONTAINER=current;
+         ```sql
+         CREATE USER C##<username> IDENTIFIED BY <password> CONTAINER=all;
+         ALTER USER C##<username> DEFAULT TABLESPACE USERS temporary tablespace TEMP CONTAINER=all;
+         ALTER USER C##<username> quota unlimited on USERS CONTAINER=all;
+         ALTER USER C##<username> SET container_data = (cdb$root, <your_PCB_name>) CONTAINER=current;
 
-            GRANT
-                CREATE SESSION,
-                execute_catalog_role,
-                SELECT ANY TRANSACTION,
-                SELECT ANY DICTIONALY,
-                CREATE PROCEDURE,
-                LOGMINING,
-                SET CONTAINER
-            TO C##<username> CONTAINER=ALL;
-            ```
+         GRANT
+             CREATE SESSION,
+             execute_catalog_role,
+             SELECT ANY TRANSACTION,
+             SELECT ANY DICTIONALY,
+             CREATE PROCEDURE,
+             LOGMINING,
+             SET CONTAINER
+         TO C##<username> CONTAINER=ALL;
+         ```
 
-            If required, you can only specify the `cdb$root` container and the container with the tables to transfer.
+         If required, you can only specify the `cdb$root` container and the container with the tables you need to transfer.
 
-        1. To allow the user to switch to the `cdb$root` container, grant them the `ALTER SESSION` privileges:
+      1. To allow the user to switch to the `cdb$root` container, grant them the `ALTER SESSION` privileges:
 
-            ```sql
-            GRANT ALTER SESSION TO C##<username>;
-            ```
+         ```sql
+         GRANT ALTER SESSION TO C##<username>;
+         ```
 
-        1. Grant privileges to the created user:
+      1. Grant privileges to the created user:
 
-            ```sql
-            GRANT SELECT ON V$DATABASE TO C##<username> CONTAINER=ALL;
-            GRANT SELECT ON V$LOG TO C##<username> CONTAINER=ALL;
-            GRANT SELECT ON V$LOGFILE TO C##<username> CONTAINER=ALL;
-            GRANT SELECT ON V$ARCHIVED_LOG TO C##<username> CONTAINER=ALL;
+         ```sql
+         GRANT SELECT ON V$DATABASE TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON V$LOG TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON V$LOGFILE TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON V$ARCHIVED_LOG TO C##<username> CONTAINER=ALL;
 
-            GRANT SELECT ON dba_objects TO C##<username> CONTAINER=ALL;
-            GRANT SELECT ON dba_extents TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON dba_objects TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON dba_extents TO C##<username> CONTAINER=ALL;
 
-            GRANT EXECUTE ON SYS.DBMS_LOGMNR TO C##<username> CONTAINER=ALL;
-            GRANT SELECT ON SYSTEM.LOGMNR_COL$ TO C##<username> CONTAINER=ALL;
-            GRANT SELECT ON SYSTEM.LOGMNR_OBJ$ TO C##<username> CONTAINER=ALL;
-            GRANT SELECT ON SYSTEM.LOGMNR_USER$ TO C##<username> CONTAINER=ALL;
-            GRANT SELECT ON SYSTEM.LOGMNR_UID$ TO C##<username> CONTAINER=ALL;
-            ```
+         GRANT EXECUTE ON SYS.DBMS_LOGMNR TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON SYSTEM.LOGMNR_COL$ TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON SYSTEM.LOGMNR_OBJ$ TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON SYSTEM.LOGMNR_USER$ TO C##<username> CONTAINER=ALL;
+         GRANT SELECT ON SYSTEM.LOGMNR_UID$ TO C##<username> CONTAINER=ALL;
+         ```
 
 {% endlist %}
 
@@ -428,6 +456,10 @@ For more information, see the [Airbyte® documentation](https://docs.airbyte.com
 
 When performing a transfer from {{ PG }} to a target of any type, objects of the [large object](https://www.postgresql.org/docs/current/largeobjects.html) type will not get transferred.
 
+{% include [matview limits](../../_includes/data-transfer/pg-gp-matview.md) %}
+
+If the definition of the `VIEW` to be transferred contains an invocation of the `VOLATILE` [function]({{ pg.docs.org }}/current/xfunc-volatility.html), the transfer reads data from this `VIEW` with the `READ UNCOMMITTED` isolation level. No consistency between the `VIEW` data and the data of other objects being transferred is guaranteed. Reading data from a `MATERIALIZED VIEW` in the `VIEW` definition are equivalent to invoking the `VOLATILE` function.
+
 Large objects in the [TOAST storage system](https://www.postgresql.org/docs/12/storage-toast.html) and those of the [bytea](https://www.postgresql.org/docs/12/datatype-binary.html) type get transferred without restrictions.
 
 {% endnote %}
@@ -436,52 +468,71 @@ Large objects in the [TOAST storage system](https://www.postgresql.org/docs/12/s
 
 - {{ mpg-name }}
 
-    1. Configure the user the transfer will connect to the source under:
+   1. Configure the user the transfer will use to connect to the source:
 
-        1. [Create a user](../../managed-postgresql/operations/cluster-users.md#adduser).
+      1. [Create a user](../../managed-postgresql/operations/cluster-users.md#adduser).
 
-        1. For the _{{ dt-type-repl }}_ and _{{ dt-type-copy-repl }}_ transfer types, [assign the role](../../managed-postgresql/operations/grant.md#grant-role) `mdb_replication` to this user.
+      1. For the _{{ dt-type-repl }}_ and _{{ dt-type-copy-repl }}_ transfer types, [assign the `mdb_replication` role](../../managed-postgresql/operations/grant.md#grant-role) to this user.
 
-        1. [Connect to the database](../../managed-postgresql/operations/connect.md) that you want to migrate as the database owner and [configure privileges](../../managed-postgresql/operations/grant.md#grant-privilege):
+      1. [Connect to the database](../../managed-postgresql/operations/connect.md) you want to migrate as the database owner and [configure privileges](../../managed-postgresql/operations/grant.md#grant-privilege):
 
-            * `SELECT` for all the database tables to be transferred.
-            * `SELECT` for all the database sequences to be transferred.
-            * `USAGE` for the schemas of these tables and sequences.
-            * `ALL PRIVILEGES` (`CREATE` and `USAGE`) to the `__consumer_keeper` and `__data_transfer_mole_finder` housekeeping table schema defined by the [endpoint parameter](./endpoint/source/postgresql.md#additional-settings) if the endpoint is going to be used for the _{{ dt-type-repl }}_ or _{{ dt-type-copy-repl }}_ transfer types.
+         * `SELECT` for all the database tables to be transferred.
+         * `SELECT` for all the database sequences to be transferred.
+         * `USAGE` for the schemas of these tables and sequences.
+         * `ALL PRIVILEGES` (`CREATE` and `USAGE`) to the `__consumer_keeper` and `__data_transfer_mole_finder` housekeeping table schema defined by the [endpoint parameter](./endpoint/source/postgresql.md#additional-settings) if the endpoint is going to be used for the _{{ dt-type-repl }}_ or _{{ dt-type-copy-repl }}_ transfer types.
 
-    1. If the replication source is a cluster, [enable](../../managed-postgresql/operations/extensions/cluster-extensions.md) the `pg_tm_aux` extension for it. This lets replication continue even after changing the master host. In certain cases, a transfer may return an error when you change masters in a cluster. For more information, see [Troubleshooting](../troubleshooting/index.md#master-change).
+   1. If the replication source is a cluster, [enable](../../managed-postgresql/operations/extensions/cluster-extensions.md) the `pg_tm_aux` extension for it. This will allow replication to continue even after changing the master host. In certain cases, a transfer may return an error when you change masters in a cluster. For more information, see [Troubleshooting](../troubleshooting/index.md#master-change).
 
     1. {% include [Tables without primary keys](../../_includes/data-transfer/primary-keys-postgresql.md) %}
 
-    1. Disable the transfer of external keys at the step of creating a source endpoint. Recreate them once the transfer is completed.
+   1. Disable the transfer of external keys when creating a source endpoint. Recreate them once the transfer is completed.
 
-    1. Find and terminate DDL queries that are running for too long. To do this, run a `SELECT` query against the {{ PG }} `pg_stat_activity` housekeeping table:
+   1. Find and terminate DDL queries that are running for too long. To do this, make a selection from the {{ PG }} `pg_stat_activity` housekeeping table:
 
-        ```sql
-        SELECT NOW() - query_start AS duration, query, state
-        FROM pg_stat_activity
-        WHERE state != 'idle' ORDER BY 1 DESC;
-        ```
+      ```sql
+      SELECT NOW() - query_start AS duration, query, state
+      FROM pg_stat_activity
+      WHERE state != 'idle' ORDER BY 1 DESC;
+      ```
 
-        This will return a list of queries running on the server. Check queries that have a large value for the `duration` parameter.
+      This will return a list of queries running on the server. Pay attention to queries with a high `duration` value.
 
-    1. Deactivate trigger transfer at the transfer initiation stage and reactivate it at the completion stage (for the _{{ dt-type-repl }}_ and the _{{ dt-type-copy-repl }}_ transfer types). For more information, see the [description of additional endpoint settings for the {{ PG }} source](./endpoint/source/postgresql.md#additional-settings).
+   1. Deactivate trigger transfer at the transfer initiation stage and reactivate it at the completion stage (for the _{{ dt-type-repl }}_ and the _{{ dt-type-copy-repl }}_ transfer types). For more information, see the [description of additional endpoint settings for the {{ PG }} source](./endpoint/source/postgresql.md#additional-settings).
 
-    1. To enable parallel data reads from the table, set its primary key to [serial mode](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-SERIAL).
+   1. To enable parallel data reads from the table, set its primary key to [serial mode](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-SERIAL).
 
-        Then specify the number of jobs and threads in the [transfer parameters](transfer.md#create) under **Runtime environment**.
+      Then specify the number of jobs and threads in the [transfer parameters](transfer.md#create) under **Runtime environment**.
+
+   1. Configure WAL monitoring. For _{{ dt-type-repl }}_ and _{{ dt-type-copy-repl }}_ transfers, [logical replication]({{ pg-docs }}/logicaldecoding.html) is used. To perform it, the transfer creates a replication slot with the `slot_name` equal to the transfer ID that you can get by selecting the transfer from the list of your transfers. The WAL size may increase for different reasons: due to a long-running transaction or a transfer issue. Therefore, we recommend setting up WAL monitoring on the source side.
+
+      1. To monitor the size of the used storage or disk, [set up an alert using the monitoring tools](../../managed-postgresql/operations/monitoring.md#monitoring-hosts) (see the `disk.used_bytes` description).
+
+      1. Set the maximum WAL size for replication in the `Max slot wal keep size` [setting](../../managed-postgresql/concepts/settings-list.md#setting-max-slot-wal-keep-size). The value of this setting can be edited as of {{ PG }} ver. 13. To urgently disable a transfer to perform data reads, [delete the replication slot](../../managed-postgresql/operations/replication-slots.md#delete).
+
+         {% note warning %}
+
+         If set to `-1` (unlimited size), you will not be able to delete WAL files due to open logical replication slots that information is not read from. As a result, the WAL files will take up the entire disk space and you will not be able to connect to the cluster.
+
+         {% endnote %}
+
+      1. [Set up an alert](../../managed-postgresql/operations/monitoring.md) with the {{ monitoring-full-name }} tools for the metric used for `Total size of WAL files`. Make sure the threshold values are less than those specified for the `disk.used_bytes` metric because, apart from the data, the disk stores temporary files, the WAL, and other types of data. You can monitor the current slot size by making a DB request with the correct `slot_name` equal to the transfer ID:
+
+         ```sql
+         SELECT slot_name, pg_size_pretty(pg_current_wal_lsn() - restart_lsn), active_pid, catalog_xmin, restart_lsn, confirmed_flush_lsn
+         FROM pg_replication_slots WHERE slot_name = '<transfer_ID>'
+         ```
 
 - {{ PG }}
 
-    1. {% include notitle [White IP list](../../_includes/data-transfer/configure-white-ip.md) %}
+   1. {% include notitle [White IP list](../../_includes/data-transfer/configure-white-ip.md) %}
 
-    1. Create a user account the transfer will utilize to connect to the source:
+   1. Create a user account the transfer will utilize to connect to the source:
 
-        * For the _{{ dt-type-copy }}_ transfer type, create a user with the following command:
+      * For the _{{ dt-type-copy }}_ transfer type, create a user with the following command:
 
-            ```sql
-            CREATE ROLE <username> LOGIN ENCRYPTED PASSWORD '<password>';
-            ```
+         ```sql
+         CREATE ROLE <username> LOGIN ENCRYPTED PASSWORD '<password>';
+         ```
 
       * For the _{{ dt-type-repl }}_ and _{{ dt-type-copy-repl }}_ transfer types, create a user with the `REPLICATION` privilege using this command:
 
@@ -489,17 +540,17 @@ Large objects in the [TOAST storage system](https://www.postgresql.org/docs/12/s
          CREATE ROLE <username> WITH REPLICATION LOGIN ENCRYPTED PASSWORD '<password>';
          ```
 
-   1. Grant the created user the privilege to perform a `SELECT` on all the database tables to be transferred and the `USAGE` privilege for the schemas of these tables:
+   1. Grant the created user the privilege to perform `SELECT` on all the database tables to be transferred and the `USAGE` privilege for the schemas of these tables:
 
       ```sql
-      GRANT SELECT ON ALL TABLES IN SCHEMA <schema name> TO <username>;
-      GRANT USAGE ON SCHEMA <schema name> TO <username>;
+      GRANT SELECT ON ALL TABLES IN SCHEMA <schema_name> TO <username>;
+      GRANT USAGE ON SCHEMA <schema_name> TO <username>;
       ```
 
    1. Grant the created user the privileges to the `__consumer_keeper` and `__data_transfer_mole_finder` housekeeping table schema defined by the [endpoint parameter](./endpoint/source/postgresql.md#additional-settings) if the endpoint is going to be used for the _{{ dt-type-repl }}_ or _{{ dt-type-copy-repl }}_ transfer types.
 
       ```sql
-      GRANT ALL PRIVILEGES ON SCHEMA <schema name> TO <username>;
+      GRANT ALL PRIVILEGES ON SCHEMA <schema_name> TO <username>;
       ```
 
    1. Install and enable the [wal2json](https://github.com/eulerto/wal2json) extension.
@@ -513,13 +564,13 @@ Large objects in the [TOAST storage system](https://www.postgresql.org/docs/12/s
 
       * Windows 10, 11
 
-         1. If you don't have Microsoft Visual Studio installed yet, download and install it. To build the wal2json extension, the [Community Edition](https://visualstudio.microsoft.com/vs/community/) is sufficient. During installation, select the following components:
+         1. If you do not have Microsoft Visual Studio installed yet, download and install it. To build the wal2json extension, the [Community Edition](https://visualstudio.microsoft.com/vs/community/) is sufficient. During installation, select the following components:
 
-            * MSBuild,
-            * MSVC v141 x86/x64 build tools,
-            * C++\CLI support for v141 build tools,
-            * MSVC v141 — VS 2017 C++ x64\x86 build tools,
-            * MSVC v141 — VS 2017 C++ x64\x86 Spectre-mitigated libs,
+            * MSBuild
+            * MSVC v141 x86/x64 build tools
+            * C++\CLI support for v141 build tools
+            * MSVC v141 - VS 2017 C++ x64\x86 build tools
+            * MSVC v141 - VS 2017 C++ x64\x86 Spectre-mitigated libs
             * The latest version of the Windows SDK for the active OS version.
             * Other dependencies that are installed automatically for selected components.
 
@@ -546,7 +597,7 @@ Large objects in the [TOAST storage system](https://www.postgresql.org/docs/12/s
             * Specify the version number of the installed Windows SDK in `<WindowsTargetPlatformVersion>`:
 
                ```powershell
-               (Get-Content .\wal2json.vcxproj).replace('<WindowsTargetPlatformVersion>8.1', '<WindowsTargetPlatformVersion><installed version of Windows SDK>') | `
+               (Get-Content .\wal2json.vcxproj).replace('<WindowsTargetPlatformVersion>8.1', '<WindowsTargetPlatformVersion><installed_version_of_Windows_SDK>') | `
                 Set-Content .\wal2json.vcxproj
                ```
 
@@ -576,13 +627,13 @@ Large objects in the [TOAST storage system](https://www.postgresql.org/docs/12/s
 
       1. Restart PostgreSQL.
 
-   1. If the replication source is a cluster, install and enable the [pg_tm_aux](https://github.com/x4m/pg_tm_aux) extension on its hosts. This lets replication continue even after changing the master host. In certain cases, a transfer may return an error when you change masters in a cluster. For more information, see [Troubleshooting](../troubleshooting/index.md#master-change).
+   1. If the replication source is a cluster, install and enable the [pg_tm_aux](https://github.com/x4m/pg_tm_aux) extension on its hosts. This will allow replication to continue even after changing the master host. In certain cases, a transfer may return an error when you change masters in a cluster. For more information, see [Troubleshooting](../troubleshooting/index.md#master-change).
 
    1. {% include [Tables without primary keys](../../_includes/data-transfer/primary-keys-postgresql.md) %}
 
-   1. Disable the transfer of external keys at the step of creating a source endpoint. Recreate them once the transfer is completed.
+   1. Disable the transfer of external keys when creating a source endpoint. Recreate them once the transfer is completed.
 
-   1. Find and terminate DDL queries that are running for too long. To do this, run a `SELECT` query against the {{ PG }} `pg_stat_activity` housekeeping table:
+   1. Find and terminate DDL queries that are running for too long. To do this, make a selection from the {{ PG }} `pg_stat_activity` housekeeping table:
 
       ```sql
       SELECT NOW() - query_start AS duration, query, state
@@ -590,7 +641,7 @@ Large objects in the [TOAST storage system](https://www.postgresql.org/docs/12/s
       WHERE state != 'idle' ORDER BY 1 DESC;
       ```
 
-      This will return a list of queries running on the server. Check queries that have a large value for the `duration` parameter.
+      This will return a list of queries running on the server. Pay attention to queries with a high `duration` value.
 
    1. Deactivate trigger transfer at the transfer initiation stage and reactivate it at the completion stage (for the _{{ dt-type-repl }}_ and the _{{ dt-type-copy-repl }}_ transfer types). For more information, see the [description of additional endpoint settings for the {{ PG }} source](./endpoint/source/postgresql.md#additional-settings).
 
@@ -602,19 +653,37 @@ Large objects in the [TOAST storage system](https://www.postgresql.org/docs/12/s
 
       ```yaml
       ignore_slots:
-        - database: <name of database that the transfer is configured for>
-          name: <replication slot name>
+        - database: <database>
+          name: <replication_slot>
           plugin: wal2json
           type: logical
       ```
+
+      Where:
+
+      * `database`: Name of the database the transfer is configured for.
+      * `name`: Replication slot name.
 
       The database and the replication slot names must match the values specified in the [source endpoint settings](../../data-transfer/operations/endpoint/source/postgresql.md). By default, the `replication slot name` is the same as the `transfer ID`.
 
       Otherwise, the start of the replication phase will fail:
 
       ```
-      Warn(Termination): unable to create new pg source: Replication slotID <replication slot name> does not exist.
+      Warn(Termination): unable to create new pg source: Replication slotID <replication_slot_name> does not exist.
       ```
+
+   1. Configure WAL monitoring. For _{{ dt-type-repl }}_ and _{{ dt-type-copy-repl }}_ transfers, [logical replication]({{ pg-docs }}/logicaldecoding.html) is used. To perform it, the transfer creates a replication slot with the `slot_name` equal to the transfer ID that you can get by selecting the transfer from the list of your transfers. The WAL size may increase for different reasons: due to a long-running transaction or a transfer issue. Therefore, we recommend setting up WAL monitoring on the source side.
+
+      1. Set up alerts following the [disk usage recommendations]({{ pg-docs }}/diskusage.html).
+
+      1. [Set the maximum WAL size]({{ pg-docs }}/runtime-config-replication.html#GUC-MAX-SLOT-WAL-KEEP-SIZE). This feature is available starting with {{ PG }} version 13.
+
+      1. You can track the current slot size by making a DB request with the correct `slot_name` equal to the transfer ID:
+
+         ```sql
+         SELECT slot_name, pg_size_pretty(pg_current_wal_lsn() - restart_lsn), active_pid, catalog_xmin, restart_lsn, confirmed_flush_lsn
+         FROM pg_replication_slots WHERE slot_name = '<transfer_ID>'
+         ```
 
 {% endlist %}
 
@@ -629,7 +698,7 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
 1. [Create a service account](../../iam/operations/sa/create.md) with the `yds.editor` role.
 1. [Create a data stream](../../data-streams/operations/manage-streams.md#create-data-stream).
-1. (optional) [Create a processing function](../../functions/operations/function/function-create.md).
+1. (Optional) [Create a processing function](../../functions/operations/function/function-create.md).
 
    {% cut "Processing function example" %}
 
@@ -690,19 +759,19 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
    {% endcut %}
 
-1. (optional) Prepare a data schema file in JSON format.
+1. (Optional) Prepare a data schema file in JSON format.
 
    Sample file with a data schema:
 
    ```json
    [
        {
-           "name": "<field name>",
+           "name": "<field_name>",
            "type": "<type>"
        },
        ...
        {
-           "name": "<field name>",
+           "name": "<field_name>",
            "type": "<type>"
        }
    ]
@@ -726,6 +795,10 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
    * `utf8`
 
 
+### {{ ydb-full-name }} source {#source-ydb}
+
+If you selected {{ dd }} database mode, [create](../../vpc/operations/security-group-create.md) and [configure](../../ydb/operations/connection.md#configuring-security-groups) a security group in the network hosting the DB.
+
 ## Preparing a target {#target}
 
 ### {{ CH }} target {#target-ch}
@@ -736,11 +809,15 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
    1. [Create a target database](../../managed-clickhouse/operations/databases.md#add-db).
 
-      Its name must be the same as the source database name. If you need to transfer multiple databases, create a separate transfer for each of them.
+      If you need to transfer multiple databases, create a separate transfer for each of them.
 
    1. [Create a user](../../managed-clickhouse/operations/cluster-users.md#adduser) with access to the target database.
 
       Once started, the transfer will connect to the target on behalf of this user.
+
+   1. [Create a security group](../../vpc/operations/security-group-create.md) and [configure it](../../managed-clickhouse/operations/connect.md#configuring-security-groups).
+
+   1. Assign the created security group to the {{ mch-name }} cluster.
 
 - {{ CH }}
 
@@ -781,9 +858,9 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
    1. Disable the following settings on the target:
 
-        * Integrity checks for foreign keys.
-        * Triggers.
-        * Other constraints.
+      * Integrity checks for foreign keys.
+      * Triggers.
+      * Other constraints.
 
       {% note warning %}
 
@@ -800,13 +877,13 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
    1. Grant the user all privileges for the database, schemas, and tables to be transferred:
 
       ```sql
-      GRANT ALL PRIVILEGES ON DATABASE <database name> TO <username>;
+      GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <username>;
       ```
 
       If the database is not empty, the user must be its owner:
 
       ```sql
-      ALTER DATABASE <database name> OWNER TO <username>;
+      ALTER DATABASE <database_name> OWNER TO <username>;
       ```
 
       Once started, the transfer will connect to the target on behalf of this user.
@@ -837,18 +914,19 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
    1. Grant the user all privileges for the database, schemas, and tables to be transferred:
 
       ```sql
-      GRANT ALL PRIVILEGES ON DATABASE <database name> TO <username>;
+      GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <username>;
       ```
 
       If the database is not empty, the user must be its owner:
 
       ```sql
-      ALTER DATABASE <database name> OWNER TO <username>;
+      ALTER DATABASE <database_name> OWNER TO <username>;
       ```
 
       Once started, the transfer will connect to the target on behalf of this user.
 
 {% endlist %}
+
 
 ### {{ MG }} target {#target-mg}
 
@@ -857,12 +935,12 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
 - {{ mmg-name }}
 
-   1. [Create a database](../../managed-mongodb/operations/databases.md#add-db) a with the same name as the source database.
+   1. [Create a database](../../managed-mongodb/operations/databases.md#add-db) with the same name as the source database.
    1. [Create a user](../../managed-mongodb/operations/cluster-users.md#adduser) with the [`readWrite`](../../managed-mongodb/concepts/users-and-roles.md#readWrite) role for the created database.
-   1. To shard migrating collections in the {{ mmg-full-name }} target cluster:
-      1. Following the [instructions](../../managed-mongodb/tutorials/sharding.md), in the target database, create and configure blank sharded collections with the same names as in the source one.
+   1. To shard the migrated collections in the {{ mmg-full-name }} target cluster:
+      1. Use this [guide](../../managed-mongodb/tutorials/sharding.md) to create and configure empty sharded collections in the target database.
 
-         {{ data-transfer-name }} doesn't automatically shard migrating collections. Sharding large collections may take a long time and slow down the transfer.
+         {{ data-transfer-name }} does not automatically shard the migrated collections. Sharding large collections may take a long time and slow down the transfer.
 
       1. If sharding is performed by any key other than the default `_id`, [assign the user](../../managed-mongodb/operations/cluster-users.md#updateuser) the `mdbShardingManager` role.
 
@@ -878,6 +956,8 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
    1. {% include notitle [White IP list](../../_includes/data-transfer/configure-white-ip.md) %}
 
    1. Make sure that the {{ MG }} version on the target is not lower than that on the source.
+
+   1. {% include [mondodb cluster requirement](../../_includes/data-transfer/mongodb-cluster-requirement.md) %}
 
    1. [Configure the target cluster](https://docs.mongodb.com/manual/core/security-mongodb-configuration/) to allow connections from the internet:
 
@@ -896,13 +976,13 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
          sudo systemctl restart mongod.service
          ```
 
-   1. If the target cluster doesn't use replication, enable replication:
+   1. If the target cluster does not use replication, enable it:
 
       1. Add replication settings to the `/etc/mongod.conf` configuration file:
 
          ```yaml
          replication:
-           replSetName: <replica set name>
+           replSetName: <replica_set_name>
          ```
 
       1. Restart the `mongod` service:
@@ -915,10 +995,10 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
          ```javascript
          rs.initiate({
-             _id: "<replica set name>",
+             _id: "<replica_set_name>",
              members: [{
                  _id: 0,
-                 host: "<IP address listening to mongod>:<port>"
+                 host: "<IP_address_listening_to_{{ MG }}>:<port>"
              }]
          });
          ```
@@ -926,7 +1006,7 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
    1. Connect to the cluster and create a target database with the same name as the source database:
 
       ```javascript
-      use <database name>
+      use <database_name>
       ```
 
    1. Create a user with the `readWrite` role for the target database:
@@ -939,7 +1019,7 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
           mechanisms: ["SCRAM-SHA-1"],
           roles: [
               {
-                  db: "<target database name>",
+                  db: "<target_database_name>",
                   role: "readWrite"
               }
           ]
@@ -948,22 +1028,22 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
       Once started, the transfer will connect to the target on behalf of this user.
 
-   1. To shard collections being migrated in the target cluster:
+   1. To shard the migrated collections in the target cluster:
 
       1. Prepare the database and create blank collections with the same names as in the source database.
 
-         {{ data-transfer-name }} doesn't automatically shard migrating collections. Sharding large collections may take a long time and slow down the transfer.
+         {{ data-transfer-name }} does not automatically shard the migrated collections. Sharding large collections may take a long time and slow down the transfer.
 
       1. Enable target database sharding:
 
          ```javascript
-         sh.enableSharding("<target database name>")
+         sh.enableSharding("<target_database_name>")
          ```
 
       1. Shard every collection based on its namespace:
 
          ```javascript
-         sh.shardCollection("<target database name>.<collection name>", { <field name>: <1|"hashed">, ... });
+         sh.shardCollection("<target_database_name>.<collection_name>", { <field_name>: <1|"hashed">, ... });
          ```
 
          For more information about the `shardCollection()` function, see the [{{ MG }} documentation](https://docs.mongodb.com/manual/reference/method/sh.shardCollection/#mongodb-method-sh.shardCollection).
@@ -974,7 +1054,7 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
          sh.status()
          ```
 
-      1. If sharding is performed by any key other than the default `_id`, assign the `clusterManager` system role to the user that {{ data-transfer-name }} will connect to the target cluster as.
+      1. If sharding is performed by any key other than the default `_id`, assign the `clusterManager` system role to the user {{ data-transfer-name }} will use for connection to the target cluster.
 
          ```javascript
          use admin;
@@ -1017,7 +1097,7 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
       ```sql
       CREATE USER '<username>'@'%' IDENTIFIED BY '<password>';
-      GRANT ALL PRIVILEGES ON <database name>.* TO '<username>'@'%';
+      GRANT ALL PRIVILEGES ON <database_name>.* TO '<username>'@'%';
       ```
 
 {% endlist %}
@@ -1057,9 +1137,9 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
 
    1. Disable the following settings on the target:
 
-        * Integrity checks for foreign keys.
-        * Triggers.
-        * Other constraints.
+      * Integrity checks for foreign keys.
+      * Triggers.
+      * Other constraints.
 
       {% note warning %}
 
@@ -1078,20 +1158,20 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
    1. Grant the user all privileges for the database, schemas, and tables to be transferred:
 
       ```sql
-      GRANT ALL PRIVILEGES ON DATABASE <database name> TO <username>;
+      GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <username>;
       ```
 
       If the database is not empty, the user must be its owner:
 
       ```sql
-      ALTER DATABASE <database name> OWNER TO <username>;
+      ALTER DATABASE <database_name> OWNER TO <username>;
       ```
 
       Once started, the transfer will connect to the target on behalf of this user.
-   1. If the target has the [Save transaction boundaries](endpoint/target/postgresql.md#additional-settings) option enabled, grant the created user all privileges to create the `__data_transfer_lsn` housekeeping table in the [current schema](https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH) (usually it's `public`) on the target:
+   1. If the target has the [Save transaction boundaries](endpoint/target/postgresql.md#additional-settings) option enabled, grant the created user all privileges to create the `__data_transfer_lsn` housekeeping table in the [current schema](https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH) (usually it is `public`) on the target:
 
       ```sql
-      GRANT ALL PRIVILEGES ON SCHEMA <schema name> TO <username>;
+      GRANT ALL PRIVILEGES ON SCHEMA <schema_name> TO <username>;
       ```
 
 - {{ PG }}
@@ -1127,33 +1207,34 @@ For things to note about data transfer from {{ PG }} to {{ CH }} using _{{ dt-ty
    1. Grant the user all privileges for the database, schemas, and tables to be transferred:
 
       ```sql
-      GRANT ALL PRIVILEGES ON DATABASE <database name> TO <username>;
+      GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <username>;
       ```
 
       If the database is not empty, the user must be its owner:
 
       ```sql
-      ALTER DATABASE <database name> OWNER TO <username>;
+      ALTER DATABASE <database_name> OWNER TO <username>;
       ```
 
       Once started, the transfer will connect to the target on behalf of this user.
 
-   1. If the target has the [Save transaction boundaries](endpoint/target/postgresql.md#additional-settings) option enabled, grant the created user all privileges to create the `__data_transfer_lsn` housekeeping table in the [current schema](https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH) (usually it's `public`) on the target:
+   1. If the target has the [Save transaction boundaries](endpoint/target/postgresql.md#additional-settings) option enabled, grant the created user all privileges to create the `__data_transfer_lsn` housekeeping table in the [current schema](https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH) (usually it is `public`) on the target:
 
       ```sql
-      GRANT ALL PRIVILEGES ON SCHEMA <schema name> TO <username>;
+      GRANT ALL PRIVILEGES ON SCHEMA <schema_name> TO <username>;
       ```
 
 {% endlist %}
 
-The service does not transfer `MATERIALIZED VIEWS`. For more information, see [Service specifics for sources and targets](../concepts/index.md#postgresql).
+{% include [matview limits](../../_includes/data-transfer/pg-gp-matview.md) %}
+
+If the definition of the `VIEW` to be transferred contains an invocation of the `VOLATILE` [function]({{ pg.docs.org }}/current/xfunc-volatility.html), the transfer reads data from this `VIEW` with the `READ UNCOMMITTED` isolation level. No consistency between the `VIEW` data and the data of other objects being transferred is guaranteed. Reading data from a `MATERIALIZED VIEW` in the `VIEW` definition are equivalent to invoking the `VOLATILE` function.
 
 
 ### {{ ydb-full-name }} target {#target-ydb}
 
-
-[Create a service account](../../iam/operations/sa/create.md) with the `ydb.editor` role.
-
+1. [Create a service account](../../iam/operations/sa/create.md) with the `ydb.editor` role.
+1. For the database running in {{ dd }} mode, [create](../../vpc/operations/security-group-create.md) and [configure](../../ydb/operations/connection.md#configuring-security-groups) a security group in the network hosting the DB.
 
 {% include [airbyte-trademark](../../_includes/data-transfer/airbyte-trademark.md) %}
 

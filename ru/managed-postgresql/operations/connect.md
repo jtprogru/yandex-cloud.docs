@@ -13,8 +13,6 @@
 
 ## Настройка групп безопасности {#configuring-security-groups}
 
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% include [sg-rules](../../_includes/mdb/sg-rules-connect.md) %}
 
 Настройки правил будут различаться в зависимости от выбранного способа подключения:
@@ -25,37 +23,37 @@
 
   [Настройте все группы безопасности](../../vpc/operations/security-group-add-rule.md) кластера так, чтобы они разрешали входящий трафик с любых IP-адресов на порт 6432. Для этого создайте следующее правило для входящего трафика:
 
-  * Диапазон портов — `6432`.
-  * Протокол — `TCP`.
-  * Источник — `CIDR`.
-  * CIDR блоки — `0.0.0.0/0`.
+  * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `6432`.
+  * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.common.label_tcp }}`.
+  * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+  * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
 - С ВМ в Облаке
 
   1. [Настройте все группы безопасности](../../vpc/operations/security-group-add-rule.md) кластера так, чтобы они разрешали входящий трафик из группы безопасности, в которой находится ВМ, на порт 6432. Для этого в этих группах создайте следующее правило для входящего трафика:
 
-     * Диапазон портов — `6432`.
-     * Протокол — `TCP`.
-     * Источник — `Группа безопасности`.
-     * Группа безопасности — если кластер и ВМ находятся в одной и той же группе безопасности, выберите значение `Текущая` (`Self`). В противном случае укажите группу безопасности ВМ.
+     * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `6432`.
+     * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.common.label_tcp }}`.
+     * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-sg }}`.
+     * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-sg-type }}** — если кластер и ВМ находятся в одной и той же группе безопасности, выберите значение `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-sg-type-self }}` (`Self`). В противном случае укажите группу безопасности ВМ.
 
   1. [Настройте группу безопасности](../../vpc/operations/security-group-add-rule.md), в которой находится ВМ так, чтобы можно было подключаться к ВМ и был разрешен трафик между ВМ и хостами кластера.
 
      Пример правил для ВМ:
 
      * Для входящего трафика:
-       * Диапазон портов — `22`.
-       * Протокол — `TCP`.
-       * Источник — `CIDR`.
-       * CIDR блоки — `0.0.0.0/0`.
+       * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `22`.
+       * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.common.label_tcp }}`.
+       * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+       * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
        Это правило позволяет [подключаться](../../compute/operations/vm-connect/ssh.md#vm-connect) к ВМ по протоколу [SSH](../../glossary/ssh-keygen.md).
 
      * Для исходящего трафика:
-        * Диапазон портов — `{{ port-any }}`.
-        * Протокол — `Любой` (`Any`).
-        * Назначение — `CIDR`.
-        * CIDR блоки — `0.0.0.0/0`.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `{{ port-any }}`.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`).
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
        Это правило разрешает любой исходящий трафик, что позволяет не только подключаться к кластеру, но и устанавливать на ВМ необходимые для этого сертификаты и утилиты.
 
@@ -72,19 +70,41 @@
 Подробнее о группах безопасности см. в разделе [{#T}](../concepts/network.md#security-groups).
 
 
+## Получение SSL-сертификата {#get-ssl-cert}
+
+{{ PG }}-хосты с публичным доступом поддерживают только шифрованные соединения. Чтобы использовать их, получите SSL-сертификат:
+
+{% include [install-certificate](../../_includes/mdb/mpg/install-certificate.md) %}
+
+{% include [ide-ssl-cert](../../_includes/mdb/mdb-ide-ssl-cert.md) %}
+
+## FQDN хоста {{ PG }} {#fqdn}
+
+Для подключения к хосту потребуется его [FQDN](../concepts/network.md#hostname) — доменное имя. Его можно получить несколькими способами:
+
+* [Запросите список хостов в кластере](../operations/hosts.md#list-hosts).
+* Скопируйте команду для подключения к кластеру в [консоли управления]({{ link-console-main }}). Команда содержит заполненный FQDN хоста. Чтобы получить команду, перейдите на страницу кластера и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-connect }}**.
+* Посмотрите FQDN в консоли управления:
+
+   1. Перейдите на страницу кластера.
+   1. Перейдите в раздел **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}**.
+   1. Скопируйте значение в столбце **{{ ui-key.yacloud.mdb.cluster.hosts.host_column_name }}**.
+
+Для хостов кластера также используются [особые FQDN](#special-fqdns).
+
 ## Особые FQDN {#special-fqdns}
 
-Наравне с обычными FQDN, которые можно запросить со [списком хостов в кластере](hosts.md#list), {{ mpg-name }} предоставляет несколько особых FQDN, которые также можно использовать при подключении к кластеру.
+Наравне с [обычными FQDN](#fqdn), {{ mpg-name }} предоставляет несколько особых FQDN, которые также можно использовать при подключении к кластеру.
 
 {% note warning %}
 
-Если при [автоматической смене мастера](../concepts/replication.md#replication-auto) новым мастером или наименее отстающей репликой станет хост без публичного доступа, подключиться к ним из интернета будет невозможно. Чтобы этого избежать, [включите публичный доступ](../operations/hosts.md#update) для всех хостов кластера.
+Если при [автоматической смене мастера](../concepts/replication.md#replication-auto) новым мастером или наименее отстающей репликой станет хост без публичного доступа, подключиться к ним из интернета будет невозможно. Чтобы этого избежать, [включите публичный доступ](hosts.md#update) для всех хостов кластера.
 
 {% endnote %}
 
 ### Текущий мастер {#fqdn-master}
 
-FQDN вида `c-<идентификатор кластера>.rw.{{ dns-zone }}` всегда указывает на текущий хост-мастер в кластере. Идентификатор кластера можно запросить со [списком кластеров в каталоге](cluster-list.md#list-clusters).
+FQDN вида `c-<идентификатор_кластера>.rw.{{ dns-zone }}` всегда указывает на текущий хост-мастер в кластере. Идентификатор кластера можно запросить со [списком кластеров в каталоге](cluster-list.md#list-clusters).
 
 При подключении к этому FQDN разрешено выполнять операции чтения и записи.
 
@@ -94,34 +114,34 @@ FQDN вида `c-<идентификатор кластера>.rw.{{ dns-zone }}
 
 {% endnote %}
 
-Пример подключения к хосту-мастеру для кластера с идентификатором `c9qash3nb1v9ulc8j9nm`:
+Пример подключения к хосту-мастеру для кластера с идентификатором `c9qash3nb1v9********`:
 
 ```bash
-psql "host=c-c9qash3nb1v9ulc8j9nm.rw.{{ dns-zone }} \
+psql "host=c-c9qash3nb1v9********.rw.{{ dns-zone }} \
       port=6432 \
       sslmode=verify-full \
-      dbname=<имя БД> \
-      user=<имя пользователя> \
+      dbname=<имя_БД> \
+      user=<имя_пользователя> \
       target_session_attrs=read-write"
 ```
 
 ### Наименее отстающая реплика {#fqdn-replica}
 
-FQDN вида `c-<идентификатор кластера>.ro.{{ dns-zone }}` указывает на наименее отстающую от мастера [реплику](../concepts/replication.md). Идентификатор кластера можно запросить со [списком кластеров в каталоге](cluster-list.md#list-clusters). 
+FQDN вида `c-<идентификатор_кластера>.ro.{{ dns-zone }}` указывает на наименее отстающую от мастера [реплику](../concepts/replication.md). Идентификатор кластера можно запросить со [списком кластеров в каталоге](cluster-list.md#list-clusters).
 
 **Особенности:**
 
 * При подключении к этому FQDN разрешено выполнять только операции чтения.
 * Если в кластере нет активных реплик, то этот FQDN укажет на текущий хост-мастер.
 
-Пример подключения к наименее отстающей реплике для кластера с идентификатором `c9qash3nb1v9ulc8j9nm`:
+Пример подключения к наименее отстающей реплике для кластера с идентификатором `c9qash3nb1v9********`:
 
 ```bash
-psql "host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
+psql "host=c-c9qash3nb1v9********.ro.{{ dns-zone }} \
       port=6432 \
       sslmode=verify-full \
-      dbname=<имя БД> \
-      user=<имя пользователя> \
+      dbname=<имя_БД> \
+      user=<имя_пользователя> \
       target_session_attrs=any"
 ```
 
@@ -132,7 +152,7 @@ psql "host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
 1. Укажите в аргументе `host` на выбор:
 
     * или [особый FQDN хоста-мастера](#fqdn-master), как сделано [в примерах ниже](#connection-string);
-    * или FQDN всех хостов кластера.
+    * или [FQDN](#fqdn) всех хостов кластера.
 
 1. Передайте параметр `target_session_attrs=read-write`. Этот параметр поддерживается библиотекой `libpq` начиная с [версии 10](https://www.postgresql.org/docs/10/static/libpq-connect.html).
 
@@ -140,14 +160,6 @@ psql "host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
 
 * Для дистрибутивов Linux на основе Debian — установите пакет `postgresql-client-10` или новее (например, через [apt-репозиторий](https://www.postgresql.org/download/linux/ubuntu/)).
 * Для ОС, использующих RPM-пакеты — воспользуйтесь дистрибутивом {{ PG }}, доступным в [yum-репозитории](https://yum.postgresql.org/).
-
-## Получение SSL-сертификата {#get-ssl-cert}
-
-{{ PG }}-хосты с публичным доступом поддерживают только шифрованные соединения. Чтобы использовать их, получите SSL-сертификат:
-
-{% include [install-certificate](../../_includes/mdb/mpg/install-certificate.md) %}
-
-{% include [ide-ssl-cert](../../_includes/mdb/mdb-ide-ssl-cert.md) %}
 
 ## Подключение из графических IDE {#connection-ide}
 
@@ -168,13 +180,13 @@ psql "host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
         * **URL** — строка подключения:
 
           ```http
-          jdbc:postgresql://<особый FQDN>:{{ port-mpg }}>/<имя БД>
+          jdbc:postgresql://<особый_FQDN>:{{ port-mpg }}>/<имя_БД>
           ```
 
-          Также в строке подключения можно использовать список FQDN всех хостов кластера:
+          Также в строке подключения можно использовать список [FQDN](#fqdn) всех хостов кластера:
 
           ```http
-          jdbc:postgresql://<хост 1 {{ PG }}:{{ port-mpg }}>,...,<хост N {{ PG }}:{{ port-mpg }}>/<имя БД>
+          jdbc:postgresql://<хост_1_{{ PG }}:{{ port-mpg }}>,...,<хост_N_{{ PG }}:{{ port-mpg }}>/<имя_БД>
           ```
 
         * Нажмите ссылку **Download**, чтобы загрузить драйвер соединения.
@@ -191,7 +203,7 @@ psql "host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
      1. Выберите из списка БД **{{ PG }}**.
      1. Нажмите кнопку **Далее**.
      1. Укажите параметры подключения на вкладке **Главное**:
-        * **Хост** — [особый FQDN хоста-мастера](#fqdn-master) или обычный FQDN хоста;
+        * **Хост** — [особый FQDN хоста-мастера](#fqdn-master) или [обычный FQDN хоста](#fqdn);
         * **Порт** — `{{ port-mpg }}`;
         * **База данных** — имя БД для подключения;
         * В блоке **Аутентификация** укажите имя и пароль пользователя БД.
@@ -215,7 +227,7 @@ psql "host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
 1. На вкладке **General** в поле **Name** укажите имя, под которым кластер будет отображаться в интерфейсе {{ pgadmin }}. Имя может быть любым.
 1. На вкладке **Connection** укажите параметры подключения:
 
-    * **Host name/address** — [особый FQDN хоста-мастера](#fqdn-master) или обычный FQDN хоста;
+    * **Host name/address** — [особый FQDN хоста-мастера](#fqdn-master) или обычный [FQDN](../concepts/network.md#hostname) хоста;
     * **Port** — `{{ port-mpg }}`;
     * **Maintenance database** — имя БД для подключения;
     * **Username** — имя пользователя, от имени которого выполняется подключение;
@@ -249,7 +261,7 @@ psql "host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
 1. Выберите {{ PG }}.
 1. Заполните поля:
 
-    * **Имя хоста или IP-адрес** — [особый FQDN хоста-мастера](#fqdn-master) или обычный FQDN хоста;
+    * **Имя хоста или IP-адрес** — [особый FQDN хоста-мастера](#fqdn-master) или обычный [FQDN](../concepts/network.md#hostname) хоста;
     * **Порт** — `{{ port-mpg }}`;
     * **База данных** — имя БД для подключения;
     * **Имя пользователя** — имя пользователя, от имени которого выполняется подключение;
@@ -264,20 +276,33 @@ psql "host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
 
 1. Нажмите **Выполнить аутентификацию**.
 
-## Подключение из Docker-контейнера {#connection-docker}
+## Подготовка к подключению из Docker-контейнера {#connection-docker}
 
-Подключаться из Docker-контейнера можно только к хостам кластера в публичном доступе с [использованием SSL-сертификата](#get-ssl-cert).
+Чтобы подключаться к кластеру {{ mpg-name }} из Docker-контейнера, добавьте в Dockerfile строки:
 
-Для подключения к кластеру {{ mpg-name }} добавьте в Dockerfile следующие строки:
+{% list tabs %}
 
-```bash
-RUN apt-get update && \
-    apt-get install wget postgresql-client --yes && \
-    mkdir -p ~/.postgresql && \
-    wget "{{ crt-web-path }}" \
-        --output-document ~/.postgresql/root.crt && \
-    chmod 0600 ~/.postgresql/root.crt
-```
+
+* Подключение без SSL
+
+    ```bash
+    RUN apt-get update && \
+        apt-get install postgresql-client --yes
+    ```
+
+
+* Подключение с SSL
+
+    ```bash
+    RUN apt-get update && \
+        apt-get install wget postgresql-client --yes && \
+        mkdir --parents ~/.postgresql && \
+        wget "{{ crt-web-path }}" \
+             --output-document ~/.postgresql/root.crt && \
+        chmod 0600 ~/.postgresql/root.crt
+    ```
+
+{% endlist %}
 
 ## Примеры строк подключения {#connection-string}
 
@@ -287,12 +312,12 @@ RUN apt-get update && \
 
 В примерах ниже предполагается, что SSL-сертификат `root.crt` расположен в директории:
 
-* `/home/<домашняя директория>/.postgresql/` для Ubuntu;
+* `/home/<домашняя_директория>/.postgresql/` для Ubuntu;
 * `$HOME\AppData\Roaming\postgresql` для Windows.
 
 Подключение без использования SSL-сертификата поддерживается только для хостов, находящихся не в публичном доступе. В этом случае трафик внутри облачной сети при подключении к БД шифроваться не будет.
 
-Подключиться к кластеру возможно как с использованием обычных FQDN хостов (можно передавать список из нескольких таких FQDN, разделенных запятой), так и [особых FQDN](#special-fqdns). В примерах используется особый FQDN текущего хоста-мастера.
+Подключиться к кластеру возможно как с использованием обычных [FQDN](../concepts/network.md#hostname) хостов (можно передавать список из нескольких таких FQDN, разделенных запятой), так и [особых FQDN](#special-fqdns). В примерах используется особый FQDN текущего хоста-мастера.
 
 {% include [see-fqdn-in-console](../../_includes/mdb/see-fqdn-in-console.md) %}
 

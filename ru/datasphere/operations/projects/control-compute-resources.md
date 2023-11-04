@@ -1,8 +1,13 @@
+---
+title: "Как выбрать вычислительные ресурсы"
+description: "Следуя данной инструкции, вы сможете настроить конфигурацию вычислительных ресурсов."
+---
+
 # Выбрать вычислительные ресурсы
 
 {% include [include](../../../_includes/datasphere/ui-control-compute-resources-intro.md) %}
 
-## Перед началом {#before-begin}
+## Перед началом работы {#before-begin}
 
 {% include [include](../../../_includes/datasphere/ui-before-begin.md) %}
 

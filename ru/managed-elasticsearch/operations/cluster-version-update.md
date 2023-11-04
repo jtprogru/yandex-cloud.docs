@@ -1,3 +1,8 @@
+---
+title: "Как изменить версии и редакции {{ ES }}"
+description: "Следуя данной инструкции, вы сможете изменить версии и редакции {{ ES }}."
+---
+
 # Изменение версии и редакции {{ ES }}
 
 {% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
@@ -16,9 +21,9 @@
 
 - Консоль управления
 
-    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-    1. Выберите кластер и нажмите кнопку **Редактировать**.
-    1. Откройте список в поле **Версия**.
+    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+    1. Выберите кластер и нажмите кнопку ![image](../../_assets/edit.svg) **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+    1. Откройте список в поле **{{ ui-key.yacloud.mdb.forms.base_field_version }}**.
 
 {% endlist %}
 
@@ -36,10 +41,10 @@
 
 - Консоль управления
 
-    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-    1. Выберите кластер и нажмите кнопку **Редактировать**.
-    1. В поле **Версия** выберите нужную версию {{ ES }}.
-    1. Нажмите кнопку **Сохранить**.
+    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+    1. Выберите кластер и нажмите кнопку ![image](../../_assets/edit.svg) **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+    1. В поле **{{ ui-key.yacloud.mdb.forms.base_field_version }}** выберите нужную версию {{ ES }}.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -56,13 +61,13 @@
     1. Получите информацию о нужном кластере и проверьте версию в свойстве `config.version`:
 
         ```bash
-        {{ yc-mdb-es }} cluster get <имя или идентификатор кластера>
+        {{ yc-mdb-es }} cluster get <имя_или_идентификатор_кластера>
         ```
 
     1. Обновите версию:
 
         ```bash
-        {{ yc-mdb-es }} cluster update <имя или идентификатор кластера> --version <версия {{ ES }}>
+        {{ yc-mdb-es }} cluster update <имя_или_идентификатор_кластера> --version <версия_{{ ES }}>
         ```
 
 - {{ TF }}
@@ -76,10 +81,10 @@
     1. Добавьте к описанию кластера {{ mes-name }} поле `config.version` или измените его значение, если оно уже существует:
 
        ```hcl
-       resource "yandex_mdb_elasticsearch_cluster" "<имя кластера>" {
+       resource "yandex_mdb_elasticsearch_cluster" "<имя_кластера>" {
          ...
          config {
-           version = "<версия {{ ES }}"
+           version = "<версия_{{ ES }}>"
          }
        }
        ```
@@ -123,10 +128,10 @@
 
 - Консоль управления
 
-    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-    1. Выберите кластер и нажмите кнопку **Редактировать**.
-    1. В поле **Редакция** выберите нужную редакцию {{ ES }}: `Basic` или `Platinum`.
-    1. Нажмите кнопку **Сохранить**.
+    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+    1. Выберите кластер и нажмите кнопку ![image](../../_assets/edit.svg) **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+    1. В поле **{{ ui-key.yacloud.elasticsearch.base_field_edition }}** выберите нужную редакцию {{ ES }}: `Basic` или `Platinum`.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -143,15 +148,17 @@
     1. Получите информацию о нужном кластере и проверьте редакцию в свойстве `config.edition`:
 
         ```bash
-        {{ yc-mdb-es }} cluster get <имя или идентификатор кластера>
+        {{ yc-mdb-es }} cluster get <имя_или_идентификатор_кластера>
         ```
 
     1. Измените редакцию:
 
         ```bash
-        {{ yc-mdb-es }} cluster update <имя или идентификатор кластера> \
-           --edition <редакция {{ ES }}: basic или platinum>
+        {{ yc-mdb-es }} cluster update <имя_или_идентификатор_кластера> \
+           --edition <редакция_{{ ES }}>
         ```
+
+        Где `--edition` — редакция {{ ES }}: `basic` или `platinum`.
 
 - {{ TF }}
 
@@ -162,15 +169,17 @@
     1. Добавьте к описанию кластера {{ mes-name }} поле `config.edition` или измените его значение, если поле уже существует:
 
         ```hcl
-        resource "yandex_mdb_elasticsearch_cluster" "<имя кластера>" {
+        resource "yandex_mdb_elasticsearch_cluster" "<имя_кластера>" {
           ...
           config {
-            edition = "<редакция {{ ES }}: basic или platinum>"
+            edition = "<редакция_{{ ES }}>"
             ...
           }
           ...
         }
         ```
+
+        Где `edition` — редакция {{ ES }}: `basic` или `platinum`.
 
     1. Проверьте корректность настроек.
 

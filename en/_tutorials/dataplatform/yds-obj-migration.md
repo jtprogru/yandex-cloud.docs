@@ -21,7 +21,7 @@ Prepare the infrastructure:
 * Using {{ TF }}
 
    1. If you do not have {{ TF }} yet, [install and configure it](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-   1. Download [the file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
+   1. Download the [file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
    1. Download the configuration file [data-transfer-yds-obj.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/data-transfer/data-transfer-yds-obj.tf) to the same working directory.
 
       This file describes:
@@ -45,7 +45,7 @@ Prepare the infrastructure:
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
    1. Create the required infrastructure:
 
@@ -59,12 +59,12 @@ Prepare the infrastructure:
 
 1. [Create a {{ yds-name }} data stream](../../data-streams/operations/aws-cli/create.md).
 
-1. [Send test data to the data stream](../../data-streams/operations/aws-cli/send.md). Use data from the vehicle's sensors in JSON format as a message:
+1. [Send test data to the data stream](../../data-streams/operations/aws-cli/send.md). Use data from the vehicle sensors in JSON format as a message:
 
 ```json
 {
-    "device_id":"iv9a94th6rztooxh5ur2",
-    "datetime":"2020-06-05 17:27:00",
+    "device_id":"iv9a94th6rzt********",
+    "datetime":"2020-06-05T17:27:00",
     "latitude":"55.70329032",
     "longitude":"37.65472196",
     "altitude":"427.5",
@@ -88,7 +88,7 @@ Prepare the infrastructure:
          * **{{ ui-key.yc-data-transfer.data-transfer.console.form.yds.console.form.yds.YDSConnection.stream.title }}**: Specify the name of the {{ yds-name }} data stream.
          * **{{ ui-key.yc-data-transfer.data-transfer.console.form.yds.console.form.yds.YDSConnection.service_account_id.title }}**: Select or create a service account with the `yds.editor` role.
 
-      * (Optional) **{{ ui-key.yc-data-transfer.data-transfer.console.form.yds.console.form.yds.YDSSource.advanced_settings.title }}**:
+      * **{{ ui-key.yc-data-transfer.data-transfer.console.form.yds.console.form.yds.YDSSource.advanced_settings.title }}**:
 
          * **{{ ui-key.yc-data-transfer.data-transfer.console.form.yds.console.form.yds.YDSSourceAdvancedSettings.converter.title }}**: `JSON`.
          * **{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.ConvertRecordOptions.data_schema.title }}**: `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.DataSchema.json_fields.title }}`:
@@ -158,7 +158,7 @@ Prepare the infrastructure:
 
    * Manually
 
-      1. [Create a transfer](../../data-transfer/operations/transfer.md#create) with a **_{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.TransferType.increment.title }}_** type that will use the created endpoints.
+      1. [Create a transfer](../../data-transfer/operations/transfer.md#create) of the **{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.TransferType.increment.title }}** type that will use the created endpoints.
       1. [Activate](../../data-transfer/operations/transfer.md#activate) your transfer.
 
    * Using {{ TF }}
@@ -178,7 +178,7 @@ Prepare the infrastructure:
          terraform validate
          ```
 
-         If there are any errors in the configuration files, {{ TF }} will point to them.
+         If there are any errors in the configuration files, {{ TF }} will point them out.
 
       1. Create the required infrastructure:
 
@@ -195,7 +195,7 @@ Prepare the infrastructure:
 1. Make sure that the data from the {{ yds-name }} stream has been moved to the bucket {{ objstorage-name }}:
 
    1. In the [management console]({{ link-console-main }}), select the folder where the bucket is located.
-   1. In the list of services, select **{{ objstorage-name }}**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_storage }}**.
    1. Select the bucket from the list.
    1. Check that the bucket includes the file `<stream name>_0.raw` (`.json` or `.csv`, depending on the selected output format) with the test data.
 
@@ -203,7 +203,7 @@ Prepare the infrastructure:
 
    ```json
    {
-       "device_id": "rhibbh3y08qmz3sdbrbu",
+       "device_id": "rhibbh3y08qm********",
        "datetime": "2020-06-06 09:49:54",
        "latitude": 55.71294467,
        "longitude": 37.66542005,
@@ -218,7 +218,7 @@ Prepare the infrastructure:
 1. Make sure that the following data has been added to the {{ objstorage-name }} bucket:
 
    1. In the [management console]({{ link-console-main }}), select the folder where the bucket is located.
-   1. In the list of services, select **{{ objstorage-name }}**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_storage }}**.
    1. Select the bucket from the list.
    1. Make sure that the file `<stream name>_0.raw` (`.json` or `.csv`, depending on the selected output format) has been added to the bucket and includes the new data.
 
@@ -230,10 +230,10 @@ Before deleting the created resources, [disable the transfer](../../data-transfe
 
 {% endnote %}
 
-Some resources are not free of charge. Delete the resources you no longer need to avoid paying for them:
+Some resources are not free of charge. To avoid paying for them, delete the resources you no longer need:
 
 1. [Delete the transfer](../../data-transfer/operations/transfer.md#delete).
-1. [Delete endpoints](../../data-transfer/operations/endpoint/index.md#delete) for both source and target.
+1. [Delete endpoints](../../data-transfer/operations/endpoint/index.md#delete) for both the source and target.
 1. [Delete](../../storage/operations/objects/delete.md) the objects from the {{ objstorage-name }} bucket:
 
 Delete the other resources, depending on the method used to create them:
@@ -256,9 +256,9 @@ Delete the other resources, depending on the method used to create them:
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

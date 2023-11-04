@@ -12,9 +12,9 @@ The example uses the following parameters:
 
 To use the API, you need the `grpcio-tools` package for Python and `grpc` for Node.js.
 
-The Yandex account or federated account are authenticated using an [IAM token](../../../iam/concepts/authorization/iam-token.md). If you use your service account, you don't need to pass the folder ID in the request. Learn more about [authentication in the {{ speechkit-name }} API](../../concepts/auth.md).
+The Yandex account or federated account are authenticated using an [IAM token](../../../iam/concepts/authorization/iam-token.md). If you use your service account, you do not need to include the folder ID in the request. Learn more about [authentication in the {{ speechkit-name }} API](../../concepts/auth.md).
 
-To follow the examples in this section:
+To try the examples in this section:
 
 1. Clone the [{{ yandex-cloud }} API](https://github.com/yandex-cloud/cloudapi) repository:
 
@@ -54,7 +54,7 @@ To follow the examples in this section:
 
          As a result, the `stt_service_pb2.py` and `stt_service_pb2_grpc.py` client interface files as well as dependency files will be created in the `output` directory.
 
-      1. Create a file (for example, `test.py`) in the root of the `output` directory and add the following code to it:
+      1. In the root of the `output` directory, create a file, e.g. `test.py`, and add to it the following code:
 
          ```python
          #coding=utf8
@@ -68,7 +68,7 @@ To follow the examples in this section:
          CHUNK_SIZE = 4000
 
          def gen(folder_id, audio_file_name):
-             # Specify recognition settings.
+             # Specify the recognition settings.
              specification = stt_service_pb2.RecognitionSpec(
                  language_code='ru-RU',
                  profanity_filter=True,
@@ -79,7 +79,7 @@ To follow the examples in this section:
              )
              streaming_config = stt_service_pb2.RecognitionConfig(specification=specification, folder_id=folder_id)
 
-             # Send the message with the recognition settings.
+             # Send a message with the recognition settings.
              yield stt_service_pb2.StreamingRecognitionRequest(config=streaming_config)
 
              # Read the audio file and send its contents in chunks.
@@ -90,15 +90,18 @@ To follow the examples in this section:
                      data = f.read(CHUNK_SIZE)
 
          def run(folder_id, iam_token, audio_file_name):
-             # Establish a connection with the server.
+             # Establish a server connection.
              cred = grpc.ssl_channel_credentials()
              channel = grpc.secure_channel('stt.{{ api-host }}:443', cred)
              stub = stt_service_pb2_grpc.SttServiceStub(channel)
 
              # Send data for recognition.
-             it = stub.StreamingRecognize(gen(folder_id, audio_file_name), metadata=(('authorization', 'Bearer %s' % iam_token),))
+             it = stub.StreamingRecognize(gen(folder_id, audio_file_name), metadata=(
+                 ('authorization', 'Bearer %s' % iam_token),
+                 ('Transfer-encoding', 'chunked'),
+             ))
 
-             # Process server responses and output the result to the console.
+             # Process the server responses and output the result to the console.
              try:
                  for r in it:
                      try:
@@ -124,12 +127,12 @@ To follow the examples in this section:
 
          Where:
 
-         * `language_code`: [Language](../index.md#langs) that recognition is performed for.
-         * `profanity_filter`: [Profanity filter](streaming-api.md#specification-msg).
-         * `model`: [Language model](../models.md).
-         * `partial_results`: [Filter of intermediate recognition results](streaming-api.md#specification-msg).
-         * `audio_encoding`: [Format](../../formats.md) of the audio stream.
-         * `sample_rate_hertz`: Sampling rate.
+         * `language_code`: Recognition [language](../index.md#langs)
+         * `profanity_filter`: [Profanity filter](streaming-api.md#specification-msg)
+         * `model`: [Language model](../models.md)
+         * `partial_results`: [Filter of intermediate recognition results](streaming-api.md#specification-msg)
+         * `audio_encoding`: [Format](../../formats.md) of the audio stream
+         * `sample_rate_hertz`: Sampling rate
 
       1. Set the [folder ID](../../../resource-manager/operations/folder/get-id.md):
 
@@ -181,7 +184,7 @@ To follow the examples in this section:
          ```
 
       1. Download a gRPC [public key certificate](https://github.com/grpc/grpc/blob/master/etc/roots.pem) from the official repository and save it in the root of the `src` directory.
-      1. Create a file, for example `index.js`, in the root of the `src` directory and add the following code to it:
+      1. In the root of the `src` directory, create a file, e.g., `index.js`, and add to it the following code:
 
          ```js
          const fs = require('fs');
@@ -193,10 +196,10 @@ To follow the examples in this section:
          const folderId = process.env.FOLDER_ID;
          const iamToken = process.env.IAM_TOKEN;
 
-         //  Read the file specified in the arguments.
+         // Read the file specified in the arguments.
          const audio = fs.readFileSync(process.argv[2]);
 
-         // Specifying the recognition settings.
+         // Specify the recognition settings.
          const request = {
              config: {
                  specification: {
@@ -212,24 +215,25 @@ To follow the examples in this section:
          };
 
          // How often audio is sent in milliseconds.
-         // or LPCM format, the frequency can be calculated using the formula: CHUNK_SIZE * 1000 / ( 2 * sampleRateHertz).
+         // For LPCM format, the frequency can be calculated using the formula: CHUNK_SIZE * 1000 / ( 2 * sampleRateHertz);
          const FREQUENCY = 250;
 
          const serviceMetadata = new grpc.Metadata();
          serviceMetadata.add('authorization', `Bearer ${iamToken}`);
+         serviceMetadata.add('Transfer-encoding', `chunked`);
 
          const packageDefinition = protoLoader.loadSync('../yandex/cloud/ai/stt/v2/stt_service.proto', {
              includeDirs: ['node_modules/google-proto-files', '..']
          });
          const packageObject = grpc.loadPackageDefinition(packageDefinition);
 
-         // Establish a connection with the server.
+         // Establish a server connection.
          const serviceConstructor = packageObject.yandex.cloud.ai.stt.v2.SttService;
          const grpcCredentials = grpc.credentials.createSsl(fs.readFileSync('./roots.pem'));
          const service = new serviceConstructor('stt.{{ api-host }}:443', grpcCredentials);
          const call = service['StreamingRecognize'](serviceMetadata);
 
-         // Send a message with the recognition settings.
+         // Send a message with recognition settings.
          call.write(request);
 
          // Read the audio file and send its contents in chunks.
@@ -246,7 +250,7 @@ To follow the examples in this section:
              }
          }, FREQUENCY);
 
-         // Process server responses and output the result to the console.
+         // Process the server responses and output the result to the console.
          call.on('data', (response) => {
              console.log('Start chunk: ');
              response.chunks[0].alternatives.forEach((alternative) => {
@@ -257,19 +261,19 @@ To follow the examples in this section:
          });
 
          call.on('error', (response) => {
-             // Handle errors
+             // Output errors to the console.
              console.log(response);
          });
          ```
 
          Where:
 
-         * `languageCode`: [Language](../index.md#langs) that recognition is performed for.
-         * `profanityFilter`: [Profanity filter](streaming-api.md#specification-msg).
-         * `model`: [Language model](../models.md).
-         * `partialResults`: [Filter of intermediate recognition results](streaming-api.md#specification-msg).
-         * `audioEncoding`: [Format](../../formats.md) of the audio stream.
-         * `sampleRateHertz`: Sampling rate.
+         * `languageCode`: Recognition [language](../index.md#langs)
+         * `profanityFilter`: [Profanity filter](streaming-api.md#specification-msg)
+         * `model`: [Language model](../models.md)
+         * `partialResults`: [Filter of intermediate recognition results](streaming-api.md#specification-msg)
+         * `audioEncoding`: [Format](../../formats.md) of the audio stream
+         * `sampleRateHertz`: Sampling rate
 
       1. Set the [folder ID](../../../resource-manager/operations/folder/get-id.md):
 

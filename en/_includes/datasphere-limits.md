@@ -6,7 +6,7 @@
 | Total [dataset](../datasphere/concepts/dataset.md) size per community | 1024 GB |
 | Number of datasets per community | 10 |
 | Number of Docker images per community | 3 |
-| Project [storage](../datasphere/concepts/project.md#storage) size (can [be increased per project](../datasphere/operations/projects/storage-resize.md)) | 10 GB |
+| Project [storage](../datasphere/concepts/project.md#storage) size ([can be increased per project](../datasphere/operations/projects/storage-resize.md)) | 10 GB |
 | Number of communities linked to a single [billing account](../billing/concepts/billing-account.md) | 100 |
 | Number of communities per [organization](../organization/) | 10 |
 | **VM usage restrictions** |
@@ -22,7 +22,7 @@
 
 ^1^ quotas can be increased after you deposit at least $10 to your billing account or upon request to the support team.
 
-^2^ quotas can be increased only for legal entities and are considered individually upon request to technical support.
+^2^ quotas can only be increased for businesses and upon individual request to the support team.
 
 #### Limits {#datasphere-limits}
 
@@ -33,3 +33,6 @@
 | Maximum non-pinned checkpoints per project | 10 |
 | Maximum project storage size | 4096 GB |
 | Maximum dataset size | 4096 GB |
+| Maximum data size per job | 10 GB |
+| Maximum log size per job | 100 MB |
+| Maximum result size per job | 1 GB |

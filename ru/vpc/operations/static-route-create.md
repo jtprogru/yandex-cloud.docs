@@ -20,7 +20,7 @@ description: "Статический маршрут по умолчанию (0.0
   1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_vpc }}**.
   1. На панели слева выберите ![image](../../_assets/vpc/route-tables.svg) **{{ ui-key.yacloud.vpc.network.switch_route-table }}**.
   1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
-  1. Задайте имя таблицы маршрутизации.
+  1. Задайте имя таблицы маршрутизации. Требования к имени:
 
      {% include [name-format](../../_includes/name-format.md) %}
 
@@ -141,7 +141,7 @@ description: "Статический маршрут по умолчанию (0.0
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы создать таблицу маршрутизации и добавить в нее [статические маршруты](../concepts/static-routes.md):
 

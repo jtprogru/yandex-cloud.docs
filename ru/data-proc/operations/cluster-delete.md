@@ -7,7 +7,7 @@ description: "Вы можете удалить кластер {{ dataproc-name }
 
 Вы можете удалить кластер вместе со всеми хранимыми данными. Помните, что резервные копии данных не создаются автоматически: если вы хотите сохранить данные для восстановления кластера или последующего использования, используйте, например, сервис [{{ objstorage-full-name }}]({{ link-cloud-services }}/storage).
 
-Для удаления кластера {{ dataproc-name }} пользователю должны быть назначены роли `editor` и `dataproc.agent`. Подробнее см. в [описании ролей](../security/index.md#roles).
+Для удаления кластера {{ dataproc-name }} пользователю должны быть назначены роли `editor` и `dataproc.agent`. Подробнее см. в [описании ролей](../security/index.md#roles-list).
 
 ## Перед удалением кластера {#before-you-delete}
 
@@ -19,10 +19,10 @@ description: "Вы можете удалить кластер {{ dataproc-name }
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ dataproc-name }}**.
-  1. Нажмите на значок ![image](../../_assets/options.svg) для нужного кластера и выберите пункт **Удалить**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_data-proc }}**.
+  1. Нажмите на значок ![image](../../_assets/options.svg) для нужного кластера и выберите пункт **{{ ui-key.yacloud.mdb.clusters.button_action-delete }}**.
   1. (Опционально) Укажите таймаут [декомиссии](../concepts/decommission.md).
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.mdb.dialogs.popup-confirm-delete-cluster_button }}**.
 
 - CLI
 

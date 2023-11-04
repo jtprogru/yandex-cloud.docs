@@ -1,3 +1,8 @@
+---
+title: "Как указать облачную сеть, в которой будет исполняться функция"
+description: "Следуя данной инструкции, вы сможете указать облачную сеть, в которой будет исполняться функция."
+---
+
 # Указать облачную сеть, в которой будет исполняться функция
 
 {% include [note-preview](../../../_includes/note-preview.md) %}
@@ -11,11 +16,11 @@
 - Консоль управления
     
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится функция.
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Выберите функцию.
-    1. Перейдите на вкладку **Редактор**.
-    1. В блоке **Параметры**, в поле **Сеть**, выберите сеть, в которой будет исполняться функция.
-    1. Нажмите кнопку **Создать версию**.
+    1. Перейдите на вкладку **{{ ui-key.yacloud.serverless-functions.item.switch_editor }}**.
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.item.editor.label_title-params }}**, в поле **{{ ui-key.yacloud.vpc.label_network }}**, выберите сеть, в которой будет исполняться функция.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**.
     
 - CLI
 

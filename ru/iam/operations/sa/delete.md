@@ -1,3 +1,8 @@
+---
+title: "Как удалить сервисный аккаунт"
+description: "Следуя данной инструкции, вы сможете удалить сервисный аккаунт."
+---
+
 # Удаление сервисного аккаунта
 
 {% note warning %}
@@ -36,8 +41,8 @@
       +----------------------+------------------+-------------------------------+
       |          ID          |       NAME       |          DESCRIPTION          |
       +----------------------+------------------+-------------------------------+
-      | aje6o61dvog2h6g9a33s | my-robot         |                               |
-      | aje9sda1ufvqcmfksd3f | blabla           | bla bla bla is my description |
+      | aje6o61dvog2******** | my-robot         |                               |
+      | aje9sda1ufvq******** | account_name     | account_description           |
       +----------------------+------------------+-------------------------------+
       ```
   1. Удалите сервисный аккаунт:
@@ -52,7 +57,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы удалить сервисный аккаунт:
 

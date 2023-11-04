@@ -7,17 +7,15 @@ After creating a {{ dataproc-name }} cluster, you can connect to hosts of subclu
 
 ## Configuring security groups {#configuring-security-groups}
 
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
 Security groups might block cluster connections. If this happens, edit the group rules.
 
 {% note alert %}
 
-When setting up security groups, don't change the [rules for service traffic](./cluster-create.md#change-security-groups). This may cause the cluster to fail.
+When setting up security groups, do not change the [rules for service traffic](./cluster-create.md#change-security-groups). This may cause the cluster to fail.
 
 {% endnote %}
 
-Settings of rules depend on the connection method you select:
+Rule settings depend on the connection method you select:
 
 {% list tabs %}
 
@@ -25,10 +23,10 @@ Settings of rules depend on the connection method you select:
 
    * To connect to your subcluster hosts from cloud networks and the internet, [set up security groups](../../vpc/operations/security-group-add-rule.md) for your cluster to allow incoming traffic from any IP address on port `{{ port-ssh }}`. To do this, create the following rule for incoming traffic:
 
-      * Port range: `{{ port-ssh }}`.
-      * Protocol: `TCP`.
-      * Source: `CIDR`.
-      * CIDR blocks: `0.0.0.0/0`.
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-ssh }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
    * To connect to a cluster from an intermediate VM:
 
@@ -36,63 +34,63 @@ Settings of rules depend on the connection method you select:
 
          * For incoming traffic:
 
-            * Port range: `{{ port-ssh }}`.
-            * Protocol: `TCP`.
-            * Source: `CIDR`.
-            * CIDR blocks: `0.0.0.0/0`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-ssh }}`
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
          * For outgoing traffic:
 
-            * Port range: `{{ port-ssh }}`.
-            * Protocol: `TCP`.
-            * Destination type: `CIDR`.
-            * CIDR blocks: Address range of the subnet where the hosts of the cluster are located. If subclusters are in different subnets, create this rule for each subnet.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-ssh }}`
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: Address range of the subnet in which the cluster hosts are located. If subclusters are in different subnets, create this rule for each subnet.
 
       1. [Configure security groups](../../vpc/operations/security-group-add-rule.md) in the cluster to allow incoming traffic from the security group where the VM is located on port `{{ port-ssh }}`. To do this, create the following rule for incoming traffic:
 
-         * Port range: `{{ port-ssh }}`.
-         * Protocol: `TCP`.
-         * Source: `CIDR`.
-         * CIDR blocks: Address range of the subnet where the hosts of the cluster are located.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-ssh }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: Address range of the subnet in which the cluster hosts are located.
 
 - UI Proxy
 
    To use [**UI Proxy**](../concepts/interfaces.md), [add](../../vpc/operations/security-group-add-rule.md) rules to the subcluster host's security group to allow incoming traffic via port `{{ port-https }}`:
 
-   * Port range: `{{ port-https }}`.
-   * Protocol: `TCP`.
-   * Source: `CIDR`.
-   * CIDR blocks: `0.0.0.0/0`.
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-https }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
    If the connection is established via an intermediate VM, [add](../../vpc/operations/security-group-add-rule.md) rules to the subcluster host's security group to allow connections via this VM:
 
    * For incoming traffic:
 
-      * Port range: `{{ port-https }}`.
-      * Protocol: `TCP`.
-      * Source: `CIDR`.
-      * CIDR blocks: `0.0.0.0/0`.
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-https }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
    * For outgoing traffic:
 
-      * Port range: `{{ port-https }}`.
-      * Protocol: `TCP`.
-      * Destination type: `CIDR`.
-      * CIDR blocks: Address range of the subnet where the host of the subcluster is located.
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-https }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: Address range of the subnet in which the subcluster host is located.
 
 - Connecting with port forwarding
 
    When using [port forwarding](../operations/connect-interfaces.md#routing), [add](../../vpc/operations/security-group-add-rule.md) rules to the intermediate VM security group that allow incoming and outgoing traffic via the required components' ports:
 
-   * Port range: `<component port>`.
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `<component port>`
 
       Port numbers for {{ dataproc-name }} components are shown in the table:
 
       {% include [ports-table](../../_includes/data-proc/ports-table.md) %}
 
-   * Protocol: `TCP`.
-   * Source: `CIDR`.
-   * CIDR blocks: `0.0.0.0/0`.
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
 {% endlist %}
 
@@ -110,7 +108,7 @@ For more information about security groups, see [{#T}](../concepts/network.md#se
 
 To connect to a {{ dataproc-name }} host, make sure the SSH key that you specified when creating the {{ dataproc-name }} cluster is accessible on the local machine or the VM. You can copy the key to the machine from which the connection is performed to the cluster, or connect to it with an SSH agent.
 
-1. (optional) [Connect](../../compute/operations/vm-connect/ssh.md) to the intermediate virtual machine via SSH.
+1. (Optional) [Connect](../../compute/operations/vm-connect/ssh.md) to the intermediate virtual machine via SSH.
 
 1. Launch the SSH agent:
 
@@ -174,7 +172,7 @@ To connect to a {{ dataproc-name }} host, make sure the SSH key that you specifi
          * HBase: Select **Apache Phoenix**.
          * Spark: Select **Apache Spark**.
 
-         The list of settings doesn't change.
+         The list of settings does not change.
 
          {% endnote %}
 
@@ -185,7 +183,7 @@ To connect to a {{ dataproc-name }} host, make sure the SSH key that you specifi
          1. Enable the **Use SSL** setting and specify the SSL connection parameters:
             * **CA file**: Downloaded SSL certificate for the connection.
             * **Client key file**, **Client key password**: File with the private key required to connect to the {{ dataproc-name }} cluster and its password.
-         1. (optional) To connect via an intermediate VM, configure an SSH tunnel:
+         1. (Optional) To connect via an intermediate VM, configure the parameters of the SSH tunnel:
             1. Select **Use SSH tunnel**, create an SSH configuration, and specify the parameters:
                * **Host**: IP address of the VM.
                * **User name**: VM user's name.
@@ -204,7 +202,7 @@ To connect to a {{ dataproc-name }} host, make sure the SSH key that you specifi
 
          {% note info %}
 
-         Depending on the {{ dataproc-name }} service you're connecting to, you may need to select **Apache Phoenix** (for HBase) or **Apache Spark** instead of **Apache Hive**. The list of settings doesn't change.
+         Depending on the {{ dataproc-name }} service you are connecting to, you may need to select **Apache Phoenix** (for HBase) or **Apache Spark** instead of **Apache Hive**. The list of settings does not change.
 
          {% endnote %}
 

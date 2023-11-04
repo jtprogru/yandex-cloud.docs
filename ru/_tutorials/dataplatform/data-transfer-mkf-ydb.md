@@ -24,7 +24,7 @@
 
    * С помощью {{ TF }}
 
-       1. Если у вас еще нет {{ TF }}, [установите и настройте его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+       1. {% include [terraform-install](../../_includes/terraform-install.md) %}
        1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
        1. Скачайте в ту же рабочую директорию файл конфигурации [data-transfer-mkf-ydb.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/data-transfer/data-transfer-mkf-ydb.tf).
 
@@ -67,7 +67,7 @@
 
    ```json
    {
-       "device_id":"iv9a94th6rztooxh5ur2",
+       "device_id":"iv9a94th6rzt********",
        "datetime":"2020-06-05 17:27:00",
        "latitude":"55.70329032",
        "longitude":"37.65472196",
@@ -99,7 +99,7 @@
 
 1. [Создайте эндпоинт для приемника](../../data-transfer/operations/endpoint/index.md#create):
 
-    * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** — `YDB`.
+    * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** — `{{ ui-key.yacloud.data-transfer.label_endpoint-type-YDB }}`.
     * **{{ ui-key.yacloud.data-transfer.forms.section-endpoint }}**:
 
         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.ydb.console.form.ydb.YdbTarget.connection.title }}**:
@@ -108,7 +108,7 @@
 
 1. [Создайте эндпоинт для источника](../../data-transfer/operations/endpoint/index.md#create):
 
-    * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** — `{{ KF }}`.
+    * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** — `{{ ui-key.yacloud.data-transfer.label_endpoint-type-KAFKA }}`.
     * **{{ ui-key.yacloud.data-transfer.forms.section-endpoint }}**:
        * **{{ ui-key.yc-data-transfer.data-transfer.console.form.kafka.console.form.kafka.KafkaSourceConnection.connection_type.title }}** — `{{ ui-key.yc-data-transfer.data-transfer.console.form.kafka.console.form.kafka.KafkaConnectionType.managed.title }}`.
 
@@ -224,7 +224,7 @@
 
         ```json
         {
-            "device_id": "iv9a94th6rztooxh5ur2",
+            "device_id": "iv9a94th6rzt********",
             "datetime": "2020-06-05 17:27:00",
             "latitude": 55.70329032,
             "longitude": 37.65472196,
@@ -236,7 +236,7 @@
         }
 
         {
-            "device_id": "rhibbh3y08qmz3sdbrbu",
+            "device_id": "rhibbh3y08qm********",
             "datetime": "2020-06-06 09:49:54",
             "latitude": 55.71294467,
             "longitude": 37.66542005,
@@ -248,7 +248,7 @@
         }
 
         {
-            "device_id": "iv9a94th6rztooxh5ur2",
+            "device_id": "iv9a94th6rzt********",
             "datetime": "2020-06-07 15:00:10",
             "latitude": 55.70985913,
             "longitude": 37.62141918,
@@ -264,13 +264,13 @@
 
         ```bash
         jq -rc . sample.json | kafkacat -P \
-           -b <FQDN хоста-брокера>:9091 \
+           -b <FQDN_хоста-брокера>:9091 \
            -t sensors \
            -k key \
            -X security.protocol=SASL_SSL \
            -X sasl.mechanisms=SCRAM-SHA-512 \
-           -X sasl.username="<имя пользователя в кластере-источнике>" \
-           -X sasl.password="<пароль пользователя в кластере-источнике>" \
+           -X sasl.username="<имя_пользователя_в_кластере-источнике>" \
+           -X sasl.password="<пароль_пользователя_в_кластере-источнике>" \
            -X ssl.ca.location={{ crt-local-dir }}{{ crt-local-file }} -Z
         ```
 
@@ -283,7 +283,7 @@
         * Консоль управления
 
            1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором находится нужная база данных.
-           1. В списке сервисов выберите **{{ ydb-name }}**.
+           1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
            1. Выберите базу из списка.
            1. Перейдите на вкладку **{{ ui-key.yacloud.ydb.database.switch_browse }}**.
            1. Проверьте, что база данных {{ ydb-name }} содержит таблицу `sensors` с тестовыми данными из топика.

@@ -8,6 +8,8 @@
 
 {% endlist %}
 
+{% include [see-fqdn](fqdn-host.md) %}
+
 ### Go {#go}
 
 Перед подключением установите зависимости:
@@ -39,12 +41,12 @@ go get github.com/opensearch-project/opensearch-go
         )
         
         var hosts = []string{
-        	"<FQDN хоста 1 с ролью DATA>:{{ port-mos }}",
+        	"<FQDN_хоста_1_с_ролью_DATA>:{{ port-mos }}",
         	...,
-        	"<FQDN хоста N с ролью DATA>:{{ port-mos }}"
+        	"<FQDN_хоста_N_с_ролью_DATA>:{{ port-mos }}"
         	}
         
-        var CA = "/home/<домашняя директория>/.opensearch/root.crt"
+        var CA = "/home/<домашняя_директория>/.opensearch/root.crt"
         
         var password = "<пароль>"
         
@@ -85,6 +87,8 @@ go get github.com/opensearch-project/opensearch-go
 
 {% endlist %}
 
+{% include [see-fqdn](fqdn-host.md) %}
+
 ### PowerShell {#powershell}
 
 {% list tabs %}
@@ -93,12 +97,14 @@ go get github.com/opensearch-project/opensearch-go
 
    ```powershell
    curl `
-     -Certificate <абсолютный путь к файлу сертификата> `
-     -Uri https://<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }} `
+     -Certificate <абсолютный_путь_к_файлу_сертификата> `
+     -Uri https://<FQDN_хоста_{{ OS }}_с_ролью_DATA>:{{ port-mos }} `
      -Credential admin
    ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 ### Python {#python}
   
@@ -123,9 +129,9 @@ pip3 install opensearch-py
         CA = '~/.opensearch/root.crt'
         PASS = '<пароль>'
         HOSTS = [
-          "<FQDN хоста 1 с ролью DATA>",
+          "<FQDN_хоста_1_с_ролью_DATA>",
           ...,
-          "<FQDN хоста N с ролью DATA>"
+          "<FQDN_хоста_N_с_ролью_DATA>"
         ]
 
         conn = OpenSearch(
@@ -145,3 +151,5 @@ pip3 install opensearch-py
         ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}

@@ -1,6 +1,37 @@
+---
+title: "Как подключиться к виртуальной машине Linux по SSH"
+description: "Следуя данной инструкции, вы сможете подключиться к ВМ с помощью пары ключей SSH: открытый ключ размещается на ВМ, а закрытый ключ хранится у пользователя."
+---
+
 # Подключиться к виртуальной машине Linux по SSH
 
-Рекомендуемый способ подключения к [ВМ](../../concepts/vm.md) по [SSH](../../../glossary/ssh-keygen.md) основан на использовании пары ключей: открытый ключ размещается на ВМ, а закрытый ключ хранится у пользователя. Подключение с помощью пары ключей более безопасно, чем подключение по логину и паролю.
+Рекомендуемый способ подключения к [ВМ](../../concepts/vm.md) по [SSH](../../../glossary/ssh-keygen.md) основан на использовании пары ключей: открытый ключ размещается на ВМ, а закрытый ключ хранится у пользователя. Чтобы другой пользователь мог подключиться к ВМ, добавьте для него SSH-ключ по [инструкции](#vm-authorized-keys). Подключение с помощью пары ключей более безопасно, чем подключение по логину и паролю.
+
+{% note info %}
+
+Вы не сможете подключиться к ВМ с включенным [доступом через OS Login](./os-login.md) с помощью пары SSH-ключей. При этом рекомендуется в любом случае указывать SSH-ключи при создании ВМ: так вы сможете [подключиться к ВМ по SSH](#vm-connect), если отключите для нее доступ через OS Login.
+
+{% endnote %}
+
+
+Обучающее видео поможет вам подключиться к ВМ Linux по SSH:
+
+{% list tabs %}
+
+- Linux/macOS
+
+  @[youtube](https://www.youtube.com/watch?v=0Q4kivQo0g4&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=10&pp=iAQB)
+
+- Windows 10
+
+  @[youtube](https://www.youtube.com/watch?v=M7m75y80VFM&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=11&pp=iAQB)
+
+- Windows 7/8
+
+  @[youtube](https://www.youtube.com/watch?v=rNA-bEbSHZ8&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=12&pp=iAQB)
+
+{% endlist %}
+
 
 ## Создание пары ключей SSH {#creating-ssh-keys}
 
@@ -91,8 +122,6 @@
 Для подключения можно использовать утилиту `ssh` в Linux/macOS/Windows 10 и программу [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) для Windows 7/8.
 
 [Группы безопасности](../../../vpc/concepts/security-groups.md) ВМ должны разрешать входящий трафик по протоколу TCP на порт 22.
-
-{% include [security-groups-note-vm](../../../_includes/vpc/security-groups-note-vm.md) %}
 
 Для подключения необходимо указать [публичный IP-адрес](../../../vpc/concepts/address.md#public-addresses) ВМ. Публичный IP-адрес можно узнать в консоли управления в поле **{{ ui-key.yacloud.compute.instance.overview.label_public-ipv4 }}** блока **{{ ui-key.yacloud.compute.instance.overview.section_network }}** на странице ВМ. Если вы создали ВМ только с внутренним IP-адресом, [привяжите к ней публичный IP-адрес](../vm-control/vm-attach-public-ip.md).
 

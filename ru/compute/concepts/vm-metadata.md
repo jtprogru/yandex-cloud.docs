@@ -61,7 +61,7 @@
       - name: <имя_пользователя>
         groups: sudo
         shell: /bin/bash
-        sudo: ['ALL=(ALL) NOPASSWD:ALL']
+        sudo: 'ALL=(ALL) NOPASSWD:ALL'
         ssh-authorized-keys:
           - <содержимое_SSH-ключа>
     ```
@@ -73,7 +73,7 @@
     ```hcl
     ...
     metadata = {
-      user-data = "#cloud-config\nusers:\n  - name: <имя_пользователя>\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - <содержимое_SSH-ключа>")}"
+      user-data = "#cloud-config\nusers:\n  - name: <имя_пользователя>\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - <содержимое_SSH-ключа>"
     }
     ...
     ```
@@ -123,8 +123,9 @@
 
 - Linux
 
-  * `serial-port-enable` — флаг, включающий доступ к [серийной консоли](../operations/serial-console/index.md). 1 — включить, 0 (по умолчанию) — выключить.
+  * `serial-port-enable` — флаг, включающий доступ к [серийной консоли](../operations/serial-console/index.md). `1` — включить, `0` (по умолчанию) — выключить.
   * `user-data` — строка с пользовательскими метаданными, которые будут обработаны агентом [cloud-init](https://cloud-init.io), запущенным на ВМ.
+  * `enable-oslogin` — флаг, включающий доступ через [OS Login](../operations/vm-connect/os-login.md). `true` — включить, `false` (по умолчанию) — выключить.
 
     Cloud-init поддерживает разные [форматы](https://cloudinit.readthedocs.io/en/latest/topics/format.html) передачи метаданных, например [cloud-config](https://cloudinit.readthedocs.io/en/latest/topics/examples.html). В этом формате вы можете передать SSH-ключи и указать, какому пользователю принадлежит каждый ключ. Для этого укажите их в элементе `users/ssh-authorized-keys`:
 
@@ -134,11 +135,11 @@
 
     ```json
     "metadata": {
-      "user-data": "#cloud-config\nusers:\n  - name: user\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAB3Nza......OjbSMRX user@example.com\n      - ssh-ed25519 AAAAB3Nza......Pu00jRN user@desktop"
+      "user-data": "#cloud-config\nusers:\n  - name: user\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAB3Nza......OjbSMRX user@example.com\n      - ssh-ed25519 AAAAB3Nza......Pu00jRN user@desktop"
     }
     ```
 
-  * `ssh-keys` — ключ для доставки SSH-ключа на ВМ Linux через {{ TF }}. Указывается в формате `<имя_пользователя>:<содержимое_SSH-ключа>`, например `user:ssh-ed25519 AAC4NzaC1 user@example.com`. Если указать несколько ключей, будет использован только первый из них.
+  * `ssh-keys` — ключ для доставки SSH-ключа на ВМ Linux через {{ TF }}. Указывается в формате `<имя_пользователя>:<содержимое_SSH-ключа>`, например `user:ssh-ed25519 AAC4NzaC1... user@example.com`. Если указать несколько ключей, будет использован только первый из них.
 
 - Windows
 
@@ -154,17 +155,17 @@
 
 ## Идентификационный документ {#identity-document}
 
-При создании ВМ формируется идентификационный документ (identity document), в котором хранятся сведения о самой ВМ: идентификаторы ВМ, продукта Marketplace, образа диска и т.д. Виртуальные машины  могут запрашивать у сервиса метаданных информацию о самих себе. 
+При создании ВМ формируется идентификационный документ (identity document), в котором хранятся сведения о самой ВМ: идентификаторы ВМ, продукта Marketplace, образа диска и т.д. Виртуальные машины могут запрашивать у сервиса метаданных информацию о самих себе.
 
 Чтобы запросить идентификационный документ:
 
 1. Подключитесь к ВМ:
 
    ```bash
-   ssh <IP-адрес ВМ>
+   ssh <IP-адрес_ВМ>
    ```
 
-1. Идентификационный документ можно получить в форматах [Google Compute Engine](../operations/vm-info/get-info.md#gce-metadata) и [Amazon EC2](../operations/vm-info/get-info.md#ec2-metadata). Выполните команду: 
+1. Идентификационный документ можно получить в форматах [Google Compute Engine](../operations/vm-info/get-info.md#gce-metadata) и [Amazon EC2](../operations/vm-info/get-info.md#ec2-metadata). Выполните команду:
    
    {% list tabs %}
    
@@ -185,7 +186,7 @@
    Пример ответа: 
    
    ```
-   {"instanceId":"fhmm5252k8**********","productCodes":null,"imageId":"fd8evlqsgg4e81rbdkn7","productIds":["f2e3ia802labs61kou0g"],"createdAt":"2023-05-29T09:46:59Z","version":"2023-03-01"}
+   {"instanceId":"fhmm5252k8vl********","productCodes":null,"imageId":"fd8evlqsgg4e********","productIds":["f2e3ia802lab********"],"createdAt":"2023-05-29T09:46:59Z","version":"2023-03-01"}
    ```
 
 {% note info %}
@@ -196,7 +197,9 @@
 
 ### Подписанные идентификационные документы {#signed-identity-documents}
 
-Идентификационный документ можно подписать, чтобы затем проверить подлинность полученного документа. 
+Если вы намерены использовать содержимое идентификационного документа для задач, имеющих большое значение, вам следует проверить содержимое и подлинность документа перед использованием.
+
+Сервис метаданных виртуальной машины кроме самого идентификационного документа предоставляет его криптографические подписи. Вы можете использовать эти подписи для проверки происхождения, подлинности и целостности документа.
 
 {% list tabs %}
 
@@ -205,7 +208,7 @@
   1. Подключитесь к ВМ:
 
      ```bash
-     ssh <IP-адрес ВМ>
+     ssh <IP-адрес_ВМ>
      ```
 
   1. Получите RSA-подпись из метаданных ВМ и сохраните ее в файл `rsa2048`: 
@@ -213,7 +216,7 @@
      * **GCE**:
 
        ```bash
-       curl -H Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/vendor/identity/document > rsa2048
+       curl -H Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/vendor/identity/rsa > rsa2048
        ```
 
      * **EC2**:
@@ -223,7 +226,6 @@
        ```
   
   1. Создайте файл `certificate` и добавьте в него публичный сертификат:
-
 
      
 
@@ -251,10 +253,9 @@
 
 
 
-
   1. Проверьте подпись и сохраните содержимое документа в файл `document`:
 
-     ```
+     ```bash
      openssl smime -verify -in rsa2048 -inform PEM -certfile certificate -noverify | tee document
      ```
 
@@ -265,7 +266,7 @@
   1. Подключитесь к ВМ:
 
      ```bash
-     ssh <IP-адрес ВМ>
+     ssh <IP-адрес_ВМ>
      ```
 
   1. Получите dsa2048-подпись из метаданных ВМ и сохраните ее в файл `dsa2048`: 
@@ -330,7 +331,7 @@
   1. Подключитесь к ВМ:
 
      ```bash
-     ssh <IP-адрес ВМ>
+     ssh <IP-адрес_ВМ>
      ```
 
   1. Получите base64-подпись из метаданных ВМ и сохраните ее в файл `signature`: 
@@ -405,7 +406,7 @@
 
 {% endlist %}
 
-Сопоставьте индентификационный документ из метаданных ВМ с документом, сохраненным в файле:
+Сопоставьте идентификационный документ из метаданных ВМ с документом, сохраненным в файле:
 
 ```
 curl http://169.254.169.254/latest/vendor/instance-identity/document | openssl dgst -sha256

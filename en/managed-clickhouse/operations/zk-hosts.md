@@ -20,13 +20,13 @@ To learn more, see [Replication](../concepts/replication.md).
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}) go to the folder page and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Click **Set up {{ ZK }} hosts** at the top right.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.hosts.button_create-zookeeper }}** at the top right.
    1. Specify the [host class](../concepts/instance-types.md).
    1. Set up the storage settings.
-   1. Change the {{ ZK }} host settings, if required. To do this, hover over the line of the desired host and click ![image](../../_assets/pencil.svg).
-   1. Click **Save changes**.
+   1. Change the {{ ZK }} host settings, if required. To do this, hover over the required host row and click ![image](../../_assets/pencil.svg).
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -186,11 +186,11 @@ To learn more, see [Replication](../concepts/replication.md).
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Click **Add {{ ZK }} hosts**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.hosts.button_add-zookeeper }}**.
    1. If required, change the host settings.
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.mdb.hosts.dialog.button_choose }}**.
 
 - CLI
 
@@ -233,14 +233,14 @@ To learn more, see [Replication](../concepts/replication.md).
    1. Add a `host` block of the `ZOOKEEPER` type to the {{ mch-name }} cluster description:
 
       ```hcl
-       resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
-         ...
-         host {
-           type      = "ZOOKEEPER"
-           zone      = "<availability zone>"
-           subnet_id = yandex_vpc_subnet.<subnet in selected availability zone>.id
-         }
-         ...
+      resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
+        ...
+        host {
+          type      = "ZOOKEEPER"
+          zone      = "<availability zone>"
+          subnet_id = yandex_vpc_subnet.<subnet in selected availability zone>.id
+        }
+        ...
       }
       ```
 
@@ -270,10 +270,10 @@ To learn more, see [Replication](../concepts/replication.md).
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Hover over the line of the desired host and click ![image](../../_assets/cross.svg).
-   1. In the window that opens, click **Delete**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
+   1. Hover over the required host row and click ![image](../../_assets/cross.svg).
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -311,7 +311,7 @@ To learn more, see [Replication](../concepts/replication.md).
 - API
 
    To delete a {{ ZK }} host, use the [deleteHosts](../api-ref/Cluster/deleteHosts.md) REST API method for the [Cluster](../api-ref/Cluster/index.md) resource or the [ClusterService/DeleteHosts](../api-ref/grpc/cluster_service.md#DeleteHosts) gRPC API call and provide the following in the request:
-   * The ID of the cluster where the host is located, in the `clusterId` parameter. To find out the cluster ID, get a [list of clusters in the folder](cluster-list.md#list-clusters).
+   * ID of the cluster where the host is located, in the `clusterId` parameter. To find out the cluster ID, get a [list of clusters in the folder](cluster-list.md#list-clusters).
    * Host name, in the `hostNames` parameter. To find out the name, request a [list of hosts in the cluster](hosts.md#list-hosts).
 
 {% endlist %}

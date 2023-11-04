@@ -21,7 +21,7 @@ items:
         href: tutorials/index.md
       - name: Капча в мобильном приложении
         items:
-          - name: Обзор
+          - name: Размещение HTML-кода для работы {{ captcha-full-name }}
             href: tutorials/mobile-app/website.md
           - name: Капча в приложении на Android
             items:
@@ -35,8 +35,12 @@ items:
     items:
       - name: Валидация пользователя
         href: concepts/validation.md
+      - name: Типы заданий
+        href: concepts/tasks.md
       - name: Методы подключения виджета
         href: concepts/widget-methods.md
+      - name: Ключи капчи
+        href: concepts/keys.md
       - name: Невидимая капча
         href: concepts/invisible-captcha.md
       - name: Капча в React
@@ -45,6 +49,8 @@ items:
         href: concepts/js-interface.md
       - name: Ограниченный режим
         href: concepts/restricted-mode.md
+      - name: Публичные IP-адреса
+        href: concepts/ips.md
       - name: Квоты и лимиты
         href: concepts/limits.md
   - name: Управление доступом

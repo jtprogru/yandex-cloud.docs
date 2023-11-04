@@ -1,6 +1,5 @@
 {% note warning %}
 
-You cannot edit the **Data Schema Registry** setting after a cluster is created.
+You cannot disable the **{{ ui-key.yacloud.kafka.field_schema-registry }}** setting after a cluster is created.
 
 {% endnote %}
-

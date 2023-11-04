@@ -82,7 +82,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -96,6 +96,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -103,6 +105,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig}
@@ -130,6 +133,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics}
@@ -139,6 +143,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow}
@@ -231,7 +244,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -245,6 +258,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig1)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources1)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -252,6 +267,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access1)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics1)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling1)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig1}
@@ -279,6 +295,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics1}
@@ -288,6 +305,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling1}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow1}
@@ -353,7 +379,7 @@ host_group_ids[] | **string**<br>Host groups hosting VMs of the cluster.
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL used in the cluster. Possible values: `9.6`, `10`, `10_1c`, `11`, `12`, `13`, `14`, `15` 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration of a PostgreSQL cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration of a PostgreSQL cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfig9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration for a PostgreSQL 9.6 cluster. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfig10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration for a PostgreSQL 10 1C cluster. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfig10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration for a PostgreSQL 10 cluster. 
@@ -367,6 +393,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfig14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration for a PostgreSQL 14 1C cluster. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfig15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration for a PostgreSQL 15 cluster. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfig15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration for a PostgreSQL 15 1C cluster. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfig16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration for a PostgreSQL 16 cluster. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfig16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration for a PostgreSQL 16 1C cluster. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig2)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources2)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -374,6 +402,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access2)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics2)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling2)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig2}
@@ -401,6 +430,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics2}
@@ -410,6 +440,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling2}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### DatabaseSpec {#DatabaseSpec}
@@ -488,7 +527,7 @@ config_spec | **[ConfigHostSpec](#ConfigHostSpec)**<br>Configuration of a Postgr
 
 Field | Description
 --- | ---
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlHostConfig9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host9_6.proto)**<br>Configuration for a host with PostgreSQL 9.6 server deployed. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlHostConfig10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10_1c.proto)**<br>Configuration for a host with PostgreSQL 10 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlHostConfig10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10.proto)**<br>Configuration for a host with PostgreSQL 10 server deployed. 
@@ -502,6 +541,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlHostConfig14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host14_1c.proto)**<br>Configuration for a host with PostgreSQL 14 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlHostConfig15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15.proto)**<br>Configuration for a host with PostgreSQL 15 server deployed. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlHostConfig15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15_1c.proto)**<br>Configuration for a host with PostgreSQL 15 1C server deployed. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlHostConfig16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16.proto)**<br>Configuration for a host with PostgreSQL 16 server deployed. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlHostConfig16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16_1c.proto)**<br>Configuration for a host with PostgreSQL 16 1C server deployed. 
 
 
 ### Operation {#Operation}
@@ -564,7 +605,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -578,6 +619,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig3)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources3)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -585,6 +628,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access3)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics3)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling3)**<br>Disk size autoscaling 
 
 
 ### MaintenanceWindow {#MaintenanceWindow2}
@@ -646,7 +690,7 @@ deletion_protection | **bool**<br>Deletion Protection inhibits deletion of the c
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL used in the cluster. Possible values: `9.6`, `10`, `10_1c`, `11`, `12`, `13`, `14`, `15` 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration of a PostgreSQL cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration of a PostgreSQL cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfig9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration for a PostgreSQL 9.6 cluster. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfig10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration for a PostgreSQL 10 1C cluster. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfig10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration for a PostgreSQL 10 cluster. 
@@ -660,6 +704,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfig14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration for a PostgreSQL 14 1C cluster. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfig15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration for a PostgreSQL 15 cluster. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfig15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration for a PostgreSQL 15 1C cluster. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfig16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration for a PostgreSQL 16 cluster. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfig16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration for a PostgreSQL 16 1C cluster. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig3)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources3)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -667,6 +713,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access3)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics3)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling3)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig3}
@@ -694,6 +741,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics3}
@@ -703,6 +751,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling3}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow3}
@@ -786,7 +843,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -800,6 +857,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig4)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources4)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -807,6 +866,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access4)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics4)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling4)**<br>Disk size autoscaling 
 
 
 ### MaintenanceOperation {#MaintenanceOperation3}
@@ -934,7 +994,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -948,6 +1008,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig4)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources4)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -955,6 +1017,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access4)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics4)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling4)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig4}
@@ -982,6 +1045,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics4}
@@ -991,6 +1055,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling4}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow4}
@@ -1099,7 +1172,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -1113,6 +1186,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig5)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources5)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -1120,6 +1195,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access5)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics5)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling5)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig5}
@@ -1147,6 +1223,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics5}
@@ -1156,6 +1233,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling5}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow5}
@@ -1267,7 +1353,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -1281,6 +1367,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig6)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources6)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -1288,6 +1376,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access6)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics6)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling6)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig6}
@@ -1315,6 +1404,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics6}
@@ -1324,6 +1414,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling6}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow6}
@@ -1433,7 +1532,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -1447,6 +1546,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig7)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources7)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -1454,6 +1555,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access7)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics7)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling7)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig7}
@@ -1481,6 +1583,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics7}
@@ -1490,6 +1593,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling7}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow7}
@@ -1556,7 +1668,7 @@ host_group_ids[] | **string**<br>Host groups hosting VMs of the cluster.
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL used in the cluster. Possible values: `9.6`, `10`, `10_1c`, `11`, `12`, `13`, `14`, `15` 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration of a PostgreSQL cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration of a PostgreSQL cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfig9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration for a PostgreSQL 9.6 cluster. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfig10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration for a PostgreSQL 10 1C cluster. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfig10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration for a PostgreSQL 10 cluster. 
@@ -1570,6 +1682,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfig14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration for a PostgreSQL 14 1C cluster. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfig15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration for a PostgreSQL 15 cluster. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfig15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration for a PostgreSQL 15 1C cluster. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfig16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration for a PostgreSQL 16 cluster. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfig16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration for a PostgreSQL 16 1C cluster. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig8)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources8)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -1577,6 +1691,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access8)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics8)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling8)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig8}
@@ -1604,6 +1719,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics8}
@@ -1613,6 +1729,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling8}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### HostSpec {#HostSpec1}
@@ -1631,7 +1756,7 @@ config_spec | **[ConfigHostSpec](#ConfigHostSpec)**<br>Configuration of a Postgr
 
 Field | Description
 --- | ---
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlHostConfig9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host9_6.proto)**<br>Configuration for a host with PostgreSQL 9.6 server deployed. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlHostConfig10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10_1c.proto)**<br>Configuration for a host with PostgreSQL 10 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlHostConfig10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10.proto)**<br>Configuration for a host with PostgreSQL 10 server deployed. 
@@ -1645,6 +1770,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlHostConfig14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host14_1c.proto)**<br>Configuration for a host with PostgreSQL 14 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlHostConfig15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15.proto)**<br>Configuration for a host with PostgreSQL 15 server deployed. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlHostConfig15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15_1c.proto)**<br>Configuration for a host with PostgreSQL 15 1C server deployed. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlHostConfig16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16.proto)**<br>Configuration for a host with PostgreSQL 16 server deployed. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlHostConfig16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16_1c.proto)**<br>Configuration for a host with PostgreSQL 16 1C server deployed. 
 
 
 ### Operation {#Operation7}
@@ -1708,7 +1835,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -1722,6 +1849,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig9)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources9)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -1729,6 +1858,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access9)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics9)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling9)**<br>Disk size autoscaling 
 
 
 ### MaintenanceWindow {#MaintenanceWindow8}
@@ -1840,7 +1970,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -1854,6 +1984,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig9)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources9)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -1861,6 +1993,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access9)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics9)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling9)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig9}
@@ -1888,6 +2021,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics9}
@@ -1897,6 +2031,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling9}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow9}
@@ -2006,7 +2149,7 @@ link | **string**<br>Link to the monitoring system charts for the PostgreSQL clu
 Field | Description
 --- | ---
 version | **string**<br>Version of PostgreSQL server software. 
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration for PostgreSQL servers in the cluster.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration for PostgreSQL servers in the cluster.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlConfigSet9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql9_6.proto)**<br>Configuration of a PostgreSQL 9.6 server. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlConfigSet10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10_1c.proto)**<br>Configuration of a PostgreSQL 10 1C server. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlConfigSet10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql10.proto)**<br>Configuration of a PostgreSQL 10 server. 
@@ -2020,6 +2163,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlConfigSet14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql14_1c.proto)**<br>Configuration of a PostgreSQL 14 1C server. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlConfigSet15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15.proto)**<br>Configuration of a PostgreSQL 15 server. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlConfigSet15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql15_1c.proto)**<br>Configuration of a PostgreSQL 15 1C server. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlConfigSet16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16.proto)**<br>Configuration of a PostgreSQL 16 server. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlConfigSet16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/postgresql16_1c.proto)**<br>Configuration of a PostgreSQL 16 1C server. 
 pooler_config | **[ConnectionPoolerConfig](#ConnectionPoolerConfig10)**<br>Configuration of the connection pooler. 
 resources | **[Resources](#Resources10)**<br>Resources allocated to PostgreSQL hosts. 
 autofailover | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Configuration setting which enables/disables autofailover in cluster. 
@@ -2027,6 +2172,7 @@ backup_window_start | **[google.type.TimeOfDay](https://github.com/googleapis/go
 backup_retain_period_days | **[google.protobuf.Int64Value](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/int64-value)**<br>Retention policy of automated backups. Acceptable values are 7 to 60, inclusive.
 access | **[Access](#Access10)**<br>Access policy to DB 
 performance_diagnostics | **[PerformanceDiagnostics](#PerformanceDiagnostics10)**<br>Configuration of the performance diagnostics service. 
+disk_size_autoscaling | **[DiskSizeAutoscaling](#DiskSizeAutoscaling10)**<br>Disk size autoscaling 
 
 
 ### ConnectionPoolerConfig {#ConnectionPoolerConfig10}
@@ -2054,6 +2200,7 @@ data_lens | **bool**<br>Allow access for DataLens
 web_sql | **bool**<br>Allow SQL queries to the cluster databases from the management console. <br>See [SQL queries in the management console](/docs/managed-postgresql/operations/web-sql-query) for more details. 
 serverless | **bool**<br>Allow access for Serverless 
 data_transfer | **bool**<br>Allow access for DataTransfer. 
+yandex_query | **bool**<br>Allow access for YandexQuery. 
 
 
 ### PerformanceDiagnostics {#PerformanceDiagnostics10}
@@ -2063,6 +2210,15 @@ Field | Description
 enabled | **bool**<br>Configuration setting which enables/disables performance diagnostics service in cluster. 
 sessions_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 statements_sampling_interval | **int64**<br>Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+
+
+### DiskSizeAutoscaling {#DiskSizeAutoscaling10}
+
+Field | Description
+--- | ---
+planned_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers automatic scaling of the storage during the maintenance window. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+emergency_usage_threshold | **int64**<br>Threshold of storage usage (in percent) that triggers immediate automatic scaling of the storage. Zero value means disabled threshold. Acceptable values are 0 to 100, inclusive.
+disk_size_limit | **int64**<br>New storage size (in bytes) that is set when one of the thresholds is achieved. 
 
 
 ### MaintenanceWindow {#MaintenanceWindow10}
@@ -2305,7 +2461,7 @@ health | enum **Health**<br>Status code of server availability. <ul><li>`HEALTH_
 
 Field | Description
 --- | ---
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>Configuration of a PostgreSQL server for the host.
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>Configuration of a PostgreSQL server for the host.
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlHostConfig9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host9_6.proto)**<br>Configuration for a host with PostgreSQL 9.6 server deployed. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlHostConfig10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10_1c.proto)**<br>Configuration for a host with PostgreSQL 10 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlHostConfig10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10.proto)**<br>Configuration for a host with PostgreSQL 10 server deployed. 
@@ -2319,6 +2475,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlHostConfig14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host14_1c.proto)**<br>Configuration for a host with PostgreSQL 14 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlHostConfig15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15.proto)**<br>Configuration for a host with PostgreSQL 15 server deployed. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlHostConfig15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15_1c.proto)**<br>Configuration for a host with PostgreSQL 15 1C server deployed. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlHostConfig16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16.proto)**<br>Configuration for a host with PostgreSQL 16 server deployed. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlHostConfig16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16_1c.proto)**<br>Configuration for a host with PostgreSQL 16 1C server deployed. 
 
 
 ## AddHosts {#AddHosts}
@@ -2355,7 +2513,7 @@ config_spec | **[ConfigHostSpec](#ConfigHostSpec)**<br>Configuration of a Postgr
 
 Field | Description
 --- | ---
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlHostConfig9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host9_6.proto)**<br>Configuration for a host with PostgreSQL 9.6 server deployed. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlHostConfig10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10_1c.proto)**<br>Configuration for a host with PostgreSQL 10 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlHostConfig10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10.proto)**<br>Configuration for a host with PostgreSQL 10 server deployed. 
@@ -2369,6 +2527,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlHostConfig14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host14_1c.proto)**<br>Configuration for a host with PostgreSQL 14 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlHostConfig15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15.proto)**<br>Configuration for a host with PostgreSQL 15 server deployed. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlHostConfig15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15_1c.proto)**<br>Configuration for a host with PostgreSQL 15 1C server deployed. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlHostConfig16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16.proto)**<br>Configuration for a host with PostgreSQL 16 server deployed. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlHostConfig16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16_1c.proto)**<br>Configuration for a host with PostgreSQL 16 1C server deployed. 
 
 
 ### Operation {#Operation11}
@@ -2471,7 +2631,7 @@ assign_public_ip | **bool**<br>Whether the host should get a public IP address o
 
 Field | Description
 --- | ---
-postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15` or `postgresql_config_15_1c`<br>
+postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c`, `postgresql_config_10`, `postgresql_config_11`, `postgresql_config_11_1c`, `postgresql_config_12`, `postgresql_config_12_1c`, `postgresql_config_13`, `postgresql_config_13_1c`, `postgresql_config_14`, `postgresql_config_14_1c`, `postgresql_config_15`, `postgresql_config_15_1c`, `postgresql_config_16` or `postgresql_config_16_1c`<br>
 &nbsp;&nbsp;postgresql_config_9_6 | **[PostgresqlHostConfig9_6](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host9_6.proto)**<br>Configuration for a host with PostgreSQL 9.6 server deployed. 
 &nbsp;&nbsp;postgresql_config_10_1c | **[PostgresqlHostConfig10_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10_1c.proto)**<br>Configuration for a host with PostgreSQL 10 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_10 | **[PostgresqlHostConfig10](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host10.proto)**<br>Configuration for a host with PostgreSQL 10 server deployed. 
@@ -2485,6 +2645,8 @@ postgresql_config | **oneof:** `postgresql_config_9_6`, `postgresql_config_10_1c
 &nbsp;&nbsp;postgresql_config_14_1c | **[PostgresqlHostConfig14_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host14_1c.proto)**<br>Configuration for a host with PostgreSQL 14 1C server deployed. 
 &nbsp;&nbsp;postgresql_config_15 | **[PostgresqlHostConfig15](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15.proto)**<br>Configuration for a host with PostgreSQL 15 server deployed. 
 &nbsp;&nbsp;postgresql_config_15_1c | **[PostgresqlHostConfig15_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host15_1c.proto)**<br>Configuration for a host with PostgreSQL 15 1C server deployed. 
+&nbsp;&nbsp;postgresql_config_16 | **[PostgresqlHostConfig16](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16.proto)**<br>Configuration for a host with PostgreSQL 16 server deployed. 
+&nbsp;&nbsp;postgresql_config_16_1c | **[PostgresqlHostConfig16_1C](https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/mdb/postgresql/v1/config/host16_1c.proto)**<br>Configuration for a host with PostgreSQL 16 1C server deployed. 
 
 
 ### Operation {#Operation13}

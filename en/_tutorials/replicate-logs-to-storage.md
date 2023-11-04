@@ -2,7 +2,7 @@
 
 Data aggregators enable you to transmit data (for example, logs) from the [VM instances](../compute/concepts/vm.md) to the log monitoring and data storage services.
 
-In this tutorial, you'll learn to replicate VM logs automatically to an {{ objstorage-name }} bucket using the [Fluent Bit](https://fluentbit.io) logging processor.
+In this tutorial, you will learn how to replicate VM logs automatically to an {{ objstorage-name }} bucket using the [Fluent Bit](https://fluentbit.io) logging processor.
 
 The solution described below works in the following way:
 1. Fluent Bit runs on an active VM as a [systemd](https://ru.wikipedia.org/wiki/Systemd) module.
@@ -36,9 +36,9 @@ The cost of data storage support includes:
 
 ## Configure the environment {#setup}
 
-1. [Create a service account](../iam/operations/sa/create.md), such as `logs-sa`, assigned the `editor` role for the folder.
+1. [Create a service account](../iam/operations/sa/create.md), e.g., `logs-sa`, with the `editor` role assigned for the folder.
 1. [Create a static access key](../iam/operations/sa/create-access-key.md) for the service account. Save the ID and private key. You'll need them to log in to AWS.
-1. [Create a VM](../compute/operations/vm-create/create-linux-vm.md) from a public [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts) image. Under **Access**, specify the service account that you created in the previous step.
+1. [Create a VM](../compute/operations/vm-create/create-linux-vm.md) from a public [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts) image. Under **{{ ui-key.yacloud.compute.instances.create.section_access }}**, specify the service account that you created in the previous step.
 1. [Connect to the VM](../compute/operations/vm-connect/ssh.md#vm-connect) via SSH.
 1. Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) utility on the VM.
 1. Run this command:
@@ -48,9 +48,9 @@ The cost of data storage support includes:
    ```
 1. Enter the following one by one:
 
-   * `AWS Access Key ID [None]:`: [ID of the service account's access key](../iam/concepts/authorization/access-key.md).
-   * `AWS Secret Access Key [None]:` [Secret access key](../iam/concepts/authorization/access-key.md) of the service account.
-   * `Default region name [None]:` Region `{{ region-id }}`.
+   * `AWS Access Key ID [None]:`: Service account [key ID](../iam/concepts/authorization/access-key.md).
+   * `AWS Secret Access Key [None]:`: [Secret access key](../iam/concepts/authorization/access-key.md) of the service account.
+   * `Default region name [None]:` `{{ region-id }}` region.
 
 {% include [create-bucket](_tutorials_includes/create-bucket.md) %}
 
@@ -127,11 +127,11 @@ If you are running Fluent Bit version below 1.9 that comes with the `td-agent-bi
    Where:
 
    * `data-stream`: {{ yds-name }} data stream ID.
-      > For example, if your stream ID is `/{{ region-id }}/aoeu1kuk2dhtaupdb1es/cc8029jgtuabequtgtbv/logs-stream`, it breaks down into the following parts:
+      > For example, if your stream ID is `/{{ region-id }}/aoeu1kuk2dht********/cc8029jgtuab********/logs-stream`, it breaks down into the following parts:
       > * `logs-stream`: Name of the stream.
       > * `{{ region-id }}`: Region.
-      > * `aoeu1kuk2dhtaupdb1es`: Folder ID.
-      > * `cc8029jgtuabequtgtbv`: {{ ydb-short-name }} database ID.
+      > * `aoeu1kuk2dht********`: Folder ID.
+      > * `cc8029jgtuab********`: {{ ydb-short-name }} database ID.
 
    For more information on how to install Fluent Bit, see the [official documentation](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file).
 
@@ -173,9 +173,9 @@ If you are running Fluent Bit version below 1.9 that comes with the `td-agent-bi
 
 {% include [check-ingestion](_tutorials_includes/check-ingestion.md) %}
 
-## How to delete created resources {#clear-out}
+## How to delete the resources you created {#clear-out}
 
-Some resources are not free of charge. Delete the resources you no longer need to avoid paying for them:
+Some resources are not free of charge. To avoid paying for them, delete the resources you no longer need:
 
 1. [Delete the transfer](../data-transfer/operations/transfer.md#delete).
 1. [Delete the endpoints](../data-transfer/operations/endpoint/index.md#delete).

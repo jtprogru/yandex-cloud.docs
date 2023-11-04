@@ -1,3 +1,8 @@
+---
+title: "Как автоматически просканировать Docker-образ при загрузке"
+description: "Следуя данному руководству, вы сможете автоматически просканировать Docker-образ при загрузке."
+---
+
 # Автоматическое сканирование Docker-образа при загрузке
 
 {% note info %}
@@ -36,10 +41,10 @@
    - Консоль управления
 
      1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../resource-manager/concepts/resources-hierarchy.md#folder), в котором будет создан реестр.
-     1. В списке сервисов выберите **{{ container-registry-name }}**.
-     1. Нажмите кнопку **Создать реестр**.
+     1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_container-registry }}**.
+     1. Нажмите кнопку **{{ ui-key.yacloud.cr.overview.button_create }}**.
      1. Задайте имя реестра.
-     1. Нажмите кнопку **Создать реестр**.
+     1. Нажмите кнопку **{{ ui-key.yacloud.cr.overview.popup-create_button_create }}**.
 
    - CLI
 
@@ -77,11 +82,11 @@
    - Консоль управления
 
      1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите создать сервисный аккаунт.
-     1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
-     1. Нажмите кнопку **Создать сервисный аккаунт**.
+     1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
+     1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-accounts.button_add }}**.
      1. Введите имя сервисного аккаунта.
-     1. Нажмите **Добавить роль** и выберите роль `container-registry.images.scanner`.
-     1. Нажмите кнопку **Создать**.
+     1. Нажмите **{{ ui-key.yacloud.iam.folder.service-account.label_add-role }}** и выберите роль `container-registry.images.scanner`.
+     1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.popup-robot_button_add }}**.
 
    - CLI
 
@@ -118,7 +123,7 @@
 
    {% endlist %}
 
-1. Аналогичным способом создайте сервисный аккаунт с именем `invoker` и назначьте ему роль `serverless.functions.invoker` на каталог, в котором создали реестр.
+1. Аналогичным способом создайте сервисный аккаунт с именем `invoker` и назначьте ему роль `{{ roles-functions-invoker }}` на каталог, в котором создали реестр.
 1. Установите Docker.
 
 ## Создайте функцию {#create-function}
@@ -130,15 +135,15 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать функцию.
-  1. Выберите сервис **{{ sf-name }}**
-  1. Нажмите кнопку **Создать функцию**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.list.button_create }}**.
   1. Введите имя `scan-on-push` и описание функции.
-  1. Нажмите кнопку **Создать**.
-  1. Перейдите в раздел **Редактор** и создайте версию функции:
-     1. В блоке **Код функции**:
-        * Выберите среду исполнения `Bash` и нажмите **Продолжить**.
-        * Выберите способ редактирования функции **Редактор кода**.
-        * В окне для редактирования функции нажмите **Создать файл**. В открывшемся окне введите имя файла `handler.sh` и нажмите **Создать**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
+  1. Перейдите в раздел **{{ ui-key.yacloud.serverless-functions.item.switch_editor }}** и создайте версию функции:
+     1. В блоке **{{ ui-key.yacloud.serverless-functions.item.editor.label_title-source }}**:
+        * Выберите среду исполнения `Bash` и нажмите **{{ ui-key.yacloud.serverless-functions.item.editor.button_action-continue }}**.
+        * Выберите способ редактирования функции `{{ ui-key.yacloud.serverless-functions.item.editor.value_method-editor }}`.
+        * В окне для редактирования функции нажмите **{{ ui-key.yacloud.serverless-functions.item.editor.create-file }}**. В открывшемся окне введите имя файла `handler.sh` и нажмите **{{ ui-key.yacloud.common.create }}**.
         * Скопируйте в файл `handler.sh` следующий код:
 
           ```bash
@@ -150,11 +155,11 @@
           ```
 
         * Укажите точку входа — `handler.sh`.
-     1. В блоке **Параметры** укажите:
-        * Таймаут, с – 60.
-        * Память – 128 МБ.
-        * Сервисный аккаунт – `scanner`.
-     1. В верхнем правом углу нажмите **Создать версию**.
+     1. В блоке **{{ ui-key.yacloud.serverless-functions.item.editor.label_title-params }}** укажите:
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_timeout }}** – `60`.
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_resources-memory }}** – `128 {{ ui-key.yacloud.common.units.label_megabyte }}`.
+        * **{{ ui-key.yacloud.forms.label_service-account-select }}** – `scanner`.
+     1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**.
 
 - CLI
 
@@ -172,7 +177,7 @@
      created_at: "2021-17-05T14:07:32.134Z"
      name: scan-on-push
      log_group_id: eolm8aoq9vcppsieej6h
-     http_invoke_url: https://functions.yandexcloud.net/d4ejb1799eko6re4omb1
+     http_invoke_url: https://{{ sf-url }}/d4ejb1799eko6re4omb1
      status: ACTIVE
      ```
 
@@ -233,20 +238,20 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
-  1. Выберите сервис **{{ sf-name }}**.
-  1. Перейдите на вкладку **Триггеры**.
-  1. Нажмите кнопку **Создать триггер**.
-  1. В блоке **Базовые параметры**:
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+  1. Перейдите на вкладку **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
+  1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
      * Введите имя и описание триггера.
-     * В поле **Тип** выберите **{{ container-registry-name }}**.
-  1. В блоке **Настройки {{ container-registry-name }}**:
-     * В поле **Реестр** выберите реестр, в который будете загружать Docker-образ.
-     * В поле **Типы событий** выберите [событие](../../functions/concepts/trigger/cr-trigger.md#event) **Создание тега Docker-образа**.
-  1. В блоке **Настройки функции**:
+     * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите `{{ ui-key.yacloud.serverless-functions.triggers.form.label_container-registry }}`.
+  1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_container-registry }}**:
+     * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_container-registry }}** выберите реестр, в который будете загружать Docker-образ.
+     * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_event-types }}** выберите [событие](../../functions/concepts/trigger/cr-trigger.md#event) `{{ ui-key.yacloud.serverless-functions.triggers.form.value_event-type-create-image-tag }}`.
+  1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}**:
      * Выберите функцию `scan-on-push`.
      * Укажите [тег версии функции](../../functions/concepts/function.md#tag) `$latest`.
      * Укажите сервисный аккаунт `invoker`, от имени которого будет вызываться функция.
-  1. Нажмите кнопку **Создать триггер**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -410,9 +415,9 @@
 
    - Консоль управления
 
-     1. В [консоли управления]({{ link-console-main }}) выберите сервис **{{ sf-name }}**.
-     1. Перейдите в раздел **Функции** и выберите функцию `scan-on-push`.
-     1. В открывшемся окне перейдите в раздел **Логи** и укажите период. По умолчанию задан период за 1 час.
+     1. В [консоли управления]({{ link-console-main }}) выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+     1. Перейдите в раздел **{{ ui-key.yacloud.serverless-functions.switch_list }}** и выберите функцию `scan-on-push`.
+     1. В открывшемся окне перейдите в раздел **{{ ui-key.yacloud.serverless-functions.item.switch_logs }}** и укажите период. По умолчанию задан период за 1 час.
 
    - CLI
 
@@ -445,10 +450,10 @@
    - Консоль управления
 
      1. В [консоли управления]({{ link-console-main }}) выберите каталог, которому принадлежит реестр, содержащий Docker-образ.
-     1. Выберите сервис **{{ container-registry-name }}**.
+     1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_container-registry }}**.
      1. Выберите реестр, в который загрузили Docker-образ.
      1. Откройте репозиторий, в котором находится Docker-образ.
-     1. Выберите нужный Docker-образ и проверьте значение параметра **Дата последнего сканирования**.
+     1. Выберите нужный Docker-образ и проверьте значение параметра **{{ ui-key.yacloud.cr.image.label_last-scan-time }}**.
 
    - CLI
 
@@ -483,7 +488,7 @@
 
 {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-Чтобы  с помощью {{ TF }}:
+Чтобы настроить автоматическое сканирование Docker-образа при загрузке  с помощью {{ TF }}:
 
 1. [Установите {{ TF }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform) и [получите данные для аутентификации](../../tutorials/infrastructure-management/terraform-quickstart.md#get-credentials).
 1. Укажите источник для установки провайдера {{ yandex-cloud }} (раздел [{#T}](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider), шаг 1).

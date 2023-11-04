@@ -2,7 +2,11 @@
 editable: false
 ---
 
-# Pricing for {{ mgp-name }}
+# {{ mgp-name }} pricing
+
+In this section, you can find {{ mgp-name }} pricing [rules](#rules) and [effective prices](#prices) for the service's resources.
+
+To calculate the service cost, use the [calculator]({{ link-calc }}) on the {{ yandex-cloud }} website.
 
 {% include [currency-choice](../../_includes/pricing/currency-choice.md) %}
 
@@ -39,7 +43,7 @@ The minimum billing unit is a minute (for example, 1.5 minutes of host usage cos
 
 ### Disk space usage {#rules-storage}
 
-The following is charged:
+You are charged for the following:
 
 * Storage allocated for clusters.
 
@@ -48,16 +52,17 @@ The following is charged:
       * For Intel Ice Lake: In {{ local-ssd-v3-step }} increments.
    * You can only order storage on non-replicated SSDs (`network-ssd-nonreplicated`) in 93 GB increments for clusters with two master hosts.
 
+   To save money on storage, export [AO and AOCO tables](../tutorials/yezzey.md) from disks within the {{ mgp-name }} cluster to a cold storage in {{ objstorage-full-name }}. The data will be stored in a service bucket in a compressed and encrypted form, which is more cost-efficient. The cost of such storage is calculated based on the [{{ objstorage-name }} pricing policy](../../storage/pricing.md).
+
 * Space used by DB backups in excess of the storage amount specified for the cluster.
 
    * Backups are stored free of charge as long as the combined size of the database and all backups is less than the storage volume selected.
 
-   * During an automatic backup, {{ mgp-name }} doesn't create a new copy, but saves changes to the database compared to the previous copy. This means that storage used by automatic backups increases only in proportion to the volume of changes that are made.
+   * During an automatic backup, {{ mgp-name }} does not create a new copy but saves changes to the database compared to the previous copy. This means that storage used by automatic backups increases only in proportion to the volume of changes that are made.
 
    * The number of hosts in the cluster does not affect the size of the storage or free backups.
 
 The cost is specified for one month of use and is based on 720 hours per month. The minimum billing unit is 1 GB per minute (for example, storing 1 GB for 1.5 minutes costs the same as storing 1 GB for 2 minutes).
-
 
 ### Example of cluster cost calculation {#example}
 
@@ -115,6 +120,18 @@ Where:
 * 50: Amount of local SSD storage (in GB) for dedicated hosts.
 * $0.104080: Cost of using 1 GB of local SSD storage per month.
 
+## Discount for committed volumes of services (CVoS) {#cvos}
+
+{% include [cvos](../../_includes/mdb/cvos.md) %}
+
+{{ mgp-name }} provides two types of CVoS: on vCPUs and RAM on the hosts you plan to use in DB clusters. In the management console, you can see potential savings from using a CVoS at the current resource usage. You can also forecast your monthly payments for the desired number of vCPUs and RAM.
+
+{% note info %}
+
+You can use a CVoS to order certain types of resources. For non-supported resources, CVoS columns contain dashes under [Prices](#prices). Currently, you cannot order storage, web traffic, and computing resources for dedicated hosts this way.
+
+{% endnote %}
+
 ## Pricing {#prices}
 
 
@@ -169,6 +186,8 @@ The cost of storage on local SSDs (`local-ssd`) also depends on the host type.
 
 
 {% endlist %}
+
+The cost of [cold storage in {{ objstorage-full-name }}](../tutorials/yezzey.md) is calculated based on the [{{ objstorage-name }} pricing policy](../../storage/pricing.md).
 
 Pricing for backup storage has the following specifics:
 

@@ -10,8 +10,8 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmy-name }}**.
-  1. Нажмите на имя нужного кластера, затем выберите вкладку **Базы данных**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
+  1. Нажмите на имя нужного кластера, затем выберите вкладку **{{ ui-key.yacloud.mysql.cluster.switch_databases }}**.
 
 - CLI
 
@@ -23,7 +23,7 @@
 
   ```bash
     {{ yc-mdb-my }} database list \
-       --cluster-name=<имя кластера>
+       --cluster-name=<имя_кластера>
   ```
 
   Имя кластера можно запросить со [списком кластеров в каталоге](cluster-list.md).
@@ -44,12 +44,12 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmy-name }}**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
   1. Нажмите на имя нужного кластера.
   1. Если владельцем новой базы данных должен стать еще не существующий пользователь, [создайте его](cluster-users.md#adduser).
-  1. Выберите вкладку **Базы данных**.
-  1. Нажмите кнопку **Добавить**.
-  1. Введите имя для базы данных и нажмите кнопку **Добавить**.
+  1. Выберите вкладку **{{ ui-key.yacloud.mysql.cluster.switch_databases }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.databases.button_add }}**.
+  1. Введите имя для базы данных и нажмите кнопку **{{ ui-key.yacloud.mdb.dialogs.popup-add-db_button_add }}**.
 
       {% include [db-name-limits](../../_includes/mdb/mmy/note-info-db-name-limits.md) %}
 
@@ -72,7 +72,7 @@
   1. Выполните команду создания БД:
 
       ```bash
-      {{ yc-mdb-my }} database create <имя базы данных> --cluster-name=<имя кластера>
+      {{ yc-mdb-my }} database create <имя_БД> --cluster-name=<имя_кластера>
       ```
 
       {% include [db-name-limits](../../_includes/mdb/mmy/note-info-db-name-limits.md) %}
@@ -90,9 +90,9 @@
   1. Добавьте ресурс `yandex_mdb_mysql_database`:
 
       ```hcl
-      resource "yandex_mdb_mysql_database" "<имя базы данных>" {
-        cluster_id = "<идентификатор кластера>"
-        name       = "<имя базы данных>"
+      resource "yandex_mdb_mysql_database" "<имя_БД>" {
+        cluster_id = "<идентификатор_кластера>"
+        name       = "<имя_БД>"
       }
       ```
 
@@ -126,9 +126,9 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmy-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Базы данных**.
-  1. Нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) в строке нужной БД и выберите пункт **Удалить**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mysql.cluster.switch_databases }}**.
+  1. Нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) в строке нужной БД и выберите пункт **{{ ui-key.yacloud.mdb.cluster.databases.button_action-remove }}**.
 
 - CLI
 
@@ -139,7 +139,7 @@
   Чтобы удалить базу данных, выполните команду:
 
   ```bash
-   {{ yc-mdb-my }} database delete <имя базы данных> --cluster-name=<имя кластера>
+   {{ yc-mdb-my }} database delete <имя_БД> --cluster-name=<имя_кластера>
   ```
 
   Имя кластера можно запросить со [списком кластеров в каталоге](cluster-list.md).
@@ -185,13 +185,13 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmy-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. В блоке **Настройки СУБД** нажмите кнопку **Настроить**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_settings }}** нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_configure-settings }}**.
   1. В списке настроек найдите параметр **sql_mode**.
-  1. Задайте набор режимов SQL с помощью выпадающего списка. Чтобы вернуть настройки по умолчанию, нажмите кнопку **Сбросить**.
-  1. Нажмите кнопку **Сохранить** в диалоговом окне настроек СУБД.
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. Задайте набор режимов SQL с помощью выпадающего списка. Чтобы вернуть настройки по умолчанию, нажмите кнопку **{{ ui-key.yacloud.component.mdb.settings.button_reset }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.component.mdb.settings.popup_settings-submit }}** в диалоговом окне настроек СУБД.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -203,7 +203,7 @@
 
   ```bash
   {{ yc-mdb-my }} cluster update-config \
-    --name <имя кластера> \
+    --name <имя_кластера> \
     --set '"sql_mode=NO_KEY_OPTIONS,NO_TABLE_OPTIONS"'
   ```
 
@@ -220,10 +220,10 @@
     1. Задайте нужные режимы SQL в значении параметра `sql_mode` блока `mysql_config`, например:
 
         ```hcl
-        resource "yandex_mdb_mysql_cluster" "<имя кластера>" {
+        resource "yandex_mdb_mysql_cluster" "<имя_кластера>" {
           ...
           mysql_config = {
-            sql_mode = "<список режимов SQL>"
+            sql_mode = "<список_режимов_SQL>"
             ...
           }
         }
@@ -264,11 +264,11 @@
 1. Выполните запрос [ALTER DATABASE](https://dev.mysql.com/doc/refman/5.7/en/charset-database.html):
 
    ```sql
-   ALTER DATABASE <имя БД> CHARACTER SET = 'utf8mb4' COLLATE = 'utf8mb4_unicode_ci';
+   ALTER DATABASE <имя_БД> CHARACTER SET = 'utf8mb4' COLLATE = 'utf8mb4_unicode_ci';
    ```
 
 1. Чтобы настройки изменились не только для самой базы данных, но и для таблиц в ней, сконвертируйте таблицы с теми же настройками:
 
    ```sql
-   ALTER TABLE <имя БД>.<имя таблицы> CONVERT TO CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
+   ALTER TABLE <имя_БД>.<имя_таблицы> CONVERT TO CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
    ```

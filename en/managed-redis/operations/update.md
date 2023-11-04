@@ -34,7 +34,7 @@ For information about how to update the {{ RD }} cluster version, see [{#T}](clu
 
    1. In the [management console]({{ link-console-main }}), select the folder with the cluster you need.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
-   1. Select the desired cluster.
+   1. Select the cluster you need.
    1. At the top of the page, click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. Under **{{ ui-key.yacloud.mdb.forms.section_base }}**, enter a new name and description for the cluster.
    1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
@@ -89,7 +89,7 @@ For information about how to update the {{ RD }} cluster version, see [{#T}](clu
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -118,7 +118,7 @@ For information about how to update the {{ RD }} cluster version, see [{#T}](clu
 
    1. In the [management console]({{ link-console-main }}), select the folder with the cluster you need.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
-   1. Select the desired cluster.
+   1. Select the cluster you need.
    1. At the top of the page, click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. Under **{{ ui-key.yacloud.mdb.forms.section_resource }}**:
 
@@ -203,7 +203,7 @@ For information about how to update the {{ RD }} cluster version, see [{#T}](clu
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -238,7 +238,7 @@ For information about how to update the {{ RD }} cluster version, see [{#T}](clu
 
    1. In the [management console]({{ link-console-main }}), select the folder with the cluster you need.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
-   1. Select the desired cluster.
+   1. Select the cluster you need.
    1. At the top of the page, click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. Edit the settings in the **{{ ui-key.yacloud.mdb.forms.section_disk }}** section.
    1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
@@ -290,7 +290,7 @@ For information about how to update the {{ RD }} cluster version, see [{#T}](clu
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -322,7 +322,7 @@ You can change the DBMS settings of the hosts in your cluster. All supported set
 
    1. In the [management console]({{ link-console-main }}), select the folder with the cluster you need.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
-   1. Select the desired cluster.
+   1. Select the cluster you need.
    1. At the top of the page, click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. Under **{{ ui-key.yacloud.mdb.forms.section_settings }}**, click **{{ ui-key.yacloud.mdb.forms.button_configure-settings }}**.
    1. Configure the available parameters according to the [{{ RD }} documentation](https://redis.io/documentation).
@@ -356,7 +356,7 @@ You can change the DBMS settings of the hosts in your cluster. All supported set
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -384,7 +384,7 @@ You can change the DBMS settings of the hosts in your cluster. All supported set
 
    1. In the [management console]({{ link-console-main }}), select the folder with the cluster you need.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
-   1. Select the desired cluster.
+   1. Select the cluster you need.
    1. At the top of the page, click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. Change additional cluster settings:
 
@@ -421,7 +421,7 @@ You can change the DBMS settings of the hosts in your cluster. All supported set
 
    {% include [backup-window-start](../../_includes/mdb/cli/backup-window-start.md) %}
 
-   * `--maintenance-window`: Settings for the [maintenance window](../concepts/maintenance.md) (including those for disabled clusters):
+   * `--maintenance-window`: Settings for the [maintenance window](../concepts/maintenance.md) (including those for disabled clusters), where `type` is the maintenance type:
 
       {% include [maintenance-window](../../_includes/mdb/cli/maintenance-window-description.md) %}
 
@@ -453,9 +453,9 @@ You can change the DBMS settings of the hosts in your cluster. All supported set
 - Management console
 
    1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon to the right of the cluster you wish to move.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) to the right of the cluster you want to move.
    1. Select **{{ ui-key.yacloud.mdb.clusters.button_action-move }}**.
-   1. Select the folder you want to move the cluster to.
+   1. Select a folder you want to move the cluster to.
    1. Click **{{ ui-key.yacloud.mdb.dialogs.popup_button_move-cluster }}**.
 
 - CLI
@@ -493,19 +493,13 @@ You can change the DBMS settings of the hosts in your cluster. All supported set
 
 ## Changing security groups {#change-sg-set}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 {% list tabs %}
 
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder with the cluster you need.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
-   1. Select the desired cluster.
+   1. Select the cluster you need.
    1. At the top of the page, click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. Under **{{ ui-key.yacloud.mdb.forms.section_network }}**, select security groups for cluster network traffic.
 
@@ -549,7 +543,7 @@ You can change the DBMS settings of the hosts in your cluster. All supported set
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

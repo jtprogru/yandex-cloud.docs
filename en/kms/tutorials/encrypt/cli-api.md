@@ -2,7 +2,7 @@
 
 In {{ kms-short-name }}, you can encrypt and decrypt small amounts of data (up to 32 KB). For more information about available encryption methods, see [{#T}](./index.md)
 
-## Before you begin {#before-you-begin}
+## Getting started {#before-you-begin}
 
 {% include [cli-install](../../../_includes/cli-install.md) %}
 
@@ -12,25 +12,25 @@ In {{ kms-short-name }}, you can encrypt and decrypt small amounts of data (up t
 
 - CLI
 
-   The command encrypts the plaintext passed in the `--plaintext-file` and writes the resulting ciphertext to the `--ciphertext-file`.
+   The command encrypts the plain text provided in the `--plaintext-file` and writes the resulting ciphertext to `--ciphertext-file`.
 
    * `--id`: ID of the [KMS key](../../concepts/key.md), make sure you set either the `--id` or `--name` flag.
    * `--name`: Name of the KMS key, make sure you set either the `--id` or `--name` flag.
-   * `--version-id` (optional): [Version](../../concepts/version.md) of the KMS key to be used for encryption. The primary version is used by default.
+   * `--version-id` (optional): [Version](../../concepts/version.md) of the KMS key to use for encryption. The primary version is used by default.
    * `--plaintext-file`: Input file with plaintext.
-   * `--aad-context-file` (optional): Input file with [AAD context](../../concepts/encryption.md#add-context).
+   * `--aad-context-file` (optional): Input file with [AAD context](../../concepts/symmetric-encryption.md#add-context).
    * `--ciphertext-file`: Output file with ciphertext.
 
    ```
    yc kms symmetric-crypto encrypt \
-     --id abj76v82ficsmn446ri7 \
+     --id abj76v82fics******** \
      --plaintext-file plaintext-file \
      --ciphertext-file ciphertext-file
    ```
 
 - API
 
-   Use the [encrypt](../../api-ref/SymmetricCrypto/encrypt) method for the `SymmetricCrypto` resource.
+   To encrypt data, use the [encrypt](../../api-ref/SymmetricCrypto/encrypt.md) REST API method for the [SymmetricCrypto](../../api-ref/SymmetricCrypto/index.md) resource or the [SymmetricCryptoService/Encrypt](../../api-ref/grpc/symmetric_crypto_service.md#Encrypt) gRPC API call.
 
 {% endlist %}
 
@@ -40,12 +40,12 @@ In {{ kms-short-name }}, you can encrypt and decrypt small amounts of data (up t
 
 - CLI
 
-   The command decrypts the ciphertext passed in the `--ciphertext-file` and writes the resulting plaintext to the `--plaintext-file`:
+   The command decrypts the ciphertext provided in `--ciphertext-file` and writes the resulting plain text to `--plaintext-file`:
 
    * `--id`: ID of the [KMS key](../../concepts/key.md), make sure you set either the `--id` or `--name` flag.
    * `--name`: Name of the KMS key, make sure you set either the `--id` or `--name` flag.
    * `--ciphertext-file`: Input file with plaintext.
-   * `--aad-context-file` (optional): Input file with [AAD context](../../concepts/encryption.md#add-context).
+   * `--aad-context-file` (optional): Input file with [AAD context](../../concepts/symmetric-encryption.md#add-context).
    * `--plaintext-file`: Output file with ciphertext.
 
    ```
@@ -57,12 +57,13 @@ In {{ kms-short-name }}, you can encrypt and decrypt small amounts of data (up t
 
 - API
 
-   Use the [decrypt](../../api-ref/SymmetricCrypto/decrypt) method for the `SymmetricCrypto` resource.
+   To decrypt data, use the [decrypt](../../api-ref/SymmetricCrypto/decrypt.md) REST API method for the [SymmetricCrypto](../../api-ref/SymmetricCrypto/index.md) resource or the [SymmetricCryptoService/Decrypt](../../api-ref/grpc/symmetric_crypto_service.md#Decrypt) gRPC API call.
 
 {% endlist %}
 
 #### See also {#see-also}
 
 * [Command line interface CLI](../../../cli).
-* [Encryption in {{ kms-name }}](../../concepts/encryption.md).
+* [Symmetric encryption in {{ kms-full-name }}](../../concepts/symmetric-encryption.md).
+* [Asymmetric encryption in {{ kms-full-name }}](../../concepts/asymmetric-encryption.md).
 * [Managing keys in {{ kms-name }}](../../operations/index.md).

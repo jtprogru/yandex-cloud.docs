@@ -1,8 +1,9 @@
-# Synthesize speech from SSML text using API v1
+# Speech synthesis from SSML text using API v1
 
-The example shows how you can synthesize speech from [SSML](../markup/ssml.md) text to an [OggOpus](../../formats.md) file using the [API v1](../request.md).
+With the [API v1](../request.md), you can synthesize speech from text marked up using [SSML](../markup/ssml.md) to an [OggOpus](../../formats.md) file.
 
 The example uses the following synthesis parameters:
+
 * [Language](../index.md#langs): Russian.
 * [Voice](../voices.md): `jane`.
 * Other parameters were left with their default values.
@@ -33,16 +34,16 @@ The Yandex account or federated account are authenticated using an [IAM token](.
 
       Where:
 
-      * `FOLDER_ID`: [ID of the folder](../../../resource-manager/operations/folder/get-id.md).
+      * `FOLDER_ID`: [Folder ID](../../../resource-manager/operations/folder/get-id.md).
       * `IAM_TOKEN`: [IAM token](../../../iam/concepts/authorization/iam-token.md).
       * `ssml`: File with text marked up according to [SSML](../markup/ssml.md) rules.
       * `lang`: [Language](../index.md#langs) of the text.
 
-   The synthesized speech will be written to the `speech.ogg` file in the directory from which you sent your request.
+   The synthesized speech will be written to the `speech.ogg` file in the directory that you sent your request from.
 
 {% endlist %}
 
-#### For details, see also {#see-also}
+#### See also {#see-also}
 
 * [{#T}](../request.md)
 * [{#T}](tts-wav.md)

@@ -1,21 +1,23 @@
-# {{ wiki-full-name }} revision history for May 2023
+# {{ wiki-full-name }} revision history for September 2023
 
-* [Emoji support](#emoji-support)
-* [Copying tables](#tables-copy)
+* [Comments on the contents of a page](#comments-on-content)
+* [Dynamic table header](#grid-header)
 
-## Emoji support {#emoji-support}
+## Comments on the contents of a page {#comments-on-content}
 
-Now you can add emojis on {{ wiki-name }} pages using their text-based description. To do this, in page edit mode, type a colon (`:`) and select the emoji you need from the list. The service currently supports the basic set of emojis. In addition, in edit mode, you can now use shortcuts that will be replaced with the associated emoji when you save your changes to the {{ wiki-name }} page.
-You can only use emojis and shortcuts in the [new editor](../wysiwyg-edit.md).
+You can now comment on the contents of a {{ wiki-name }} page. To leave a comment:
 
-![](../../_assets/wiki/emoji-plugin.png =690x325)
+1. Select a text fragment.
+1. In the panel that opens, click ![](../../_assets/wiki/svg/comment.svg).
+1. Enter the text of your comment.
+1. Click **Save**.
 
+## Dynamic table header {#grid-header}
 
-## Copying tables {#tables-copy}
+A [dynamic table](../pages-types.md#grid) now has a header that contains:
 
-The **Table settings** menu now includes the copy feature. To copy a table, open the settings in its top-right corner using ![](../../_assets/wiki/svg/settings.svg) and select **Create copy**. When copying a table, you can specify:
-* Name of the copy being created.
-* Address at which the new table will be accessible in a browser.
-* Position of the new table in the page hierarchy.
-
-By default, tables are copied without their content.
+* Name (editable)
+* Search option
+* Sorting option
+* Settings
+* Additional information

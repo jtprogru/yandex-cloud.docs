@@ -12,6 +12,8 @@
 * [{#T}](cluster-backups.md)
 * [{#T}](cluster-delete.md)
 
+Если вы хотите перенести хосты кластера {{ mgp-name }} в другую зону доступности, см. [инструкцию по управлению резервными копиями](cluster-backups.md).
+
 ## Базы данных
 
 * [{#T}](connect.md)
@@ -21,6 +23,7 @@
 
 * [{#T}](roles-and-users.md)
 * [{#T}](resource-groups.md)
+* [{#T}](command-center.md)
 * [{#T}](cluster-process.md)
 
 ## Расширения {{ GP }}

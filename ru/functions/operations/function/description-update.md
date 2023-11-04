@@ -1,3 +1,8 @@
+---
+title: "Изменить описание функции"
+description: "Следуя данной инструкции, вы сможете изменить описание функции."
+---
+
 # Изменить описание функции
 
 {% list tabs %}
@@ -5,11 +10,11 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите изменить описание [функции](../../concepts/function.md).
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Выберите функцию.
-    1. В правом верхнем углу нажмите кнопку **Редактировать**.
+    1. В правом верхнем углу нажмите кнопку **{{ ui-key.yacloud.serverless-functions.list.button_action-edit }}**.
     1. В открывшемся окне укажите нужное описание функции.
-    1. Нажмите кнопку **Сохранить**.        
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
     
 - CLI
   
@@ -26,15 +31,15 @@
     Результат:
 
     ```       
-    id: b097d9ous3gep99khe83
-    folder_id: aoek49ghmknnpj1ll45e
+    id: b097d9ous3ge********
+    folder_id: aoek49ghmknn********
     created_at: "2019-06-06T11:36:48.688Z"
     name: my-beta-function
     description: My beta function.
     labels:
       test: test
-    log_group_id: eolv6578frac08uh5h6s
-    http_invoke_url: https://functions.yandexcloud.net/b097d9ous3gep99khe83
+    log_group_id: eolv6578frac********
+    http_invoke_url: https://{{ sf-url }}/b097d9ous3ge********
     status: ACTIVE
     ```
 
@@ -42,7 +47,7 @@
 
     {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     Чтобы изменить описание функции:
 
@@ -106,8 +111,10 @@
 
     Чтобы изменить описание функции, воспользуйтесь методом REST API [update](../../functions/api-ref/Function/update.md) для ресурса [Function](../../functions/api-ref/Function/index.md) или вызовом gRPC API [FunctionService/Update](../../functions/api-ref/grpc/function_service.md#Update).
 
+
 - {{ yandex-cloud }} Toolkit
 
     Изменить описание функции можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}

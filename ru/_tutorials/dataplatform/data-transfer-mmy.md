@@ -27,8 +27,6 @@
     * [Инструкция для {{ mmy-name }}](../../managed-mysql/operations/connect.md#configuring-security-groups).
     * [Инструкция для {{ mkf-name }}](../../managed-kafka/operations/connect.md#configuring-security-groups).
 
-    {% include [preview-pp.md](../../_includes/preview-pp.md) %}
-
 
 1. Установите на локальный компьютер [утилиту](https://github.com/edenhill/kcat) `kcat` (`kafkacat`) и [утилиту командной строки MySQL](https://www.mysql.com/downloads/). Например, в Ubuntu 20.04 выполните команду:
 
@@ -65,13 +63,13 @@
 
     ```sql
     INSERT INTO db1.measurements VALUES
-        ('iv9a94th6rztooxh5ur2', '2022-06-05 17:27:00', 55.70329032, 37.65472196,  427.5,    0, 23.5, 17, NULL),
-        ('rhibbh3y08qmz3sdbrbu', '2022-06-06 09:49:54', 55.71294467, 37.66542005, 429.13, 55.5, NULL, 18, 32);
+        ('iv9a94th6rzt********', '2022-06-05 17:27:00', 55.70329032, 37.65472196,  427.5,    0, 23.5, 17, NULL),
+        ('rhibbh3y08qm********', '2022-06-06 09:49:54', 55.71294467, 37.66542005, 429.13, 55.5, NULL, 18, 32);
     ```
 
 ## Подготовьте кластер-приемник {#prepare-target}
 
-Настройки различаются в зависимости от используемого [способа управления топиками](../../managed-kafka/concepts/topics.md#management). При этом имена топиков для данных формируются по следующему принципу — `<префикс топика>.<имя схемы>.<имя таблицы>`. В этом руководстве в качестве примера будет использоваться префикс `cdc`.
+Настройки различаются в зависимости от используемого [способа управления топиками](../../managed-kafka/concepts/topics.md#management). При этом имена топиков для данных формируются по следующему принципу — `<префикс_топика>.<имя_схемы>.<имя_таблицы>`. В этом руководстве в качестве примера будет использоваться префикс `cdc`.
 
 {% list tabs %}
 
@@ -101,7 +99,7 @@
 
 1. [Создайте эндпоинт](../../data-transfer/operations/endpoint/index.md#create) для источника {{ MY }} с [настройками](../../data-transfer/operations/endpoint/source/mysql.md):
 
-    * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** — `MySQL`.
+    * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** — `{{ ui-key.yacloud.data-transfer.label_endpoint-type-MYSQL }}`.
     * **{{ ui-key.yacloud.data-transfer.forms.section-endpoint }}**:
         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mysql.console.form.mysql.MysqlSource.connection.title }}** — `{{ ui-key.yc-data-transfer.data-transfer.console.form.mysql.console.form.mysql.MysqlConnectionType.mdb_cluster_id.title }}`.
         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mysql.console.form.mysql.MysqlConnectionType.mdb_cluster_id.title }}** — выберите [созданный ранее](#before-you-begin) кластер {{ mmy-name }}.
@@ -112,7 +110,7 @@
 
 1. [Создайте эндпоинт](../../data-transfer/operations/endpoint/index.md#create) для приемника {{ KF }} с [настройками](../../data-transfer/operations/endpoint/source/kafka.md):
 
-    * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** — `Kafka`.
+    * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** — `{{ ui-key.yacloud.data-transfer.label_endpoint-type-KAFKA }}`.
     * **{{ ui-key.yacloud.data-transfer.forms.section-endpoint }}**:
         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.kafka.console.form.kafka.KafkaTargetConnection.connection_type.title }}** — `{{ ui-key.yc-data-transfer.data-transfer.console.form.kafka.console.form.kafka.KafkaConnectionType.managed.title }}`.
             * **{{ ui-key.yc-data-transfer.data-transfer.console.form.kafka.console.form.kafka.ManagedKafka.cluster_id.title }}** — выберите [созданный ранее](#before-you-begin) кластер {{ mkf-name }}.
@@ -136,7 +134,7 @@
     ```bash
     kafkacat \
         -C \
-        -b <FQDN хоста-брокера-1>:9091,...,<FQDN хоста-брокера N>:9091 \
+        -b <FQDN_хоста-брокера_1>:9091,...,<FQDN_хоста-брокера_N>:9091 \
         -t cdc.db1.measurements \
         -X security.protocol=SASL_SSL \
         -X sasl.mechanisms=SCRAM-SHA-512 \
@@ -153,8 +151,8 @@
 
     ```sql
     INSERT INTO db1.measurements VALUES
-        ('iv7b74th678tooxh5ur2', '2022-06-08 17:45:00', 53.70987913, 36.62549834, 378.0, 20.5, 5.3, 20, NULL),
-        ('iv9a94th678tooxh5ur2', '2022-06-07 15:00:10', 55.70985913, 37.62141918,  417.0, 15.7, 10.3, 17, NULL);
+        ('iv7b74th678t********', '2022-06-08 17:45:00', 53.70987913, 36.62549834, 378.0, 20.5, 5.3, 20, NULL),
+        ('iv9a94th678t********', '2022-06-07 15:00:10', 55.70985913, 37.62141918,  417.0, 15.7, 10.3, 17, NULL);
     ```
 
 1. Убедитесь, что в терминале с запущенной утилитой `kafkacat` отобразились схема формата данных таблицы `db1.measurements` и сведения о добавленных строках.
@@ -164,7 +162,7 @@
     ```json
     {
         "payload": {
-            "device_id": "iv7b74th678tooxh5ur2"
+            "device_id": "iv7b74th678t********"
         },
         "schema": {
             "fields": [
@@ -185,7 +183,7 @@
                 "battery_voltage": 5.3,
                 "cabin_temperature": 20,
                 "datetime": "2020-06-08T17:45:00Z",
-                "device_id": "iv7b74th678tooxh5ur2",
+                "device_id": "iv7b74th678t********",
                 "fuel_level": null,
                 "latitude": 53.70987913,
                 "longitude": 36.62549834,
@@ -197,7 +195,7 @@
                 "connector": "mysql",
                 "db": "db1",
                 "file": "mysql-log.000016",
-                "gtid": "1e46a80b-2e96-11ed-adf7-d00d18378058:1-98501",
+                "gtid": "1e46a80b-2e96-11ed-adf7-d00d183780**:*-*****",
                 "name": "cdc",
                 "pos": 1547357,
                 "query": null,

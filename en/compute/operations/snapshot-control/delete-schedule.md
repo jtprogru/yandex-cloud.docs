@@ -9,9 +9,9 @@ To delete a disk snapshot schedule:
    1. In the [management console]({{ link-console-main }}), select the folder where the schedule is located.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
    1. In the left-hand panel, select ![image](../../../_assets/compute/snapshots.svg) **{{ ui-key.yacloud.compute.switch_snapshots }}**.
-   1. Click the **{{ ui-key.yacloud.compute.snapshots-schedules.label_title }}** tab.
-   1. Next to the schedule you wish to delete, click ![image](../../../_assets/options.svg) and select **{{ ui-key.yacloud.common.delete }}**.
-   1. Confirm schedule deletion.
+   1. Go to the **{{ ui-key.yacloud.compute.snapshots-schedules.label_title }}** tab.
+   1. Next to the schedule to delete, click ![image](../../../_assets/options.svg) and select **{{ ui-key.yacloud.common.delete }}**.
+   1. Confirm the schedule deletion.
 
 - CLI
 
@@ -76,6 +76,47 @@ To delete a disk snapshot schedule:
       ```text
       done (5s)
       ```
+
+- {{ TF }}
+
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+   1. Open the {{ TF }} configuration file and delete the fragment with the schedule description:
+
+      {% cut "Sample schedule description in the {{ TF }} configuration" %}
+
+      ```hcl
+      resource "yandex_compute_snapshot_schedule" "default" {
+        name = "my-name"
+
+        schedule_policy {
+          expression = "0 0 * * *"
+        }
+
+        snapshot_count = 1
+
+        snapshot_spec {
+            description = "snapshot-description"
+            labels = {
+              snapshot-label = "my-snapshot-label-value"
+            }
+        }
+
+        disk_ids = ["test_disk_id", "another_test_disk_id"]
+      }
+      ```
+
+      {% endcut %}
+
+   1. Apply the changes:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+   You can check the schedule deletion using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
+
+   ```bash
+   yc compute snapshot-schedule list
+   ```
 
 - API
 

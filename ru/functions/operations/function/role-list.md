@@ -1,8 +1,13 @@
+---
+title: "Как посмотреть роли, назначенные на функцию"
+description: "Следуя данной инструкции, вы сможете посмотреть роли, назначенные на функцию."
+---
+
 # Посмотреть роли, назначенные на функцию
 
 {% note info %}
 
-[Роли](../../security/index.md#roles), назначенные на каталог или облако, автоматически [наследуются](../../../iam/concepts/access-control/index.md#inheritance) функцией. При этом они не отображаются в списке ролей, назначенных на нее. Подробнее о [просмотре ролей](../../../iam/operations/roles/get-assigned-roles.md).
+[Роли](../../security/index.md#roles-list), назначенные на каталог или облако, автоматически [наследуются](../../../iam/concepts/access-control/index.md#inheritance) функцией. При этом они не отображаются в списке ролей, назначенных на нее. Подробнее о [просмотре ролей](../../../iam/operations/roles/get-assigned-roles.md).
 
 {% endnote %}
 
@@ -14,7 +19,7 @@
 
     {% include [default-catalogue](../../../_includes/default-catalogue.md) %}
 
-    Чтобы посмотреть [роли](../../security/index.md#roles), назначенные на функцию, выполните команду:
+    Чтобы посмотреть [роли](../../security/index.md#roles-list), назначенные на функцию, выполните команду:
     
     ```
     yc serverless function list-access-bindings <имя функции>
@@ -25,7 +30,7 @@
     +------------------------------+--------------+-----------------------+
     |           ROLE ID            | SUBJECT TYPE |       SUBJECT ID      |
     +------------------------------+--------------+-----------------------+
-    | serverless.functions.invoker | system       | allAuthenticatedUsers |
+    | {{ roles-functions-invoker }}    | system       | allAuthenticatedUsers |
     +------------------------------+--------------+-----------------------+
     ```
 

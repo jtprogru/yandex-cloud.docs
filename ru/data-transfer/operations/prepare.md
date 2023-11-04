@@ -37,7 +37,7 @@
 
 - {{ mkf-name }}
 
-  [Создайте пользователя](../../managed-kafka/operations/cluster-accounts.md#create-account) с ролью `ACCESS_ROLE_CONSUMER` на топике-источнике.
+    1. [Создайте пользователя](../../managed-kafka/operations/cluster-accounts.md#create-account) с ролью `ACCESS_ROLE_CONSUMER` на топике-источнике.
 
 - {{ KF }}
 
@@ -47,9 +47,21 @@
 
     1. [Настройте права доступа](https://kafka.apache.org/documentation/#multitenancy-security) пользователя к нужному топику.
 
+    1. Выдайте права `READ` консьюмер-группе, идентификатор которой совпадает с идентификатором трансфера.
+
+        ```text
+        bin/kafka-acls --bootstrap-server localhost:9092 \
+          --command-config adminclient-configs.conf \
+          --add \
+          --allow-principal User:username \
+          --operation Read \
+          --group <идентификатор_трансфера>
+        ```
+
     1. (Опционально) Чтобы использовать авторизацию по логину и паролю, [настройте SASL-аутентификацию](https://kafka.apache.org/documentation/#security_sasl).
 
 {% endlist %}
+
 
 ### Источник {{ CH }} {#source-ch}
 
@@ -73,6 +85,12 @@
 
 ### Источник {{ GP }} {#source-gp}
 
+{% note info %}
+
+{% include [matview limits](../../_includes/data-transfer/pg-gp-matview.md) %}
+
+{% endnote %}
+
 {% list tabs %}
 
 
@@ -81,7 +99,7 @@
     1. Создайте пользователя, от имени которого трансфер подключится к источнику. Для этого выполните команду:
 
         ```pgsql
-        CREATE ROLE <имя пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
+        CREATE ROLE <имя_пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
         ```
 
     1. Настройте кластер-источник так, чтобы созданный пользователь мог подключаться ко всем [хостам-мастерам](../../managed-greenplum/concepts/index.md) кластера.
@@ -97,8 +115,8 @@
         В этом примере привилегии выдаются на все таблицы в выбранной схеме:
 
         ```pgsql
-        GRANT SELECT ON ALL TABLES IN SCHEMA <название схемы> TO <имя пользователя>;
-        GRANT USAGE ON SCHEMA <название схемы> TO <имя пользователя>;
+        GRANT SELECT ON ALL TABLES IN SCHEMA <название_схемы> TO <имя_пользователя>;
+        GRANT USAGE ON SCHEMA <название_схемы> TO <имя_пользователя>;
         ```
 
 
@@ -109,7 +127,7 @@
     1. Создайте пользователя, от имени которого трансфер подключится к источнику. Для этого выполните команду:
 
         ```pgsql
-        CREATE ROLE <имя пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
+        CREATE ROLE <имя_пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
         ```
 
     1. Настройте кластер-источник так, чтобы созданный пользователь мог подключаться ко всем [хостам-мастерам](../../managed-greenplum/concepts/index.md) кластера.
@@ -125,8 +143,8 @@
         В этом примере привилегии выдаются на все таблицы базы данных:
 
         ```pgsql
-        GRANT SELECT ON ALL TABLES IN SCHEMA <название схемы> TO <имя пользователя>;
-        GRANT USAGE ON SCHEMA <название схемы> TO <имя пользователя>;
+        GRANT SELECT ON ALL TABLES IN SCHEMA <название_схемы> TO <имя_пользователя>;
+        GRANT USAGE ON SCHEMA <название_схемы> TO <имя_пользователя>;
         ```
 
 {% endlist %}
@@ -141,17 +159,19 @@
 
 - {{ mmg-name }}
 
-    1. Оцените общее количество баз данных для трансфера и общую нагрузку на {{ mmg-name }}. Если нагрузка на базы выше 10 000 транзакций на запись в секунду, создайте несколько эндпоинтов и трансферов. Подробнее см. в разделе [{#T}](../../data-transfer/operations/endpoint/source/mongodb.md).
-    1. [Создайте пользователя](../../managed-mongodb/operations/cluster-users.md#adduser) с ролью `readWrite` на каждую базу в источнике, которая будет реплицироваться. Роль `readWrite` нужна для того, чтобы у трансфера было право записи в служебную коллекцию `__dt_cluster_time`.
+    1. Оцените общее количество баз данных для трансфера и общую нагрузку на {{ mmg-name }}. Если нагрузка на базы выше 10 000 операций на запись в секунду, создайте несколько эндпоинтов и трансферов. Подробнее см. в разделе [{#T}](../../data-transfer/operations/endpoint/source/mongodb.md).
+    1. [Создайте пользователя](../../managed-mongodb/operations/cluster-users.md#adduser) с ролью `readWrite` на каждую базу в источнике, которая будет реплицироваться. Роль `readWrite` нужна для того, чтобы у трансфера было право записи в служебную коллекцию `__data_transfer.__dt_cluster_time`.
 
 
 - {{ MG }}
 
-    1. Оцените общее количество баз данных для трансфера и общую нагрузку на {{ MG }}. Если нагрузка на базы выше 10 000 транзакций на запись в секунду, создайте несколько эндпоинтов и трансферов. Подробнее см. в разделе [{#T}](../../data-transfer/operations/endpoint/source/mongodb.md).
+    1. Оцените общее количество баз данных для трансфера и общую нагрузку на {{ MG }}. Если нагрузка на базы выше 10 000 операций на запись в секунду, создайте несколько эндпоинтов и трансферов. Подробнее см. в разделе [{#T}](../../data-transfer/operations/endpoint/source/mongodb.md).
 
     1. {% include notitle [White IP list](../../_includes/data-transfer/configure-white-ip.md) %}
 
     1. Убедитесь, что версия {{ MG }} на приемнике не ниже `4.0`.
+
+    1. {% include [mondodb cluster requirement](../../_includes/data-transfer/mongodb-cluster-requirement.md) %}
 
     1. [Настройте доступ к кластеру-источнику из {{ yandex-cloud }}](../concepts/network.md#source-external). Чтобы настроить [кластер-источник](https://docs.mongodb.com/manual/core/security-mongodb-configuration/) для подключения из интернета:
 
@@ -176,7 +196,7 @@
 
             ```yaml
             replication:
-              replSetName: <имя набора реплик>
+              replSetName: <имя_набора_реплик>
             ```
 
         1. Перезапустите сервис `mongod`:
@@ -189,10 +209,10 @@
 
             ```javascript
             rs.initiate({
-                _id: "<имя набора реплик>",
+                _id: "<имя_набора_реплик>",
                 members: [{
                     _id: 0,
-                    host: "<IP-адрес, который слушает mongod>:<порт>"
+                    host: "<IP-адрес_который_слушает_{{ MG }}>:<порт>"
                 }]
             });
             ```
@@ -202,16 +222,16 @@
         ```javascript
         use admin
         db.createUser({
-            user: "<имя пользователя>",
+            user: "<имя_пользователя>",
             pwd: "<пароль>",
             mechanisms: ["SCRAM-SHA-1"],
             roles: [
                 {
-                    db: "<имя базы-источника 1>",
+                    db: "<имя_базы-источника_1>",
                     role: "readWrite"
                 },
                 {
-                    db: "<имя базы-источника 2>",
+                    db: "<имя_базы-источника_2>",
                     role: "readWrite"
                 },
                 ...
@@ -219,7 +239,7 @@
         });
         ```
 
-        После старта трансфер подключится к источнику от имени этого пользователя. Роль `readWrite` нужна для того, чтобы у трансфера было право записи в служебную коллекцию `__dt_cluster_time`.
+        После старта трансфер подключится к источнику от имени этого пользователя. Роль `readWrite` нужна для того, чтобы у трансфера было право записи в служебную коллекцию `__data_transfer.__dt_cluster_time`.
 
         {% note info %}
 
@@ -231,7 +251,7 @@
 
         ```js
         use admin;
-        db.grantRolesToUser("<имя пользователя>", ["clusterAdmin"]);
+        db.grantRolesToUser("<имя_пользователя>", ["clusterAdmin"]);
         ```
        
         Для выдачи более гранулярных прав можно назначить роль [`clusterMonitor`](https://www.mongodb.com/docs/manual/reference/built-in-roles/#mongodb-authrole-clusterMonitor), необходимую для чтения коллекции `local.oplog.rs`, а также дать доступ на чтение и запись системной коллекции `__data_transfer.__dt_cluster_time`.
@@ -285,9 +305,9 @@
     1. Создайте пользователя для подключения к источнику и выдайте ему необходимые привилегии:
 
         ```sql
-        CREATE USER '<имя пользователя>'@'%' IDENTIFIED BY '<пароль>';
-        GRANT ALL PRIVILEGES ON <имя базы>.* TO '<имя пользователя>'@'%';
-        GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO '<имя пользователя>'@'%';
+        CREATE USER '<имя_пользователя>'@'%' IDENTIFIED BY '<пароль>';
+        GRANT ALL PRIVILEGES ON <имя_базы>.* TO '<имя_пользователя>'@'%';
+        GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO '<имя_пользователя>'@'%';
         ```
 
     1. {% include [Таблицы без первичных ключей](../../_includes/data-transfer/primary-keys-mysql.md) %}
@@ -321,17 +341,17 @@
         1. Создайте пользователя, от имени которого трансфер подключится к источнику:
 
             ```sql
-            CREATE USER <имя пользователя> IDENTIFIED BY <пароль>;
-            GRANT CREATE SESSION TO <имя пользователя>;
+            CREATE USER <имя_пользователя> IDENTIFIED BY <пароль>;
+            GRANT CREATE SESSION TO <имя_пользователя>;
             ```
 
         1. Выдайте права созданному пользователю:
 
            ```sql
-           GRANT SELECT ON V$DATABASE TO <имя пользователя>;
-           GRANT SELECT ON DBA_EXTENTS TO <имя пользователя>;
-           GRANT SELECT ON DBA_OBJECTS TO <имя пользователя>;
-           GRANT FLASHBACK ANY TABLE TO <имя пользователя>;
+           GRANT SELECT ON V$DATABASE TO <имя_пользователя>;
+           GRANT SELECT ON DBA_EXTENTS TO <имя_пользователя>;
+           GRANT SELECT ON DBA_OBJECTS TO <имя_пользователя>;
+           GRANT FLASHBACK ANY TABLE TO <имя_пользователя>;
            ```
 
            При необходимости, право `FLASHBACK` можно выдать не на все таблицы (`ANY TABLE`), а только на те, которые нужно скопировать.
@@ -343,9 +363,9 @@
         1. Создайте пользователя, от имени которого трансфер подключится к источнику:
     
            ```sql
-           CREATE USER <имя пользователя> IDENTIFIED BY <пароль>;
-           ALTER USER <имя пользователя> DEFAULT tablespace USERS TEMPORARY tablespace TEMP;
-           ALTER USER <имя пользователя> quote unlimited on USERS;
+           CREATE USER <имя_пользователя> IDENTIFIED BY <пароль>;
+           ALTER USER <имя_пользователя> DEFAULT tablespace USERS TEMPORARY tablespace TEMP;
+           ALTER USER <имя_пользователя> quote unlimited on USERS;
 
            GRANT 
                CREATE SESSION,
@@ -354,25 +374,25 @@
                SELECT ANY DISCTIONARY,
                CREATE PROCEDURE,
                LOGMINING 
-           TO <имя пользователя>;
+           TO <имя_пользователя>;
            ```
 
         1. Выдайте права созданному пользователю:
 
-           ```sql
-            GRANT SELECT ON V$DATABASE TO <имя пользователя>;
-            GRANT SELECT ON V$LOG TO <имя пользователя>;
-            GRANT SELECT ON V$LOGFILE TO <имя пользователя>;
-            GRANT SELECT ON V$ARCHIVED_LOG TO <имя пользователя>;
+            ```sql
+            GRANT SELECT ON V$DATABASE TO <имя_пользователя>;
+            GRANT SELECT ON V$LOG TO <имя_пользователя>;
+            GRANT SELECT ON V$LOGFILE TO <имя_пользователя>;
+            GRANT SELECT ON V$ARCHIVED_LOG TO <имя_пользователя>;
 
-            GRANT SELECT ON dba_objects TO <имя пользователя>;
-            GRANT SELECT ON dba_extents TO <имя пользователя>;
+            GRANT SELECT ON dba_objects TO <имя_пользователя>;
+            GRANT SELECT ON dba_extents TO <имя_пользователя>;
 
-            GRANT EXECUTE ON SYS.DBMS_LOGMNR TO <имя пользователя>;
-            GRANT SELECT ON SYSTEM.LOGMNR_COL$ TO <имя пользователя>;
-            GRANT SELECT ON SYSTEM.LOGMNR_OBJ$ TO <имя пользователя>;
-            GRANT SELECT ON SYSTEM.LOGMNR_USER$ TO <имя пользователя>;
-            GRANT SELECT ON SYSTEM.LOGMNR_UID$ TO <имя пользователя>;
+            GRANT EXECUTE ON SYS.DBMS_LOGMNR TO <имя_пользователя>;
+            GRANT SELECT ON SYSTEM.LOGMNR_COL$ TO <имя_пользователя>;
+            GRANT SELECT ON SYSTEM.LOGMNR_OBJ$ TO <имя_пользователя>;
+            GRANT SELECT ON SYSTEM.LOGMNR_USER$ TO <имя_пользователя>;
+            GRANT SELECT ON SYSTEM.LOGMNR_UID$ TO <имя_пользователя>;
             ```
 
         1. Выдайте пользователю [права на чтение таблиц](https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/GRANT.html), которые нужно реплицировать.
@@ -387,10 +407,10 @@
         1. Создайте [пользователя](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/overview-of-managing-a-multitenant-environment.html#GUID-7D303718-2D59-495F-90FB-E51A377B1AD2) `Common User`:
 
             ```sql
-            CREATE USER C##<имя пользователя> IDENTIFIED BY <пароль> CONTAINER=all;
-            ALTER USER C##<имя пользователя> DEFAULT TABLESPACE USERS temporary tablespace TEMP CONTAINER=all;
-            ALTER USER C##<имя пользователя> quota unlimited on USERS CONTAINER=all;
-            ALTER USER C##<имя пользователя> SET container_data = (cdb$root, <имя вашей PCB>) CONTAINER=current;
+            CREATE USER C##<имя_пользователя> IDENTIFIED BY <пароль> CONTAINER=all;
+            ALTER USER C##<имя_пользователя> DEFAULT TABLESPACE USERS temporary tablespace TEMP CONTAINER=all;
+            ALTER USER C##<имя_пользователя> quota unlimited on USERS CONTAINER=all;
+            ALTER USER C##<имя_пользователя> SET container_data = (cdb$root, <имя_вашей_PCB>) CONTAINER=current;
 
             GRANT 
                 CREATE SESSION,
@@ -400,7 +420,7 @@
                 CREATE PROCEDURE,
                 LOGMINING,
                 SET CONTAINER
-            TO C##<имя пользователя> CONTAINER=ALL;
+            TO C##<имя_пользователя> CONTAINER=ALL;
             ```
 
             При необходимости, можно указать только контейнер `cdb$root` и контейнер с таблицами, которые нужно перенести.
@@ -408,25 +428,25 @@
         1. Чтобы пользователь мог переключаться на контейнер `cdb$root`, выдайте ему права `ALTER SESSION`:
 
             ```sql
-            GRANT ALTER SESSION TO C##<имя пользователя>;
+            GRANT ALTER SESSION TO C##<имя_пользователя>;
             ```
 
         1. Выдайте права созданному пользователю:
 
             ```sql
-            GRANT SELECT ON V$DATABASE TO C##<имя пользователя> CONTAINER=ALL;
-            GRANT SELECT ON V$LOG TO C##<имя пользователя> CONTAINER=ALL;
-            GRANT SELECT ON V$LOGFILE TO C##<имя пользователя> CONTAINER=ALL;
-            GRANT SELECT ON V$ARCHIVED_LOG TO C##<имя пользователя> CONTAINER=ALL;
+            GRANT SELECT ON V$DATABASE TO C##<имя_пользователя> CONTAINER=ALL;
+            GRANT SELECT ON V$LOG TO C##<имя_пользователя> CONTAINER=ALL;
+            GRANT SELECT ON V$LOGFILE TO C##<имя_пользователя> CONTAINER=ALL;
+            GRANT SELECT ON V$ARCHIVED_LOG TO C##<имя_пользователя> CONTAINER=ALL;
 
-            GRANT SELECT ON dba_objects TO C##<имя пользователя> CONTAINER=ALL;
-            GRANT SELECT ON dba_extents TO C##<имя пользователя> CONTAINER=ALL;
+            GRANT SELECT ON dba_objects TO C##<имя_пользователя> CONTAINER=ALL;
+            GRANT SELECT ON dba_extents TO C##<имя_пользователя> CONTAINER=ALL;
 
-            GRANT EXECUTE ON SYS.DBMS_LOGMNR TO C##<имя пользователя> CONTAINER=ALL;
-            GRANT SELECT ON SYSTEM.LOGMNR_COL$ TO C##<имя пользователя> CONTAINER=ALL;
-            GRANT SELECT ON SYSTEM.LOGMNR_OBJ$ TO C##<имя пользователя> CONTAINER=ALL;
-            GRANT SELECT ON SYSTEM.LOGMNR_USER$ TO C##<имя пользователя> CONTAINER=ALL;
-            GRANT SELECT ON SYSTEM.LOGMNR_UID$ TO C##<имя пользователя> CONTAINER=ALL;
+            GRANT EXECUTE ON SYS.DBMS_LOGMNR TO C##<имя_пользователя> CONTAINER=ALL;
+            GRANT SELECT ON SYSTEM.LOGMNR_COL$ TO C##<имя_пользователя> CONTAINER=ALL;
+            GRANT SELECT ON SYSTEM.LOGMNR_OBJ$ TO C##<имя_пользователя> CONTAINER=ALL;
+            GRANT SELECT ON SYSTEM.LOGMNR_USER$ TO C##<имя_пользователя> CONTAINER=ALL;
+            GRANT SELECT ON SYSTEM.LOGMNR_UID$ TO C##<имя_пользователя> CONTAINER=ALL;
             ```
 
 {% endlist %}
@@ -436,6 +456,10 @@
 {% note info %}
 
 При трансфере из {{ PG }} в любой тип приемника объекты типа [large objects](https://www.postgresql.org/docs/current/largeobjects.html) не переносятся.
+
+{% include [matview limits](../../_includes/data-transfer/pg-gp-matview.md) %}
+
+Если определение переносимого `VIEW` содержит вызов `VOLATILE` [функции]({{ pg.docs.org }}/current/xfunc-volatility.html), то трансфер читает данные из такого `VIEW` с уровнем изоляции `READ UNCOMMITTED`. Консистентность между данными в этом `VIEW` и данными других переносимых объектов не гарантируется. Чтение из `MATERIALIZED VIEW` в определении `VIEW` равносильно вызову `VOLATILE` функции.
 
 Большие объекты в [системе хранения TOAST](https://www.postgresql.org/docs/12/storage-toast.html) и данные с [типом bytea](https://www.postgresql.org/docs/12/datatype-binary.html) переносятся без ограничений.
 
@@ -480,6 +504,25 @@
 
         После этого укажите количество воркеров и потоков в блоке **Среда выполнения** в [параметрах трансфера](transfer.md#create).
 
+    1. Настройте мониторинг WAL-лога. Для трансферов типа _{{ dt-type-repl }}_ и _{{ dt-type-copy-repl }}_ используется [логическая репликация]({{ pg-docs }}/logicaldecoding.html). Для этого сам трансфер создает слот репликации со значением `slot_name`, равным идентификатору трансфера, который можно получить, выбрав трансфер в списке ваших трансферов. WAL может расти по разным причинам: из-за долгой транзакции или из-за проблемы на трансфере. Поэтому рекомендуется настроить мониторинг WAL-лога на стороне источника.
+    
+        1. Для мониторинга размера использованного хранилища или диска [настройте алерт средствами мониторинга](../../managed-postgresql/operations/monitoring.md#monitoring-hosts) (см. описание `disk.used_bytes`).
+
+        1. Задайте максимальный размер WAL при репликации в [настройке](../../managed-postgresql/concepts/settings-list.md#setting-max-slot-wal-keep-size) `Max slot wal keep size`. Редактирование данной настройки доступно начиная с 13 версии {{ PG }}. Если вы хотите экстренно запретить операции чтения трансферу, то [удалите слот репликации](../../managed-postgresql/operations/replication-slots.md#delete).
+
+           {% note warning %}
+
+           При значении настройки `-1` (размер не ограничен) открытые логические слоты репликации, из которых не считывается информация, будут препятствовать удалению WAL-файлов. В результате WAL-файлы займут все дисковое пространство и вы потеряете возможность подключаться к кластеру.
+
+           {% endnote %} 
+                  
+        1. [Настройте алерт](../../managed-postgresql/operations/monitoring.md) средствами {{ monitoring-full-name }} на метрику, которая используется для `Total size of WAL files`. Пороговые значения должны быть меньше, чем указаны для метрики `disk.used_bytes`, так как на диске, кроме данных, хранятся временные файлы, WAL-лог и другие типы данных. Текущий размер слота можно мониторить средствами БД через запрос, указав правильный `slot_name`, равный идентификатору трансфера:
+
+            ```sql
+            SELECT slot_name, pg_size_pretty(pg_current_wal_lsn() - restart_lsn), active_pid, catalog_xmin, restart_lsn, confirmed_flush_lsn
+            FROM pg_replication_slots WHERE slot_name = '<идентификатор_трансфера>'
+            ```
+
 - {{ PG }}
 
     1. {% include notitle [White IP list](../../_includes/data-transfer/configure-white-ip.md) %}
@@ -489,26 +532,26 @@
         * Для типа трансфера _{{ dt-type-copy }}_ создайте пользователя командой:
 
             ```sql
-            CREATE ROLE <имя пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
+            CREATE ROLE <имя_пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
             ```
 
         * Для типов трансфера _{{ dt-type-repl }}_ и _{{ dt-type-copy-repl }}_ создайте пользователя с привилегией `REPLICATION` командой:
 
             ```sql
-            CREATE ROLE <имя пользователя> WITH REPLICATION LOGIN ENCRYPTED PASSWORD '<пароль>';
+            CREATE ROLE <имя_пользователя> WITH REPLICATION LOGIN ENCRYPTED PASSWORD '<пароль>';
             ```
 
     1. Выдайте созданному пользователю привилегию на выполнение операции `SELECT` над всеми таблицами базы данных, которые переносит трансфер, и привилегию `USAGE` на схемы этих таблиц:
 
         ```sql
-        GRANT SELECT ON ALL TABLES IN SCHEMA <название схемы> TO <имя пользователя>;
-        GRANT USAGE ON SCHEMA <название схемы> TO <имя пользователя>;
+        GRANT SELECT ON ALL TABLES IN SCHEMA <название_схемы> TO <имя_пользователя>;
+        GRANT USAGE ON SCHEMA <название_схемы> TO <имя_пользователя>;
         ```
 
     1. Выдайте созданному пользователю привилегии на задаваемую [параметром эндпоинта](./endpoint/source/postgresql.md#additional-settings) схему служебных таблиц `__consumer_keeper` и `__data_transfer_mole_finder`, если эндпоинт будет использоваться для типов трансфера _{{ dt-type-repl }}_ или _{{ dt-type-copy-repl }}_:
 
         ```sql
-        GRANT ALL PRIVILEGES ON SCHEMA <имя схемы> TO <имя пользователя>;
+        GRANT ALL PRIVILEGES ON SCHEMA <имя_схемы> TO <имя_пользователя>;
         ```
 
     1. Установите и включите расширение [wal2json](https://github.com/eulerto/wal2json).
@@ -555,7 +598,7 @@
                 * укажите в параметре `<WindowsTargetPlatformVersion>` номер версии установленного компонента Windows SDK:
 
                     ```powershell
-                    (Get-Content .\wal2json.vcxproj).replace('<WindowsTargetPlatformVersion>8.1', '<WindowsTargetPlatformVersion><установленная версия Windows SDK>') | `
+                    (Get-Content .\wal2json.vcxproj).replace('<WindowsTargetPlatformVersion>8.1', '<WindowsTargetPlatformVersion><установленная_версия_Windows_SDK>') | `
                      Set-Content .\wal2json.vcxproj
                     ```
 
@@ -611,19 +654,37 @@
 
        ```yaml
        ignore_slots:
-         - database: <имя базы данных, для которой настроен трансфер>
-           name: <имя слота репликации>
+         - database: <база_данных>
+           name: <слот_репликации>
            plugin: wal2json
            type: logical
        ```
        
+       Где:
+
+       * `database` — имя базы данных, для которой настроен трансфер.
+       * `name` — имя слота репликации.
+
        Имя базы данных и имя слота репликации должны совпадать со значениями, указанными в [настройках эндпоинта для источника](../../data-transfer/operations/endpoint/source/postgresql.md). По умолчанию `имя слота репликации` совпадает с `ID трансфера`.
 
        В противном случае начало этапа репликации завершится ошибкой:
       
        ```
-       Warn(Termination): unable to create new pg source: Replication slotID <имя слота репликации> does not exist.
+       Warn(Termination): unable to create new pg source: Replication slotID <имя_слота_репликации> does not exist.
        ```
+    
+    1. Настройте мониторинг WAL-лога. Для трансферов типа _{{ dt-type-repl }}_ и _{{ dt-type-copy-repl }}_ используется [логическая репликация]({{ pg-docs }}/logicaldecoding.html). Для этого сам трансфер создает слот репликации со значением `slot_name`, равным идентификатору трансфера, который можно получить, выбрав трансфер в списке ваших трансферов. WAL может расти по разным причинам: из-за долгой транзакции или из-за проблемы на трансфере. Поэтому рекомендуется настроить мониторинг WAL-лога на стороне источника.
+    
+        1. Настройте алерты на основе [рекомендаций по использованию диска]({{ pg-docs }}/diskusage.html).
+
+        1. [Установите максимальный размер WAL]({{ pg-docs }}/runtime-config-replication.html#GUC-MAX-SLOT-WAL-KEEP-SIZE). Эта возможность доступна, начиная с версии {{ PG }} 13.
+
+        1. Текущий размер слота можно отслеживать средствами БД через запрос, указав правильный `slot_name`, равный идентификатору трансфера:
+
+            ```sql
+            SELECT slot_name, pg_size_pretty(pg_current_wal_lsn() - restart_lsn), active_pid, catalog_xmin, restart_lsn, confirmed_flush_lsn
+            FROM pg_replication_slots WHERE slot_name = '<идентификатор_трансфера>'
+            ```    
 
 {% endlist %}
 
@@ -706,12 +767,12 @@
     ```json
     [
         {
-            "name": "<имя поля>",
+            "name": "<имя_поля>",
             "type": "<тип>"
         },
         ...
         {
-            "name": "<имя поля>",
+            "name": "<имя_поля>",
             "type": "<тип>"
         }
     ]
@@ -735,6 +796,10 @@
     * `utf8`
 
 
+### Источник {{ ydb-full-name }} {#source-ydb}
+
+Если вы выбрали режим базы данных {{ dd }}, [создайте](../../vpc/operations/security-group-create.md) и [настройте](../../ydb/operations/connection.md#configuring-security-groups) группу безопасности в сети, где находится БД.
+
 ## Подготовка приемника {#target}
 
 ### Приемник {{ CH }} {#target-ch}
@@ -745,11 +810,15 @@
 
     1. [Создайте базу-приемник](../../managed-clickhouse/operations/databases.md#add-db).
 
-        Ее имя должно совпадать с именем базы-источника. Если нужно перенести несколько баз данных, создайте для каждой из них отдельный трансфер.
+        Если нужно перенести несколько баз данных, создайте для каждой из них отдельный трансфер.
 
     1. [Создайте пользователя](../../managed-clickhouse/operations/cluster-users.md#adduser) с доступом к базе приемника.
 
         После старта трансфер подключится к приемнику от имени этого пользователя.
+
+    1. [Создайте группу безопасности](../../vpc/operations/security-group-create.md) и [настройте ее](../../managed-clickhouse/operations/connect.md#configuring-security-groups).
+
+    1. Назначьте кластеру {{ mch-name }} созданную группу безопасности.
 
 - {{ CH }}
 
@@ -803,19 +872,19 @@
     1. Создайте пользователя:
 
         ```sql
-        CREATE ROLE <имя пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
+        CREATE ROLE <имя_пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
         ```
 
     1. Выдайте созданному пользователю все привилегии на базу данных, схемы и переносимые таблицы:
 
         ```sql
-        GRANT ALL PRIVILEGES ON DATABASE <имя базы> TO <имя пользователя>;
+        GRANT ALL PRIVILEGES ON DATABASE <имя_базы> TO <имя_пользователя>;
         ```
 
        Если база не пустая, то пользователь должен быть ее владельцем (owner):
 
         ```sql
-        ALTER DATABASE <имя базы> OWNER TO <имя пользователя>;
+        ALTER DATABASE <имя_базы> OWNER TO <имя_пользователя>;
         ```
 
        После старта трансфер подключится к приемнику от имени этого пользователя.
@@ -840,19 +909,19 @@
     1. Создайте пользователя:
 
         ```sql
-        CREATE ROLE <имя пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
+        CREATE ROLE <имя_пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
         ```
 
     1. Выдайте созданному пользователю все привилегии на базу данных, схемы и переносимые таблицы:
 
         ```sql
-        GRANT ALL PRIVILEGES ON DATABASE <имя базы> TO <имя пользователя>;
+        GRANT ALL PRIVILEGES ON DATABASE <имя_базы> TO <имя_пользователя>;
         ```
 
         Если база не пустая, то пользователь должен быть ее владельцем (owner):
 
         ```sql
-        ALTER DATABASE <имя базы> OWNER TO <имя пользователя>;
+        ALTER DATABASE <имя_базы> OWNER TO <имя_пользователя>;
         ```
 
         После старта трансфер подключится к приемнику от имени этого пользователя.
@@ -870,7 +939,7 @@
     1. [Создайте базу данных](../../managed-mongodb/operations/databases.md#add-db) с тем же именем, что и на источнике.
     1. [Создайте пользователя](../../managed-mongodb/operations/cluster-users.md#adduser) с ролью [`readWrite`](../../managed-mongodb/concepts/users-and-roles.md#readWrite) на созданную базу.
     1. Чтобы шардировать переносимые коллекции в кластере-приемнике {{ mmg-full-name }}:
-        1. Следуя [инструкции](../../managed-mongodb/tutorials/sharding.md), создайте и настройте в базе-приемнике пустые шардированные коллекции с теми же именами, что и на источнике.
+        1. Следуя [инструкции](../../managed-mongodb/tutorials/sharding.md), создайте и настройте в базе-приемнике пустые шардированные коллекции.
 
             Сервис {{ data-transfer-name }} не шардирует переносимые коллекции автоматически. Шардирование больших коллекций может занять продолжительное время и снизить скорость трансфера.
 
@@ -888,6 +957,8 @@
     1. {% include notitle [White IP list](../../_includes/data-transfer/configure-white-ip.md) %}
 
     1. Убедитесь, версия {{ MG }} на приемнике не ниже чем на источнике.
+
+    1. {% include [mondodb cluster requirement](../../_includes/data-transfer/mongodb-cluster-requirement.md) %} 
 
     1. [Настройте кластер-приемник](https://docs.mongodb.com/manual/core/security-mongodb-configuration/), чтобы к нему можно было подключиться из интернета:
 
@@ -912,7 +983,7 @@
 
             ```yaml
             replication:
-              replSetName: <имя набора реплик>
+              replSetName: <имя_набора_реплик>
             ```
 
         1. Перезапустите сервис `mongod`:
@@ -925,10 +996,10 @@
 
             ```javascript
             rs.initiate({
-                _id: "<имя набора реплик>",
+                _id: "<имя_набора_реплик>",
                 members: [{
                     _id: 0,
-                    host: "<IP-адрес, который слушает mongod>:<порт>"
+                    host: "<IP-адрес_который_слушает_{{ MG }}>:<порт>"
                 }]
             });
             ```
@@ -936,7 +1007,7 @@
     1. Подключитесь к кластеру и создайте базу-приемник с тем же именем, что и на источнике:
 
         ```javascript
-        use <имя базы>
+        use <имя_базы>
         ```
 
     1. Создайте пользователя с правами `readWrite` на базу-приемник:
@@ -944,12 +1015,12 @@
         ```javascript
         use admin;
         db.createUser({
-            user: "<имя пользователя>",
+            user: "<имя_пользователя>",
             pwd: "<пароль>",
             mechanisms: ["SCRAM-SHA-1"],
             roles: [
                 {
-                    db: "<имя базы-приемника>",
+                    db: "<имя_базы-приемника>",
                     role: "readWrite"
                 }
             ]
@@ -967,13 +1038,13 @@
         1. Включите шардирование для базы-приемника:
 
             ```javascript
-            sh.enableSharding("<имя базы-приемника>")
+            sh.enableSharding("<имя_базы-приемника>")
             ```
 
         1. Задайте шардирование для каждой коллекции с учетом ее пространства имен:
 
             ```javascript
-            sh.shardCollection("<имя базы-приемника>.<имя коллекции>", { <имя поля>: <1|"hashed">, ... });
+            sh.shardCollection("<имя_базы-приемника>.<имя_коллекции>", { <имя_поля>: <1|"hashed">, ... });
             ```
 
             Описание функции `shardCollection()` см. в [документации {{ MG }}](https://docs.mongodb.com/manual/reference/method/sh.shardCollection/#mongodb-method-sh.shardCollection).
@@ -988,7 +1059,7 @@
 
             ```javascript
             use admin;
-            db.grantRolesToUser("<имя пользователя>", ["clusterManager"]);
+            db.grantRolesToUser("<имя_пользователя>", ["clusterManager"]);
             ```
 
         1. При [создании эндпоинта для приемника](./endpoint/target/mongodb.md) выберите политику очистки `DISABLED` или `TRUNCATE`.
@@ -1026,8 +1097,8 @@
     1. Создайте пользователя для подключения к приемнику и выдайте ему необходимые привилегии:
 
         ```sql
-        CREATE USER '<имя пользователя>'@'%' IDENTIFIED BY '<пароль>';
-        GRANT ALL PRIVILEGES ON <имя базы>.* TO '<имя пользователя>'@'%';
+        CREATE USER '<имя_пользователя>'@'%' IDENTIFIED BY '<пароль>';
+        GRANT ALL PRIVILEGES ON <имя_базы>.* TO '<имя_пользователя>'@'%';
         ```
 
 {% endlist %}
@@ -1088,20 +1159,20 @@
     1. Выдайте созданному пользователю все привилегии на базу данных, схемы и переносимые таблицы:
 
         ```sql
-        GRANT ALL PRIVILEGES ON DATABASE <имя базы> TO <имя пользователя>;
+        GRANT ALL PRIVILEGES ON DATABASE <имя_базы> TO <имя_пользователя>;
         ```
 
        Если база не пустая, то пользователь должен быть ее владельцем (owner):
 
         ```sql
-        ALTER DATABASE <имя базы> OWNER TO <имя пользователя>;
+        ALTER DATABASE <имя_базы> OWNER TO <имя_пользователя>;
         ```
 
        После старта трансфер подключится к приемнику от имени этого пользователя.
     1. Если в приемнике включена опция [сохранение границ транзакций](endpoint/target/postgresql.md#additional-settings), выдайте созданному пользователю все привилегии на создание служебной таблицы `__data_transfer_lsn` в [текущей схеме](https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH) (обычно `public`) на приемнике:
 
        ```sql
-       GRANT ALL PRIVILEGES ON SCHEMA <имя схемы> TO <имя пользователя>;
+       GRANT ALL PRIVILEGES ON SCHEMA <имя_схемы> TO <имя_пользователя>;
        ```
 
 - {{ PG }}
@@ -1131,19 +1202,19 @@
     1. Создайте пользователя:
 
         ```sql
-        CREATE ROLE <имя пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
+        CREATE ROLE <имя_пользователя> LOGIN ENCRYPTED PASSWORD '<пароль>';
         ```
 
     1. Выдайте созданному пользователю все привилегии на базу данных, схемы и переносимые таблицы:
 
         ```sql
-        GRANT ALL PRIVILEGES ON DATABASE <имя базы> TO <имя пользователя>;
+        GRANT ALL PRIVILEGES ON DATABASE <имя_базы> TO <имя_пользователя>;
         ```
 
         Если база не пустая, то пользователь должен быть ее владельцем (owner):
 
         ```sql
-        ALTER DATABASE <имя базы> OWNER TO <имя пользователя>;
+        ALTER DATABASE <имя_базы> OWNER TO <имя_пользователя>;
         ```
 
         После старта трансфер подключится к приемнику от имени этого пользователя.
@@ -1151,19 +1222,20 @@
     1. Если в приемнике включена опция [сохранение границ транзакций](endpoint/target/postgresql.md#additional-settings), выдайте созданному пользователю все привилегии на создание служебной таблицы `__data_transfer_lsn` в [текущей схеме](https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH) (обычно `public`) на приемнике:
 
         ```sql
-        GRANT ALL PRIVILEGES ON SCHEMA <имя схемы> TO <имя пользователя>;
+        GRANT ALL PRIVILEGES ON SCHEMA <имя_схемы> TO <имя_пользователя>;
         ```
 
 {% endlist %}
 
-Сервис не переносит материализованные представления (`MATERIALIZED VIEW`). Подробнее см. в разделе [Особенности работы сервиса с источниками и приемниками](../concepts/index.md#postgresql).
+{% include [matview limits](../../_includes/data-transfer/pg-gp-matview.md) %}
+
+Если определение переносимого `VIEW` содержит вызов `VOLATILE` [функции]({{ pg.docs.org }}/current/xfunc-volatility.html), то трансфер читает данные из такого `VIEW` с уровнем изоляции `READ UNCOMMITTED`. Консистентность между данными в этом `VIEW` и данными других переносимых объектов не гарантируется. Чтение из `MATERIALIZED VIEW` в определении `VIEW` равносильно вызову `VOLATILE` функции.
 
 
 ### Приемник {{ ydb-full-name }} {#target-ydb}
 
-
-[Создайте сервисный аккаунт](../../iam/operations/sa/create.md) с ролью `ydb.editor`.
-
+1. [Создайте сервисный аккаунт](../../iam/operations/sa/create.md) с ролью `ydb.editor`.
+1. Для базы данных в {{ dd }}-режиме [создайте](../../vpc/operations/security-group-create.md) и [настройте](../../ydb/operations/connection.md#configuring-security-groups) группу безопасности в сети, где находится БД.
 
 {% include [airbyte-trademark](../../_includes/data-transfer/airbyte-trademark.md) %}
 

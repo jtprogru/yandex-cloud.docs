@@ -1,3 +1,8 @@
+---
+title: "Создание потока данных в AWS SDK"
+description: "Следуя данной инструкции, вы сможете создать поток данных в AWS SDK."
+---
+
 # Создание потока данных в AWS SDK
 
 {% list tabs %}
@@ -6,9 +11,11 @@
 
   Для создания потока данных используется метод `create_stream`. При вызове этого метода необходимо указать следующие параметры:
   * Имя создаваемого потока данных, например `example-stream`.
-  * [Идентификатор облака](../../../resource-manager/operations/cloud/get-id.md), в котором будет создан поток, например `b1gi1kuj2dhtaupdb5es`.
-  * Идентификатор существующей [бессерверной](../../../ydb/pricing/serverless.md) базы данных {{ ydb-full-name }}, например `cc8028jgtuabcqutgtbv`. Как создать новую базу данных, читайте в [документации {{ ydb-short-name }}](../../../ydb/quickstart.md#create-db).
+  * [Идентификатор облака](../../../resource-manager/operations/cloud/get-id.md), в котором будет создан поток, например `b1gi1kuj2dht********`.
+  * Идентификатор существующей [бессерверной](../../../ydb/pricing/serverless.md) базы данных {{ ydb-short-name }}, например `cc8028jgtuab********`. Как создать новую базу данных, читайте в [документации {{ ydb-short-name }}](../../../ydb/quickstart.md#create-db).
   * Число сегментов, например `1`.
+
+  Вам также потребуется [настроить](prepare.md) AWS SDK и [назначить](../../../iam/operations/sa/assign-role-for-sa.md) сервисному аккаунту роль `yds.editor`.
 
   Чтобы создать поток с параметрами, указанными выше:
 
@@ -30,8 +37,8 @@
 
      if __name__ == '__main__':
        create_stream_response = create_stream(
-         cloud="b1gi1kuj2dhtaupdb5es",
-         database="cc8028jgtuabcqutgtbv",
+         cloud="b1gi1kuj2dht********",
+         database="cc8028jgtuab********",
          stream_name="example-stream",
          shard_count=1)
        print("The stream has been created successfully")
@@ -56,7 +63,7 @@
            'content-type': 'application/json',
            'date': ''
            'GMT',
-           'server': 'nginx/1.19.5'},
+           'server': 'nginx/1.19.5',
            'HTTPStatusCode': 200,
            'RetryAttempts': 0
          }

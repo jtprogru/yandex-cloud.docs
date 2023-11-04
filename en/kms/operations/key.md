@@ -11,12 +11,13 @@ To create a key:
 - Management console
 
    1. Log in to the [management console]({{ link-console-main }}).
-   1. Select **{{ kms-name }}**.
-   1. Click **Create** and set the key attributes:
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+   1. In the left-hand panel, select ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
+   1. Click **{{ ui-key.yacloud.kms.symmetric-keys.button_empty-create }}** and set the key attributes:
       * Any name and optional description.
-      * Encryption algorithm, such as AES-256.
+      * Encryption algorithm, such as `AES-256`.
       * [Rotation](../concepts/index.md#rotation) period (how often to change key versions).
-      * Click **Create**.
+      * Click **{{ ui-key.yacloud.common.create }}**.
 
    The key is created along with its first version: click the key in the list to open the page with its attributes.
 
@@ -25,7 +26,7 @@ To create a key:
    Run the command with the following parameters:
    * `name`: Key name.
    * `default-algorithm`: Encryption algorithm (`aes-128`, `aes-192`, or `aes-256`).
-   * `rotation-period`: Key rotation period. To create a key without automatic rotation, don't specify the `rotation-period` parameter.
+   * `rotation-period`: Key rotation period. To create a key without automatic rotation, do not specify the `rotation-period` parameter.
 
    ```bash
    yc kms symmetric-key create \
@@ -34,17 +35,17 @@ To create a key:
      --rotation-period 24h
    ```
 
-   The key is created along with its first version. It's specified in the `primary_version` field.
+   The key is created along with its first version. It is specified in the `primary_version` field.
 
 - API
 
-   Use the [create](../api-ref/SymmetricKey/create) method for the `SymmetricKey` resource.
+   Use the [create](../../kms/api-ref/SymmetricKey/create.md) REST API method for the [SymmetricKey](../../kms/api-ref/SymmetricKey/index.md) resource or the [SymmetricKeyService/Create](../../kms/api-ref/grpc/symmetric_key_service.md#Create) gRPC API call.
 
 - {{ TF }}
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   If you don't have {{ TF }}, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    {% include [terraform-key-create](../../_includes/kms/terraform-key-create.md) %}
 
@@ -61,9 +62,10 @@ To edit a key:
 - Management console
 
    1. Log in to the [management console]({{ link-console-main }}).
-   1. Select **{{ kms-name }}**.
-   1. In the row with the key in question, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Update** from the drop-down list.
-   1. Change the key attributes and click **Save**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+   1. In the left-hand panel, select ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
+   1. In the line with the appropriate key, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.common.edit }}**.
+   1. Change the key attributes and click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -71,7 +73,7 @@ To edit a key:
    * `name`: Key name. If there are multiple keys with the same name in the folder, use the key ID.
    * `new-name`: New key name.
    * `default-algorithm`: Encryption algorithm (`aes-128`, `aes-192`, or `aes-256`).
-   * `rotation-period`: Key rotation period. To disable automatic rotation for an updated key, don't specify the `rotation-period` parameter.
+   * `rotation-period`: Key rotation period. To disable automatic rotation for an updated key, do not specify the `rotation-period` parameter.
 
    ```bash
    yc kms symmetric-key update \
@@ -83,14 +85,14 @@ To edit a key:
 
 - API
 
-   Use the [update](../api-ref/SymmetricKey/update) method for the `SymmetricKey` resource.
+   Use the [update](../../kms/api-ref/SymmetricKey/update.md) REST API method for the [SymmetricKey](../../kms/api-ref/SymmetricKey/index.md) resource or the [SymmetricKeyService/Update](../../kms/api-ref/grpc/symmetric_key_service.md#Update) gRPC API call.
 
 - {{ TF }}
 
    To edit a key:
    1. Open the {{ TF }} configuration file and change the required parameters of the `yandex_kms_symmetric_key` resource.
 
-      Example configuration file structure:
+      Example of the configuration file structure:
 
       ```hcl
       ...
@@ -104,25 +106,25 @@ To edit a key:
       ```
 
       For more information about the `yandex_kms_symmetric_key` resource parameters in {{ TF }}, see the [provider documentation]({{ tf-provider-resources-link }}/kms_symmetric_key).
-   1. Check the configuration using the command:
+   1. Check the configuration using this command:
 
       ```bash
       terraform validate
       ```
 
-      If the configuration is correct, the following message is returned:
+      If the configuration is correct, you will get this message:
 
       ```text
       Success! The configuration is valid.
       ```
 
-   1. Run the command:
+   1. Run this command:
 
       ```bash
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
    1. Apply the configuration changes:
 
       ```bash
@@ -131,7 +133,7 @@ To edit a key:
 
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-      You can verify the change to the key using the [management console]({{ link-console-main }}) or the following [CLI](../../cli/quickstart.md) command:
+      You can check the key update using the [management console]({{ link-console-main }}) or this [CLI](../../cli/quickstart.md) command:
 
       ```bash
       yc kms symmetric-key get <key name>
@@ -150,8 +152,9 @@ To rotate a key:
 - Management console
 
    1. Log in to the [management console]({{ link-console-main }}).
-   1. Select **{{ kms-name }}**.
-   1. In the row with the key in question, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Rotate** from the drop-down list.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+   1. In the left-hand panel, select ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
+   1. In the line with the appropriate key, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.kms.symmetric-key.overview.button_action-rotate }}**.
    1. Confirm the rotation (make sure that changing the default version will not affect your work).
 
 - CLI
@@ -164,7 +167,7 @@ To rotate a key:
 
 - API
 
-   Use the [rotate](../api-ref/SymmetricKey/rotate) method for the `SymmetricKey` resource.
+   Use the [rotate](../../kms/api-ref/SymmetricKey/rotate.md) REST API method for the [SymmetricKey](../../kms/api-ref/SymmetricKey/index.md) resource or the [SymmetricKeyService/Rotate](../../kms/api-ref/grpc/symmetric_key_service.md#Rotate) gRPC API call.
 
 {% endlist %}
 
@@ -174,7 +177,7 @@ By destroying a key you also destroy all its versions. You cannot delete a key d
 
 {% note alert %}
 
-3 days after the key is requested to be destroyed, the key and its versions are permanently destroyed: if you still have any data encrypted with this key, you can't decrypt the data.
+3 days after the key is requested to be destroyed, the key and its versions are permanently destroyed: if you still have any data encrypted with this key, you cannot decrypt the data.
 
 {% endnote %}
 
@@ -185,9 +188,10 @@ To destroy a key:
 - Management console
 
    1. Log in to the [management console]({{ link-console-main }}).
-   1. Select **{{ kms-name }}**.
-   1. In the row with the key you need, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Delete** from the drop-down list.
-   1. In the window that opens, click **Delete**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+   1. In the left-hand panel, select ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
+   1. In the line with the appropriate key, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.kms.symmetric-key.overview.button_action-delete }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.kms.symmetric-key.overview.popup-confirm_button_delete }}**.
 
 - CLI
 
@@ -199,11 +203,11 @@ To destroy a key:
 
 - API
 
-   Use the [delete](../api-ref/SymmetricKey/delete) method for the `SymmetricKey` resource.
+   Use the [delete](../../kms/api-ref/SymmetricKey/delete.md) REST API method for the [SymmetricKey](../../kms/api-ref/SymmetricKey/index.md) resource or the [SymmetricKeyService/Delete](../../kms/api-ref/grpc/symmetric_key_service.md#Delete) gRPC API call.
 
 - {{ TF }}
 
-   To delete an key created with {{ TF }}:
+   To delete a key created with {{ TF }}:
    1. Open the {{ TF }} configuration file and delete the fragment with the key description.
 
       Example key description in the {{ TF }} configuration:
@@ -220,25 +224,25 @@ To destroy a key:
       ```
 
    1. In the command line, go to the directory with the {{ TF }} configuration file.
-   1. Check the configuration using the command:
+   1. Check the configuration using this command:
 
       ```bash
       terraform validate
       ```
 
-      If the configuration is correct, the following message is returned:
+      If the configuration is correct, you will get this message:
 
       ```bash
       Success! The configuration is valid.
       ```
 
-   1. Run the command:
+   1. Run this command:
 
       ```bash
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
    1. Apply the configuration changes:
 
       ```bash

@@ -1,10 +1,9 @@
+---
+title: "Удалить правило из группы безопасности"
+description: "Следуя данной инструкции, вы сможете удалить правило из группы безопасности."
+---
+
 # Удалить правило из группы безопасности
-
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
 
 {% list tabs %}
 
@@ -93,7 +92,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы удалить правило из группы безопасности, созданное с помощью {{ TF }}:
 

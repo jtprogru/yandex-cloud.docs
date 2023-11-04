@@ -1,4 +1,9 @@
-# Attach a target group to a network load balancer
+---
+title: "Attaching a target group to a network load balancer"
+description: "Follow this guide to attach a target group to a network load balancer."
+---
+
+# Attaching a target group to a network load balancer
 
 {% list tabs %}
 
@@ -7,11 +12,11 @@
    To attach a [target group](../concepts/target-resources.md) to a network load balancer:
 
    1. In the [management console]({{ link-console-main }}), select the folder where you wish to attach a target group to a load balancer.
-   1. In the list of services, select **{{ network-load-balancer-name }}**.
-   1. In the line of the load balancer to attach a target group to, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Attach target group**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
+   1. In the line of the load balancer to attach a target group to, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.load-balancer.network-load-balancer.button_attach-tg }}**.
    1. Select a target group or [create a new one](target-group-create.md).
    1. Configure health check settings.
-   1. Click **Attach target group**.
+   1. Click **{{ ui-key.yacloud.load-balancer.network-load-balancer.button_attach-tg }}**.
 
 - CLI
 
@@ -89,7 +94,7 @@
 
 - API
 
-   Use the [attachTargetGroup](../api-ref/NetworkLoadBalancer/attachTargetGroup.md) API method and include the following in the request:
+   To attach a target group to a network load balancer, use the [attachTargetGroup](../api-ref/NetworkLoadBalancer/attachTargetGroup.md) REST API method for the [NetworkLoadBalancer](../api-ref/NetworkLoadBalancer/index.md) resource or the [NetworkLoadBalancerService/AttachTargetGroup](../api-ref/grpc/network_load_balancer_service.md#AttachTargetGroup) gRPC API call and provide the following in the request:
 
    * Load balancer ID in the `networkLoadBalancerId` parameter.
    * Target group ID in the `attachedTargetGroup.targetGroupId` parameter.

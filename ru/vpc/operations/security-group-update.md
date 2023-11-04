@@ -1,11 +1,5 @@
 # Изменить имя и описание
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 После создания группы безопасности вы можете изменить ее имя и описание, а также [добавить](security-group-add-rule.md) или [удалить](security-group-delete-rule.md) правила.
 
 {% list tabs %}
@@ -35,7 +29,7 @@
 
 - {{ TF }}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
  
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 

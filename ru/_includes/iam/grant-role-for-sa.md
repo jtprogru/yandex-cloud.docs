@@ -13,13 +13,13 @@
     Чтобы назначить сервисному аккаунту роль на облако или каталог:
 
     1. В [консоли управления]({{ link-console-main }}) выберите нужное облако или каталог.
-    1. Перейдите на вкладку **Права доступа**.
-    1. Нажмите кнопку **Назначить роли**.
-    1. В открывшемся окне нажмите ![image](../../_assets/plus.svg) **Выбрать пользователя** → **Сервисные аккаунты**.
+    1. Перейдите на вкладку **{{ ui-key.yacloud.common.resource-acl.label_access-bindings }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.resource-acl.button_new-bindings }}**.
+    1. В открывшемся окне нажмите ![image](../../_assets/plus.svg) **{{ ui-key.yacloud_components.acl.action.select-subject }}** → **{{ ui-key.yacloud.common.resource-acl.label_service-accounts }}**.
     1. Выберите нужный сервисный аккаунт из списка или воспользуйтесь поиском.
-    1. Нажмите кнопку ![image](../../_assets/plus.svg) **Добавить роль**.
+    1. Нажмите кнопку ![image](../../_assets/plus.svg) **{{ ui-key.yacloud_components.acl.button.add-role }}**.
     1. Выберите роль в каталоге.
-    1. Нажмите кнопку **Сохранить**.
+    1. Нажмите кнопку **{{ ui-key.yacloud_components.acl.action.apply }}**.
 
 - CLI
 
@@ -52,7 +52,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 
@@ -62,16 +62,14 @@
      resource "yandex_resourcemanager_folder_iam_member" "admin-account-iam" {
        folder_id   = "<идентификатор_каталога>"
        role        = "<роль>"
-       members     = [
-	                   "serviceAccount:<идентификатор_сервисного_аккаунта>"
-                     ]
+       member      = "serviceAccount:<идентификатор_сервисного_аккаунта>"
      }
      ```
 
      Где:
      * `folder_id` — [идентификатор каталога](../../resource-manager/operations/folder/get-id.md). Обязательный параметр.
      * `role` — назначаемая роль. Описание ролей можно найти в документации {{ iam-full-name }} в разделе [{#T}](../../iam/concepts/access-control/roles.md). Обязательный параметр.
-     * `members` — [идентификатор](../../iam/operations/sa/get-id.md) сервисного аккаунта, которому назначается роль. Указывается в виде `serviceAccount:<идентификатор_сервисного_аккаунта>`. Обязательный параметр.
+     * `member` — [идентификатор](../../iam/operations/sa/get-id.md) сервисного аккаунта, которому назначается роль. Указывается в виде `serviceAccount:<идентификатор_сервисного_аккаунта>`. Обязательный параметр.
 
      Более подробную информацию о ресурсах, которые вы можете создать с помощью {{ TF }}, см. в [документации провайдера]({{ tf-provider-link }}/).
 
@@ -118,19 +116,19 @@
 
   1. Перейдите в сервис [{{ org-full-name }}]({{ link-org-main }}).
   
-  1. На панели слева нажмите значок ![icon-acl](../../_assets/organization/acl.svg) [Права доступа]({{ link-org-acl }}).
+  1. На панели слева нажмите значок ![icon-acl](../../_assets/organization/acl.svg) [**{{ ui-key.yacloud_org.pages.acl }}**]({{ link-org-acl }}).
 
-  1. В фильтре типов аккаунта выберите `Сервисные аккаунты`.
+  1. В фильтре типов аккаунта выберите `{{ ui-key.yacloud.common.resource-acl.label_service-accounts }}`.
 
-  1. Если у нужного сервисного аккаунта уже есть хотя бы одна роль, выберите его из списка или воспользуйтесь строкой поиска. В строке аккаунта нажмите значок ![icon-context-menu](../../_assets/horizontal-ellipsis.svg) и выберите **Назначить роли**.
+  1. Если у нужного сервисного аккаунта уже есть хотя бы одна роль, выберите его из списка или воспользуйтесь строкой поиска. В строке аккаунта нажмите значок ![icon-context-menu](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud_org.entity.user.action.acl }}**.
 
-     Если нужного сервисного аккаунта нет в списке, в правом верхнем углу страницы нажмите кнопку **Назначить роли**. В открывшемся окне нажмите ![image](../../_assets/plus.svg) **Выбрать пользователя** → **Сервисные аккаунты** и выберите аккаунт из списка или воспользуйтесь строкой поиска.
+     Если нужного сервисного аккаунта нет в списке, в правом верхнем углу страницы нажмите кнопку **{{ ui-key.yacloud_org.entity.user.action.acl }}**. В открывшемся окне нажмите ![image](../../_assets/plus.svg) **{{ ui-key.yacloud_components.acl.action.select-subject }}** → **{{ ui-key.yacloud.common.resource-acl.label_service-accounts }}** и выберите аккаунт из списка или воспользуйтесь строкой поиска.
   
-  1. Нажмите кнопку ![image](../../_assets/plus.svg) **Добавить роль** и введите название роли или выберите роль в списке.
+  1. Нажмите кнопку ![image](../../_assets/plus.svg) **{{ ui-key.yacloud_components.acl.button.add-role }}** и введите название роли или выберите роль в списке.
   
      Описание доступных ролей можно найти в документации {{ iam-full-name }} в разделе [{#T}](../../iam/concepts/access-control/roles.md). 
   
-  1. Нажмите **Сохранить**.
+  1. Нажмите **{{ ui-key.yacloud_components.acl.action.apply }}**.
 
 - CLI
 
@@ -301,7 +299,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform). 
+  {% include [terraform-install](../../_includes/terraform-install.md) %} 
 
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 
@@ -318,7 +316,7 @@
      ```
 
      Где:
-     * `organization_id` — [идентификатор организации](../../organization/org-profile.md). Обязательный параметр.
+     * `organization_id` — [идентификатор организации](../../organization/operations/org-profile.md). Обязательный параметр.
      * `role` — назначаемая роль. Описание ролей можно найти в документации {{ iam-full-name }} в разделе [{#T}](../../iam/concepts/access-control/roles.md). Для каждой роли можно использовать только один `yandex_organization manager_organization_iam_binding`. Обязательный параметр.
      * `members` — [идентификатор](../../iam/operations/sa/get-id.md) сервисного аккаунта, которому назначается роль. Указывается в виде `serviceAccount:<идентификатор_сервисного_аккаунта>`. Обязательный параметр.
 

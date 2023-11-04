@@ -1,15 +1,19 @@
-# {{ forms-full-name }} revision history for May 2023
+# {{ forms-full-name }} revision history for September 2023
 
-* [Access to forms for {{ ya-360 }} organization departments](#access-departments)
-* [Specifying a manager's login in integration settings](#integration-login-manager)
+* [Inserting responses at the beginning or end of a {{ wiki-name }} page](#insert-answer)
+* [Design theme for forms](#design-theme)
+* [Integration with dynamic tables](#integration-with-grids)
 
-## Access to forms for {{ ya-360 }} organization departments {#access-departments}
+## Inserting responses at the beginning or end of a {{ wiki-name }} page {#insert-answer}
 
-You can now grant access permissions to a form or group of forms for {{ ya-360 }} organization departments.
+Now, when [setting up integration with {{ wiki-full-name }}](../send-wiki.md), you can select where to insert responses: at the beginning or end of a page.
 
-## Specifying a manager's login in integration settings {#integration-login-manager}
+![](../../_assets/forms/insert-answer.png)
 
-You can now use the **Manager login** variable in the settings of [form integration](../create-task.md) with {{ tracker-full-name }} to appoint the issue reporter or assignee role to the manager and add them to followers.
-To provide the parameter value to a {{ tracker-name }} issue, open the [integration setup page](https://cloud.yandex.ru/docs/forms/vars) and select the **User info** or **Survey Question Info** parameter in the **Organization Info** section.
+## Design theme for forms {#design-theme}
 
-![new-tracker-integration-parameter](../../_assets/forms/new-tracker-integration-parameter.png =690x429)
+In the [new interface](2306.md), you can now set up a [design theme](../appearance.md).
+
+## Integration with dynamic tables {#integration-with-grids}
+
+[Business forms](../forms-for-org.md) can now be integrated with dynamic tables. For more information, see [{#T}](../send-wiki.md#grid).

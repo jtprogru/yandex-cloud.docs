@@ -17,8 +17,6 @@
 
 ## Настройка групп безопасности {#configure-security-groups}
 
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% include [sg-rules](../../_includes/mdb/sg-rules-connect.md) %}
 
 Настройки правил будут различаться в зависимости от выбранного способа подключения:
@@ -29,37 +27,37 @@
 
     [Настройте все группы безопасности](../../vpc/operations/security-group-add-rule.md) кластера так, чтобы они разрешали входящий трафик с любых IP-адресов на порт {{ port-mmy }}. Для этого создайте следующее правило для входящего трафика:
 
-    * Диапазон портов — `{{ port-mmy }}`.
-    * Протокол — `TCP`.
-    * Источник — `CIDR`.
-    * CIDR блоки — `0.0.0.0/0`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `{{ port-mmy }}`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
 - С ВМ в {{ yandex-cloud }}
 
     1. [Настройте все группы безопасности](../../vpc/operations/security-group-add-rule.md) кластера так, чтобы они разрешали входящий трафик из группы безопасности, в которой находится ВМ, на порт {{ port-mmy }}. Для этого в этих группах создайте следующее правило для входящего трафика:
 
-        * Диапазон портов — `{{ port-mmy }}`.
-        * Протокол — `TCP`.
-        * Источник — `Группа безопасности`.
-        * Группа безопасности — если кластер и ВМ находятся в одной и той же группе безопасности, выберите значение `Текущая` (`Self`). В противном случае укажите группу безопасности ВМ.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `{{ port-mmy }}`.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-sg }}`.
+        * Группа безопасности — если кластер и ВМ находятся в одной и той же группе безопасности, выберите значение `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-sg-type-self }}` (`Self`). В противном случае укажите группу безопасности ВМ.
 
     1. [Настройте группу безопасности](../../vpc/operations/security-group-add-rule.md), в которой находится ВМ так, чтобы можно было подключаться к ВМ и был разрешен трафик между ВМ и хостами кластера.
 
         Пример правил для ВМ:
 
         * Для входящего трафика:
-           * Диапазон портов — `{{ port-ssh }}`.
-           * Протокол — `TCP`.
-           * Источник — `CIDR`.
-           * CIDR блоки — `0.0.0.0/0`.
+           * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `{{ port-ssh }}`.
+           * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`.
+           * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+           * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
             Это правило позволяет [подключаться](../../compute/operations/vm-connect/ssh.md#vm-connect) к ВМ по протоколу [SSH](../../glossary/ssh-keygen.md).
 
         * Для исходящего трафика:
-            * Диапазон портов — `{{ port-any }}`.
-            * Протокол — `Любой` (`Any`).
-            * Назначение — `CIDR`.
-            * CIDR блоки — `0.0.0.0/0`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `{{ port-any }}`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`).
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
             Это правило разрешает любой исходящий трафик, что позволяет не только подключаться к кластеру, но и устанавливать на ВМ необходимые для этого сертификаты и утилиты.
 
@@ -84,9 +82,23 @@
 
 {% include [ide-ssl-cert](../../_includes/mdb/mdb-ide-ssl-cert.md) %}
 
+## FQDN хоста {{ MY }} {#fqdn}
+
+Для подключения к хосту потребуется его [FQDN](../concepts/network.md#hostname) — доменное имя. Его можно получить несколькими способами:
+
+* [Запросите список хостов в кластере](../operations/hosts.md#list).
+* Скопируйте команду для подключения к кластеру в [консоли управления]({{ link-console-main }}). Команда содержит заполненный FQDN хоста. Чтобы получить команду, перейдите на страницу кластера и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-connect }}**.
+* Посмотрите FQDN в консоли управления:
+
+   1. Перейдите на страницу кластера.
+   1. Перейдите в раздел **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}**.
+   1. Скопируйте значение в столбце **{{ ui-key.yacloud.mdb.cluster.hosts.host_column_name }}**.
+
+Для хостов кластера также используются [особые FQDN](#special-fqdns).
+
 ## Особые FQDN {#special-fqdns}
 
-Наравне с обычными FQDN, которые можно запросить со [списком хостов в кластере](./hosts.md#list), {{ mmy-name }} предоставляет несколько особых FQDN, которые также можно использовать при подключении к кластеру.
+Наравне с обычными FQDN, {{ mmy-name }} предоставляет несколько особых FQDN, которые также можно использовать при подключении к кластеру.
 
 {% note warning %}
 
@@ -96,41 +108,41 @@
 
 ### Текущий мастер {#fqdn-master}
 
-FQDN вида `c-<идентификатор кластера>.rw.{{ dns-zone }}` всегда указывает на текущий хост-мастер в кластере. Идентификатор кластера можно получить со [списком кластеров в каталоге](./cluster-list.md#list-clusters).
+FQDN вида `c-<идентификатор_кластера>.rw.{{ dns-zone }}` всегда указывает на текущий хост-мастер в кластере. Идентификатор кластера можно получить со [списком кластеров в каталоге](./cluster-list.md#list-clusters).
 
 При подключении к этому FQDN разрешено выполнять операции чтения и записи.
 
-Пример подключения к хосту-мастеру для кластера с идентификатором `c9qash3nb1v9ulc8j9nm`:
+Пример подключения к хосту-мастеру для кластера с идентификатором `c9qash3nb1v9********`:
 
 ```bash
-mysql --host=c-c9qash3nb1v9ulc8j9nm.rw.{{ dns-zone }} \
+mysql --host=c-c9qash3nb1v9********.rw.{{ dns-zone }} \
       --port=3306 \
       --ssl-ca=~/.mysql/root.crt \
       --ssl-mode=VERIFY_IDENTITY \
-      --user=<имя пользователя> \
+      --user=<имя_пользователя> \
       --password \
-      <имя БД>
+      <имя_БД>
 ```
 
 ### Наименее отстающая реплика {#fqdn-replica}
 
-FQDN вида `c-<идентификатор кластера>.ro.{{ dns-zone }}` указывает на наименее отстающую от мастера [реплику](../concepts/replication.md). Идентификатор кластера можно запросить со [списком кластеров в каталоге](./cluster-list.md#list-clusters).
+FQDN вида `c-<идентификатор_кластера>.ro.{{ dns-zone }}` указывает на наименее отстающую от мастера [реплику](../concepts/replication.md). Идентификатор кластера можно запросить со [списком кластеров в каталоге](./cluster-list.md#list-clusters).
 
 **Особенности:**
 
 * При подключении к этому FQDN разрешено выполнять только операции чтения.
 * Если в кластере нет активных реплик, то подключиться к этому FQDN невозможно: соответствующая CNAME-запись в [DNS](../../glossary/dns.md) будет указывать на пустой объект (`null`).
 
-Пример подключения к наименее отстающей реплике для кластера с идентификатором `c9qash3nb1v9ulc8j9nm`:
+Пример подключения к наименее отстающей реплике для кластера с идентификатором `c9qash3nb1v9********`:
 
 ```bash
-mysql --host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
+mysql --host=c-c9qash3nb1v9********.ro.{{ dns-zone }} \
       --port=3306 \
       --ssl-ca=~/.mysql/root.crt \
       --ssl-mode=VERIFY_IDENTITY \
-      --user=<имя пользователя> \
+      --user=<имя_пользователя> \
       --password \
-      <имя БД>
+      <имя_БД>
 ```
 
 ## Подключение из графических IDE {#connection-ide}
@@ -149,7 +161,7 @@ mysql --host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
      1. Выберите в меню **File** → **New** → **Data Source** → **{{ MY }}**.
      1. На вкладке **General**:
         1. Укажите параметры подключения:
-           * **Host** — <имя хоста>.{{ dns-zone }} или один из [особых FQDN](#special-fqdns);
+           * **Host** — [FQDN любого хоста {{ MY }}](#fqdn) или один из [особых FQDN](#special-fqdns);
            * **Port** — `{{ port-mmy }}`;
            * **User**, **Password** — имя и пароль пользователя БД;
            * **Database** — имя БД для подключения.
@@ -167,7 +179,7 @@ mysql --host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
      1. Выберите из списка БД **{{ MY }}**.
      1. Нажмите кнопку **Далее**.
      1. Укажите параметры подключения на вкладке **Главное**:
-        * **Сервер** — <имя хоста>.{{ dns-zone }} или один из [особых FQDN](#special-fqdns);
+        * **Сервер** — [FQDN любого хоста {{ MY }}](#fqdn) или один из [особых FQDN](#special-fqdns);
         * **Порт** — `{{ port-mmy }}`;
         * **База данных** — имя БД для подключения;
         * **Пользователь**, **Пароль** — имя и пароль пользователя БД.
@@ -179,6 +191,34 @@ mysql --host=c-c9qash3nb1v9ulc8j9nm.ro.{{ dns-zone }} \
             1. Выключите настройку **Проверять сертификат сервера**.
   1. Нажмите кнопку **Тест соединения ...** для проверки подключения. При успешном подключении будет выведен статус подключения, информация о СУБД и драйвере.
   1. Нажмите кнопку **Готово**, чтобы сохранить настройки соединения с БД.
+
+{% endlist %}
+
+## Подготовка к подключению из Docker-контейнера {#connection-docker}
+
+Чтобы подключаться к кластеру {{ mmy-name }} из Docker-контейнера, добавьте в Dockerfile строки:
+
+{% list tabs %}
+
+
+* Подключение без SSL
+
+  ```bash
+  RUN apt-get update && \
+      apt-get install mysql-client --yes
+  ```
+
+
+* Подключение с SSL
+
+  ```bash
+  RUN apt-get update && \
+      apt-get install wget mysql-client --yes && \
+      mkdir --parents ~/.mysql && \
+      wget "{{ crt-web-path }}" \
+           --output-document ~/.mysql/root.crt && \
+      chmod 0600 ~/.mysql/root.crt
+  ```
 
 {% endlist %}
 

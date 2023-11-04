@@ -25,13 +25,13 @@ To authenticate in {{ objstorage-name }}, you can use one of the following appro
 
 ### Accessing S3 with authentication via the IAM token of a cluster service account {#s3-access-using-iam}
 
-1. When creating a cluster, specify a [service account](../../iam/operations/sa/create.md#create-sa). If a cluster is already created, add a service account using the **Edit cluster** button in the management console.
+1. When creating a cluster, specify a [service account](../../iam/operations/sa/create.md#create-sa). If the cluster is already created, add a service account using the **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** button in the management console.
 
 1. The service account must have access to the appropriate bucket. To do this, grant the service account privileges in the [bucket ACL](../../storage/concepts/acl), or the `storage.viewer` or `storage.editor` roles.
 
    For more information about these roles, see the [{{ objstorage-name }} documentation](../../storage/security/index.md).
 
-> For example, get a list of files located in the `yc-mdb-examples` public bucket at the path `dataproc/example01/set01`. To do this, [connect](../operations/connect.md) to the cluster and run the command:
+> For example, get a list of files located in the `yc-mdb-examples` public bucket at the path `dataproc/example01/set01`. To do this, connect to the [cluster](../operations/connect.md) and run the command:
 >
 > ```bash
 > hadoop fs -ls s3a://yc-mdb-examples/dataproc/example01/set01
@@ -285,6 +285,7 @@ For more information, see the [Apache Spark documentation](https://spark.apache.
       sc._jsc.hadoopConfiguration().set("fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider")
       sc._jsc.hadoopConfiguration().set("hadoop.security.credential.provider.path", "jceks://hdfs/<path to JCEKS file>")
       ```
+
    * Reading a file using an access key and bucket secret:
 
       ```python
@@ -298,6 +299,8 @@ For more information, see the [Apache Spark documentation](https://spark.apache.
    Once you have access, you can read the file directly from {{ objstorage-name }}:
 
    ```python
+   from pyspark.sql import SQLContext
+
    sql = SQLContext(sc)
    df = sql.read.parquet("s3a://<bucket name>/<object path>")
    ```

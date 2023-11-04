@@ -11,11 +11,11 @@ editable: false
 ### Using speech synthesis {#rules-tts}
 
 
-The cost of using {{ speechkit-name }} for speech synthesis depends on the version of the API used. For [API v1](tts/request.md), the cost is calculated based on the total number of characters sent to generate speech from text in a calendar month ([Reporting period](../billing/concepts/glossary#period)).
+The cost of using {{ speechkit-name }} for speech synthesis depends on the version of the API you use. For [API v1](tts/request.md), the cost is calculated based on the total number of characters sent to generate speech from text in a calendar month ([Reporting period](../billing/concepts/glossary#period)).
 
 {% include [pricing-symbol-count](../_includes/pricing-symbol-count.md) %}
 
-The cost using [API v3](tts-v3/api-ref/grpc/index.md) depends on the number of synthesis requests sent. Speech synthesis requests have limitations — {{ tts-v3-count }} and {{ tts-v3-time }}.
+The cost of using [API v3](tts-v3/api-ref/grpc/index.md) depends on the number of synthesis requests sent. Speech synthesis requests have such limitations as {{ tts-v3-count }} and {{ tts-v3-time }}.
 
 
 
@@ -24,7 +24,7 @@ The cost using [API v3](tts-v3/api-ref/grpc/index.md) depends on the number of 
 
 
 
-The cost of using {{ speechkit-name }} for speech recognition depends on the recognition type and duration of a recognized audio fragment. The cost is calculated for a calendar month ([Reporting period](https://cloud.yandex.com/docs/billing/concepts/glossary)).
+The cost of using {{ speechkit-name }} for speech recognition depends on the recognition type and duration of a recognized audio fragment. Cost is calculated for a calendar month ([Reporting period](../billing/concepts/glossary.md)).
 
 #### Streaming speech recognition {#rules-stt-streaming}
 
@@ -34,11 +34,11 @@ The cost of using {{ speechkit-name }} streaming recognition is calculated based
 
 These rules apply to [synchronous recognition](stt/request.md) and [streaming mode](stt/streaming.md) recognition when using API v2 and API v3.
 
-Billable unit — a 15-second segment of single-channel audio. Shorter segments are rounded up (1 second becomes 15 seconds).
+The billing unit is a 15-second segment of single-channel audio. Shorter segments are rounded up (1 second becomes 15 seconds).
 
 {% note warning %}
 
-In [streaming mode](stt/streaming.md), billing begins when a [message with recognition settings](stt/streaming.md#specification-msg) is sent. Even if you don't send any audio after this message, it's treated as 1 consumed billable unit.
+In [streaming mode](stt/streaming.md), billing begins when a [message with recognition settings](stt/streaming.md#specification-msg) is sent. Even if you do not send any audio after this message, it will be treated as one consumed billing unit.
 
 {% endnote %}
 
@@ -56,9 +56,9 @@ In [streaming mode](stt/streaming.md), billing begins when a [message with recog
 
 These rules apply when using [asynchronous recognition](stt/transcribation.md).
 
-Billable unit — 1 second of two-channel audio. Shorter segments are rounded up. The number of channels is rounded up to an even number.
+The billing unit is a one-second segment of two-channel audio. Shorter segments are rounded up. The number of channels is rounded up to an even number.
 
-The minimum billable amount is 15 seconds for every pair of channels. Audio that is shorter is billed as 15 seconds.
+The minimum billable amount is 15 seconds for every pair of channels. Shorter audio is billed as 15 seconds.
 
 **Examples of rounding audio length:**
 
@@ -69,7 +69,6 @@ The minimum billable amount is 15 seconds for every pair of channels. Audio that
 | 1 second | 3 | 30 |
 | 15.5 seconds | 2 | 16 |
 | 15.5 seconds | 4 | 32 |
-
 
 
 ## Pricing {#prices}

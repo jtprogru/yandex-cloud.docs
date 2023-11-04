@@ -16,3 +16,8 @@
 * [{#T}](./outbound-replication.md)
 * [{#T}](../operations/logical-replica-from-rds.md)
 * [{#T}](./mpg-to-objstorage.md)
+* [{#T}](./mpg-to-mmy.md)
+* [{#T}](./mmy-to-mpg.md)
+* [{#T}](./rds-to-mpg.md)
+
+О миграции хостов кластера {{ mpg-name }} в другую зону доступности читайте в [инструкции](../operations/host-migration.md).

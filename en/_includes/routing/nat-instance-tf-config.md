@@ -1,6 +1,6 @@
 
 ```hcl
-# Declaring variables for user-defined parameters
+# Declaring variables for custom parameters
 
 variable "folder_id" {
   type = string
@@ -30,7 +30,7 @@ locals {
   route_table_name = "nat-instance-route"
 }
 
-# Setting up a provider
+# Setting up the provider
 
 terraform {
   required_providers {
@@ -112,7 +112,7 @@ resource "yandex_compute_image" "nat-instance-ubuntu" {
   source_family = "nat-instance-ubuntu"
 }
 
-# Creating a VM instance
+# Creating a VM
 
 resource "yandex_compute_instance" "test-vm" {
   name        = local.vm_test_name
@@ -137,7 +137,7 @@ resource "yandex_compute_instance" "test-vm" {
   }
 
   metadata = {
-    user-data = "#cloud-config\nusers:\n  - name: ${var.vm_user}\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - ${file("${var.ssh_key_path}")}"
+    user-data = "#cloud-config\nusers:\n  - name: ${var.vm_user}\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ${file("${var.ssh_key_path}")}"
   }
 }
 
@@ -167,7 +167,7 @@ resource "yandex_compute_instance" "nat-instance" {
   }
 
   metadata = {
-    user-data = "#cloud-config\nusers:\n  - name: ${var.vm_user_nat}\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - ${file("${var.ssh_key_path}")}"
+    user-data = "#cloud-config\nusers:\n  - name: ${var.vm_user_nat}\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ${file("${var.ssh_key_path}")}"
   }
 }
 

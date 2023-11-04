@@ -11,13 +11,11 @@ You can connect to a cluster:
 
 ## Configuring security groups {#configuring-security-groups}
 
-{% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% include [sg-rules](../../_includes/mdb/sg-rules-connect.md) %}
 
 To ensure {{ mgp-name }} cluster functionality and network connectivity between its hosts, you need at least one cluster security group to include rules allowing any incoming and outgoing traffic from any IPs using any protocol.
 
-Settings of rules depend on the connection method you select:
+Rule settings depend on the connection method you select:
 
 {% list tabs %}
 
@@ -29,23 +27,23 @@ Settings of rules depend on the connection method you select:
 
    1. {% include [Cluster security group rules](../../_includes/mdb/mgp/cluster-sg-rules.md) %}
 
-   1. [Configure the security group](../../vpc/operations/security-group-add-rule.md) where the VM is located to allow connections to the VM and traffic between the VM and the cluster hosts.
+   1. [Configure the security group](../../vpc/operations/security-group-add-rule.md) where the VM is located to enable connections to the VM and traffic between the VM and the cluster hosts.
 
-      Example of rules for a VM:
+      For example, you can set the following rules for a VM:
 
       * For incoming traffic:
-         * Port range: `22`.
-         * Protocol: `TCP`.
-         * Source: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `22`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
          This rule allows you to connect to the VM over SSH.
 
       * For outgoing traffic:
-         * Port range: `{{ port-any }}`.
-         * Protocol: `Any`.
-         * Destination type: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-any }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`)
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
          This rule allows all outgoing traffic, which enables you to both connect to the cluster and install the certificates and utilities the VMs need to connect to the cluster.
 
@@ -61,20 +59,7 @@ To automatically select a host to connect to a cluster, use a [special primary m
 
 To use an SSL connection, get a certificate:
 
-{% list tabs %}
-
-- Linux (Bash)
-
-   {% include [install-certificate](../../_includes/mdb/mgp/install-certificate.md) %}
-
-- Windows (PowerShell)
-
-   ```powershell
-   mkdir $HOME\AppData\Roaming\postgresql
-   curl.exe -o $HOME\AppData\Roaming\postgresql\root.crt {{ crt-web-path }}
-   ```
-
-{% endlist %}
+{% include [install-certificate](../../_includes/mdb/mgp/install-certificate.md) %}
 
 {% include [ide-ssl-cert](../../_includes/mdb/mdb-ide-ssl-cert.md) %}
 
@@ -108,7 +93,7 @@ You can only use graphical IDEs to connect to a public cluster using SSL certifi
       1. On the **SSH/SSL** tab:
          1. Enable the **Use SSL** setting.
          1. In the **CA file** field, specify the path to the file with an [SSL certificate for the connection](#get-ssl-cert).
-   1. Click **Test Connection** to test the connection. If the connection is successful, you'll see the connection status and information about the DBMS and driver.
+   1. Click **Test Connection** to test the connection. If the connection is successful, you will see the connection status and information about the DBMS and driver.
    1. Click **OK** to save the data source.
 
 * DBeaver
@@ -120,12 +105,12 @@ You can only use graphical IDEs to connect to a public cluster using SSL certifi
       1. Specify the connection parameters on the **Main** tab:
          * **Host**: [Special primary master FQDN](#fqdn-master): `c-<clusterID>.rw.{{ dns-zone }}`.
          * **Port**: `{{ port-mgp }}`.
-         * **Database**: Name of the DB to connect to.
+         * **Database**: DB you want to connect to.
          * Under **Authentication**, specify the DB user's name and password.
       1. On the **SSL** tab:
          1. Enable **Use SSL**.
          1. In the **Root certificate** field, specify the path to the saved [SSL certificate](#get-ssl-cert) file.
-   1. Click **Test connection ...** to test the connection. If the connection is successful, you'll see the connection status and information about the DBMS and driver.
+   1. Click **Test connection ...** to test the connection. If the connection is successful, you will see the connection status and information about the DBMS and driver.
    1. Click **Ready** to save the database connection settings.
 
 {% endlist %}
@@ -145,7 +130,7 @@ Create a new server connection:
    * **Host name/address**: [Special master host FQDN](#fqdn-master) or regular host FQDN.
    * **Port**: `{{ port-mgp }}`.
    * **Maintenance database**: Name of the `postgres` maintenance database.
-   * **Username**: Name of the user to connect under.
+   * **Username**: Username for connection.
    * **Password**: User password.
 
 1. In the **Parameters** tab:
@@ -164,6 +149,34 @@ column "wait_event_type" does not exist LINE 10: wait_event_type || ': ' || wait
 ```
 
 This error does not occur in other tabs in {{ pgadmin }}.
+
+## Before you connect from a Docker container {#connection-docker}
+
+To connect to a {{ mgp-name }} cluster from a Docker container, add the following lines to the Dockerfile:
+
+{% list tabs %}
+
+
+- Connecting without using SSL
+
+   ```bash
+   RUN apt-get update && \
+       apt-get install postgresql-client --yes
+   ```
+
+
+- Connecting via SSL
+
+   ```bash
+   RUN apt-get update && \
+       apt-get install wget postgresql-client --yes && \
+       mkdir --parents ~/.postgresql && \
+       wget "{{ crt-web-path }}" \
+            --output-document ~/.postgresql/root.crt && \
+       chmod 0600 ~/.postgresql/root.crt
+   ```
+
+{% endlist %}
 
 ## Sample connection strings {#connection-string}
 
@@ -186,7 +199,7 @@ You can connect to a cluster using both a regular primary master FQDN or its [sp
 
 Just like usual FQDNs, which can be requested with a list of cluster hosts, {{ mgp-name }} provides a special FQDN, which can also be used when connecting to a cluster.
 
-A FQDN like `c-<cluster ID>.rw.{{ dns-zone }}` always points to the primary master host in the cluster. Connection to this FQDN is permitted and both read and write operations are allowed.
+Such FQDN as `c-<cluster ID>.rw.{{ dns-zone }}` always points to the primary master host in the cluster. Connection to this FQDN is permitted and both read and write operations are allowed.
 
 An example of connecting to a primary master host in a cluster with the ID `c9qash3nb1v9ulc8j9nm`:
 

@@ -11,18 +11,22 @@
 
 Audio features in this format:
 
-* Sampling rate: 
-  
-  * 8, 16, or 48 kHz for the [synthesis](tts/index.md) API v1 and [recognition](stt/index.md) API v2.
-  * 8–48 kHz for the [synthesis](tts-v3/api-ref/grpc/index.md) and [recognition](stt-v3/api-ref/grpc/index.md) APIs v3.
- 
+* Sampling frequency:
+
+   | API version | Acceptable values |
+   | --- | --- |
+   | [Speech synthesis API v1](tts/index.md) | 8, 16, or 48 kHz |
+   | [Speech synthesis API v3](tts-v3/api-ref/grpc/index.md) | Any value between 8 and 48 kHz |
+   | [Speech recognition API v2](stt/index.md) | 8, 16, or 48 kHz |
+   | [Speech recognition API v3](stt-v3/api-ref/grpc/index.md) | Any value between 8 and 48 kHz |
+
 * Bit depth: 16-bit.
 * Byte order: Reversed (little-endian).
 * Audio data is stored as signed integers.
 
 #### OggOpus {#OggOpus}
 
-[OggOpus](https://wiki.xiph.org/OggOpus) — data is encoded using the OPUS audio codec and compressed using the OGG container format.
+[OggOpus](https://wiki.xiph.org/OggOpus): Data is encoded using the OPUS audio codec and compressed using the OGG container format.
 
 {{ speechkit-short-name }} recognizes and synthesizes OggOpus without audio file quality and header restrictions.
 

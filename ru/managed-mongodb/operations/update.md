@@ -16,6 +16,8 @@
 - [{#T}](#change-sg-set).
 
 
+Если вы хотите переместить кластер в другую зону доступности, см. [инструкцию](host-migration.md). В результате вы перенесете хосты кластера.
+
 ## Изменить класс хостов {#change-resource-preset}
 
 {% include [mmg-settings-dependence](../../_includes/mdb/mmg/note-info-settings-dependence.md) %}
@@ -24,13 +26,13 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
 
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
 
   1. {% include [mmg-settings-host-class](../../_includes/mdb/mmg/settings-host-class.md) %}
 
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -63,12 +65,35 @@
 
 
 
-  1. Укажите нужный класс в команде изменения кластера:
+  1. Укажите нужный класс в команде изменения кластера. При смене класса учитывайте роль хоста, она зависит от [типа шардирования](../concepts/sharding.md#shard-management). В одной команде можно использовать параметры для хостов с разными ролями.
 
-      ```
-      {{ yc-mdb-mg }} cluster update <имя кластера>
-           --mongod-resource-preset <ID класса>
-      ```
+      * Для хостов `MONGOD`:
+
+          ```bash
+          {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+             --mongod-resource-preset <ID_класса>
+          ```
+
+      * Для хостов `MONGOINFRA`:
+
+          ```bash
+          {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+             --mongoinfra-resource-preset <ID_класса>
+          ```
+
+      * Для хостов `MONGOS`:
+
+          ```bash
+          {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+             --mongos-resource-preset <ID_класса>
+          ```
+
+      * Для хостов `MONGOCFG`:
+
+          ```bash
+          {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+             --mongocfg-resource-preset <ID_класса>
+          ```
 
       {{ mmg-short-name }} запустит операцию изменения класса хостов для кластера.
 
@@ -83,10 +108,10 @@
       Пример:
   
       ```hcl
-      resource "yandex_mdb_mongodb_cluster" "<имя кластера>" {
+      resource "yandex_mdb_mongodb_cluster" "<имя_кластера>" {
         ...
         resources_mongod {
-            resource_preset_id = "<класс хостов {{ MG }}>"
+            resource_preset_id = "<класс_хостов>"
             ...
         }
       }
@@ -109,7 +134,7 @@
   Чтобы изменить класс хостов, воспользуйтесь методом REST API [update](../api-ref/Cluster/update.md) для ресурса [Cluster](../api-ref/Cluster/index.md) или вызовом gRPC API [ClusterService/Update](../api-ref/grpc/cluster_service.md#Update) и передайте в запросе:
 
   * Идентификатор кластера в параметре `clusterId`. Чтобы узнать идентификатор, [получите список кластеров в каталоге](./cluster-list.md#list-clusters).
-  * Класс хоста в параметре `configSpec.mongodbSpec_<версия {{ MG }}>.mongod.resources.resourcePresetId`.
+  * Класс хоста в параметре `configSpec.mongodbSpec_<версия_{{ MG }}>.mongod.resources.resourcePresetId`.
 
       Чтобы получить список поддерживаемых значений, воспользуйтесь методом [list](../api-ref/ResourcePreset/list.md) для ресурсов `ResourcePreset`.
 
@@ -129,10 +154,10 @@
 
   Чтобы увеличить размер хранилища для кластера:
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. В разделе **Размер хранилища** укажите необходимое значение.
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. В разделе **{{ ui-key.yacloud.mdb.forms.section_disk }}** укажите необходимое значение.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -150,10 +175,35 @@
 
   1. Укажите нужный размер хранилища в команде изменения кластера. Новый размер должен быть не меньше, чем текущее значение `disk_size` в свойствах кластера.
 
-      ```bash
-      {{ yc-mdb-mg }} cluster update <имя или идентификатор кластера> \
-        --mongod-disk-size <размер хранилища в гигабайтах>
-      ```
+      При увеличении размера хранилища учитывайте роль хоста, она зависит от [типа шардирования](../concepts/sharding.md#shard-management). В одной команде можно использовать параметры для хостов с разными ролями.
+
+      * Для хостов `MONGOD`:
+
+          ```bash
+          {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+             --mongod-disk-size <размер_хранилища_ГБ>
+          ```
+
+      * Для хостов `MONGOINFRA`:
+
+          ```bash
+          {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+             --mongoinfra-disk-size <размер_хранилища_ГБ>
+          ```
+
+      * Для хостов `MONGOS`:
+
+          ```bash
+          {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+             --mongos-disk-size <размер_хранилища_ГБ>
+          ```
+
+      * Для хостов `MONGOCFG`:
+
+          ```bash
+          {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+             --mongocfg-disk-size <размер_хранилища_ГБ>
+          ```
 
       Если все условия выполнены, {{ mmg-short-name }} запустит операцию по увеличению размера хранилища.
   
@@ -170,10 +220,10 @@
       Пример:
     
       ```hcl
-      resource "yandex_mdb_mongodb_cluster" "<имя кластера>" {
+      resource "yandex_mdb_mongodb_cluster" "<имя_кластера>" {
         ...
         resources_mongod {
-          disk_size = <размер хранилища в гигабайтах>
+          disk_size = <размер_хранилища_ГБ>
           ...
         }
       }
@@ -196,7 +246,7 @@
   Чтобы увеличить размер хранилища для кластера, воспользуйтесь методом REST API [update](../api-ref/Cluster/update.md) для ресурса [Cluster](../api-ref/Cluster/index.md) или вызовом gRPC API [ClusterService/Update](../api-ref/grpc/cluster_service.md#Update) и передайте в запросе:
 
   * Идентификатор кластера в параметре `clusterId`. Чтобы узнать идентификатор, [получите список кластеров в каталоге](./cluster-list.md#list-clusters).
-  * Новый размер хранилища в параметре `configSpec.mongodbSpec_<версия {{ MG }}>.mongod.resources.diskSize`.
+  * Новый размер хранилища в параметре `configSpec.mongodbSpec_<версия_{{ MG }}>.mongod.resources.diskSize`.
   * Список настроек, которые необходимо изменить, в параметре `updateMask`.
 
   {% include [Note API updateMask](../../_includes/note-api-updatemask.md) %}
@@ -213,10 +263,10 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. Чтобы изменить [настройки {{ MG }}](../concepts/settings-list.md#dbms-cluster-settings), нажмите кнопку **Настроить** в блоке **Настройки СУБД**.
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. Чтобы изменить [настройки {{ MG }}](../concepts/settings-list.md#dbms-cluster-settings), нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_configure-settings }}** в блоке **{{ ui-key.yacloud.mdb.forms.section_settings }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -233,7 +283,7 @@
   Например, для установки значения параметра [net.maxIncomingConnections](https://docs.mongodb.com/manual/reference/configuration-options/#mongodb-setting-net.maxIncomingConnections) в `4096`, выполните следующую команду:
 
   ```
-  {{ yc-mdb-mg }} cluster update-config <имя кластера> \
+  {{ yc-mdb-mg }} cluster update-config <имя_кластера> \
      --set net.max_incoming_connections=4096
   ```
 
@@ -244,7 +294,7 @@
   Чтобы изменить настройки {{ MG }}, воспользуйтесь методом REST API [update](../api-ref/Cluster/update.md) для ресурса [Cluster](../api-ref/Cluster/index.md) или вызовом gRPC API [ClusterService/Update](../api-ref/grpc/cluster_service.md#Update) и передайте в запросе:
 
   * Идентификатор кластера в параметре `clusterId`. Чтобы узнать идентификатор, [получите список кластеров в каталоге](./cluster-list.md#list-clusters).
-  * Нужные значения настроек {{ MG }} в параметре `configSpec.mongodbSpec_<верия {{ MG }}>.mongod.config`.
+  * Нужные значения настроек {{ MG }} в параметре `configSpec.mongodbSpec_<версия_{{ MG }}>.mongod.config`.
 
       Все поддерживаемые настройки описаны [в справочнике API](../api-ref/Cluster/update.md) и в разделе [{#T}](../concepts/settings-list.md).
 
@@ -260,13 +310,13 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
   1. Измените дополнительные настройки кластера:
 
      {% include [mmg-extra-settings](../../_includes/mdb/mmg-extra-settings.md) %}
      
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -285,19 +335,21 @@
     1. Выполните команду, передав список настроек, которые хотите изменить:
 
         ```bash
-        {{ yc-mdb-mg }} cluster update <идентификатор или имя кластера> \
-          --backup-retain-period-days=<срок хранения> \
-          --backup-window-start <время начала резервного копирования> \
-          --maintenance-window type=<тип технического обслуживания: anytime или weekly>,`
-                               `day=<день недели для типа weekly>,`
-                               `hour=<час дня для типа weekly>
+        {{ yc-mdb-mg }} cluster update <идентификатор_или_имя_кластера> \
+          --backup-retain-period-days=<срок_хранения> \
+          --backup-window-start <время_начала_резервного_копирования> \
+          --maintenance-window type=<тип_технического_обслуживания>,`
+                               `day=<день_недели>,`
+                               `hour=<час_дня> \
+          --performance-diagnostics=<включить_диагностику> \
+          --deletion-protection=<защита_от_удаления>
         ```
 
     Вы можете изменить следующие настройки:
 
     * `--backup-retain-period` — срок хранения автоматических резервных копий (в днях).
       
-      Значение параметра `<срок хранения>` задается в диапазоне от {{ mmg-backup-retention-min }} до {{ mmg-backup-retention-max }} (по умолчанию — {{ mmg-backup-retention }}). Эта функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md). Подробнее см. в разделе [{#T}](../concepts/backup.md).
+      Значение параметра `<срок_хранения>` задается в диапазоне от {{ mmg-backup-retention-min }} до {{ mmg-backup-retention-max }} (по умолчанию — {{ mmg-backup-retention }}). Эта функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md). Подробнее см. в разделе [{#T}](../concepts/backup.md).
 
 
       Изменение срока хранения затрагивает как новые автоматические резервные копии, так и уже существующие.
@@ -306,9 +358,11 @@
 
     {% include [backup-window-start](../../_includes/mdb/cli/backup-window-start.md) %}
 
-    * `--maintenance-window` — настройки времени [технического обслуживания](../concepts/maintenance.md) (в т. ч. для выключенных кластеров):
+    * `--maintenance-window` — настройки времени [технического обслуживания](../concepts/maintenance.md) (в т. ч. для выключенных кластеров), где `type` — тип технического обслуживания:
 
         {% include [maintenance-window](../../_includes/mdb/cli/maintenance-window-description.md) %}
+
+    * `--performance-diagnostics` — укажите параметр, чтобы воспользоваться инструментом [{#T}](performance-diagnostics.md) в кластере. Эта функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md).
 
     * {% include [Deletion protection](../../_includes/mdb/cli/deletion-protection.md) %}
 
@@ -325,12 +379,12 @@
     1. Чтобы изменить время начала резервного копирования, добавьте к описанию кластера {{ mmg-name }} блок `backup_window_start` в секции `cluster_config`:
   
         ```hcl
-        resource "yandex_mdb_mongodb_cluster" "<имя кластера>" {
+        resource "yandex_mdb_mongodb_cluster" "<имя_кластера>" {
           ...
           cluster_config {
             backup_window_start {
-              hours   = <Час начала резервного копирования>
-              minutes = <Минута начала резервного копирования>
+              hours   = <час>
+              minutes = <минута>
             }
             ...
           }
@@ -338,30 +392,36 @@
         }
         ```
 
+        Где `hours` и `minutes` — час и минута начала резервного копирования.
+
     1. Чтобы разрешить доступ [из сервиса {{ datalens-full-name }}](../../datalens/concepts/index.md), добавьте к описанию кластера {{ mmg-name }} блок `access` в секции `cluster_config`:
   
         ```hcl
-        resource "yandex_mdb_mongodb_cluster" "<имя кластера>" {
+        resource "yandex_mdb_mongodb_cluster" "<имя_кластера>" {
           ...
           cluster_config {
             ...
             access {
-              data_lens = <Доступ из DataLens: true или false>
+              data_lens = <доступ_из_{{ datalens-name }}>
             }
           ...
         }
         ```
+
+        Где `data_lens` — доступ из {{ datalens-name }}: `true` или `false`.
 
     1. {% include [Maintenance window](../../_includes/mdb/mmg/terraform/maintenance-window.md) %}
 
     1. Чтобы включить защиту кластера от непреднамеренного удаления пользователем вашего облака, добавьте к описанию кластера поле `deletion_protection` со значением `true`:
 
         ```hcl
-        resource "yandex_mdb_mongodb_cluster" "<имя кластера>" {
+        resource "yandex_mdb_mongodb_cluster" "<имя_кластера>" {
           ...
-          deletion_protection = <защита от удаления кластера: true или false>
+          deletion_protection = <защита_от_удаления>
         }
         ```
+
+        Где `deletion_protection` — защита от удаления кластера: `true` или `false`.
 
         {% include [Ограничения защиты от удаления](../../_includes/mdb/deletion-protection-limits-db.md) %}
 
@@ -385,6 +445,7 @@
     * Новое время начала резервного копирования в параметре `configSpec.backupWindowStart`.
     * Настройки доступа из других сервисов в параметре `configSpec.access`.
     * Настройки времени [технического обслуживания](../concepts/maintenance.md) (в т. ч. для выключенных кластеров) в параметре `maintenanceWindow`.
+    * Разрешение на сбор статистики для диагностики производительности кластера в параметре `performanceDiagnostics.profilingEnabled`.
     * Настройки защиты от удаления кластера в параметре `deletionProtection`.
 
         {% include [Ограничения защиты от удаления кластера](../../_includes/mdb/deletion-protection-limits-db.md) %}
@@ -401,11 +462,11 @@
 
 - Консоль управления
 
-    1. Перейдите на страницу каталога и выберите сервис **{{ mmg-name }}**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
     1. Нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) справа в строке кластера, который вы хотите переместить.
-    1. Выберите пункт **Переместить**.
+    1. Выберите пункт **{{ ui-key.yacloud.mdb.dialogs.popup_button_move-cluster }}**.
     1. Выберите каталог, в который вы хотите переместить кластер.
-    1. Нажмите кнопку **Переместить**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.mdb.dialogs.popup_button_move-cluster }}**.
 
 - CLI
 
@@ -424,8 +485,8 @@
     1. Укажите каталог назначения в команде перемещения кластера:
 
         ```bash
-        {{ yc-mdb-mg }} cluster move <идентификатор кластера> \
-           --destination-folder-name=<имя каталога назначения>
+        {{ yc-mdb-mg }} cluster move <имя_или_идентификатор_кластера> \
+           --destination-folder-name=<имя_каталога_назначения>
         ```
 
         Идентификатор кластера можно получить со [списком кластеров в каталоге](cluster-list.md#list-clusters).
@@ -442,20 +503,14 @@
 
 ## Изменить группы безопасности {#change-sg-set}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 {% list tabs %}
 
 - Консоль управления
 
-    1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-    1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-    1. В блоке **Сетевые настройки** выберите группы безопасности для сетевого трафика кластера.
-    1. Нажмите кнопку **Сохранить изменения**.
+    1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+    1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+    1. В блоке **{{ ui-key.yacloud.mdb.forms.section_network }}** выберите группы безопасности для сетевого трафика кластера.
+    1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -474,8 +529,8 @@
     1. Укажите нужные группы безопасности в команде изменения кластера:
 
         ```bash
-        {{ yc-mdb-mg }} cluster update <идентификатор или имя кластера> \
-          --security-group-ids <список групп безопасности>
+        {{ yc-mdb-mg }} cluster update <имя_или_идентификатор_кластера> \
+          --security-group-ids <список_идентификаторов_групп_безопасности>
         ```
 
 - {{ TF }}
@@ -487,9 +542,9 @@
     1. Измените в описании кластера {{ mmg-name }} значение параметра `security_group_ids`:
   
         ```hcl
-        resource "yandex_mdb_mongodb_cluster" "<имя кластера>" {
+        resource "yandex_mdb_mongodb_cluster" "<имя_кластера>" {
           ...
-          security_group_ids = [ <Список идентификаторов групп безопасности> ]
+          security_group_ids = [ <список_идентификаторов_групп_безопасности> ]
           ...
         }
         ```

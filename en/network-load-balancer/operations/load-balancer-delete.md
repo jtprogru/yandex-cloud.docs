@@ -1,13 +1,18 @@
-# Delete a network load balancer
+---
+title: "Deleting a network load balancer"
+description: "Follow this guide to delete a network load balancer."
+---
+
+# Deleting a network load balancer
 
 {% list tabs %}
 
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder to delete a load balancer from.
-   1. In the list of services, select **{{ network-load-balancer-name }}**.
-   1. In the line of the load balancer to delete, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Delete**.
-   1. In the window that opens, click **Delete**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
+   1. In the line of the load balancer to delete, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.common.delete }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -33,7 +38,7 @@
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see the documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To delete a network load balancer created with {{ TF }}:
    1. Open the {{ TF }} configuration file and delete the fragment with the network load balancer description.
@@ -73,9 +78,7 @@
 
 - API
 
-   Use the [delete](../api-ref/NetworkLoadBalancer/delete.md) API method and provide the load balancer ID in the `networkLoadBalancerId` request parameter.
-
-   You can get the load balancer ID with a [list of network load balancers in the folder](load-balancer-list.md#list).
+   To delete a network load balancer, use the [delete](../api-ref/NetworkLoadBalancer/delete.md) REST API method for the [NetworkLoadBalancer](../api-ref/NetworkLoadBalancer/index.md) resource or the [NetworkLoadBalancerService/Delete](../api-ref/grpc/network_load_balancer_service.md#Delete) gRPC API call.
 
 {% endlist %}
 

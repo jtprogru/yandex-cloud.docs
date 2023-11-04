@@ -38,8 +38,8 @@
 ## Создайте кластер {#cluster-create}
 
 1. [Создайте кластер {{ mch-name }}](../../managed-clickhouse/operations/cluster-create.md) любой подходящей вам конфигурации с БД `db1` и публичным доступом ко всем его хостам. Сохраните имя БД, имя пользователя БД и пароль.
-1. В [консоли управления]({{ link-console-main }}) выберите сервис {{ mch-name }}, перейдите в созданный кластер. На вкладке **Обзор** сохраните идентификатор кластера. 
-1. В правом верхнем углу нажмите **Подключиться**, на вкладке **Shell** из поля **Пример строки подключения** сохраните параметр `--host`, например `rc1a-2sqal8f01znegjkj.{{ dns-zone }}`, это FQDN хоста кластера, он потребуется в дальнейшем.
+1. В [консоли управления]({{ link-console-main }}) выберите сервис {{ mch-name }}, перейдите в созданный кластер. На вкладке **{{ ui-key.yacloud.common.overview }}** сохраните идентификатор кластера. 
+1. В правом верхнем углу нажмите **{{ ui-key.yacloud.mdb.cluster.overview.button_action-connect }}**, на вкладке **Shell** из поля **Пример строки подключения** сохраните параметр `--host`, например `rc1a-2sqal8f01znegjkj.{{ dns-zone }}`, это FQDN хоста кластера, он потребуется в дальнейшем.
 
 ## Зарегистрируйте конфигурацию rollup в кластере {#rollup-config}
 
@@ -55,34 +55,28 @@
 
   1. Подготовьте yaml-файл `graphite-rollup.yaml` с описанием параметров `rollup`, например:
   
-      ```bash
-                name: test_rollup
-      patterns:    
-          - regexp: click_cost
+      ```yaml
+      name: test_rollup
+      patterns:
+        - regexp: click_cost
           function: max
           retention:
             - age: 86400
               precision: 60
       ```
 
-  1. Вместо `<CLUSTER_ID>` укажите идентификатор кластера, вместо `<путь к yaml-файлу>` — путь к `graphite-rollup.yaml` и выполните команду: 
-   
+  1. Выполните команду:
+
       ```bash
-      yc managed-clickhouse cluster add-graphite-rollup <CLUSTER_ID> --rollup-file-name <путь к yaml-файлу>
+      yc managed-clickhouse cluster add-graphite-rollup <CLUSTER_ID> --rollup-file-name <путь_к_файлу_yaml>
       ```
 
       Где:
 
-      * `<CLUSTER_ID>` – идентификатор кластера.
-      * `<путь к yaml-файлу>` — путь к `graphite-rollup.yaml`.
+      * `<CLUSTER_ID>` — идентификатор кластера.
+      * `<путь_к_файлу_yaml>` — путь к `graphite-rollup.yaml`.
 
-      Подробнее о команде `managed-clickhouse cluster add-graphite-rollup` см. в [справочнике CLI](../../cli/cli-ref/managed-services/managed-clickhouse/cluster/add-graphite-rollup.md). 
-
-      {% note info %}
-
-      Для удаления конфигурации `rollup` используйте команду `managed-clickhouse cluster remove-graphite-rollup`. Подробнее о команде см. в [справочнике CLI](../../cli/cli-ref/managed-services/managed-clickhouse/cluster/remove-graphite-rollup.md).
-
-      {% endnote %}
+      Подробнее о команде `managed-clickhouse cluster add-graphite-rollup` см. в [справочнике CLI](../../cli/cli-ref/managed-services/managed-clickhouse/cluster/add-graphite-rollup.md).
 
 - API
   
@@ -137,16 +131,15 @@
 
     ```bash
     sudo mkdir --parents {{ crt-local-dir }} && \
-    sudo wget "{{ crt-web-path }}" \
-        --output-document {{ crt-local-dir }}{{ crt-local-file }} && \
-    sudo chmod 655 {{ crt-local-dir }}{{ crt-local-file }}
+    sudo wget "{{ crt-web-path-root }}" \
+         --output-document {{ crt-local-dir }}{{ crt-local-file-root }} && \
+    sudo chmod 655 {{ crt-local-dir }}{{ crt-local-file-root }} && \
+    sudo update-ca-certificates
     ```
 
 ## Подключите виртуальную машину к базе данных {#cluster-connect}
 
 1. Если вы используете группы безопасности для облачной сети, [настройте их](../../managed-clickhouse/operations/connect.md#configuring-security-groups) так, чтобы был разрешен весь необходимый трафик между кластером и ВМ.
-
-    {% include [preview-pp.md](../../_includes/preview-pp.md) %}
 
 1. [Подключитесь](../../compute/operations/vm-connect/ssh.md). 
 1. Запустите ClickHouse CLI со следующими параметрами: вместо `<FQDN хоста>`, `<имя БД>`, `<имя пользователя БД>` и `<пароль пользователя БД>` укажите ранее сохраненные параметры.
@@ -168,17 +161,17 @@
 
   В интерфейсе ClickHouse CLI выполните запрос на создание таблицы на основе [GraphiteMergeTree]({{ ch.docs }}/engines/table-engines/mergetree-family/graphitemergetree/). В качестве параметра передайте имя секции `rollup`, описанной ранее:
 
-    ```bash
+    ```sql
     CREATE TABLE GraphiteTable
     (        
-        metric String, 
-        time DateTime, 
-        value Int64, 
-        version UInt64
+        Path String, 
+        Time DateTime, 
+        Value Int64, 
+        Version UInt64
     )
     ENGINE = GraphiteMergeTree('test_rollup')
-    PARTITION BY time
-    ORDER BY cityHash64(version, metric)
+    PARTITION BY Time
+    ORDER BY cityHash64(Version, Path)
     ```
 
 {% endlist %}
@@ -221,7 +214,20 @@
 
 ## Как удалить созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Чтобы удалить из кластера конфигурацию `rollup`:
+
+1. Удалите все таблицы, которые используют эту конфигурацию.
+1. Используйте команду `yc managed-clickhouse cluster remove-graphite-rollup`.
+
+Подробнее о команде см. в [справочнике CLI](../../cli/cli-ref/managed-services/managed-clickhouse/cluster/remove-graphite-rollup.md).
+
+{% note alert %}
+
+Удаление конфигурации `rollup` без предварительного удаления таблиц, которые ее используют, может привести к отказу кластера.
+
+{% endnote %}
+
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 * [Удалите кластер {{ CH }}](../../managed-clickhouse/operations/cluster-delete.md).
 * [Удалите ВМ](../../compute/operations/vm-control/vm-delete.md).

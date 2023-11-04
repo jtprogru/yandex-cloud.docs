@@ -1,4 +1,4 @@
-There are two ways to migrate topics from a {{ KF }} _source cluster_ to a {{ mkf-name }} _target cluster_:
+There are two ways to migrate topics from an {{ KF }} _source cluster_ to a {{ mkf-name }} _target cluster_:
 
 * [Using the built-in {{ mkf-full-name }} MirrorMaker connector](#kf-connnector).
 
@@ -20,7 +20,6 @@ There are two ways to migrate topics from a {{ KF }} _source cluster_ to a {{ mk
 * Manually
 
    1. Prepare the target cluster:
-      * Enable [topic management](../managed-kafka/concepts/topics.md#management) via the Admin API.
       * Create an [admin user](../managed-kafka/operations/cluster-accounts.md#create-account) named `admin-cloud`.
       * Enable [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics).
       * Configure [security groups](../managed-kafka/operations/connect.md#configuring-security-groups), if required, to connect to the target cluster.
@@ -29,27 +28,27 @@ There are two ways to migrate topics from a {{ KF }} _source cluster_ to a {{ mk
    1. Make sure that the network hosting the source cluster is configured to allow source cluster connections from the internet.
    1. [For the target cluster, create a connector](../managed-kafka/operations/cluster-connector.md#create-connector) of the `MirrorMaker` type, configured as follows:
 
-      * **Topics**: List of topics to migrate. You can also specify a regular expression for selecting topics. To migrate all topics, specify `.*`.
-      * Under **Source cluster**, specify the parameters for connecting to the source cluster:
-         * **Alias**: A prefix to indicate the source cluster in the connector settings. Defaults to `source`. Topics in the target cluster are created with the indicated prefix.
-         * **Bootstrap servers**: Comma-separated list of source cluster broker host FQDNs with port numbers, for example:
+      * **{{ ui-key.yacloud.kafka.field_connector-config-mirror-maker-topics }}**: List of topics to migrate. You can also specify a regular expression for selecting topics. To migrate all topics, specify `.*`.
+      * Under **{{ ui-key.yacloud.kafka.field_connector-config-mirror-maker-source-cluster }}**, specify the parameters for connecting to the source cluster:
+         * **{{ ui-key.yacloud.kafka.field_connector-alias }}**: Prefix for the source cluster in the connector settings. Defaults to `source`. Topics in the target cluster are created with the indicated prefix.
+         * **{{ ui-key.yacloud.kafka.field_connector-bootstrap-servers }}**: Comma-separated list of source cluster broker host FQDNs with port numbers, for example:
 
             ```text
             FQDN1:9091,FQDN2:9091,...,FQDN:9091
             ```
 
-         * **SASL username**, **SASL password**: Username and password for the previously created `admin-source` user.
-         * **SASL mechanism**: `SCRAM-SHA-512` mechanism for username and password encryption.
-         * **Security protocol**: Select a protocol for connecting the connector:
+         * **{{ ui-key.yacloud.kafka.field_connector-sasl-username }}**, **{{ ui-key.yacloud.kafka.field_connector-sasl-password }}**: Username and password for the previously created `admin-source` user.
+         * **{{ ui-key.yacloud.kafka.field_connector-sasl-mechanism }}**: `SCRAM-SHA-512` mechanism for username and password encryption.
+         * **{{ ui-key.yacloud.kafka.field_connector-security-protocol }}**: Select a protocol for connecting the connector:
             * `SASL_PLAINTEXT`: For connecting to the source cluster without SSL.
             * `SASL_SSL`: For SSL connections to the source cluster.
 
-      * Under **Target cluster**, select **Use this cluster**.
+      * Under **{{ ui-key.yacloud.kafka.field_connector-config-mirror-maker-target-cluster }}**, select **{{ ui-key.yacloud.kafka.label_connector-this-cluster }}**.
 
 * Using {{ TF }}
 
-   1. If you don't have {{ TF }}, [install it](../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-   1. Download [the file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
+   1. {% include [terraform-install](../_includes/terraform-install.md) %}
+   1. Download the [file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
    1. Download the [kafka-mirrormaker-connector.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/kafka-connectors/kafka-mirrormaker-connector.tf) configuration file to the same working directory.
 
       This file describes:
@@ -57,7 +56,7 @@ There are two ways to migrate topics from a {{ KF }} _source cluster_ to a {{ mk
       * Network.
       * Subnet.
       * Default security group and rules required to connect to the cluster from the internet.
-      * {{ mkf-name }} cluster with [topic management](../managed-kafka/concepts/topics#management) via the Admin API, an [administrator user](../managed-kafka/operations/cluster-accounts.md#create-account) named `admin-cloud`, and the [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics) setting enabled.
+      * {{ mkf-name }} cluster with an [administrator user](../managed-kafka/operations/cluster-accounts.md#create-account) named `admin-cloud`, and the [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics) setting on.
       * MirrorMaker connector.
 
    1. In `kafka-mirrormaker-connector.tf`, specify:
@@ -75,7 +74,7 @@ There are two ways to migrate topics from a {{ KF }} _source cluster_ to a {{ mk
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
    1. Create the required infrastructure:
 
@@ -109,16 +108,15 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
    1. [Create a {{ mkf-name }} target cluster](../managed-kafka/operations/cluster-create.md):
 
-      * With [topic management](../managed-kafka/concepts/topics#management) via the Admin API.
       * With the `admin-cloud` [admin user](../managed-kafka/operations/cluster-accounts.md#create-account).
       * With [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics) activated.
 
-   1. [Create a new Linux VM](../compute/operations/vm-create/create-linux-vm.md) for MirrorMaker on the same network the target cluster is on. To connect to the cluster from the user's local machine instead of the {{ yandex-cloud }} cloud network, enable public access when creating it.
+   1. [Create a new Linux VM](../compute/operations/vm-create/create-linux-vm.md) for MirrorMaker on the same network the target cluster is on. To connect to the cluster from the user's local machine rather than doing so from the {{ yandex-cloud }} network, enable public access when creating it.
 
 - Using {{ TF }}
 
-   1. If you don't have {{ TF }}, [install it](../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-   1. Download [the file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
+   1. {% include [terraform-install](../_includes/terraform-install.md) %}
+   1. Download the [file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
    1. Download the [kafka-mirror-maker.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/kafka-mirror-maker.tf) configuration file to the same working directory.
 
       This file describes:
@@ -126,23 +124,23 @@ If you no longer need the resources you created, [delete them](#clear-out).
       * Network.
       * Subnet.
       * Default security group and rules required to connect to the cluster and VM from the internet.
-      * A {{ mkf-name }} cluster with [topic management](../managed-kafka/concepts/topics#management) enabled via the Admin API, the `admin-cloud` [admin user](../managed-kafka/operations/cluster-accounts.md#create-account), and [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics).
-      * A virtual machine with public internet access.
+      * {{ mkf-name }} cluster with an [administrator user](../managed-kafka/operations/cluster-accounts.md#create-account) named `admin-cloud`, and the [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics) setting on.
+      * Virtual machine with public internet access.
 
    1. In `kafka-mirror-maker.tf`, specify:
 
       * {{ mkf-name }} admin user password.
       * ID of the public [image](../compute/operations/images-with-pre-installed-software/get-list) with Ubuntu and no GPU, e.g., [Ubuntu 20.04 LTS](/marketplace/products/yc/ubuntu-20-04-lts).
-      * Username and path to the [public key](../compute/operations/vm-connect/ssh.md#creating-ssh-keys) file to use to access to the virtual machine. By default, the specified username is ignored in the image used. Instead, a user with the `ubuntu` username is created. Use it to connect to the instance.
+      * Username and path to the [public key](../compute/operations/vm-connect/ssh.md#creating-ssh-keys) file for accessing the virtual machine. By default, the specified username is ignored in the image used. A user with the `ubuntu` username is created instead. Use it to connect to the instance.
 
-   1. Run the `terraform init` command in the directory with the configuration file. This command initializes the providers specified in the configuration files and lets you work with the provider resources and data sources.
+   1. Run the `terraform init` command in the directory with the configuration file. This command initializes the providers specified in the configuration files and allows you to work with the provider resources and data sources.
    1. Make sure the {{ TF }} configuration files are correct using this command:
 
       ```bash
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
    1. Create the required infrastructure:
 
@@ -277,7 +275,7 @@ If you no longer need the resources you created, [delete them](#clear-out).
    * Topic names in the target cluster are the same as in the source.
    * `<R>` is the parameter that sets the [replication factor for MirrorMaker service topics](../managed-kafka/concepts/settings-list.md#settings-topic-replication-factor). The value of this parameter should not exceed the smaller of the number of brokers in the source or the number of brokers in the target cluster.
    * `<M>` is the [default replication factor](../managed-kafka/concepts/settings-list.md#settings-topic-replication-factor) defined for topics in the target cluster.
-   * `<T>` is the number of concurrent MirrorMaker processes. A value of at least `2` is recommended for even replication load distribution. For more information, see the [{{ KF }} documentation](https://kafka.apache.org/documentation/#georeplication-config-syntax).
+   * `<T>` is the number of concurrent MirrorMaker processes. We recommend a value of at least `2` for even replication load distribution. For more information, see the [{{ KF }} documentation](https://kafka.apache.org/documentation/#georeplication-config-syntax).
 
    You can request {{ mkf-name }} broker FQDNs with a [list of hosts in the cluster](../managed-kafka/operations/cluster-hosts.md#list-hosts).
 
@@ -319,9 +317,9 @@ Delete the resources you no longer need to avoid paying for them:
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../_includes/mdb/terraform/apply.md) %}
 

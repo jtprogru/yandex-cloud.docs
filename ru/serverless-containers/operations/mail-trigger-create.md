@@ -16,27 +16,27 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Выберите сервис **{{ serverless-containers-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
 
-    1. На панели слева выберите ![image](../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
-        * (опционально) Введите имя и описание триггера.
-        * В поле **Тип** выберите **Почта**.
-        * В поле **Запускаемый ресурс** выберите **Контейнер**.
+        * (Опционально) Введите имя и описание триггера.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите `{{ ui-key.yacloud.serverless-functions.triggers.form.label_mail }}`.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите `{{ ui-key.yacloud.serverless-functions.triggers.form.label_container }}`.
 
     1. {% include [container-settings](../../_includes/serverless-containers/container-settings.md) %}
 
-    1. (Опционально) В блоке **Настройки повторных запросов**:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
         {% include [repeat-request](../../_includes/serverless-containers/repeat-request.md) %}
 
-    1. (Опционально) В блоке **Настройки Dead Letter Queue** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -46,9 +46,14 @@
 
     Чтобы создать триггер, который вызывает контейнер, выполните команду:
 
-    ```
+    
+    ```bash
     yc serverless trigger create mail \
       --name <имя_триггера> \
+      --batch-size <размер_группы> \
+      --batch-cutoff <максимальное_время_ожидания> \
+      --attachements-bucket <имя_бакета> \
+      --attachements-service-account-id <идентификатор_сервисного_аккаунта> \
       --invoke-container-id <идентификатор_контейнера> \
       --invoke-container-service-account-id <идентификатор_сервисного_аккаунта> \
       --retry-attempts 1 \
@@ -56,15 +61,21 @@
       --dlq-queue-id <идентификатор_очереди_Dead_Letter_Queue> \
       --dlq-service-account-id <идентификатор_сервисного_аккаунта>
     ```
+  
 
     Где:
 
     * `--name` — имя триггера.
 
+    {% include [batch-settings-messages](../../_includes/serverless-containers/batch-settings-messages.md) %}
+
+    {% include [attachments-params](../../_includes/functions/attachments-params.md) %}
+
     {% include [trigger-cli-param](../../_includes/serverless-containers/trigger-cli-param.md) %}
 
     Результат:
 
+    
     ```
     id: a1sfe084v4**********
     folder_id: b1g88tflru**********
@@ -73,6 +84,12 @@
     rule:
       mail:
         email: a1s8h8avgl**********-cho1****@serverless.yandexcloud.net
+        batch_settings:
+          size: "3"
+          cutoff: 20s
+        attachments_bucket:
+          bucket_id: bucket-for-attachments
+          service_account_id: ajejeis235ma********
         invoke_container:
           container_id: d4eofc7n0m**********
           service_account_id: aje3932acd**********
@@ -84,6 +101,7 @@
             service-account-id: aje3932acd**********
     status: ACTIVE
     ```
+  
 
 - API
 

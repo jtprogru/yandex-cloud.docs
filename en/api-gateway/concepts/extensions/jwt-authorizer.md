@@ -1,4 +1,4 @@
-# Extension x-yc-apigateway-authorizer:jwt
+# x-yc-apigateway-authorizer:jwt extension
 
 The `x-yc-apigateway-authorizer:jwt` extension is used inside the [securityScheme](https://swagger.io/docs/specification/authentication/) component schemes with the [OpenId Connect](https://swagger.io/docs/specification/authentication/openid-connect-discovery/) type. For HTTP request authorization, {{ api-gw-short-name }} validates a token and verifies its signature using public keys the extension refers to. You can learn more about the JWT standard [here](https://www.rfc-editor.org/rfc/rfc7519).
 
@@ -37,7 +37,7 @@ The `IdentitySource` object may contain the following parameters:
 | `RSASSA-PKCS1-v1_5` and `SHA-512` | `RS512` |
 | `ECDSA` with `P-256` and `SHA-256` functions | `ES256` |
 | `ECDSA` with `P-384` and `SHA-384` functions | `ES384` |
-| `ECDSA` with `P-512` and `SHA-512` functions | `ES512` |
+| `ECDSA` with `P-521` and `SHA-512` functions | `ES512` |
 
 ## API call authorization algorithm {#authorizing-alg}
 

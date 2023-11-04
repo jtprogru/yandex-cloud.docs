@@ -21,11 +21,13 @@ Migration with data storage type changed.
 
 * [{{ MY }} to {{ ydb-short-name }}](managed-mysql-to-ydb.md)
 * [{{ PG }} to {{ ydb-short-name }}](mpg-to-ydb.md)
+* [{{ MY }} to {{ PG }}](mmy-to-mpg.md)
+* [{{ PG }} to {{ MY }}](mpg-to-mmy.md)
 
 ## Change data capture {#cdc}
 
 [Change Data Capture](../concepts/cdc.md) (CDC) is a process of tracking changes in a database and delivering them to consumers with public serialization format supported when writing data to a Debezium queue.
-СDC is used for creating apps that are sensitive to real-time data changes, exchanging data between different services, including those with different levels of availability, and collecting and delivering data from the production environment to internal data storage for processing and analysis.
+CDC is used for creating apps that are sensitive to real-time data changes, exchanging data between different services, including those with different levels of availability, and collecting and delivering data from the production environment to internal data storage for processing and analysis.
 
 ![cdc](../../_assets/data-transfer/tutorials/cdc.svg)
 
@@ -56,7 +58,7 @@ Data delivery is a process of delivering arbitrary data to target storage. It in
 * [{{ KF }} to {{ DS }}](mkf-to-yds.md)
 * [{{ DS }} to {{ CH }}](yds-to-clickhouse.md)
 * [{{ DS }} to {{ objstorage-name }}](yds-to-objstorage.md)
-* [{{ at-name }} log from {{ DS }} to {{ OS }}](trails-to-os.md)
+* [{{ DS }} to {{ OS }}](trails-to-os.md)
 
 ## Uploading data to data marts {#upload-to-data-mart}
 

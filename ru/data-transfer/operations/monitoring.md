@@ -8,6 +8,10 @@
 Вы можете [настроить алерты](#monitoring-integration) в сервисе {{ monitoring-full-name }} для получения уведомлений о сбоях в работе трансфера. В {{ monitoring-full-name }} используются два порога срабатывания алерта: `Warning` и `Alarm`. При превышении заданного порога вы получите оповещения через настроенные [каналы уведомлений](../../monitoring/concepts/alerting.md#notification-channel).
 
 
+Отслеживать состояние трансферов и получать логи их работы можно и в [мобильном приложении](/mobile-app) {{ yandex-cloud }}.
+
+
+
 ## Мониторинг состояния трансфера {#monitoring}
 
 {% list tabs %}
@@ -105,7 +109,7 @@
 
 * Метрики:
 
-    ![image](../../_assets/monitoring/chart-lines2.svg) `<имя облака> > <имя каталога>` `service = data-transfer` `name = publisher.data.changeitems`
+    ![image](../../_assets/monitoring/chart-lines2.svg) `<имя_облака> > <имя_каталога>` `service = data-transfer` `name = publisher.data.changeitems`
 
     ![image](../../_assets/monitoring/function.svg) `derivative()` (в разделе **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Transformation.transformers.array_item_label }}**)
 
@@ -136,7 +140,7 @@
 
 * Метрики:
 
-    ![image](../../_assets/monitoring/chart-lines2.svg) `<имя облака> > <имя каталога>` `service = data-transfer` `name = sinker.pusher.data.changeitems`
+    ![image](../../_assets/monitoring/chart-lines2.svg) `<имя_облака> > <имя_каталога>` `service = data-transfer` `name = sinker.pusher.data.changeitems`
     ![image](../../_assets/monitoring/function.svg) `derivative()` (в разделе **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Transformation.transformers.array_item_label }}**)
 
 * Настройки алерта:
@@ -166,7 +170,7 @@
 
 * Метрики:
 
-    ![image](../../_assets/monitoring/chart-lines2.svg) `<имя облака> > <имя каталога>` `service = data-transfer` `name = sinker.pusher.time.row_max_lag_sec`
+    ![image](../../_assets/monitoring/chart-lines2.svg) `<имя_облака> > <имя_каталога>` `service = data-transfer` `name = sinker.pusher.time.row_max_lag_sec`
 
 * Настройки алерта:
 
@@ -192,7 +196,7 @@
 
 * Метрики:
 
-    ![image](../../_assets/monitoring/chart-lines2.svg) `<имя облака> > <имя каталога>` `service = data-transfer` `name = publisher.data.bytes`
+    ![image](../../_assets/monitoring/chart-lines2.svg) `<имя_облака> > <имя_каталога>` `service = data-transfer` `name = publisher.data.bytes`
     ![image](../../_assets/monitoring/function.svg) `derivative()` (в разделе **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Transformation.transformers.array_item_label }}**)
 
 * Настройки алерта:

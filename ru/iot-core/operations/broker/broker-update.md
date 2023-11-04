@@ -1,3 +1,8 @@
+---
+title: "Как изменить брокер"
+description: "Следуя данной инструкции, вы сможете изменить брокер."
+---
+
 # Изменение брокера
 
 {% include [note-pp](../../../_includes/iot-core/note-pp.md) %}
@@ -13,10 +18,11 @@
 - Консоль управления
 
    1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите изменить имя брокера.
-   1. Выберите сервис **{{ iot-short-name }}**.
-   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и в выпадающем списке выберите **Редактировать**.
-   1. Измените поле **Имя**.
-   1. Нажмите кнопку **Сохранить**.
+   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_iot-core }}**.
+   1. На панели слева выберите **{{ ui-key.yacloud.iot.label_brokers }}**.
+   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и в выпадающем списке выберите **{{ ui-key.yacloud.common.edit }}**.
+   1. Измените поле **{{ ui-key.yacloud.common.name }}**.
+   1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -42,7 +48,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы изменить имя брокера, созданного с помощью {{ TF }}:
 
@@ -109,10 +115,11 @@
    Чтобы изменить описание брокера:
 
    1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите изменить описание брокера.
-   1. Выберите сервис **{{ iot-short-name }}**.
-   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg), в выпадающем списке выберите **Редактировать**.
-   1. Измените поле **Описание**.
-   1. Нажмите кнопку **Сохранить**.
+   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_iot-core }}**.
+   1. На панели слева выберите **{{ ui-key.yacloud.iot.label_brokers }}**.
+   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg), в выпадающем списке выберите **{{ ui-key.yacloud.common.edit }}**.
+   1. Измените поле **{{ ui-key.yacloud.common.description }}**.
+   1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -139,7 +146,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы изменить описание брокера, созданного с помощью {{ TF }}:
 
@@ -212,10 +219,11 @@
 - Консоль управления
 
    1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите добавить метку брокера.
-   1. Выберите сервис **{{ iot-short-name }}**.
-   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и в выпадающем списке выберите **Редактировать**.
-   1. Заполните поля **Ключ**, **Значение** и нажмите кнопку **Добавить метку**.
-   1. Нажмите кнопку **Сохранить**.
+   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_iot-core }}**.
+   1. На панели слева выберите **{{ ui-key.yacloud.iot.label_brokers }}**.
+   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и в выпадающем списке выберите **{{ ui-key.yacloud.common.edit }}**.
+   1. Заполните поля **{{ ui-key.yacloud.component.key-values-input.label_key }}**, **{{ ui-key.yacloud.component.key-values-input.label_value }}** и нажмите кнопку **{{ ui-key.yacloud.iot.button_add-label }}**.
+   1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -243,7 +251,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы добавить метку брокеру, созданному с помощью {{ TF }}:
 
@@ -315,10 +323,11 @@
 - Консоль управления
 
    1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите изменить метку брокера.
-   1. Выберите сервис **{{ iot-short-name }}**.
-   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и в выпадающем списке выберите **Редактировать**.
-   1. Измените поля **Ключ** и **Значение**.
-   1. Нажмите кнопку **Сохранить**.
+   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_iot-core }}**.
+   1. На панели слева выберите **{{ ui-key.yacloud.iot.label_brokers }}**.
+   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и в выпадающем списке выберите **{{ ui-key.yacloud.common.edit }}**.
+   1. Измените поля **{{ ui-key.yacloud.component.key-values-input.label_key }}** и **{{ ui-key.yacloud.component.key-values-input.label_value }}**.
+   1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -352,7 +361,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы изменить метку брокера, созданного с помощью {{ TF }}:
 
@@ -419,10 +428,11 @@
 - Консоль управления
 
    1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите удалить метку брокера.
-   1. Выберите сервис **{{ iot-short-name }}**.
-   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и в выпадающем списке выберите **Редактировать**.
+   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_iot-core }}**.
+   1. На панели слева выберите **{{ ui-key.yacloud.iot.label_brokers }}**.
+   1. Справа от имени нужного брокера нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и в выпадающем списке выберите **{{ ui-key.yacloud.common.edit }}**.
    1. Справа от удаляемой метки нажмите значок ![image](../../../_assets/cross.svg).
-   1. Нажмите кнопку **Сохранить**.
+   1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -448,7 +458,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы удалить метку брокера, созданного с помощью {{ TF }}:
 

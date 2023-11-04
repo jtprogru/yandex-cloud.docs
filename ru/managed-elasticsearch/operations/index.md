@@ -1,3 +1,8 @@
+---
+title: "Пошаговые инструкции для {{ mes-name }}"
+description: "В этом разделе собраны пошаговые инструкции для {{ mes-name }}."
+---
+
 # Пошаговые инструкции для {{ mes-name }}
 
 {% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
@@ -14,6 +19,7 @@
 * [{#T}](cluster-extensions.md)
 * [{#T}](cluster-stop.md)
 * [{#T}](cluster-hosts.md)
+* [{#T}](host-migration.md)
 * [{#T}](cluster-backups.md)
 * [{#T}](s3-access.md)
 * [{#T}](cluster-delete.md)

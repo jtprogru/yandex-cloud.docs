@@ -1,4 +1,4 @@
-# Delivering data from a {{ KF }} queue to {{ PG }} using {{ data-transfer-full-name }}
+# Delivering data from an {{ KF }} queue to {{ PG }} using {{ data-transfer-full-name }}
 
 You can set up data transfer from a {{ mkf-name }} topic to {{ mpg-name }} using {{ data-transfer-full-name }}. To do this:
 
@@ -16,13 +16,13 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
    * Manually
 
-      1. [Create a source {{ mkf-name }} cluster](../../managed-kafka/operations/cluster-create.md#create-cluster) in any [availability zone](../../overview/concepts/geo-scope.md), with any appropriate configuration and public access allowed.
+      1. [Create a {{ mkf-name }} source cluster](../../managed-kafka/operations/cluster-create.md#create-cluster) in any [availability zone](../../overview/concepts/geo-scope.md), with any appropriate configuration, and allow public access to it.
 
       1. [In the source cluster, create a topic](../../managed-kafka/operations/cluster-topics.md#create-topic) named `sensors`.
 
       1. [In the source cluster, create a user](../../managed-kafka/operations/cluster-accounts.md#create-user) named `mkf-user` with the `ACCESS_ROLE_PRODUCER` and `ACCESS_ROLE_CONSUMER` permissions to the created topic.
 
-      1. In the same availability zone, [create a target {{ mpg-name }} cluster](../../managed-postgresql/operations/cluster-create.md#create-cluster) with any appropriate configuration, `pg-user` as the admin username, and hosts located in the public domain.
+      1. In the same availability zone, [create a {{ mpg-name }} target cluster](../../managed-postgresql/operations/cluster-create.md#create-cluster) with any appropriate configuration, `pg-user` as the admin username, and hosts located in the public domain.
 
       1. Make sure that the cluster's security groups have been set up correctly and allow connecting to them:
          * [{{ mkf-name }}](../../managed-kafka/operations/connect.md#configuring-security-groups).
@@ -30,7 +30,7 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
    * Using {{ TF }}
 
-      1. If you do not have {{ TF }} yet, [install and configure it](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+      1. {% include [terraform-install](../../_includes/terraform-install.md) %}
       1. Download the [file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
       1. Download the [kafka-postgresql.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/kafka-postgresql.tf) configuration file to the same working directory.
 
@@ -45,17 +45,17 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
       1. In `kafka-postgresql.tf`, specify:
 
-         * Versions {{ KF }} and {{ PG }}.
-         * {{ KF }} and {{ PG }} user passwords.
+         * {{ KF }} and {{ PG }} versions
+         * {{ KF }} and {{ PG }} user passwords
 
-      1. Run the `terraform init` command in the directory with the configuration file. This command initializes the provider specified in the configuration files and enables you to use the provider's resources and data sources.
+      1. Run the `terraform init` command in the directory with the configuration file. This command initializes the provider specified in the configuration files and enables you to use the provider resources and data sources.
       1. Make sure the {{ TF }} configuration files are correct using this command:
 
          ```bash
          terraform validate
          ```
 
-         If there are any errors in the configuration files, {{ TF }} will point to them.
+         If there are any errors in the configuration files, {{ TF }} will point them out.
 
       1. Create the required infrastructure:
 
@@ -82,7 +82,7 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
 ## Prepare the test data {#prepare-data}
 
-Let's assume the {{ KF }} `sensors` topic in the source cluster receive data from car sensors in JSON format.
+Let's assume the {{ KF }} `sensors` topic in the source cluster receives data from car sensors in JSON format.
 
 Create a local `sample.json` file with the following test data:
 
@@ -90,7 +90,7 @@ Create a local `sample.json` file with the following test data:
 
 ```json
 {
-    "device_id": "iv9a94th6rztooxh5ur2",
+    "device_id": "iv9a94th6rzt********",
     "datetime": "2020-06-05 17:27:00",
     "latitude": 55.70329032,
     "longitude": 37.65472196,
@@ -101,7 +101,7 @@ Create a local `sample.json` file with the following test data:
     "fuel_level": null
 }
 {
-    "device_id": "rhibbh3y08qmz3sdbrbu",
+    "device_id": "rhibbh3y08qm********",
     "datetime": "2020-06-06 09:49:54",
     "latitude": 55.71294467,
     "longitude": 37.66542005,
@@ -112,7 +112,7 @@ Create a local `sample.json` file with the following test data:
     "fuel_level": 32
 }
 {
-    "device_id": "iv9a94th6rztooxh5ur2",
+    "device_id": "iv9a94th6rzt********",
     "datetime": "2020-06-07 15:00:10",
     "latitude": 55.70985913,
     "longitude": 37.62141918,
@@ -131,7 +131,7 @@ Create a local `sample.json` file with the following test data:
 1. [Create a source endpoint](../../data-transfer/operations/endpoint/source/kafka.md) with the `{{ KF }}` type and specify the following items for it:
 
    * **{{ ui-key.yc-data-transfer.data-transfer.console.form.kafka.console.form.kafka.KafkaSourceConnection.topic_name.title }}**: `sensors`.
-   * `json` conversion rules. In the **{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.ConvertRecordOptions.data_schema.title }}** field, select `JSON specification` and copy the following field specification in the form that opens:
+   * `json` conversion rules. In the **{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.ConvertRecordOptions.data_schema.title }}** field, select `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.DataSchema.json_fields.title }}` and copy and paste the following field specification into the form that opens:
 
    {% cut "sensors-specification" %}
 
@@ -187,12 +187,12 @@ Create a local `sample.json` file with the following test data:
 
       1. [Create a target endpoint](../../data-transfer/operations/endpoint/target/postgresql.md) of the `{{ PG }}` type and specify the cluster connection parameters in it.
 
-         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnection.connection_type.title }}**: `Yandex Managed Service for PostgreSQL cluster`.
-         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnectionType.mdb_cluster_id.title }}**: `<{{ PG }} target cluster name>` from the drop-down list.
-         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnection.database.title }}**: `db1`.
-         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnection.user.title }}**: `pg-user`.
-         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnection.password.title }}**: `<user password>`.
-      1. [Create a transfer](../../data-transfer/operations/transfer.md#create) with a **_{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.TransferType.increment.title }}_** type that will use the created endpoints.
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnection.connection_type.title }}**: `{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnectionType.mdb_cluster_id.title }}`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnectionType.mdb_cluster_id.title }}**: `<name_of_{{ PG }}_target_cluster>` from the drop-down list
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnection.database.title }}**: `db1`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnection.user.title }}**: `pg-user`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresConnection.password.title }}**: `<user_password>`
+      1. [Create a transfer](../../data-transfer/operations/transfer.md#create) of the **_{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.TransferType.increment.title }}_** type that will use the created endpoints.
       1. [Activate the transfer](../../data-transfer/operations/transfer.md#activate) and wait for its status to change to **{{ ui-key.yacloud.data-transfer.label_connector-status-RUNNING }}**.
 
    * Using {{ TF }}
@@ -208,7 +208,7 @@ Create a local `sample.json` file with the following test data:
          terraform validate
          ```
 
-         If there are any errors in the configuration files, {{ TF }} will point to them.
+         If there are any errors in the configuration files, {{ TF }} will point them out.
 
       1. Create the required infrastructure:
 
@@ -226,13 +226,13 @@ Make sure the data from the topic in the source {{ mkf-name }} cluster is being 
 
    ```bash
    jq -rc . sample.json | kafkacat -P \
-       -b <FQDN of the broker host>:9091 \
+       -b <broker_host_FQDN>:9091 \
        -t sensors \
        -k key \
        -X security.protocol=SASL_SSL \
        -X sasl.mechanisms=SCRAM-SHA-512 \
        -X sasl.username="mkf-user" \
-       -X sasl.password="<user password in the source cluster>" \
+       -X sasl.password="<user_password_in_the_source_cluster>" \
        -X ssl.ca.location={{ crt-local-dir }}{{ crt-local-file }} -Z
    ```
 
@@ -279,9 +279,9 @@ Some resources are not free of charge. To avoid paying for them, delete the reso
          terraform validate
          ```
 
-         If there are any errors in the configuration files, {{ TF }} will point to them.
+         If there are any errors in the configuration files, {{ TF }} will point them out.
 
-      1. Confirm the resources have been updated:
+      1. Confirm updating the resources.
 
          {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

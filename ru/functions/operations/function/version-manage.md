@@ -1,3 +1,8 @@
+---
+title: "Как создать версию функции"
+description: "Следуя данной инструкции, вы сможете создать версию функции."
+---
+
 # Создать версию функции
 
 {% include [create-version](../../../_includes/functions/create-version.md) %}
@@ -10,30 +15,31 @@
 
 При создании версии необходимо задать следующие параметры:
 
-* _Среда выполнения_ — предоставляет дополнительные библиотеки и переменные окружения, к которым можно получить доступ из кода функции. Соответствует языку программирования, на котором написана ваша функция. Подробнее см. в разделе [Среда выполнения](../../concepts/runtime/index.md).
-* _Точка входа_ — функция, которая будет вызываться в качестве обработчика. Подробнее об обработчике читайте в разделе [Модель программирования](../../concepts/function.md#programming-model).
-* _Таймаут_ — максимальное время выполнения функции, после которого сервис прервет выполнение, не дожидаясь ответа. Включает в себя время начальной инициализации при первом запуске.
+* _{{ ui-key.yacloud.serverless-functions.item.editor.field_runtime }}_ — предоставляет дополнительные библиотеки и переменные окружения, к которым можно получить доступ из кода функции. Соответствует языку программирования, на котором написана ваша функция. Подробнее см. в разделе [Среда выполнения](../../concepts/runtime/index.md).
+* _{{ ui-key.yacloud.serverless-functions.item.editor.field_entry }}_ — функция, которая будет вызываться в качестве обработчика. Подробнее об обработчике читайте в разделе [Модель программирования](../../concepts/function.md#programming-model).
+* _{{ ui-key.yacloud.serverless-functions.item.editor.field_timeout }}_ — максимальное время выполнения функции, после которого сервис прервет выполнение, не дожидаясь ответа. Включает в себя время начальной инициализации при первом запуске.
 
 {% list tabs %}
 
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится функция.
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Выберите функцию, версию которой хотите создать.
-    1. В разделе **Последняя версия** нажмите кнопку **Создать в редакторе**.
-    1. Выберите [среду выполнения](../../concepts/runtime/index.md). Не выбирайте опцию **Добавить файлы с примерами кода**.
+    1. В разделе **{{ ui-key.yacloud.serverless-functions.item.overview.label_title-latest-version }}** нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.overview.button_editor-create }}**.
+    1. Выберите [среду выполнения](../../concepts/runtime/index.md). Отключите опцию **{{ ui-key.yacloud.serverless-functions.item.editor.label_with-template }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_action-continue }}**.
     1. Подготовьте код функции:
-       * Среда выполнения: `nodejs`.
-       * Способ: ZIP-архив.
-       * Файл: `hello-js.zip`.
-       * Точка входа: `index.handler`.
+       * **{{ ui-key.yacloud.serverless-functions.item.editor.field_runtime }}**: `nodejs12`.
+       * **{{ ui-key.yacloud.serverless-functions.item.editor.field_method }}**: `{{ ui-key.yacloud.serverless-functions.item.editor.value_method-zip-file }}`.
+       * **{{ ui-key.yacloud.serverless-functions.item.editor.field_file }}**: `hello-js.zip`.
+       * **{{ ui-key.yacloud.serverless-functions.item.editor.field_entry }}**: `index.handler`.
     1. Задайте параметры версии:
-       * Таймаут, с: 5.
-       * Память: 128 МБ.
-       * [Сервисный аккаунт](../../../iam/concepts/users/service-accounts): Не выбрано.
-       * [Переменные окружения](../../concepts/runtime/environment-variables.md): Не выбрано.
-    1. В правом верхнем углу нажмите **Создать версию**.
+       * **{{ ui-key.yacloud.serverless-functions.item.editor.field_timeout }}**: `5`.
+       * **{{ ui-key.yacloud.serverless-functions.item.editor.field_resources-memory }}**: `128 {{ ui-key.yacloud.common.units.label_megabyte }}`.
+       * [**{{ ui-key.yacloud.forms.label_service-account-select }}**](../../../iam/concepts/users/service-accounts.md): `{{ ui-key.yacloud.component.service-account-select.label_no-service-account }}`.
+       * [**{{ ui-key.yacloud.serverless-functions.item.editor.field_environment-variables }}**](../../concepts/runtime/environment-variables.md): `{{ ui-key.yacloud.common.not-selected }}`.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**.
 
 - CLI
 
@@ -43,6 +49,7 @@
 
     Чтобы создать версию функции, выполните команду:
 
+    
     ```
     yc serverless function version create \
       --function-name=my-nodejs-function \
@@ -52,6 +59,7 @@
       --execution-timeout 5s \
       --source-path ./hello-js.zip
     ```
+  
 
     Где:
 
@@ -64,6 +72,7 @@
 
     Результат:
 
+    
     ```
     done (1s)
     id: d4evvn8obisa********
@@ -80,12 +89,13 @@
     - $latest
     log_group_id: ckg3qh8h363p********
     ```
+  
 
 - {{ TF }}
 
     {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     Чтобы создать новую версию функции:
 
@@ -94,7 +104,7 @@
        * `yandex_function` — описание создаваемой функции и ее исходный код.
          * `name` — имя функции.
          * `description` — текстовое описание функции.
-         * `user_hash` — произвольная строка, определяющая версию функции. При изменениях функции необходимо менять и  эту строку. Функция обновится при изменении этой строки.
+         * `user_hash` — произвольная строка, определяющая версию функции. При изменениях функции необходимо менять и эту строку. Функция обновится при изменении этой строки.
          * `runtime` — [среда выполнения](../../concepts/runtime/index.md) функции.
          * `entrypoint` — имя функции в исходном коде, которая будет служить точкой входа в приложения.
          * `memory` — объем памяти в мегабайтах, отведенный для выполнения функции.
@@ -110,7 +120,7 @@
             name               = "test-function"
             description        = "Test function"
             user_hash          = "first-function"
-            runtime            = "python37"
+            runtime            = "python311"
             entrypoint         = "main"
             memory             = "128"
             execution_timeout  = "10"
@@ -166,9 +176,11 @@
 
     Чтобы создать версию функции, воспользуйтесь методом REST API [createVersion](../../functions/api-ref/Function/createVersion.md) для ресурса [Function](../../functions/api-ref/Function/index.md) или вызовом gRPC API [FunctionService/CreateVersion](../../functions/api-ref/grpc/function_service.md#CreateVersion).
 
+
 - {{ yandex-cloud }} Toolkit
 
     Создать версию функции можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}
 

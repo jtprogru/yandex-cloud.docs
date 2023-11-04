@@ -1,3 +1,8 @@
+---
+title: "Как создать виртуальную машину из пользовательского образа"
+description: "Следуя данной инструкции, вы сможете создать виртуальную машину из пользовательского образа."
+---
+
 # Создать виртуальную машину из пользовательского образа
 
 ## Перед началом работы {#before-you-begin}
@@ -12,7 +17,10 @@
 
 - Консоль управления
 
-  Чтобы создать ВМ:
+  
+  @[youtube](https://www.youtube.com/watch?v=M9KoXX4ueAI&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=9&pp=iAQB)
+
+
   1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../../resource-manager/concepts/resources-hierarchy.md#folder), в котором будет создана ВМ.
   1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
   1. Справа сверху нажмите **{{ ui-key.yacloud.compute.instances.button_create }}**.
@@ -32,6 +40,10 @@
       * В открывшемся окне перейдите на вкладку **{{ ui-key.yacloud.compute.instances.create-disk.value_source-image }}**.
       * Выберите образ из списка и нажмите **{{ ui-key.yacloud.common.apply }}**. 
 
+  
+  1. {% include [encryption-section-boot](../../../_includes/compute/encryption-section-boot.md) %}
+
+
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** [добавьте диск](create-from-disks.md):
 
       * Нажмите **{{ ui-key.yacloud.compute.instances.create.label_add-disk }}**.
@@ -39,7 +51,12 @@
       * Выберите [тип диска](../../concepts/disk.md#disks_types).
       * Укажите нужный размер блока.
       * Укажите нужный размер диска.
-      * (опционально) Включите опцию **{{ ui-key.yacloud.compute.instances.create-disk.field_auto-delete }}**, если нужно автоматически удалять диск при удалении ВМ, к которой он будет подключен.
+
+      
+      * {% include [encryption-section-secondary](../../../_includes/compute/encryption-section-secondary.md) %}
+
+
+      * (Опционально) Включите опцию **{{ ui-key.yacloud.compute.instances.create-disk.field_auto-delete }}**, если нужно автоматически удалять диск при удалении ВМ, к которой он будет подключен.
       * Выберите наполнение `{{ ui-key.yacloud.compute.instances.create-disk.value_source-image }}`.
       * Выберите нужный образ.
       * Нажмите **{{ ui-key.yacloud.compute.instances.create-disk.button_create }}**.
@@ -58,7 +75,7 @@
      * Выберите [платформу](../../concepts/vm-platforms.md).
      * Укажите [гарантированную долю](../../../compute/concepts/performance-levels.md) и необходимое количество vCPU, а также объем RAM.
      * При необходимости сделайте ВМ [прерываемой](../../concepts/preemptible-vm.md).
-     * (опционально) Включите [программно-ускоренную сеть](../../concepts/software-accelerated-network.md).
+     * (Опционально) Включите [программно-ускоренную сеть](../../concepts/software-accelerated-network.md).
 
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
 
@@ -70,7 +87,15 @@
 
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_access }}** укажите данные для доступа на ВМ:
 
-     * (опционально) Выберите или создайте [сервисный аккаунт](../../../iam/concepts/users/service-accounts.md). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
+     * (Опционально) Выберите или создайте [сервисный аккаунт](../../../iam/concepts/users/service-accounts.md). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
+     * (Опционально) [Включите доступ к ВМ через OS Login](../vm-connect/os-login.md). Опция доступна только для образов Linux.
+
+       {% note info %}
+
+       {% include [preview](../../../_includes/preview-pp.md) %}
+
+       {% endnote %}
+
      * В поле **{{ ui-key.yacloud.compute.instances.create.field_user }}** введите имя пользователя.
 
        {% note alert %}
@@ -143,7 +168,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы создать ВМ из пользовательского образа:
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:

@@ -67,13 +67,13 @@ If you no longer need the resources you created, [delete them](#clear-out).
    * In the **{{ ui-key.yacloud.mdb.forms.field_initialization-action-uri }}** field, specify the path to the script file in the bucket, such as:
 
       ```http
-      s3a://<bucket name>/geesefs_mount.sh
+      s3a://<bucket_name>/geesefs_mount.sh
       ```
 
    * In the **{{ ui-key.yacloud.mdb.forms.field_initialization-action-args }}** field, specify the name of the [previously created](#before-you-begin) bucket and `/mnt/test` as your mount point. Arguments are specified on separate lines:
 
       ```text
-      <bucket name>
+      <bucket_name>
       /mnt/test
       ```
 
@@ -88,14 +88,14 @@ If you no longer need the resources you created, [delete them](#clear-out).
 1. To make sure that the bucket has been mounted successfully, run the command:
 
    ```bash
-   ls /mnt/test/<bucket name>
+   ls /mnt/test/<bucket_name>
    ```
 
    As a result, it will output the list of objects stored in the root folder of the bucket. In this case, the file name is `geesefs_mount.sh`.
 
 ## Delete the resources you created {#clear-out}
 
-Delete the resources you no longer need to avoid paying for them:
+Delete the resources you no longer need to avoid being charged for them:
 
 1. [Delete the {{ dataproc-name }} cluster](../../data-proc/operations/cluster-delete.md).
 1. If you used static public IP addresses to access the cluster hosts, release and [delete them](../../vpc/operations/address-delete.md).

@@ -90,48 +90,48 @@ Make sure that you can connect to the source cluster hosts from the internet.
 - Non-sharded target cluster
 
    1. [Create an endpoint for the source cluster](../../data-transfer/operations/endpoint/index.md#create):
-      * **Database type**: `{{ MG }}`.
-      * **Connection settings**: `Custom installation`.
-         * **CA Certificate**: Upload the certificate file if a connection to the source cluster requires encryption.
-         * **Host list**: Specify the FQDN of the source cluster hosts.
-         * **Port**: Specify the port for connecting to the hosts.
-         * **Authentication source**: `db1`.
-         * **Username**: `user1`.
-         * **Password**: Enter the password for `user1`.
+      * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}**: `{{ MG }}`
+      * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoSource.connection.title }}**: `{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnectionType.on_premise.title }}`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.OnPremiseMongo.ca_certificate.title }}**: Upload the certificate file if a connection to the source cluster requires encryption
+         * **Host list**: Specify the FQDN of the source cluster hosts
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.OnPremiseMongo.port.title }}**: Specify the port for connecting to the hosts
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.auth_source.title }}**: `db1`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.user.title }}**: `user1`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.raw_password.title }}**: Enter the password for `user1`
    1. [Create an endpoint for the target cluster](../../data-transfer/operations/endpoint/index.md#create):
-      * **Database type**: `{{ MG }}`.
-      * **Connection settings**: `MDB cluster`.
+      * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}**: `{{ MG }}`
+      * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoTarget.connection.title }}**: `MDB cluster`
          * Specify the ID of the target cluster.
-         * **Username**: `user_transfer`.
-         * **Password**: Enter the password for `user_transfer`.
-         * **Cleanup policy**: `DROP`.
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.user.title }}**: `user_transfer`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.raw_password.title }}**: Enter the password for `user_transfer`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoTarget.cleanup_policy.title }}**: `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.DROP.title }}`
    1. [Create a transfer](../../data-transfer/operations/transfer.md#create):
-      * **Transfer type**: {{ dt-type-copy-repl }}.
-      * **Source**: Select the created endpoint for the source cluster.
-      * **Target**: Select the created endpoint for the target cluster.
+      * **{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.Transfer.type.title }}**: {{ dt-type-copy-repl }}
+      * **{{ ui-key.yacloud.data-transfer.forms.label_source-type }}**: Select the created endpoint for the source cluster
+      * **{{ ui-key.yacloud.data-transfer.forms.label_target-type }}**: Select the created endpoint for the target cluster
 
 - Sharded target cluster
 
    1. [Create an endpoint for the source cluster](../../data-transfer/operations/endpoint/index.md#create):
-      * **Database type**: `{{ MG }}`.
-      * **Connection settings**: `Custom installation`.
-         * **CA Certificate**: Upload the certificate file if a connection to the source cluster requires encryption.
-         * **Host list**: Specify the FQDN of the source cluster hosts.
-         * **Port**: Specify the port for connecting to the hosts.
-         * **Authentication source**: `db1`.
-         * **Username**: `user1`.
-         * **Password**: Enter the password for `user1`.
+      * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}**: `{{ MG }}`
+      * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoSource.connection.title }}**: `{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnectionType.on_premise.title }}`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.OnPremiseMongo.ca_certificate.title }}**: Upload the certificate file if a connection to the source cluster requires encryption
+         * **Host list**: Specify the FQDN of the source cluster hosts
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.OnPremiseMongo.port.title }}**: Specify the port for connecting to the hosts
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.auth_source.title }}**: `db1`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.user.title }}**: `user1`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.raw_password.title }}**: Enter the password for `user1`
    1. [Create an endpoint for the target cluster](../../data-transfer/operations/endpoint/index.md#create):
-      * **Database type**: `{{ MG }}`.
-      * **Connection settings**: `MDB cluster`.
+      * **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}**: `{{ MG }}`
+      * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoTarget.connection.title }}**: `MDB cluster`
          * Specify the ID of the target cluster.
-         * **Username**: `user_transfer`.
-         * **Password**: Enter the password for `user_transfer`.
-         * **Cleanup policy**: `DISABLED` or `TRUNCATE`.
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.user.title }}**: `user_transfer`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoConnection.raw_password.title }}**: Enter the password for `user_transfer`
+         * **{{ ui-key.yc-data-transfer.data-transfer.console.form.mongo.console.form.mongo.MongoTarget.cleanup_policy.title }}**: `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.DISABLED.title }}` or `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.TRUNCATE.title }}`
    1. [Create a transfer](../../data-transfer/operations/transfer.md#create):
-      * **Transfer type**: {{ dt-type-copy-repl }}.
-      * **Source**: Select the created endpoint for the source cluster.
-      * **Target**: Select the created endpoint for the target cluster.
+      * **{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.Transfer.type.title }}**: {{ dt-type-copy-repl }}
+      * **{{ ui-key.yacloud.data-transfer.forms.label_source-type }}**: Select the created endpoint for the source cluster
+      * **{{ ui-key.yacloud.data-transfer.forms.label_target-type }}**: Select the created endpoint for the target cluster
 
 {% endlist %}
 
@@ -144,7 +144,7 @@ Make sure that you can connect to the source cluster hosts from the internet.
    1. [Activate](../../data-transfer/operations/transfer.md#activate) the created transfer.
    1. Wait for the transfer status to change to {{ dt-status-repl }}.
    1. Switch the source cluster to <q>read-only</q> mode and switch the load to the target cluster.
-   1. On the [transfer monitoring](../../data-transfer/operations/monitoring.md) page, wait for the **Maximum lag on delivery, [s]** metric to decrease to zero. This means that all changes that occurred in the source cluster after data copying was completed are transferred to the target cluster.
+   1. On the [transfer monitoring](../../data-transfer/operations/monitoring.md) page, wait for the **Maximum data transfer delay** metric to decrease to zero. This means that all changes that occurred in the source cluster after data copying was completed are transferred to the target cluster.
    1. [Connect](../../managed-mongodb/operations/connect/non-sharded.md) to the target cluster.
    1. Make sure that the `collection1` collection has been transferred and contains 200000 documents like in the source cluster:
 
@@ -162,7 +162,7 @@ Make sure that you can connect to the source cluster hosts from the internet.
    1. [Activate](../../data-transfer/operations/transfer.md#activate) the created transfer.
    1. Wait for the transfer status to change to {{ dt-status-repl }}.
    1. Switch the source cluster to <q>read-only</q> mode and switch the load to the target cluster.
-   1. On the [transfer monitoring](../../data-transfer/operations/monitoring.md) page, wait for the **Maximum lag on delivery, [s]** metric to decrease to zero. This means that all changes that occurred in the source cluster after data copying was completed are transferred to the target cluster.
+   1. On the [transfer monitoring](../../data-transfer/operations/monitoring.md) page, wait for the **Maximum data transfer delay** metric to decrease to zero. This means that all changes that occurred in the source cluster after data copying was completed are transferred to the target cluster.
    1. [Connect](../../managed-mongodb/operations/connect/sharded.md) to the target cluster.
    1. Make sure that the `collection1` collection has been transferred, contains 200000 documents like in the source cluster, and the documents are distributed across shards:
 
@@ -205,12 +205,12 @@ Make sure that you can connect to the source cluster hosts from the internet.
 
 ### Delete the resources you created {#clear-out}
 
-Some resources are not free of charge. Delete the resources you no longer need to avoid paying for them:
+Some resources are not free of charge. To avoid paying for them, delete the resources you no longer need:
 
 1. [Deactivate](../../data-transfer/operations/transfer.md#deactivate) the transfer and wait for its status to change to {{ dt-status-stopped }}.
 
    To learn more about the transfer lifecycle, see the [{{ data-transfer-full-name }} documentation](../../data-transfer/concepts/transfer-lifecycle.md).
 
 1. [Delete](../../data-transfer/operations/transfer.md#delete) the stopped transfer.
-1. [Delete endpoints for the source and target](../../data-transfer/operations/endpoint/index.md#delete).
+1. [Delete endpoints for both source and target](../../data-transfer/operations/endpoint/index.md#delete).
 1. [Delete the created {{ mmg-name }} cluster](../../managed-mongodb/operations/cluster-delete.md).

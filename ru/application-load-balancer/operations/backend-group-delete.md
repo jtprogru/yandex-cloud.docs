@@ -1,3 +1,8 @@
+---
+title: "Как удалить группу бэкендов"
+description: "Следуя данной инструкции, вы сможете удалить группу бэкендов."
+---
+
 # Удалить группу бэкендов
 
 {% note warning %}
@@ -13,12 +18,12 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором создана группа бэкендов.
-  1. Выберите сервис **{{ alb-name }}**.
-  1. На панели слева выберите ![image](../../_assets/backgrs.svg) **Группы бэкендов**.
-  1. Напротив имени группы бэкендов нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Удалить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. На панели слева выберите ![image](../../_assets/backgrs.svg) **{{ ui-key.yacloud.alb.label_backend-groups }}**.
+  1. Напротив имени группы бэкендов нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.delete }}**.
 
-     Чтобы выполнить это действие с несколькими группами, выделите нужные в списке и нажмите кнопку **Удалить** в нижней части экрана.
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+     Чтобы выполнить это действие с несколькими группами, выделите нужные в списке и нажмите кнопку **{{ ui-key.yacloud.common.delete }}** в нижней части экрана.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -35,7 +40,7 @@
   1. Выполните команду, указав имя удаляемой группы бэкендов:
 
      ```bash
-     yc alb backend-group delete --name <имя группы бэкендов>
+     yc alb backend-group delete --name <имя_группы_бэкендов>
      ```
 
      Чтобы проверить удаление, получите список группы бэкендов, выполнив команду:
@@ -48,20 +53,20 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
   1. Откройте конфигурационный файл {{ TF }} и удалите фрагмент с описанием группы бэкендов.
 
      Пример описания группы бэкендов в конфигурации {{ TF }}:
 
      ```hcl
      resource "yandex_alb_backend_group" "test-backend-group" {
-       name                     = "<имя группы бэкендов>"
+       name                     = "<имя_группы_бэкендов>"
 
        http_backend {
-         name                   = "<имя бэкенда>"
+         name                   = "<имя_бэкенда>"
          weight                 = 1
          port                   = 80
-         target_group_ids       = ["<идентификатор целевой группы>"]
+         target_group_ids       = ["<идентификатор_целевой_группы>"]
          load_balancing_config {
            panic_threshold      = 90
          }    

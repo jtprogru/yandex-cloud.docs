@@ -1,1 +1,5 @@
-{% include [local-dns-cache](../../_tutorials/infrastructure-management/local-dns-cache.md) %}
+---
+canonical: "{{ link-docs }}/tutorials/infrastructure-management/local-dns-cache"
+---
+
+{% include [local-dns-cache](../../_tutorials/infrastructure/local-dns-cache.md) %}

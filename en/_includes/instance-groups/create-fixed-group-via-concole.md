@@ -9,7 +9,10 @@
 
       {% include [name-fqdn](../compute/name-fqdn.md) %}
 
-   * Select a [service account](../../iam/concepts/users/service-accounts.md) from the list or create a new one. To be able to create, update, and delete group instances, assign the `editor` role to the service account. In {{ ig-name }}, all operations are performed on behalf of a service account.
+   * Select a [service account](../../iam/concepts/users/service-accounts.md) from the list or create a new one. To be able to create, update, and delete instances in the instance group, assign the `editor` role to the service account. By default, all operations in {{ ig-name }} are performed on behalf of a service account.
+
+     {% include [sa-dependence-brief](../../_includes/instance-groups/sa-dependence-brief.md) %}
+
    * Enable the **{{ ui-key.yacloud.compute.groups.create.field_deletion-protection }}** option if needed. You cannot delete a group with this option enabled.
 1. Under **{{ ui-key.yacloud.compute.groups.create.section_allocation }}**, select the required ones in the **{{ ui-key.yacloud.compute.groups.create.field_zone }}** field. Instances of a group may reside in [different availability zones and regions](../../overview/concepts/geo-scope.md).
 1. Under **{{ ui-key.yacloud.compute.groups.create.section_instance }}**, click **{{ ui-key.yacloud.compute.groups.create.button_instance_empty-create }}** to set up the configuration for a basic instance:
@@ -17,8 +20,8 @@
    * Under **{{ ui-key.yacloud.compute.instances.create.section_image }}**, select a system to be deployed on the VM instance's boot [disk](../../compute/concepts/disk.md).
 
    * Under **{{ ui-key.yacloud.compute.instances.create.section_disk }}**:
-      * Select the [disk type](../../compute/concepts/disk.md#disks_types).
-      * Specify the disk size.
+      * Select [disk type](../../compute/concepts/disk.md#disks_types).
+      * Specify disk size.
       * To add more disks, click **{{ ui-key.yacloud.compute.instances.create.label_add-disk }}**.
    * Under **{{ ui-key.yacloud.compute.instances.create.section_platform }}**:
       * Choose a [platform](../../compute/concepts/vm-platforms.md).
@@ -30,8 +33,7 @@
 
    * Under **{{ ui-key.yacloud.compute.instances.create.section_access }}**, specify the information required to access the instance:
       * Select a service account to link to the instance.
-      * If you selected a Linux [image](../../compute/concepts/image.md), fill out **{{ ui-key.yacloud.compute.instances.create.field_user }}** and **{{ ui-key.yacloud.compute.instances.create.field_key }}**. As the key, use the [public key](../../compute/operations/vm-connect/ssh.md#creating-ssh-keys) file contents.
-      * If you selected a Windows image, enter the `Administrator` user password.
+      * If you selected a Linux [image](../../compute/concepts/image.md), fill out the fields **{{ ui-key.yacloud.compute.instances.create.field_user }}** and **{{ ui-key.yacloud.compute.instances.create.field_key }}**. For the key, use the contents of the [public key](../../compute/operations/vm-connect/ssh.md#creating-ssh-keys) file.
       * Select `{{ ui-key.yacloud.compute.instances.create.field_serial-port-enable }}` if needed.
    * Click **{{ ui-key.yacloud.compute.groups.create.button_edit }}**.
 1. Under **{{ ui-key.yacloud.compute.groups.create.section_deploy }}**:
@@ -47,7 +49,7 @@
    * Select the `{{ ui-key.yacloud.compute.groups.create.value_scale-fixed }}` [scaling type](../../compute/concepts/instance-groups/scale.md).
    * Specify the instance group size.
 1. If needed, enable the **{{ ui-key.yacloud.compute.groups.create.section_health-check }}** to get information about the state of instances and their automatic recovery on failure.
-   * In the **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-protocol }}** field, select the protocol for the health checks: `{{ ui-key.yacloud.ylb.health-check.label_http }}` or `{{ ui-key.yacloud.ylb.health-check.label_tcp }}`.
+   * In the **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-protocol }}** field, select the protocol for the health checks: `{{ ui-key.yacloud.common.label_http }}` or `{{ ui-key.yacloud.common.label_tcp }}`.
    * In the **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-path }}** field (for the HTTP type), specify the URL path for the HTTP check requests sent from {{ ig-name }}.
    * In the **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-port }}** field, specify the port number from 1 to 32767 for {{ ig-name }} to send the health check requests to.
    * In the **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-timeout }}** field, specify the response wait time from 1 to 60 seconds.

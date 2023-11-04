@@ -14,7 +14,7 @@
 
 {% list tabs %}
 
-* Вручную
+- Вручную
 
     1. [Создайте сервисный аккаунт](../../iam/operations/sa/create.md) с именем `dataproc-s3-sa` и назначьте ему роль `dataproc.agent`.
     1. {% include [basic-before-buckets](../../_includes/data-proc/tutorials/basic-before-buckets.md) %}
@@ -23,24 +23,23 @@
     1. [Настройте NAT-шлюз](../../vpc/operations/create-nat-gateway.md) для созданной подсети.
     1. [Создайте два кластера {{ dataproc-name }}](../../data-proc/operations/cluster-create.md) с именами `dataproc-source` и `dataproc-target`, с любой [подходящей конфигурацией хостов](../../data-proc/concepts/instance-types.md) и следующими настройками:
 
-        * Компоненты:
+        * **{{ ui-key.yacloud.mdb.forms.config_field_services }}**:
             * `SPARK`;
-            * `YARN`;
-            * `HIVE`.
-        * Сервисный аккаунт — `dataproc-sa`.
-        * Имя бакета — бакет, который вы создали для выходных данных.
-        * Сеть — `dataproc-network`.
+            * `YARN`.
+        * **{{ ui-key.yacloud.mdb.forms.base_field_service-account }}** — `dataproc-sa`.
+        * **{{ ui-key.yacloud.mdb.forms.config_field_bucket }}** — бакет, который вы создали для выходных данных.
+        * **{{ ui-key.yacloud.mdb.forms.config_field_network }}** — `dataproc-network`.
 
     1. Если в облачной сети используются [группы безопасности](../../vpc/concepts/security-groups.md), [добавьте](../../vpc/operations/security-group-add-rule.md) в группу безопасности кластеров {{ dataproc-name }} следующее правило для исходящего трафика:
 
-        * Диапазон портов — `{{ port-metastore }}`.
-        * Протокол — `Любой` (`Any`).
-        * Источник — `CIDR`.
-        * CIDR блоки — `0.0.0.0/0`.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `{{ port-metastore }}`.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`).
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+        * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
-* С помощью {{ TF }}
+- С помощью {{ TF }}
 
-    1. Если у вас еще нет {{ TF }}, [установите и настройте его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
     1. Скачайте в ту же рабочую директорию файл конфигурации [dataproc-to-dataproc.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/dataproc-to-dataproc.tf).
 
@@ -89,7 +88,7 @@
     spark:spark.hive.metastore.uris=thrift://<IP-адрес кластера {{ metastore-name }}>:{{ port-metastore }}
     ```
 
-   Чтобы узнать IP-адрес кластера {{ metastore-name }}, в [консоли управления]({{ link-console-main }}) выберите сервис **{{ dataproc-name }}** и на левой панели выберите страницу ![image](../../_assets/data-proc/metastore.svg) **Metastore-сервер**. IP-адрес кластера указан в блоке **{{ ui-key.yacloud.common.section-base }}**.
+   Чтобы узнать IP-адрес кластера {{ metastore-name }}, в [консоли управления]({{ link-console-main }}) выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_data-proc }}** и на левой панели выберите страницу ![image](../../_assets/data-proc/metastore.svg) **{{ ui-key.yacloud.metastore.label_metastore }}**. IP-адрес кластера указан в блоке **{{ ui-key.yacloud.common.section-base }}**.
 
 ## Создайте тестовую таблицу {#create-table}
 
@@ -196,14 +195,14 @@
 
     {% list tabs %}
 
-    * Вручную
+    - Вручную
 
         1. [Кластеры {{ dataproc-name }}](../../data-proc/operations/cluster-delete.md).
         1. [Бакеты {{ objstorage-name }}](../../storage/operations/buckets/delete.md).
         1. [Облачную сеть](../../vpc/operations/network-delete.md).
         1. [Сервисный аккаунт](../../iam/operations/sa/delete.md).
 
-    * С помощью {{ TF }}
+    - С помощью {{ TF }}
 
         1. [Удалите объекты](../../storage/operations/objects/delete.md) из бакетов.
         1. В терминале перейдите в директорию с планом инфраструктуры.

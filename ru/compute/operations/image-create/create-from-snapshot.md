@@ -10,7 +10,7 @@
   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
   1. На панели слева выберите ![image](../../../_assets/compute/snapshots.svg) **{{ ui-key.yacloud.compute.switch_snapshots }}**.
   1. В строке с нужным снимком нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.compute.snapshots.list.button_action-image }}**.
-  1. Введите имя образа.
+  1. Введите имя образа. Требования к имени:
 
       {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -63,7 +63,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле параметры ресурса `yandex_compute_image`.
 

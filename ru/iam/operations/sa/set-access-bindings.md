@@ -9,17 +9,19 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, которому принадлежит сервисный аккаунт.
-    1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
+    1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
     1. Выберите сервисный аккаунт и нажмите на строку с его именем.
-    1. Перейдите на вкладку **Права доступа**.
-    1. Нажмите кнопку **Назначить роли**.
-    1. В окне **Настройка прав доступа** нажмите кнопку **Выбрать пользователя**.
+    1. Перейдите на вкладку **{{ ui-key.yacloud.common.resource-acl.label_access-bindings }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.resource-acl.button_new-bindings }}**.
+    1. В окне **{{ ui-key.yacloud_components.acl.label.title }}** нажмите кнопку **{{ ui-key.yacloud_components.acl.action.select-subject }}**.
     1. Выберите пользователя из списка или воспользуйтесь поиском по пользователям.
-    1. Нажмите кнопку **Добавить роль**.
+    1. Нажмите кнопку **{{ ui-key.yacloud_components.acl.button.add-role }}**.
     1. Выберите роль.
-    1. Нажмите кнопку **Сохранить**.
+    1. Нажмите кнопку **{{ ui-key.yacloud_components.acl.action.apply }}**.
 
 - CLI
+
+    {% include [cli-install](../../../_includes/cli-install.md) %}
 
     {% include [default-catalogue](../../../_includes/default-catalogue.md) %}
 
@@ -155,7 +157,7 @@
 
 - {{ TF }}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     1. Добавьте в конфигурационный файл параметры ресурса и укажите роль пользователей для доступа к сервисному аккаунту:
 
@@ -219,6 +221,8 @@
 
 - CLI
 
+    {% include [cli-install](../../../_includes/cli-install.md) %}
+
     Команда `add-access-binding` позволяет добавить только одну роль. Вы можете назначить несколько ролей с помощью команды `set-access-binding`.
 
     {% note alert %}
@@ -278,6 +282,7 @@
 
     {% endnote %}
 
+
     ```bash
     curl -X POST \
         -H 'Content-Type: application/json' \
@@ -295,7 +300,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы назначить несколько ролей на сервисный аккаунт, созданный с помощью {{ TF }}:
 
@@ -314,6 +319,7 @@
 
      {% cut "Пример назначения нескольких ролей на сервисный аккаунт с помощью {{ TF }}" %}
 
+     
      ```hcl
      ...
      resource "yandex_iam_service_account_iam_binding" "admin-account-iam" {
@@ -332,18 +338,19 @@
      }
      ...
      ```
-    
+
+
      {% endcut %}
 
      Более подробную информацию о ресурсах, которые вы можете создать с помощью {{ TF }}, см. в [документации провайдера]({{ tf-provider-resources-link }}/iam_service_account_iam_binding).
-  
+ 
   1. Проверьте конфигурацию командой:
      ```
      terraform validate
-     ```
-     
+     ``` 
+
      Если конфигурация является корректной, появится сообщение:
-     
+
      ```
      Success! The configuration is valid.
      ```
@@ -352,14 +359,14 @@
      ```
      terraform plan
      ```
-  
+
      В терминале будет выведен список ресурсов с параметрами. На этом этапе изменения не будут внесены. Если в конфигурации есть ошибки, {{ TF }} на них укажет.
 
   1. Примените изменения конфигурации:
      ```
      terraform apply
      ```
-     
+
   1. Подтвердите изменения: введите в терминал слово `yes` и нажмите **Enter**.
 
      Проверить изменение каталога можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../../cli/quickstart.md):
@@ -377,6 +384,8 @@
 {% list tabs %}
 
 - CLI
+
+  {% include [cli-install](../../../_includes/cli-install.md) %}
 
   1. Узнайте ID сервисного аккаунта, например, `test-sa`, которому вы хотите назначить роль. Чтобы узнать ID, получите список доступных сервисных аккаунтов (в профиле администратора):
 
@@ -413,7 +422,7 @@
 
 
   1. Пользователь может выполнить команду от имени сервисного аккаунта `test-sa` с помощью флага `--impersonate-service-account-id`.
-  
+
       Например, пользователь может получить список виртуальных машин в каталоге `my-folder`:
 
       ```
@@ -454,6 +463,8 @@
 {% list tabs %}
 
 - CLI
+
+  {% include [cli-install](../../../_includes/cli-install.md) %}
 
   1. Узнайте ID сервисного аккаунта `test-sa`, которому вы хотите назначить роль. Чтобы узнать ID, получите список доступных сервисных аккаунтов:
 
@@ -531,7 +542,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы разрешить сервисному аккаунту `test-sa` управлять сервисным аккаунтом `my-robot`, созданным при помощи {{ TF }}:
 
@@ -554,18 +565,18 @@
      }
      ...
      ```
-    
+
      {% endcut %}
 
      Более подробную информацию о ресурсах, которые вы можете создать с помощью {{ TF }}, см. в [документации провайдера]({{ tf-provider-resources-link }}/iam_service_account_iam_binding).
-  
+
   1. Проверьте конфигурацию командой:
      ```
      terraform validate
      ```
-     
+
      Если конфигурация является корректной, появится сообщение:
-     
+
      ```
      Success! The configuration is valid.
      ```
@@ -574,14 +585,14 @@
      ```
      terraform plan
      ```
-  
+
      В терминале будет выведен список ресурсов с параметрами. На этом этапе изменения не будут внесены. Если в конфигурации есть ошибки, {{ TF }} на них укажет.
 
   1. Примените изменения конфигурации:
      ```
      terraform apply
      ```
-     
+
   1. Подтвердите изменения: введите в терминал слово `yes` и нажмите **Enter**.
 
      Проверить изменение каталога можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../../cli/quickstart.md):
@@ -601,6 +612,8 @@
 {% list tabs %}
 
 - CLI
+
+  {% include [cli-install](../../../_includes/cli-install.md) %}
 
   Назначьте роль `viewer` системной группе `allAuthenticatedUsers`. В типе субъекта укажите `system`:
 
@@ -633,7 +646,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы разрешить любому прошедшему аутентификацию пользователю просматривать информацию о сервисном аккаунте `my-robot`:
 
@@ -656,18 +669,18 @@
      }
      ...
      ```
-    
+
      {% endcut %}
 
      Более подробную информацию о ресурсах, которые вы можете создать с помощью {{ TF }}, см. в [документации провайдера]({{ tf-provider-resources-link }}/iam_service_account_iam_binding).
-  
+
   1. Проверьте конфигурацию командой:
      ```
      terraform validate
      ```
-     
+
      Если конфигурация является корректной, появится сообщение:
-     
+
      ```
      Success! The configuration is valid.
      ```
@@ -676,14 +689,14 @@
      ```
      terraform plan
      ```
-  
+
      В терминале будет выведен список ресурсов с параметрами. На этом этапе изменения не будут внесены. Если в конфигурации есть ошибки, {{ TF }} на них укажет.
 
   1. Примените изменения конфигурации:
      ```
      terraform apply
      ```
-     
+
   1. Подтвердите изменения: введите в терминал слово `yes` и нажмите **Enter**.
 
      Проверить изменение каталога можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../../cli/quickstart.md):

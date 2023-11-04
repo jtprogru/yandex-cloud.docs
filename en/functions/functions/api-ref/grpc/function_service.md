@@ -20,6 +20,7 @@ A set of methods for managing serverless functions.
 | [GetFunctionVersionByTag](#GetFunctionVersionByTag) | Deprecated. |
 | [ListVersions](#ListVersions) | Retrieves the list of versions for the specified function, or of all function versions in the specified folder. |
 | [ListFunctionVersions](#ListFunctionVersions) | Deprecated. |
+| [DeleteVersion](#DeleteVersion) | Deletes the specified version of a function. |
 | [SetTag](#SetTag) | Set a tag for the specified version of a function. |
 | [RemoveTag](#RemoveTag) | Remove a tag from the specified version of a function. |
 | [ListTagHistory](#ListTagHistory) | Returns the log of tags assigned to versions of the specified function. |
@@ -297,13 +298,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Connectivity {#Connectivity}
@@ -346,6 +348,37 @@ mount_point_name | **string**<br>Required. Mount point directory name (not path)
 read_only | **bool**<br>Is mount read only. 
 
 
+### AsyncInvocationConfig {#AsyncInvocationConfig}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget}
+
+Empty.
+
+### YMQTarget {#YMQTarget}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
+
+
 ## GetFunctionVersion {#GetFunctionVersion}
 
 Deprecated. Use [GetVersion](#GetVersion).
@@ -382,13 +415,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret1)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions1)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount1)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig1)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources1}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Connectivity {#Connectivity1}
@@ -431,6 +465,37 @@ mount_point_name | **string**<br>Required. Mount point directory name (not path)
 read_only | **bool**<br>Is mount read only. 
 
 
+### AsyncInvocationConfig {#AsyncInvocationConfig1}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget1)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget1)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget1}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget1)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget1)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget1}
+
+Empty.
+
+### YMQTarget {#YMQTarget1}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
+
+
 ## GetVersionByTag {#GetVersionByTag}
 
 Returns all versions with the specified tag. <br>To get the list of all available versions, make a [ListVersions](#ListVersions) request.
@@ -468,13 +533,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret2)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions2)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount2)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig2)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources2}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Connectivity {#Connectivity2}
@@ -517,6 +583,37 @@ mount_point_name | **string**<br>Required. Mount point directory name (not path)
 read_only | **bool**<br>Is mount read only. 
 
 
+### AsyncInvocationConfig {#AsyncInvocationConfig2}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget2)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget2)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget2}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget2)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget2)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget2}
+
+Empty.
+
+### YMQTarget {#YMQTarget2}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
+
+
 ## GetFunctionVersionByTag {#GetFunctionVersionByTag}
 
 Deprecated. Use [GetVersionByTag](#GetVersionByTag).
@@ -554,13 +651,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret3)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions3)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount3)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig3)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources3}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Connectivity {#Connectivity3}
@@ -601,6 +699,37 @@ bucket_id | **string**<br>Required. S3 bucket name for mounting. The string leng
 prefix | **string**<br>S3 bucket prefix for mounting. 
 mount_point_name | **string**<br>Required. Mount point directory name (not path) for mounting. The string length in characters must be 1-100. Value must match the regular expression ` [-_0-9a-zA-Z]* `.
 read_only | **bool**<br>Is mount read only. 
+
+
+### AsyncInvocationConfig {#AsyncInvocationConfig3}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget3)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget3)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget3}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget3)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget3)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget3}
+
+Empty.
+
+### YMQTarget {#YMQTarget3}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
 
 
 ## ListVersions {#ListVersions}
@@ -652,13 +781,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret4)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions4)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount4)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig4)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources4}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Connectivity {#Connectivity4}
@@ -699,6 +829,37 @@ bucket_id | **string**<br>Required. S3 bucket name for mounting. The string leng
 prefix | **string**<br>S3 bucket prefix for mounting. 
 mount_point_name | **string**<br>Required. Mount point directory name (not path) for mounting. The string length in characters must be 1-100. Value must match the regular expression ` [-_0-9a-zA-Z]* `.
 read_only | **bool**<br>Is mount read only. 
+
+
+### AsyncInvocationConfig {#AsyncInvocationConfig4}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget4)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget4)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget4}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget4)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget4)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget4}
+
+Empty.
+
+### YMQTarget {#YMQTarget4}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
 
 
 ## ListFunctionVersions {#ListFunctionVersions}
@@ -750,13 +911,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret5)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions5)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount5)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig5)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources5}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Connectivity {#Connectivity5}
@@ -799,11 +961,83 @@ mount_point_name | **string**<br>Required. Mount point directory name (not path)
 read_only | **bool**<br>Is mount read only. 
 
 
+### AsyncInvocationConfig {#AsyncInvocationConfig5}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget5)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget5)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget5}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget5)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget5)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget5}
+
+Empty.
+
+### YMQTarget {#YMQTarget5}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
+
+
+## DeleteVersion {#DeleteVersion}
+
+Deletes the specified version of a function. <br>NOTE: old untagged function versions are deleted automatically.
+
+**rpc DeleteVersion ([DeleteFunctionVersionRequest](#DeleteFunctionVersionRequest)) returns ([operation.Operation](#Operation3))**
+
+Metadata and response of Operation:<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[DeleteFunctionVersionMetadata](#DeleteFunctionVersionMetadata)<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;Operation.response:[google.protobuf.Empty](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Empty)<br>
+
+### DeleteFunctionVersionRequest {#DeleteFunctionVersionRequest}
+
+Field | Description
+--- | ---
+function_version_id | **string**<br>Required. ID of the function's version to delete. 
+force | **bool**<br>Forces deletion of the version tags. <br>If the value equals false and the function has tags with the selected version then request returns an error. 
+
+
+### Operation {#Operation3}
+
+Field | Description
+--- | ---
+id | **string**<br>ID of the operation. 
+description | **string**<br>Description of the operation. 0-256 characters long. 
+created_at | **[google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp)**<br>Creation timestamp. 
+created_by | **string**<br>ID of the user or service account who initiated the operation. 
+modified_at | **[google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp)**<br>The time when the Operation resource was last modified. 
+done | **bool**<br>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available. 
+metadata | **[google.protobuf.Any](https://developers.google.com/protocol-buffers/docs/proto3#any)<[DeleteFunctionVersionMetadata](#DeleteFunctionVersionMetadata)>**<br>Service-specific metadata associated with the operation. It typically contains the ID of the target resource that the operation is performed on. Any method that returns a long-running operation should document the metadata type, if any. 
+result | **oneof:** `error` or `response`<br>The operation result. If `done == false` and there was no failure detected, neither `error` nor `response` is set. If `done == false` and there was a failure detected, `error` is set. If `done == true`, exactly one of `error` or `response` is set.
+&nbsp;&nbsp;error | **[google.rpc.Status](https://cloud.google.com/tasks/docs/reference/rpc/google.rpc#status)**<br>The error result of the operation in case of failure or cancellation. 
+&nbsp;&nbsp;response | **[google.protobuf.Any](https://developers.google.com/protocol-buffers/docs/proto3#any)<[google.protobuf.Empty](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Empty)>**<br>if operation finished successfully. 
+
+
+### DeleteFunctionVersionMetadata {#DeleteFunctionVersionMetadata}
+
+Field | Description
+--- | ---
+function_version_id | **string**<br>ID of the function's version is being deleted. 
+
+
 ## SetTag {#SetTag}
 
 Set a tag for the specified version of a function.
 
-**rpc SetTag ([SetFunctionTagRequest](#SetFunctionTagRequest)) returns ([operation.Operation](#Operation3))**
+**rpc SetTag ([SetFunctionTagRequest](#SetFunctionTagRequest)) returns ([operation.Operation](#Operation4))**
 
 Metadata and response of Operation:<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[SetFunctionTagMetadata](#SetFunctionTagMetadata)<br>
@@ -817,7 +1051,7 @@ function_version_id | **string**<br>Required. ID of the version to set the tag f
 tag | **string**<br>Tag to set for the version. Value must match the regular expression ` [a-z][-_0-9a-z]* `.
 
 
-### Operation {#Operation3}
+### Operation {#Operation4}
 
 Field | Description
 --- | ---
@@ -863,13 +1097,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret6)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions6)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount6)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig6)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources6}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Connectivity {#Connectivity6}
@@ -912,11 +1147,42 @@ mount_point_name | **string**<br>Required. Mount point directory name (not path)
 read_only | **bool**<br>Is mount read only. 
 
 
+### AsyncInvocationConfig {#AsyncInvocationConfig6}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget6)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget6)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget6}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget6)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget6)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget6}
+
+Empty.
+
+### YMQTarget {#YMQTarget6}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
+
+
 ## RemoveTag {#RemoveTag}
 
 Remove a tag from the specified version of a function.
 
-**rpc RemoveTag ([RemoveFunctionTagRequest](#RemoveFunctionTagRequest)) returns ([operation.Operation](#Operation4))**
+**rpc RemoveTag ([RemoveFunctionTagRequest](#RemoveFunctionTagRequest)) returns ([operation.Operation](#Operation5))**
 
 Metadata and response of Operation:<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[RemoveFunctionTagMetadata](#RemoveFunctionTagMetadata)<br>
@@ -930,7 +1196,7 @@ function_version_id | **string**<br>Required. ID of the version to remove a tag 
 tag | **string**<br>Tag to remove from the specified version. Value must match the regular expression ` [a-z][-_0-9a-z]* `.
 
 
-### Operation {#Operation4}
+### Operation {#Operation5}
 
 Field | Description
 --- | ---
@@ -976,13 +1242,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret7)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions7)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount7)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig7)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources7}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Connectivity {#Connectivity7}
@@ -1023,6 +1290,37 @@ bucket_id | **string**<br>Required. S3 bucket name for mounting. The string leng
 prefix | **string**<br>S3 bucket prefix for mounting. 
 mount_point_name | **string**<br>Required. Mount point directory name (not path) for mounting. The string length in characters must be 1-100. Value must match the regular expression ` [-_0-9a-zA-Z]* `.
 read_only | **bool**<br>Is mount read only. 
+
+
+### AsyncInvocationConfig {#AsyncInvocationConfig7}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget7)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget7)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget7}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget7)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget7)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget7}
+
+Empty.
+
+### YMQTarget {#YMQTarget7}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
 
 
 ## ListTagHistory {#ListTagHistory}
@@ -1101,7 +1399,7 @@ effective_to | **[google.protobuf.Timestamp](https://developers.google.com/proto
 
 Creates a version for the specified function.
 
-**rpc CreateVersion ([CreateFunctionVersionRequest](#CreateFunctionVersionRequest)) returns ([operation.Operation](#Operation5))**
+**rpc CreateVersion ([CreateFunctionVersionRequest](#CreateFunctionVersionRequest)) returns ([operation.Operation](#Operation6))**
 
 Metadata and response of Operation:<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[CreateFunctionVersionMetadata](#CreateFunctionVersionMetadata)<br>
@@ -1129,13 +1427,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret8)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions8)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount8)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig8)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources8}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Package {#Package}
@@ -1187,7 +1486,38 @@ mount_point_name | **string**<br>Required. Mount point directory name (not path)
 read_only | **bool**<br>Is mount read only. 
 
 
-### Operation {#Operation5}
+### AsyncInvocationConfig {#AsyncInvocationConfig8}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget8)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget8)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget8}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget8)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget8)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget8}
+
+Empty.
+
+### YMQTarget {#YMQTarget8}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
+
+
+### Operation {#Operation6}
 
 Field | Description
 --- | ---
@@ -1233,13 +1563,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret9)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions9)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount9)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig9)**<br>Config for asynchronous invocations of the version 
 
 
 ## CreateFunctionVersion {#CreateFunctionVersion}
 
 Deprecated. Use [CreateVersion](#CreateVersion).
 
-**rpc CreateFunctionVersion ([CreateFunctionVersionRequest](#CreateFunctionVersionRequest)) returns ([operation.Operation](#Operation6))**
+**rpc CreateFunctionVersion ([CreateFunctionVersionRequest](#CreateFunctionVersionRequest)) returns ([operation.Operation](#Operation7))**
 
 Metadata and response of Operation:<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[CreateFunctionVersionMetadata](#CreateFunctionVersionMetadata)<br>
@@ -1267,13 +1598,14 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret9)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions9)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount9)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig9)**<br>Config for asynchronous invocations of the version 
 
 
 ### Resources {#Resources9}
 
 Field | Description
 --- | ---
-memory | **int64**<br>Amount of memory available to the version, specified in bytes. Acceptable values are 134217728 to 4294967296, inclusive.
+memory | **int64**<br>Amount of memory available to the version, specified in bytes, multiple of 128MB. Acceptable values are 134217728 to 4294967296, inclusive.
 
 
 ### Package {#Package1}
@@ -1325,7 +1657,38 @@ mount_point_name | **string**<br>Required. Mount point directory name (not path)
 read_only | **bool**<br>Is mount read only. 
 
 
-### Operation {#Operation6}
+### AsyncInvocationConfig {#AsyncInvocationConfig9}
+
+Field | Description
+--- | ---
+retries_count | **int64**<br>Number of retries of version invocation Acceptable values are 0 to 100, inclusive.
+success_target | **[ResponseTarget](#ResponseTarget9)**<br>Required. Target for successful result of the version's invocation 
+failure_target | **[ResponseTarget](#ResponseTarget9)**<br>Required. Target for unsuccessful result, if all retries failed 
+service_account_id | **string**<br>Service account which can invoke version 
+
+
+### ResponseTarget {#ResponseTarget9}
+
+Field | Description
+--- | ---
+target | **oneof:** `empty_target` or `ymq_target`<br>
+&nbsp;&nbsp;empty_target | **[EmptyTarget](#EmptyTarget9)**<br>Target to ignore a result 
+&nbsp;&nbsp;ymq_target | **[YMQTarget](#YMQTarget9)**<br>Target to send a result to ymq 
+
+
+### EmptyTarget {#EmptyTarget9}
+
+Empty.
+
+### YMQTarget {#YMQTarget9}
+
+Field | Description
+--- | ---
+queue_arn | **string**<br>Required. Queue ARN 
+service_account_id | **string**<br>Required. Service account which has write permission on the queue. The maximum string length in characters is 50.
+
+
+### Operation {#Operation7}
 
 Field | Description
 --- | ---
@@ -1371,6 +1734,7 @@ named_service_accounts | **map<string,string>**<br>Additional service accounts t
 secrets[] | **[Secret](#Secret10)**<br>Yandex Lockbox secrets to be used by the version. 
 log_options | **[LogOptions](#LogOptions10)**<br>Options for logging from the function 
 storage_mounts[] | **[StorageMount](#StorageMount10)**<br>S3 mounts to be used by the version. 
+async_invocation_config | **[AsyncInvocationConfig](#AsyncInvocationConfig10)**<br>Config for asynchronous invocations of the version 
 
 
 ## ListRuntimes {#ListRuntimes}
@@ -1403,18 +1767,18 @@ Field | Description
 function_id | **string**<br>Required. ID of the function to list operations for. 
 page_size | **int64**<br>The maximum number of results per page that should be returned. If the number of available results is larger than `pageSize`, the service returns a [ListFunctionOperationsResponse.next_page_token](#ListFunctionOperationsResponse) that can be used to get the next page of results in subsequent list requests. <br>Default value: 100. Acceptable values are 0 to 1000, inclusive.
 page_token | **string**<br>Page token. To get the next page of results, set `pageToken` to the [ListFunctionOperationsResponse.next_page_token](#ListFunctionOperationsResponse) returned by a previous list request. The maximum string length in characters is 100.
-filter | **string**<br>A filter expression that filters resources listed in the response. <br>The expression must specify: <ol><li>The field name. Currently filtering can be applied to the [operation.Operation.done](#Operation7), [operation.Operation.created_by](#Operation7) field. </li><li>An `=` operator. </li><li>The value in double quotes (`"`). Must be 3-63 characters long and match the regular expression `[a-z][-a-z0-9]{1,61}[a-z0-9]`. </li></ol>Examples of a filter: `done=false`, `created_by='John.Doe'`. The maximum string length in characters is 1000.
+filter | **string**<br>A filter expression that filters resources listed in the response. <br>The expression must specify: <ol><li>The field name. Currently filtering can be applied to the [operation.Operation.done](#Operation8), [operation.Operation.created_by](#Operation8) field. </li><li>An `=` operator. </li><li>The value in double quotes (`"`). Must be 3-63 characters long and match the regular expression `[a-z][-a-z0-9]{1,61}[a-z0-9]`. </li></ol>Examples of a filter: `done=false`, `created_by='John.Doe'`. The maximum string length in characters is 1000.
 
 
 ### ListFunctionOperationsResponse {#ListFunctionOperationsResponse}
 
 Field | Description
 --- | ---
-operations[] | **[operation.Operation](#Operation7)**<br>List of operations for the specified function. 
+operations[] | **[operation.Operation](#Operation8)**<br>List of operations for the specified function. 
 next_page_token | **string**<br>Token for getting the next page of the list. If the number of results is greater than the specified [ListFunctionOperationsRequest.page_size](#ListFunctionOperationsRequest), use `nextPageToken` as the value for the [ListFunctionOperationsRequest.page_token](#ListFunctionOperationsRequest) parameter in the next list request. <br>Each subsequent page will have its own `nextPageToken` to continue paging through the results. 
 
 
-### Operation {#Operation7}
+### Operation {#Operation8}
 
 Field | Description
 --- | ---
@@ -1473,7 +1837,7 @@ type | **string**<br>Required. Type of the subject. <br>It can contain one of th
 
 Sets access bindings for the function.
 
-**rpc SetAccessBindings ([SetAccessBindingsRequest](#SetAccessBindingsRequest)) returns ([operation.Operation](#Operation8))**
+**rpc SetAccessBindings ([SetAccessBindingsRequest](#SetAccessBindingsRequest)) returns ([operation.Operation](#Operation9))**
 
 Metadata and response of Operation:<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[SetAccessBindingsMetadata](#SetAccessBindingsMetadata)<br>
@@ -1503,7 +1867,7 @@ id | **string**<br>Required. ID of the subject. <br>It can contain one of the fo
 type | **string**<br>Required. Type of the subject. <br>It can contain one of the following values: <ul><li>`userAccount`: An account on Yandex or Yandex.Connect, added to Yandex.Cloud. </li><li>`serviceAccount`: A service account. This type represents the `yandex.cloud.iam.v1.ServiceAccount` resource. </li><li>`federatedUser`: A federated account. This type represents a user from an identity federation, like Active Directory. </li><li>`system`: System group. This type represents several accounts with a common system identifier. </li></ul><br>For more information, see [Subject to which the role is assigned](/docs/iam/concepts/access-control/#subject). The maximum string length in characters is 100.
 
 
-### Operation {#Operation8}
+### Operation {#Operation9}
 
 Field | Description
 --- | ---
@@ -1530,7 +1894,7 @@ resource_id | **string**<br>ID of the resource for which access bindings are bei
 
 Updates access bindings for the specified function.
 
-**rpc UpdateAccessBindings ([UpdateAccessBindingsRequest](#UpdateAccessBindingsRequest)) returns ([operation.Operation](#Operation9))**
+**rpc UpdateAccessBindings ([UpdateAccessBindingsRequest](#UpdateAccessBindingsRequest)) returns ([operation.Operation](#Operation10))**
 
 Metadata and response of Operation:<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[UpdateAccessBindingsMetadata](#UpdateAccessBindingsMetadata)<br>
@@ -1568,7 +1932,7 @@ id | **string**<br>Required. ID of the subject. <br>It can contain one of the fo
 type | **string**<br>Required. Type of the subject. <br>It can contain one of the following values: <ul><li>`userAccount`: An account on Yandex or Yandex.Connect, added to Yandex.Cloud. </li><li>`serviceAccount`: A service account. This type represents the `yandex.cloud.iam.v1.ServiceAccount` resource. </li><li>`federatedUser`: A federated account. This type represents a user from an identity federation, like Active Directory. </li><li>`system`: System group. This type represents several accounts with a common system identifier. </li></ul><br>For more information, see [Subject to which the role is assigned](/docs/iam/concepts/access-control/#subject). The maximum string length in characters is 100.
 
 
-### Operation {#Operation9}
+### Operation {#Operation10}
 
 Field | Description
 --- | ---
@@ -1631,7 +1995,7 @@ zone_requests_limit | **int64**<br>Upper limit of requests count in each zone. 0
 
 Set scaling policy for specified function and tag
 
-**rpc SetScalingPolicy ([SetScalingPolicyRequest](#SetScalingPolicyRequest)) returns ([operation.Operation](#Operation10))**
+**rpc SetScalingPolicy ([SetScalingPolicyRequest](#SetScalingPolicyRequest)) returns ([operation.Operation](#Operation11))**
 
 Metadata and response of Operation:<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[SetScalingPolicyMetadata](#SetScalingPolicyMetadata)<br>
@@ -1648,7 +2012,7 @@ zone_instances_limit | **int64**<br>Upper limit for instance count in each zone.
 zone_requests_limit | **int64**<br>Upper limit of requests count in each zone. 0 means no limit. Acceptable values are 0 to 1000, inclusive.
 
 
-### Operation {#Operation10}
+### Operation {#Operation11}
 
 Field | Description
 --- | ---
@@ -1688,7 +2052,7 @@ zone_requests_limit | **int64**<br>Upper limit of requests count in each zone. 0
 
 Remove scaling policy for specified function and tag
 
-**rpc RemoveScalingPolicy ([RemoveScalingPolicyRequest](#RemoveScalingPolicyRequest)) returns ([operation.Operation](#Operation11))**
+**rpc RemoveScalingPolicy ([RemoveScalingPolicyRequest](#RemoveScalingPolicyRequest)) returns ([operation.Operation](#Operation12))**
 
 Metadata and response of Operation:<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;Operation.metadata:[RemoveScalingPolicyMetadata](#RemoveScalingPolicyMetadata)<br>
@@ -1702,7 +2066,7 @@ function_id | **string**<br>Required. ID of the function to remove scaling polic
 tag | **string**<br>Required. Version tag. <br>To get the history of version tags make a [FunctionService.ListTagHistory](#ListTagHistory) request. Value must match the regular expression ` [a-z][-_0-9a-z]*\|[$]latest `.
 
 
-### Operation {#Operation11}
+### Operation {#Operation12}
 
 Field | Description
 --- | ---

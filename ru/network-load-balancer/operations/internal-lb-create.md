@@ -1,8 +1,15 @@
+---
+title: "Как создать внутренний сетевой балансировщик"
+description: "Следуя данной инструкции, вы сможете создать внутренний сетевой балансировщик."
+---
+
 # Создать внутренний сетевой балансировщик
 
 {% note info %}
 
 Для создания внутреннего сетевого балансировщика необходима роль `load-balancer.privateAdmin`.
+
+{% include [type-update](../../_includes/network-load-balancer/type-update.md) %}
 
 {% endnote %}
 
@@ -16,21 +23,21 @@
 
 - Консоль управления
   
-  Чтобы создать [внутренний сетевой балансировщик](../concepts/internal-load-balancer.md):
+  Чтобы создать [внутренний сетевой балансировщик](../concepts/nlb-types.md):
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, где нужно создать балансировщик.
-  1. В списке сервисов выберите **{{ network-load-balancer-name }}**.
-  1. Нажмите кнопку **Создать сетевой балансировщик**.
-  1. Задайте имя балансировщика.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.load-balancer.network-load-balancer.button_create }}**.
+  1. Задайте имя балансировщика. Требования к имени:
   
       {% include [name-format](../../_includes/name-format.md) %}
 
-  1. Выберите тип балансировщика — **Внутренний**. 
-  1. В блоке **Обработчики** добавьте [обработчик](../concepts/listener.md):
-      1. Нажмите кнопку **Добавить обработчик**.
+  1. Выберите тип балансировщика — `{{ ui-key.yacloud.load-balancer.network-load-balancer.form.label_internal }}`. 
+  1. В блоке **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.section_listeners }}** добавьте [обработчик](../concepts/listener.md):
+      1. Нажмите кнопку **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.label_add-listener }}**.
       1. В открывшемся окне задайте параметры обработчика:
-          * **Имя**.
-          * **Подсеть**, в которой балансировщик будет перенаправлять трафик.
-          * **Протокол** — **TCP** или **UDP**.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-name }}**.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-subnet-id }}**, в которой балансировщик будет перенаправлять трафик.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-protocol }}** — `{{ ui-key.yacloud.common.label_tcp }}` или `{{ ui-key.yacloud.common.label_udp }}`.
 
             {% note info %}
 
@@ -38,26 +45,26 @@
 
             {% endnote %}
 
-          * **Порт**, на котором обработчик будет принимать входящий трафик. Возможные значения: от `1` до `32767`.
-          * **Целевой порт**, куда балансировщик будет направлять трафик. Возможные значения: от `1` до `32767`.
-      1. Нажмите кнопку **Добавить**.
-  1. В блоке **Целевые группы** добавьте [целевую группу](../concepts/target-resources.md):
-      1. Нажмите кнопку **Добавить целевую группу**.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-port }}**, на котором обработчик будет принимать входящий трафик. Возможные значения: от `1` до `32767`.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-target-port }}**, куда балансировщик будет направлять трафик. Возможные значения: от `1` до `32767`.
+      1. Нажмите кнопку **{{ ui-key.yacloud.common.add }}**.
+  1. В блоке **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.section_target-groups }}** добавьте [целевую группу](../concepts/target-resources.md):
+      1. Нажмите кнопку **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.label_add-target-group }}**.
       1. Выберите целевую группу или [создайте новую](target-group-create.md):
-          * В поле **Целевые группы** выберите ![image](../../_assets/plus-sign.svg) **Создать целевую группу**.
+          * В поле **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.label_target-group-id }}** выберите ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.button_create-target-group }}**.
           * В открывшемся окне введите имя целевой группы.
           * Добавьте в целевую группу [виртуальные машины](../../glossary/vm.md).
-          * Нажмите кнопку **Создать**.
-      1. (Опционально) Под блоком **Проверка состояния** нажмите кнопку **Настроить**. В открывшемся окне задайте параметры [проверки состояния ресурсов](../concepts/health-check.md):
-          * **Имя**.
-          * **Тип** — **HTTP** или **TCP**. Для проверки по протоколу HTTP в поле **Путь** укажите адрес URL, по которому будут выполняться проверки.
-          * **Порт** для проверок. Возможные значения: от `1` до `32767`.
-          * **Время ожидания** — время ожидания ответа в секундах.
-          * **Интервал** — интервал выполнения проверок состояния в секундах.
-          * **Порог работоспособности** — количество успешных проверок, после которого виртуальная машина будет считаться готовой к приему трафика.
-          * **Порог неработоспособности** — количество проваленных проверок, после которого на виртуальную машину перестанет подаваться трафик.
-	    1. Нажмите кнопку **Применить**.
-  1. Нажмите кнопку **Создать**.
+          * Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
+      1. (Опционально) Под блоком **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check }}** нажмите кнопку **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.label_edit-health-check }}**. В открывшемся окне задайте параметры [проверки состояния ресурсов](../concepts/health-check.md):
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-name }}**.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-protocol }}** — `{{ ui-key.yacloud.common.label_http }}` или `{{ ui-key.yacloud.common.label_tcp }}`. Для проверки по протоколу HTTP в поле **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-path }}** укажите адрес URL, по которому будут выполняться проверки.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-port }}** для проверок. Возможные значения: от `1` до `32767`.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-timeout }}** — время ожидания ответа в секундах.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-interval }}** — интервал выполнения проверок состояния в секундах.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-healthy-threshold }}** — количество успешных проверок, после которого виртуальная машина будет считаться готовой к приему трафика.
+          * **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-unhealthy-threshold }}** — количество проваленных проверок, после которого на виртуальную машину перестанет подаваться трафик.
+	    1. Нажмите кнопку **{{ ui-key.yacloud.common.apply }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
   
@@ -76,7 +83,7 @@
   1. Чтобы создать внутренний балансировщик с [обработчиком](../concepts/listener.md) и [целевой группой](../concepts/target-resources.md), выполните команду:
   
      ```bash
-     yc load-balancer network-load-balancer create <имя балансировщика> \
+     yc load-balancer network-load-balancer create <имя_балансировщика> \
         --type=internal \
         --listener name=<имя_обработчика>,`
                   `port=<порт>,`
@@ -112,7 +119,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы создать внутренний сетевой балансировщик с [обработчиком](../concepts/listener.md) и [целевой группой](../concepts/target-resources.md):
 
@@ -167,18 +174,6 @@
       {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
 
       После этого в указанном каталоге будут созданы все требуемые ресурсы. Проверить появление ресурсов и их настройки можно в [консоли управления]({{ link-console-main }}).
-
-- API
-
-  Воспользуйтесь методом API [create](../api-ref/NetworkLoadBalancer/create.md) и передайте в запросе:
-
-  * Идентификатор каталога, в котором должен быть размещен сетевой балансировщик, в параметре `folderId`.
-  * Имя сетевого балансировщика в параметре `name`.
-  * Тип сетевого балансировщика в параметре `type`. Используйте `INTERNAL`, чтобы создать внутренний балансировщик.
-  * Описание [обработчиков](../concepts/listener.md) в параметре `listenerSpecs`.
-  * Идентификаторы [целевых групп](../concepts/target-resources.md) и настройки [проверки состояния их ресурсов](../concepts/health-check.md) в параметре `attachedTargetGroups`.
-
-  Идентификаторы целевых групп можно получить со [списком целевых групп в каталоге](target-group-list.md#list).
 
 - API
 

@@ -1,3 +1,8 @@
+---
+title: "Удалить сетевой балансировщик"
+description: "Следуя данной инструкции, вы сможете удалить сетевой балансировщик."
+---
+
 # Удалить сетевой балансировщик
 
 {% list tabs %}
@@ -5,9 +10,9 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, где требуется удалить балансировщик.
-  1. В списке сервисов выберите **{{ network-load-balancer-name }}**.
-  1. В строке балансировщика, который требуется удалить, нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Удалить**.
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
+  1. В строке балансировщика, который требуется удалить, нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.delete }}**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -33,7 +38,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы удалить сетевой балансировщик, созданный с помощью {{ TF }}:
   1. Откройте файл конфигурации {{ TF }} и удалите фрагмент с описанием сетевого балансировщика.
@@ -70,12 +75,6 @@
   1. Удалите сетевой балансировщик.
 
      {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
-
-- API
-
-  Воспользуйтесь методом API [delete](../api-ref/NetworkLoadBalancer/delete.md) и передайте значение идентификатора нужного балансировщика в параметре `networkLoadBalancerId` запроса.
-
-  Идентификатор балансировщика можно получить со [списком сетевых балансировщиков в каталоге](load-balancer-list.md#list).
 
 - API
 

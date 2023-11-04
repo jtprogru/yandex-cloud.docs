@@ -4,13 +4,14 @@ The {{ ydb-short-name }} CLI is a tool for managing your data in {{ ydb-full-nam
 
 Before you start, install the [{{ ydb-short-name }} CLI](https://ydb.tech/en/docs/reference/ydb-cli/install). To connect to your {{ ydb-full-name }} database from the {{ ydb-short-name }} CLI, specify the [endpoint and path](#endpoint-and-path) and [select and set up](#auth) authentication mode.
 
-{% note warning %}
+## Configuring security groups {#configuring-security-groups}
 
-To connect to your DB in Dedicated mode from outside {{ yandex-cloud }}, allow incoming and outgoing traffic over TCP on port `2135`. Make sure the assigned [security group](../../vpc/concepts/security-groups.md) has the appropriate rule or add one.
+To connect to your DB in {{ dd }} mode, allow incoming and outgoing traffic over TCP on port `{{ ydb.port-dedicated }}`. Make sure the assigned [security group](../../vpc/concepts/security-groups.md) contains the appropriate rule, or add one:
 
-{% endnote %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
+* **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ ydb.port-dedicated }}`
+* **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+* **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+* **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
 ## Get connection parameters {#endpoint-and-path}
 
@@ -21,17 +22,17 @@ You can get DB connection parameters in the {{ yandex-cloud }} management consol
 - Management console
 
    1. Go to the [management console]({{ link-console-main }}).
-   1. Select the folder with your DB and go to **{{ ydb-full-name }}**.
-   1. Select the DB to get the endpoint and path for.
+   1. Select the folder hosting your DB and go to **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
+   1. Select the DB you want to get the endpoint and path for.
 
-      * The DB endpoint is specified under **Connection** in the **Endpoint** line:
+      * The DB endpoint is specified under **{{ ui-key.yacloud.ydb.overview.section_connection }}** in the first part of the **{{ ui-key.yacloud.ydb.overview.label_endpoint }}** field value (preceding `/?database=`):
 
          > For example, the endpoint for a DB in Serverless mode is `{{ ydb.ep-serverless }}` and in Dedicated mode is `{{ ydb.ep-dedicated }}`.
-      * The DB path is specified under **Connection** in the **Database** line.
+      * The DB path is specified under **{{ ui-key.yacloud.ydb.overview.section_connection }}** in the second part of the **{{ ui-key.yacloud.ydb.overview.label_endpoint }}** field value (following `/?database=`).
 
          > Sample DB path: `{{ ydb.path-serverless }}`.
 
-- YC CLI
+- {{ yandex-cloud }} CLI
 
    1. {% include [cli-install](../../_includes/cli-install.md) %}
    1. Get a list of databases in the folder:

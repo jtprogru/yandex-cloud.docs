@@ -1,3 +1,8 @@
+---
+title: "Updating API gateways"
+description: "Follow this guide to update an API gateway."
+---
+
 # Updating API gateways
 
 {% list tabs %}
@@ -5,11 +10,11 @@
 - Management console
 
    To update an API gateway specification:
-   1. In the [management console]({{ link-console-main }}), select the folder where you wish to edit an API gateway.
-   1. In the list of services, select **{{ api-gw-name }}**.
-   1. In the API gateway's row, click ![image](../../_assets/options.svg) and select **Edit**.
+   1. In the [management console]({{ link-console-main }}), select the folder where you want to edit an API gateway.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_api-gateway }}**.
+   1. In the API gateway row, click ![image](../../_assets/options.svg) and select **{{ ui-key.yacloud.serverless-functions.gateways.list.button_action-edit }}**.
    1. Edit the name, description, or specification of the API gateway.
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.gateways.form.button_update-gateway }}**.
 
 - CLI
 
@@ -23,8 +28,8 @@
 
       Where:
 
-      - `id`: ID of the API gateway.
-      - `spec`: Updated specification file.
+      * `id`: ID of the API gateway
+      * `spec`: Updated specification file
 
       Result:
 
@@ -44,7 +49,7 @@
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To change the name, description, or specification of the API gateway:
 
@@ -118,7 +123,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -134,9 +139,11 @@
       yc serverless api-gateway get <API gateway name>
       ```
 
+
 - {{ yandex-cloud }} Toolkit
 
    You can edit the name, description, or specification of an API gateway using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the family of IDEs on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 - API
 

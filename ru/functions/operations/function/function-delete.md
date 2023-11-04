@@ -1,3 +1,8 @@
+---
+title: "Удалить функцию"
+description: "Следуя данной инструкции, вы сможете удалить функцию."
+---
+
 # Удалить функцию
 
 {% list tabs %}
@@ -5,9 +10,9 @@
 - Консоль управления
   
     1. В [консоли управления]({{ link-console-main }}) откройте каталог, в котором хотите удалить функцию.
-    1. Выберите сервис **{{ sf-name }}**.
-    1. В строке с функцией нажмите значок ![image](../../../_assets/options.svg) и выберите **Удалить**.
-    1. В открывшемся окне нажмите кнопку **Удалить**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+    1. В строке с функцией нажмите значок ![image](../../../_assets/options.svg) и выберите **{{ ui-key.yacloud.serverless-functions.list.button_action-delete }}**.
+    1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.serverless-functions.list.popup-confirm_button_delete }}**.
   
 - CLI
   
@@ -30,7 +35,7 @@
     created_at: "2019-06-13T13:21:40.022Z"
     name: my-functions
     log_group_id: eolq9ac97486********
-    http_invoke_url: https://functions.yandexcloud.net/b09kk2ujb8js********
+    http_invoke_url: https://{{ sf-url }}/b09kk2ujb8js********
     status: DELETING
     ```
 
@@ -38,7 +43,7 @@
 
     {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-    Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     Чтобы удалить функцию, созданную с помощью {{ TF }}:
 
@@ -102,8 +107,10 @@
 
     Чтобы удалить функцию, воспользуйтесь методом REST API [delete](../../functions/api-ref/Function/delete.md) для ресурса [Function](../../functions/api-ref/Function/index.md) или вызовом gRPC API [FunctionService/Delete](../../functions/api-ref/grpc/function_service.md#Delete).
 
+
 - {{ yandex-cloud }} Toolkit
 
     Удалить функцию можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}

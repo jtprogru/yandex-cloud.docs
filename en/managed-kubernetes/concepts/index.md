@@ -1,11 +1,11 @@
 ---
 title: "{{ k8s }} resource interdependencies"
-description: "The main entity in the service is a {{ k8s }} cluster. A {{ k8s }} cluster consists of a master and one or more node groups. The master is responsible for managing the {{ k8s }} cluster. Containerized user applications are run on nodes."
+description: "The main entity in this managed service is a {{ k8s }} cluster. A {{ k8s }} cluster consists of a master and one or more node groups. The master is responsible for managing the {{ k8s }} cluster. Containerized user applications are run on nodes."
 ---
 
-# Relationships between resources in {{ managed-k8s-name }}
+# Resource relationships in {{ managed-k8s-name }}
 
-[{{ k8s }}](https://kubernetes.io/) is an environment for managing containerized applications. {{ k8s }} provides mechanisms for interacting with clusters that can automate tasks like deploying, scaling, and managing applications in containers.
+[{{ k8s }}](https://kubernetes.io/) is an environment for managing containerized applications. {{ k8s }} provides tools for working with clusters that can automate such tasks as deploying, scaling, and managing applications in containers.
 
 The main entity in the service is the _{{ k8s }} cluster_.
 
@@ -13,25 +13,16 @@ The main entity in the service is the _{{ k8s }} cluster_.
 
 {{ k8s }} clusters consist of a master and one or more node groups. The master is responsible for managing the {{ k8s }} cluster. Containerized user applications are run on nodes.
 
-The service fully controls the master and monitors the status and health of node groups. Users can manage nodes directly and configure {{ k8s }} clusters using the {{ yandex-cloud }} management console and the {{ managed-k8s-name }} CLI and API.
+The service fully manages the master and monitors the status and health of node groups. Users can manage nodes directly and configure {{ k8s }} clusters using the {{ yandex-cloud }} management console and the {{ managed-k8s-name }} CLI and API.
 
-{% note warning %}
-
-Groups of {{ k8s }} nodes require internet access for downloading images and components.
-
-Internet access can be provided in the following ways:
-* By assigning each node in the group a [public IP address](../../vpc/concepts/address.md#public-addresses).
-* [Configuring a VM as a NAT instance](../../tutorials/routing/nat-instance.md).
-* [Setting up a NAT gateway](../../vpc/operations/create-nat-gateway.md).
-
-{% endnote %}
+{% include [Install kubectl](../../_includes/managed-kubernetes/note-node-group-internet-access.md) %}
 
 {{ k8s }} clusters in the {{ yandex-cloud }} infrastructure use the following resources:
 
-Resource | Amount | Comment
---- | --- | ---
-Subnet | 2 | {{ k8s }} reserves ranges of IP addresses to use for pods and services.
-Public IP | N | The number N includes:<br>* **One** public IP address for the NAT instance.<br>* A public IP address assigned to **each** node in the group if you use one-to-one NAT technology.
+| Resource | Amount | Comment |
+| --- | --- | --- |
+| Subnet | 2 | {{ k8s }} reserves IP address ranges to be used for pods and services. |
+| Public IP | N | The N number includes:<br>* **One** public IP address for the NAT instance.<br>* A public IP address assigned to **each** node in the group if you use one-to-one NAT technology. |
 
 ## Master {#master}
 
@@ -40,8 +31,8 @@ _Masters_ are components that manage {{ k8s }} clusters.
 They run {{ k8s }} control processes that include the {{ k8s }} API server, scheduler, and main resource controllers. The master lifecycle is managed by the service when creating or deleting a {{ k8s }} cluster. The master is responsible for global solutions that are run on all {{ k8s }} cluster nodes. These include scheduling workloads (such as containerized applications), managing the lifecycle of workloads, and scaling.
 
 There are two types of masters that differ by their location in [availability zones](../../overview/concepts/geo-scope.md):
-* _Zonal_: A master created in a subnet in one availability zone.
-* _Regional_: A master created and distributed in three subnets in each availability zone. If a zone becomes unavailable, the regional master remains functional.
+* _Zonal_: Master created in a subnet in one availability zone.
+* _Regional_: Master created and distributed in three subnets in each availability zone. If a zone becomes unavailable, the regional master remains functional.
 
   {% note warning %}
 
@@ -61,9 +52,15 @@ When creating a group of nodes, you can configure the following VM parameters:
 * Amount of memory (RAM) and disk space.
 * Kernel parameters.
   * _Safe_ kernel parameters are isolated between pods.
-  * _Unsafe_ parameters affect the operation of the pods and the node as a whole. In {{ managed-k8s-name }}, you can't change unsafe kernel parameters unless their names have been explicitly specified when [creating a node group](../operations/node-group/node-group-create.md).
+  * _Unsafe_ parameters affect the operation of the pods and the node as a whole. In {{ managed-k8s-name }}, you cannot change unsafe kernel parameters unless their names have been explicitly specified when [creating a node group](../operations/node-group/node-group-create.md).
 
-  For more information about kernel parameters, see the [{{ k8s }} documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/).
+   {% note info %}
+
+   You should only specify kernel parameters that belong to [namespaces](#namespace), such as `net.ipv4.ping_group_range`. Parameters that do not belong to namespaces, such as `vm.max_map_count`, should be resolved directly in the OS or using a DaemonSet with containers in privileged mode after creating a [{{ managed-k8s-name }} node group](#node-group).
+
+   {% endnote %}
+
+   For more information about kernel parameters, see the [{{ k8s }} documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/).
 
 You can create groups with different configurations in a {{ k8s }} cluster and place them in different availability zones.
 
@@ -99,7 +96,7 @@ Every taint policy consists of three parts:
 ```
 
 A list of available taint effects:
-* `NO_SCHEDULE`: Prohibit running new pods on group nodes (doesn't affect running pods).
+* `NO_SCHEDULE`: Prohibit running new pods on group nodes (it does not affect running pods).
 * `PREFER_NO_SCHEDULE`: Avoid running pods on group nodes if there are available resources for this in other groups.
 * `NO_EXECUTE`: Evict pods from nodes in this group to other groups, and prohibit running new pods.
 
@@ -140,7 +137,7 @@ If a pod needs access to resources outside the cluster, its IP address will be r
 
 By default, IP masquerade is enabled for the entire range of pod IP addresses.
 
-To implement IP masquerading, the `ip-masq-agent` pod is deployed on each cluster node. The settings for this pod are stored in a ConfigMap object called `ip-masq-agent`. If you need to disable pod IP masquerading, for example, to access the pods over a VPN or [{{ interconnect-full-name }}](../../interconnect/), specify the desired IP ranges in the `data.config.nonMasqueradeCIDRs` parameter:
+To implement IP masquerading, the `ip-masq-agent` pod is deployed on each cluster node. The settings for this pod are stored in a ConfigMap object called `ip-masq-agent`. If you need to disable pod IP masquerading, e.g., to access the pods over a VPN or [{{ interconnect-full-name }}](../../interconnect/index.yaml), specify the IP ranges you need in the `data.config.nonMasqueradeCIDRs` parameter:
 
 ```yaml
 ...
@@ -177,13 +174,13 @@ A _namespace_ is an abstraction that logically isolates {{ k8s }} cluster resour
 
   A number of {{ k8s }} service accounts are automatically created in the `kube-system` namespace when deploying a {{ managed-k8s-name }} cluster.
 
-  {{ k8s }} creates a token for each of these accounts. This token is used for authentication within the {{ k8s }} cluster that the account belongs to.
+  For authentication within the {{ k8s }} cluster hosting the service account, create a token for this account manually.
 
-  For more information, see the [{{ k8s }} documentation](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/).
+  For more information, see [{#T}](../operations/connect/create-static-conf.md) and the [{{ k8s }} documentation](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/).
 
 {% note warning %}
 
-Don't confuse [cloud service accounts](../security/index.md#sa-annotation) and {{ k8s }} service accounts.
+Do not confuse [cloud service accounts](../security/index.md#sa-annotation) with {{ k8s }} service accounts.
 
 In the service documentation, _service account_ refers to a regular cloud service account unless otherwise specified.
 
@@ -206,7 +203,7 @@ Node labels can only be set when creating a node group. Each object can be assig
 Node label keys can consist of two parts: an optional prefix and a name separated by a `/`.
 
 A prefix is an optional part of a key. The prefix requirements are as follows:
-* It must be a DNS subdomain, i.e., a series of DNS tags separated by periods (`.`).
+* It must be a DNS subdomain, i.e., a series of DNS tags separated by periods `.`.
 * It may be up to 253 characters long.
 * The last character must be followed by a `/`.
 

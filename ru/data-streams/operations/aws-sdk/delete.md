@@ -1,13 +1,20 @@
+---
+title: "Удаление потока данных в AWS SDK"
+description: "Следуя данной инструкции, вы сможете удалить поток данных в AWS SDK."
+---
+
 # Удаление потока данных в AWS SDK
 
 {% list tabs %}
 
 - Python
 
-  Для удаления [потока данных](../../concepts/glossary.md#stream-concepts) используется метод `delete_stream`.  При вызове этого метода необходимо указать следующие параметры:
+  Для удаления [потока данных](../../concepts/glossary.md#stream-concepts) используется метод `delete_stream`. При вызове этого метода необходимо указать следующие параметры:
   * Имя удаляемого потока данных, например `example-stream`.
-  * [Идентификатор облака](../../../resource-manager/operations/cloud/get-id.md), в котором будет удален поток, например `b1gi1kuj2dhtaupdb5es`.
-  * Идентификатор базы данных {{ ydb-full-name }} с потоком, например `cc8028jgtuabcqutgtbv`.
+  * [Идентификатор облака](../../../resource-manager/operations/cloud/get-id.md), в котором будет удален поток, например `b1gi1kuj2dht********`.
+  * Идентификатор базы данных {{ ydb-short-name }} с потоком, например `cc8028jgtuab********`.
+
+  Вам также потребуется [настроить](prepare.md) AWS SDK и [назначить](../../../iam/operations/sa/assign-role-for-sa.md) сервисному аккаунту роль `yds.editor`.
 
   Чтобы удалить поток с параметрами, указанными выше:
 
@@ -28,8 +35,8 @@
 
      if __name__ == '__main__':
        delete_stream_response = delete_stream(
-         cloud="b1gi1kuj2dhtaupdb5es",
-         database="cc8028jgtuabcqutgtbv",
+         cloud="b1gi1kuj2dht********",
+         database="cc8028jgtuab********",
          stream_name="example-stream")
 
        print("The stream has been deleted successfully")

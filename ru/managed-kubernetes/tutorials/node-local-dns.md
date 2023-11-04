@@ -38,7 +38,7 @@
 
 - С помощью {{ TF }}
 
-  1. Если у вас еще нет {{ TF }}, [установите его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  1. {% include [terraform-install](../../_includes/terraform-install.md) %}
   1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
   1. Скачайте в ту же рабочую директорию файл конфигурации кластера {{ managed-k8s-name }} [k8s-node-local-dns.tf](https://github.com/yandex-cloud/examples/blob/master/tutorials/terraform/managed-kubernetes/k8s-node-local-dns.tf). В файле описаны:
      * [Сеть](../../vpc/concepts/network.md#network).
@@ -159,7 +159,7 @@
            }
            reload
            loop
-           bind 169.254.20.10 <IP-адрес сервиса kube-dns>
+           bind 169.254.20.10 <IP-адрес_сервиса_kube-dns>
            forward . __PILLAR__CLUSTER__DNS__ {
              prefer_udp
            }
@@ -171,7 +171,7 @@
            cache 30
            reload
            loop
-           bind 169.254.20.10 <IP-адрес сервиса kube-dns>
+           bind 169.254.20.10 <IP-адрес_сервиса_kube-dns>
            forward . __PILLAR__CLUSTER__DNS__ {
              prefer_udp
            }
@@ -182,7 +182,7 @@
            cache 30
            reload
            loop
-           bind 169.254.20.10 <IP-адрес сервиса kube-dns>
+           bind 169.254.20.10 <IP-адрес_сервиса_kube-dns>
            forward . __PILLAR__CLUSTER__DNS__ {
              prefer_udp
            }
@@ -193,7 +193,7 @@
            cache 30
            reload
            loop
-           bind 169.254.20.10 <IP-адрес сервиса kube-dns>
+           bind 169.254.20.10 <IP-адрес_сервиса_kube-dns>
            forward . __PILLAR__UPSTREAM__SERVERS__ {
              prefer_udp
            }
@@ -240,7 +240,7 @@
                requests:
                  cpu: 25m
                  memory: 5Mi
-             args: [ "-localip", "169.254.20.10,<IP-адрес сервиса kube-dns>", "-conf", "/etc/Corefile", "-upstreamsvc", "kube-dns-upstream" ]
+             args: [ "-localip", "169.254.20.10,<IP-адрес_сервиса_kube-dns>", "-conf", "/etc/Corefile", "-upstreamsvc", "kube-dns-upstream" ]
              securityContext:
                privileged: true
              ports:
@@ -418,8 +418,8 @@
    Результат:
 
    ```text
-   Server:         <IP-адрес kube-dns>
-   Address:        <IP-адрес kube-dns>#53
+   Server:         <IP-адрес_kube-dns>
+   Address:        <IP-адрес_kube-dns>#53
 
    Name:   kubernetes.default.svc.cluster.local
    Address: 10.96.128.1
@@ -429,7 +429,7 @@
 
    ```bash
    dig +short @169.254.20.10 www.com
-   dig +short @<IP-адрес сервиса kube-dns> example.com
+   dig +short @<IP-адрес_сервиса_kube-dns> example.com
    ```
 
    Результат:
@@ -437,11 +437,11 @@
    ```text
    # dig +short @169.254.20.10 www.com
    52.128.23.153
-   # dig +short @<IP-адрес kube-dns> example.com
+   # dig +short @<IP-адрес_kube-dns> example.com
    93.184.216.34
    ```
 
-   После запуска `node-local-dns` правила iptables настраиваются так, что по обоим адресам (`<IP-адрес сервиса kube-dns>:53` и `169.254.20.10:53`) отвечает [local DNS](https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/1024-nodelocal-cache-dns/README.md#iptables-notrack).
+   После запуска `node-local-dns` правила iptables настраиваются так, что по обоим адресам (`<IP-адрес_сервиса_kube-dns>:53` и `169.254.20.10:53`) отвечает [local DNS](https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/1024-nodelocal-cache-dns/README.md#iptables-notrack).
 
    К `kube-dns` можно обращаться по новому адресу, `ClusterIp` сервиса `kube-dns-upstream`. Этот адрес может понадобиться, чтобы настроить перенаправление (forwarding) запросов.
 
@@ -484,7 +484,7 @@ service "node-local-dns" deleted
 
 ## Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 1. Удалите кластер {{ managed-k8s-name }}.
 
    {% list tabs %}

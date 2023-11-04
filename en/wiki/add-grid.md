@@ -21,7 +21,7 @@ To place a table in the text, use the markup:
 
 ## Inserting dynamic tables {#grid}
 
-[Dynamic tables](pages-types.md#grid) are tables where users can specify data types in columns, sort values, and make cells mandatory. You can use a table directly or [embed it in a page](#section-integrate-table).
+[Dynamic tables](pages-types.md#grid) are tables where you can specify column data type, sort values, or turn cells into required. You can use a table directly or [embed it in a page](#section-integrate-table).
 
 
 ### Creating and embedding a table in a page created in the old editor {#section-add-table-button}
@@ -36,15 +36,15 @@ To create a table and embed it in the text of a page:
 
    The created table becomes a subsection of the current page.
 
-1. Click **Save**.
+1. Click **{{ ui-key.beta-wiki.blocks_common_newgrid.blocks_b-grid-table-settings.save }}**.
 
-1. [Fill in the table](edit-grid.md).
+1. [Fill in the table](edit-grid-wysiwyg.md).
 
 ### Embedding an existing table {#section-integrate-table}
 
 To embed a dynamic table in a page:
 
-1. Open the table you need and click ![](../_assets/wiki/svg/new-settings.svg) **Table settings** in the top-right corner.
+1. Open the table you need and click ![](../_assets/wiki/svg/new-settings.svg) **{{ ui-key.yacloud.common.table-config }}** in the top-right corner.
 
 1. Select **</> Copy embed code**.
 
@@ -56,7 +56,7 @@ To embed a dynamic table in a page:
 
 You can filter dynamic tables you embed in a page created in the old editor so that only specific rows and columns are displayed. To do this:
 
-1. Get the code for embedding a table and place it in the text of the page.
+1. Get the table embed code and insert it into the text of the page.
 
 1. To choose columns for display, add the `columns` parameter to your table's code. For more information about using this parameter, see [{#T}](actions/grid-reference.md#col-filter).
 
@@ -70,11 +70,11 @@ To open the original table embedded in the page:
 1. Click ![](../_assets/wiki/table-settings-footer.png) at the bottom of the table.
 
 
-1. Choose **Parent table**.
+1. Select **{{ ui-key.beta-wiki.blocks_common_newgrid.blocks_b-grid-table-options.parent_table }}**.
 
 #### See also
 
-- [{#T}](edit-grid.md)
+- [{#T}](edit-grid-wysiwyg.md)
 
 - [{#T}](import-page.md)
 

@@ -8,6 +8,7 @@ default:
   link-connect: https://connect.yandex.com/
   link-connect-main: https://connect.yandex.com/portal/home
   link-admin-fields: https://tracker.yandex.com/admin/fields
+  link-admin-types: https://tracker.yandex.com/admin/types
   link-admin-resolutions: https://tracker.yandex.com/admin/resolutions
   link-quick-start: https://tracker.yandex.com/queues/new/quick-start
   link-repositories: https://tracker.yandex.com/admin/repositories
@@ -15,6 +16,7 @@ default:
   link-tracker-templates: https://tracker.yandex.com/settings/templates/issues/edit
   link-sub-roles: https://tracker.yandex.com/subscriptions/roles
   link-sub-manage: https://tracker.yandex.com/subscriptions/manage
+  link-admin-settings: https://tracker.yandex.com/admin/orgs
   link-settings: https://tracker.yandex.com/settings
   link-tracker-promo: /services/tracker
   link-services-tracker: https://connect.yandex.com/portal/services/tracker
@@ -50,6 +52,7 @@ default:
   support-business-import: https://yandex.com/support/business/import-mailboxes.html
   support-business-domain-main: https://yandex.ru/support/business/domains/add-domain.html#add-domain__add-main-domain
   support-business-link: https://yandex.com/support/business/
+  support-calendar: https://yandex.com/support/calendar/
   link-wiki-scrum: https://en.wikipedia.org/wiki/Scrum_(software_development)
   link-wiki-kanban: https://en.wikipedia.org/wiki/Kanban_(development)
   link-wiki-agile: https://en.wikipedia.org/wiki/Agile_software_development
@@ -59,7 +62,7 @@ default:
   mobile-apple-link: https://apps.apple.com/ru/app/yandex-cloud/id1351761680
   mobile-huawei-link: https://appgallery.huawei.com/#/app/C107995179
   mobile-apk-link: https://storage.yandexcloud.net/public-mobile/android/tracker.apk
-  yfm-link: https://ydocs.tech/ru/
+  yfm-link: https://diplodoc.com/docs/en/index-yfm
   link-iso-8601: http://dotat.at/tmp/ISO_8601-2004_E.pdf
   link-rfc7578: https://tools.ietf.org/html/rfc7578
   link-get-token: https://oauth.yandex.com/

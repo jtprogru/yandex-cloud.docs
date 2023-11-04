@@ -2,7 +2,7 @@
 
 Если вы хотите создавать резервные копии [ВМ](../../compute/concepts/vm.md) [{{ compute-full-name }}](../../compute/) в сервисе {{ backup-name }}, ее нужно подключить к сервису и корректно настроить.
 
-Чтобы ВМ можно было подключить к {{ backup-name }}, на ней должна быть установлена одна из [поддерживаемых операционных систем](#os): Linux (CentOS, Ubuntu) или Windows Server. Подключать ВМ Linux нужно при ее создании, выбрав соответствующую опцию, а ВМ Windows Server — после ее создания. Подробнее о подключении см. в [инструкциях](../operations/index.md#connect-vm).
+Чтобы ВМ можно было подключить к {{ backup-name }}, на ней должна быть установлена одна из [поддерживаемых операционных систем](#os): Linux (CentOS, Ubuntu) или Windows Server. Вы можете подключить существующие ВМ на Linux и Windows Server, а также создать ВМ Linux с подключением к {{ backup-name }}. Подробнее о подключении см. в [инструкциях](../operations/index.md#connect-vm).
 
 Чтобы подключение работало корректно, к ВМ нужно привязать [сервисный аккаунт](#sa) с ролью `backup.editor`, [публичный IP-адрес](#public-ip-address) и [группу безопасности](#security-groups) с определенными правилами (если эта функциональность включена в вашем [облаке](../../resource-manager/concepts/resources-hierarchy.md#cloud)).
 
@@ -11,7 +11,7 @@
 ## Поддерживаемые операционные системы {#os}
 
 {{ backup-name }} поддерживает резервное копирование ВМ со следующими операционными системами:
-* Ubuntu версий 20.04 и ниже.
+* Ubuntu версии 20.04 и ниже.
 * CentOS 7.
 * Windows Server 2019 и 2022.
 
@@ -35,22 +35,27 @@ Ubuntu или CentOS должна быть установлена из публ�
 
 ## Группы безопасности {#security-groups} 
 
-{% include [security-groups-note](../../application-load-balancer/_includes_service/security-groups-note.md) %}
-
 Группы безопасности позволяют управлять доступом ВМ к ресурсам {{ yandex-cloud }} или ресурсам в интернете.
 
-Чтобы ВМ могла обмениваться данными с серверами провайдера резервного копирования, при ее создании и подключении к {{ backup-name }} нужно выбрать группу безопасности, которая разрешает исходящий TCP-трафик на диапазон адресов `193.32.199.0/24` на порты `443`, `7770-7800`, `43234` и `45284`. Для этого в группе можно создать следующие (или более «широкие») правила:
+Чтобы ВМ могла обмениваться данными с серверами провайдера резервного копирования, при ее создании и подключении к {{ backup-name }} выберите группу безопасности со следующими (или более широкими) правилами:
 
 {% list tabs %}
 
 - Исходящий трафик
 
-  Диапазон портов | Протокол | Тип назначения | Назначение
+  {{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }} | {{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }} | {{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }} | {{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}
   --- | --- | --- | ---
-  443 | TCP | CIDR | 193.32.199.0/24
-  7770-7800 | TCP | CIDR | 193.32.199.0/24
-  43234 | TCP | CIDR | 193.32.199.0/24
-  45284 | TCP | CIDR | 193.32.199.0/24
+  `80` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `213.180.193.0/24`
+  `80` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `213.180.204.0/24`
+  `443` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `84.47.172.0/24`
+  `443` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `84.201.181.0/24`
+  `443` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `178.176.128.0/24`
+  `443` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `193.32.199.0/24`
+  `443` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `213.180.193.0/24`
+  `443` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `213.180.204.0/24`
+  `7770-7800` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `84.47.172.0/24`
+  `8443` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `84.47.172.0/24`
+  `44445` | `{{ ui-key.yacloud.common.label_tcp }}` | `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}` | `51.250.1.0/24`
 
 {% endlist %}
 

@@ -3,6 +3,8 @@ href: index.yaml
 items:
   - name: Getting started
     items:
+      - name: Overview
+        href: quickstart-overview.md
       - name: How to manage access to resources
         href: quickstart.md
       - name: How to work with service accounts
@@ -109,12 +111,15 @@ items:
         href: concepts/federations.md
       - name: Quotas and limits
         href: concepts/limits.md
-  - name: How to use {{ yandex-cloud }} securely
+  - name: Using {{ yandex-cloud }} securely
     href: best-practices/using-iam-securely.md
   - name: Access management
     href: security/index.md
   - name: Pricing policy
     href: pricing.md
+  - name: Role reference
+    href: roles-reference.md
+    hidden: true
   - name: API reference
     items:
       - name: Authentication in the API

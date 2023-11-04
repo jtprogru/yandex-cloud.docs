@@ -11,11 +11,11 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, которому принадлежит сервисный аккаунт.
-  1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
+  1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
   1. Выберите сервисный аккаунт и нажмите на строку с его именем.
-  1. Нажмите кнопку **Создать новый ключ** на верхней панели.
-  1. Выберите **Создать статический ключ доступа**.
-  1. Задайте описание ключа и нажмите кнопку **Создать**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create-key-popup }}** на верхней панели.
+  1. Выберите **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create_service-account-key }}**.
+  1. Задайте описание ключа и нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.overview.popup-key_button_create }}**.
   1. Сохраните идентификатор и секретный ключ.
 
       {% note alert %}
@@ -49,7 +49,7 @@
       |          ID          |       NAME       |          DESCRIPTION          |
       +----------------------+------------------+-------------------------------+
       | aje6o61dvog2******** | my-robot         |                               |
-      | aje9sda1ufvq******** | blabla           | bla bla bla is my description |
+      | aje9sda1ufvq******** | account_name     | account_description           |
       +----------------------+------------------+-------------------------------+
       ```
   1. Создайте ключ доступа для сервисного аккаунта `my-robot`:
@@ -77,7 +77,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 

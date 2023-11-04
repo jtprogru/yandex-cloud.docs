@@ -1,8 +1,8 @@
-# Network in {{ dataproc-name }}
+# Networking in {{ dataproc-name }}
 
 All subclusters of a cluster belong to the same [cloud network](../../vpc/concepts/network.md), while all hosts of each subcluster are in a certain subnet of that network.
 
-When creating a cluster, any host can be assigned a public IP address, which will make the cluster available online. You can connect to hosts without a public IP address only through {{ yandex-cloud }} virtual machines located on the same cloud network as the cluster.
+When creating a cluster, public access can be enabled for any subcluster to make its hosts available online. You can only connect to subcluster hosts without public access through {{ yandex-cloud }} VMs located in the same cloud network as the cluster.
 
 ## Cluster host addresses {#hostname}
 
@@ -17,12 +17,6 @@ When you reduce the number of hosts in a subcluster, the service selects the hos
 {% endnote %}
 
 ## Security groups {#security-groups}
-
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
 
 Security groups follow the "All traffic that is not allowed is prohibited" principle. If the security group settings are missing the required rules, you will not be able to connect to the cluster. Furthermore, there will be no connectivity between the subclusters, the cluster, and the intermediate VM instance used for [port forwarding](interfaces.md).
 

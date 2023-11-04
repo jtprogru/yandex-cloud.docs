@@ -6,6 +6,8 @@
 
 {% include [aws-tools-prepare](../../_includes/aws-tools/aws-tools-prepare.md) %}
 
+{% include [access-bucket-sa](../../_includes/storage/access-bucket-sa.md) %}
+
 ## Установка {#installation}
 
 {% include [install-go-sdk](../../_includes/aws-tools/install-go-sdk.md)%}
@@ -114,7 +116,7 @@ func main() {
 	// Создаем клиента для доступа к хранилищу S3
 	client := s3.NewFromConfig(cfg)
 
-	// Запрашиваем список бакетов
+	// Запрашиваем список всех файлов в бакете
 	result, err := client.ListObjectsV2(context.TODO(), &s3.ListObjectsV2Input{
 		Bucket: aws.String(*bucketName),
 	})

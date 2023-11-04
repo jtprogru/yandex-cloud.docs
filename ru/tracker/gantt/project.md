@@ -2,11 +2,11 @@
 
 На диаграмме Ганта для проекта в {{ tracker-name }} отображаются все задачи проекта и связи между ними.
 
-## Построить диаграмму для проекта {#sec_project}
+## Построить диаграмму {#sec_project}
 
 Чтобы перейти к диаграмме Ганта:
 
-1. На [панели слева]({{ link-tracker }}) выберите ![](../../_assets/tracker/svg/project.svg)&nbsp;**{{ ui-key.startrek.blocks-desktop_b-queues-info.projects }}** или перейдите по [прямой ссылке]({{ link-tracker }}pages/projects) и откройте страницу проекта.
+1. На [панели слева]({{ link-tracker }}) выберите ![](../../_assets/tracker/svg/project.svg)&nbsp;**{{ ui-key.startrek.blocks-desktop_b-queues-info.projects }}** или перейдите по [прямой ссылке]({{ link-tracker }}pages/projects/list) и откройте страницу проекта.
 
 1. {% include [go-to-gantt](../../_includes/tracker/go-to-gantt.md) %}
 
@@ -52,8 +52,30 @@
 
 ### Цвет задачи {#task-color}
 
+{% note info %}
+
+Настройки цвета задач сохраняются на уровне диаграммы проекта, то есть выбранная цветовая схема действует для всех пользователей, просматривающих эту диаграмму.
+
+{% endnote %}
+
 {% include [color-issue](../../_includes/tracker/color-issue.md) %}
+
+### Критический путь {#critical-path}
+
+{% include [critical-path](../../_includes/tracker/gantt-critical-path.md) %}
 
 ## Отображение блока со списком задач {#tasks-view}
 
 {% include [issues-table-project](../../_includes/tracker/issues-table-project.md) %}
+
+## Действия с задачами {#issue-actions}
+
+Чтобы в блоке со списком задач открыть меню действий с задачей, справа от названия задачи нажмите ![](../../_assets/tracker/svg/actions.svg) **{{ ui-key.startrek.ui_components_Gantt_IssueActionsCell.issue-action-menu-title }}**.
+
+В меню доступны действия:
+* ![](../../_assets/tracker/text-edit/link.svg) **{{ ui-key.startrek.ui_components_projects_hooks.copy-to-clipboard }}**;
+* ![](../../_assets/tracker/svg/move-up.svg) **{{ ui-key.startrek.ui_components_projects_hooks.issue-actions--move-up }}** (только при ручной сортировке);
+* ![](../../_assets/tracker/svg/move-down.svg) **{{ ui-key.startrek.ui_components_projects_hooks.issue-actions--move-down }}** (только при ручной сортировке);
+* ![](../../_assets/tracker/svg/convert.svg) **Преобразовать в [веху](../manager/milestones.md) или задачу**.
+* ![](../../_assets/tracker/svg/icon-remove.svg) **{{ ui-key.startrek.ui_components_projects_hooks.delete-from-project }}**;
+* ![](../../_assets/tracker/svg/gantt-palette.svg) **{{ ui-key.startrek.ui_components_Gantt_IssueActionsCell.choose-color }}** (только при настройке цвета **{{ ui-key.startrek.ui_components_Gantt.color-type-by-manual }}**).

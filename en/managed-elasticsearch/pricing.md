@@ -1,8 +1,16 @@
 ---
+title: "Pricing policy for Managed Service for Elasticsearch"
+description: "In this section, you can find {{ mes-name }} pricing rules and effective prices for the service's resources."
 editable: false
 ---
 
 # Pricing policy for Managed Service for Elasticsearch
+
+{% include [Elasticsearch-end-of-service](../_includes/mdb/mes/note-end-of-service.md) %}
+
+In this section, you can find {{ mes-name }} pricing [rules](#rules) and [effective prices](#prices) for the service's resources.
+
+To calculate the service cost, use the [calculator]({{ link-calc }}) on the {{ yandex-cloud }} website.
 
 {% include [currency-choice](../_includes/pricing/currency-choice.md) %}
 
@@ -34,13 +42,13 @@ The {{ mes-name }} usage cost is based on:
 
 The cost is calculated for each hour of operation of the host in accordance with the allocated computing resources and {{ ES }} edition used. Supported resource configurations are shown in [{#T}](concepts/instance-types.md) while prices for using vCPUs and RAM are quoted in the [Prices](#prices) section.
 
-You can select the host class both for the hosts with the `Data node` role and hosts with the `Master node` role.
+You can select host class both for hosts with the `Data node` role and hosts with the `Master node` role.
 
 The minimum billing unit is a minute (for example, 1.5 minutes of host usage cost the same as 2 minutes). You are not charged for time when the {{ ES }} host is not performing its main functions.
 
 ### Disk space usage {#rules-storage}
 
-The following is charged:
+You are charged for the following:
 
 * Storage allocated for clusters.
 
@@ -48,7 +56,7 @@ The following is charged:
 
    * Storing backups is free of charge as long as the total amount of data in a cluster together with all the backups stays under the selected storage size.
 
-   * When performing automatic backups, {{ mes-short-name }} does not create a new copy, but stores data changes with respect to the previous backup. This means that storage used by automatic backups increases only in proportion to the volume of changes that are made.
+   * When performing automatic backups, {{ mes-short-name }} does not create a new copy but stores data changes with respect to the previous backup. This means that storage used by automatic backups increases only in proportion to the volume of changes that are made.
 
    * The number of hosts in the cluster does not affect the size of the storage or free backups.
 
@@ -84,9 +92,9 @@ Where:
 > Total: $699.289600 is the cost of using the cluster for 30 days.
 
 Where:
-* 720 is the number of hours in 30 days.
+* 720: Number of hours in 30 days.
 * Total: $0.967680 is the cost per hour of operation for all hosts.
-* 100 is the amount of HDD network storage (in GB).
+* 100: Amount of HDD network storage (in GB).
 * $0.025600 is the cost of using 1 GB of network HDD storage per month.
 
 

@@ -30,13 +30,13 @@ Make sure this does not affect your applications:
 
 1. See the {{ RD }} [changelog](https://docs.redis.com/latest/rs/release-notes/) to check how updates might affect your applications.
 1. Try updating the version on a test cluster. You can deploy it from a backup of the main cluster.
-1. [Make a backup](cluster-backups.md) of the main cluster before updating the version.
+1. [Create a backup](cluster-backups.md) of the main cluster before updating the version.
 
 ## Upgrading a cluster {#start-update}
 
 {% note alert %}
 
-* After updating the DBMS, the cluster can't be rolled back to the previous version.
+* After updating the DBMS, the cluster cannot be rolled back to the previous version.
 * The success of a {{ RD }} version upgrade depends on multiple factors, including cluster settings and data stored in databases. We recommend that you first [upgrade a test cluster](#before-update) that uses the same data and settings.
 
 {% endnote %}
@@ -51,7 +51,7 @@ Make sure this does not affect your applications:
    1. In the **{{ ui-key.yacloud.mdb.forms.base_field_version }}** field, select the new version.
    1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
-   Once the upgrade is launched, the cluster status will change to **UPDATING**. Wait for the operation to complete and then check the cluster version.
+   Once the update is launched, the cluster status will change to **Updating**. Wait for the operation to complete and then check the cluster version.
 
 - CLI
 
@@ -78,7 +78,7 @@ Make sure this does not affect your applications:
         --redis-version <new version number>
       ```
 
-      Once the upgrade is launched, the cluster status will change to **UPDATING**. Wait for the operation to complete and then check the cluster version.
+      Once the update is launched, the cluster status will change to **Updating**. Wait for the operation to complete and then check the cluster version.
 
 - API
 

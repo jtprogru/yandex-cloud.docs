@@ -1,17 +1,17 @@
 # Изменить пользовательский сертификат
 
-После создания [пользовательского сертификата](../../concepts/imported-certificate.md) вы можете изменить его название или описание. Чтобы изменить сертификат:
+После добавления в {{ certificate-manager-name }} [пользовательского сертификата](../../concepts/imported-certificate.md) вы можете изменить его название или описание. Чтобы изменить сертификат:
 
 {% list tabs %}
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../../resource-manager/concepts/resources-hierarchy.md#folder), в котором был создан сертификат.
-  1. В списке сервисов выберите **{{ certificate-manager-name }}**.
+  1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../../resource-manager/concepts/resources-hierarchy.md#folder), в который был добавлен сертификат.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_certificate-manager }}**.
   1. Выберите в списке сертификат, который необходимо изменить.
-  1. В открывшемся окне нажмите кнопку **Изменить**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.certificate-manager.overview.action_edit-meta }}**.
   1. Измените название или описание сертификата.
-  1. Нажмите кнопку **Сохранить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -37,7 +37,7 @@
      +----------------------+--------+-------------+---------------------+----------+--------+
      |          ID          |  NAME  |   DOMAINS   |      NOT AFTER      |   TYPE   | STATUS |
      +----------------------+--------+-------------+---------------------+----------+--------+
-     | fpqmg47avvimp7rvmp30 | mycert | example.com | 2021-09-15 08:12:57 | IMPORTED | ISSUED |
+     | fpqmg47avvim******** | mycert | example.com | 2021-09-15 08:12:57 | IMPORTED | ISSUED |
      +----------------------+--------+-------------+---------------------+----------+--------+
      ```
 
@@ -45,7 +45,7 @@
 
      ```bash
      yc certificate-manager certificates update \
-       --id fpqmg47avvimp7rvmp30 \
+       --id fpqmg47avvim******** \
        --new-name myupdatedcert \
        --description "description of myupdatedcert"
      ```
@@ -58,14 +58,56 @@
      Результат выполнения команды:
 
      ```bash
-     id: fpqmg47avvimp7rvmp30
-     folder_id: b1g7gvsi89m34qmcm3ke
+     id: fpqmg47avvim********
+     folder_id: b1g7gvsi89m3********
      created_at: "2020-09-15T06:54:44.916Z"
      ...
      issued_at: "2020-09-15T08:23:50.147Z"
      not_after: "2021-09-15T08:12:57Z"
      not_before: "2020-09-15T08:12:57Z"
      ```
+
+- {{ TF }}
+
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+  1. Откройте файл конфигурации {{ TF }} и измените имя или описание сертификата:
+
+     {% cut "Пример описания сертификата в конфигурации {{ TF }}" %}
+
+     ```
+     ...
+     resource "yandex_cm_certificate" "imported-certificate" {
+       name        = "my-certificate"
+       description = "this is a test certificate"
+
+       self_managed {
+         certificate = <<-EOT
+                       -----BEGIN CERTIFICATE-----
+                       MIIF...
+                       -----END CERTIFICATE-----
+                       EOT
+         private_key = <<-EOT
+                       -----BEGIN PRIVATE KEY-----
+                       MIIJ...
+                       -----END PRIVATE KEY-----
+                       EOT
+       }
+     }
+     ...
+     ```
+
+     {% endcut %}
+
+  1. Примените изменения:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+  Проверить изменение сертификата можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../../cli/quickstart.md):
+
+    ```bash
+    yc certificate-manager certificate get <имя_сертификата>
+    ```
 
 - API
 

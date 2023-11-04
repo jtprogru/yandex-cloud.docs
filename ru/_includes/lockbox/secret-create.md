@@ -5,10 +5,10 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создан [секрет](../../lockbox/concepts/secret.md).
-    1. В списке сервисов выберите **{{ lockbox-short-name }}**.
-    1. Нажмите кнопку **Создать секрет**.
-    1. В поле **Имя** введите имя секрета.
-    1. (Опционально) В поле **Ключ {{ kms-short-name }}** укажите существующий ключ или [создайте новый](../../kms/operations/key.md#create).
+    1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.lockbox.button_create-secret }}**.
+    1. В поле **{{ ui-key.yacloud.common.name }}** введите имя секрета.
+    1. (Опционально) В поле **{{ ui-key.yacloud.lockbox.forms.field_kms-key }}** укажите существующий ключ или [создайте новый](../../kms/operations/key.md#create).
 
         Указанный ключ {{ kms-short-name }} используется для шифрования секрета. Если вы не будете указывать ключ, секрет будет зашифрован специальным системным ключом.
 
@@ -18,14 +18,14 @@
 
         {% endnote %}
 
-    1. (опционально) Включите опцию **Запретить удаление секрета**. Пока опция включена, удалить секрет невозможно. Не защищает содержимое секрета.
-    1. В блоке **Версия**:
+    1. (опционально) Включите опцию **{{ ui-key.yacloud.lockbox.forms.field_deletion-protection }}**. Пока опция включена, удалить секрет невозможно. Не защищает содержимое секрета.
+    1. В блоке **{{ ui-key.yacloud.lockbox.forms.section_version }}**:
 
-        * В поле **Ключ** введите неконфиденциальный идентификатор.
-        * В поле **Значение** введите конфиденциальные данные для хранения.
+        * В поле **{{ ui-key.yacloud.lockbox.forms.label_key }}** введите неконфиденциальный идентификатор.
+        * В поле **{{ ui-key.yacloud.lockbox.forms.label_value }}** введите конфиденциальные данные для хранения.
         
-        Чтобы добавить больше данных нажмите кнопку **Добавить пару** и повторите шаги.
-    1. Нажмите кнопку **Создать**.
+        Чтобы добавить больше данных нажмите кнопку **{{ ui-key.yacloud.lockbox.forms.button_add-pair }}** и повторите шаги.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -39,15 +39,15 @@
       yc lockbox secret create --help
       ```
 
-  1. Выполните команду, указав в параметрах имя каталога и [идентификатор облака](../../resource-manager/operations/cloud/get-id.md). Вы можете передать один или несколько ключей `key`. Если секрет будет содержать несколько значений, перечисляйте их через запятую. В примере указаны два ключа:
-
+  1. Выполните команду:
+  
      ```bash
      yc lockbox secret create \
        --name <имя_секрета> \
        --description <описание_секрета> \
-       --payload "[{'key': '<ключ>', 'text_value': '<текстовое_значение>'},{'key': '<ключ>', 'text_value': '<текстовое_значение>'}]" \
+       --payload "<массив_с_содержимым_секрета>" \
        --cloud-id <идентификатор_облака> \
-       --folder-name <название_каталога> \
+       --folder-id <идентификатор_каталога> \
        --deletion-protection
      ```
 
@@ -55,34 +55,55 @@
 
      * `--name` — имя секрета. Обязательный параметр.
      * `--description` — описание секрета. Необязательный параметр.
-     * `--payload` — содержимое секрета в виде массива YAML или JSON. Например, для сохранения ключей `username` со значением `myusername` и `password` со значением `p@$$w0rd` можно задать такой массив: `[{'key': '<username>', 'text_value': '<myusername>'},{'key': '<password>', 'text_value': '<p@$$w0rd>'}]`.
-     * `--cloud-id` — идентификатор облака, в котором будет создан секрет.
-     * `--folder-name` — название каталога, в котором будет создан секрет.
+     * `--payload` — содержимое секрета в виде массива YAML или JSON. 
+        
+         Вы можете одновременно передать один или несколько ключей `key`. Если секрет будет содержать несколько значений, перечислите их через запятую. Если ключи будут содержать значения в бинарном формате, передавайте их в кодировке `base64`. 
+        
+         Например, для сохранения ключа `username` с текстовым значением `myusername` и ключа `avatar` с загруженным из файла `avatar.jpg` значением в бинарном формате можно указать:
+         `[{'key': 'username', 'text_value': 'myusername'},{'key': 'avatar', 'binary_value': $(base64 -w 0 ./avatar.jpg)}]`.
+     * `--cloud-id` — [идентификатор облака](../../resource-manager/operations/cloud/get-id.md), в котором будет создан секрет.
+     * `--folder-id` — [идентификатор каталога](../../resource-manager/operations/folder/get-id.md), в котором будет создан секрет.
      * `--deletion-protection` — защита от удаления секрета. Пока опция включена, удалить секрет невозможно. Не защищает содержимое секрета. Необязательный параметр.
+
+     Пример команды для создания секрета:
+
+     ```bash
+     yc lockbox secret create \
+       --name sample-secret \
+       --description sample_secret \
+       --payload "[{'key': 'username', 'text_value': 'myusername'},{'key': 'avatar', 'binary_value': $(base64 -w 0 ./avatar.jpg)}]" \
+       --cloud-id b1gwa87mbaom******** \
+       --folder-id b1qt6g8ht345******** \
+       --deletion-protection
+     ``` 
+
+     В этом примере создается секрет с двумя ключами: один ключ с текстовым значением, другой — со значением в бинарном формате.
 
      Результат:
      
      ```
-     id: f1sa31gi4v3s********
-     folder_id: d3sad80hs4od********
-     created_at: "2021-11-08T19:23:00.383Z"
-     name: <имя секрета>
-     description: <описание секрета>
+     id: e6q6nbjfu9m2********
+     folder_id: b1qt6g8ht345********
+     created_at: "2023-10-09T16:29:11.402Z"
+     name: sample-secret
+     description: sample_secret
      status: ACTIVE
      current_version:
-       id: hfdf68j9fdjk********
-       secret_id: f1s2tu3uqg12********
-       created_at: "2021-11-08T19:23:00.383Z"
+       id: e6q0s9airqca********
+       secret_id: e6q6nbjfu9m2********
+       created_at: "2023-10-09T16:29:11.402Z"
        status: ACTIVE
        payload_entry_keys:
-       - <ключ>
+         - username
+         - avatar
+     deletion_protection: true
      ```
 
 - {{ TF }}
 
   [Секрет](../../lockbox/concepts/secret.md) содержит только метаинформацию о себе: имя, описание, уникальный идентификатор и т. д. Для начала работы с секретом необходимо [создать версию](../../lockbox/operations/secret-version-manage.md) секрета.
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 
@@ -124,7 +145,7 @@
       * `deletion_protection` — флаг защиты от удаления. Для включения защиты укажите значение `true`. Для отключения защиты — `false`. Значение по умолчанию `false`. Необязательный параметр.
       * `labels` — [метка](../../overview/concepts/services.md#labels) ресурса в формате `<ключ>:"<значение>"`. Необязательный параметр.
 
-      Более подробную информацию о параметрах ресурса `yandex_lockbox_secret` в Terraform, см. в [документации провайдера]({{ tf-provider-resources-link }}/lockbox_secret).
+      Более подробную информацию о параметрах ресурса `yandex_lockbox_secret` в {{ TF }}, см. в [документации провайдера]({{ tf-provider-link }}/lockbox_secret).
 
   1. Создайте ресурсы:
 

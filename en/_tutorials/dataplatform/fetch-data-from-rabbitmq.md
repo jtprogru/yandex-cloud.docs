@@ -32,7 +32,7 @@ If you no longer need the resources you created, [delete them](#clear-out).
 - Using {{ TF }}
 
    1. If you do not have {{ TF }} yet, [install it](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-   1. Download [the file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
+   1. Download the [file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
    1. Download the [clickhouse-cluster-and-vm-for-rabbitmq.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/clickhouse-cluster-and-vm-for-rabbitmq.tf) configuration file to the same working directory.
 
       This file describes:
@@ -45,9 +45,9 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
    1. Specify in `clickhouse-cluster-and-vm-for-rabbitmq.tf`:
 
-      * Username and password that will be used to access a {{ mch-name }} cluster.
-      * ID of the public Ubuntu [image](../../compute/operations/images-with-pre-installed-software/get-list.md) without GPU for the VM. For example, `fd879gb88170to70d38a` for Ubuntu 20.04 LTS.
-      * Username and path to the [public key](../../compute/operations/vm-connect/ssh.md#creating-ssh-keys) file to use to access to the virtual machine. By default, the specified username is ignored in the image used. Instead, a user with the `ubuntu` username is created. Use it to connect to the instance.
+      * Username and password that will be used to access the {{ mch-name }} cluster.
+      * ID of the public [Ubuntu](/marketplace?tab=software&search=Ubuntu&categories=os) [image](../../compute/operations/images-with-pre-installed-software/get-list.md) without GPU for the VM.
+      * Username and path to the [public key](../../compute/operations/vm-connect/ssh.md#creating-ssh-keys) file to use to access to the virtual machine. By default, the specified username is ignored in the image used. A user with the `ubuntu` username is created instead. Use it to connect to the instance.
 
    1. Run the `terraform init` command in the directory with the configuration file. This command initializes the providers specified in the configuration files and allows you to work with the provider resources and data sources.
 
@@ -57,7 +57,7 @@ If you no longer need the resources you created, [delete them](#clear-out).
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
    1. Create the required infrastructure:
 
@@ -133,7 +133,7 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
 - Manually
 
-    In the [{{ mch-name }} cluster settings](../../managed-clickhouse/operations/update.md#change-clickhouse-config), specify the username and password for {{ RMQ }} authentication in **DBMS settings** → **Rabbitmq**.
+    In the [{{ mch-name }} cluster settings](../../managed-clickhouse/operations/update.md#change-clickhouse-config), specify the username and password for {{ RMQ }} authentication in **{{ ui-key.yacloud.mdb.forms.section_settings }}** → **Rabbitmq**.
 
 - Using {{ TF }}
 
@@ -311,7 +311,7 @@ The query will return a table with data sent to {{ RMQ }}.
 
 ## Delete the resources you created {#clear-out}
 
-Delete the resources you no longer need to avoid paying for them:
+Delete the resources you no longer need to avoid being charged for them:
 
 {% list tabs %}
 
@@ -333,9 +333,9 @@ Delete the resources you no longer need to avoid paying for them:
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
-   1. Confirm the resources have been updated:
+   1. Confirm that the resources have been updated.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

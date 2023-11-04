@@ -6,11 +6,11 @@ To delete a [DNS zone](../concepts/dns-zone.md):
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), select the folder where you wish to delete a DNS zone.
-   1. Select **{{ dns-name }}**.
-   1. Click ![image](../../_assets/options.svg) in the row next to the zone to delete it.
-   1. In the resulting menu, click **Delete**.
-   1. In the window that opens, click **Delete**.
+   1. In the [management console]({{ link-console-main }}), select the folder to delete a DNS zone from.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_dns }}**.
+   1. Click ![image](../../_assets/options.svg) in the row of the zone to delete.
+   1. In the menu that opens, click **{{ ui-key.yacloud.common.delete }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -37,7 +37,7 @@ To delete a [DNS zone](../concepts/dns-zone.md):
 
 - {{ TF }}
 
-   For more information about the {{ TF }}, [see the documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To delete a DNS zone created using {{ TF }}:
 
@@ -56,7 +56,7 @@ To delete a [DNS zone](../concepts/dns-zone.md):
           label1 = "test-public"
         }
 
-        zone    = "test.example-public2.com."
+        zone = "test.example-public2.com."
       }
       ```
 
@@ -64,23 +64,23 @@ To delete a [DNS zone](../concepts/dns-zone.md):
 
    1. In the command line, go to the directory with the {{ TF }} configuration file.
 
-   1. Check the configuration using the command:
+   1. Check the configuration using this command:
       ```
       terraform validate
       ```
 
-      If the configuration is correct, the following message is returned:
+      If the configuration is correct, you will get this message:
 
       ```
       Success! The configuration is valid.
       ```
 
-   1. Run the command:
+   1. Run this command:
       ```
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
       ```
@@ -89,10 +89,14 @@ To delete a [DNS zone](../concepts/dns-zone.md):
 
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-      You can make sure the DNS zone has been deleted in the [management console]({{ link-console-main }}) or via the [CLI](../../cli/quickstart.md) command below:
+      You can check the DNS zone deletion using the [management console]({{ link-console-main }}) or this [CLI](../../cli/quickstart.md) command:
 
       ```
       yc dns zone list
       ```
+
+- API
+
+   To delete a DNS zone, use the [delete](../api-ref/DnsZone/delete.md) REST API method for the [DnsZone](../api-ref/DnsZone/index.md) resource or the [DnsZoneService/Delete](../api-ref/grpc/dns_zone_service.md#Delete) gRPC API call.
 
 {% endlist %}

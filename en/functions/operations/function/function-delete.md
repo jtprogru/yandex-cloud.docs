@@ -1,13 +1,18 @@
+---
+title: "Deleting a function"
+description: "Follow this guide to delete a function."
+---
+
 # Deleting a function
 
 {% list tabs %}
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), select the folder from which you wish to delete the function.
-   1. Select **{{ sf-name }}**.
-   1. In the line of the function, click ![image](../../../_assets/options.svg) and select **Delete**.
-   1. In the window that opens, click **Delete**.
+   1. In the [management console]({{ link-console-main }}), select the folder to delete the function from.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+   1. In the function row, click ![image](../../../_assets/options.svg) and select **{{ ui-key.yacloud.serverless-functions.list.button_action-delete }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.serverless-functions.list.popup-confirm_button_delete }}**.
 
 - CLI
 
@@ -30,7 +35,7 @@
    created_at: "2019-06-13T13:21:40.022Z"
    name: my-functions
    log_group_id: eolq9ac97486********
-   http_invoke_url: https://functions.yandexcloud.net/b09kk2ujb8js********
+   http_invoke_url: https://{{ sf-url }}/b09kk2ujb8js********
    status: DELETING
    ```
 
@@ -38,7 +43,7 @@
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see our documentation](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To delete a function created using {{ TF }}:
 
@@ -83,7 +88,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -92,7 +97,7 @@
       ```
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-   You can verify that you have deleted the function in the [management console]({{ link-console-main }}) or using the [CLI](../../../cli/quickstart.md) command:
+   You can check the deletion of the function using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
 
    ```
    yc serverless function list
@@ -102,8 +107,10 @@
 
    To delete a function, use the [delete](../../functions/api-ref/Function/delete.md) REST API method for the [Function](../../functions/api-ref/Function/index.md) resource or the [FunctionService/Delete](../../functions/api-ref/grpc/function_service.md#Delete) gRPC API call.
 
+
 - {{ yandex-cloud }} Toolkit
 
    You can delete a function using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the IDE family on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 {% endlist %}

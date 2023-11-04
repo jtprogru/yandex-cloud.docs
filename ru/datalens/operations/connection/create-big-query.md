@@ -1,6 +1,22 @@
+---
+title: "Как создать подключение к BigQuery"
+description: "Следуя данной инструкции, вы сможете создать подключение к BigQuery."
+---
+
 # Создание подключения к Google BigQuery
 
+{% note info %}
+
+Для создания подключения сервисному аккаунту в BigQuery должна быть выдана роль [BigQuery Data Viewer](https://cloud.google.com/bigquery/docs/access-control#bigquery.dataViewer) на датасет.
+Подключение не поддерживает работу с партиционированными таблицами.
+
+{% endnote %}
+
 Чтобы создать подключение к BigQuery:
+
+
+{% include [datalens-workbooks-collections-note](../../../_includes/datalens/operations/datalens-workbooks-collections-note.md) %}
+
 
 
 1. Перейдите на [страницу подключений]({{ link-datalens-main }}/connections).

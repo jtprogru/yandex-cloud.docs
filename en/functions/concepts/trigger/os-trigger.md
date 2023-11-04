@@ -1,6 +1,6 @@
 # Trigger for {{ objstorage-name }} that invokes a {{ sf-name }} function
 
-[Triggers](../trigger/) for {{ objstorage-name }} run a {{ sf-name }} [function](../function.md) when a certain event occurs with a {{ objstorage-name }} [object](../../../storage/concepts/object.md). The trigger must be in the same cloud as the bucket whose events it's subscribed to.
+[Triggers](../trigger/) for {{ objstorage-name }} run a {{ sf-name }} [function](../function.md) when a certain event occurs with a {{ objstorage-name }} [object](../../../storage/concepts/object.md). The trigger must be in the same cloud as the bucket whose events it is subscribed to.
 
 A trigger for {{ objstorage-name }} needs a [service account](../../../iam/concepts/users/service-accounts.md) to call the function.
 
@@ -19,12 +19,16 @@ Events are filtered using prefixes and suffixes for an object [key](../../../sto
 * The prefix is the part of the object key that contains the beginning of the object key.
 * The suffix is the part of the object key that contains the end of the object key.
 
-Prefixes and suffixes can be any length. When using a prefix and suffix at the same time, filtering is done based on the logical `AND`: for the trigger to work, the object key must match both the prefix and suffix.
+Prefixes and suffixes can be of any length. When using a prefix and suffix at the same time, filtering is based on the logical `AND`: for the trigger to work, the object key must match both the prefix and suffix.
+
+{% include [batching-events](../../../_includes/functions/batching-events.md) %}
+
+{% include [batching-events](../../../_includes/functions/batching-events.md) %}
 
 ## Roles required for the proper operation of a trigger for {{ objstorage-name }} {#roles}
 
 - To create a trigger, you need a permission for a service account that runs the trigger executing the operation. This permission is included in the [iam.serviceAccounts.user](../../../iam/concepts/access-control/roles.md#sa-user) and [editor](../../../iam/concepts/access-control/roles.md#editor) roles and higher.
-- To run a trigger, the service account needs the `{{ roles-functions-ivoker }}` role for the folder containing the function called by the trigger.
+- For the trigger to fire, the service account needs the `{{ roles-functions-invoker }}` role for the folder containing the function called by the trigger.
 
 Read more about [access management](../../security/index.md).
 

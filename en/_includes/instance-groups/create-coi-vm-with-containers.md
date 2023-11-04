@@ -20,12 +20,12 @@ Docker containers are created based on the [Docker Compose](../../cos/concepts/
 
    - Management console
 
-      1. In the [management console]({{ link-console-main }}), select a [folder](../../resource-manager/concepts/resources-hierarchy.md#folder) where you wish to create a service account.
-      1. At the top of the screen, go to the **Service accounts** tab.
-      1. Click **Create service account**.
+      1. In the [management console]({{ link-console-main }}), select a [folder](../../resource-manager/concepts/resources-hierarchy.md#folder) where to create a service account in.
+      1. At the top of the screen, go to the **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}** tab.
+      1. Click **{{ ui-key.yacloud.iam.folder.service-accounts.button_add }}**.
       1. Enter the name: `group-coi`.
-      1. To assign the service account a role for the current folder, click **Add role** and select the role `editor`.
-      1. Click **Create**.
+      1. To assign the service account a role for the current folder, click **{{ ui-key.yacloud.iam.folder.service-account.label_add-role }}** and select the `editor` role.
+      1. Click **{{ ui-key.yacloud.iam.folder.service-account.popup-robot_button_add }}**.
 
    - CLI
 
@@ -65,11 +65,11 @@ Docker containers are created based on the [Docker Compose](../../cos/concepts/
    - Management console
 
       1. In the [management console]({{ link-console-main }}), select the folder where you want to create a network.
-      1. Select **{{ vpc-name }}**.
-      1. Click **Create network**.
-      1. Enter the network name `yc-auto-network`.
-      1. Select the additional option **Create subnets**.
-      1. Click **Create network**.
+      1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_vpc }}**.
+      1. Click **{{ ui-key.yacloud.vpc.networks.button_create }}**.
+      1. Enter `yc-auto-network` as the network name.
+      1. Select the additional option: **{{ ui-key.yacloud.vpc.networks.create.field_is-default }}**.
+      1. Click **{{ ui-key.yacloud.vpc.networks.create.button_create }}**.
 
    - CLI
 
@@ -213,8 +213,8 @@ Docker containers are created based on the [Docker Compose](../../cos/concepts/
    - Management console
 
       1. In the [management console]({{ link-console-main }}), select the folder where you created the instance group.
-      1. Select **{{ compute-name }}**.
-      1. Go to **Instance groups**.
+      1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
+      1. Go to **{{ ui-key.yacloud.compute.switch_groups }}**.
       1. Click the `group-coi-containers` instance group name.
 
    - CLI
@@ -229,8 +229,8 @@ Docker containers are created based on the [Docker Compose](../../cos/concepts/
       +----------------------+---------------------------+----------------------------------+-------------+------------------------+----------------+
       |     INSTANCE ID      |           NAME            |            EXTERNAL IP           | INTERNAL IP |         STATUS         | STATUS MESSAGE |
       +----------------------+---------------------------+----------------------------------+-------------+------------------------+----------------+
-      | fhmabcv0de123fo50d0b | cl0q12abcs4gq8m966de-fmar | {{ cos-external-ip-examples.0 }} | 10.130.0.14 | RUNNING_ACTUAL [2h35m] |                |
-      | fhmab0cdqj12tcv18jou | cl0q12abcs4gq8m966de-fqeg | {{ cos-external-ip-examples.1 }} | 10.130.0.47 | RUNNING_ACTUAL [2h35m] |                |
+      | fhmabcv0de123fo50d0b | cl0q12abcs4gq8m966de-fmar | {{ external-ip-examples.0 }} | 10.130.0.14 | RUNNING_ACTUAL [2h35m] |                |
+      | fhmab0cdqj12tcv18jou | cl0q12abcs4gq8m966de-fqeg | {{ external-ip-examples.1 }} | 10.130.0.47 | RUNNING_ACTUAL [2h35m] |                |
       +----------------------+---------------------------+----------------------------------+-------------+------------------------+----------------+
       ```
 
@@ -249,7 +249,7 @@ Docker containers are created based on the [Docker Compose](../../cos/concepts/
    - CLI
 
       ```bash
-      ssh yc-user@{{ cos-external-ip-examples.0 }}
+      ssh yc-user@{{ external-ip-examples.0 }}
       ```
 
       Result:
@@ -257,9 +257,9 @@ Docker containers are created based on the [Docker Compose](../../cos/concepts/
       ```bash
       Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-54-generic x86_64)
 
-       * Documentation:  https://help.ubuntu.com
-       * Management:     https://landscape.canonical.com
-       * Support:        https://ubuntu.com/advantage
+       * Documentation: https://help.ubuntu.com
+       * Management:    https://landscape.canonical.com
+       * Support:       https://ubuntu.com/advantage
       Last login: Mon Mar 13 15:23:28 2023 from 123.456.789.101
       ```
 

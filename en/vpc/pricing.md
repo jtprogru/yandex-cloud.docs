@@ -2,7 +2,7 @@
 editable: false
 ---
 
-# Pricing for {{ vpc-name }}
+# {{ vpc-name }} pricing
 
 {{ vpc-name }} usage is rated by the pricing policy described in this section.
 
@@ -28,7 +28,7 @@ A public IP address can be in one of the following two states:
 1. **Inactive**: When a _static_ public IP address is not linked to a cloud resource or is linked to a stopped resource.
 
 
-All prices are shown without VAT.
+All prices are net of VAT.
 
 
 
@@ -58,6 +58,36 @@ Where:
 * $0.001920 is the cost of using a public IP address per hour.
 * $0.002480 is the cost of reserving an inactive public static IP address for an hour.
 
+
+### NAT gateways {#nat-gateways}
+
+You will be charged per hour of NAT gateway usage and for outgoing traffic via the gateway. Charges will apply as soon as you add a gateway to a route table.
+
+
+
+
+{% include notitle [usd-egress-nat.md](../_pricing/vpc/usd-egress-nat.md) %}
+
+
+#### Outgoing traffic via NAT gateways {#nat-gateway-egress-traffic}
+
+Outgoing traffic via a NAT gateway exceeding 100 GB per month is billable.
+
+Please note that traffic transmitted via a NAT gateway is charged separately from other [outgoing traffic](#prices-traffic) but according to the same pricing policy.
+
+> For example:
+>
+> If you transmit 110 GB of outgoing traffic via a NAT gateway and 5 GB of outgoing traffic using other ways per month, you pay for 10 GB of the outgoing traffic sent via the NAT gateway.
+>
+> If you transmit 110 GB of outgoing traffic via a NAT gateway and 105 GB of outgoing traffic using other ways per month, you pay for 10 GB of the outgoing traffic sent via the NAT gateway and 5 GB of the other outgoing traffic.
+
+
+
+
+{% include notitle [usd-egress-nat-traffic.md](../_pricing/vpc/usd-egress-nat-traffic.md) %}
+
+
+
 ### Using security groups {#prices-security-groups}
 
 The [security group](concepts/security-groups.md) functionality is at the [Preview](../overview/concepts/launch-stages.md) stage and can be used free of charge.
@@ -65,8 +95,10 @@ The [security group](concepts/security-groups.md) functionality is at the [Previ
 ### Egress traffic {#prices-traffic}
 
 
-All prices are shown without VAT.
+All prices are net of VAT.
 
+
+{% include notitle [note-public-ip-traffic.md](../_includes/pricing/note-public-ip-traffic.md) %}
 
 
 
@@ -81,7 +113,7 @@ All prices are shown without VAT.
 ## {{ ddos-protection-full-name }} pricing {#prices-ddos-protection}
 
 
-All prices are shown without VAT.
+All prices are net of VAT.
 
 
 

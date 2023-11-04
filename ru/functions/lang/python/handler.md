@@ -11,7 +11,7 @@ _Обработчик запросов_ — это метод, который и
 При вызове обработчика среда выполнения передает следующие аргументы:
 1. Тело запроса (параметр `event`):
     * Если тело запроса — [JSON-документ](../../concepts/function-invoke.md#request), то оно будет преобразовано в `dict` с помощью метода `json.loads`.
-    * Если функция была вызвана с параметром строки запроса `integration=raw`, тело HTTP-запроса передается в функцию как есть, без обработки.
+    * Если функция была вызвана с параметром строки запроса `?integration=raw`, тело HTTP-запроса передается в функцию как есть, без обработки.
 1. [Контекст вызова](context.md) (параметр `context`). 
 
     Контекст содержит необходимую информацию о версии функции. Структура этого объекта описана в разделе [{#T}](context.md).
@@ -65,7 +65,7 @@ def handler(event, context):
 Пример вызова функции:
 
 ```
-curl --data '{"hello": "world"}' -H 'Content-Type: application/json' https://functions.yandexcloud.net/d4eo2faf62**********?param=one
+curl --data '{"hello": "world"}' -H 'Content-Type: application/json' https://{{ sf-url }}/d4eo2faf62**********?param=one
 ```
 
 Результат:
@@ -94,7 +94,7 @@ curl --data '{"hello": "world"}' -H 'Content-Type: application/json' https://fun
             "Accept": "*/*",
             "Content-Length": "18",
             "Content-Type": "application/json",
-            "Host": "functions.yandexcloud.net",
+            "Host": "{{ sf-url }}",
             "User-Agent": "curl/7.64.1",
             "X-Forwarded-For": "109.252.148.209",
             "X-Real-Remote-Address": "[109.252.148.209]:2816",
@@ -114,7 +114,7 @@ curl --data '{"hello": "world"}' -H 'Content-Type: application/json' https://fun
                 "application/json"
             ],
             "Host": [
-                "functions.yandexcloud.net"
+                "{{ sf-url }}"
             ],
             "User-Agent": [
                 "curl/7.64.1"

@@ -11,10 +11,10 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать функцию.
-    1. Выберите сервис **{{ sf-name }}**
-    1. Нажмите кнопку **Создать функцию**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.list.button_create }}**.
     1. Введите имя функции — `python-function`.
-    1. Нажмите кнопку **Создать**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -33,10 +33,10 @@
     ```
     id: b09bhaokchn9********
     folder_id: aoek49ghmknn********
-    created_at: "2019-06-14T10:03:37.475Z"
+    created_at: "2023-08-16T19:01:37.475Z"
     name: python-function
     log_group_id: eolm8aoq9vcp********
-    http_invoke_url: https://functions.yandexcloud.net/b09bhaokchn9********
+    http_invoke_url: https://{{ sf-url }}/b09bhaokchn9********
     status: ACTIVE
     ```
 
@@ -44,9 +44,11 @@
 
     Создать функцию можно с помощью метода API [create](../../functions/api-ref/Function/create.md).
 
-- Yandex Cloud Toolkit
 
-    Создать функцию можно с помощью [плагина Yandex Cloud Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+- {{ yandex-cloud }} Toolkit
+
+    Создать функцию можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}
 
@@ -80,20 +82,20 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится функция.
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Выберите функцию `python-function`.
-    1. В разделе **Последняя версия** нажмите кнопку **Создать в редакторе**.
+    1. В разделе **{{ ui-key.yacloud.serverless-functions.item.overview.label_title-latest-version }}** нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.overview.button_editor-create }}**.
+    1. Выберите среду выполнения `python311` и нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_action-continue }}**.
     1. Задайте параметры версии:
-        - **Среда выполнения:** `python37`.
-        - **Способ:** ZIP-архив.
-        - **Файл:** `hello-py.zip`.
-        - **Точка входа:** `hello.handler`.
-        - **Таймаут, секунды:** 3.
-        - **Память:** 128 МБ.
-        - **Сервисный аккаунт:** Не выбрано.
-    1. Нажмите кнопку **Создать версию**.
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_method }}** — `{{ ui-key.yacloud.serverless-functions.item.editor.value_method-zip-file }}`.
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_file }}** — прикрепите файл `hello-py.zip`.
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_entry }}** — `hello.handler`.
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_timeout }}** — `3`.
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_resources-memory }}** — `128 {{ ui-key.yacloud.common.units.label_megabyte }}`.
+        * **{{ ui-key.yacloud.forms.label_service-account-select }}** — `{{ ui-key.yacloud.component.service-account-select.label_no-service-account }}`.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**.
 
-- CLI
+- CLI    
 
     {% include [cli-install](../../../_includes/cli-install.md) %}
 
@@ -104,7 +106,7 @@
     ```
     yc serverless function version create \
       --function-name=python-function \
-      --runtime python37 \
+      --runtime python311 \
       --entrypoint hello.handler \
       --memory 128m \
       --execution-timeout 3s \
@@ -126,8 +128,8 @@
     done (1s)
     id: d4evvn8obisa********
     function_id: d4elpv8pft63********
-    created_at: "2020-08-01T19:09:19.531Z"
-    runtime: python37
+    created_at: "2023-08-16T19:09:19.531Z"
+    runtime: python311
     entrypoint: hello.handler
     resources:
         memory: "134217728"
@@ -143,9 +145,11 @@
 
     Создать версию функции можно с помощью метода API [createVersion](../../functions/api-ref/Function/createVersion.md).
 
-- Yandex Cloud Toolkit
 
-    Создать версию функции можно с помощью [плагина Yandex Cloud Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+- {{ yandex-cloud }} Toolkit
+
+    Создать версию функции можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}
 

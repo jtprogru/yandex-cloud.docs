@@ -9,3 +9,7 @@
 * [{#T}](cdc-debezium.md)
 * [{#T}](mmy-ydb-migration.md)
 * [{#T}](mmy-objs-migration.md)
+* [{#T}](mmy-to-mpg.md)
+* [{#T}](mpg-to-mmy.md)
+
+О миграции хостов кластера {{ mmy-name }} в другую зону доступности читайте в [инструкции](../operations/host-migration.md).

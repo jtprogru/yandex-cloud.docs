@@ -1,3 +1,8 @@
+---
+title: "How to delete a disk image"
+description: "Follow this guide to delete a disk image."
+---
+
 # Deleting a disk image
 
 {% note warning %}
@@ -50,7 +55,7 @@ To delete an image:
 
 - {{ TF }}
 
-   For more information about {{ TF }}, [see our documentation](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    Images created using {{ TF }} can be deleted:
    1. In the command line, go to the directory with the {{ TF }} configuration file.

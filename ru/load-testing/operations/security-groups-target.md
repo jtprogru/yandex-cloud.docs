@@ -1,10 +1,9 @@
+---
+title: "Как настроить группы безопасности цели тестирования"
+description: "Следуя данной инструкции, вы сможете настроить группы безопасности цели тестирования."
+---
+
 # Настройка групп безопасности цели тестирования
-
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
 
 {% include [security-groups-target](../../_includes/load-testing/security-groups-target.md) %}
 

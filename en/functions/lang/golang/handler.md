@@ -7,7 +7,7 @@ A _call handler_ is a method used to handle each Go function call. When creating
 
 {% note info %}
 
-At any given time, a single function instance processes only one request. This lets you use global variables without having to provide data integrity control.
+At any given time, a single function instance processes only one request. This allows you to use global variables without having to provide data integrity control.
 
 {% endnote %}
 
@@ -29,7 +29,7 @@ If the argument responsible for the request body is missing, any function input 
 The runtime environment returns the function execution result as a data set:
 1. The response body (the `response` value).
 
-   The body can be represented by an array of bytes, a string, a custom type, or a pointer to it, as well as an [empty interface](https://go.dev/tour/methods/14). In the first two cases, to get the correct response, you should run functions by specifying the `integration=raw` request string parameter. Learn more about invoking functions in the [relevant section](../../concepts/function-invoke.md#http). In other cases, the response value is converted to an object of the corresponding type using the `json.Unmarshal` method and returned as a JSON document.
+   The body can be represented by an array of bytes, a string, a custom type, or a pointer to it, as well as an [empty interface](https://go.dev/tour/methods/14). In the first two cases, to get the correct response, you should run functions by specifying the `?integration=raw` request string parameter. Learn more about invoking functions in the [relevant section](../../concepts/function-invoke.md#http). In the other cases, the response value is converted to an object of the corresponding type using the `json.Unmarshal` method and returned as a JSON document.
 
 1. An error (the `error` value).
 
@@ -72,7 +72,7 @@ The following function receives a request with two fields (a string and a number
 
 {% note warning %}
 
-To invoke the function, use the [YC CLI](../../concepts/function-invoke.md) or an HTTP request with the `integration=raw` parameter.
+To invoke the function, use the [{{ yandex-cloud }} CLI](../../concepts/function-invoke.md) or an HTTP request with the `?integration=raw` parameter.
 
 {% endnote %}
 
@@ -158,7 +158,7 @@ import (
 )
 
 // The response body is a string, hence to correctly output the
-// response, run the function with the `integration=raw` parameter
+// response, run the function with the `?integration=raw` parameter
 func Handler() (string, error) {
   if (rand.Int31n(100) >= 50) {
     return "", fmt.Errorf("not so lucky")
@@ -191,7 +191,7 @@ The function is invoked using an HTTP request with the username, logs the reques
 
 {% note warning %}
 
-Don't use the `integration=raw` parameter to invoke this function. If you do, the function won't get any data about the original request's methods, headers, or parameters.
+Do not use the `?integration=raw` parameter to invoke this function. If you do, the function will not get any data about the original request's methods, headers, or parameters.
 
 {% endnote %}
 
@@ -204,14 +204,14 @@ import (
   "fmt"
 )
 
-// The request structure (see https://cloud.yandex.com/docs/functions/concepts/function-invoke#request)
-// The other fields aren't used anywhere in this example, so you can do without them
+// Request body structure (see the paragraph after the example).
+// The other fields are not used anywhere in this example, so you can do without them
 type RequestBody struct {
   HttpMethod string `json:"httpMethod"`
   Body       []byte `json:"body"`
 }
 
-// We convert the body field of the RequestBody object
+// Convert the body field of the RequestBody object
 type Request struct {
   Name string `json:"name"`
 }
@@ -223,7 +223,7 @@ type Response struct {
 
 func Greet(ctx context.Context, request []byte) (*Response, error) {
   requestBody := &RequestBody{}
-  // The array of bytes with the request body is converted to the corresponding object
+  // The byte array with the request body is converted to the corresponding object
   err := json.Unmarshal(request, &requestBody)
   if err != nil {
     return nil, fmt.Errorf("an error has occurred when parsing request: %v", err)
@@ -233,7 +233,7 @@ func Greet(ctx context.Context, request []byte) (*Response, error) {
   fmt.Println(requestBody.HttpMethod, string(requestBody.Body))
 
   req := &Request{}
-  // The request's body field is converted to a Request object to get the passed name
+  // The request body field is converted to a Request object to get the passed name
   err = json.Unmarshal(requestBody.Body, &req)
   if err != nil {
     return nil, fmt.Errorf("an error has occurred when parsing body: %v", err)
@@ -248,6 +248,8 @@ func Greet(ctx context.Context, request []byte) (*Response, error) {
   }, nil
 }
 ```
+
+To learn more about the request body structure (`type RequestBody struct`), see [{#T}](../../concepts/function-invoke.md#request).
 
 Example of input data (the POST method):
 
@@ -268,9 +270,10 @@ Hello, Anonymous
 ```
 
 
-### Parsing an API Gateway HTTP request
 
-The function is called by Yandex API Gateway with a service account, logs the request method and body, and returns a greeting.
+### Parsing an {{ api-gw-name }} HTTP request
+
+The function is invoked by {{ api-gw-full-name }} with a service account, logs the request method and body, and returns a greeting.
 
 The function decodes the body of an incoming request using `json.Unmarshal()`.
 
@@ -363,5 +366,4 @@ Response returned:
 ```
 Hello, Anonymous
 ```
-
 

@@ -92,7 +92,7 @@
 
 - {{ TF }}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     1. Добавьте в конфигурационный файл параметры ресурса, укажите нужную роль и перечень пользователей облака:
 
@@ -155,6 +155,8 @@
     {% include [set-access-binding](../../../_includes/resource-manager/set-access-binding-multiple-users-console.md) %}
 
 - CLI
+
+    {% include [cli-install](../../../_includes/cli-install.md) %}
 
     Команда `add-access-binding` позволяет добавить только одну роль. Вы можете назначить несколько ролей с помощью команды `set-access-binding`.
 
@@ -259,7 +261,7 @@
 
 ## Доступ к ресурсу для федеративного пользователя {#access-to-federated-user}
 
-В консоли управления [федеративному пользователю](../../../organization/add-federation.md) можно назначить роль на отдельное облако или каталог.
+В консоли управления [федеративному пользователю](../../../organization/concepts/add-federation.md) можно назначить роль на отдельное облако или каталог.
 
 {% list tabs %}
 
@@ -278,6 +280,8 @@
         {% include [set-access-binding-user-acc-abstract-console](../../../_includes/resource-manager/set-access-binding-user-acc-abstract-console.md) %}
 
 - CLI
+
+    {% include [cli-install](../../../_includes/cli-install.md) %}
 
     1. Выберите роль из списка в разделе [Роли](../../concepts/access-control/roles.md).
     1. [Получите идентификатор пользователя](../users/get.md).
@@ -347,17 +351,19 @@
     Назначьте роль в облаке для группы пользователей:
 
     1. В [консоли управления]({{ link-console-main }}) [выберите](../../../resource-manager/operations/cloud/switch-cloud.md) облако.
-    1. Перейдите на вкладку **Права доступа**.
-    1. Нажмите кнопку **Назначить роли**.
-    1. В окне **Настройка прав доступа** нажмите кнопку **Выбрать пользователя**:
-        1. Перейдите на вкладку **Группы** или воспользуйтесь поиском, чтобы найти группу по названию.
-        1. Нажмите кнопку **Добавить роль**.
+    1. Перейдите на вкладку **{{ ui-key.yacloud.common.resource-acl.label_access-bindings }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.resource-acl.button_new-bindings }}**.
+    1. В окне **{{ ui-key.yacloud_components.acl.label.title }}** нажмите кнопку **{{ ui-key.yacloud_components.acl.action.select-subject }}**:
+        1. Перейдите на вкладку **{{ ui-key.yacloud.common.resource-acl.label_groups }}** или воспользуйтесь поиском, чтобы найти группу по названию.
+        1. Нажмите кнопку **{{ ui-key.yacloud_components.acl.button.add-role }}**.
         1. Выберите роль в облаке.
-        1. Нажмите кнопку **Сохранить**.
+        1. Нажмите кнопку **{{ ui-key.yacloud_components.acl.action.apply }}**.
   
-    Название группы отобразится в разделе **Права доступа** облака вместе с остальными пользователями, у которых есть роли в этом облаке.
+    Название группы отобразится в разделе **{{ ui-key.yacloud.common.resource-acl.label_access-bindings }}** облака вместе с остальными пользователями, у которых есть роли в этом облаке.
 
 - CLI
+
+    {% include [cli-install](../../../_includes/cli-install.md) %}
 
     1. Выберите роль из списка в разделе [Роли](../../concepts/access-control/roles.md).
     1. [Получите идентификатор пользователя](../users/get.md).

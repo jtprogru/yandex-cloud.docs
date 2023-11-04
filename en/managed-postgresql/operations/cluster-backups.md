@@ -13,14 +13,14 @@ You can create [backups](../concepts/backup.md) and restore clusters from existi
 
 Point-in-Time Recovery (PITR) technology allows you to restore the cluster state to any point in time in the interval from the creation of the oldest full backup to the archiving of the most recent write ahead log (WAL). For more information, see [{#T}](../concepts/backup.md).
 
-When you restore a cluster from a backup, you create a new cluster with data from the backup. If the folder has insufficient [resources](../concepts/limits.md) to create such a cluster, you will not be able to restore from the backup. The average backup recovery speed is 10 MBps per database core.
+When you restore a cluster from a backup, you create a new cluster with the backup data. If the folder has insufficient [resources](../concepts/limits.md) to create such a cluster, you will not be able to restore from the backup. The average backup recovery speed is 10 MBps per database core.
 
 When creating a new cluster, set all required parameters.
 
-When restoring to the current state, the new cluster will reflect the state of:
+When restored to the current state, the new cluster will match the state of:
 
-* An existing cluster at the time of recovery.
-* A deleted cluster at the time of archiving the last write ahead log.
+* Existing cluster at the time of recovery.
+* Deleted cluster at the time of archiving the most recent WAL.
 
 {% list tabs %}
 
@@ -30,30 +30,30 @@ When restoring to the current state, the new cluster will reflect the state of:
 
    **To restore an existing cluster from a backup:**
 
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon for the desired backup and click **Restore cluster**.
-   1. Set up the new cluster. You can select a folder for the new cluster from the **Folder** list.
-   1. To restore the cluster state from a desired point of time after creating this backup, configure the **Date and time of recovery (UTC) setting**. You can enter the value manually or select it from the drop-down calendar.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.postgresql.cluster.switch_backups }}** tab.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the backup you need and click **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
+   1. Set up the new cluster. You can select a folder for the new cluster from the **{{ ui-key.yacloud.mdb.forms.base_field_folder }}** list.
+   1. To restore the cluster state to the required point in time after creating this backup, configure **{{ ui-key.yacloud.mdb.forms.field_date }}** as appropriate. You can enter the value manually or select it from the drop-down calendar.
 
-      If you do not change the setting, the cluster is restored to the state when the backup was completed.
+      If you do not change the setting, the cluster will be restored to the state when the backup was completed.
 
-   1. Click **Restore cluster**.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
 
    **To restore a previously deleted cluster from a backup:**
 
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click the **Backups** tab.
-   1. Find the desired backup using the backup creation time and cluster ID. The **Name** column contains the IDs in `<cluster ID>:<backup ID>` format.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon for the desired backup and click **Restore cluster**.
-   1. Set up the new cluster. You can select a folder for the new cluster from the **Folder** list.
-   1. To restore the cluster state from a desired point of time after creating this backup, configure the **Date and time of recovery (UTC) setting**. You can enter the value manually or select it from the drop-down calendar.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Select the **{{ ui-key.yacloud.postgresql.switch_backups }}** tab.
+   1. Find the backup you need using the backup creation time and cluster ID. The **{{ ui-key.yacloud.common.id }}** column contains IDs in `<cluster ID>:<backup ID>` format.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the backup you need and click **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
+   1. Set up the new cluster. You can select a folder for the new cluster from the **{{ ui-key.yacloud.mdb.forms.base_field_folder }}** list.
+   1. To restore the cluster state to the required point in time after creating this backup, configure **{{ ui-key.yacloud.mdb.forms.field_date }}** as appropriate. You can enter the value manually or select it from the drop-down calendar.
 
-      If you do not change the setting, the cluster is restored to the state when the backup was completed.
+      If you do not change the setting, the cluster will be restored to the state when the backup was completed.
 
-   1. Click **Restore cluster**.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
 
-   {{ mpg-name }} launches the operation to create a cluster from the backup.
+   {{ mpg-name }} will launch the operation to create a cluster from the backup.
 
 - CLI
 
@@ -98,7 +98,7 @@ When restoring to the current state, the new cluster will reflect the state of:
          --network-name=<network name> \
          --host zone-id=<availability zone>,`
                `subnet-name=<subnet name>,`
-               `assign-public-ip=<host access via public IP: true or false> \
+               `assign-public-ip=<public access to the host: true or false> \
          --resource-preset=<host class> \
          --disk-size=<storage size in GB> \
          --disk-type=<disk type>
@@ -107,12 +107,12 @@ When restoring to the current state, the new cluster will reflect the state of:
 
       Where:
 
-      * `--backup-id`: [Backup](../concepts/backup.md) ID
+      * `--backup-id`: [Backup](../concepts/backup.md) ID.
       * `--time`: Point in time to which you need to restore a {{ PG }} cluster's state, in `yyyy-mm-ddThh:mm:ssZ` format.
       * `--name`: Cluster name.
       * `--environment`: Environment:
 
-         * `PRESTABLE`: For testing, including the {{ PG }} service itself. The Prestable environment is updated first with new features, improvements, and bug fixes. However, not every update ensures backward compatibility.
+         * `PRESTABLE`: For testing purposes. The prestable environment is similar to the production environment and is also covered by the SLA. However, it is the first to receive new functionalities, improvements, and bug fixes. In the prestable environment, you can test compatibility of new versions with your application.
          * `PRODUCTION`: For stable versions of your apps.
 
       * `--network-name`: [Network name](../../vpc/concepts/network.md#network).
@@ -122,12 +122,12 @@ When restoring to the current state, the new cluster will reflect the state of:
 
          
          * `subnet-name`: [Name of the subnet](../../vpc/concepts/network.md#subnet). It must be specified if the selected availability zone includes two or more subnets.
-         * `assign-public-ip`: Flag to specify if a host requires a [public IP address](../../vpc/concepts/address.md#public-addresses).
+         * `assign-public-ip`: Flag to be set if [public access to the host](../concepts/network.md#public-access-to-a-host) is required.
 
 
-      * `--resource-preset`: [host class](../concepts/instance-types.md#available-flavors).
+      * `--resource-preset`: [Host class](../concepts/instance-types.md#available-flavors).
       * `--disk-size`: Storage size in GB.
-      * `--disk-type`: The [type of disk](../concepts/storage.md):
+      * `disk-type`: [Type of the disk](../concepts/storage.md):
 
          
          * `network-hdd`
@@ -196,7 +196,7 @@ When restoring to the current state, the new cluster will reflect the state of:
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -223,7 +223,7 @@ When restoring to the current state, the new cluster will reflect the state of:
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -233,8 +233,8 @@ When restoring to the current state, the new cluster will reflect the state of:
 
    To restore a cluster from a backup, use the [restore](../api-ref/Cluster/restore.md) REST API method for the [Cluster](../api-ref/Cluster/index.md) resource or the [ClusterService/Restore](../api-ref/grpc/cluster_service.md#Restore) gRPC API call and provide the following in the request:
 
-   * ID of the desired backup, in the `backupId` parameter. To find out the ID, [retrieve a list of cluster backups](#list-backups).
-   * Timestamp of the point to which you want to recover the cluster, in the `time` parameter.
+   * ID of the backup, in the `backupId` parameter. To find out the ID, [retrieve a list of cluster backups](#list-backups).
+   * Timestamp to which you want to recover the cluster, in the `time` parameter.
    * Name of the new cluster that will contain the data recovered from the backup, in the `name` parameter. It must be unique within the folder.
 
    By default, the cluster is restored to the same folder where the backup is stored. To restore the cluster to a different folder, specify its ID in the `folderId` parameter.
@@ -247,9 +247,9 @@ When restoring to the current state, the new cluster will reflect the state of:
 
 - Management console
 
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
-   1. Click **Create backup**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.postgresql.cluster.switch_backups }}** tab.
+   1. Click ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud.mdb.cluster.backups.button_create }}**.
 
    {% include [no-prompt](../../_includes/mdb/backups/no-prompt.md) %}
 
@@ -291,12 +291,12 @@ When restoring to the current state, the new cluster will reflect the state of:
 - Management console
 
    To get a list of cluster backups:
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.postgresql.cluster.switch_backups }}** tab.
 
    To get a list of all backups in a folder:
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click the **Backups** tab.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Select the **{{ ui-key.yacloud.postgresql.switch_backups }}** tab.
 
 - CLI
 
@@ -335,12 +335,12 @@ When restoring to the current state, the new cluster will reflect the state of:
 - Management console
 
    To get information about the backup of an existing cluster:
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.postgresql.cluster.switch_backups }}** tab.
 
    To get information about the backup of a previously deleted cluster:
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click the **Backups** tab.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Select the **{{ ui-key.yacloud.postgresql.switch_backups }}** tab.
 
 - CLI
 
@@ -425,7 +425,7 @@ When restoring to the current state, the new cluster will reflect the state of:
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -451,12 +451,34 @@ You can only delete backups that were created manually.
 
 - Management console
 
-   1. Go to the folder page and select **{{ mpg-name }}**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
    1. Select the {{ mpg-name }} cluster whose backup you want to delete.
-   1. In the left panel, select **Backups**.
-   1. Click ![image](../../_assets/horizontal-ellipsis.svg) to the right of the backup you wish to delete.
-   1. Select **Delete backup**.
-   1. Confirm deletion and click **Delete**.
+   1. In the left-hand panel, select **{{ ui-key.yacloud.postgresql.cluster.switch_backups }}**.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) to the right of the backup you want to delete.
+   1. Select **{{ ui-key.yacloud.mdb.cluster.backups.button_delete }}**.
+   1. Confirm deletion and click **{{ ui-key.yacloud.mdb.cluster.backups.action_delete-backup }}**.
+
+- CLI
+
+   {% include [cli-install](../../_includes/cli-install.md) %}
+
+   {% include [default-catalogue](../../_includes/default-catalogue.md) %}
+
+   To delete a backup:
+
+   1. View a description of the CLI command to delete a {{ PG }} cluster backup:
+
+      ```bash
+      {{ yc-mdb-pg }} backup delete --help
+      ```
+
+   1. Request the deletion of a backup by specifying its ID:
+
+      ```bash
+      {{ yc-mdb-pg }} backup delete <backup_ID>
+      ```
+
+   You can retrieve the backup ID with a [list of backups](#list-backups).
 
 - API
 

@@ -1,4 +1,9 @@
-# Deleting backend group
+---
+title: "How to delete a backend group"
+description: "Follow this guide to delete a backend group."
+---
+
+# Deleting a backend group
 
 {% note warning %}
 
@@ -13,12 +18,12 @@ To delete a backend group:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder where the backend group was created.
-   1. Select **{{ alb-name }}**.
-   1. On the left-hand panel, select ![image](../../_assets/backgrs.svg) **Backend groups**.
-   1. Click ![image](../../_assets/horizontal-ellipsis.svg) next to the backend group name and select **Delete**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+   1. In the left-hand panel, select ![image](../../_assets/backgrs.svg) **{{ ui-key.yacloud.alb.label_backend-groups }}**.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) next to the backend group name and select **{{ ui-key.yacloud.common.delete }}**.
 
-      To do this with multiple groups, select the groups to delete from the list and click **Delete** at the bottom of the screen.
-   1. In the window that opens, click **Delete**.
+      To do this with multiple groups, select the groups to delete from the list and click **{{ ui-key.yacloud.common.delete }}** at the bottom of the screen.
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -35,7 +40,7 @@ To delete a backend group:
    1. Run the command, specifying the name of the backend group you want to delete:
 
       ```bash
-      yc alb backend-group delete --name <backend group name>
+      yc alb backend-group delete --name <backend_group_name>
       ```
 
       To check the deletion, get a list of backend groups by running the command:
@@ -48,20 +53,20 @@ To delete a backend group:
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about the {{ TF }}, [see our documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
    1. Open the {{ TF }} configuration file and delete the fragment with the backend group description.
 
       Sample backend group description in the {{ TF }} configuration:
 
       ```hcl
       resource "yandex_alb_backend_group" "test-backend-group" {
-        name                     = "<backend group name>"
+        name                     = "<backend_group_name>"
 
         http_backend {
-          name                   = "<backend name>"
+          name                   = "<backend_name>"
           weight                 = 1
           port                   = 80
-          target_group_ids       = ["<target group ID>"]
+          target_group_ids       = ["<target_group_ID>"]
           load_balancing_config {
             panic_threshold      = 90
           }    

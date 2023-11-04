@@ -28,8 +28,8 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
    * Using {{ TF }}
 
-      1. If you do not have {{ TF }} yet, [install and configure it](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-      1. Download [the file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
+      1. {% include [terraform-install](../../_includes/terraform-install.md) %}
+      1. Download the [file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
       1. Download the [kafka-greenplum.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/kafka-greenplum.tf) configuration file to the same working directory.
 
          This file describes:
@@ -48,7 +48,7 @@ If you no longer need the resources you created, [delete them](#clear-out).
          terraform validate
          ```
 
-         If there are any errors in the configuration files, {{ TF }} will point to them.
+         If there are any errors in the configuration files, {{ TF }} will point them out.
 
       1. Create the required infrastructure:
 
@@ -83,7 +83,7 @@ Create a file named `sample.json` with test data on your running instance:
 
 ```json
 {
-    "device_id": "iv9a94th6rztooxh5ur2",
+    "device_id": "iv9a94th6rzt********",
     "datetime": "2020-06-05 17:27:00",
     "latitude": 55.70329032,
     "longitude": 37.65472196,
@@ -102,7 +102,7 @@ Create a file named `sample.json` with test data on your running instance:
 1. [Create a source endpoint](../../data-transfer/operations/endpoint/source/kafka.md) with the `{{ KF }}` type and specify the following items for it:
 
    * **{{ ui-key.yc-data-transfer.data-transfer.console.form.kafka.console.form.kafka.KafkaSourceConnection.topic_name.title }}**: `sensors`.
-   * `json` conversion rules. In the **{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.ConvertRecordOptions.data_schema.title }}** field, select `JSON specification` and copy the following field specification in the form that opens:
+   * `json` conversion rules. In the **{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.ConvertRecordOptions.data_schema.title }}** field, select `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.DataSchema.json_fields.title }}` and copy and paste the following field specification into the form that opens:
 
    {% cut "sensors-specification" %}
 
@@ -157,7 +157,7 @@ Create a file named `sample.json` with test data on your running instance:
 
    * Manually
 
-      1. [Create a transfer](../../data-transfer/operations/transfer.md#create) with a _{{ dt-type-repl }}_ type that will use the created endpoints.
+      1. [Create a transfer](../../data-transfer/operations/transfer.md#create) of the _{{ dt-type-repl }}_ type that will use the created endpoints.
       1. [Activate the transfer](../../data-transfer/operations/transfer.md#activate) and wait for its status to change to {{ dt-status-repl }}.
 
    * Using {{ TF }}
@@ -174,7 +174,7 @@ Create a file named `sample.json` with test data on your running instance:
          terraform validate
          ```
 
-         If there are any errors in the configuration files, {{ TF }} will point to them.
+         If there are any errors in the configuration files, {{ TF }} will point them out.
 
       1. Create the required infrastructure:
 
@@ -192,13 +192,13 @@ Make sure the data from the topic in the source {{ mkf-name }} cluster is being 
 
    ```bash
    jq -rc . sample.json | kafkacat -P \
-      -b <broker host FQDN>:9091 \
+      -b <broker_host_FQDN>:9091 \
       -t sensors \
       -k key \
       -X security.protocol=SASL_SSL \
       -X sasl.mechanisms=SCRAM-SHA-512 \
-      -X sasl.username="<username in the source cluster>" \
-      -X sasl.password="<user password in the source cluster>" \
+      -X sasl.username="<<username_in_the_source_cluster>" \
+      -X sasl.password="<user_password_in_the_source_cluster>" \
       -X ssl.ca.location={{ crt-local-dir }}{{ crt-local-file }} -Z
    ```
 
@@ -240,9 +240,9 @@ Some resources are not free of charge. To avoid paying for them, delete the reso
          terraform validate
          ```
 
-         If there are any errors in the configuration files, {{ TF }} will point to them.
+         If there are any errors in the configuration files, {{ TF }} will point them out.
 
-      1. Confirm the resources have been updated:
+      1. Confirm updating the resources.
 
          {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

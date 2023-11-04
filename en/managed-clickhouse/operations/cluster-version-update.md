@@ -41,7 +41,7 @@ Make sure this does not affect your applications:
 
 1. See the {{ CH }} [changelog](https://clickhouse.com/docs/category/changelog) to check how updates might affect your applications.
 1. Try updating the version on a test cluster. You can deploy it from a backup of the main cluster. In this case, you will only recover MergeTree tables.
-1. [Make a backup](cluster-backups.md) of the main cluster before updating the version.
+1. [Create a backup](cluster-backups.md) of the main cluster before updating the version.
 
 ## Updating the version {#start-update}
 
@@ -49,11 +49,11 @@ Make sure this does not affect your applications:
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), open the **{{ mch-name }}** page in the folder where you want to update the {{ CH }} version.
+   1. In the [management console]({{ link-console-main }}), open the **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}** page in the folder where you want to update the {{ CH }} version.
    1. In the list of clusters, select the one to change.
-   1. Click **Edit cluster**.
-   1. Select the desired version in the **Version** field under **Basic parameters**.
-   1. Click **Save changes**.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_base }}**, select the appropriate version in the **{{ ui-key.yacloud.mdb.forms.base_field_version }}** field.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
    When the change starts, the cluster status switches to **UPDATING**. Wait for the operation to complete and then check the cluster version.
 

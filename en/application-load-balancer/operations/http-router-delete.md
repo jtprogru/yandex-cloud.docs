@@ -1,4 +1,9 @@
-# Deleting HTTP router
+---
+title: "How to delete an HTTP router"
+description: "Follow this guide to delete an HTTP router."
+---
+
+# Deleting an HTTP router
 
 {% note warning %}
 
@@ -13,12 +18,12 @@ To delete an HTTP router:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder where the HTTP router was created.
-   1. Select **{{ alb-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
    1. Select the router and click ![image](../../_assets/horizontal-ellipsis.svg).
-   1. In the menu that opens, select **Delete**.
+   1. In the menu that opens, select **{{ ui-key.yacloud.common.delete }}**.
 
-      To do this with multiple HTTP routers, select the routers to delete from the list and click **Delete** at the bottom of the screen.
-   1. In the window that opens, click **Delete**.
+      To do this with multiple HTTP routers, select the routers to delete from the list and click **{{ ui-key.yacloud.common.delete }}** at the bottom of the screen.
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -35,7 +40,7 @@ To delete an HTTP router:
    1. Run the command, specifying the name of the HTTP router:
 
       ```bash
-      yc alb http-router delete --name <HTTP router name>
+      yc alb http-router delete --name <HTTP_router_name>
       ```
 
       To check the deletion, get a list of HTTP routers by running the command:
@@ -46,7 +51,7 @@ To delete an HTTP router:
 
 - {{ TF }}
 
-   For more information about the {{ TF }}, [see our documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To delete an HTTP router or virtual host created with {{ TF }}:
    1. Open the {{ TF }} configuration file and delete the fragment with the HTTP router or virtual host description (the `yandex_alb_http_router` and `yandex_alb_virtual_host` resources, respectively).
@@ -100,7 +105,7 @@ To delete an HTTP router:
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
    1. Apply the configuration changes:
 
       ```bash

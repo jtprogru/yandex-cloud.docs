@@ -1,16 +1,16 @@
-# Создание авторизованных ключей
+# Создание авторизованного ключа
 
-Чтобы создать [авторизованные ключи](../../concepts/authorization/key.md):
+Чтобы создать [авторизованный ключ](../../concepts/authorization/key.md):
 
 {% list tabs %}
 
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, которому принадлежит сервисный аккаунт.
-  1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
+  1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
   1. Выберите сервисный аккаунт и нажмите на строку с его именем.
-  1. Нажмите кнопку **Создать новый ключ** на верхней панели.
-  1. Выберите пункт **Создать авторизованный ключ**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create-key-popup }}** на верхней панели.
+  1. Выберите пункт **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create_key }}**.
   1. Выберите алгоритм шифрования.
   1. Задайте описание ключа, чтобы потом было проще найти его в консоли управления.
   1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.overview.popup-key_button_create }}**. В открывшемся окне:
@@ -23,7 +23,7 @@
 
   {% include [cli-install](../../../_includes/cli-install.md) %}
 
-  Создайте авторизованные ключи для сервисного аккаунта `my-robot`:
+  Создайте авторизованный ключ для сервисного аккаунта `my-robot`:
 
   ```bash
   yc iam key create --service-account-name my-robot -o my-robot-key.json
@@ -83,7 +83,7 @@
 
 - {{ TF }}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 

@@ -50,11 +50,16 @@ metadata:
     ingress.alb.yc.io/internal-ipv4-address: <string>
     ingress.alb.yc.io/internal-alb-subnet: <string>
     ingress.alb.yc.io/protocol: <string>
+    ingress.alb.yc.io/group-settings-name: <string>
     ingress.alb.yc.io/transport-security: <string>
     ingress.alb.yc.io/prefix-rewrite: <string>
     ingress.alb.yc.io/upgrade-types: <string>
     ingress.alb.yc.io/request-timeout: <string>
     ingress.alb.yc.io/idle-timeout: <string>
+    ingress.alb.yc.io/modify-header-response-append: <string>
+    ingress.alb.yc.io/modify-header-response-replace: <string>
+    ingress.alb.yc.io/modify-header-response-rename: <string>
+    ingress.alb.yc.io/modify-header-response-remove: <string>
 ```
 
 Где:
@@ -78,8 +83,6 @@ metadata:
   Все подсети одного балансировщика должны относиться к одной сети, из каждой [зоны доступности](../../overview/concepts/geo-scope.md) можно указать не более одной сети.
 
 * `ingress.alb.yc.io/security-groups` (`string`)
-
-  {% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
 
   Список [групп безопасности](../../vpc/concepts/security-groups.md) {{ vpc-name }} для балансировщика. Идентификаторы групп перечисляются через запятую, например:
 
@@ -122,6 +125,41 @@ metadata:
   * `http` — HTTP/1.1. Значение по умолчанию.
   * `http2` — HTTP/2.
   * `grpc` — gRPC.
+
+* `ingress.alb.yc.io/group-settings-name` (`string`)
+
+  Имя для настроек Ingress-группы, объединяемых в один балансировщик.
+
+  Чтобы задать настройки, создайте дополнительный ресурс `IngressGroupSettings`, например:
+
+  ```yaml
+  apiVersion: alb.yc.io/v1alpha1
+  kind: IngressGroupSettings
+  metadata:
+    name: non-default-settings
+  logOptions:
+    logGroupID: <идентификатор_лог-группы>
+    discardRules:
+      - discardPercent: 50
+        grpcCodes:
+          - OK
+          - CANCELLED
+          - UNKNOWN
+      - discardPercent: 67
+        httpCodeIntervals:
+          - HTTP_1XX
+      - discardPercent: 20
+        httpCodes:
+          - 200
+          - 404
+  ```
+
+  Укажите идентификатор лог-группы и параметры [правил отбрасывания логов](../concepts/application-load-balancer.md#discard-logs-rules):
+
+  * `httpCodes` — HTTP-коды.
+  * `httpCodeIntervals` — классы HTTP-кодов.
+  * `grpcCodes` — gRPC-коды.
+  * `discardPercent` — процент отбрасываемых логов.
 
 * `ingress.alb.yc.io/transport-security` (`string`)
 
@@ -186,6 +224,55 @@ metadata:
   Если аннотация не указана, соединение может простаивать в течение любого периода до истечения общего таймаута (аннотация `ingress.alb.yc.io/request-timeout`).
 
   В {{ alb-name }} таймаут будет настроен во всех HTTP-роутерах, созданных по ресурсу `Ingress`.
+
+* `ingress.alb.yc.io/modify-header-response-append` (`string`)
+
+  Добавляет строку к значению заголовка ответа. Заголовок и строка указываются в формате:
+
+  ```yaml
+  ingress.alb.yc.io/modify-header-response-append: <ключ>=<значение>
+  ```
+
+  Где:
+
+    * `<ключ>` — имя изменяемого заголовка.
+    * `<значение>` — строка, которая будет добавлена к значению заголовка.
+
+* `ingress.alb.yc.io/modify-header-response-replace` (`string`)
+
+  Заменяет значение заголовка ответа. Заголовок и его новое значение указываются в формате:
+
+  ```yaml
+  ingress.alb.yc.io/modify-header-response-replace: <ключ>=<значение>
+  ```
+
+  Где:
+
+    * `<ключ>` — имя изменяемого заголовка.
+    * `<значение>` — новое значение заголовка.
+
+* `ingress.alb.yc.io/modify-header-response-rename` (`string`)
+
+  Переименовывает заголовок ответа. Заголовок и его новое имя указываются в формате:
+
+  ```yaml
+  ingress.alb.yc.io/modify-header-response-rename: <ключ>=<значение>
+  ```
+
+  Где:
+
+    * `<ключ>` — имя изменяемого заголовка.
+    * `<значение>` — новое имя заголовка.
+
+* `ingress.alb.yc.io/modify-header-response-remove` (`string`)
+
+  Удаляет заголовок ответа. Заголовок для удаления указывается в формате:
+
+  ```yaml
+  ingress.alb.yc.io/modify-header-response-remove: <ключ>=true
+  ```
+
+  Где `<ключ>` — имя удаляемого заголовка.
 
 ## IngressSpec {#spec}
 

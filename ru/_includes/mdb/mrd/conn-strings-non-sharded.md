@@ -12,25 +12,25 @@
 
         ```bash
         redis-cli \
-            -h <FQDN любого хоста {{ RD }}> \
+            -h <FQDN_любого_хоста_{{ RD }}> \
             -p {{ port-mrd-sentinel }} \
             sentinel \
-            get-master-addr-by-name <имя кластера {{ RD }}> | head -n 1
+            get-master-addr-by-name <имя_кластера_{{ RD }}> | head -n 1
         ```
 
     1. Подключитесь к хосту с этим адресом:
 
         ```bash
         redis-cli \
-            -h <адрес хоста-мастера {{ RD }}> \
-            -a <пароль {{ RD }}>
+            -h <адрес_хоста-мастера_{{ RD }}> \
+            -a <пароль_{{ RD }}>
         ```
 
     **Подключение напрямую к мастеру:**
 
     ```bash
     redis-cli \
-        -h c-<идентификатор кластера>.rw.{{ dns-zone }} \
+        -h c-<идентификатор_кластера>.rw.{{ dns-zone }} \
         -a <пароль>
     ```
 
@@ -43,6 +43,8 @@
     {% include [default-connstring](default-connstring.md) %}
 
 {% endlist %}
+
+{% include [see-fqdn](../../../_includes/mdb/mrd/fqdn-host.md) %}
 
 {% include [Подключение к кластеру](./connect/bash/after-connect.md) %}
 
@@ -70,10 +72,10 @@
     	conn := redis.NewUniversalClient(
     		&redis.UniversalOptions{
     			Addrs: []string{
-    				"<FQDN хоста 1 {{ RD }}>:{{ port-mrd-sentinel }}",
+    				"<FQDN_хоста_1_{{ RD }}>:{{ port-mrd-sentinel }}",
     				...
-    				"<FQDN хоста N {{ RD }}>:{{ port-mrd-sentinel }}"},
-    			MasterName: "<имя кластера {{ RD }}>",
+    				"<FQDN_хоста_N_{{ RD }}>:{{ port-mrd-sentinel }}"},
+    			MasterName: "<имя_кластера_{{ RD }}>",
     			Password:   "<пароль>",
     			ReadOnly:   false,
     		},
@@ -108,7 +110,7 @@
     func main() {
     	conn := redis.NewUniversalClient(
     		&redis.UniversalOptions{
-    			Addrs:    []string{"c-<идентификатор кластера>.rw.{{ dns-zone }}:{{ port-mrd }}"},
+    			Addrs:    []string{"c-<идентификатор_кластера>.rw.{{ dns-zone }}:{{ port-mrd }}"},
     			Password: "<пароль>",
     			ReadOnly: false,
     		},
@@ -144,7 +146,7 @@
     )
 
     const (
-    	cert = "/home/<домашняя директория>/.redis/{{ crt-local-file }}"
+    	cert = "/home/<домашняя_директория>/.redis/{{ crt-local-file }}"
     )
 
     func main() {
@@ -160,7 +162,7 @@
 
     	conn := redis.NewUniversalClient(
     		&redis.UniversalOptions{
-    			Addrs:    []string{"c-<идентификатор кластера>.rw.{{ dns-zone }}:{{ port-mrd-tls }}"},
+    			Addrs:    []string{"c-<идентификатор_кластера>.rw.{{ dns-zone }}:{{ port-mrd-tls }}"},
     			Password: "<пароль>",
     			ReadOnly: false,
     			SSLConfig: &tls.Config{
@@ -186,6 +188,8 @@
 
 {% endlist %}
 
+{% include [see-fqdn](../../../_includes/mdb/mrd/fqdn-host.md) %}
+
 {% include [Подключение к кластеру](./connect/go/after-connect.md) %}
 
 ### Java {#java}
@@ -209,13 +213,13 @@
 
     public class App {
       public static void main(String[] args) {
-        String redisName = "<имя кластера {{ RD }}>";
+        String redisName = "<имя_кластера_{{ RD }}>";
         String redisPass = "<пароль>";
 
         HashSet sentinels = new HashSet();
-        sentinels.add("<FQDN хоста 1 {{ RD }}>:{{ port-mrd-sentinel }}");
+        sentinels.add("<FQDN_хоста_1_{{ RD }}>:{{ port-mrd-sentinel }}");
         ...
-        sentinels.add("<FQDN хоста N {{ RD }}>:{{ port-mrd-sentinel }}");
+        sentinels.add("<FQDN_хоста_N_{{ RD }}>:{{ port-mrd-sentinel }}");
 
         try {
           JedisSentinelPool pool = new JedisSentinelPool(redisName, sentinels);
@@ -244,7 +248,7 @@
 
     public class App {
       public static void main(String[] args) {
-        String redisHost = "c-<идентификатор кластера>.rw.{{ dns-zone }}";
+        String redisHost = "c-<идентификатор_кластера>.rw.{{ dns-zone }}";
         String redisPass = "<пароль>";
 
         try {
@@ -277,11 +281,11 @@
 
     public class App {
       public static void main(String[] args) {
-        String redisHost = "c-<идентификатор кластера>.rw.{{ dns-zone }}";
-        String redisPass = "<пароль кластера>";
+        String redisHost = "c-<идентификатор_кластера>.rw.{{ dns-zone }}";
+        String redisPass = "<пароль_кластера>";
 
-        System.setProperty("javax.net.ssl.trustStore", "/home/<домашняя директория>/.redis/YATrustStore");
-        System.setProperty("javax.net.ssl.trustStorePassword", "<пароль защищенного хранилища сертификатов>");
+        System.setProperty("javax.net.ssl.trustStore", "/home/<домашняя_директория>/.redis/YATrustStore");
+        System.setProperty("javax.net.ssl.trustStorePassword", "<пароль_защищенного_хранилища_сертификатов>");
 
         SSLParameters sslParameters = new SSLParameters();
         DefaultJedisClientConfig jedisClientConfig = DefaultJedisClientConfig.builder().
@@ -305,6 +309,8 @@
 
 {% endlist %}
 
+{% include [see-fqdn](../../../_includes/mdb/mrd/fqdn-host.md) %}
+
 {% include [Подключение к кластеру](./connect/java/after-connect.md) %}
 
 ### Node.js {#nodejs}
@@ -325,11 +331,11 @@
 
     const conn = new Redis({
         sentinels: [
-            { host: "<FQDN хоста 1 {{ RD }}>", port: {{ port-mrd-sentinel }} },
+            { host: "<FQDN_хоста_1_{{ RD }}>", port: {{ port-mrd-sentinel }} },
             ...
-            { host: "<FQDN хоста N {{ RD }}>", port: {{ port-mrd-sentinel }} },
+            { host: "<FQDN_хоста_N_{{ RD }}>", port: {{ port-mrd-sentinel }} },
         ],
-        name: "<имя кластера {{ RD }}>",
+        name: "<имя_кластера_{{ RD }}>",
         password: "<пароль>"
     });
 
@@ -361,7 +367,7 @@
     const Redis = require("ioredis");
 
     const conn = new Redis({
-        host: "c-<идентификатор кластера>.rw.{{ dns-zone }}",
+        host: "c-<идентификатор_кластера>.rw.{{ dns-zone }}",
         port: {{ port-mrd }},
         password: "<пароль>"
     });
@@ -395,11 +401,11 @@
     const Redis = require("ioredis");
 
     const conn = new Redis({
-        host: "c-<идентификатор кластера>.rw.{{ dns-zone }}",
+        host: "c-<идентификатор_кластера>.rw.{{ dns-zone }}",
         port: {{ port-mrd-tls }},
         password: "<пароль>",
         tls: {
-            ca: fs.readFileSync("/home/<домашняя директория>/.redis/{{ crt-local-file }}"),
+            ca: fs.readFileSync("/home/<домашняя_директория>/.redis/{{ crt-local-file }}"),
         }
     });
 
@@ -423,6 +429,8 @@
 
 {% endlist %}
 
+{% include [see-fqdn](../../../_includes/mdb/mrd/fqdn-host.md) %}
+
 {% include [Подключение к кластеру](./connect/nodejs/after-connect.md) %}
 
 ### PHP {#php}
@@ -443,13 +451,13 @@
     Predis\Autoloader::register();
 
     $sentinels = [
-        "<FQDN хоста 1 {{ RD }}>:{{ port-mrd-sentinel }}>",
+        "<FQDN_хоста_1_{{ RD }}>:{{ port-mrd-sentinel }}>",
         ...
-        "<FQDN хоста N {{ RD }}>:{{ port-mrd-sentinel }}>",
+        "<FQDN_хоста_N_{{ RD }}>:{{ port-mrd-sentinel }}>",
     ];
     $options = [
         "replication" => "sentinel",
-        "service" => "<имя кластера {{ RD }}>",
+        "service" => "<имя_кластера_{{ RD }}>",
         "parameters" => [
             "password" => "<пароль>",
         ],
@@ -473,7 +481,7 @@
     require "Predis/Autoloader.php";
     Predis\Autoloader::register();
 
-    $host = ["c-<идентификатор кластера>.rw.{{ dns-zone }}:{{ port-mrd }}"];
+    $host = ["c-<идентификатор_кластера>.rw.{{ dns-zone }}:{{ port-mrd }}"];
     $options = [
         "parameters" => [
             "password" => "<пароль>",
@@ -498,12 +506,12 @@
     require "Predis/Autoloader.php";
     Predis\Autoloader::register();
 
-    $host = ["c-<идентификатор кластера>.rw.{{ dns-zone }}:{{ port-mrd-tls }}"];
+    $host = ["c-<идентификатор_кластера>.rw.{{ dns-zone }}:{{ port-mrd-tls }}"];
     $options = [
         "parameters" => [
             "scheme" => "tls",
             "ssl" => [
-                "cafile" => "/home/<домашняя директория>/.redis/{{ crt-local-file }}",
+                "cafile" => "/home/<домашняя_директория>/.redis/{{ crt-local-file }}",
                 "verify_peer" => true,
                 "verify_peer_name" => false,
             ],
@@ -521,6 +529,8 @@
     ```
 
 {% endlist %}
+
+{% include [see-fqdn](../../../_includes/mdb/mrd/fqdn-host.md) %}
 
 {% include [Подключение к кластеру](./connect/php/after-connect.md) %}
 
@@ -545,11 +555,11 @@ pip3 install redis
     from redis.sentinel import Sentinel
 
     sentinels = [
-        "<FQDN хоста 1 {{ RD }}>",
+        "<FQDN_хоста_1_{{ RD }}>",
         ...
-        "<FQDN хоста N {{ RD }}>"
+        "<FQDN_хоста_N_{{ RD }}>"
     ]
-    name = "<имя кластера {{ RD }}>"
+    name = "<имя_кластера_{{ RD }}>"
     pwd = "<пароль>"
 
     sentinel = Sentinel([(h, {{ port-mrd-sentinel }}) for h in sentinels], socket_timeout=0.1)
@@ -568,7 +578,7 @@ pip3 install redis
     import redis
 
     r = redis.StrictRedis(
-        host="c-<идентификатор кластера>.rw.{{ dns-zone }}",
+        host="c-<идентификатор_кластера>.rw.{{ dns-zone }}",
         port={{ port-mrd }},
         password="<пароль>",
     )
@@ -585,11 +595,11 @@ pip3 install redis
     import redis
 
     r = redis.StrictRedis(
-        host="c-<идентификатор кластера>.rw.{{ dns-zone }}",
+        host="c-<идентификатор_кластера>.rw.{{ dns-zone }}",
         port={{ port-mrd-tls }},
         password="<пароль>",
         ssl=True,
-        ssl_ca_certs="/home/<домашняя директория>/.redis/{{ crt-local-file }}",
+        ssl_ca_certs="/home/<домашняя_директория>/.redis/{{ crt-local-file }}",
     )
 
     r.set("foo", "bar")
@@ -597,6 +607,8 @@ pip3 install redis
     ```
 
 {% endlist %}
+
+{% include [see-fqdn](../../../_includes/mdb/mrd/fqdn-host.md) %}
 
 {% include [Подключение к кластеру](./connect/python/after-connect.md) %}
 
@@ -618,13 +630,13 @@ pip3 install redis
     require 'redis'
 
     SENTINELS = [
-      { host: '<FQDN хоста 1 {{ RD }}>', port: {{ port-mrd-sentinel }} },
+      { host: '<FQDN_хоста_1_{{ RD }}>', port: {{ port-mrd-sentinel }} },
       ...
-      { host: '<FQDN хоста N {{ RD }}>', port: {{ port-mrd-sentinel }} }
+      { host: '<FQDN_хоста_N_{{ RD }}>', port: {{ port-mrd-sentinel }} }
     ]
 
     conn = Redis.new(
-      host: '<имя кластера {{ RD }}>',
+      host: '<имя_кластера_{{ RD }}>',
       sentinels: SENTINELS,
       role: 'master',
       password: '<пароль>'
@@ -646,7 +658,7 @@ pip3 install redis
     require 'redis'
 
     conn = Redis.new(
-      host: 'c-<идентификатор кластера>.rw.{{ dns-zone }}',
+      host: 'c-<идентификатор_кластера>.rw.{{ dns-zone }}',
       port: {{ port-mrd }},
       password: '<пароль>'
     )
@@ -667,11 +679,11 @@ pip3 install redis
     require 'redis'
 
     conn = Redis.new(
-      host: 'c-<идентификатор кластера>.rw.{{ dns-zone }}',
+      host: 'c-<идентификатор_кластера>.rw.{{ dns-zone }}',
       port: {{ port-mrd-tls }},
       password: '<пароль>',
       ssl: true,
-      ssl_params: { ca_file: '/home/<домашняя директория>/.redis/{{ crt-local-file }}' },
+      ssl_params: { ca_file: '/home/<домашняя_директория>/.redis/{{ crt-local-file }}' },
     )
 
     conn.set('foo', 'bar')
@@ -681,5 +693,7 @@ pip3 install redis
     ```
 
 {% endlist %}
+
+{% include [see-fqdn](../../../_includes/mdb/mrd/fqdn-host.md) %}
 
 {% include [Подключение к кластеру](./connect/ruby/after-connect.md) %}

@@ -18,34 +18,34 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Откройте сервис **{{ serverless-containers-name }}**.
+    1. Откройте сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
 
-    1. На панели слева выберите ![image](../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
         * Введите имя и описание триггера.
-        * В поле **Тип** выберите **{{ objstorage-name }}**.
-        * В поле **Запускаемый ресурс** выберите **Контейнер**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите `{{ ui-key.yacloud.serverless-functions.triggers.form.label_storage }}`.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите `{{ ui-key.yacloud.serverless-functions.triggers.form.label_container }}`.
 
-    1. В блоке **Настройки {{ objstorage-name }}**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_storage }}**:
 
-        * В поле **Бакет** выберите бакет, для событий с объектами которого хотите создать триггер.
-        * В поле **Типы событий** выберите события, после наступления которых триггер будет запускаться.
-        * (опционально) В поле **Префикс ключа объекта** введите префикс для фильтрации.
-        * (опционально) В поле **Суффикс ключа объекта** введите суффикс для фильтрации.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_bucket }}** выберите бакет, для событий с объектами которого хотите создать триггер.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_event-types }}** выберите события, после наступления которых триггер будет запускаться.
+        * (Опционально) В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_prefix }}** введите префикс для фильтрации.
+        * (Опционально) В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_suffix }}** введите суффикс для фильтрации.
 
     1. {% include [container-settings](../../_includes/serverless-containers/container-settings.md) %}
 
-    1. (Опционально) В блоке **Настройки повторных запросов**:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
         {% include [repeat-request](../../_includes/serverless-containers/repeat-request.md) %}
 
-    1. (Опционально) В блоке **Настройки Dead Letter Queue** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -55,6 +55,7 @@
 
     Чтобы создать триггер, который вызывает контейнер, выполните команду:
 
+    
     ```bash
     yc serverless trigger create object-storage \
       --name <имя_триггера> \
@@ -62,6 +63,8 @@
       --prefix '<префикс_ключа_объекта>' \
       --suffix '<суффикс_ключа_объекта>' \
       --events 'create-object','delete-object','update-object' \
+      --batch-size <размер_группы> \
+      --batch-cutoff <максимальное_время_ожидания> \
       --invoke-container-id <идентификатор_контейнера> \
       --invoke-container-service-account-id <идентификатор_сервисного_аккаунта> \
       --retry-attempts 1 \
@@ -69,6 +72,7 @@
       --dlq-queue-id <идентификатор_очереди_Dead_Letter_Queue> \
       --dlq-service-account-id <идентификатор_сервисного_аккаунта>
     ```
+  
 
     Где:
 
@@ -77,11 +81,14 @@
     * `--prefix` — [префикс](../concepts/trigger/os-trigger.md#filter) ключа объекта в бакете. Необязательный параметр. Используется для фильтрации.
     * `--suffix` — [суффикс](../concepts/trigger/os-trigger.md#filter) ключа объекта в бакете. Необязательный параметр. Используется для фильтрации.
     * `--events` — [события](../concepts/trigger/os-trigger.md#event), после наступления которых триггер запускается.
+
+    {% include [batch-settings-events](../../_includes/serverless-containers/batch-settings-events.md) %}
     
     {% include [trigger-cli-param](../../_includes/serverless-containers/trigger-cli-param.md) %}
 
     Результат:
 
+    
     ```text
     id: a1s5msktij**********
     folder_id: b1gmit33hg**********
@@ -96,6 +103,9 @@
         bucket_id: s3-for-trigger
         prefix: dev
         suffix: 12.jpg
+        batch_settings:
+          size: "3"
+          cutoff: 20s
         invoke_container:
           container_id: bba5jb38o8**********
           service_account_id: aje3932acd**********
@@ -107,6 +117,7 @@
             service-account-id: aje3932acd**********
     status: ACTIVE
     ```
+  
 
 - API
 

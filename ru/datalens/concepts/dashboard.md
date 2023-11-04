@@ -25,6 +25,8 @@ _Дашборд_ — страница или набор страниц, на к�
   * [{#T}](../operations/dashboard/add-access-message.md)
   * [{#T}](../operations/dashboard/add-chart.md)
   * [{#T}](../operations/dashboard/add-selector.md)
+  * [{#T}](../operations/dashboard/add-text.md)
+  * [{#T}](../operations/dashboard/add-title.md)
   * [Создание алиаса](../operations/dashboard/create-alias.md)
   * [{#T}](../operations/dashboard/edit-alias.md)
   * [{#T}](../operations/dashboard/manage-access.md)
@@ -32,7 +34,7 @@ _Дашборд_ — страница или набор страниц, на к�
   * [{#T}](../operations/dashboard/auto-update.md)
   * [{#T}](../operations/dashboard/display-modes.md)
 
+
 #### См. также {#see-also}
 
-* [{#T}](optimization_recommendations.md)
 * [{#T}](../security/index.md)

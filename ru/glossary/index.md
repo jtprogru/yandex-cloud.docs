@@ -23,6 +23,7 @@
 * [{#T}](cloud-server.md)
 * [{#T}](containerization.md)
 * [{#T}](sla.md)
+* [{#T}](backup.md)
 
 ## Хранение и обработка данных
 
@@ -54,8 +55,12 @@
 * [{#T}](cdn.md)
 * [{#T}](ssh-keygen.md)
 * [{#T}](rest-api.md)
+* [{#T}](grpc.md)
 * [{#T}](cors.md)
 * [{#T}](cli.md)
 
 ## Безопасность
 * [{#T}](ssl-certificate.md)
+* [{#T}](ipsec.md)
+* [{#T}](ddos.md)
+* [{#T}](waf.md)

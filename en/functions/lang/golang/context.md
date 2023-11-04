@@ -1,12 +1,14 @@
 # Go function invocation context
 
-_Invocation context_ is an object that is optionally accepted by the [request handler](handler.md). The object type is `context.Context`. It provides an interface for getting more information about Go function version properties:
+_Invocation context_ is an object that is optionally accepted by the [request handler](handler.md). It is a `context.Context` type object and provides an interface for getting more information about Go function version properties:
 * `lambdaRuntimeFunctionName`: The function ID (`string`).
 * `lambdaRuntimeFunctionVersion`: The function version ID (`string`).
 * `lambdaRuntimeMemoryLimit`: The amount of memory specified when creating the function version, MB (`int`).
 * `lambdaRuntimeRequestID`: The ID of the request being handled (`string`).
 
 To extract information from the invocation context, use its `Value(key)` method and pass it in the `key` parameter as a string with one of the keys described above.
+
+
 
 ### Authentication in the {{ yandex-cloud }} API {#token}
 

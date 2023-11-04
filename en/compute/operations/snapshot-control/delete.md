@@ -1,3 +1,8 @@
+---
+title: "How to delete a disk snapshot"
+description: "Follow this guide to delete a disk snapshot."
+---
+
 # Deleting a disk snapshot
 
 {% note warning %}
@@ -47,7 +52,7 @@ To delete a snapshot:
 
 - {{ TF }}
 
-   For more information about {{ TF }}, [see our documentation](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    If you created a snapshot with {{ TF }}, you can delete it:
    1. In the command line, go to the directory with the {{ TF }} configuration file.

@@ -28,6 +28,8 @@ The owner can create new folders and resources in this cloud, and manage access 
              --name new-folder
          ```
 
+         The folder naming requirements are as follows:
+
          {% include [name-format](../../_includes/name-format.md) %}
 
       * with a name and description:
@@ -52,10 +54,10 @@ The management console only allows you to change the name of a folder. To change
 
 - Management console
 
-   1. Select the folder on the management console [home page]({{ link-console-main }}). This page displays folders for the selected cloud. If necessary, [switch to another cloud](../../resource-manager/operations/cloud/switch-cloud.md).
-   2. Click ![image](../../_assets/options.svg) next to the folder and select **Rename**.
+   1. On the [home page]({{ link-console-main }}) of the management console, select the folder. This page displays folders for the selected cloud. If necessary, [switch to another cloud](../../resource-manager/operations/cloud/switch-cloud.md).
+   2. Click ![image](../../_assets/options.svg) next to the folder and select **{{ ui-key.yacloud.common.edit }}**.
    3. Enter a new name for the folder.
-   4. Click **Rename**.
+   4. Click **{{ ui-key.yacloud.iam.cloud.folders.popup-edit_button_save }}**.
 
 - CLI
 
@@ -64,7 +66,7 @@ The management console only allows you to change the name of a folder. To change
       ```
       $ yc resource-manager folder update --help
       ```
-   2. If you know the folder ID or name, proceed to the next step. If not, use one of these methods to get them:
+   2. If you know the folder ID or name, proceed to the next step. Otherwise, use one of these methods to get them:
 
       * Get a list of folders:
 
@@ -85,9 +87,9 @@ The management console only allows you to change the name of a folder. To change
          ```
 
          Where:
-         * `<SERVICE-NAME>` is the name of the service, such as `compute`.
-         * `<RESOURCE>`: The resource type, such as `instance`.
-         * `<RESOURCE-ID>` is the resource ID.
+         * `<SERVICE-NAME>`: Name of the service, such as `compute`.
+         * `<RESOURCE>`: Resource category, e.g., `instance`.
+         * `<RESOURCE-ID>`: Resource ID.
 
          For example, the `fhmp74bfis2aim728p2a` VM belongs to the `b1gpvjd9ir42nsng55ck` folder:
 
@@ -97,7 +99,7 @@ The management console only allows you to change the name of a folder. To change
          folder_id: b1gpvjd9ia42nsng55ck
          ...
          ```
-   3. Change the folder parameters, such as name and description. You can specify the folder to update by its name or ID.
+   3. Change the folder parameters, e.g., name and description. You can specify the folder to update by its name or ID.
 
       ```
       $ yc resource-manager folder update default \
@@ -106,6 +108,8 @@ The management console only allows you to change the name of a folder. To change
       ```
 
       The command will rename the `default` folder to `myfolder` and update its description.
+
+      The folder naming requirements are as follows:
 
       {% include [name-format](../../_includes/name-format.md) %}
 

@@ -4,14 +4,14 @@ A _call handler_ is a method used to process each Python function call. When cre
 
 {% note info %}
 
-At any given time, a single function instance processes only one request. This lets you use global variables without having to provide data integrity control.
+At any given time, a single function instance processes only one request. This allows you to use global variables without having to provide data integrity control.
 
 {% endnote %}
 
-When invoking the handler, the runtime passes the following arguments:
-1. Call body (`event` parameter):
-   * If the call body is a [JSON document](../../concepts/function-invoke.md#request), it's converted to `dict` using the `json.loads` method.
-   * If a function was invoked with the `integration=raw` request string parameter, the HTTP request body is passed to the function as-is (unprocessed).
+When invoking the handler, the runtime provides the following arguments:
+1. Request body (`event` parameter):
+   * If the request body is a [JSON document](../../concepts/function-invoke.md#request), it will be converted to `dict` using the `json.loads` method.
+   * If a function was invoked with the `?integration=raw` request string parameter, the HTTP request body is provided to the function as is (unprocessed).
 1. [Invocation context](context.md) (`context` parameter).
 
    The context contains the necessary information about the function version. The structure of this object is described in [{#T}](context.md).
@@ -65,7 +65,7 @@ def handler(event, context):
 Function invocation example:
 
 ```
-curl --data '{"hello": "world"}' -H 'Content-Type: application/json' https://functions.yandexcloud.net/d4eo2faf62**********?param=one
+curl --data '{"hello": "world"}' -H 'Content-Type: application/json' https://{{ sf-url }}/d4eo2faf62**********?param=one
 ```
 
 Result:
@@ -94,7 +94,7 @@ Result:
             "Accept": "*/*",
             "Content-Length": "18",
             "Content-Type": "application/json",
-            "Host": "functions.yandexcloud.net",
+            "Host": "{{ sf-url }}",
             "User-Agent": "curl/7.64.1",
             "X-Forwarded-For": "109.252.148.209",
             "X-Real-Remote-Address": "[109.252.148.209]:2816",
@@ -114,7 +114,7 @@ Result:
                 "application/json"
             ],
             "Host": [
-                "functions.yandexcloud.net"
+                "{{ sf-url }}"
             ],
             "User-Agent": [
                 "curl/7.64.1"

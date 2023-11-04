@@ -43,8 +43,6 @@ Where:
 
       * `gateway.alb.yc.io/security-groups` (`string`, required)
 
-         {% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
-
          List of {{ vpc-name }} [security groups](../../vpc/concepts/security-groups.md) for a load balancer. Group IDs are provided in a comma-separated list, such as:
 
          ```
@@ -114,7 +112,7 @@ Where:
 
       For instance, names like `example`, `example.com`, or `foo.example.com` are suitable, while `example.com/bar` and `-example.` are not.
 
-      The name may not be longer than 63 characters.
+      The name may be up to 63 characters long.
 
    * `hostname` (`string`)
 

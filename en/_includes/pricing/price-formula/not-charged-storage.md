@@ -1,6 +1,4 @@
 Standard storage resources are provided free of charge every month:
-
-* The first 1 GB of storage a month.
-* The first 10000 PUT, POST operations.
-* The first 100000 GET, HEAD operations.
-
+* First 1 GB of storage per month
+* First 10,000 PUT and POST operations
+* First 100,000 GET, HEAD, and OPTIONS operations

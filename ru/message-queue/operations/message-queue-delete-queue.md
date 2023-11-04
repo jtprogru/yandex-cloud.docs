@@ -7,24 +7,32 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, которому принадлежит очередь.
-  1. Откройте раздел **Message Queue**.
-  1. Нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) в строке очереди, которую требуется удалить.
-  1. В открывшемся меню нажмите кнопку **Удалить**.
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
+  1. В строке нужной очереди нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.delete }}**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.common.delete }}**.
   
 - AWS CLI
   
-  Выполните в терминале команду:
+  1. Получите URL очереди сообщений, которую нужно удалить:
   
-  ```
-  aws sqs delete-queue \
-    --queue-url <URL_очереди_сообщений> \
-    --endpoint <эндпоинт>/
-  ```
+     ```bash
+     aws sqs list-queues \
+       --endpoint <эндпойнт>
+     ```
 
-  Где:
-  * `queue-url` — URL очереди сообщений, например: `https://message-queue.{{ api-host }}/aoegtvhtp8ob9rqq8sto/000000000000002p01jp/sample-queue`.
-  * `endpoint` — эндпоинт, например: `https://message-queue.{{ api-host }}/`.
+     Где `--endpoint` — эндпоинт в значении `https://message-queue.{{ api-host }}/`.
+
+  2. Удалите очередь сообщений:
+  
+     ```
+     aws sqs delete-queue \
+       --queue-url <URL_очереди> \
+       --endpoint <эндпоинт>
+     ```
+
+     Где:
+     * `--queue-url` — URL очереди, которую нужно удалить.
+     * `--endpoint` — эндпоинт в значении `https://message-queue.{{ api-host }}/`.
 
 - {{ TF }}
 

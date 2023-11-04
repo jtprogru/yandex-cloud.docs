@@ -6,7 +6,7 @@ Starting April 17, 2023, the free {{ ya-360 }} version will be running with cert
 
 The [changes]({{ link-ya-360-notfree }}) will affect all {{ tracker-name }} users with a free-of-charge organization in {{ ya-360 }}.
 
-To see what organizations your {{ tracker-name }} is linked to, click ![](../_assets/tracker/svg/admin.svg) **Administration** → ![](../_assets/tracker/svg/organizations.svg) [**Organizations**]({{ link-tracker }}admin/orgs) in the left-hand panel. To check if you pay for an organization in {{ ya-360 }}, click **Organization management** in the section with the appropriate organization and go to **Payment and service plan**.
+To see what organizations your {{ tracker-name }} is linked to, click ![](../_assets/tracker/svg/admin.svg) **{{ ui-key.startrek.blocks-desktop_page-admin.breadcrumbs-title }}** → ![](../_assets/tracker/svg/organizations.svg) [**{{ ui-key.startrek.ui_components_page-admin_PageAdmin.menu-item-orgs }}**]({{ link-tracker }}admin/orgs) in the left-hand panel. To check if you pay for an organization in {{ ya-360 }}, click **{{ ui-key.startrek.ui_components_page-admin_OrgMainInfoPane.org-manage-button }}** in the section with the appropriate organization and go to **Payment and service plan**.
 
 {% cut "Why do I have an organization in {{ ya-360 }} if I only had {{ org-full-name }} set up?" %}
 
@@ -28,7 +28,7 @@ Unless you switch to the paid service plan, the following changes take effect st
 
 Starting March 2023, {{ org-full-name }} will support user group management in {{ tracker-name }}.
 
-{{ org-full-name }} administrators will also be administrators in {{ tracker-name }} (the `organization-manager.admin` and `organization-manager.organizations.owner` [roles](../organization/roles.md#admin)). You will be able to appoint an administrator by [granting](../organization/roles.md) a user the `tracker.admin` role.
+{{ org-full-name }} administrators will also be administrators in {{ tracker-name }} (the `organization-manager.admin` and `organization-manager.organizations.owner` [roles](../organization/security/index.md#admin)). You will be able to appoint an administrator by [granting](../organization/security/index.md) a user the `tracker.admin` role.
 
 {{ org-full-name }} will remain free of charge.
 

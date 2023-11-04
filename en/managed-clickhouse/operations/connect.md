@@ -11,15 +11,9 @@ You can connect to a cluster both using encryption via ports `{{ port-mch-cli }}
 
 ## Configuring security groups {#configuring-security-groups}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 {% include [sg-rules](../../_includes/mdb/sg-rules-connect.md) %}
 
-Settings of rules depend on the connection method you select:
+Rule settings depend on the connection method you select:
 
 {% list tabs %}
 
@@ -27,10 +21,10 @@ Settings of rules depend on the connection method you select:
 
    [Configure all security groups](../../vpc/operations/security-group-add-rule.md) in a cluster to allow incoming traffic on ports 8443 and 9440 from any IP address. To do this, create the following rules for incoming traffic:
 
-   * Port range: `8443`, `9440`.
-   * Protocol: `TCP`.
-   * Source: `CIDR`.
-   * CIDR blocks: `0.0.0.0/0`.
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `8443`, `9440`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
    A separate rule is created for each port.
 
@@ -38,30 +32,30 @@ Settings of rules depend on the connection method you select:
 
    1. [Configure all the security groups](../../vpc/operations/security-group-add-rule.md) of your cluster to allow incoming traffic on ports 8123, 8443, 9000, and 9440 from the security group where your VM is located. To do this, create the following rules for incoming traffic in these security groups:
 
-      * Port range: `8123` (or any of the other ports listed).
-      * Protocol: `TCP`.
-      * Source: `Security group`.
-      * Security group: If a cluster and a VM are in the same security group, select `Self` (`Self`) as the value. Otherwise, specify the VM security group.
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `8123` (or any of the other ports listed)
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-sg }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-sg-type }}**: If your cluster and VM are in the same security group, select `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-sg-type-self }}` (`Self`) as the value. Otherwise, specify the VM security group.
 
       A separate rule is created for each port.
 
-   1. [Configure the security group](../../vpc/operations/security-group-add-rule.md) where the VM is located to allow connections to the VM and traffic between the VM and the cluster hosts.
+   1. [Configure the security group](../../vpc/operations/security-group-add-rule.md) where the VM is located to enable connections to the VM and traffic between the VM and the cluster hosts.
 
-      Example of rules for a VM:
+      For example, you can set the following rules for a VM:
 
       * For incoming traffic:
-         * Port range: `22`.
-         * Protocol: `TCP`.
-         * Source: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `22`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
          This rule allows you to [connect](../../compute/operations/vm-connect/ssh.md#vm-connect) to the VM over SSH.
 
       * For outgoing traffic:
-         * Port range: `{{ port-any }}`.
-         * Protocol: `Any`.
-         * Destination type: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-any }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`)
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
          This rule allows all outgoing traffic, which enables you to both connect to the cluster and install the certificates and utilities the VMs need to connect to the cluster.
 
@@ -78,39 +72,43 @@ Security groups must be configured correctly for all subnets that will include c
 For more information about security groups, see [DB network and clusters](../concepts/network.md#security-groups).
 
 
-## Getting an SSL certificate {#get-ssl-cert}
+## Getting your SSL certificates {#get-ssl-cert}
 
-To use an encrypted connection, get an SSL certificate.
+To use an encrypted connection, get your SSL certificates:
 
-{% list tabs %}
-
-- Linux (Bash)
-
-   Run the following commands:
-
-   {% include [install-certificate](../../_includes/mdb/mch/install-certificate.md) %}
-
-
-- Windows (PowerShell)
-
-   1. Download and import the certificate:
-      ```powershell
-      mkdir -Force $HOME\.clickhouse; `
-      (Invoke-WebRequest {{ crt-web-path }}).RawContent.Split([Environment]::NewLine)[-31..-1] `
-        | Out-File -Encoding ASCII $HOME\.clickhouse\{{ crt-local-file }}; `
-      Import-Certificate `
-        -FilePath $HOME\.clickhouse\{{ crt-local-file }} `
-        -CertStoreLocation cert:\CurrentUser\Root
-      ```
-
-   1. Confirm that that you agree to install the certificate in the "Trusted Root Certification Authorities" store.
-
-   The certificate is saved to the `$HOME\.clickhouse\{{ crt-local-file }}` file.
-
-
-{% endlist %}
+{% include [install-certificate](../../_includes/mdb/mch/install-certificate.md) %}
 
 {% include [ide-ssl-cert](../../_includes/mdb/mdb-ide-ssl-cert.md) %}
+
+## {{ CH }} host FQDN {#fqdn}
+
+To connect to a host, you need its fully qualified domain name ([FQDN](../concepts/network.md#hostname)). You can obtain it in one of the following ways:
+
+* [Request a list of cluster hosts](../operations/hosts.md#list-hosts).
+* In the [management console]({{ link-console-main }}), copy the command for connecting to the cluster. This command contains the host FQDN. To get the command, go to the cluster page and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-connect }}**.
+* Look up the FQDN in the management console:
+
+   1. Go to the cluster page.
+   1. Go to **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}**.
+   1. Copy the **{{ ui-key.yacloud.mdb.cluster.hosts.host_column_name }}** column value.
+
+Cluster hosts also use [special FQDNs](#auto).
+
+### Selecting an available host automatically {#auto}
+
+If you do not want to manually connect to another host in case the current one becomes unavailable, use a special FQDN. It can be in one of the following formats:
+
+* `c-<cluster ID>.rw.{{ dns-zone }}` : To connect to an available cluster host.
+
+* `<shard name>.c-<cluster ID>.rw.{{ dns-zone }}` : To connect to an available [shard](../concepts/sharding.md) host.
+
+If the host an FQDN points to becomes unavailable, there may be a slight delay before the FQDN starts pointing to another available host.
+
+{% note warning %}
+
+If, under [cluster maintenance](../concepts/maintenance.md#maintenance-order), a special FQDN points to a host with no public access enabled, the cluster cannot be connected to from the internet. To avoid this, [enable public access](hosts.md#update) for all cluster hosts.
+
+{% endnote %}
 
 ## Connecting to cluster hosts from graphical IDEs {#connection-ide}
 
@@ -128,7 +126,7 @@ You can only use graphical IDEs to connect to public cluster hosts using SSL cer
       1. Select **File** → **New** → **Data Source** → **{{ CH }}**.
       1. On the **General** tab:
          1. Specify the connection parameters:
-            * **Host**: Any {{ CH }} host FQDN or a [special FQDN](#auto).
+            * **Host**: [Any {{ CH }} host FQDN](#fqdn) or a [special FQDN](#auto).
             * **Port**: `{{ port-mch-http }}`.
             * **User**, **Password**: DB user's name and password.
             * **Database**: Name of the DB to connect to.
@@ -136,7 +134,7 @@ You can only use graphical IDEs to connect to public cluster hosts using SSL cer
       1. On the **SSH/SSL** tab:
          1. Enable the **Use SSL** setting.
          1. Specify the path to the directory that contains the file with the downloaded [SSL certificate for the connection](#get-ssl-cert).
-   1. Click **Test Connection** to test the connection. If the connection is successful, you'll see the connection status and information about the DBMS and driver.
+   1. Click **Test Connection** to test the connection. If the connection is successful, you will see the connection status and information about the DBMS and driver.
    1. Click **OK** to save the data source.
 
 - DBeaver
@@ -146,7 +144,7 @@ You can only use graphical IDEs to connect to public cluster hosts using SSL cer
       1. Select **{{ CH }}** from the DB list.
       1. Click **Next**.
       1. Specify the connection parameters on the **Main** tab:
-         * **Host**: FQDN of any {{ CH }} host or a [special FQDN](#auto).
+         * **Host**: [FQDN of any {{ CH }} host](#fqdn) or a [special FQDN](#auto).
          * **Port**: `{{ port-mch-http }}`.
          * **DB/Schema**: Name of the DB to connect to.
          * Under **Authentication**, specify the DB user's name and password.
@@ -155,8 +153,66 @@ You can only use graphical IDEs to connect to public cluster hosts using SSL cer
          1. Specify the [SSL connection](#get-ssl-cert) parameters in the driver property list:
             * `ssl:true`.
             * `sslrootcert:<path to the saved SSL certificate file>`.
-   1. Click **Test connection ...** to test the connection. If the connection is successful, you'll see the connection status and information about the DBMS and driver.
+   1. Click **Test connection ...** to test the connection. If the connection is successful, you will see the connection status and information about the DBMS and driver.
    1. Click **Ready** to save the database connection settings.
+
+{% endlist %}
+
+## Before you connect from a Docker container {#connection-docker}
+
+To connect to a {{ mch-name }} cluster from a Docker container, add the following lines to the Dockerfile:
+
+{% list tabs %}
+
+
+- Connecting without using SSL
+
+   ```bash
+   # Connect the DEB repository.
+   RUN apt-get update && \
+       apt-get install wget --yes apt-transport-https ca-certificates dirmngr && \
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754 && \
+       echo "deb https://packages.{{ ch-domain }}/deb stable main" | tee \
+       /etc/apt/sources.list.d/clickhouse.list && \
+       # Install dependencies.
+       apt-get update && \
+       apt-get install wget clickhouse-client --yes && \
+       # Upload a configuration file for clickhouse-client.
+       mkdir --parents ~/.clickhouse-client && \
+       wget "https://{{ s3-storage-host }}/doc-files/clickhouse-client.conf.example" \
+            --output-document ~/.clickhouse-client/config.xml
+   ```
+
+
+- Connecting via SSL
+
+
+   ```bash
+   # Connect the DEB repository.
+   RUN apt-get update && \
+       apt-get install wget --yes apt-transport-https ca-certificates dirmngr && \
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754 && \
+       echo "deb https://packages.{{ ch-domain }}/deb stable main" | tee \
+       /etc/apt/sources.list.d/clickhouse.list && \
+       # Install dependencies.
+       apt-get update && \
+       apt-get install wget clickhouse-client --yes && \
+       # Upload a configuration file for clickhouse-client.
+       mkdir --parents ~/.clickhouse-client && \
+       wget "https://{{ s3-storage-host }}/doc-files/clickhouse-client.conf.example" \
+            --output-document ~/.clickhouse-client/config.xml && \
+       # Get SSL certificates.
+       mkdir --parents {{ crt-local-dir }} && \
+       wget "{{ crt-web-path-root }}" \
+            --output-document {{ crt-local-dir }}{{ crt-local-file-root }} && \
+       wget "{{ crt-web-path-int }}" \
+            --output-document {{ crt-local-dir }}{{ crt-local-file-int }} && \
+       chmod 655 \
+            {{ crt-local-dir }}{{ crt-local-file-root }} \
+            {{ crt-local-dir }}{{ crt-local-file-int }} && \
+       update-ca-certificates
+   ```
+
 
 {% endlist %}
 
@@ -175,9 +231,9 @@ When connecting from the browser, SQL queries are executed separately, without c
 
 {% include [web-sql-warning](../../_includes/mdb/mch/note-web-sql-console.md) %}
 
-To connect to a {{ mch-name }} cluster, log in to the [management console]({{ link-console-main }}), open the cluster page you need, and go to the **SQL** tab.
+To connect to a {{ mch-name }} cluster, log in to the [management console]({{ link-console-main }}), open the cluster page you need, and go to the **{{ ui-key.yacloud.clickhouse.cluster.switch_explore }}** tab.
 
-To allow connections, activate the **Access from management console** option when [creating a cluster](cluster-create.md) or [changing its settings](update.md#change-additional-settings).
+To allow connections, activate the **{{ ui-key.yacloud.mdb.forms.additional-field-websql }}** option when [creating a cluster](cluster-create.md) or [changing its settings](update.md#change-additional-settings).
 
 For more information, see [{#T}](web-sql-query.md).
 
@@ -191,7 +247,7 @@ To connect to a cluster host from the built-in SQL editor, specify the following
 https://<FQDN of any {{ CH }} host>:8443/play
 ```
 
-You can only connect to publicly accessible cluster hosts.
+You can only connect to publicly accessible cluster hosts. To learn how to get the FQDN of a host, see [this guide](#fqdn).
 
 To connect to a cluster by [selecting an available host automatically](#auto), use the following URL:
 
@@ -205,32 +261,16 @@ To make a query to the database, specify the username and password in the upper-
 
 {% include [conn-strings-environment](../../_includes/mdb/mdb-conn-strings-env.md) %}
 
-You can connect to public {{ CH }} cluster hosts only if you use an SSL certificate. Before connecting, [prepare a certificate](#get-ssl-cert).
+You can only connect to public {{ CH }} cluster hosts with your SSL certificates. Before connecting, [prepare your certificates](#get-ssl-cert).
 
-In the examples below, it is assumed that the `{{ crt-local-file }}` certificate:
-* Is located in the `{{ crt-local-dir }}` folder (for Ubuntu).
-* Is imported to the Trusted Root Certificate store (for Windows).
+In the examples below, it is assumed that the `{{ crt-local-file-root }}` and `{{ crt-local-file-int }}` certificates:
+* Are located in the `{{ crt-local-dir }}` directory (for Ubuntu).
+* Are imported to the Trusted Root Certificate store (for Windows).
 
-Connecting without an SSL certificate is only supported for hosts that are not publicly accessible. For connections to the database, traffic inside the virtual network isn't encrypted in this case.
+Connecting without any SSL certificates is only supported for hosts that are not publicly accessible. For connections to the database, traffic inside the virtual network is not encrypted in this case.
 
 {% include [see-fqdn-in-console](../../_includes/mdb/see-fqdn-in-console.md) %}
 
 If the connection to the cluster and the test query are successful, the {{ CH }} version is output.
 
 {% include [mch-connection-strings](../../_includes/mdb/mch-conn-strings.md) %}
-
-## Selecting an available host automatically {#auto}
-
-If you don't want to manually connect to another host in case the current one becomes unavailable, use an address like this:
-
-* `c-<cluster ID>.rw.{{ dns-zone }}` to connect to an available host in a cluster.
-
-* `<shard name>.c-<cluster ID>.rw.{{ dns-zone }}` to connect to an available host in a [shard](../concepts/sharding.md).
-
-If the host that this address points to becomes unavailable, there may be a slight delay before the address starts pointing to another available host.
-
-{% note warning %}
-
-If, under [cluster maintenance](../concepts/maintenance.md#maintenance-order), a special FQDN points to a host with no public access enabled, the cluster can't be connected to from the internet. To avoid this, [enable public access](hosts.md#update) for all cluster hosts.
-
-{% endnote %}

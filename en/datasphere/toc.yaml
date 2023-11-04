@@ -3,6 +3,14 @@ href: index.yaml
 items:
   - name: Getting started
     href: quickstart.md
+  - name: Organizing a workflow in {{ ml-platform-name }}
+    items:
+      - name: Setting up a project to work with a cloud
+        href: tutorials/basics.md
+      - name: Setting up a student community
+        href: tutorials/community-for-students.md
+      - name: Automating project setup
+        href: tutorials/automation-community-settings.md
   - name: Step-by-step guides
     items:
       - name: All guides
@@ -11,10 +19,12 @@ items:
         items:
           - name: Creating a community
             href: operations/community/create.md
-          - name: Adding user to a community
+          - name: Adding a user to a community
             href: operations/community/add-user.md
           - name: Community label management
             href: operations/community/manage-community-labels.md
+          - name: Community configuration management
+            href: operations/community/manage-community-config.md
           - name: Adding a communication channel
             href: operations/community/link-channel.md
           - name: Linking a billing account
@@ -23,6 +33,8 @@ items:
             href: operations/community/billing-details.md
           - name: Deleting a community
             href: operations/community/delete.md
+          - name: Removing a user from a community
+            href: operations/community/delete-user.md
       - name: Project management
         items:
           - name: Creating a project
@@ -41,6 +53,10 @@ items:
             href: operations/projects/restrictions.md
           - name: Deleting a notebook or project
             href: operations/projects/delete.md
+          - name: Removing a user from a project
+            href: operations/projects/delete-user.md
+          - name: Connecting to JupyterLab from a local IDE
+            href: operations/projects/remote-connect.md
       - name: Working in a notebook
         items:
           - name: Selecting computing resources
@@ -55,8 +71,12 @@ items:
             href: operations/projects/clear-kernel-state.md
           - name: Notebook code snippets
             href: operations/projects/snippets.md
+          - name: Clearing notebook cell outputs
+            href: operations/projects/clear-outputs.md
           - name: Working with Git
             href: operations/projects/work-with-git.md
+          - name: Running a job in {{ ml-platform-name }} Jobs
+            href: operations/projects/work-with-jobs.md
           - name: Running a Docker container in a separate cell
             href: operations/user-images-cell.md
       - name: Working with resources
@@ -71,9 +91,15 @@ items:
             href: operations/user-images.md
           - name: Working with datasets
             href: operations/data/dataset.md
+          - name: Working with S3 connectors
+            href: operations/data/s3-connectors.md
+          - name: Working with models
+            href: operations/data/models.md
       - name: Connecting to data sources
         items:
-          - name: Connecting to S3 storage
+          - name: Connecting to an S3 storage
+            href: operations/data/s3-connectors.md
+          - name: Connecting to S3 using the boto3 library
             href: operations/data/connect-to-s3.md
           - name: Connecting to a {{ CH }} database
             href: operations/data/connect-to-clickhouse.md
@@ -115,7 +141,7 @@ items:
     items:
       - name: About Yandex DataSphere
         href: concepts/index.md
-      - name: Relationships between resources in DataSphere
+      - name: DataSphere resource relationships
         href: concepts/resource-model.md
       - name: Communities
         href: concepts/community.md
@@ -141,6 +167,8 @@ items:
             href: concepts/async.md
           - name: Computing on Apache Spark™ clusters
             href: concepts/data-proc.md
+      - name: DataSphere Jobs
+        href: concepts/jobs.md
       - name: Resources
         items:
           - name: Overview
@@ -155,10 +183,18 @@ items:
             href: concepts/dataset.md
           - name: '{{ dataproc-name }} templates'
             href: concepts/data-proc-template.md
+          - name: S3 connectors
+            href: concepts/s3-connector.md
+          - name: Models
+            href: concepts/models/index.md
       - name: Deploying models
         href: concepts/deploy/index.md
+      - name: Foundation models
+        href: concepts/models/foundation-models.md
       - name: Quotas and limits
         href: concepts/limits.md
+      - name: Special terms for educational institutions
+        href: concepts/freetier.md
   - name: Tutorials
     items:
       - name: All tutorials
@@ -177,10 +213,14 @@ items:
           Web analytics with funnels and cohorts calculated based on Yandex
           Metrica data
         href: tutorials/data-from-metrica-yc-visualization.md
-      - name: Running computations on a schedule
+      - name: Running scheduled computations
         href: tutorials/regular-launch.md
       - name: Running computations using the API
         href: tutorials/batch-code-execution.md
+      - name: Training a model on data from {{ objstorage-full-name }}
+        href: tutorials/s3-to-datasphere.md
+      - name: Creating an MLFlow server for logging experiments and artifacts
+        href: tutorials/mlflow-datasphere.md
   - name: API reference
     items:
       - name: Overview
@@ -193,10 +233,10 @@ items:
             href: api-ref/grpc/index.md
           - name: CommunityService
             href: api-ref/grpc/community_service.md
-          - name: ProjectDataService
-            href: api-ref/grpc/project_data_service.md
           - name: ProjectService
             href: api-ref/grpc/project_service.md
+          - name: ProjectJobService
+            href: api-ref/grpc/project_job_service.md
           - name: OperationService
             href: api-ref/grpc/operation_service.md
       - name: REST

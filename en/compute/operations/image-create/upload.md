@@ -17,7 +17,7 @@ Major virtualization systems are supported.
 
 {% note warning %}
 
-In {{ compute-name }}, you can only create images from files uploaded to {{ objstorage-name }}. You can also migrate a VM using [Hystax Acura](../../../tutorials/infrastructure-management/hystax-migration.md).
+In {{ compute-name }}, you can only create images using files uploaded to {{ objstorage-name }}. You can also migrate a VM using [Hystax Acura](../../../tutorials/infrastructure-management/hystax-migration.md).
 
 {% endnote %}
 
@@ -30,7 +30,7 @@ For setup instructions, see [{#T}](custom-image.md).
 ## Upload an image file to {{ objstorage-name }} {#upload-file}
 
 Upload your image to {{ objstorage-name }} and get a link to the uploaded image:
-1. If you do not have a [bucket](../../../storage/concepts/bucket.md) in {{ objstorage-name }}, [create](../../../storage/operations/buckets/create.md) one.
+1. If you do not have a [bucket](../../../storage/concepts/bucket.md) in {{ objstorage-name }}, [create](../../../storage/operations/buckets/create.md) one with restricted access.
 1. Upload the image [using the management console](../../../storage/operations/objects/upload.md), the [AWS CLI](../../../storage/tools/aws-cli.md), or [WinSCP](../../../storage/tools/winscp.md), for example. In {{ objstorage-name }} terms, the uploaded image is called an _object_.
 1. [Get a link](../../../storage/operations/objects/link-for-download.md) to the uploaded image. Use this link when creating an image in {{ compute-name }}.
 
@@ -46,7 +46,7 @@ Create a new image from the link obtained in {{ objstorage-name }}:
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
    1. In the left-hand panel, select ![image](../../../_assets/compute/image-pic.svg) **{{ ui-key.yacloud.compute.switch_images }}**.
    1. Click **{{ ui-key.yacloud.compute.images.button_upload }}**.
-   1. Enter the image name.
+   1. Enter the image name. The naming requirements are as follows:
 
       {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -94,7 +94,7 @@ Create a new image from the link obtained in {{ objstorage-name }}:
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the provider {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To create an image:
    1. Describe the resource parameters in the `yandex_compute_image` configuration file.
@@ -110,10 +110,10 @@ Create a new image from the link obtained in {{ objstorage-name }}:
       }
       ```
 
-      For more information on resources that you can create with {{ TF }}, see the [provider documentation]({{ tf-provider-link }}/).
+      For more information about resources you can create with {{ TF }}, see the [provider documentation]({{ tf-provider-link }}/).
    1. Make sure the configuration files are valid.
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```bash
          terraform plan
@@ -129,7 +129,7 @@ Create a new image from the link obtained in {{ objstorage-name }}:
 
       1. Confirm that you want to create the resources.
 
-      All the resources you need will then be created in the specified folder. You can check that the resources are there and their settings are correct using the [management console]({{ link-console-main }}).
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}).
 
 {% endlist %}
 
@@ -137,7 +137,7 @@ After creation, the image will have the `CREATING` status. Wait until the image 
 
 ## Delete the image from {{ objstorage-name }} {#delete-image}
 
-If you have successfully created an image, you can [delete the image file](../../../storage/operations/objects/delete.md) from {{ objstorage-name }}. You can also [delete the bucket](../../../storage/operations/buckets/delete.md) if it doesn't contain any more objects.
+If you have successfully created an image, you can [delete the image file](../../../storage/operations/objects/delete.md) from {{ objstorage-name }}. You can also [delete the bucket](../../../storage/operations/buckets/delete.md) if it does not contain any more objects.
 
 ## Create a VM from the prepared image {#create-vm-from-user-image}
 

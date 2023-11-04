@@ -14,6 +14,8 @@ To create an API key:
 
 - CLI
 
+   {% include [cli-install](../../../_includes/cli-install.md) %}
+
    {% include [default-catalogue](../../../_includes/default-catalogue.md) %}
 
    1. See the description of the create API key command:
@@ -35,7 +37,7 @@ To create an API key:
       |          ID          |       NAME       |          DESCRIPTION          |
       +----------------------+------------------+-------------------------------+
       | aje6o61dvog2******** | my-robot         |                               |
-      | aje9sda1ufvq******** | blabla           | bla bla bla is my description |
+      | aje9sda1ufvq******** | account_name     | account_description           |
       +----------------------+------------------+-------------------------------+
       ```
 
@@ -63,7 +65,7 @@ To create an API key:
    1. Create an API key using the [create](../../api-ref/ApiKey/create.md) REST API method for the [ApiKey](../../api-ref/ApiKey/index.md) resource:
 
       ```bash
-      export SERVICEACCOUNT_ID=<service_account_id>
+      export SERVICEACCOUNT_ID=<service_account_ID>
       export IAM_TOKEN=CggaATEVAgA...
       curl -X POST \
         -H "Content-Type: application/json" \
@@ -75,19 +77,19 @@ To create an API key:
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
-   1. Add parameters of resource to the configuration file:
+   1. Add resource parameters to the configuration file:
 
-      * `service_account_id` = service account [ID](../sa/get-id.md). This parameter is required.
-      * `-description`: Key description. This is an optional parameter.
+      * `service_account_id`: Service account [ID](../sa/get-id.md). This is a required parameter.
+      * `description`: Key description. This is an optional parameter.
       * `pgp_key`: Additional PGP key for encrypting a private key. This is an optional parameter. Specify the public part of the key in Base64 encoding or in the `keybase:keybaseusername` format.
 
       Example of the configuration file structure:
 
       ```
       resource "yandex_iam_service_account_api_key" "sa-api-key" {
-        service_account_id = "<service_account_id>"
+        service_account_id = "<service_account_ID>"
         description        = "<key_description>"
         pgp_key            = "<pgp_key>"
       }
@@ -98,7 +100,7 @@ To create an API key:
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```
          terraform plan
@@ -114,9 +116,9 @@ To create an API key:
          terraform apply
          ```
 
-      1. Confirm the resource creation: type `yes` in the terminal and press **Enter**.
+      1. Confirm creating the resources: type `yes` in the terminal and press **Enter**.
 
-      All the resources you need will then be created in the specified folder. You can verify that the resources are there and properly configured in the [management console]({{ link-console-main }}) or using the following CLI command:
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}) and this CLI command:
 
       ```
       yc iam key list --service-account-id <service account ID>
@@ -142,7 +144,7 @@ To make it easier to find an API key without knowing its ID, add a description w
 - API
 
    ```bash
-   export SERVICEACCOUNT_ID=<service_account_id>
+   export SERVICEACCOUNT_ID=<service_account_ID>
    export IAM_TOKEN=CggaATEVAgA...
    curl -X POST \
      -H "Content-Type: application/json" \
@@ -158,14 +160,14 @@ To make it easier to find an API key without knowing its ID, add a description w
 
    1. Add parameters of resource to the configuration file:
 
-      * `service_account_id`: Service account ID. This parameter is required.
-      * `-description`: Key description. This is an optional parameter.
+      * `service_account_id`: Service account ID. This is a required parameter.
+      * `description`: Key description. This is an optional parameter.
 
       {% cut "Example of adding a description when creating a service account API key using {{ TF }}" %}
 
       ```
       resource "yandex_iam_service_account_api_key" "sa-api-key" {
-        service_account_id = "<service_account_id>"
+        service_account_id = "<service_account_ID>"
         description        = "this API-key is for my-robot"
       }
       ```
@@ -177,7 +179,7 @@ To make it easier to find an API key without knowing its ID, add a description w
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```
          terraform plan
@@ -193,9 +195,9 @@ To make it easier to find an API key without knowing its ID, add a description w
          terraform apply
          ```
 
-      1. Confirm the resource creation: type `yes` in the terminal and press **Enter**.
+      1. Confirm creating the resources: type `yes` in the terminal and press **Enter**.
 
-      All the resources you need will then be created in the specified folder. You can check that the resources are there and their settings are correct using the [management console]({{ link-console-main }}).
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}).
 
 {% endlist %}
 

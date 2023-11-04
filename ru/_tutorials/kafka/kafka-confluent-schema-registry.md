@@ -1,17 +1,27 @@
-Чтобы использовать [Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html) совместно с {{ mkf-name }}:
+
+В {{ mkf-name }} вы можете использовать интегрированный реестр схем формата данных [{{ mkf-msr }}](../../managed-kafka/concepts/managed-schema-registry.md#msr). Подробнее см. в разделе [{#T}](../../managed-kafka/tutorials/managed-schema-registry.md). Если вам необходим реестр [Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html), используйте информацию из этого руководства.
+
+{% note info %}
+
+Руководство проверено на версии Confluent Schema Registry 6.2 и виртуальной машине с Ubuntu 20.04 LTS. Работоспособность при использовании новых версий не гарантируется.
+
+{% endnote %}
+
+Чтобы использовать Confluent Schema Registry совместно с {{ mkf-name }}:
 
 1. [Создайте топик для уведомлений об изменении схем форматов данных](#create-schemas-topic).
 1. [Установите и настройте Confluent Schema Registry на виртуальной машине](#configure-vm).
 1. [Создайте скрипты производителя и потребителя](#create-scripts).
 1. [Проверьте правильность работы Confluent Schema Registry](#check-schema-registry).
-1. [Удалите созданные ресурсы](#clear-out).
+
+Если созданные ресурсы вам больше не нужны, [удалите их](#clear-out).
 
 ## Перед началом работы {#before-you-begin}
 
 1. [Создайте кластер {{ mkf-name }}](../../managed-kafka/operations/cluster-create.md) любой подходящей конфигурации.
 
     1. [Создайте топик](../../managed-kafka/operations/cluster-topics.md#create-topic) с именем `messages` для обмена сообщениями между производителем и потребителем.
-    1. [Создайте учетную запись](../../managed-kafka/operations/cluster-accounts.md#create-account) с именем `user` и [выдайте ей права](../../managed-kafka/operations/cluster-accounts.md#grant-permission) на топик `messages`:
+    1. [Создайте пользователя](../../managed-kafka/operations/cluster-accounts.md#create-account) с именем `user` и [выдайте ему права](../../managed-kafka/operations/cluster-accounts.md#grant-permission) на топик `messages`:
         * `ACCESS_ROLE_CONSUMER`,
         * `ACCESS_ROLE_PRODUCER`.
 
@@ -22,34 +32,32 @@
 
 1. Если вы используете группы безопасности, [настройте их](../../managed-kafka/operations/connect.md#configuring-security-groups) так, чтобы был разрешен весь необходимый трафик между кластером {{ mkf-name }} и виртуальной машиной.
 
-    {% include [preview-pp.md](../../_includes/preview-pp.md) %}
-
 1. В группах безопасности виртуальной машины [создайте правило](../../vpc/operations/security-group-add-rule.md) для входящего трафика, разрешающее подключение через порт `8081` — через него производитель и потребитель будут обращаться к реестру схем:
 
-    * **Диапазон портов**: `8081`.
-    * **Протокол**: `TCP`.
-    * **Назначение**: `CIDR`.
-    * **CIDR блоки**: `0.0.0.0/0` или диапазоны адресов подсетей, в которых работают производитель и потребитель.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `8081`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0` или диапазоны адресов подсетей, в которых работают производитель и потребитель.
 
 
 ## Создайте топик для уведомлений об изменении схем форматов данных {#create-schemas-topic}
 
 1. [Создайте служебный топик](../../managed-kafka/operations/cluster-topics.md#create-topic) с именем `_schemas` со следующими настройками:
 
-    * **Количество разделов** — `1`.
-    * **Политика очистки лога** — `Compact`.
+    * **{{ ui-key.yacloud.kafka.label_partitions }}** — `1`.
+    * **{{ ui-key.yacloud.kafka.label_topic-cleanup-policy }}** — `Compact`.
 
     {% note warning %}
 
-    Указанные значения настроек **Количество разделов** и **Политика очистки лога** необходимы для работы Confluent Schema Registry.
+    Указанные значения настроек **{{ ui-key.yacloud.kafka.label_partitions }}** и **{{ ui-key.yacloud.kafka.label_topic-cleanup-policy }}** необходимы для работы Confluent Schema Registry.
 
     {% endnote %}
 
-1. [Создайте учетную запись](../../managed-kafka/operations/cluster-accounts.md#create-account) с именем `registry` и [выдайте ей права](../../managed-kafka/operations/cluster-accounts.md#grant-permission) на топик `_schemas`:
+1. [Создайте пользователя](../../managed-kafka/operations/cluster-accounts.md#create-account) с именем `registry` и [выдайте ему права](../../managed-kafka/operations/cluster-accounts.md#grant-permission) на топик `_schemas`:
     * `ACCESS_ROLE_CONSUMER`,
     * `ACCESS_ROLE_PRODUCER`.
 
-    От имени этой учетной записи Confluent Schema Registry будет работать со служебным топиком `_schemas`.
+    От имени этого пользователя Confluent Schema Registry будет работать со служебным топиком `_schemas`.
 
 ## Установите и настройте Confluent Schema Registry на виртуальной машине {#configure-vm}
 
@@ -81,7 +89,7 @@
          -keystore /etc/schema-registry/client.truststore.jks \
          -alias CARoot \
          -import -file {{ crt-local-dir }}{{ crt-local-file }} \
-         -storepass <пароль защищенного хранилища сертификатов> \
+         -storepass <пароль_защищенного_хранилища_сертификатов> \
          --noprompt
     ```
 
@@ -91,7 +99,7 @@
     KafkaClient {
       org.apache.kafka.common.security.scram.ScramLoginModule required
       username="registry"
-      password="<пароль учетной записи registry>";
+      password="<пароль_пользователя_registry>";
     };
     ```
 
@@ -112,9 +120,9 @@
     1. Добавьте в конец файла строки:
 
         ```ini
-        kafkastore.bootstrap.servers=SASL_SSL://<FQDN 1-го хоста-брокера:9091>,<FQDN 2-го хоста-брокера:9091>,...,<FQDN N-го хоста-брокера:9091>
+        kafkastore.bootstrap.servers=SASL_SSL://<FQDN_хоста-брокера_1:9091>,<FQDN_хоста-брокера_2:9091>,...,<FQDN_хоста-брокера_N:9091>
         kafkastore.ssl.truststore.location=/etc/schema-registry/client.truststore.jks
-        kafkastore.ssl.truststore.password=<пароль защищенного хранилища сертификатов>
+        kafkastore.ssl.truststore.password=<пароль_защищенного_хранилища_сертификатов>
         kafkastore.sasl.mechanism=SCRAM-SHA-512
         kafkastore.security.protocol=SASL_SSL
         ```
@@ -182,17 +190,17 @@
     c = AvroConsumer(
         {
             "bootstrap.servers": ','.join([
-                "<FQDN 1-го хоста-брокера>:9091",
+                "<FQDN_хоста-брокера_1>:9091",
                 ...
-                "<FQDN N-го хоста-брокера>:9091",
+                "<FQDN_хоста-брокера_N>:9091",
             ]),
             "group.id": "avro-consumer",
             "security.protocol": "SASL_SSL",
             "ssl.ca.location": "{{ crt-local-dir }}{{ crt-local-file }}",
             "sasl.mechanism": "SCRAM-SHA-512",
             "sasl.username": "user",
-            "sasl.password": "<пароль учетной записи user>",
-            "schema.registry.url": "http://<FQDN или IP-адрес сервера Confluent Schema Registry>:8081",
+            "sasl.password": "<пароль_пользователя_user>",
+            "schema.registry.url": "http://<FQDN_или_IP-адреc_сервера_Confluent_Schema_Registry>:8081",
         }
     )
 
@@ -277,17 +285,17 @@
     avroProducer = AvroProducer(
         {
             "bootstrap.servers": ','.join([
-                "<FQDN 1-го хоста-брокера>:9091",
+                "<FQDN_хоста-брокера_1>:9091",
                 ...
-                "<FQDN N-го хоста-брокера>:9091",
+                "<FQDN_хоста-брокера_N>:9091",
             ]),
             "security.protocol": "SASL_SSL",
             "ssl.ca.location": "{{ crt-local-dir }}{{ crt-local-file }}",
             "sasl.mechanism": "SCRAM-SHA-512",
             "sasl.username": "user",
-            "sasl.password": "<пароль учетной записи user>",
+            "sasl.password": "<пароль_пользователя_user>",
             "on_delivery": delivery_report,
-            "schema.registry.url": "http://<FQDN или IP-адрес сервера Schema Registry>:8081",
+            "schema.registry.url": "http://<FQDN_или_IP-адрес_сервера_Schema_Registry>:8081",
         },
         default_key_schema=key_schema,
         default_value_schema=value_schema,
@@ -296,7 +304,6 @@
     avroProducer.produce(topic="messages", key=key, value=value)
     avroProducer.flush()
     ```
-
 
 ## Проверьте правильность работы Confluent Schema Registry {#check-schema-registry}
 

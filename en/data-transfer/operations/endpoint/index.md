@@ -29,7 +29,10 @@ The source [endpoint](../../concepts/index.md#endpoint) describes the settings o
 
 {% endlist %}
 
-## Getting a list of endpoints {#list}
+## Creating an endpoint {#create}
+
+{% include [access-requirements](../../../_includes/data-transfer/note-on-required-role.md) %}
+
 
 {% list tabs %}
 
@@ -37,20 +40,10 @@ The source [endpoint](../../concepts/index.md#endpoint) describes the settings o
 
    1. Go to the [folder page]({{ link-console-main }}) and select **{{ data-transfer-full-name }}**.
    1. In the left-hand panel, select ![image](../../../_assets/data-transfer/endpoint.svg) **{{ ui-key.yacloud.data-transfer.label_endpoints }}**.
-
-{% endlist %}
-
-## Creating an endpoint {#create}
-
-{% list tabs %}
-
-- Management console
-
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ data-transfer-full-name }}**.
    1. Click **{{ ui-key.yacloud.data-transfer.button_create-endpoint }}**.
    1. In the **{{ ui-key.yacloud.data-transfer.forms.label-is_source }}** field, select **{{ ui-key.yacloud.data-transfer.forms.label_source-type }}** or **{{ ui-key.yacloud.data-transfer.forms.label_target-type }}**.
    1. Enter a name for the endpoint. Use lowercase Latin letters and numbers.
-   1. (optional) Enter a description of the endpoint.
+   1. (Optional) Enter a description of the endpoint.
    1. Select the appropriate value in the **{{ ui-key.yacloud.data-transfer.forms.label-database_type }}** field. This will create an endpoint of the relevant type.
    1. Set the endpoint parameters:
 
@@ -81,10 +74,10 @@ The source [endpoint](../../concepts/index.md#endpoint) describes the settings o
    1. Specify the endpoint parameters in the create command (only some of the supported parameters are given in the example):
 
       ```bash
-      {{ yc-dt }} endpoint create <endpoint type> \
-         --name <endpoint name> \
-         --description <endpoint description> \
-         <endpoint parameters>
+      {{ yc-dt }} endpoint create <endpoint_type> \
+         --name <endpoint_name> \
+         --description <endpoint_description> \
+         <endpoint_parameters>
       ```
 
       You can view the endpoint type and parameters in the settings section for the appropriate data source or target.
@@ -102,7 +95,7 @@ The source [endpoint](../../concepts/index.md#endpoint) describes the settings o
    
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }}, [install it and configure the provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
    To create an endpoint:
@@ -112,11 +105,11 @@ The source [endpoint](../../concepts/index.md#endpoint) describes the settings o
       Example of the configuration file structure:
 
       ```hcl
-      resource "ycp_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-        name = "<endpoint name>"
+      resource "ycp_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+        name = "<endpoint_name>"
         settings {
-          <endpoint type> {
-            <endpoint parameters>
+          <endpoint_type> {
+            <endpoint_parameters>
           }
         }
       }
@@ -124,18 +117,18 @@ The source [endpoint](../../concepts/index.md#endpoint) describes the settings o
 
    You can retrieve a complete resource schema by running `terraform providers schema`.
 
-    1. You can view the endpoint type and parameters in the settings section for the appropriate data source or target.
+   1. You can view the endpoint type and parameters in the settings section for the appropriate data source or target.
 
-    1. Make sure the settings are correct.
+   1. Make sure the settings are correct.
 
         {% include [terraform-validate](../../../_includes/mdb/terraform/validate.md) %}
 
-    1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
-        {% include [terraform-apply](../../../_includes/mdb/terraform/apply.md) %}
+      {% include [terraform-apply](../../../_includes/mdb/terraform/apply.md) %}
 
-        
-    1. For more information, see the [{{ TF }} provider documentation]({{ tf-provider-dt-endpoint }}).
+      
+   1. For more information, see the [{{ TF }} provider documentation]({{ tf-provider-dt-endpoint }}).
 
 
 - API
@@ -159,6 +152,9 @@ The source [endpoint](../../concepts/index.md#endpoint) describes the settings o
 
 ## Updating the endpoint {#update}
 
+{% include [access-requirements](../../../_includes/data-transfer/note-on-required-role.md) %}
+
+
 {% note info %}
 
 You cannot change the endpoint and database types. For some endpoints, you cannot change the connection type, either.
@@ -170,6 +166,7 @@ You cannot change the endpoint and database types. For some endpoints, you canno
 - Management console
 
    1. Go to the [folder page]({{ link-console-main }}) and select **{{ data-transfer-full-name }}**.
+   1. In the left-hand panel, select ![image](../../../_assets/data-transfer/endpoint.svg) **{{ ui-key.yacloud.data-transfer.label_endpoints }}**.
    1. Select an endpoint and click ![pencil](../../../_assets/pencil.svg) **{{ ui-key.yacloud.common.edit }}** in the top panel.
    1. Edit the endpoint parameters:
 
@@ -200,10 +197,10 @@ You cannot change the endpoint and database types. For some endpoints, you canno
    1. Run the following command by providing a list of the settings to change (the example below does not contain a full list of parameters):
 
       ```bash
-      {{ yc-dt }} transfer update <endpoint type> <endpoint ID> \
-         --name <endpoint name> \
-         --description <endpoint description> \
-         <endpoint parameters>
+      {{ yc-dt }} transfer update <endpoint_type> <endpoint_ID> \
+         --name <endpoint_name> \
+         --description <endpoint_description> \
+         <endpoint_parameters>
       ```
 
       You can view the endpoint type and parameters in the settings section for the appropriate data source or target. You can get the endpoint ID with a [list of endpoints in the folder](#list).
@@ -214,33 +211,33 @@ You cannot change the endpoint and database types. For some endpoints, you canno
 
         To learn how to create such a file, see [Create endpoint](#create).
 
-    1. Edit the value in the `name` field (endpoint name) and the endpoint parameters under `settings`.
-    1. Make sure the settings are correct.
+   1. Edit the value in the `name` field (endpoint name) and the endpoint parameters under `settings`.
+   1. Make sure the settings are correct.
 
         {% include [terraform-validate](../../../_includes/mdb/terraform/validate.md) %}
 
-    1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
         {% include [terraform-apply](../../../_includes/mdb/terraform/apply.md) %}
 
-    For more information, see the [{{ TF }} provider documentation]({{ tf-provider-dt-endpoint }}).
+   For more information, see the [{{ TF }} provider documentation]({{ tf-provider-dt-endpoint }}).
 
 - API
 
-    {% note info %}
+   {% note info %}
 
-    You can edit endpoints using the API only for {{ CH }}, {{ KF }}, {{ MG }}, {{ MY }}, and {{ PG }} sources and targets.
+   You can edit endpoints using the API only for {{ CH }}, {{ KF }}, {{ MG }}, {{ MY }}, and {{ PG }} sources and targets.
 
-    {% endnote %}
+   {% endnote %}
 
-    Use the [update](../../api-ref/Endpoint/update) API method and include the following in the request:
+   Use the [update](../../api-ref/Endpoint/update) API method and include the following in the request:
 
-    * Endpoint ID in the `endpointId` parameters.
-    * Endpoint name in the `name` parameter.
-    * Endpoint description in the `description` parameter.
-    * Endpoint parameters in the `settings` parameter.
+   * Endpoint ID in the `endpointId` parameters.
+   * Endpoint name in the `name` parameter.
+   * Endpoint description in the `description` parameter.
+   * Endpoint parameters in the `settings` parameter.
 
-    You can get the endpoint ID with a [list of endpoints in the folder](#list).
+   You can get the endpoint ID with a [list of endpoints in the folder](#list).
 
 {% endlist %}
 
@@ -259,6 +256,7 @@ You cannot change the endpoint and database types when cloning.
 - Management console
 
    1. Go to the [folder page]({{ link-console-main }}) and select **{{ data-transfer-full-name }}**.
+   1. In the left-hand panel, select ![image](../../../_assets/data-transfer/endpoint.svg) **{{ ui-key.yacloud.data-transfer.label_endpoints }}**.
    1. Select the endpoint to clone.
    1. Click **{{ ui-key.yacloud.common.clone }}** in the top panel.
    1. Specify a new endpoint name and edit other parameters, if required:
@@ -283,10 +281,11 @@ To delete an endpoint:
 
 - Management console
 
-    1. Go to the [folder page]({{ link-console-main }}) and select **{{ data-transfer-full-name }}**.
-    1. Select the endpoint to delete.
-    1. Click **{{ ui-key.yacloud.common.delete }}** in the top panel.
-    1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ data-transfer-full-name }}**.
+   1. In the left-hand panel, select ![image](../../../_assets/data-transfer/endpoint.svg) **{{ ui-key.yacloud.data-transfer.label_endpoints }}**.
+   1. Select the endpoint to delete.
+   1. Click **{{ ui-key.yacloud.common.delete }}** in the top panel.
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -297,7 +296,7 @@ To delete an endpoint:
     To delete an endpoint, run the command:
 
     ```bash
-    {{ yc-dt }} endpoint delete <endpoint ID>
+    {{ yc-dt }} endpoint delete <endpoint_ID>
     ```
 
     You can get the endpoint ID with a [list of endpoints in the folder](#list).

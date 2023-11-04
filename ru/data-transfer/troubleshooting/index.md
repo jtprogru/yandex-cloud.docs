@@ -21,15 +21,25 @@
 
 Вы можете запросить записи о том, что происходило с вашими ресурсами, из логов сервисов {{ yandex-cloud }}. Подробнее читайте в разделе [{#T}](../../support/request.md).
 
+
+Используйте [мобильное приложение](/mobile-app) {{ yandex-cloud }} для быстрого просмотра логов, мониторинга трансферов и получения информации об ошибках.
+
+
 ## Общие {#common}
 
 {% include [long-time](../../_includes/data-transfer/troubles/long-time.md) %}
+
+{% include [increment-copy](../../_includes/data-transfer/troubles/increment-copy.md) %}
 
 {% include [duplicates](../../_includes/data-transfer/troubles/duplicates.md) %}
 
 {% include [insufficiency-resources](../../_includes/data-transfer/troubles/insufficiency-resources.md) %}
 
 {% include [permission-denied](../../_includes/data-transfer/troubles/permission-denied.md) %}
+
+
+{% include [required-role](../../_includes/data-transfer/troubles/required-roles.md) %}
+
 
 ## Ошибки в API {#api}
 
@@ -77,6 +87,8 @@
 
 {% include [timeseries](../../_includes/data-transfer/troubles/mongodb/timeseries.md) %}
 
+{% include [cluster configuration](../../_includes/data-transfer/troubles/mongodb/cluster-configuration.md) %}
+
 ## {{ MY }} {#mysql}
 
 {% include [binlog-size](../../_includes/data-transfer/troubles/mysql/binlog-size.md) %}
@@ -90,6 +102,8 @@
 {% include [binlog-bytes](../../_includes/data-transfer/troubles/mysql/binlog-bytes.md) %}
 
 {% include [drop-table-error](../../_includes/data-transfer/troubles/drop-table-error.md) %}
+
+{% include [timezone-shift](../../_includes/data-transfer/troubles/mysql/timezone-shift.md) %}
 
 ## {{ OS }} {#opensearch}
 
@@ -141,6 +155,8 @@
 ## {{ yds-full-name }} {#yds}
 
 {% include [overloaded](../../_includes/data-transfer/troubles/overloaded.md) %}
+
+{% include [redirects](../../_includes/data-transfer/troubles/data-streams/data-streams-redirects.md) %}
 
 
 

@@ -6,7 +6,7 @@ Create a [{{ objstorage-name }} trigger](../../concepts/trigger/os-trigger.md) t
 
 {% include [trigger-before-you-begin](../../../_includes/functions/trigger-before-you-begin.md) %}
 
-* [Bucket](../../../storage/concepts/bucket.md) whose object events will fire the trigger. If you don't have a bucket, [create one](../../../storage/operations/buckets/create.md).
+* [Bucket](../../../storage/concepts/bucket.md) whose object events will fire the trigger. If you do not have a bucket, [create one](../../../storage/operations/buckets/create.md) with restricted access.
 
 ## Creating a trigger {#trigger-create}
 
@@ -18,36 +18,36 @@ Create a [{{ objstorage-name }} trigger](../../concepts/trigger/os-trigger.md) t
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create your trigger.
 
-   1. Select **{{ sf-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-   1. On the left-hand panel, select ![image](../../../_assets/functions/triggers.svg) **Triggers**.
+   1. In the left-hand panel, select ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-   1. Under **Basic parameters**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
       * Enter a name and description for the trigger.
-      * In the **Type** field, select **{{ objstorage-name }}**.
-      * In the **Launched resource** field, select **Function**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** field, select **{{ ui-key.yacloud.serverless-functions.triggers.form.label_storage }}**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** field, select **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-   1. Under **{{ objstorage-name }} settings**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_storage }}**:
 
-      * In the **Bucket** field, select the bucket whose object events you want to create a trigger for.
-      * In the **Event types** field, select the [events](../../concepts/trigger/os-trigger.md#event) that will fire the trigger.
-      * (optional) In the **Object key prefix** field, enter a [prefix](../../concepts/trigger/os-trigger.md#filter) for filtering.
-      * (optional) In the **Object key suffix** field, enter a [suffix](../../concepts/trigger/os-trigger.md#filter) for filtering.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_bucket }}** field, select the bucket whose object events you want to create a trigger for.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_event-types }}** field, select the [events](../../concepts/trigger/os-trigger.md#event) that will fire the trigger.
+      * (Optional) In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_prefix }}** field, enter a [prefix](../../concepts/trigger/os-trigger.md#filter) for filtering.
+      * (Optional) In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_suffix }}** field, enter a [suffix](../../concepts/trigger/os-trigger.md#filter) for filtering.
 
-   1. Under **Function settings**, select a function and specify:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}**, select a function and specify:
 
       {% include [function-settings](../../../_includes/functions/function-settings.md) %}
 
-   1. (optional) Under **Repeat request settings**:
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
       {% include [repeat-request.md](../../../_includes/functions/repeat-request.md) %}
 
-   1. (optional) Under **Dead Letter Queue settings**, select the Dead Letter Queue and the service account with write privileges for this queue.
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}**, select the Dead Letter Queue and the service account with write privileges for this queue.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -57,36 +57,42 @@ Create a [{{ objstorage-name }} trigger](../../concepts/trigger/os-trigger.md) t
 
    To create a trigger that invokes a function, run this command:
 
+   
    ```bash
    yc serverless trigger create object-storage \
-     --name <trigger name> \
-     --bucket-id <bucket ID> \
-     --prefix '<object key prefix>' \
-     --suffix '<object key suffix>' \
+     --name <trigger_name> \
+     --bucket-id <bucket_ID> \
+     --prefix '<object_key_prefix>' \
+     --suffix '<object_key_suffix>' \
      --events 'create-object','delete-object','update-object' \
-     --invoke-function-id <function ID> \
-     --invoke-function-service-account-id <service account ID> \
+     --batch-size <batch_size> \
+     --batch-cutoff <maximum_wait_time> \
+     --invoke-function-id <function_ID> \
+     --invoke-function-service-account-id <service_account_ID> \
      --retry-attempts 1 \
      --retry-interval 10s \
-     --dlq-queue-id <Dead Letter Queue ID> \
-     --dlq-service-account-id <service account ID>
+     --dlq-queue-id <Dead_Letter_Queue_ID> \
+     --dlq-service-account-id <service_account_ID>
    ```
+
 
    Where:
 
    * `--name`: Trigger name.
    * `--bucket-id`: Bucket ID.
-   * `--prefix`: Bucket object key [prefix](../../concepts/trigger/os-trigger.md#filter). This is an optional parameter that is used for filtering.
-   * `--suffix`: Bucket object key [suffix](../../concepts/trigger/os-trigger.md#filter). This is an optional parameter that is used for filtering.
-   * `--events`: [Events](../../concepts/trigger/os-trigger.md#event) after which the trigger activates.
+   * `--prefix`: Bucket object key [prefix](../../concepts/trigger/os-trigger.md#filter). This is an optional parameter. It is used for filtering.
+   * `--suffix`: Bucket object key [suffix](../../concepts/trigger/os-trigger.md#filter). This is an optional parameter. It is used for filtering.
+   * `--events`: [Events](../../concepts/trigger/os-trigger.md#event) activating the trigger.
+
+   {% include [batch-settings-events](../../../_includes/functions/batch-settings-events.md) %}
 
    {% include [trigger-cli-param](../../../_includes/functions/trigger-cli-param.md) %}
 
    Result:
 
    ```text
-   id: a1s92agr8mpgeo3kjt48
-   folder_id: b1g88tflru0ek1omtsu0
+   id: a1s92agr8mpg********
+   folder_id: b1g88tflru0e********
    created_at: "2019-12-18T09:47:50.079103Z"
    name: os-trigger
    rule:
@@ -98,16 +104,19 @@ Create a [{{ objstorage-name }} trigger](../../concepts/trigger/os-trigger.md) t
        bucket_id: s3-for-trigger
        prefix: dev
        suffix: 12.jpg
+       batch_settings:
+         size: "3"
+         cutoff: 20s
        invoke_function:
-         function_id: d4eofc7n0m03lmudsk7y
+         function_id: d4eofc7n0m03********
          function_tag: $latest
-         service_account_id: aje3932acd0c5ur7drte
+         service_account_id: aje3932acd0c********
          retry_settings:
            retry_attempts: "1"
            interval: 10s
          dead_letter_queue:
-           queue-id: yrn:yc:ymq:{{ region-id }}:aoek49ghmknnpj1ll45e:dlq
-           service-account-id: aje3932acd0c5ur7dagp
+           queue-id: yrn:yc:ymq:{{ region-id }}:aoek49ghmknn********:dlq
+           service-account-id: aje3932acd0c********
    status: ACTIVE
    ```
 
@@ -115,7 +124,7 @@ Create a [{{ objstorage-name }} trigger](../../concepts/trigger/os-trigger.md) t
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To create a trigger for {{ objstorage-name }}:
 
@@ -163,7 +172,7 @@ Create a [{{ objstorage-name }} trigger](../../concepts/trigger/os-trigger.md) t
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```
          terraform plan
@@ -179,9 +188,9 @@ Create a [{{ objstorage-name }} trigger](../../concepts/trigger/os-trigger.md) t
          terraform apply
          ```
 
-      1. Confirm the resource creation: type `yes` in the terminal and press **Enter**.
+      1. Confirm creating the resources: type `yes` in the terminal and press **Enter**.
 
-         Once you are done, all the resources you need will be created in the specified folder. You can verify that the resources are there and their configuration is correct using the [management console]({{ link-console-main }}) or the following [CLI](../../../cli/quickstart.md) command:
+         All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
 
          ```
          yc serverless trigger get <trigger ID>

@@ -25,7 +25,7 @@ To set up storing {{ TF }} states in {{ objstorage-name }} and locking them by {
 
 If you no longer need the resources you created, [delete them](#clear-out).
 
-{{ TF }} and its providers are distributed under the [Mozilla Public License](https://github.com/hashicorp/terraform/blob/main/LICENSE).
+{{ TF }} and its providers are distributed under the [Business Source License](https://github.com/hashicorp/terraform/blob/main/LICENSE).
 
 ## Prepare your cloud {#before-you-begin}
 
@@ -50,7 +50,7 @@ If you deploy resources of other {{ yandex-cloud }} services, the cost will chan
 
 ## Create a bucket {#create-service-account}
 
-Create a [private bucket](../../storage/operations/buckets/create.md) named `terraform-ydb-tutorial`. This bucket will store the {{ TF }} state file.
+[Create a bucket](../../storage/operations/buckets/create.md) with restricted access. This bucket will store the {{ TF }} state file.
 
 ## Create a {{ ydb-name }} database {#db-create}
 
@@ -276,4 +276,4 @@ member flag, but this is not recommended.
 If you no longer need the resources you created, delete them:
 1. [Delete](../../ydb/operations/schema.md#drop-table) the table from the database.
 1. [Delete](../../ydb/operations/manage-databases.md#delete-db) the `state-lock-db` database.
-1. [Delete](../../storage/operations/buckets/delete.md) the `terraform-ydb-tutorial` bucket.
+1. [Delete](../../storage/operations/buckets/delete.md) the bucket.

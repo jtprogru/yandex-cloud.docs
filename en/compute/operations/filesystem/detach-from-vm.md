@@ -39,9 +39,45 @@
       1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
       1. In the left-hand panel, select ![image](../../../_assets/compute/storage.svg) **{{ ui-key.yacloud.compute.switch_file-storages }}**.
       1. Select the desired storage.
-      1. Click the **{{ ui-key.yacloud.compute.nfs.label_attached-instances }}** tab.
+      1. Go to the **{{ ui-key.yacloud.compute.nfs.label_attached-instances }}** tab.
       1. In the line of the appropriate VM, click ![image](../../../_assets/options-grey.svg) and select **{{ ui-key.yacloud.compute.nfs.button_detach-instance-from-the-filesystem }}**.
       1. In the window that opens, confirm the detach operation.
+
+   - {{ TF }}
+
+      {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+      Set the `allow_stopping_for_update` parameter to `true` on your VM, if you have not done it yet.
+
+      1. Open the {{ TF }} configuration file and delete the fragment with the storage description:
+
+         {% cut "Sample storage description in the VM configuration in {{ TF }}" %}
+
+         ```hcl
+         ...
+         resource "yandex_compute_instance" "vm-1" {
+
+            name        = "test-vm"
+            platform_id = "standard-v3"
+            zone        = "{{ region-id }}-a"
+
+            filesystem {
+               filesystem_id = "fhmaikp755grp4mlvvem"
+            }
+         ...
+         ```
+
+         {% endcut %}
+
+      1. Apply the changes:
+
+         {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+      You can verify that the storage has been detached from the VM using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
+
+      ```bash
+      yc compute instance get <VM_name>
+      ```
 
    - API
 

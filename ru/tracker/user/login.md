@@ -14,7 +14,7 @@
 
 * Аккаунт на домене, подключенном к сервису [{{ ya-360 }}]({{ link-ya-360 }}) (например, `login@example.com`).
 
-* Аккаунт в корпоративной системе управления учетными записями (например, Active Directory или Google Workspace), если настроена [система единого входа (Single Sign-On)](../../organization/add-federation.md).
+* Аккаунт в корпоративной системе управления учетными записями (например, Active Directory или Google Workspace), если настроена [система единого входа (Single Sign-On)](../../organization/concepts/add-federation.md).
 
 Для создания и редактирования задач вам потребуется [полный доступ](../access.md) в {{ tracker-name }}. Если {{ tracker-name }} доступен только для чтения, обратитесь к администратору вашей организации.
 
@@ -60,7 +60,7 @@
 
 1. На панели слева внизу нажмите на фото профиля.
 
-1. Напротив своего логина нажмите кнопку ![](../../_assets/tracker/svg/logout.svg) **{{ ui-key.yacloud.component.user-account.label_logout }}**.
+1. Напротив своего логина нажмите кнопку ![](../../_assets/tracker/svg/logout.svg) **{{ ui-key.yacloud.common.button_logout }}**.
 
 1. Выберите другого пользователя из списка или нажмите **Войти в другой аккаунт**. 
 	

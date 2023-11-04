@@ -1,3 +1,8 @@
+---
+title: "Revoking roles assigned to a function"
+description: "Use this guide to revoke function roles."
+---
+
 # Revoking roles assigned to a function
 
 {% list tabs %}
@@ -8,7 +13,7 @@
 
    {% include [default-catalogue](../../../_includes/default-catalogue.md) %}
 
-   To revoke a [role](../../security/index.md#roles) for a function, run this command:
+   To revoke a [role](../../security/index.md#roles-list) for a function, run this command:
 
    * User:
       ```
@@ -32,7 +37,7 @@
       ```
       done (1s)
       ```
-   * All authorized users (`allAuthenticatedUsers` system group):
+   * All authorized users (`{{ subjects-allAuthenticatedUsers }}` system group):
       ```
       yc serverless function remove-access-binding \
         --id <function ID> \

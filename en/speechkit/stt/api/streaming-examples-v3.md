@@ -1,16 +1,14 @@
-# Example use of streaming recognition with API v3
+# Audio file streaming recognition using API v3
 
-The example shows how you can recognize speech in LPCM format in real time using the {{ speechkit-short-name }} [API v3](../../stt-v3/api-ref/grpc/index.md).
+Below, we provide an example of synchronous recognition of speech from an audio file using {{ speechkit-name }} [API v3](../../stt-v3/api-ref/grpc/index.md). The example uses the following parameters:
 
-The example uses the following parameters:
-
-* [Language](../index.md#langs): Russian.
+* [Language](../models.md#languages): Russian.
 * Format of the audio stream: [LPCM](../../formats.md#LPCM) with a sampling rate of 8000 Hz.
 * [Number of audio channels](../../stt-v3/api-ref/grpc/stt_service#RawAudio): 1 (default).
 * [Profanity filter](../../stt-v3/api-ref/grpc/stt_service#TextNormalizationOptions) enabled.
 * Other parameters were left with their default values.
 
-To use the API, you need the `grpcio-tools` package.
+To use the API, the `grpcio-tools` package is required.
 
 An [IAM token](../../../iam/concepts/authorization/iam-token.md) is used to authenticate the service account. Learn more about [authentication in the {{speechkit-name}} API](../../concepts/auth.md).
 
@@ -36,7 +34,7 @@ To implement an example from this section:
       pip install grpcio-tools
       ```
 
-   1. Go to the directory hosting the cloned {{ yandex-cloud }} API repository, create the `output` directory, and generate the client interface code there:
+   1. Go to the directory hosting the cloned {{ yandex-cloud }} API repository, create an `output` directory, and generate the client interface code there:
 
       ```bash
       cd <path_to_cloudapi_directory>
@@ -49,13 +47,14 @@ To implement an example from this section:
           yandex/cloud/api/operation.proto \
           google/rpc/status.proto \
           yandex/cloud/operation/operation.proto \
+          yandex/cloud/validation.proto \
           yandex/cloud/ai/stt/v3/stt_service.proto \
           yandex/cloud/ai/stt/v3/stt.proto
       ```
 
-      As a result, the `stt_pb2.py`, `stt_pb2_grpc.py`, `stt_service_pb2.py`, `stt_service_pb2_grpc.py` client interface files as well as dependency files will be created in the `output` directory.
+      As a result, the `stt_pb2.py`, `stt_pb2_grpc.py`, `stt_service_pb2.py`, and `stt_service_pb2_grpc.py` client interface files as well as dependency files will be created in the `output` directory.
 
-   1. Create a file (for example, `test.py`) in the root of the `output` directory and add the following code to it:
+   1. In the root of the `output` directory, create a file, e.g. `test.py`, and add to it the following code:
 
       ```python
       #coding=utf8
@@ -95,7 +94,7 @@ To implement an example from this section:
           # Send a message with recognition settings.
           yield stt_pb2.StreamingRequest(session_options=recognize_options)
 
-          # Read the audio file and send its contents in portions.
+          # Read the audio file and send its contents in chunks.
           with open(audio_file_name, 'rb') as f:
               data = f.read(CHUNK_SIZE)
               while data != b'':
@@ -103,7 +102,7 @@ To implement an example from this section:
                   data = f.read(CHUNK_SIZE)
 
       def run(iam_token, audio_file_name):
-          # Establish a connection with the server.
+          # Establish a server connection.
           cred = grpc.ssl_channel_credentials()
           channel = grpc.secure_channel('{{ api-host-sk-stt }}:443', cred)
           stub = stt_service_pb2_grpc.RecognizerStub(channel)
@@ -143,7 +142,7 @@ To implement an example from this section:
       * `audio_channel_count`: Number of audio channels.
       * `profanity_filter`: [Profanity filter](../../stt-v3/api-ref/grpc/stt_service#TextNormalizationOptions).
       * `literature_text`: [Flag to generate the recognized text in a literary style](../../stt-v3/api-ref/grpc/stt_service#TextNormalizationOptions).
-      * `language_code`: [Language](../index.md#langs) that recognition is performed for.
+      * `language_code`: [Recognition language](../index.md#langs).
 
    1. Use the [IAM token](../../../iam/concepts/authorization/iam-token.md) of the service account:
 
@@ -176,5 +175,6 @@ To implement an example from this section:
 
 #### See also {#see-also}
 
-* [Learn more about the API v3](../../stt-v3/api-ref/grpc/)
+* [{#T}](microphone-streaming.md)
+* [Learn more about the API v3](../../stt-v3/api-ref/grpc/index.md)
 * [{#T}](../../concepts/auth.md)

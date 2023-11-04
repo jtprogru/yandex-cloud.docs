@@ -1,8 +1,9 @@
-# Example use of API v3 synthesis
+# Speech synthesis in API v3
 
-The example shows how you can synthesize speech from text with [TTS markup](../markup/tts-markup.md) to a [WAV](https://en.wikipedia.org/wiki/WAV) file using the {{ speechkit-short-name }} [API v3](../../tts-v3/api-ref/grpc/).
+With the {{ speechkit-short-name }} [API v3](../../tts-v3/api-ref/grpc/), you can synthesize speech from text with [TTS markup](../markup/tts-markup.md) to a [WAV](https://en.wikipedia.org/wiki/WAV) file.
 
 The example uses the following synthesis parameters:
+
 * Synthesized audio file [format](../../formats.md): LPCM with a sample rate of 22050 Hz, [WAV](https://en.wikipedia.org/wiki/WAV) container (default).
 * [Volume normalization](../index.md#volume): LUFS (default).
 
@@ -36,7 +37,7 @@ To implement an example:
 
          The `grpcio-tools` package is needed to generate client interface code for the synthesis API v3.
 
-         The `pydub` package is needed to process the received audio files.
+         The `pydub` package is needed to process the resulting audio files.
 
       1. [Download](https://www.ffmpeg.org/download.html) the FFmpeg utility for correct operation of the `pydub` package. Add the path to the directory with the executable file to the `PATH` variable. To do this, run the following command:
 
@@ -44,7 +45,7 @@ To implement an example:
          export PATH=$PATH:<path_to_directory_with_executable_FFmpeg_file>
          ```
 
-      1. Go to the directory hosting the cloned {{ yandex-cloud }} API repository, create the `output` directory, and generate the client interface code there:
+      1. Go to the directory hosting the cloned {{ yandex-cloud }} API repository, create an `output` directory, and generate the client interface code there:
 
          ```bash
          cd <path_to_cloudapi_directory>
@@ -57,13 +58,14 @@ To implement an example:
            yandex/cloud/api/operation.proto \
            google/rpc/status.proto \
            yandex/cloud/operation/operation.proto \
+           yandex/cloud/validation.proto \
            yandex/cloud/ai/tts/v3/tts_service.proto \
            yandex/cloud/ai/tts/v3/tts.proto
          ```
 
-         As a result, the `tts_pb2.py`, `tts_pb2_grpc.py`, `tts_service_pb2.py`, `tts_service_pb2_grpc.py` client interface files as well as dependency files will be created in the `output` directory.
+         As a result, the `tts_pb2.py`, `tts_pb2_grpc.py`, `tts_service_pb2.py`, and `tts_service_pb2_grpc.py` client interface files as well as dependency files will be created in the `output` directory.
 
-      1. Create a file (for example, `test.py`) in the root of the `output` directory and add the following code to it:
+      1. In the root of the `output` directory, create a file, e.g. `test.py`, and add to it the following code:
 
          ```python
          import io
@@ -74,7 +76,7 @@ To implement an example:
          import yandex.cloud.ai.tts.v3.tts_pb2 as tts_pb2
          import yandex.cloud.ai.tts.v3.tts_service_pb2_grpc as tts_service_pb2_grpc
 
-         # Define request parameters.
+         # Specify the synthesis settings.
          def synthesize(iam_token, text) -> pydub.AudioSegment:
              request = tts_pb2.UtteranceSynthesisRequest(
                  text=text,
@@ -86,7 +88,7 @@ To implement an example:
                  loudness_normalization_type=tts_pb2.UtteranceSynthesisRequest.LUFS
              )
 
-             # Establish connection with server.
+             # Establish a server connection.
              cred = grpc.ssl_channel_credentials()
              channel = grpc.secure_channel('{{ api-host-sk-tts }}:443', cred)
              stub = tts_service_pb2_grpc.SynthesizerStub(channel)
@@ -145,3 +147,4 @@ To implement an example:
 
 * [Learn more about the API v3](../../tts-v3/api-ref/grpc/)
 * [{#T}](../../concepts/auth.md)
+* [{#T}](../../sdk/python/synthesis.md)

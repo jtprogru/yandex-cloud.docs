@@ -38,8 +38,8 @@ The cost of maintaining your {{ CH }} database for Graphite includes:
 ## Create a cluster {#cluster-create}
 
 1. [Create a {{ mch-name }} cluster](../../managed-clickhouse/operations/cluster-create.md) in any suitable configuration with the `db1` database and public access to all of its hosts. Save the database name, username, and password.
-1. In the [management console]({{ link-console-main }}), select {{ mch-name }} and go to the created cluster. Save the cluster ID on the **Overview** tab.
-1. In the upper-right corner, click **Connect**, on the **Shell** tab from the **Sample connection string** field, save the `--host` parameter, for example, `rc1a-2sqal8f01znegjkj.{{ dns-zone }}`. This is the FQDN of the cluster host, you will need it later.
+1. In the [management console]({{ link-console-main }}), select {{ mch-name }} and go to the created cluster. Save the cluster ID in the **{{ ui-key.yacloud.common.overview }}** tab.
+1. In the top-right corner, click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-connect }}**. In the **Shell** tab, save the `--host` parameter from the **Sample connection string** field, e.g., `rc1a-2sqal8f01znegjkj.{{ dns-zone }}`. This is the cluster host FQDN which you will need later.
 
 ## Register the rollup configuration in a cluster {#rollup-config}
 
@@ -137,16 +137,15 @@ Register the `rollup` configuration in a cluster to trim and aggregate or averag
 
    ```bash
    sudo mkdir --parents {{ crt-local-dir }} && \
-   sudo wget "{{ crt-web-path }}" \
-       --output-document {{ crt-local-dir }}{{ crt-local-file }} && \
-   sudo chmod 655 {{ crt-local-dir }}{{ crt-local-file }}
+   sudo wget "{{ crt-web-path-root }}" \
+       --output-document {{ crt-local-dir }}{{ crt-local-file-root }} && \
+   sudo chmod 655 {{ crt-local-dir }}{{ crt-local-file-root }} && \
+   sudo update-ca-certificates
    ```
 
 ## Connect the virtual machine to a database {#cluster-connect}
 
 1. If you are using security groups for a cloud network, [set them up](../../managed-clickhouse/operations/connect.md#configuring-security-groups) to allow all required traffic between the cluster and the VM.
-
-   {% include [preview-pp.md](../../_includes/preview-pp.md) %}
 
 1. [Connect](../../compute/operations/vm-connect/ssh.md).
 1. Run the ClickHouse CLI with the following parameters: replace `<host FQDN>`, `<database name>`, `<database username>`, and `<database user password>` with the previously saved values.
@@ -221,7 +220,7 @@ Configure Graphite to save metrics in the {{ CH }} cluster. In this case, data i
 
 ## How to delete the resources you created {#clear-out}
 
-Delete the resources you no longer need to avoid paying for them:
+Delete the resources you no longer need to avoid being charged for them:
 
 * [Delete the {{ CH }} cluster](../../managed-clickhouse/operations/cluster-delete.md).
 * [Delete the VM](../../compute/operations/vm-control/vm-delete.md).

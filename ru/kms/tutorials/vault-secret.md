@@ -49,7 +49,7 @@
     {% endlist %}
 
 1. [Создайте](../operations/key.md#create) отдельный [{{ kms-name}}-ключ](../concepts/key.md) для Vault (рекомендуется).
-1. [Предоставьте доступ](../../iam/operations/roles/grant.md) к ключу только пользователю или сервисному аккаунту, который будет использоваться для аутентификации запросов Vault в {{ kms-short-name }}. Vault при взаимодействии с {{ kms-short-name }} выполняет только операции [шифрования и расшифрования](../concepts/encryption.md), поэтому [роли](../../iam/concepts/access-control/roles.md) `kms.keys.encrypterDecrypter` будет достаточно.
+1. [Предоставьте доступ](../../iam/operations/roles/grant.md) к ключу только пользователю или сервисному аккаунту, который будет использоваться для аутентификации запросов Vault в {{ kms-short-name }}. Vault при взаимодействии с {{ kms-short-name }} выполняет только операции [шифрования и расшифрования](../concepts/symmetric-encryption.md), поэтому [роли](../../iam/concepts/access-control/roles.md) `kms.keys.encrypterDecrypter` будет достаточно.
 
 
 
@@ -91,25 +91,7 @@
 
     {% endlist %}
 
-1. В блоке [seal](https://www.vaultproject.io/docs/configuration/seal#seal-stanza) укажите значение `"yandexcloudkms"`.
-1. Добавьте параметр `kms_key_id` с идентификатором {{ kms-short-name }}-ключа для шифрования.
-1. Аутентифицируйтесь одним из способов:
-
-    {% list tabs %}
-
-    - Сервисный аккаунт, привязанный к ВМ
-
-      Привяжите сервисный аккаунт к ВМ в соответствии с [инструкцией](../../compute/operations/vm-connect/auth-inside-vm.md).
-
-    - Произвольный сервисный аккаунт
-
-      В значении параметра `service_account_key_file` укажите путь к файлу с авторизованным ключом сервисного аккаунта.
-
-    - Аккаунт на Яндексе или федеративный аккаунт
-
-      Если вы используете аккаунт на Яндекс, то в значении параметра `oauth_token` укажите OAuth-токен. Для федеративного аккаунта следует использовать IAM-токен.
-
-    {% endlist %}
+1. Измените конфигурацию в рамках [процедуры миграции](https://www.vaultproject.io/docs/concepts/seal#seal-migration), соответствующей используемой версии Vault.
 
 {% note info %}
 

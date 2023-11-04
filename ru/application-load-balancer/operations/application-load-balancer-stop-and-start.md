@@ -2,7 +2,7 @@
 
 ## Остановить балансировщик {#stop}
 
-Команда **Остановить** выключает L7-балансировщик. После выключения балансировщик переходит в статус `STOPPED`. Пока балансировщик остановлен, плата за него не взимается.
+Команда **{{ ui-key.yacloud.common.stop }}** выключает [L7-балансировщик](../concepts/application-load-balancer.md). После выключения балансировщик переходит в статус `STOPPED`. Пока балансировщик остановлен, плата за него не взимается.
 
 Вы сможете включить балансировщик в любой момент, чтобы продолжить работу. Все данные и внесенные вами изменения сохраняются.
 
@@ -13,10 +13,10 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором создан балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
-  1. Напротив имени нужного балансировщика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Остановить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. Напротив имени нужного балансировщика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.stop }}**.
   
-     Чтобы выполнить это действие с несколькими балансировщиками, выделите нужные в списке, в нижней части экрана нажмите кнопку **Остановить** и в открывшемся окне нажмите кнопку **Остановить**.
+     Чтобы выполнить это действие с несколькими балансировщиками, выделите нужные в списке, в нижней части экрана нажмите кнопку **{{ ui-key.yacloud.common.stop }}** и в открывшемся окне нажмите кнопку **{{ ui-key.yacloud.common.stop }}**.
 
 - CLI
 
@@ -30,7 +30,7 @@
      yc application-load-balancer load-balancer stop --help
      ```
 
-  1. Получите список всех балансировщик в каталоге по умолчанию:
+  1. Получите список всех балансировщиков в каталоге по умолчанию:
 
      ```bash
      yc application-load-balancer load-balancer list --format yaml
@@ -41,11 +41,11 @@
      
 
      ```bash
-     - id: ds79cfnvmti39p7k83sa
+     - id: ds79cfnvmti3********
        name: test-load-balancer
-       folder_id: b1gv87ssvu497lpgjh5o
+       folder_id: b1gv87ssvu49********
        status: ACTIVE
-       network_id: enp45glgitd6e44dn1fj
+       network_id: enp45glgitd6********
        listeners:
        - name: test-listener
          endpoints:
@@ -56,41 +56,41 @@
            - "80"
          http:
            handler:
-             http_router_id: ds7bharmjfs30dll9r3s
+             http_router_id: ds7bharmjfs3********
        allocation_policy:
          locations:
          - zone_id: {{ region-id }}-a
-           subnet_id: e9bn57jvjnbujnmk3mba
+           subnet_id: e9bn57jvjnbu********
          - zone_id: {{ region-id }}-b
-           subnet_id: e2ltcj4urgpbsbaq9977
+           subnet_id: e2ltcj4urgpb********
          - zone_id: {{ region-id }}-c
-           subnet_id: b0c29k6anelkik7jg5v1
-       log_group_id: ckgph76s449vsca8ho9p
+           subnet_id: b0c29k6anelk********
+       log_group_id: ckgph76s449v********
        created_at: "2022-02-11T09:00:31.911019416Z"
-     - id: ds7o71924t0hqmu9h0n2
+     - id: ds7o71924t0h********
        name: balancer2
-       folder_id: b1gv87ssvu497lpgjh5o
+       folder_id: b1gv87ssvu49********
        status: ACTIVE
-       network_id: enp45glgitd6e44dn1fj
+       network_id: enp45glgitd********
        allocation_policy:
          locations:
          - zone_id: {{ region-id }}-a
-           subnet_id: e9bn57jvjnbujnmk3mba
+           subnet_id: e9bn57jvjnbu********
          - zone_id: {{ region-id }}-b
-           subnet_id: e2ltcj4urgpbsbaq9977
+           subnet_id: e2ltcj4urgpb********
          - zone_id: {{ region-id }}-c
-           subnet_id: b0c29k6anelkik7jg5v1
-       log_group_id: ckgjhe81a23v2miqfl7u
+           subnet_id: b0c29k6anelk********
+       log_group_id: ckgjhe81a23v********
        created_at: "2022-02-11T09:01:46.724279145Z"
      ```
 
 
 
 
-  1. Остановите балансировщик, указав в команде его идентификатор `id` или имя `name`, например `balancer2`:
+  1. Остановите балансировщик, указав в команде его идентификатор или имя:
 
      ```bash
-     yc application-load-balancer load-balancer stop balancer2
+     yc application-load-balancer load-balancer stop <имя_балансировщика>
      ```
 
      Подробнее о команде `application-load-balancer load-balancer stop` см. в [справочнике CLI](../../cli/cli-ref/managed-services/application-load-balancer/load-balancer/stop.md).
@@ -103,7 +103,7 @@
 
 ## Запустить балансировщик {#start}
 
-Команда **Запустить** включает остановленный L7-балансировщик. После включения балансировщик переходит в статус `ACTIVE`. С этого момента начинает взиматься плата за использование балансировщика.
+Команда **{{ ui-key.yacloud.common.start }}** включает остановленный L7-балансировщик. После включения балансировщик переходит в статус `ACTIVE`. С этого момента начинает взиматься плата за использование балансировщика.
 
 Чтобы запустить балансировщик:
 
@@ -112,10 +112,10 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором создан балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
-  1. Напротив имени нужного балансировщика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Запустить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. Напротив имени нужного балансировщика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.start }}**.
 
-     Чтобы выполнить это действие с несколькими балансировщиками, выделите нужные в списке, в нижней части экрана нажмите кнопку **Запустить**, в открывшемся окне нажмите кнопку **Запустить**.
+     Чтобы выполнить это действие с несколькими балансировщиками, выделите нужные в списке, в нижней части экрана нажмите кнопку **{{ ui-key.yacloud.common.start }}**, в открывшемся окне нажмите кнопку **{{ ui-key.yacloud.common.start }}**.
 
 - CLI
 
@@ -134,17 +134,17 @@
      ```bash
      yc application-load-balancer load-balancer list --format yaml
      ```
-    
+
      Результат:
- 
+
      
 
      ```bash
-     - id: ds79cfnvmti39p7k83sa
+     - id: ds79cfnvmti3********
        name: test-load-balancer
-       folder_id: b1gv87ssvu497lpgjh5o
+       folder_id: b1gv87ssvu49********
        status: ACTIVE
-       network_id: enp45glgitd6e44dn1fj
+       network_id: enp45glgitd6********
        listeners:
        - name: test-listener
          endpoints:
@@ -155,41 +155,41 @@
            - "80"
          http:
            handler:
-             http_router_id: ds7bharmjfs30dll9r3s
+             http_router_id: ds7bharmjfs3********
        allocation_policy:
          locations:
          - zone_id: {{ region-id }}-a
-           subnet_id: e9bn57jvjnbujnmk3mba
+           subnet_id: e9bn57jvjnbu********
          - zone_id: {{ region-id }}-b
-           subnet_id: e2ltcj4urgpbsbaq9977
+           subnet_id: e2ltcj4urgpb********
          - zone_id: {{ region-id }}-c
-           subnet_id: b0c29k6anelkik7jg5v1
-       log_group_id: ckgph76s449vsca8ho9p
+           subnet_id: b0c29k6anelk********
+       log_group_id: ckgph76s449v********
        created_at: "2022-02-11T09:00:31.911019416Z"
-     - id: ds7o71924t0hqmu9h0n2
+     - id: ds7o71924t0h********
        name: balancer2
-       folder_id: b1gv87ssvu497lpgjh5o
+       folder_id: b1gv87ssvu49********
        status: STOPPED
-       network_id: enp45glgitd6e44dn1fj
+       network_id: enp45glgitd********
        allocation_policy:
          locations:
          - zone_id: {{ region-id }}-a
-           subnet_id: e9bn57jvjnbujnmk3mba
+           subnet_id: e9bn57jvjnbu********
          - zone_id: {{ region-id }}-b
-           subnet_id: e2ltcj4urgpbsbaq9977
+           subnet_id: e2ltcj4urgpb********
          - zone_id: {{ region-id }}-c
-           subnet_id: b0c29k6anelkik7jg5v1
-       log_group_id: ckgjhe81a23v2miqfl7u
+           subnet_id: b0c29k6anelk********
+       log_group_id: ckgjhe81a23v********
        created_at: "2022-02-11T09:01:46.724279145Z"
      ```
 
 
 
 
-  1. Запустите балансировщик, указав в команде его идентификатор `id` или имя `name`, например `balancer2`:
+  1. Запустите балансировщик, указав в команде его идентификатор или имя:
 
      ```bash
-     yc application-load-balancer load-balancer start balancer2
+     yc application-load-balancer load-balancer start <имя_балансировщика>
      ```
 
      Подробнее о команде `application-load-balancer load-balancer start` см. в [справочнике CLI](../../cli/cli-ref/managed-services/application-load-balancer/load-balancer/start.md).

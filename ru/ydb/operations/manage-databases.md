@@ -2,7 +2,7 @@
 
 В сервисе {{ ydb-name }} вы можете создавать базы данных в двух режимах: [бессерверном](../concepts/serverless-and-dedicated.md#serverless) (Serverless) и с [выделенными серверами](../concepts/serverless-and-dedicated.md#dedicated) (Dedicated).
 
-С помощью консоли управления или YC CLI можно:
+С помощью консоли управления или {{ yandex-cloud }} CLI можно:
 
 * [Создать и изменить параметры бессерверной (Serverless) базы данных](#serverless).
 * [Создать и изменить параметры базы данных с выделенными серверами (Dedicated)](#dedicated).
@@ -18,25 +18,25 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создана БД.
-  1. В списке сервисов выберите **{{ ydb-name }}**.
-  1. Нажмите кнопку **Создать базу данных**.
-  1. Введите **Имя** БД. Требования к имени:
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.ydb.databases.button_create }}**.
+  1. Введите **{{ ui-key.yacloud.ydb.forms.label_field_name }}** БД. Требования к имени:
 
       {% include [name-format](../../_includes/name-format.md) %}
 
-  1. В блоке **Тип базы данных** выберите опцию **Serverless**.
+  1. В блоке **{{ ui-key.yacloud.ydb.forms.label_field_database-type }}** выберите опцию `{{ ui-key.yacloud.ydb.forms.label_serverless-type }}`.
   1. Вам будут предложены значения по умолчанию. Они подобраны таким образом, чтобы вы могли эффективно начать работу. Вы можете изменить их сейчас или в будущем, если потребуется. Подробнее о настройках БД [см. раздел Режимы работы Serverless и Dedicated](../concepts/serverless-and-dedicated.md).
-  1. Нажмите кнопку **Создать базу данных**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.ydb.forms.button_create-database }}**.
 
    Дождитесь, когда статус БД изменится на `Running`.
 
-- YC CLI
+- {{ yandex-cloud }} CLI
 
   {% include [cli-install](../../_includes/cli-install.md) %}
 
   {% include [default-catalogue](../../_includes/default-catalogue.md) %}
 
-  1. Посмотрите описание команды YC CLI для создания БД:
+  1. Посмотрите описание команды {{ yandex-cloud }} CLI для создания БД:
 
       ```bash
       yc ydb database create --help
@@ -51,12 +51,12 @@
       Результат:
 
       ```text
-      id: etne027gi9aap7ldau3f
-      folder_id: b1gmit33ngp3kr4mhjmo
+      id: etne027gi9aa********
+      folder_id: b1gmit33ngp3********
       created_at: "2022-12-13T09:17:06Z"
       name: svlbd
       status: PROVISIONING
-      endpoint: {{ ydb.ep-serverless }}/?database=/{{ region-id }}/b1gia87mbaomkfvsleds/etne027gi9aap7ldau3f
+      endpoint: {{ ydb.ep-serverless }}/?database=/{{ region-id }}/b1gia87mbaom********/etne027gi9aa********
       serverless_database:
       storage_size_limit: "53687091200"
       location_id: {{ region-id }}
@@ -69,11 +69,11 @@
                 hours: 17
           backup_time_to_live: 604800s
           type: SYSTEM
-      document_api_endpoint: https://docapi.serverless.yandexcloud.net/{{ region-id }}/b1gia87mbaomkfvsleds/etne027gi9aap7ldau3f
+      document_api_endpoint: {{ ydb.document-api-endpoint }}/{{ region-id }}/b1gia87mbaom********/etne027gi9aa********
       monitoring_config: {}
       ```
 
-  Все параметры можно будет [изменить](#update-db-serverles) в дальнейшем командой `update` YC CLI или в консоли управления. Подробнее см. в разделе [{#T}](../concepts/serverless-and-dedicated.md#serverless-options).
+  Все параметры можно будет [изменить](#update-db-serverles) в дальнейшем командой `update` {{ yandex-cloud }} CLI или в консоли управления. Подробнее см. в разделе [{#T}](../concepts/serverless-and-dedicated.md#serverless-options).
 
   Любая создаваемая Serverless БД является георезервированной в трех [зонах доступности](../../overview/concepts/geo-scope.md).
 
@@ -81,13 +81,14 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
   
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле {{ TF }} параметры Serverless БД, которую необходимо создать:
 
       ```hcl
       resource "yandex_ydb_database_serverless" "database1" {
-        name = "<имя_БД>"
+        name                = "<имя_БД>"
+        deletion_protection = "<защита_от_удаления:_true_или_false>"
 
         serverless_database {
           enable_throttling_rcu_limit = <true_или_false>
@@ -101,16 +102,17 @@
      Где:
 
      * `name` — имя БД. Обязательный параметр.
+     * `deletion_protection` — защита БД от удаления. Пока опция включена, удалить БД  невозможно. Включенная защита от удаления не защищает содержимое БД. Значение по умолчанию `false`.
      * `enable_throttling_rcu_limit` — включить ограничение пропускной способности. Необязательный параметр. Значение по умолчанию `false`.
      * `provisioned_rcu_limit` — ограничение потребления Request Units в секунду. Необязательный параметр. Значение по умолчанию 0.
      * `storage_size_limit` — объем данных, ГБ. Необязательный параметр. Значение по умолчанию 50 ГБ.
      * `throttling_rcu_limit` — устанавленное значение показывает, какое потребление Request Units в секунду оплачивается по часам по тарифу. Ноль выключает почасовую оплату. Необязательный параметр. Значение по умолчанию 0.
-
+     
   1. Примените изменения:
   
       {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
       
-    {{ TF }} создаст все требуемые ресурсы. Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [YC CLI](../../cli/quickstart.md):
+    {{ TF }} создаст все требуемые ресурсы. Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [{{ yandex-cloud }} CLI](../../cli/quickstart.md):
 
     ```bash
     yc ydb database get <имя_БД>
@@ -118,11 +120,12 @@
 
   **Пример**
 
-  Создание Serverless БД с ограничением пропускной способности 10 RU/c и объемом данных 50 ГБ:
+  Создание Serverless БД с защитой от удаления, ограничением пропускной способности 10 RU/c и объемом данных 50 ГБ:
 
     > ```hcl
     > resource "yandex_ydb_database_serverless" "database1" {
-    >   name = "test-ydb-serverless"
+    >   name                = "test-ydb-serverless"
+    >   deletion_protection = "true"
     > 
     >   serverless_database {
     >     enable_throttling_rcu_limit = false
@@ -142,21 +145,21 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором нужно изменить настройки БД.
-  1. В списке сервисов выберите **{{ ydb-name }}**.
-  1. Нажмите значок ![horizontal-ellipsis](../../_assets/horizontal-ellipsis.svg) в строке нужной БД и выберите пункт **Изменить**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
+  1. Нажмите значок ![horizontal-ellipsis](../../_assets/horizontal-ellipsis.svg) в строке нужной БД и выберите пункт **{{ ui-key.yacloud.ydb.overview.button_action-edit }}**.
   1. Настройте параметры БД:
       1. При необходимости измените имя БД.
-      1. В блоке **Ограничения** задайте [пропускную способность](../pricing/serverless.md#prices-ru) и [объем данных](../pricing/serverless.md#rules-storage).
-      1. В блоке **Тарификация** задайте [выделенную пропускную способность](../pricing/serverless.md#prices-ru).
-  1. Нажмите кнопку **Изменить базу данных**.
+      1. В блоке **{{ ui-key.yacloud.ydb.overview.label_serverless-limits }}** задайте [пропускную способность](../pricing/serverless.md#prices-ru) и [объем данных](../pricing/serverless.md#rules-storage).
+      1. В блоке **{{ ui-key.yacloud.ydb.overview.label_serverless-billing }}** задайте [выделенную пропускную способность](../pricing/serverless.md#prices-ru).
+  1. Нажмите кнопку **{{ ui-key.yacloud.ydb.forms.button_update-database }}**.
 
-- YC CLI
+- {{ yandex-cloud }} CLI
 
   {% include [cli-install](../../_includes/cli-install.md) %}
 
   {% include [default-catalogue](../../_includes/default-catalogue.md) %}
 
-  Посмотрите описание команды YC CLI для изменения БД:
+  Посмотрите описание команды {{ yandex-cloud }} CLI для изменения БД:
 
   ```bash
   yc ydb database update --help
@@ -182,13 +185,14 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Откройте конфигурационный файл {{ TF }} и измените фрагмент с описанием Serverless базы данных:
 
       ```hcl
       resource "yandex_ydb_database_serverless" "database1" {
-        name = "<имя_БД>"
+        name                = "<имя_БД>"
+        deletion_protection = "<защита_от_удаления:_true_или_false>"
 
         serverless_database {
           enable_throttling_rcu_limit = <true_или_false>
@@ -202,6 +206,7 @@
      Где:
 
      * `name` — имя БД. Обязательный параметр.
+     * `deletion_protection` — защита БД от удаления. Пока опция включена, удалить БД невозможно. Включенная защита от удаления не защищает содержимое БД. Значение по умолчанию `false`.
      * `enable_throttling_rcu_limit` — включить ограничение пропускной способности. Необязательный параметр. Значение по умолчанию `false`.
      * `provisioned_rcu_limit` — ограничение потребления Request Units в секунду. Необязательный параметр. Значение по умолчанию 0.
      * `storage_size_limit` — объем данных, ГБ. Необязательный параметр. Значение по умолчанию 50 ГБ.
@@ -211,7 +216,7 @@
   
       {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
 
-    {{ TF }} применит требуемые изменения к ресурсам. Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [YC CLI](../../cli/quickstart.md):
+    {{ TF }} применит требуемые изменения к ресурсам. Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [{{ yandex-cloud }} CLI](../../cli/quickstart.md):
 
     ```bash
     yc ydb database get <имя_БД>
@@ -223,7 +228,9 @@
 
     > ```hcl
     > resource "yandex_ydb_database_serverless" "database1" {
-    >   name = "test-ydb-serverless"
+    >   name                = "test-ydb-serverless"
+    >   deletion_protection = "true"
+    >
     >   serverless_database {
     >     enable_throttling_rcu_limit = false
     >     provisioned_rcu_limit       = 10
@@ -244,43 +251,50 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создана БД.
-  1. В списке сервисов выберите **{{ ydb-name }}**.
-  1. Нажмите кнопку **Создать базу данных**.
-  1. Введите **Имя** базы. Требования к имени:
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.ydb.databases.button_create }}**.
+  1. Введите **{{ ui-key.yacloud.ydb.forms.label_field_name }}** базы. Требования к имени:
 
       {% include [name-format](../../_includes/name-format.md) %}
 
-  1. В блоке **Тип базы данных** выберите опцию **Dedicated**.
-  1. В блоке **Вычислительные ресурсы** выберите тип и количество [вычислительных ресурсов](../concepts/resources.md#resource-presets).
-  1. В блоке **Группы хранения** выберите тип диска и количество [групп хранения](../concepts/resources.md#storage-groups), определяющее суммарный объем хранилища.
-  1. В блоке **Сеть** настройте параметры сети:
-      1. (Опционально) В поле **Публичные IP-адреса** выберите опцию **Присвоить**, если вы планируете отправлять запросы к базе не только из сети {{ yandex-cloud }}, но и через интернет.
+  1. В блоке **{{ ui-key.yacloud.ydb.forms.label_field_database-type }}** выберите опцию `{{ ui-key.yacloud.ydb.forms.label_dedicated-type }}`.
+  1. В блоке **{{ ui-key.yacloud.ydb.forms.label_section-compute }}** выберите тип и количество [вычислительных ресурсов](../concepts/resources.md#resource-presets).
+
+      {% note warning %}
+
+      Для надежной и стабильной работы базе данных необходимо более одного слота. База в production-окружении должна запускаться минимум на трех слотах.
+
+      {% endnote %}
+
+  1. В блоке **{{ ui-key.yacloud.ydb.forms.label_section-storage }}** выберите тип диска и количество [групп хранения](../concepts/resources.md#storage-groups), определяющее суммарный объем хранилища.
+  1. В блоке **{{ ui-key.yacloud.ydb.forms.label_section-network }}** настройте параметры сети:
+      1. (Опционально) В поле **{{ ui-key.yacloud.ydb.forms.field_public-ips }}** выберите опцию **{{ ui-key.yacloud.ydb.forms.label_text-public-ips }}**, если вы планируете отправлять запросы к базе не только из сети {{ yandex-cloud }}, но и через интернет.
 
           {% include  [traffic_metering](../_includes/traffic_metering.md) %}
 
-      1. Выберите существующую сеть из списка **Облачная сеть** или создайте новую:
-          * Нажмите кнопку **Создать новую**.
-          * В открывшемся окне укажите **Имя** новой сети.
-          * (опционально) Выберите опцию **Создать подсети**. Подсети в каждой зоне доступности будут созданы автоматически.
-          * Нажмите кнопку **Создать**.
-      1. В блоке **Подсети** для каждой зоны доступности выберите подсеть или создайте новую:
-          * Нажмите кнопку **Создать новую**.
-          * В открывшемся окне укажите **Имя** новой подсети.
-          * (опционально) Введите **Описание** подсети.
-          * Выберите из списка **Зона доступности** нужную зону.
-          * Задайте адрес подсети в формате [**CIDR**](https://ru.wikipedia.org/wiki/Бесклассовая_адресация).
-          * Нажмите кнопку **Создать**.
-  1. Нажмите кнопку **Создать базу данных**.
+      1. Выберите существующую сеть из списка **{{ ui-key.yacloud.ydb.forms.field_network }}** или создайте новую:
+          * Нажмите кнопку **{{ ui-key.yacloud.ydb.forms.button_create-network-new }}**.
+          * В открывшемся окне укажите **{{ ui-key.yacloud.component.vpc.create-network-dialog.field_name }}** новой сети.
+          * (Опционально) Выберите опцию **{{ ui-key.yacloud.component.vpc.create-network-dialog.field_is-default }}**. Подсети в каждой зоне доступности будут созданы автоматически.
+          * Нажмите кнопку **{{ ui-key.yacloud.component.vpc.create-network-dialog.button_create }}**.
+      1. В блоке **{{ ui-key.yacloud.ydb.forms.field_subnetworks }}** для каждой зоны доступности выберите подсеть или создайте новую:
+          * Нажмите кнопку **{{ ui-key.yacloud.ydb.forms.button_create-subnetwork-new }}**.
+          * В открывшемся окне укажите **{{ ui-key.yacloud.component.vpc.create-subnetwork-dialog.field_name }}** новой подсети.
+          * (Опционально) Введите **{{ ui-key.yacloud.component.vpc.create-subnetwork-dialog.field_description }}** подсети.
+          * Выберите из списка **{{ ui-key.yacloud.component.vpc.create-subnetwork-dialog.field_zone }}** нужную зону.
+          * Задайте адрес подсети в формате [**{{ ui-key.yacloud.component.vpc.create-subnetwork-dialog.field_cidr }}**](https://ru.wikipedia.org/wiki/Бесклассовая_адресация).
+          * Нажмите кнопку **{{ ui-key.yacloud.component.vpc.create-subnetwork-dialog.button_create }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.ydb.forms.button_create-database }}**.
 
     Дождитесь, когда статус БД изменится на `Running`.
 
-- YC CLI
+- {{ yandex-cloud }} CLI
 
   {% include [cli-install](../../_includes/cli-install.md) %}
 
   {% include [default-catalogue](../../_includes/default-catalogue.md) %}
 
-  1. Посмотрите описание команды YC CLI для создания БД:
+  1. Посмотрите описание команды {{ yandex-cloud }} CLI для создания БД:
 
       ```bash
       yc ydb database create --help
@@ -311,7 +325,7 @@
 
   **Примеры**
   
-  1. Создание минимальной одноузловой Dedicated БД YDB с именем dedb, доступной из Интернет:
+  1. Создание минимальной одноузловой Dedicated БД YDB с именем dedb, доступной из интернета:
 
       > ```bash
       > yc ydb database create dedb \
@@ -322,7 +336,7 @@
       >   --public-ip
       > ```  
 
-  1. Асинхронное создание трехузловой георезервированной Dedicated БД YDB с хранилищем в 300 ГБ и вычислительным узлами по 64 ГБ RAM, с именем dedb3, доступной из Интернет:
+  1. Асинхронное создание трехузловой георезервированной Dedicated БД YDB с хранилищем в 300 ГБ и вычислительным узлами по 64 ГБ RAM, с именем dedb3, доступной из интернета:
 
       > ```bash
       > yc ydb database create dedb3 \
@@ -337,7 +351,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. В конфигурационном файле {{ TF }} опишите параметры Dedicated БД, которую необходимо создать:
 
@@ -349,6 +363,7 @@
         subnet_ids          = ["<идентификатор_подсети1>", "<идентификатор_подсети2>", "<идентификатор_подсети3>"]
 
         resource_preset_id  = "<конфигурация_вычислительных_ресурсов>"      
+        deletion_protection = "<защита_от_удаления:_true_или_false>"
 
         scale_policy {
           fixed_scale {
@@ -369,6 +384,7 @@
      * `network_id` — идентификатор сети, к которой подключается БД.
      * `subnet_ids` — список идентификаторов подсетей. Перечисляются через запятую.
      * `resource_preset_id` — конфигурация вычислительных ресурсов узла. Возможные значения перечислены в колонке **Имя конфигурации** в таблице раздела [{#T}](../concepts/resources.md#resource-presets).
+     * `deletion_protection` — защита БД от удаления. Пока опция включена, БД удалить невозможно. Включенная защита не защищает содержимое БД. Значение по умолчанию — `false`.
      * `scale_policy` — политика масштабирования, где `size` — количество экземпляров БД.
      * `storage_config` — конфигурация хранилища, где:
         * `group_count` — количество [групп хранения](../concepts/resources.md#storage-groups).
@@ -378,7 +394,7 @@
   
       {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
 
-    {{ TF }} создаст все требуемые ресурсы. Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [YC CLI](../../cli/quickstart.md):
+    {{ TF }} создаст все требуемые ресурсы. Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [{{ yandex-cloud }} CLI](../../cli/quickstart.md):
 
     ```bash
     yc ydb database list
@@ -390,10 +406,11 @@
 
     > ```hcl
     > resource "yandex_ydb_database_dedicated" "database2" {
-    >    name               = "test-ydb-dedicated"
-    >    network_id         = yandex_vpc_network.my-net.id
-    >    subnet_ids         = [yandex_vpc_subnet.my-subnet-a.id, yandex_vpc_subnet.my-subnet-b.id, yandex_vpc_subnet.my-subnet-c.id]
-    >    resource_preset_id = "medium"
+    >    name                = "test-ydb-dedicated"
+    >    network_id          = yandex_vpc_network.my-net.id
+    >    subnet_ids          = [yandex_vpc_subnet.my-subnet-a.id, yandex_vpc_subnet.my-subnet-b.id, yandex_vpc_subnet.my-subnet-c.id]
+    >    resource_preset_id  = "medium"
+    >    deletion_protection = "true"
     >    scale_policy {
     >      fixed_scale {
     >        size = 1
@@ -415,21 +432,21 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором нужно изменить настройки БД.
-  1. В списке сервисов выберите **{{ ydb-name }}**.
-  1. Нажмите значок ![horizontal-ellipsis](../../_assets/horizontal-ellipsis.svg) в строке нужной БД и выберите пункт **Изменить**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
+  1. Нажмите значок ![horizontal-ellipsis](../../_assets/horizontal-ellipsis.svg) в строке нужной БД и выберите пункт **{{ ui-key.yacloud.ydb.overview.button_action-edit }}**.
   1. Настройте параметры БД:
       1. При необходимости измените имя БД.
-      1. В блоке **Вычислительные ресурсы** выберите тип и количество [вычислительных ресурсов](../concepts/resources.md#resource-presets).
-      1. В блоке **Группы хранения** выберите тип диска и количество [групп хранения](../concepts/resources.md#storage-groups), определяющее суммарный объем хранилища.
-  1. Нажмите кнопку **Изменить базу данных**.
+      1. В блоке **{{ ui-key.yacloud.ydb.forms.label_section-compute }}** выберите тип и количество [вычислительных ресурсов](../concepts/resources.md#resource-presets).
+      1. В блоке **{{ ui-key.yacloud.ydb.forms.label_section-storage }}** выберите тип диска и количество [групп хранения](../concepts/resources.md#storage-groups), определяющее суммарный объем хранилища.
+  1. Нажмите кнопку **{{ ui-key.yacloud.ydb.forms.button_update-database }}**.
 
-- YC CLI
+- {{ yandex-cloud }} CLI
 
   {% include [cli-install](../../_includes/cli-install.md) %}
 
   {% include [default-catalogue](../../_includes/default-catalogue.md) %}
 
-  Посмотрите описание команды YC CLI для изменения БД:
+  Посмотрите описание команды {{ yandex-cloud }} CLI для изменения БД:
 
   ```bash
   yc ydb database update --help
@@ -450,16 +467,17 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Откройте конфигурационный файл {{ TF }} и измените фрагмент с описанием БД:
 
       > ```hcl
       > resource "yandex_ydb_database_dedicated" "database2" {
-      >   name               = "my-first-ydb-dedicated"
-      >   network_id         = yandex_vpc_network.my-net.id
-      >   subnet_ids         = [yandex_vpc_subnet.my-subnet-a.id, yandex_vpc_subnet.my-subnet-b.id, yandex_vpc_subnet.my-subnet-c.id]
-      >   resource_preset_id = "medium"
+      >   name                = "my-first-ydb-dedicated"
+      >   network_id          = yandex_vpc_network.my-net.id
+      >   subnet_ids          = [yandex_vpc_subnet.my-subnet-a.id, yandex_vpc_subnet.my-subnet-b.id, yandex_vpc_subnet.my-subnet-c.id]
+      >   resource_preset_id  = "medium"
+      >   deletion_protection = "true"
       >   scale_policy {
       >     fixed_scale {
       >       size = 2
@@ -476,7 +494,7 @@
 
      {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
 
-  Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [YC CLI](../../cli/quickstart.md):
+  Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [{{ yandex-cloud }} CLI](../../cli/quickstart.md):
 
   ```bash
   yc ydb database get <имя_БД>
@@ -491,9 +509,9 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, для которого нужно получить список БД.
-  1. В списке сервисов выберите **{{ ydb-name }}**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
 
-- YC CLI
+- {{ yandex-cloud }} CLI
 
   {% include [cli-install](../../_includes/cli-install.md) %}
 
@@ -514,11 +532,11 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором нужно удалить БД.
-  1. В списке сервисов выберите **{{ ydb-name }}**.
-  1. Нажмите значок ![horizontal-ellipsis](../../_assets/horizontal-ellipsis.svg) в строке нужной БД и выберите пункт **Удалить**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
+  1. Нажмите значок ![horizontal-ellipsis](../../_assets/horizontal-ellipsis.svg) в строке нужной БД и выберите пункт **{{ ui-key.yacloud.ydb.overview.button_action-delete }}**.
   1. Подтвердите удаление.
 
-- YC CLI
+- {{ yandex-cloud }} CLI
 
   {% include [cli-install](../../_includes/cli-install.md) %}
 
@@ -532,7 +550,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Откройте файл конфигураций {{ TF }} и удалите фрагмент с описанием БД.
 
@@ -546,7 +564,6 @@
        subnet_ids         = [yandex_vpc_subnet.my-subnet-a.id, yandex_vpc_subnet.my-subnet-b.id, yandex_vpc_subnet.my-subnet-c.id]
 
        resource_preset_id = "medium"
-
        scale_policy {
          fixed_scale {
            size = 1
@@ -564,7 +581,7 @@
 
       {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
 
-    {{ TF }} удалит все требуемые ресурсы. Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [YC CLI](../../cli/quickstart.md):
+    {{ TF }} удалит все требуемые ресурсы. Проверить изменения можно в [консоли управления]({{ link-console-main }}) или с помощью команды [{{ yandex-cloud }} CLI](../../cli/quickstart.md):
 
     ```bash
     yc ydb database list

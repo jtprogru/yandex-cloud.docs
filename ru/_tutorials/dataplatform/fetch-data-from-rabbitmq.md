@@ -31,7 +31,7 @@
 
 - С помощью {{ TF }}
 
-    1. Если у вас еще нет {{ TF }}, [установите его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
     1. Скачайте в ту же рабочую директорию файл конфигурации [clickhouse-cluster-and-vm-for-rabbitmq.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/clickhouse-cluster-and-vm-for-rabbitmq.tf).
 
@@ -46,7 +46,7 @@
     1. Укажите в файле `clickhouse-cluster-and-vm-for-rabbitmq.tf`:
 
         * Имя пользователя и пароль, которые будут использоваться для доступа к кластеру {{ mch-name }}.
-        * Идентификатор публичного [образа](../../compute/operations/images-with-pre-installed-software/get-list.md) с Ubuntu без [GPU](../../glossary/gpu.md) для виртуальной машины. Например, `fd879gb88170to70d38a` для Ubuntu 20.04 LTS.
+        * Идентификатор публичного [образа](../../compute/operations/images-with-pre-installed-software/get-list.md) с [Ubuntu](/marketplace?tab=software&search=Ubuntu&categories=os) без [GPU](../../glossary/gpu.md) для виртуальной машины.
         * Логин и путь к файлу [открытого ключа](../../compute/operations/vm-connect/ssh.md#creating-ssh-keys), которые будут использоваться для доступа к виртуальной машине. По умолчанию в используемом образе указанный логин игнорируется, вместо него создается пользователь с логином `ubuntu`. Используйте его для подключения к виртуальной машине.
 
     1. Выполните команду `terraform init` в директории с конфигурационным файлом. Эта команда инициализирует провайдеров, указанных в конфигурационных файлах, и позволяет работать с ресурсами и источниками данных провайдера.
@@ -133,7 +133,7 @@
 
 - Вручную
 
-    Укажите в [настройках кластера {{ mch-name }}](../../managed-clickhouse/operations/update.md#change-clickhouse-config) имя пользователя и пароль для аутентификации {{ RMQ }} в секции **Настройки СУБД** → **Rabbitmq**.
+    Укажите в [настройках кластера {{ mch-name }}](../../managed-clickhouse/operations/update.md#change-clickhouse-config) имя пользователя и пароль для аутентификации {{ RMQ }} в секции **{{ ui-key.yacloud.mdb.forms.section_settings }}** → **Rabbitmq**.
 
 - С помощью {{ TF }}
 
@@ -311,7 +311,7 @@
 
 ## Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 {% list tabs %}
 

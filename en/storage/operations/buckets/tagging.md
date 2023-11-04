@@ -8,6 +8,17 @@ A [bucket label](../../concepts/tags.md) is a key-value pair used for logical bu
 
 {% list tabs %}
 
+- Management console
+
+  1. In the [management console]({{ link-console-main }}), select the folder where the [bucket](../../concepts/bucket.md) is located.
+  1. Select **{{ objstorage-name }}**.
+  1. Select a bucket from the list.
+  1. Click the **{{ ui-key.yacloud.storage.bucket.switch_settings }}** tab in the left-hand menu.
+  1. Click **{{ ui-key.yacloud.component.label-set.button_add-label }}**.
+  1. Enter a label in `key: value` format. To edit an existing label, enter its key and a new value.
+  1. Click **Enter**.
+  1. Click **{{ ui-key.yacloud.storage.bucket.settings.button_save }}**.
+
 - AWS CLI
 
    If you do not have the AWS CLI yet, [install and configure it](../../tools/aws-cli.md).
@@ -28,11 +39,43 @@ A [bucket label](../../concepts/tags.md) is a key-value pair used for logical bu
       * `Value`: Label value of the `string` type.
    * `--endpoint-url`: {{ objstorage-name }} endpoint.
 
+- {{ TF }}
+
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+  1. Open the {{ TF }} configuration file and add a section called `tags` to the fragment describing the bucket:
+
+      ```hcl
+      resource "yandex_storage_bucket" "test-bucket" {
+        bucket           = "<bucket_name>"
+        ...
+        tags             = {
+          <key_of_label_1> = "<value_of_label_1>"
+          <key_of_label_2> = "<value_of_label_2>"
+        }
+        ...
+      }
+      ```
+
+      Where `tags` is an array of bucket labels in `<key> = "<value>"` format.
+
+      For more information about the `yandex_storage_bucket` resource parameters in Terraform, see the [provider documentation]({{ tf-provider-resources-link }}/storage_bucket).
+
+  1. Apply the changes:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+  That will add the labels to the bucket. You can check the new labels and the bucket's configuration using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
+
+  ```bash
+  yc storage bucket get <bucket_name> --full
+  ```
+
 - API
 
    To add or update bucket labels, use the [update](../../api-ref/Bucket/update.md) REST API method for the [Bucket](../../api-ref/Bucket/index.md) resource, the [BucketService/Update](../../api-ref/grpc/bucket_service.md#Update) gRPC API call, or the [putBucketTagging](../../s3/api-ref/bucket/putbuckettagging.md) S3 API method.
 
-   ### Sample gRPC API call {#api-edit-example}
+   **Sample gRPC API call**
 
    ```bash
    export IAM_TOKEN="<IAM token>"
@@ -72,6 +115,13 @@ A [bucket label](../../concepts/tags.md) is a key-value pair used for logical bu
 
 {% list tabs %}
 
+- Management console
+
+  1. In the [management console]({{ link-console-main }}), select the folder where the [bucket](../../concepts/bucket.md) is located.
+  1. Select **{{ objstorage-name }}**.
+  1. Select a bucket from the list.
+  1. Click the **{{ ui-key.yacloud.storage.bucket.switch_settings }}** tab in the left-hand menu.
+
 - AWS CLI
 
    If you do not have the AWS CLI yet, [install and configure it](../../tools/aws-cli.md).
@@ -109,7 +159,7 @@ A [bucket label](../../concepts/tags.md) is a key-value pair used for logical bu
 
    To view bucket labels, use the [get](../../api-ref/Bucket/get.md) REST API method for the [Bucket](../../api-ref/Bucket/index.md) resource, the [BucketService/Get](../../api-ref/grpc/bucket_service.md#Get) gRPC API call, or the [getBucketTagging](../../s3/api-ref/bucket/getbuckettagging.md) S3 API method.
 
-   ### Sample gRPC API call {#api-get-example}
+   **Sample gRPC API call**
 
    ```bash
    export IAM_TOKEN="<IAM token>"
@@ -163,6 +213,15 @@ A [bucket label](../../concepts/tags.md) is a key-value pair used for logical bu
 
 {% list tabs %}
 
+- Management console
+
+  1. In the [management console]({{ link-console-main }}), select the folder where the [bucket](../../concepts/bucket.md) is located.
+  1. Select **{{ objstorage-name }}**.
+  1. Select a bucket from the list.
+  1. Click the **{{ ui-key.yacloud.storage.bucket.switch_settings }}** tab in the left-hand menu.
+  1. Click ![image](../../../_assets/cross.svg) next to the appropriate label.
+  1. Click **{{ ui-key.yacloud.storage.bucket.settings.button_save }}**.
+
 - AWS CLI
 
    If you do not have the AWS CLI yet, [install and configure it](../../tools/aws-cli.md).
@@ -179,11 +238,43 @@ A [bucket label](../../concepts/tags.md) is a key-value pair used for logical bu
    * `--bucket`: Bucket name.
    * `--endpoint-url`: {{ objstorage-name }} endpoint.
 
+- {{ TF }}
+
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+  1. Open the {{ TF }} configuration file and delete the `tags` section from the fragment describing the bucket.
+
+     {% cut "Example of a bucket tag description in {{ TF }} configuration" %}
+
+     ```hcl
+     resource "yandex_storage_bucket" "test-bucket" {
+       bucket           = "<bucket_name>"
+       ...
+       tags             = {
+         <key_of_label_1> = "<value_of_label_1>"
+         <key_of_label_2> = "<value_of_label_2>"
+       }
+       ...
+     }
+     ```
+
+     {% endcut %}
+
+  1. Apply the changes:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+  That will delete the bucket's labels. You can check the deletion of labels and the bucket's configuration using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
+
+  ```bash
+  yc storage bucket get <bucket_name> --full
+  ```
+
 - API
 
    To delete bucket labels, use the [update](../../api-ref/Bucket/update.md) REST API method for the [Bucket](../../api-ref/Bucket/index.md) resource, the [BucketService/Update](../../api-ref/grpc/bucket_service.md#Update) gRPC API call, or the [deleteBucketTagging](../../s3/api-ref/bucket/deletebuckettagging.md) S3 API method.
 
-   ### Sample gRPC API call {#api-delete-example}
+   **Sample gRPC API call**
 
    ```bash
    export IAM_TOKEN="<IAM token>"

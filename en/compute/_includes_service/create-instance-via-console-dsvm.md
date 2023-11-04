@@ -24,7 +24,7 @@ Creating an instance from a public [DSVM](/marketplace/products/f2e4v304qn35mhil
       * Choose a [platform](../concepts/vm-platforms.md).
       * Specify the [guaranteed share](../../compute/concepts/performance-levels.md) and the required number of vCPUs as well as the amount of RAM.
       * Make your VM [preemptible](../concepts/preemptible-vm.md), if required.
-      * (optional) Enable a [software-accelerated network](../concepts/software-accelerated-network.md).
+      * (Optional) Enable a [software-accelerated network](../concepts/software-accelerated-network.md).
    1. Under **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
       * Enter a subnet ID or select a [cloud network](../../vpc/concepts/network.md#network) from the list. You can select the search scope: in the current folder or in all folders. If you do not have a network, click ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud.component.vpc.network-select.button_create-network }}** to create one:
          * In the window that opens, enter the folder to host the new network, as well as the network name.
@@ -37,13 +37,14 @@ Creating an instance from a public [DSVM](/marketplace/products/f2e4v304qn35mhil
          * (Optional) Enable [DDoS protection](../../vpc/ddos-protection/index.md) in the **{{ ui-key.yacloud.component.compute.network-select.field_advanced }}** field, if required.
       * Select the [appropriate security groups](../../vpc/concepts/security-groups.md) in the **{{ ui-key.yacloud.component.compute.network-select.field_security-groups }}** field.
 
-         {% include [security-groups-note-vm](../../_includes/vpc/security-groups-note-vm.md) %}
-
    1. Under **{{ ui-key.yacloud.compute.instances.create.section_access }}**, specify the data required to access the VM:
-      * (optional) Select or create a [service account](../../iam/concepts/index.md#sa). By using a service account, you can flexibly configure access rights for your resources.
-      * Enter the username in the **{{ ui-key.yacloud.compute.instances.create.field_user }}** field.
+      * (Optional) Select or create a [service account](../../iam/concepts/index.md#sa). With a service account, you can flexibly configure access rights for your resources.
+      * Enter username in the **{{ ui-key.yacloud.compute.instances.create.field_user }}** field.
       * In the **{{ ui-key.yacloud.compute.instances.create.field_key }}** field, paste the contents of the [public key](../operations/vm-connect/ssh.md#creating-ssh-keys) file.
       * (Optional) Enable access to the [serial console](../operations/index.md#serial-console) in the **{{ ui-key.yacloud.compute.instances.create.field_access-advanced }}** field, if required.
+
+      {% include [vm-connect-linux](../../_includes/vm-connect-linux.md) %}
+
    1. Click **{{ ui-key.yacloud.compute.instances.create.button_create }}**.
 
    The virtual machine will appear in the list. When a VM is created, it is assigned an [IP address](../../vpc/concepts/address) and [hostname](../../vpc/concepts/address.md#fqdn) (FQDN).

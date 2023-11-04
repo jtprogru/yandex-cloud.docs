@@ -1,10 +1,15 @@
-# Check target health statuses
+---
+title: "Checking target health statuses"
+description: "Follow this guide to run health checks for target resources."
+---
+
+# Checking target health statuses
 
 {% list tabs %}
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ network-load-balancer-name }}**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
    1. Click the name of the required network load balancer.
 
 - CLI

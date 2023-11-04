@@ -23,7 +23,7 @@
 
    - С помощью {{ TF }}
 
-     1. Если у вас еще нет {{ TF }}, [установите его](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+     1. {% include [terraform-install](../../../_includes/terraform-install.md) %}
      1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
      1. Скачайте в ту же рабочую директорию файл конфигурации кластера [k8s-cluster.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/managed-kubernetes/k8s-cluster.tf). В файле описаны:
         * [Сеть](../../../vpc/concepts/network.md#network).
@@ -33,7 +33,7 @@
           * Правила для доступа к API {{ k8s }} и управления кластером с помощью `kubectl` через порты 443 и 6443.
           * Правила для доступа к сервисам из интернета.
         * Кластер {{ managed-k8s-name }}.
-        * [Сервисный аккаунт](../../../iam/concepts/users/service-accounts.md), необходимый для работы кластера и группы узлов {{ managed-k8s-name }}}.
+        * [Сервисный аккаунт](../../../iam/concepts/users/service-accounts.md), необходимый для работы кластера и группы узлов {{ managed-k8s-name }}.
      1. Укажите в файле конфигурации:
         * [Идентификатор каталога](../../../resource-manager/operations/folder/get-id.md).
         * [Версию {{ k8s }}](../../concepts/release-channels-and-updates.md) для кластера и групп узлов {{ managed-k8s-name }}.
@@ -96,6 +96,8 @@
       ```text
       clusterpolicy.kyverno.io/require-labels created
       ```
+
+1. {% include [install policy reporter](../../../_includes/managed-kubernetes/install-policy-reporter.md) %}
 
 ## Проверьте работу Kyverno & Kyverno Policies {#check-apps}
 

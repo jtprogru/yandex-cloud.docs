@@ -16,29 +16,32 @@ Create a [timer](../concepts/trigger/timer.md) — a trigger that invokes a [{{ 
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create your trigger.
 
-   1. Select **{{ serverless-containers-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
 
-   1. On the left-hand panel, select ![image](../../_assets/functions/triggers.svg) **Triggers**.
+   1. In the left-hand panel, select ![image](../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-   1. Under **Basic parameters**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
       * Enter a name and description for the trigger.
-      * In the **Type** field, select **Timer**.
-      * In the **Launched resource** field, select **Container**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** field, select `{{ ui-key.yacloud.serverless-functions.triggers.form.label_timer }}`.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** field, select `{{ ui-key.yacloud.serverless-functions.triggers.form.label_container }}`.
 
-   1. Under **Timer settings**, specify the container invocation schedule in a [cron expression](../concepts/trigger/timer.md#cron-expression).
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_timer }}**:
+
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_cron-expression }}** field, specify the function invocation schedule in the [cron expression](../concepts/trigger/timer.md#cron-expression) format.
+      * (Optional) In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_cron-payload }}** field, enter the message to be delivered to the function if the timer triggers in the `payload` field. Data type is a string of no more than 4096 characters.
 
    1. {% include [container-settings](../../_includes/serverless-containers/container-settings.md) %}
 
-   1. (optional) Under **Repeat request settings**:
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
       {% include [repeat-request](../../_includes/serverless-containers/repeat-request.md) %}
 
-   1. (optional) **Under Dead Letter Queue settings**, select the Dead Letter Queue and the service account with write privileges for this queue.
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}**, select the Dead Letter Queue and the service account with write privileges for this queue.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -48,10 +51,12 @@ Create a [timer](../concepts/trigger/timer.md) — a trigger that invokes a [{{ 
 
    To create a trigger that invokes a container, run this command:
 
+   
    ```bash
    yc serverless trigger create timer \
      --name <timer_name> \
      --cron-expression '<cron_expression>' \
+     --payload <message> \
      --invoke-container-id <container_ID> \
      --invoke-container-service-account-id <service_account_ID> \
      --retry-attempts 1 \
@@ -60,15 +65,18 @@ Create a [timer](../concepts/trigger/timer.md) — a trigger that invokes a [{{ 
      --dlq-service-account-id <service_account_ID>
    ```
 
+
    Where:
 
    * `--name`: Timer name.
    * `--cron-expression`: Container invocation schedule in [cron expression](../concepts/trigger/timer.md#cron-expression) format.
+   * `--payload`: Message to be delivered to the function if the timer triggers. String length should not exceed 4,096 characters.
 
    {% include [trigger-cli-param](../../_includes/serverless-containers/trigger-cli-param.md) %}
 
    Result:
 
+   
    ```text
    id: a1s5msktij**********
    folder_id: b1gmit33hg**********
@@ -77,6 +85,7 @@ Create a [timer](../concepts/trigger/timer.md) — a trigger that invokes a [{{ 
    rule:
      timer:
        cron_expression: 5 10 ? * * *
+       payload: <message>
        invoke_container_with_retry:
          container_id: bba5jb38o8**********
          service_account_id: aje3932acd**********
@@ -88,6 +97,7 @@ Create a [timer](../concepts/trigger/timer.md) — a trigger that invokes a [{{ 
            service-account-id: aje3932acd**********
    status: ACTIVE
    ```
+
 
 - API
 

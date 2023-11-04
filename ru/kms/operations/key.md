@@ -11,12 +11,13 @@
 - Консоль управления
 
   1. Войдите в [консоль управления]({{ link-console-main }}).
-  1. Выберите сервис **{{ kms-name }}**.
-  1. Нажмите кнопку **Создать** и задайте атрибуты ключа:
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+  1. На панели слева выберите ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.kms.symmetric-keys.button_empty-create }}** и задайте атрибуты ключа:
      * Имя и опциональное описание в свободной форме.
-     * Алгоритм шифрования, например AES-256.
+     * Алгоритм шифрования, например `AES-256`.
      * Период [ротации](../concepts/index.md#rotation) (частота смены версии ключа по умолчанию).
-     * Нажмите кнопку **Создать**.
+     * Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
   Вместе с ключом создается его первая версия: нажмите на ключ в списке, чтобы открыть страницу с его атрибутами.
 
@@ -44,7 +45,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   {% include [terraform-key-create](../../_includes/kms/terraform-key-create.md) %}
 
@@ -61,9 +62,10 @@
 - Консоль управления
 
   1. Войдите в [консоль управления]({{ link-console-main }}).
-  1. Выберите сервис **{{ kms-name }}**.
-  1. В строке с нужным ключом нажмите значок ![image](../../_assets/horizontal-ellipsis.svg), в выпадающем списке выберите **Изменить**.
-  1. Изменив атрибуты ключа, нажмите кнопку **Сохранить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+  1. На панели слева выберите ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
+  1. В строке с нужным ключом нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.edit }}**.
+  1. Изменив атрибуты ключа, нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -150,8 +152,9 @@
 - Консоль управления
 
   1. Войдите в [консоль управления]({{ link-console-main }}).
-  1. Выберите сервис **{{ kms-name }}**.
-  1. В строке с нужным ключом нажмите значок ![image](../../_assets/horizontal-ellipsis.svg), в выпадающем списке выберите **Ротировать**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+  1. На панели слева выберите ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
+  1. В строке с нужным ключом нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.kms.symmetric-key.overview.button_action-rotate }}**.
   1. Подтвердите ротацию (убедитесь, что смена версии по умолчанию не повредит вашей работе).
 
 - CLI
@@ -185,9 +188,10 @@
 - Консоль управления
 
   1. Войдите в [консоль управления]({{ link-console-main }}).
-  1. Выберите сервис **{{ kms-name }}**.
-  1. В строке с нужным ключом нажмите значок ![image](../../_assets/horizontal-ellipsis.svg), в выпадающем списке выберите **Удалить**.
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+  1. На панели слева выберите ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
+  1. В строке с нужным ключом нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.kms.symmetric-key.overview.button_action-delete }}**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.kms.symmetric-key.overview.popup-confirm_button_delete }}**.
 
 - CLI
 

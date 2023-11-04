@@ -1,3 +1,8 @@
+---
+title: "Updating a service account"
+description: "Follow this guide to update a service account."
+---
+
 # Updating a service account
 
 {% list tabs %}
@@ -5,16 +10,16 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder the service account belongs to.
-   1. At the top of the screen, go to the **Service accounts** tab.
-   1. Click ![image](../../../_assets/options.svg) next to the service account and select **Edit**.
+   1. At the top of the screen, go to the **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}** tab.
+   1. Click ![image](../../../_assets/options.svg) next to the service account and select **{{ ui-key.yacloud.iam.folder.service-accounts.button_action-edit }}**.
    1. Change the name of your service account.
 
-      Name format requirements:
+      The name format requirements are as follows:
 
       {% include [name-format](../../../_includes/name-format.md) %}
 
    1. Change the description of your service account.
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.iam.folder.service-account.popup-robot_button_save }}**.
 
 - CLI
 
@@ -38,8 +43,8 @@
       +----------------------+------------------+-------------------------------+
       |          ID          |       NAME       |          DESCRIPTION          |
       +----------------------+------------------+-------------------------------+
-      | aje6o61dvog2h6g9a33s | my-robot         |                               |
-      | aje9sda1ufvqcmfksd3f | blabla           | bla bla bla is my description |
+      | aje6o61dvog2******** | my-robot         |                               |
+      | aje9sda1ufvq******** | account_name     | account_description           |
       +----------------------+------------------+-------------------------------+
       ```
 
@@ -51,7 +56,7 @@
         --description "this is my service account"
       ```
 
-      Name format requirements:
+      The name format requirements are as follows:
 
       {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -61,7 +66,7 @@
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To change the name or description of a service account:
 
@@ -92,7 +97,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
       ```bash

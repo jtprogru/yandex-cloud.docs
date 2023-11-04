@@ -35,6 +35,8 @@ items:
             href: operations/buckets/configure-object-lock.md
           - name: Bucket label management
             href: operations/buckets/tagging.md
+          - name: Getting bucket information and statistics
+            href: operations/buckets/get-info.md
       - name: Objects
         items:
           - name: Uploading an object
@@ -45,6 +47,8 @@ items:
             href: operations/objects/download.md
           - name: Restoring an object's version
             href: operations/objects/restore-object-version.md
+          - name: Renaming and moving objects
+            href: operations/objects/rename-move.md
           - name: Getting a public link to an object
             href: operations/objects/link-for-download.md
           - name: Configuring an object lock
@@ -71,6 +75,8 @@ items:
             href: operations/hosting/certificate.md
   - name: Tutorials
     items:
+      - name: All tutorials
+        href: tutorials/index.md
       - name: Getting object query statistics with S3 Select
         href: tutorials/server-logs.md
       - name: Getting website traffic statistics with S3 Select
@@ -79,7 +85,7 @@ items:
         href: tutorials/billing-resource-detailing.md
       - name: Server-side encryption
         href: tutorials/server-side-encryption.md
-      - name: Integrating L7 load balancer with CDN and Object Storage
+      - name: Integrating an L7 load balancer with the CDN and Object Storage
         href: tutorials/cdn-storage-integration.md
       - name: Blue-green and canary deployment of service versions
         href: tutorials/blue-green-canary-deployment.md
@@ -97,6 +103,14 @@ items:
         href: tutorials/yds-obj-migration.md
       - name: Automatically copying objects from one bucket to another
         href: tutorials/bucket-to-bucket.md
+      - name: Regular recognition of audio files in buckets
+        href: tutorials/batch-recognition-stt.md
+      - name: >-
+          Training a model in {{ ml-platform-full-name }} on data from {{
+          objstorage-name }}
+        href: tutorials/s3-to-datasphere.md
+      - name: Connecting to {{ objstorage-name }} from {{ vpc-short-name }}
+        href: tutorials/storage-vpc-access.md
   - name: Concepts
     items:
       - name: Overview
@@ -187,6 +201,8 @@ items:
             href: tools/sftps.md
   - name: API reference
     items:
+      - name: Authentication in the API
+        href: api-ref/authentication.md
       - name: REST (Amazon S3-compatible)
         items:
           - name: How to use the API
@@ -363,8 +379,6 @@ items:
                 href: s3/api-ref/response-codes.md
       - name: gRPC and REST
         items:
-          - name: Authentication in the API
-            href: api-ref/authentication.md
           - name: gRPC
             items:
               - name: Overview

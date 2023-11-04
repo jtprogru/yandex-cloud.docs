@@ -14,21 +14,23 @@ Regardless of the deployment option, all {{ dataproc-name }} clusters are charge
 
 In a {{ dataproc-name }} template, you select one of the preset cluster configurations. Based on the {{ dataproc-name }} template activated in the project, {{ ml-platform-name }} deploys a temporary cluster using the appropriate project parameters.
 
-{{ ml-platform-name }} monitors how temporary clusters are running. If the cluster isn't used for computations during two hours, {{ ml-platform-name }} stops it. You can redeploy the cluster in your project as needed. You can also share {{ dataproc-name }} templates with other users.
+{{ ml-platform-name }} monitors how temporary clusters are running. If the cluster is not used for computations during two hours, {{ ml-platform-name }} will stop it. You can redeploy the cluster in your project as needed. You can also share {{ dataproc-name }} templates with other users.
 
-[Learn more about {{ dataproc-name }} templates](../operations/data-proc-template.md).
+You can learn more about {{ dataproc-name }} templates [here](../operations/data-proc-template.md).
 
 ### Integration with {{ dataproc-full-name }} {#clusters}
 
-If you have experience using [{{ dataproc-full-name }}](../../data-proc/) or the standard template configurations are not well-suited, you can deploy a cluster and use it for computing in {{ ml-platform-name }}.
+If you have experience using [{{ dataproc-full-name }}](../../data-proc/) or the standard template configurations do not suit your needs, you can deploy a cluster and use it for computing in {{ ml-platform-name }}.
 
 {% note warning %}
 
-Using the cluster deployed in {{ dataproc-name }}, you manage its lifecycle on your own. Even if there have been no computations for more than two hours, the cluster keeps running and you'll pay for it until you stop it.
+Using a cluster deployed in {{ dataproc-name }}, you will need to manage its lifecycle on your own. Even if there have been no computations for more than two hours, the cluster will be running and you will pay for it until you stop it.
 
 {% endnote %}
 
-To ensure proper integration with {{ ml-platform-name }}, make sure the [image version](../../data-proc/concepts/environment.md) of the deployed {{ dataproc-name }} cluster is at least `1.3` and the following services are enabled: `LIVY`, `SPARK`, `YARN`, and `HDFS`.
+For proper integration with {{ ml-platform-name }}, make sure the [image version](../../data-proc/concepts/environment.md) of the deployed {{ dataproc-name }} cluster is at least `1.3` and has the `LIVY`, `SPARK`, `YARN`, and `HDFS` services enabled.
+
+{% include [dataproc-s3-connector](../../_includes/datasphere/dataproc-s3-connector.md) %}
 
 ## Setting up a {{ ml-platform-name }} project to work with {{ dataproc-name }} clusters {#settings}
 
@@ -44,7 +46,7 @@ To ensure proper integration with {{ ml-platform-name }}, make sure the [image v
 
 ### Running Python code in a cluster {#run-code}
 
-Code is run in cells with the header:
+The code is run in the cells with the header:
 
 ```
 #!spark [--cluster <cluster>] [--session <session>] [--variables <input_variable>] [--return_variables <returned_variable>]
@@ -56,12 +58,12 @@ Where:
    * Name of the cluster created through the notebook interface.
    * HTTP link to the internal IP address of the `masternode` host, such as `http://10.0.0.8:8998/`.
 * `<session>`: Computing session ID. If this parameter is not specified, the default {{ dataproc-name }} cluster session is used.
-* `<input variable>`: Variable imported to the {{ dataproc-name }} cluster from {{ ml-platform-name }}. Supported types: `bool`, `int`, `float`, `str`, and `pandas.DataFrame` (converted to Spark DataFrame in a cluster).
-* `<returned variable>`: Variable to export from the {{ dataproc-name }} cluster to {{ ml-platform-name }}. Supported types: `bool`, `int`, `float`, `str`, and `pandas.DataFrame` (converted to Spark DataFrame).
+* `<input_variable>`: Variable imported to the {{ dataproc-name }} cluster from {{ ml-platform-name }}. Supported types include `bool`, `int`, `float`, `str`, and `pandas.DataFrame` (converted to Spark DataFrame in a cluster).
+* `<returned_variable>`: Variable to export from the {{ dataproc-name }} cluster to {{ ml-platform-name }}. Supported types include `bool`, `int`, `float`, `str`, and `pandas.DataFrame` (converted to Spark DataFrame).
 
 #### Example of using computing sessions with user-defined parameters {#example-custom-sessions}
 
-To run computations in a session with defined settings, first create this session and then pass the code in the cell with the `#!spark` heading:
+To run computations in a session with defined settings, first create this session and then provide the code in the cell with the `#!spark` header:
 
 1. Create a session and set its parameters:
 
@@ -94,7 +96,7 @@ To run computations in a session with defined settings, first create this sessio
 
 ### Working with the Spark SQL library {#sql}
 
-{{ ml-platform-name }} supports the Spark SQL library. For example, the query below will return all records in the `animals` table created in the `cluster test-dataproc-cluster`:
+{{ ml-platform-name }} supports using the Spark SQL library. For example, the query below will return all records in the `animals` table created in `cluster test-dataproc-cluster`:
 
 ```python
 #!spark --cluster test-dataproc-cluster --return_variables df
@@ -109,5 +111,5 @@ For more information about the SQL query syntax and how to use the Spark SQL lib
 
 #### See also {#see-also}
 
-* [{#T}](data-proc-template.md).
-* [{#T}](../tutorials/data-proc-integration.md).
+* [{#T}](data-proc-template.md)
+* [{#T}](../tutorials/data-proc-integration.md)

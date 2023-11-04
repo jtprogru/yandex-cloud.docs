@@ -1,9 +1,9 @@
 ---
 title: "Working with VMs Step-by-step guides"
-description: "Step-by-step guide on how to use and manage VMs in {{ yandex-cloud }}. In this article, you'll learn how to work with VMs, manage resources, and connect to them using SSH, RDP, and PowerShell. Find out how to use disks, images, and hosts."
+description: "Step-by-step guides on how to use and manage VMs in {{ yandex-cloud }}. In this article, you will learn how to work with VMs, manage resources, and connect to them using SSH, RDP, and PowerShell. Find out how to use disks, images, and hosts."
 ---
 
-# Step-by-step guides for {{ compute-name }}
+# Step-by-step guide for {{ compute-name }}
 
 ## Creating VMs {#vm-create}
 
@@ -44,6 +44,7 @@ description: "Step-by-step guide on how to use and manage VMs in {{ yandex-cloud
 ## Managing VMs {#vm-control}
 
 * [{#T}](vm-control/vm-stop-and-start.md)
+* [{#T}](vm-control/vm-reset-password.md)
 * [{#T}](vm-control/vm-attach-disk.md)
 * [{#T}](vm-control/vm-detach-disk.md)
 * [{#T}](vm-control/vm-change-zone.md)
@@ -62,12 +63,16 @@ description: "Step-by-step guide on how to use and manage VMs in {{ yandex-cloud
 * [{#T}](vm-connect/ssh.md)
 * [{#T}](vm-connect/rdp.md)
 * [{#T}](vm-connect/powershell.md)
+* [{#T}](vm-connect/os-login.md)
 * [{#T}](vm-connect/auth-inside-vm.md)
 * [{#T}](vm-operate/install-nvidia-drivers.md)
 * [{#T}](vm-connect/recovery-access.md)
 
 ## Managing the password reset agent {#guest-agent}
+
+* [{#T}](vm-guest-agent/check.md)
 * [{#T}](vm-guest-agent/install.md)
+* [{#T}](vm-guest-agent/uninstall.md)
 
 ## Creating a disk {#disk-create}
 
@@ -75,12 +80,15 @@ description: "Step-by-step guide on how to use and manage VMs in {{ yandex-cloud
 * [{#T}](disk-create/empty-disk-blocksize.md)
 * [{#T}](disk-create/nonreplicated.md)
 * [{#T}](disk-create/from-snapshot.md)
+* [{#T}](disk-create/from-image.md)
 
 ## Disk management {#disk-control}
 
 * [{#T}](disk-control/update.md)
 * [{#T}](disk-control/configure-schedule.md)
 * [{#T}](disk-control/disk-change-folder.md)
+* [{#T}](disk-control/disk-change-zone.md)
+* [{#T}](disk-control/disk-encrypt.md)
 * [{#T}](disk-control/delete.md)
 
 ## Disk snapshots {#snapshots}
@@ -90,12 +98,14 @@ description: "Step-by-step guide on how to use and manage VMs in {{ yandex-cloud
 * [{#T}](snapshot-control/create-schedule.md)
 * [{#T}](snapshot-control/update-schedule.md)
 * [{#T}](snapshot-control/stop-and-start-schedule.md)
+* [{#T}](snapshot-control/snapshot-encrypt.md)
 * [{#T}](snapshot-control/delete-schedule.md)
 
 
 ## Disk placement groups {#placement-groups}
 
 * [{#T}](disk-placement-groups/create.md)
+* [{#T}](disk-placement-groups/add-disk.md)
 * [{#T}](disk-placement-groups/remove-disk.md)
 
 
@@ -111,6 +121,7 @@ description: "Step-by-step guide on how to use and manage VMs in {{ yandex-cloud
 
 * [{#T}](image-control/get-list.md)
 * [{#T}](image-control/delete.md)
+* [{#T}](image-control/import.md)
 
 
 ## File storage {#filesystem}
@@ -154,6 +165,8 @@ description: "Step-by-step guide on how to use and manage VMs in {{ yandex-cloud
 * [{#T}](instance-groups/deploy/zero-downtime.md)
 * [{#T}](instance-groups/pause-processes.md)
 * [{#T}](instance-groups/resume-processes.md)
+* [{#T}](instance-groups/rolling-restart.md)
+* [{#T}](instance-groups/rolling-recreate.md)
 * [{#T}](instance-groups/stop.md)
 * [{#T}](instance-groups/start.md)
 * [{#T}](instance-groups/delete.md)
@@ -165,7 +178,7 @@ description: "Step-by-step guide on how to use and manage VMs in {{ yandex-cloud
 * [{#T}](dedicated-host/running-host-group-vms.md)
 * [{#T}](dedicated-host/running-host-vms.md)
 
-# GPU clusters {#gpu-cluster}
+## GPU clusters {#gpu-cluster}
 
 * [{#T}](gpu-cluster/gpu-cluster-create.md)
 * [{#T}](gpu-cluster/gpu-add-to-cluster.md)

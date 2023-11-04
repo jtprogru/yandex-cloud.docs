@@ -19,6 +19,9 @@ description:
     использующих его приложений.
 meta:
   title: Yandex Data Transfer
+  description: >-
+    Сервис Yandex Data Transfer предназначен для логического переноса данных
+    между источниками и приемниками.
 links:
   - title: Доступные трансферы
     description: Список поддерживаемых типов трансферов
@@ -50,6 +53,9 @@ links:
   - title: Решение проблем
     description: Перечень известных проблем и способов их решения
     href: troubleshooting/
+  - title: История изменений
+    description: Перечень обновлений сервиса
+    href: changelogs/
   - title: Обучающие курсы
     description: Информация о доступных программах обучения
     href: training

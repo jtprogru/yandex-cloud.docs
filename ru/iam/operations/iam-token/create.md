@@ -1,3 +1,8 @@
+---
+title: "Как получить IAM-токен для аккаунта"
+description: "Следуя данной инструкции, вы сможете получить IAM-токен для аккаунта."
+---
+
 # Получение IAM-токена для аккаунта на Яндексе
 
 {% note info %}
@@ -32,4 +37,4 @@
 
 ### Использование IAM-токена, полученного с помощью CLI {#use-cli}
 
-{% include [include](../../../_includes/iam/iam-token-usage-examples.md) %}
+{% include [token-examples](../../../_includes/iam/iam-token-usage-examples.md) %}

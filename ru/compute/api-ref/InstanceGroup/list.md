@@ -232,12 +232,16 @@ view | <p>Defines which information about the Instance template should be return
         "maxCreating": "string",
         "maxExpansion": "string",
         "startupDuration": "string",
-        "strategy": "string"
+        "strategy": "string",
+        "minimalAction": "string"
       },
       "allocationPolicy": {
         "zones": [
           {
-            "zoneId": "string"
+            "zoneId": "string",
+            "instanceTagsPool": [
+              "string"
+            ]
           }
         ]
       },
@@ -257,7 +261,8 @@ view | <p>Defines which information about the Instance template should be return
           "description": "string",
           "labels": "object"
         },
-        "maxOpeningTrafficDuration": "string"
+        "maxOpeningTrafficDuration": "string",
+        "ignoreHealthChecks": true
       },
       "healthChecksSpec": {
         "healthCheckSpecs": [
@@ -296,7 +301,8 @@ view | <p>Defines which information about the Instance template should be return
           "description": "string",
           "labels": "object"
         },
-        "maxOpeningTrafficDuration": "string"
+        "maxOpeningTrafficDuration": "string",
+        "ignoreHealthChecks": true
       },
       "applicationLoadBalancerState": {
         "targetGroupId": "string",
@@ -449,9 +455,11 @@ instanceGroups[].<br>deployPolicy.<br>maxCreating | **string** (int64)<br><p>The
 instanceGroups[].<br>deployPolicy.<br>maxExpansion | **string** (int64)<br><p>The maximum number of instances that can be temporarily allocated above the group's target size during the update process. If ``maxUnavailable`` is not specified or set to zero, ``maxExpansion`` must be set to a non-zero value.</p> <p>Acceptable values are 0 to 100, inclusive.</p> 
 instanceGroups[].<br>deployPolicy.<br>startupDuration | **string**<br><p>Instance startup duration. Instance will be considered up and running (and start receiving traffic) only after startup_duration has elapsed and all health checks are passed. See ``ManagedInstanceStatus`` for more information.</p> <p>Acceptable values are 0 seconds to 3600 seconds, inclusive.</p> 
 instanceGroups[].<br>deployPolicy.<br>strategy | **string**<br><p>Affects the lifecycle of the instance during deployment.</p> <ul> <li>PROACTIVE: Instance Groups can forcefully stop a running instance. This is the default.</li> <li>OPPORTUNISTIC: Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.</li> </ul> 
+instanceGroups[].<br>deployPolicy.<br>minimalAction | **string**<br><p>If instance update requires a less disruptive action than ``minimalAction``, Instance Groups performs ``minimalAction`` to execute the update</p> <ul> <li>LIVE_UPDATE: Updating an instance without stopping. This is the default.</li> <li>RESTART: Updating an instance with restart: stopping and then starting the instance.</li> <li>RECREATE: Re-creating an instance: deleting an instance and creating a new one.</li> </ul> 
 instanceGroups[].<br>allocationPolicy | **object**<br><p>Allocation policy of the instance group by zones and regions.</p> 
 instanceGroups[].<br>allocationPolicy.<br>zones[] | **object**<br><p>Required. List of availability zones.</p> <p>The minimum number of elements is 1.</p> 
 instanceGroups[].<br>allocationPolicy.<br>zones[].<br>zoneId | **string**<br><p>Required. ID of the availability zone where the instance resides.</p> 
+instanceGroups[].<br>allocationPolicy.<br>zones[].<br>instanceTagsPool[] | **string**<br><p>Each instance in a zone will be associated with exactly one of a tag from a pool below. All specified tags must be unique across the whole group not only the zone. It is guaranteed that during whole deploy only tags from prefix of the specified list will be used. It is possible to use tag associated with instance in templating via {instance.tag}.</p> <p>The string length in characters for each value must be 3-50.</p> 
 instanceGroups[].<br>loadBalancerState | **object**<br><p>Status of the Network Load Balancer target group attributed to the instance group.</p> 
 instanceGroups[].<br>loadBalancerState.<br>targetGroupId | **string**<br><p>ID of the Network Load Balancer target group attributed to the instance group.</p> 
 instanceGroups[].<br>loadBalancerState.<br>statusMessage | **string**<br><p>Status message of the target group.</p> 
@@ -466,6 +474,7 @@ instanceGroups[].<br>loadBalancerSpec.<br>targetGroupSpec.<br>name | **string**<
 instanceGroups[].<br>loadBalancerSpec.<br>targetGroupSpec.<br>description | **string**<br><p>Description of the target group.</p> <p>The maximum string length in characters is 256.</p> 
 instanceGroups[].<br>loadBalancerSpec.<br>targetGroupSpec.<br>labels | **object**<br><p>Resource labels as ``key:value`` pairs.</p> <p>No more than 64 per resource. The string length in characters for each key must be 1-63. Each key must match the regular expression ``[a-z][-_./\@0-9a-z]*``. The maximum string length in characters for each value is 63. Each value must match the regular expression ``[-_./\@0-9a-z]*``.</p> 
 instanceGroups[].<br>loadBalancerSpec.<br>maxOpeningTrafficDuration | **string**<br><p>Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.</p> <p>The minimum value is 1 seconds.</p> 
+instanceGroups[].<br>loadBalancerSpec.<br>ignoreHealthChecks | **boolean** (boolean)<br><p>Do not wait load balancer health checks.</p> 
 instanceGroups[].<br>healthChecksSpec | **object**<br><p>Health checking specification. For more information, see <a href="/docs/network-load-balancer/concepts/health-check">Health check</a>.</p> 
 instanceGroups[].<br>healthChecksSpec.<br>healthCheckSpecs[] | **object**<br><p>Required. Health checking specification. For more information, see <a href="/docs/network-load-balancer/concepts/health-check">Health check</a>.</p> <p>The minimum number of elements is 1.</p> 
 instanceGroups[].<br>healthChecksSpec.<br>healthCheckSpecs[].<br>interval | **string**<br><p>The interval between health checks. The default is 2 seconds.</p> <p>Acceptable values are 1 seconds to 300 seconds, inclusive.</p> 
@@ -490,6 +499,7 @@ instanceGroups[].<br>applicationLoadBalancerSpec.<br>targetGroupSpec.<br>name | 
 instanceGroups[].<br>applicationLoadBalancerSpec.<br>targetGroupSpec.<br>description | **string**<br><p>Description of the target group.</p> 
 instanceGroups[].<br>applicationLoadBalancerSpec.<br>targetGroupSpec.<br>labels | **object**<br><p>Resource labels as ``key:value`` pairs.</p> 
 instanceGroups[].<br>applicationLoadBalancerSpec.<br>maxOpeningTrafficDuration | **string**<br><p>Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.</p> <p>The minimum value is 1 seconds.</p> 
+instanceGroups[].<br>applicationLoadBalancerSpec.<br>ignoreHealthChecks | **boolean** (boolean)<br><p>Do not wait load balancer health checks.</p> 
 instanceGroups[].<br>applicationLoadBalancerState | **object**<br><p>Status of the Application Load Balancer target group attributed to the instance group.</p> <p>Returned if there is a working load balancer that the target group is connected to.</p> 
 instanceGroups[].<br>applicationLoadBalancerState.<br>targetGroupId | **string**<br><p>ID of the Application Load Balancer target group attributed to the instance group.</p> 
 instanceGroups[].<br>applicationLoadBalancerState.<br>statusMessage | **string**<br><p>Status message of the target group.</p> 

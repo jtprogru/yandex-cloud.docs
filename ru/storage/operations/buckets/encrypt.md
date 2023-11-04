@@ -11,7 +11,7 @@
 {% endnote %}
 
 
-Чтобы расшифровывать объекты, у пользователя бакета вместе с ролью {{ objstorage-name }} должна быть роль на чтение ключа шифрования — `kms.keys.decrypter` (см. [описание роли](../../../kms/security/index.md#service)).
+{% include [encryption-roles](../../../_includes/storage/encryption-roles.md) %}
 
 
 ## Добавить шифрование бакету {#add}
@@ -31,7 +31,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Перед началом работы [получите IAM-токен](../../../iam/operations/iam-token/create-for-sa.md#via-cli) для сервисного аккаунта и запишите его в файл.
 
@@ -121,7 +121,7 @@
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
   Чтобы убрать шифрование бакета, созданного с помощью {{ TF }}:

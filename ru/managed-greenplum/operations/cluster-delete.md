@@ -10,8 +10,8 @@
 
 - Консоль управления
 
-  1. Перейдите [на страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mgp-name }}**.
-  1. Нажмите на значок ![image](../../_assets/options.svg) для нужного кластера и выберите пункт **Удалить кластер**.
+  1. Перейдите [на страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-greenplum }}**.
+  1. Нажмите на значок ![image](../../_assets/options.svg) для нужного кластера и выберите пункт **{{ ui-key.yacloud.mdb.clusters.button_action-delete }}**.
 
 - CLI
 
@@ -22,7 +22,7 @@
     Чтобы удалить кластер, выполните команду:
 
     ```bash
-    {{ yc-mdb-gp }} cluster delete <идентификатор или имя кластера>
+    {{ yc-mdb-gp }} cluster delete <имя_или_идентификатор_кластера>
     ```
 
     Идентификатор и имя кластера можно запросить со [списком кластеров в каталоге](cluster-list.md#list-clusters).

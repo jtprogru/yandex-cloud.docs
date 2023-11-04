@@ -20,11 +20,11 @@ The default static route (`0.0.0.0/0`) is used for VMs with public IPs. If you n
    1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_vpc }}**.
    1. In the left-hand panel, select ![image](../../_assets/vpc/route-tables.svg) **{{ ui-key.yacloud.vpc.network.switch_route-table }}**.
    1. Click **{{ ui-key.yacloud.common.create }}**.
-   1. Enter a name for the route table.
+   1. Enter a name for the route table. The requirements are as follows:
 
       {% include [name-format](../../_includes/name-format.md) %}
 
-   1. (optional) Add a description of a route table.
+   1. (Optional) Add a description of a route table.
    1. Select the network to create the route table in.
    1. Click **{{ ui-key.yacloud.vpc.route-table-form.label_add-static-route }}**.
    1. In the window that opens, enter the prefix of the destination subnet in CIDR notation.
@@ -35,7 +35,7 @@ The default static route (`0.0.0.0/0`) is used for VMs with public IPs. If you n
    To use static routes, link the route table to a subnet:
 
    1. In the left-hand panel, select ![image](../../_assets/vpc/subnets.svg) **{{ ui-key.yacloud.vpc.switch_networks }}**.
-   1. In the line with the desired subnet, click ![image](../../_assets/options.svg).
+   1. In the required subnet row, click ![image](../../_assets/options.svg).
    1. In the menu that opens, select **{{ ui-key.yacloud.vpc.subnetworks.button_action-add-route-table }}**.
    1. In the window that opens, select the created table from the list.
    1. Click **{{ ui-key.yacloud.vpc.subnet.add-route-table.button_add }}**.
@@ -141,7 +141,7 @@ The default static route (`0.0.0.0/0`) is used for VMs with public IPs. If you n
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To create a route table and add [static routes](../concepts/static-routes.md):
 
@@ -176,7 +176,7 @@ The default static route (`0.0.0.0/0`) is used for VMs with public IPs. If you n
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```
          terraform plan
@@ -192,9 +192,9 @@ The default static route (`0.0.0.0/0`) is used for VMs with public IPs. If you n
          terraform apply
          ```
 
-      1. Confirm the resource creation: type `yes` in the terminal and press **Enter**.
+      1. Confirm creating the resources: type `yes` in the terminal and press **Enter**.
 
-         All the resources you need will then be created in the specified folder. You can verify that the resources are there and their configuration is correct using the [management console]({{ link-console-main }}) or the following [CLI](../../cli/quickstart.md) command:
+         All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}) or this [CLI](../../cli/quickstart.md) command:
 
          ```
          yc vpc route-table list

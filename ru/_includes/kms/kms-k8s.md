@@ -1,4 +1,4 @@
-Используйте ключ {{ kms-short-name }} для шифрования секретов — конфиденциальной информации, такой как пароли, OAuth-токены и [SSH-ключи](../../glossary/ssh-keygen.md), в {{ managed-k8s-full-name }}. Для этого при создании кластера укажите ключ {{ kms-short-name }}, который будет использоваться при шифровании и расшифровке.
+Используйте ключ {{ kms-short-name }} для шифрования секретов — конфиденциальной информации, такой как пароли, OAuth-токены и [SSH-ключи](../../glossary/ssh-keygen.md), в {{ managed-k8s-full-name }}. Для этого при создании кластера укажите ключ {{ kms-short-name }}, который будет использоваться при шифровании и расшифровании.
 
 Ключ шифрования необходимо указать при создании кластера {{ k8s }}, его нельзя добавить при изменении кластера.
 
@@ -8,11 +8,11 @@
 
     Укажите ключ при создании кластера {{ k8s }}:
     1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создан кластер {{ k8s }}.
-    1. В списке сервисов выберите **{{ managed-k8s-name }}**.
-    1. Нажмите кнопку **Создать кластер**.
-    1. В поле **Ключ шифрования** укажите необходимый ключ или [создайте новый](../../kms/operations/key.md#create).
+    1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kubernetes }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.k8s.clusters.button_create }}**.
+    1. В поле **{{ ui-key.yacloud.k8s.clusters.create.field_kms-key }}** укажите необходимый ключ или [создайте новый](../../kms/operations/key.md#create).
     1. Закончите заполнение параметров [создания кластера](../../managed-kubernetes/operations/kubernetes-cluster/kubernetes-cluster-create.md).
-    1. Нажмите кнопку **Создать кластер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -49,7 +49,7 @@
 
     {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-    Если у вас еще нет {{ TF }}, [установите его и настройте провайдер](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../_includes/terraform-install.md) %}
 
     Укажите ключ при [создании кластера](../../managed-kubernetes/operations/kubernetes-cluster/kubernetes-cluster-create.md) {{ k8s }}:
 
@@ -74,4 +74,4 @@
 
 {% endlist %}
 
-Взаимодействие {{ managed-k8s-name }} с {{ kms-short-name }} происходит с помощью [механизма {{ kms-short-name }} провайдеров](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/). {{ managed-k8s-name }} поддерживает {{ kms-short-name }}-плагин, который используется для шифрования и расшифровки ключей шифрования данных (DEK) в {{ kms-short-name }}. Шифрование секретов осуществляется стандартными средствами {{ k8s }}.
+Взаимодействие {{ managed-k8s-name }} с {{ kms-short-name }} происходит с помощью [механизма {{ kms-short-name }} провайдеров](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/). {{ managed-k8s-name }} поддерживает {{ kms-short-name }}-плагин, который используется для шифрования и расшифрования ключей шифрования данных (DEK) в {{ kms-short-name }}. Шифрование секретов осуществляется стандартными средствами {{ k8s }}.

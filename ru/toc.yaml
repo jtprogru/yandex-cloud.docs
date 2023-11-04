@@ -21,10 +21,14 @@ items:
     href: cloud-apps/index.yaml
   - name: Cloud Backup
     href: backup/index.yaml
+  - name: Cloud Desktop
+    href: cloud-desktop/index.yaml
   - name: Cloud Interconnect
     href: interconnect/index.yaml
   - name: Cloud Logging
     href: logging/index.yaml
+  - name: Cloud Video
+    href: video/index.yaml
   - name: Compute Cloud
     href: compute/index.yaml
   - name: Container Registry
@@ -59,6 +63,8 @@ items:
     href: kms/index.yaml
   - name: Lockbox
     href: lockbox/index.yaml
+  - name: Managed Service for Apache Airflow™
+    href: managed-airflow/index.yaml
   - name: Managed Service for Apache Kafka®
     href: managed-kafka/index.yaml
   - name: Managed Service for ClickHouse
@@ -105,8 +111,12 @@ items:
     href: security/index.yaml
   - name: SmartCaptcha
     href: smartcaptcha/index.yaml
+  - name: Smart Web Security
+    href: smartwebsecurity/index.yaml
   - name: '{{ speechkit-name }}'
     href: speechkit/index.yaml
+  - name: SpeechSense
+    href: speechsense/index.yaml
   - name: Object Storage
     href: storage/index.yaml
   - name: Техническая поддержка {{ yandex-cloud }}
@@ -121,6 +131,8 @@ items:
     href: vision/index.yaml
   - name: Virtual Private Cloud
     href: vpc/index.yaml
+  - name: WebSQL
+    href: websql/index.yaml
   - name: Wiki
     href: wiki/index.yaml
   - name: '{{ ydb-name }}'

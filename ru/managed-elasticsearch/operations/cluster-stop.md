@@ -23,9 +23,9 @@ keywords:
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Найдите нужный кластер в списке, нажмите значок ![options](../../_assets/horizontal-ellipsis.svg) и выберите пункт **Остановить кластер**.
-  1. В открывшемся диалоге подтвердите остановку кластера и нажмите кнопку **Остановить**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Найдите нужный кластер в списке, нажмите значок ![options](../../_assets/horizontal-ellipsis.svg) и выберите пункт **{{ ui-key.yacloud.mdb.cluster.overview.button_action-stop }}**.
+  1. В открывшемся диалоге подтвердите остановку кластера и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.stop-dialog.popup-confirm_button }}**.
 
 - CLI
 
@@ -36,7 +36,7 @@ keywords:
     Чтобы остановить работу кластера, выполните команду:
 
     ```bash
-    {{ yc-mdb-es }} cluster stop <имя или идентификатор кластера>
+    {{ yc-mdb-es }} cluster stop <имя_или_идентификатор_кластера>
     ```
 
     Имя и идентификатор кластера можно запросить со [списком кластеров в каталоге](cluster-list.md#list-clusters).
@@ -57,9 +57,9 @@ keywords:
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Найдите нужный остановленный кластер в списке, нажмите значок ![options](../../_assets/horizontal-ellipsis.svg) и выберите пункт **Запустить кластер**.
-  1. В открывшемся диалоге подтвердите запуск кластера нажатием на кнопку **Запустить**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Найдите нужный остановленный кластер в списке, нажмите значок ![options](../../_assets/horizontal-ellipsis.svg) и выберите пункт **{{ ui-key.yacloud.mdb.cluster.overview.button_action-start }}**.
+  1. В открывшемся диалоге подтвердите запуск кластера нажатием на кнопку **{{ ui-key.yacloud.mdb.cluster.start-dialog.popup-confirm_button }}**.
 
 - CLI
 
@@ -70,7 +70,7 @@ keywords:
     Для запуска остановленного кластера выполните команду:
 
     ```bash
-    {{ yc-mdb-es }} cluster start <имя или идентификатор кластера>
+    {{ yc-mdb-es }} cluster start <имя_или_идентификатор_кластера>
     ```
 
     Имя и идентификатор кластера можно запросить со [списком кластеров в каталоге](cluster-list.md#list-clusters).

@@ -21,17 +21,23 @@
 
     1. [Создайте кластер](../../managed-clickhouse/operations/cluster-create.md) {{ mch-name }}:
 
-        * **Версия** — {{ mch-ck-version }} или выше.
-                * **Тип диска** — стандартные (`network-hdd`), быстрые (`network-ssd`) или нереплицируемые (`network-ssd-nonreplicated`) сетевые диски.
-        * **Имя БД** — `tutorial`.
-        * **Гибридное хранилище** — `Включено`.
+        * **{{ ui-key.yacloud.mdb.forms.base_field_version }}** — {{ mch-ck-version }} или выше.
+
+        
+        * **{{ ui-key.yacloud.mdb.forms.label_diskTypeId }}** — стандартные (`network-hdd`), быстрые (`network-ssd`) или нереплицируемые (`network-ssd-nonreplicated`) сетевые диски.
+
+
+        * **{{ ui-key.yacloud.mdb.forms.label_disk-size }}** — не менее 15 ГБ.
+        * **{{ ui-key.yacloud.mdb.forms.database_field_sql-user-management }}** — выключено.
+        * **{{ ui-key.yacloud.mdb.forms.database_field_name }}** — `tutorial`.
+        * **{{ ui-key.yacloud.mdb.forms.additional-field-cloud-storage }}** — включено.
 
     1. [Настройте права доступа](../../managed-clickhouse/operations/cluster-users.md#update-settings) так, чтобы вы могли выполнять в этой базе запросы на чтение и запись.
 
 - С помощью {{ TF }}
 
     
-    1. Если у вас еще нет {{ TF }}, [установите его и настройте провайдер](../../tutorials/infrastructure-management/terraform-quickstart.md).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
 
 
     1. Клонируйте репозиторий с примерами:
@@ -45,8 +51,13 @@
         В этом файле описаны:
 
         * сеть;
+
         * подсеть;
-                * группа безопасности по умолчанию и правила, необходимые для подключения к кластеру из интернета;
+
+        
+        * группа безопасности по умолчанию и правила, необходимые для подключения к кластеру из интернета;
+
+
         * кластер {{ mch-name }} с включенным гибридным хранилищем.
 
     1. Укажите в файле `clickhouse-hybrid-storage.tf` имя пользователя и пароль, которые будут использоваться для доступа к кластеру {{ mch-name }}.
@@ -69,9 +80,15 @@
 
 {% endlist %}
 
-### Настройте clickhouse-client {#deploy-clickhouse-client}
+### Настройте инструменты командной строки {#set-instruments}
 
-[Настройте clickhouse-client](../../managed-clickhouse/operations/connect.md), чтобы иметь возможность подключаться с его помощью к базе данных.
+1. Установите инструменты `curl` и `unxz`:
+
+    ```bash
+    apt-get update && apt-get install curl xz-utils
+    ```
+
+1. [Настройте clickhouse-client](../../managed-clickhouse/operations/connect.md#clickhouse-client) и подключитесь с его помощью к базе данных.
 
 ### Познакомьтесь с тестовым набором данных (необязательный шаг) {#explore-dataset}
 
@@ -112,7 +129,7 @@ SETTINGS index_granularity = 8192
    * если количество дней от текущей даты до `EventDate` меньше значения TTL (то есть время жизни еще не истекло), то эти данные остаются в хранилище на сетевых дисках;
    * если количество дней от текущей даты до `EventDate` больше или равно значению TTL (то есть время жизни уже истекло), то эти данные помещаются в объектное хранилище согласно политике `TO DISK 'object_storage'`;
 
-Указывать TTL для использования гибридного хранилища необязательно, однако это позволяет явно контролировать, какие данные будут находиться в {{ objstorage-name }}. Если не указывать TTL, то данные будут помещаться в объектное хранилище только когда в хранилище на сетевых дисках закончится место. Подробнее см. в разделе [{#T}](../../managed-clickhouse/concepts/storage.md).
+Указывать TTL для использования гибридного хранилища необязательно, однако это позволяет явно контролировать, какие данные будут находиться в {{ objstorage-name }}. Если не указывать TTL, то данные будут помещаться в объектное хранилище, только когда в хранилище на сетевых дисках закончится место. Подробнее см. в разделе [{#T}](../../managed-clickhouse/concepts/storage.md).
 
 {% note info %}
 
@@ -126,6 +143,7 @@ SETTINGS index_granularity = 8192
 
 ## Наполните таблицу данными {#fill-table-with-data}
 
+1. Отключитесь от базы данных.
 1. Загрузите тестовый датасет:
 
    
@@ -134,13 +152,15 @@ SETTINGS index_granularity = 8192
    ```
 
 
+   Объем загруженного датасета — около 10 ГБ.
+
 1. Вставьте данные из этого датасета в {{ CH }} с помощью `clickhouse-client`:
 
    ```bash
    clickhouse-client \
-       --host <FQDN хоста {{ CH }}> \
+       --host <FQDN_хоста_{{ CH }}> \
        --secure \
-       --user <имя пользователя> \
+       --user <имя_пользователя> \
        --database tutorial \
        --port 9440 \
        --ask-password \
@@ -156,6 +176,7 @@ SETTINGS index_granularity = 8192
 
 ## Проверьте размещение данных в кластере {#check-table-tiering}
 
+1. [Подключитесь к базе данных](../../managed-clickhouse/operations/connect.md#clickhouse-client).
 1. Посмотрите, где размещены строки таблицы:
 
    ```sql
@@ -242,9 +263,21 @@ LIMIT 10
 
 Как видно из результата выполнения SQL-запроса, с точки зрения пользователя таблица выступает единой сущностью: {{ CH }} успешно выполняет запросы к такой таблице вне зависимости от фактического места расположения данных в ней.
 
+## Отслеживайте объем, занимаемый данными в {{ objstorage-name }} (необязательный шаг) {#metrics}
+
+Чтобы узнать, какой объем занимают куски таблиц [MergeTree]({{ ch.docs }}/engines/table-engines/mergetree-family/mergetree/) в {{ objstorage-name }}, воспользуйтесь метрикой `ch_s3_disk_parts_size` в сервисе {{ monitoring-full-name }}:
+
+1. В [консоли управления]({{ link-console-main }}) выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_monitoring }}**.
+1. Перейдите в раздел **Обзор метрик**.
+1. Выполните запрос:
+
+    ```text
+    "ch_s3_disk_parts_size"{service="managed-clickhouse", resource_type="cluster", node="by_host", resource_id="<ID_кластера>", subcluster_name="clickhouse_subcluster"}
+    ```
+
 ## Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 {% list tabs %}
 

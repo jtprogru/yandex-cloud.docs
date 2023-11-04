@@ -10,8 +10,8 @@
 При вызове этих утилит используйте строку подключения с логином и паролем пользователя с ролью `mdbMonitor`, например:
 
 ```bash
-mongostat 5 --uri="mongodb://{имя_пользователя_с ролью_mdbMonitor}:{пароль}@{хост}:27018/?authSource=admin"
-mongotop 5 --uri="mongodb://{имя_пользователя_с ролью_mdbMonitor}:{пароль}@{хост}:27018/?authSource=admin"
+mongostat 5 --uri="mongodb://{<имя_пользователя_с_ролью_mdbMonitor>}:{<пароль>}@{<хост>}:27018/?authSource=admin"
+mongotop 5 --uri="mongodb://{<имя_пользователя_с_ролью_mdbMonitor>}:{<пароль>}@{<хост>}:27018/?authSource=admin"
 ```
 
 Здесь обе утилиты выводят набор данных о производительности с интервалом опроса (polling interval) в 5 секунд.
@@ -57,8 +57,8 @@ db.currentOp({ "$ownOps": true })
 
 - Консоль управления
 
-    1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку ![image](../../_assets/logs.svg) **Логи**.
+    1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку ![image](../../_assets/logs.svg) **{{ ui-key.yacloud.mongodb.cluster.switch_logs }}**.
 
 - CLI
 
@@ -66,7 +66,7 @@ db.currentOp({ "$ownOps": true })
 
     {% include [default-catalogue](../../_includes/default-catalogue.md) %}
 
-    Чтобы посмотреть логи **{{ mmg-name }}**:
+    Чтобы посмотреть логи **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**:
 
     1. Посмотрите описание команды CLI для просмотра логов:
 
@@ -77,7 +77,7 @@ db.currentOp({ "$ownOps": true })
     1. Для получения всех логов кластера выполните команду:
 
         ```bash
-        {{ yc-mdb-mg }} cluster list-logs --id <идентификатор кластера>
+        {{ yc-mdb-mg }} cluster list-logs --id <идентификатор_кластера>
         ```
 
         Идентификатор кластера можно получить со [списком кластеров в каталоге](./cluster-list.md#list-clusters).

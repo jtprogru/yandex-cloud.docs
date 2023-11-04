@@ -1,3 +1,8 @@
+---
+title: "Удалить тег версии функции"
+description: "Следуя данной инструкции, вы сможете удалить тег версии функции."
+---
+
 # Удалить тег версии функции
 
 {% list tabs %}
@@ -17,10 +22,10 @@
     Результат:
 
     ```
-    id: b09ch6pmpohfc9sogj5f
-    function_id: b097d9ous3gep99khe83
-    created_at: "2019-06-13T09:12:38.464Z"
-    runtime: python37
+    id: b09ch6pmpohf********
+    function_id: b097d9ous3ge********
+    created_at: "2023-08-22T09:12:38.464Z"
+    runtime: python311
     entrypoint: test.handler
     resources:
       memory: "134217728"
@@ -29,27 +34,27 @@
     status: ACTIVE
     tags:
     - beta
-    log_group_id: eolv6578frac08uh5h6s
+    log_group_id: eolv6578frac********
     ```
 
 - {{ TF }}
 
     {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     Чтобы удалить тег версии:
 
     1. Откройте файл конфигурации {{ TF }} и в блоке `tags` удалите строку с ненужным тегом.
 
        Пример описания функции в конфигурации {{ TF }}:
-      
+ 
         ```
         resource "yandex_function" "test-function" {
             name               = "test-function"
             description        = "Test function"
             user_hash          = "first-function"
-            runtime            = "python37"
+            runtime            = "python311"
             entrypoint         = "main"
             memory             = "128"
             execution_timeout  = "10"
@@ -100,8 +105,10 @@
 
     Чтобы удалить тег версии функции, воспользуйтесь методом REST API [removeTag](../../functions/api-ref/Function/removeTag.md) для ресурса [Function](../../functions/api-ref/Function/index.md) или вызовом gRPC API [FunctionService/RemoveTag](../../functions/api-ref/grpc/function_service.md#RemoveTag).
 
+
 - {{ yandex-cloud }} Toolkit
 
     Удалить тег можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}

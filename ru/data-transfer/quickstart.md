@@ -32,6 +32,8 @@
                    --name new-folder
                  ```
 
+                 Требования к имени каталога:
+
                  {% include [name-format](../_includes/name-format.md) %}
 
             * с именем и описанием:
@@ -68,6 +70,7 @@
 * Airbyte®:
     * [AWS CloudTrail](operations/prepare.md#source-aws)
     * [BigQuery](operations/prepare.md#source-bigquery)
+    * [Microsoft SQL Server](operations/prepare.md#source-mssql)
     * [S3](operations/prepare.md#source-s3)
 * [{{ KF }}](operations/prepare.md#source-kf)
 * [{{ CH }}](operations/prepare.md#source-ch)

@@ -2,7 +2,7 @@
 
 С помощью этой инструкции вы создадите в своем облаке агент тестирования, сконфигурируете простейший нагрузочный тест и посмотрите на его результаты.
 
-## Перед началом работы
+## Перед началом работы {#before-you-begin}
 
 1. Войдите в [консоль управления]({{ link-console-main }}). Если вы еще не зарегистрированы, перейдите в консоль управления и следуйте инструкциям.
 1. На странице [**Биллинг**]({{ link-console-billing }}) убедитесь, что у вас подключен [платежный аккаунт](../billing/concepts/billing-account.md), и он находится в статусе `ACTIVE` или `TRIAL_ACTIVE`. Если платежного аккаунта нет, [создайте его](../billing/quickstart/index.md).
@@ -13,8 +13,6 @@
     * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `TCP`;
     * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `CIDR`;
     * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`.
-
-    {% include [security-groups-note](../_includes/vpc/security-groups-note-services.md) %}
 
 1. Агенту потребуется доступ в подсеть, в которой находится цель тестирования. Чтобы агент мог подключиться к сервису {{ load-testing-name }}, настройте для подсети [NAT-шлюз](../vpc/operations/create-nat-gateway.md).
 1. Если у вас еще нет пары SSH-ключей, [создайте их](../compute/operations/vm-connect/ssh.md#creating-ssh-keys).
@@ -70,7 +68,7 @@
 
       Эти настройки дадут генератору указание наращивать нагрузку от 1 до 100 запросов в секунду первые 60 секунд, а потом 5 минут поддерживать нагрузку 100 запросов в секунду.		
    1. **Тип запросов** — укажите тип `URI`.
-   1. В меню **Задать запросы через форму**:
+   1. В поле **{{ ui-key.yacloud.load-testing.test-data-section }}** выберите **{{ ui-key.yacloud.load-testing.label_settings-type-form }}** и в открывшемся меню:
       * В подменю **Запросы** добавьте запросы:
         * `/ index`
         * `/test?param1=1&param2=2 get_test`

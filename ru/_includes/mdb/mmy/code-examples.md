@@ -15,15 +15,17 @@ sudo apt update && sudo apt install --yes mysql-client
 - Подключение без SSL
 
   ```bash
-  mysql --host=<имя хоста {{ MY }}>.{{ dns-zone }} \
+  mysql --host=<FQDN_любого_хоста_{{ MY }}> \
         --port={{ port-mmy }} \
         --ssl-mode=DISABLED \
-        --user=<имя пользователя> \
+        --user=<имя_пользователя> \
         --password \
-        <имя БД>
+        <имя_БД>
   ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 При выполнении любой из команд введите пароль пользователя БД.
 
@@ -59,16 +61,16 @@ go get github.com/go-sql-driver/mysql
   )
 
   const (
-    host     = "<имя хоста {{ MY }}>.{{ dns-zone }}"
+    host     = "<FQDN_любого_хоста_{{ MY }}>"
     port     = {{ port-mmy }}
-    user     = "<имя пользователя>"
-    password = "<пароль пользователя>"
-    dbname   = "<имя БД>"
+    user     = "<имя_пользователя>"
+    password = "<пароль_пользователя>"
+    dbname   = "<имя_БД>"
   )
 
   func main() {
     rootCertPool := x509.NewCertPool()
-    pem, err := ioutil.ReadFile("/home/<домашняя директория>/.mysql/root.crt")
+    pem, err := ioutil.ReadFile("/home/<домашняя_директория>/.mysql/root.crt")
     if err != nil {
       panic(err)
     }
@@ -119,11 +121,11 @@ go get github.com/go-sql-driver/mysql
   )
 
   const (
-    host     = "<имя хоста {{ MY }}>.{{ dns-zone }}"
+    host     = "<FQDN_любого_хоста_{{ MY }}>"
     port     = {{ port-mmy }}
-    user     = "<имя пользователя>"
-    password = "<пароль пользователя>"
-    dbname   = "<имя БД>"
+    user     = "<имя_пользователя>"
+    password = "<пароль_пользователя>"
+    dbname   = "<имя_БД>"
   )
 
   func main() {
@@ -152,6 +154,8 @@ go get github.com/go-sql-driver/mysql
 
 {% endlist %}
 
+{% include [see-fqdn](fqdn-host.md) %}
+
 Подключение:
 
 ```bash
@@ -178,9 +182,11 @@ go run connect.go
                  -alias {{ crt-alias }} \
                  -file root.crt \
                  -keystore YATrustStore \
-                 -storepass <пароль хранилища сертификатов, не короче 6 символов> \
+                 -storepass <пароль_хранилища_сертификатов> \
                  --noprompt
     ```
+
+    Где `storepass` — пароль хранилища сертификатов, не короче 6 символов.
 
 1. Создайте директорию для проекта Maven:
 
@@ -279,12 +285,12 @@ go run connect.go
 
   public class App {
     public static void main(String[] args) {
-      String DB_URL     = "jdbc:mysql://<имя хоста {{ MY }}>.{{ dns-zone }}:{{ port-mmy }}/<имя БД>?useSSL=true";
-      String DB_USER    = "<имя пользователя>";
-      String DB_PASS    = "<пароль пользователя>";
+      String DB_URL     = "jdbc:mysql://<FQDN_любого_хоста_{{ MY }}>:{{ port-mmy }}/<имя_БД>?useSSL=true";
+      String DB_USER    = "<имя_пользователя>";
+      String DB_PASS    = "<пароль_пользователя>";
 
-      System.setProperty("javax.net.ssl.trustStore", "/home/<домашняя директория>/.mysql/YATrustStore");
-      System.setProperty("javax.net.ssl.trustStorePassword", "<пароль хранилища сертификатов>");
+      System.setProperty("javax.net.ssl.trustStore", "/home/<домашняя_директория>/.mysql/YATrustStore");
+      System.setProperty("javax.net.ssl.trustStorePassword", "<пароль_хранилища_сертификатов>");
 
       try {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -313,9 +319,9 @@ go run connect.go
 
   public class App {
     public static void main(String[] args) {
-      String DB_URL     = "jdbc:mysql://<имя хоста {{ MY }}>.{{ dns-zone }}:{{ port-mmy }}/<имя БД>?useSSL=false";
-      String DB_USER    = "<имя пользователя>";
-      String DB_PASS    = "<пароль пользователя>";
+      String DB_URL     = "jdbc:mysql://<FQDN_любого_хоста_{{ MY }}>:{{ port-mmy }}/<имя_БД>?useSSL=false";
+      String DB_USER    = "<имя_пользователя>";
+      String DB_PASS    = "<пароль_пользователя>";
 
       try {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -332,6 +338,8 @@ go run connect.go
   ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 Подключение:
 
@@ -363,14 +371,14 @@ npm install mysql2
   const mysql = require('mysql2');
   
   const config = {
-    host     : '<имя хоста {{ MY }}>.{{ dns-zone }}',
+    host     : '<FQDN_любого_хоста_{{ MY }}>',
     port     : {{ port-mmy }},
-    user     : '<имя пользователя>',
-    password : '<пароль пользователя>',
-    database : '<имя БД>',
+    user     : '<имя_пользователя>',
+    password : '<пароль_пользователя>',
+    database : '<имя_БД>',
     ssl: {
       rejectUnauthorized: true,
-      ca: fs.readFileSync('/home/<домашняя директория>/.mysql/root.crt').toString(),
+      ca: fs.readFileSync('/home/<домашняя_директория>/.mysql/root.crt').toString(),
     },
   }
 
@@ -394,11 +402,11 @@ npm install mysql2
   const mysql = require('mysql2');
   
   const config = {
-    host     : '<имя хоста {{ MY }}>.{{ dns-zone }}',
+    host     : '<FQDN_любого_хоста_{{ MY }}>',
     port     : {{ port-mmy }},
-    user     : '<имя пользователя>',
-    password : '<пароль пользователя>',
-    database : '<имя БД>',
+    user     : '<имя_пользователя>',
+    password : '<пароль_пользователя>',
+    database : '<имя_БД>',
   }
 
   const conn = mysql.createConnection(config)
@@ -411,6 +419,8 @@ npm install mysql2
   ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 Подключение:
 
@@ -443,12 +453,12 @@ sudo dpkg -i mysql-connector-odbc_8.0.21-1ubuntu20.04_amd64.deb
   ```ini
   [mysql]
   Driver=MySQL ODBC 8.0 Unicode Driver
-  SERVER=<имя хоста {{ MY }}>.{{ dns-zone }}
-  UID=<имя пользователя>
-  PWD=<пароль пользователя>
-  DATABASE=<имя БД>
+  SERVER=<FQDN_любого_хоста_{{ MY }}>
+  UID=<имя_пользователя>
+  PWD=<пароль_пользователя>
+  DATABASE=<имя_БД>
   PORT={{ port-mmy }}
-  SSLCA=/home/<домашняя директория>/.mysql/root.crt
+  SSLCA=/home/<домашняя_директория>/.mysql/root.crt
   SSLVERIFY=1
   ```
 
@@ -461,14 +471,16 @@ sudo dpkg -i mysql-connector-odbc_8.0.21-1ubuntu20.04_amd64.deb
   ```ini
   [mysql]
   Driver=MySQL ODBC 8.0 Unicode Driver
-  SERVER=<имя хоста {{ MY }}>.{{ dns-zone }}
-  UID=<имя пользователя>
-  PWD=<пароль пользователя>
-  DATABASE=<имя БД>
+  SERVER=<FQDN_любого_хоста_{{ MY }}>
+  UID=<имя_пользователя>
+  PWD=<пароль_пользователя>
+  DATABASE=<имя_БД>
   PORT={{ port-mmy }}
   ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 Подключение:
 
@@ -499,8 +511,8 @@ sudo apt update && apt install --yes php php-mysql
       $conn = mysqli_init();
 
       $conn->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
-      $conn->ssl_set(NULL, NULL, '/home/<домашняя директория>/.mysql/root.crt', NULL, NULL);
-      $conn->real_connect('<имя хоста {{ MY }}>.{{ dns-zone }}', '<имя пользователя>', '<пароль пользователя>', '<имя БД>', {{ port-mmy }}, NULL, MYSQLI_CLIENT_SSL);
+      $conn->ssl_set(NULL, NULL, '/home/<домашняя_директория>/.mysql/root.crt', NULL, NULL);
+      $conn->real_connect('<FQDN_любого_хоста_{{ MY }}>', '<имя_пользователя>', '<пароль_пользователя>', '<имя_БД>', {{ port-mmy }}, NULL, MYSQLI_CLIENT_SSL);
 
       $q = $conn->query('SELECT version()');
       $result = $q->fetch_row();
@@ -522,7 +534,7 @@ sudo apt update && apt install --yes php php-mysql
       $conn = mysqli_init();
 
       $conn->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
-      $conn->real_connect('<имя хоста {{ MY }}>.{{ dns-zone }}', '<имя пользователя>', '<пароль пользователя>', '<имя БД>', {{ port-mmy }}, NULL, NULL);
+      $conn->real_connect('<FQDN_любого_хоста_{{ MY }}>', '<имя_пользователя>', '<пароль_пользователя>', '<имя_БД>', {{ port-mmy }}, NULL, NULL);
 
       $q = $conn->query('SELECT version()');
       $result = $q->fetch_row();
@@ -534,6 +546,8 @@ sudo apt update && apt install --yes php php-mysql
   ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 Подключение:
 
@@ -552,28 +566,30 @@ php connect.php
 - Подключение с SSL
 
   ```PowerShell
-  mysqlsh --host=<имя хоста {{ MY }}>.{{ dns-zone }} `
+  mysqlsh --host=<FQDN_любого_хоста_{{ MY }}> `
           --port={{ port-mmy }} `
-          --ssl-ca=<абсолютный путь к файлу сертификата> `
+          --ssl-ca=<абсолютный_путь_к_файлу_сертификата> `
           --ssl-mode=VERIFY_IDENTITY `
-          --user=<имя пользователя> `
+          --user=<имя_пользователя> `
           --password `
-          --database=<имя БД> `
+          --database=<имя_БД> `
           --sql
   ```
 
 - Подключение без SSL
 
   ```PowerShell
-  mysqlsh --host=<имя хоста {{ MY }}>.{{ dns-zone }} `
+  mysqlsh --host=<FQDN_любого_хоста_{{ MY }}> `
           --port={{ port-mmy }} `
           --ssl-mode=DISABLED `
-          --user=<имя пользователя> `
+          --user=<имя_пользователя> `
           --password `
-          --database=<имя БД>
+          --database=<имя_БД>
   ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 При выполнении любой из команд введите пароль пользователя БД.
 
@@ -600,11 +616,11 @@ pip3 install mysqlclient
   import MySQLdb
   
   conn = MySQLdb.connect(
-        host="<имя хоста {{ MY }}>.{{ dns-zone }}",
+        host="<FQDN_любого_хоста_{{ MY }}>",
         port={{ port-mmy }},
-        db="<имя БД>",
-        user="<имя пользователя>",
-        passwd="<пароль пользователя>",
+        db="<имя_БД>",
+        user="<имя_пользователя>",
+        passwd="<пароль_пользователя>",
         ssl={'ca': '~/.mysql/root.crt'})
   
   cur = conn.cursor()
@@ -623,11 +639,11 @@ pip3 install mysqlclient
   import MySQLdb
   
   conn = MySQLdb.connect(
-        host="<имя хоста {{ MY }}>.{{ dns-zone }}",
+        host="<FQDN_любого_хоста_{{ MY }}>",
         port={{ port-mmy }},
-        db="<имя БД>",
-        user="<имя пользователя>",
-        passwd="<пароль пользователя>")
+        db="<имя_БД>",
+        user="<имя_пользователя>",
+        passwd="<пароль_пользователя>")
   
   cur = conn.cursor()
   cur.execute('SELECT version()')
@@ -638,6 +654,8 @@ pip3 install mysqlclient
   ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 Подключение:
 
@@ -665,11 +683,11 @@ sudo apt update && sudo apt install --yes ruby ruby-mysql2
   require "mysql2"
 
   conn = Mysql2::Client.new(
-          :host => "<имя хоста {{ MY }}>.{{ dns-zone }}",
+          :host => "<FQDN_любого_хоста_{{ MY }}>",
           :port => {{ port-mmy }},
-          :database => "<имя БД>",
-          :username => "<имя пользователя>",
-          :password => "<пароль пользователя>",
+          :database => "<имя_БД>",
+          :username => "<имя_пользователя>",
+          :password => "<пароль_пользователя>",
           :ssl_mode => "verify_identity",
           :sslca => "~/.mysql/root.crt")
 
@@ -690,11 +708,11 @@ sudo apt update && sudo apt install --yes ruby ruby-mysql2
   require "mysql2"
 
   conn = Mysql2::Client.new(
-          :host => "<имя хоста {{ MY }}>.{{ dns-zone }}",
+          :host => "<FQDN_любого_хоста_{{ MY }}>",
           :port => {{ port-mmy }},
-          :database => "<имя БД>",
-          :username => "<имя пользователя>",
-          :password => "<пароль пользователя>")
+          :database => "<имя_БД>",
+          :username => "<имя_пользователя>",
+          :password => "<пароль_пользователя>")
 
   q = conn.query("SELECT version()")
 
@@ -706,6 +724,8 @@ sudo apt update && sudo apt install --yes ruby ruby-mysql2
   ```
 
 {% endlist %}
+
+{% include [see-fqdn](fqdn-host.md) %}
 
 Подключение:
 

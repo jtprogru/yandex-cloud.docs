@@ -1,9 +1,9 @@
 ---
 title: "Instructions for operations with Billing"
-description: "In this article, you'll learn how to perform operations with billing in {{ yandex-cloud }}, activate the paid version, purchase a committed volume of services (CVoS), activate a promo code, top up your account, and more."
+description: "In this article, you will learn how to work with the {{ billing-name }} service in {{ yandex-cloud }}, activate the paid version, purchase a committed volume of services (CVoS), activate a promo code, top up your account, and more."
 ---
 
-# All instructions for Billing
+# All {{ billing-name }} guides
 
 
 ## Working with documents {#docs}
@@ -17,6 +17,7 @@ description: "In this article, you'll learn how to perform operations with billi
 
 * [{#T}](create-new-account.md)
 * [{#T}](change-data.md)
+* [{#T}](get-data.md)
 * [{#T}](pin-cloud.md)
 * [{#T}](delete-account.md)
 * [{#T}](activate-commercial.md)

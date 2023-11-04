@@ -41,6 +41,8 @@ items:
             href: operations/roles-and-users.md
           - name: Управление ресурсными группами
             href: operations/resource-groups.md
+          - name: Мониторинг и управление сессиями и запросами в командном центре
+            href: operations/command-center.md
           - name: Управление клиентскими процессами и сессиями пользователей
             href: operations/cluster-process.md
       - name: Расширения {{ GP }}
@@ -51,6 +53,12 @@ items:
             href: operations/extensions/pgcrypto.md
           - name: uuid-cb
             href: operations/extensions/uuid-cb.md
+      - name: Встроенные функции
+        items:
+          - name: >-
+              Оценка количества уникальных элементов с помощью алгоритма
+              HyperLogLog
+            href: operations/embedded-functions/hyperloglog.md
       - name: Логи и мониторинг
         items:
           - name: Просмотр логов кластера
@@ -63,6 +71,8 @@ items:
         href: operations/greenplum-db.md
   - name: Практические руководства
     items:
+      - name: Все сценарии
+        href: tutorials/index.md
       - name: Миграция базы данных в {{ mgp-name }}
         href: tutorials/data-migration.md
       - name: >-
@@ -73,6 +83,10 @@ items:
         href: tutorials/greenplum-to-postgresql.md
       - name: Миграция базы данных из {{ GP }} в {{ CH }}
         href: tutorials/greenplum-to-clickhouse.md
+      - name: >-
+          Выгрузка данных {{ GP }} в холодное хранилище {{ objstorage-full-name
+          }}
+        href: tutorials/yezzey.md
   - name: Концепции
     items:
       - name: Взаимосвязь ресурсов сервиса
@@ -95,6 +109,8 @@ items:
         href: concepts/tables.md
       - name: Пользователи и роли
         href: concepts/cluster-users.md
+      - name: Командный центр
+        href: concepts/command-center.md
       - name: Управление соединениями
         href: concepts/pooling.md
       - name: Техническое обслуживание
@@ -117,6 +133,8 @@ items:
             href: api-ref/grpc/backup_service.md
           - name: ClusterService
             href: api-ref/grpc/cluster_service.md
+          - name: PXFDatasourceService
+            href: api-ref/grpc/pxf_service.md
           - name: ResourcePresetService
             href: api-ref/grpc/resource_preset_service.md
           - name: OperationService
@@ -167,6 +185,18 @@ items:
                 href: api-ref/Cluster/streamLogs.md
               - name: update
                 href: api-ref/Cluster/update.md
+          - name: PXFDatasource
+            items:
+              - name: Overview
+                href: api-ref/PXFDatasource/index.md
+              - name: create
+                href: api-ref/PXFDatasource/create.md
+              - name: delete
+                href: api-ref/PXFDatasource/delete.md
+              - name: list
+                href: api-ref/PXFDatasource/list.md
+              - name: update
+                href: api-ref/PXFDatasource/update.md
           - name: ResourcePreset
             items:
               - name: Overview

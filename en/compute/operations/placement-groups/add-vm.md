@@ -114,7 +114,7 @@ Add an existing instance to a [placement group](../../concepts/placement-groups.
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    Adding an existing instance to a placement group:
 
@@ -162,7 +162,7 @@ Add an existing instance to a [placement group](../../concepts/placement-groups.
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -172,10 +172,10 @@ Add an existing instance to a [placement group](../../concepts/placement-groups.
 
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-      Once you are done, all the resources you need will be created in the specified folder. You can verify that the virtual machine has been added to the placement group from the [management console]({{ link-console-main }}).
+      All the resources you need will then be created in the specified folder. You can verify that the virtual machine has been added to the placement group from the [management console]({{ link-console-main }}).
 
 {% endlist %}
 
 ## See also {#see-also}
 
-* [How to create a VM instance in a placement group](create-vm-in-pg.md).
+* [How to create a VM in a placement group](create-vm-in-pg.md)

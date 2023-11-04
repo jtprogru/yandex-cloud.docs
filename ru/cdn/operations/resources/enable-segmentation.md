@@ -8,17 +8,17 @@
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором расположен ресурс.
 
-  1. Выберите сервис **{{ cdn-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_cdn }}**.
 
   1. Нажмите на имя необходимого ресурса.
 
-  1. Перейдите на вкладку **Контент**.
+  1. Перейдите на вкладку **{{ ui-key.yacloud.cdn.label_resource-content }}**.
 
-  1. Справа вверху нажмите кнопку ![image](../../../_assets/pencil.svg) **Редактировать**.
+  1. Справа вверху нажмите кнопку ![image](../../../_assets/edit.svg) **{{ ui-key.yacloud.common.edit }}**.
 
-  1. В поле **Сегментация больших файлов** включите опцию **Сегментировать**.
+  1. В поле **{{ ui-key.yacloud.cdn.label_resource-content-slice }}** включите опцию **{{ ui-key.yacloud.cdn.label_resource-content-optimize-true }}**.
 
-  1. Нажмите кнопку **Сохранить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
   
@@ -89,7 +89,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле параметры создаваемого CDN-ресурса:
 

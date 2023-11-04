@@ -49,12 +49,12 @@ To set up Auto Unseal:
    {% endlist %}
 
 1. [Create](../operations/key.md#create) a separate [{{ kms-name}} key](../concepts/key.md) for Vault (recommended).
-1. [Grant access](../../iam/operations/roles/grant.md) to the key only to the user or service account that will be used to authenticate Vault requests to {{ kms-short-name }}. When working with {{ kms-short-name }}, Vault only performs [encryption and decryption](../concepts/encryption.md) operations, so the `kms.keys.encrypterDecrypter` [role](../../iam/concepts/access-control/roles.md) is sufficient.
+1. [Grant access](../../iam/operations/roles/grant.md) to the key only to the user or service account that will be used to authenticate Vault requests to {{ kms-short-name }}. When working with {{ kms-short-name }}, Vault only performs [encryption and decryption](../concepts/symmetric-encryption.md) operations, so the `kms.keys.encrypterDecrypter` [role](../../iam/concepts/access-control/roles.md) is sufficient.
 
 
 ### Required paid resources {#paid-resources}
 
-The cost of this infrastructure includes:
+The infrastructure support costs include:
 * Fee for a continuously running VM (see [{{ compute-full-name }} pricing](../../compute/pricing.md)).
 * Fee for using a dynamic or static [public IP](../../vpc/concepts/address.md#public-addresses) (see [{{ vpc-full-name }} pricing](../../vpc/pricing.md)).
 * Fee for the number of active {{ kms-short-name }} key versions and completed cryptographic operations (see [{{ vpc-full-name }} pricing](../../kms/pricing.md)).
@@ -90,25 +90,7 @@ If Vault has already been initialized, you have to run a [migration procedure](h
 
    {% endlist %}
 
-1. Under [seal](https://www.vaultproject.io/docs/configuration/seal#seal-stanza), enter `"yandexcloudkms"` as the value.
-1. Add the `kms_key_id` parameter with the {{ kms-short-name }} encryption key ID.
-1. Authenticate using one the following methods:
-
-   {% list tabs %}
-
-   - The service account linked to your VM
-
-      Link a service account to a VM by following the [instructions](../../compute/operations/vm-connect/auth-inside-vm.md).
-
-   - Any service account
-
-      In the `service_account_key_file` parameter, specify the path to the file with the service account's authorized key.
-
-   - Yandex or federated account
-
-      If you are using a Yandex account, specify the OAuth token in the `oauth_token` parameter. For a federated account, use the IAM token.
-
-   {% endlist %}
+1. Change the configuration when performing [migration](https://www.vaultproject.io/docs/concepts/seal#seal-migration) based on the Vault version in use.
 
 {% note info %}
 

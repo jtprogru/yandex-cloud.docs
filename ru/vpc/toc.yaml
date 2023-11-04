@@ -15,6 +15,8 @@ items:
             href: operations/network-delete.md
           - name: Изменить облачную сеть
             href: operations/network-update.md
+          - name: Изучить карту облачной сети
+            href: operations/network-map.md
           - name: Перенести облачную сеть между каталогами
             href: operations/network-move.md
       - name: Подсеть
@@ -98,6 +100,10 @@ items:
         href: tutorials/mikrotik.md
       - name: Соединение с облачной сетью при помощи OpenVPN
         href: tutorials/openvpn.md
+      - name: >-
+          Защищенный доступ пользователей к облачным ресурсам на основе
+          WireGuard VPN
+        href: tutorials/remote-wireguard-vpn.md
       - name: Создание и настройка шлюза UserGate в режиме прокси-сервера
         href: tutorials/usergate-proxy.md
       - name: Настройка сети для {{ dataproc-full-name }}
@@ -278,6 +284,8 @@ items:
                 href: api-ref/Subnet/listUsedAddresses.md
               - name: move
                 href: api-ref/Subnet/move.md
+              - name: relocate
+                href: api-ref/Subnet/relocate.md
               - name: removeCidrBlocks
                 href: api-ref/Subnet/removeCidrBlocks.md
               - name: update

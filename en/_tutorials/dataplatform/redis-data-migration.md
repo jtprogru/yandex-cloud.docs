@@ -35,7 +35,7 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
    1. (Optional) [Create an intermediate Linux virtual machine](../../compute/operations/vm-create/create-linux-vm.md) in {{ compute-full-name }} on the same network as the {{ mrd-name }} cluster using the following configuration:
 
-      * Under **{{ ui-key.yacloud.compute.instances.create.section_image }}**, select **{{ ui-key.yacloud.compute.instances.create.image_value_os-products }}** → `Ubuntu 20.04`.
+      * Under **{{ ui-key.yacloud.compute.instances.create.section_image }}**, select **{{ ui-key.yacloud.compute.instances.create.image_value_os-products }}** → [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts).
       * Under **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
 
          * **{{ ui-key.yacloud.component.compute.network-select.field_external }}**: `{{ ui-key.yacloud.component.compute.network-select.switch_auto }}`.
@@ -44,8 +44,6 @@ If you no longer need the resources you created, [delete them](#clear-out).
 
    
    1. If you use {{ vpc-name }} security groups, [configure them](../../managed-redis/operations/connect/index.md#configuring-security-groups).
-
-      {% include [preview-pp.md](../../_includes/preview-pp.md) %}
 
 
 - Using {{ TF }}
@@ -327,7 +325,7 @@ The total number of keys in the cluster must be equal to the number of keys proc
 
 ## Delete the resources you created {#clear-out}
 
-Delete the resources you no longer need to avoid paying for them:
+Delete the resources you no longer need to avoid being charged for them:
 
 {% list tabs %}
 

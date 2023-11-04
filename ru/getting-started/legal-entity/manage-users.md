@@ -4,7 +4,7 @@
 
 ## Добавьте пользователя Яндекса {#add-user-yandex}
 
-Если у сотрудников компании есть аккаунты на Яндексе (например, `login@yandex.ru`), они могут использовать эти аккаунты для доступа к сервисам {{yandex-cloud}}, подключенным к вашей организации.
+Если у сотрудников компании есть аккаунты на Яндексе (например, `login@yandex.ru`), они могут использовать эти аккаунты для доступа к сервисам {{ yandex-cloud }}, подключенным к вашей организации.
 
 Чтобы добавить аккаунты сотрудников в организацию:
 
@@ -30,10 +30,10 @@
   1. [Войдите в аккаунт]({{ link-passport-login }}) администратора организации.
   1. Перейдите в сервис [{{ org-full-name }}]({{ link-org-main }}).
   1. На левой панели выберите раздел [Пользователи](https://org.cloud.yandex.ru/users) ![icon-users](../../_assets/organization/icon-users.svg).
-  1. В правом верхнем углу нажмите ![icon-users](../../_assets/datalens/arrow-down.svg) → **Добавить федеративных пользователей**.
+  1. В правом верхнем углу нажмите ![icon-users](../../_assets/datalens/arrow-down.svg) → **{{ ui-key.yacloud_org.page.users.action.add-federated-users }}**.
   1. Выберите федерацию, из которой необходимо добавить пользователей.
   1. Перечислите Name ID пользователей, разделяя их переносами строк.
-  1. Нажмите кнопку **Добавить**. Пользователи будут подключены к организации.
+  1. Нажмите кнопку **{{ ui-key.yacloud_org.actions.add }}**. Пользователи будут подключены к организации.
 
 - CLI
 
@@ -43,16 +43,16 @@
 
   1. Посмотрите описание команды добавления пользователей:
 
-    ```
-    yc organization-manager federation saml add-user-accounts --help
-    ```
+      ```
+      yc organization-manager federation saml add-user-accounts --help
+      ```
 
   1. Добавьте пользователей, перечислив их Name ID через запятую:
 
-    ```
-    yc organization-manager federation saml add-user-accounts --name my-federation \
-    --name-ids=alice@example.com,bob@example.com,charlie@example.com
-    ```
+      ```
+      yc organization-manager federation saml add-user-accounts --name my-federation \
+      --name-ids=alice@example.com,bob@example.com,charlie@example.com
+      ```
 
 - API
 
@@ -60,24 +60,24 @@
 
   1.  Сформируйте файл с телом запроса, например `body.json`. В теле запроса укажите массив Name ID пользователей, которых необходимо добавить:
 
-    ```json
-    {
-    "nameIds": [
-      "alice@example.com",
-      "bob@example.com",
-      "charlie@example.com"
-    ]
-    }
-    ```
+      ```json
+      {
+      "nameIds": [
+        "alice@example.com",
+        "bob@example.com",
+        "charlie@example.com"
+      ]
+      }
+      ```
   1.  Отправьте запрос, указав в параметрах идентификатор федерации:
 
-    ```bash
-    $ curl -X POST \
-    -H "Content-Type: application/json" \
-    -H "Authorization: Bearer <IAM-токен>" \
-    -d '@body.json' \
-    https://iam.api.cloud.yandex.net/iam/v1/saml/federations/<ID федерации>:addUserAccounts
-    ```
+      ```bash
+      $ curl -X POST \
+      -H "Content-Type: application/json" \
+      -H "Authorization: Bearer <IAM-токен>" \
+      -d '@body.json' \
+      https://iam.api.cloud.yandex.net/iam/v1/saml/federations/<ID федерации>:addUserAccounts
+      ```
 
 {% endlist %}
 
@@ -92,10 +92,10 @@
   {% include [grant-role-console](../../_includes/grant-role-console.md) %}
 
 
-- CLI
+- CLI 
 
   1. Выберите роль из списка в разделе [Роли](../../iam/concepts/access-control/roles.md).
-  1. [Получите идентификатор пользователя](../../organization/users-get.md).
+  1. [Получите идентификатор пользователя](../../organization/operations/users-get.md).
   1. Назначьте роль с помощью команды:
 
     ```
@@ -126,7 +126,7 @@
   Воспользуйтесь методом `updateAccessBindings` для соответствующего ресурса.
 
   1. Выберите роль из списка в разделе [Роли](../../iam/concepts/access-control/roles.md).
-  1. [Получите идентификатор пользователя](../../organization/users-get.md).
+  1. [Получите идентификатор пользователя](../../organization/operations/users-get.md).
   1. Сформируйте тело запроса, например в файле `body.json`. В свойстве `action` укажите `ADD`, а в свойстве `subject` - тип `userAccount` и идентификатор пользователя:
 
     **body.json:**

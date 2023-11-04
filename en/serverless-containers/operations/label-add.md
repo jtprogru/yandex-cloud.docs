@@ -1,3 +1,8 @@
+---
+title: "Adding a container label"
+description: "Follow this guide to add a container label."
+---
+
 # Adding a container label
 
 {% list tabs %}
@@ -24,7 +29,7 @@
    description: my beta container description
    labels:
      label: test
-   url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
+   url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
    status: ACTIVE
    ```
 
@@ -32,7 +37,7 @@
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see the documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To add a label to a container created using {{ TF }}:
 
@@ -71,7 +76,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
       ```

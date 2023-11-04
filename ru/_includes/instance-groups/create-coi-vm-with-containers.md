@@ -21,11 +21,11 @@
    - Консоль управления
 
      1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../resource-manager/concepts/resources-hierarchy.md#folder), в котором вы хотите создать сервисный аккаунт.
-     1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
-     1. Нажмите кнопку **Создать сервисный аккаунт**.
+     1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
+     1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-accounts.button_add }}**.
      1. Введите имя `group-coi`.
-     1. Чтобы назначить сервисному аккаунту роль на текущий каталог, нажмите **Добавить роль** и выберите роль `editor`.
-     1. Нажмите кнопку **Создать**.
+     1. Чтобы назначить сервисному аккаунту роль на текущий каталог, нажмите **{{ ui-key.yacloud.iam.folder.service-account.label_add-role }}** и выберите роль `editor`.
+     1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.popup-robot_button_add }}**.
 
    - CLI
 
@@ -65,11 +65,11 @@
    - Консоль управления
 
      1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите создать сеть.
-     1. Выберите сервис **{{ vpc-name }}**.
-     1. Нажмите кнопку **Создать сеть**.
+     1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_vpc }}**.
+     1. Нажмите кнопку **{{ ui-key.yacloud.vpc.networks.button_create }}**.
      1. Задайте имя сети `yc-auto-network`.
-     1. Выберите дополнительную опцию **Создать подсети**.
-     1. Нажмите кнопку **Создать сеть**.
+     1. Выберите дополнительную опцию **{{ ui-key.yacloud.vpc.networks.create.field_is-default }}**.
+     1. Нажмите кнопку **{{ ui-key.yacloud.vpc.networks.create.button_create }}**.
 
    - CLI
 
@@ -213,8 +213,8 @@
    - Консоль управления
 
      1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы создали группу ВМ.
-     1. Выберите сервис **{{ compute-name }}**.
-     1. Перейдите в раздел **Группы виртуальных машин**.
+     1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
+     1. Перейдите в раздел **{{ ui-key.yacloud.compute.switch_groups }}**.
      1. Нажмите на имя группы ВМ `group-coi-containers`.
 
    - CLI
@@ -229,8 +229,8 @@
      +----------------------+---------------------------+----------------------------------+-------------+------------------------+----------------+
      |     INSTANCE ID      |           NAME            |            EXTERNAL IP           | INTERNAL IP |         STATUS         | STATUS MESSAGE |
      +----------------------+---------------------------+----------------------------------+-------------+------------------------+----------------+
-     | fhmabcv0de123fo50d0b | cl0q12abcs4gq8m966de-fmar | {{ cos-external-ip-examples.0 }} | 10.130.0.14 | RUNNING_ACTUAL [2h35m] |                |
-     | fhmab0cdqj12tcv18jou | cl0q12abcs4gq8m966de-fqeg | {{ cos-external-ip-examples.1 }} | 10.130.0.47 | RUNNING_ACTUAL [2h35m] |                |
+     | fhmabcv0de123fo50d0b | cl0q12abcs4gq8m966de-fmar | {{ external-ip-examples.0 }} | 10.130.0.14 | RUNNING_ACTUAL [2h35m] |                |
+     | fhmab0cdqj12tcv18jou | cl0q12abcs4gq8m966de-fqeg | {{ external-ip-examples.1 }} | 10.130.0.47 | RUNNING_ACTUAL [2h35m] |                |
      +----------------------+---------------------------+----------------------------------+-------------+------------------------+----------------+
      ```
 
@@ -249,7 +249,7 @@
    - CLI
 
      ```bash
-     ssh yc-user@{{ cos-external-ip-examples.0 }}
+     ssh yc-user@{{ external-ip-examples.0 }}
      ```
 
      Результат:

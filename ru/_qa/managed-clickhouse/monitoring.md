@@ -25,16 +25,20 @@
 
 Воспользуйтесь инструкцией в разделе [{#T}](../../managed-clickhouse/operations/monitoring.md), чтобы отслеживать состояние хостов или настроить алерты.
 
+#### Как отслеживать объем, занимаемый данными в гибридном хранилище? {#hybrid}
+
+Воспользуйтесь метрикой `ch_s3_disk_parts_size` в сервисе {{ monitoring-full-name }}. Она показывает, какой объем занимают куски таблиц [MergeTree]({{ ch.docs }}/engines/table-engines/mergetree-family/mergetree/) в сервисе {{ objstorage-name }}. Метрика доступна только для кластеров {{ mch-name }} с настроенным [гибридным хранилищем](../../managed-clickhouse/concepts/storage.md#hybrid-storage-features). Подробнее о том, как выполнить запрос с метрикой, см. в [руководстве](../../managed-clickhouse/tutorials/hybrid-storage.md#metrics).
+
 #### Как настроить алерт, который срабатывает при заполнении определенного процента дискового пространства? {#disk-space-percentage}
 
 [Создайте алерт](../../managed-clickhouse/operations/monitoring.md#monitoring-integration) с метрикой `disk.used_bytes` в сервисе {{ monitoring-full-name }}. Метрика показывает размер использованного дискового пространства в кластере {{ mch-name }}.
 
 Для `disk.used_bytes` используются пороги для оповещения. Их рекомендуемые значения:
 
-* `Alarm` — 95% дискового пространства.
-* `Warning` — 80% дискового пространства.
+* `{{ ui-key.yacloud_monitoring.alert.status_alarm }}` — 95% дискового пространства.
+* `{{ ui-key.yacloud_monitoring.alert.status_warn }}` — 80% дискового пространства.
 
 Значения порогов задаются только в байтах. Например, рекомендуемые значения для диска размером в 100 ГБ:
 
-* `Alarm` — `102005473280` байтов (95%).
-* `Warning` — `85899345920` байтов (80%).
+* `{{ ui-key.yacloud_monitoring.alert.status_alarm }}` — `102005473280` байт (95%).
+* `{{ ui-key.yacloud_monitoring.alert.status_warn }}` — `85899345920` байт (80%).

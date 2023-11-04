@@ -14,8 +14,8 @@ If you have created a cluster without [{{ CK }}](../concepts/replication.md#ck) 
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
 
 - CLI
 
@@ -30,16 +30,14 @@ If you have created a cluster without [{{ CK }}](../concepts/replication.md#ck) 
      --cluster-name=<cluster name>
    ```
 
-   
    ```text
-   +----------------------------+--------------+---------+--------+-------------------+
-   |            NAME            |  CLUSTER ID  |  ROLE   | HEALTH |      ZONE ID      |
-   +----------------------------+--------------+---------+--------+-------------------+
-   |   rc1b...{{ dns-zone }}    | c9qp71dk1... | MASTER  | ALIVE  | {{ region-id }}-b |
-   |   rc1a...{{ dns-zone }}    | c9qp71dk1... | REPLICA | ALIVE  | {{ region-id }}-a |
-   +----------------------------+--------------+---------+--------+-------------------+
+   +-----------------------+--------------+---------+--------+-------------------+
+   |         NAME          |  CLUSTER ID  |  ROLE   | HEALTH |      ZONE ID      |
+   +-----------------------+--------------+---------+--------+-------------------+
+   | rc1b...{{ dns-zone }} | c9qp71dk1... | MASTER  | ALIVE  | {{ region-id }}-b |
+   | rc1a...{{ dns-zone }} | c9qp71dk1... | REPLICA | ALIVE  | {{ region-id }}-a |
+   +-----------------------+--------------+---------+--------+-------------------+
    ```
-
 
    The cluster name can be requested with a [list of clusters in the folder](cluster-list.md#list-clusters).
 
@@ -53,23 +51,23 @@ If you have created a cluster without [{{ CK }}](../concepts/replication.md#ck) 
 
 ## Adding a host {#add-host}
 
-The number of hosts in {{ mch-name }} clusters is limited by the CPU and RAM quotas available to DB clusters in your cloud. To check the resources in use, open the [Quotas]({{ link-console-quotas }}) page and find **Managed Databases**.
+The number of hosts in {{ mch-name }} clusters is limited by the CPU and RAM quotas available to DB clusters in your cloud. To check the resources in use, open the [Quotas]({{ link-console-quotas }}) page and find **{{ ui-key.yacloud.iam.folder.dashboard.label_mdb }}**.
 
 {% list tabs %}
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. Click on the name of the cluster you need and go to the **Hosts** tab.
-   1. Click ![image](../../_assets/plus-sign.svg) **Add host**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and go to the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
+   1. Click ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud.mdb.cluster.hosts.button_add-host }}**.
 
    
    1. Specify the host parameters:
       * Availability zone.
       * Subnet (if the required subnet is not on the list, [create it](../../vpc/operations/subnet-create.md)).
-      * Select **Public access** if the host must be accessible from outside {{ yandex-cloud }}.
+      * Select **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}** if the host must be accessible from outside {{ yandex-cloud }}.
       * Name of the shard.
-      * Select the **Copy data schema** option to copy the schema from a random replica to the new host.
+      * Select the **{{ ui-key.yacloud.clickhouse.hosts.dialog.field_copy_schema }}** option to copy the schema from a random replica to the new host.
 
 
 - CLI
@@ -154,7 +152,7 @@ The number of hosts in {{ mch-name }} clusters is limited by the CPU and RAM quo
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -175,7 +173,7 @@ The number of hosts in {{ mch-name }} clusters is limited by the CPU and RAM quo
 {% note warning %}
 
 
-If you can't [connect](connect.md) to the added host, check that the cluster's [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host. The security groups feature is currently in the [Preview](../../overview/concepts/launch-stages.md) stage.
+If you cannot [connect](connect.md) to the added host, check that the cluster [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host.
 
 
 Use the copy data schema option only if the schema is the same on all replica hosts of the cluster.
@@ -191,11 +189,11 @@ You can modify public access settings for every host in a {{ mch-name }} cluster
 - Management console
 
    To change the parameters of the cluster host:
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Click the ![image](../../_assets/options.svg) icon in the same row as the desired host and select **Edit**.
-   1. Enable **Public access** if a host must be accessible from outside {{ yandex-cloud }}.
-   1. Click **Save**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
+   1. Click ![image](../../_assets/options.svg) in the required host row and select **{{ ui-key.yacloud.common.edit }}**.
+   1. Enable **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}** if the host must be accessible from outside {{ yandex-cloud }}.
+   1. Click **{{ ui-key.yacloud.mdb.hosts.dialog.button_choose }}**.
 
 - CLI
 
@@ -236,7 +234,7 @@ You can modify public access settings for every host in a {{ mch-name }} cluster
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -257,7 +255,7 @@ You can modify public access settings for every host in a {{ mch-name }} cluster
 
 {% note warning %}
 
-If you can't [connect](connect.md) to the changed host, check that the cluster's [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host. The security groups feature is currently in the [Preview](../../overview/concepts/launch-stages.md) stage.
+If you can't [connect](connect.md) to the changed host, check that the cluster's [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host.
 
 {% endnote %}
 
@@ -276,9 +274,9 @@ A cluster created with [{{ CK }}](../concepts/replication.md#ck) replication sup
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Click the ![image](../../_assets/options.svg) icon in the same row as the desired host and select **Delete**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
+   1. Click ![image](../../_assets/options.svg) in the required host row and select **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 

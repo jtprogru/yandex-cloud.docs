@@ -11,12 +11,49 @@
       1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
       1. In the left-hand panel, select ![image](../../../_assets/compute/storage.svg) **{{ ui-key.yacloud.compute.switch_file-storages }}**.
       1. Select the desired storage.
-      1. Click the **{{ ui-key.yacloud.compute.nfs.label_attached-instances }}** tab.
+      1. Go to the **{{ ui-key.yacloud.compute.nfs.label_attached-instances }}** tab.
       1. Click ![image](../../../_assets/plus-sign.svg) **{{ ui-key.yacloud.compute.nfs.button_attach-instance-to-the-filesystem }}**.
       1. In the window that opens:
          1. Select the VM.
          1. Specify the device name for accessing file storage in the VM.
          1. Click **{{ ui-key.yacloud.compute.nfs.button_attach-instance-to-the-filesystem }}**.
+
+   - {{ TF }}
+
+      {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+      Set the `allow_stopping_for_update` parameter to `true` on your VM, if you have not done it yet.
+
+      To attach file storage to the VM, add the `filesystem` section with the `filesystem_id` parameter to the VM description (see the example below).
+
+      1. Open the {{ TF }} configuration file and add a fragment with the storage description to the VM description:
+
+         {% cut "Sample storage description in the VM configuration in {{ TF }}" %}
+
+         ```hcl
+         ...
+         resource "yandex_compute_instance" "vm-1" {
+           name        = "test-vm"
+           platform_id = "standard-v3"
+           zone        = "{{ region-id }}-a"
+
+           filesystem {
+             filesystem_id = "fhmaikp755grp4mlvvem"
+           }
+         ...
+         ```
+
+         {% endcut %}
+
+      1. Apply the changes:
+
+         {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+      You can verify that the storage has been added to the VM using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
+
+      ```bash
+      yc compute instance get <VM_name>
+      ```
 
    - API
 
@@ -29,7 +66,7 @@
    1. Run this command:
 
       ```bash
-      sudo mount -t virtiofs <device name> <mount path>
+      sudo mount -t virtiofs <device_name> <mount_path>
       ```
 
    1. Check that the file storage has been mounted:
@@ -54,6 +91,6 @@
 
    1. In order for file storage to be mounted every time the VM is started, add a line to the `/etc/fstab` file in the following format:
 
-      ```text
-      <device name>  <mount path> virtiofs    rw    0   0
+      ```
+      <device_name>  <mount_path> virtiofs    rw    0   0
       ```

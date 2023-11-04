@@ -3,17 +3,20 @@
 Вы можете получить подробные сведения о расходах в {{ ml-platform-name }} с детализацией до проекта, собрав дашборд в [{{ datalens-full-name }}](../../../datalens/). Для этого:
 
 1. Откройте или создайте новый экземпляр на [главной странице {{ datalens-name }}]({{ link-datalens-main }}). 
-1. Создайте подключение с типом коннектора **{{ ui-key.datalens.connections.connectors-list.view.label_connector-ch_billing_analytics }}**.
-1. Задайте название подключения и нажмите кнопку **{{ ui-key.datalens.collections.action_create }}**.
+1. Создайте подключение с типом коннектора **Yandex Cloud Billing**.
+1. Задайте название подключения и нажмите кнопку **Создать**.
 1. Откройте **{{ yandex-cloud }} Billing Dashboard** и перейдите на вкладку **Labels**.
 1. Выберите: 
    * **Usage date** — нужные даты;
    * **Billing account name** — один или несколько платежных аккаунтов;
    * **Cloud name (ID)** — оставьте поле пустым;
-   * **Label key** — несколько значений можно указать одновременно:
-     * `project_id` — статистика по проектам.
-     * `resource_id` — статистика по сообществам.
-     * `label.user_labels` — статистика по пользовательским [меткам](../../../resource-manager/concepts/labels.md).
+   * **Label key** — метки для просмотра статистики, можно указать несколько значений одновременно:
+   
+     | Метка | Статистика после 13.09.2023 | Статистика до 13.09.2023 |
+     | --- | ---| ---|
+     | Статистика по проектам | `system-datasphere-project_id` | `project_id` |
+     | Статистика по сообществам | `system-datasphere-resource_id` | `resource_id` |
+     | Статистика по пользовательским [меткам](../../../resource-manager/concepts/labels.md) | `<имя_метки>` | `<имя_метки>` | 
 
 {% note warning %}
 

@@ -7,7 +7,7 @@ description: "Атомарные полномочия в PostgreSQL называ
 
 Атомарные полномочия в **{{ PG }}** называются _привилегиями_, группы полномочий — _ролями_. Подробнее об организации прав доступа читайте в [документации {{ PG }}](https://www.postgresql.org/docs/current/user-manag.html).
 
-Пользователь, создаваемый вместе с кластером **{{ mpg-name }}**, является владельцем первой базы данных в кластере. Вы можете [создавать других пользователей](cluster-users.md#adduser) и настраивать их права по своему усмотрению:
+Пользователь, создаваемый вместе с кластером **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**, является владельцем первой базы данных в кластере. Вы можете [создавать других пользователей](cluster-users.md#adduser) и настраивать их права по своему усмотрению:
 
 - [Изменить список ролей пользователя](#grant-role).
 - [Выдать привилегию пользователю](#grant-privilege).
@@ -25,11 +25,11 @@ description: "Атомарные полномочия в PostgreSQL называ
 
 - Консоль управления
 
-  1. Перейдите на страницу каталога и выберите сервис **{{ mpg-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Пользователи**.
-  1. В строке с именем нужного пользователя нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите пункт **Настроить**.
-  1. Разверните список **Настройки СУБД** и в поле **Grants** выберите роли, которые хотите назначить пользователю.
-  1. Нажмите кнопку **Сохранить**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.postgresql.cluster.switch_users }}**.
+  1. В строке с именем нужного пользователя нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите пункт **{{ ui-key.yacloud.mdb.cluster.users.button_action-update }}**.
+  1. Разверните список **{{ ui-key.yacloud.mdb.dialogs.button_advanced-settings }}** и в поле **Grants** выберите роли, которые хотите назначить пользователю.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.dialogs.popup_button_save }}**.
 
 - CLI
 
@@ -42,9 +42,9 @@ description: "Атомарные полномочия в PostgreSQL называ
   Чтобы назначить роли, выполните команду:
 
   ```
-  {{ yc-mdb-pg }} user update <имя пользователя> \
+  {{ yc-mdb-pg }} user update <имя_пользователя> \
          --grants=<роль1,роль2> \
-         --cluster-id <идентификатор кластера>
+         --cluster-id <идентификатор_кластера>
   ```
 
   Имя кластера можно запросить со [списком кластеров в каталоге](cluster-list.md), имя пользователя — со [списком пользователей](cluster-users.md#list-users).
@@ -63,9 +63,9 @@ description: "Атомарные полномочия в PostgreSQL называ
     1. Добавьте атрибут `grants` со списком нужных ролей:
   
         ```hcl
-        resource "yandex_mdb_postgresql_user" "<имя пользователя>" {
+        resource "yandex_mdb_postgresql_user" "<имя_пользователя>" {
           ...
-          name   = "<имя пользователя>"
+          name   = "<имя_пользователя>"
           grants = [ "<роль1>","<роль2>" ]
           ...
         }
@@ -97,13 +97,126 @@ description: "Атомарные полномочия в PostgreSQL называ
 
 ## Выдать привилегию пользователю {#grant-privilege}
 
-1. [Подключитесь](connect.md) к базе данных с помощью учетной записи владельца базы данных.
-2. Выполните команду `GRANT`. Подробное описание синтаксиса команды смотрите в [документации {{ PG }}](https://www.postgresql.org/docs/current/sql-grant.html).
+{% list tabs %}
 
+- SQL
+
+    1. [Подключитесь](connect.md) к базе данных с помощью учетной записи владельца базы данных.
+    1. Выполните команду `GRANT`. Подробное описание синтаксиса команды смотрите в [документации {{ PG }}](https://www.postgresql.org/docs/current/sql-grant.html).
+
+- {{ TF }}
+
+    Выдать привилегию пользователю через {{ TF }} можно только в кластере с хостами в публичном доступе.
+
+    Вы можете выдавать привилегии пользователям через {{ TF }}, используя сторонний провайдер — [Terraform Provider for PostgreSQL](https://github.com/cyrilgdn/terraform-provider-postgresql).
+
+    {% include [pg-provider-disclaimer](../../_includes/mdb/mpg/terraform/pg-provider-disclaimer.md) %}
+
+    Чтобы выдать привилегию пользователю кластера:
+  
+    1. Добавьте провайдер `postgresql` в блок `required_providers` в файле с настройками провайдера:
+
+        ```hcl
+        terraform {
+          required_providers {
+            ...
+            postgresql = {
+              source = "cyrilgdn/postgresql"
+            }
+            ...
+          }
+        }
+        ```
+
+    1. Откройте конфигурационный файл {{ TF }} с планом инфраструктуры.
+  
+        О том, как создать такой файл, см. в разделе [{#T}](cluster-create.md).
+
+    1. Добавьте провайдер `postgresql` и настройте для него доступ к интересующей базе данных от имени ее владельца:
+
+        ```hcl
+        provider "postgresql" {
+          host            = <FQDN_хоста>
+          port            = 6432
+          database        = <имя_БД>
+          username        = <имя_пользователя_владельца_БД> 
+          password        = <пароль_пользователя>
+        }
+        ```
+
+        {% include [see-fqdn](../../_includes/mdb/mpg/fqdn-host.md) %}
+
+        Полный список настроек см. в [документации провайдера](https://registry.terraform.io/providers/cyrilgdn/postgresql/latest/docs).
+
+    1. Добавьте ресурс `postgresql_grant`:
+
+        ```hcl
+        resource "postgresql_grant" "<название_ресурса>" {
+          database    = "<имя_БД>"
+          role        = "<имя_пользователя>"
+          object_type = "<тип_объекта>"
+          privileges  = ["<список_привилегий>"]
+          schema      = "<схема>"
+          objects     = ["<список_объектов>"]
+          columns     = ["<список_столбцов>"]
+          with_grant_option = <разрешение_на_выдачу_привилегий>
+        }
+        ```
+
+        Где:
+
+        * `<название_ресурса>` — название {{ TF }}-ресурса с привилегиями. Должно быть уникальным в рамках манифеста {{ TF }}.
+        * `database` — имя базы данных, на которую выдаются привилегии.
+        * `role` — имя пользователя, которому выдаются привилегии.
+        * `object_type` — тип {{ PG }}-объекта, на который выдаются привилегии. Возможные значения: `database`, `schema`, `table`, `sequence`, `function`, `procedure`, `routine`, `foreign_data_wrapper`, `foreign_server`, `column`.
+        * `privileges` — массив выдаваемых привилегий. Возможные значения: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `TRUNCATE`, `REFERENCES`, `TRIGGER`, `CREATE`, `CONNECT`, `TEMPORARY`, `EXECUTE` и `USAGE`. Описание привилегий см. в [документации {{ PG }}](https://www.postgresql.org/docs/current/ddl-priv.html).
+        * `schema` — схема, на которую выдаются привилегии. Нельзя задать, если выбран тип объекта `database`.
+        * (Опционально) `objects` — массив объектов, на которые выдаются привилегии. Если параметр не задан, привилегии будут выданы на все объекты указанного типа. Нельзя задать, если выбран тип объекта `database` или `schema`. Если выбран тип объекта `column`, массив может содержать только одно значение.
+        * `columns` — массив столбцов, на которые выдаются привилегии. Параметр обязателен, если выбран тип объекта `column`. Нельзя задать, если выбран любой другой тип объекта, кроме `column`.
+        * (Опционально) `with_grant_option` — если `true`, то пользователь с выданными привилегиями сможет выдавать эти привилегии другим пользователям. По умолчанию `false`.
+
+    1. Повторно инициализируйте {{ TF }}:
+
+        ```bash
+        terraform init
+        ```
+
+    1. Проверьте корректность настроек.
+  
+        {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
+  
+    1. Подтвердите изменение ресурсов.
+  
+        {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
+
+{% endlist %}
 
 ## Отозвать привилегию у пользователя {#revoke-privilege}
 
-1. [Подключитесь](connect.md) к базе данных с помощью учетной записи владельца базы данных.
-2. Выполните команду `REVOKE`. Подробное описание синтаксиса команды смотрите в [документации {{ PG }}](https://www.postgresql.org/docs/current/sql-revoke.html).
+{% list tabs %}
+
+- SQL
+
+    1. [Подключитесь](connect.md) к базе данных с помощью учетной записи владельца базы данных.
+    1. Выполните команду `REVOKE`. Подробное описание синтаксиса команды смотрите в [документации {{ PG }}](https://www.postgresql.org/docs/current/sql-revoke.html).
+
+- {{ TF }}
+
+    Если вы ранее выдали привилегию с использованием {{ TF }}:
+
+    1. Откройте конфигурационный файл {{ TF }} с планом инфраструктуры.
+    1. В блоке `postgresql_grant` удалите привилегию, которую хотите отозвать, из параметра `privileges`.
+
+        Чтобы отозвать все привилегии, оставьте массив `privileges` пустым или удалите ресурс `postgresql_grant` целиком.
+
+    1. Проверьте корректность настроек.
+  
+        {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
+  
+    1. Подтвердите изменение ресурсов.
+  
+        {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
+
+{% endlist %}
 
 {% include [user-ro](../../_includes/mdb/mpg-user-examples.md) %}

@@ -1,3 +1,8 @@
+---
+title: "Removing a function version tag"
+description: "Follow this guide to remove a function version tag."
+---
+
 # Removing a function version tag
 
 {% list tabs %}
@@ -17,10 +22,10 @@
    Result:
 
    ```
-   id: b09ch6pmpohfc9sogj5f
-   function_id: b097d9ous3gep99khe83
-   created_at: "2019-06-13T09:12:38.464Z"
-   runtime: python37
+   id: b09ch6pmpohf********
+   function_id: b097d9ous3ge********
+   created_at: "2023-08-22T09:12:38.464Z"
+   runtime: python311
    entrypoint: test.handler
    resources:
      memory: "134217728"
@@ -29,14 +34,14 @@
    status: ACTIVE
    tags:
    - beta
-   log_group_id: eolv6578frac08uh5h6s
+   log_group_id: eolv6578frac********
    ```
 
 - {{ TF }}
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To delete a version tag:
 
@@ -49,7 +54,7 @@
           name               = "test-function"
           description        = "Test function"
           user_hash          = "first-function"
-          runtime            = "python37"
+          runtime            = "python311"
           entrypoint         = "main"
           memory             = "128"
           execution_timeout  = "10"
@@ -81,7 +86,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -90,7 +95,7 @@
       ```
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-   You can verify that the tags have been deleted in the [management console]({{ link-console-main }}) or using this [CLI](../../../cli/quickstart.md) command:
+   You can check the deletion of the tags using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
 
    ```
    yc serverless function version list --function-name <function name>
@@ -100,8 +105,10 @@
 
    To remove a function version tag, use the [removeTag](../../functions/api-ref/Function/removeTag.md) REST API method for the [Function](../../functions/api-ref/Function/index.md) resource or the [FunctionService/RemoveTag](../../functions/api-ref/grpc/function_service.md#RemoveTag) gRPC API call.
 
+
 - {{ yandex-cloud }} Toolkit
 
    You can delete a tag using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the IDE family on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 {% endlist %}

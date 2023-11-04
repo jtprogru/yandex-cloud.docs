@@ -125,7 +125,7 @@ To prepare a container's Docker image:
 
    WORKDIR /app
    ADD index.go .
-   RUN go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o server-app *.go
+   RUN GOARCH=amd64 go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o server-app *.go
 
    FROM scratch
    COPY --from=build /app/server-app /server-app
@@ -150,7 +150,7 @@ To prepare a container's Docker image:
 After creating the container, you will get the invocation link. Here is how you can [retrieve it](../operations/invoke.md#link). Make an HTTPS request by sending an [IAM token](../../iam/concepts/authorization/iam-token.md) in the `Authorization` header:
 
 ```
-curl -H "Authorization: Bearer $(yc iam create-token)" https://bba3fva6ka5g********.containers.yandexcloud.net/hello
+curl -H "Authorization: Bearer $(yc iam create-token)" https://bba3fva6ka5g********.{{ serverless-containers-host }}/hello
 ```
 
 Result:

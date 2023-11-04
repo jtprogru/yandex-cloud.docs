@@ -24,8 +24,6 @@
         * исходящий и входящий трафик через порты `80` и `443` на любые IP-адреса для HTTP/HTTPS;
         * исходящий и входящий трафик через порт `6379` на IP-адреса внутренней сети для {{ RD }}.
 
-        {% include [preview-pp.md](../../_includes/preview-pp.md) %}
-
         Подробнее см. [{#T}](../../vpc/concepts/security-groups.md).
 
 
@@ -39,7 +37,7 @@
 
 - С помощью {{ TF }}
 
-    1. Если у вас еще нет {{ TF }}, [установите его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
     1. Скачайте в ту же рабочую директорию файл конфигурации для подходящего типа кластера:
 
@@ -57,7 +55,7 @@
     1. Укажите в файле конфигурации:
 
         * Пароль для доступа к кластеру {{ mrd-name }}.
-        * Идентификатор публичного [образа](../../compute/operations/images-with-pre-installed-software/get-list.md) LAMP/LEMP. Например, `fd832gltdaeepe0m2hi8` для LAMP.
+        * Идентификатор публичного [образа](../../compute/operations/images-with-pre-installed-software/get-list.md) LAMP/LEMP.
         * Логин и путь к файлу [открытого ключа](../../compute/operations/vm-connect/ssh.md#creating-ssh-keys), которые будут использоваться для доступа к виртуальной машине. По умолчанию в используемом образе указанный логин игнорируется, вместо него создается пользователь с логином `ubuntu`. Используйте его для подключения к виртуальной машине.
 
     1. Выполните команду `terraform init` в директории с конфигурационным файлом. Эта команда инициализирует провайдеров, указанных в конфигурационных файлах, и позволяет работать с ресурсами и источниками данных провайдера.
@@ -101,7 +99,7 @@
     * Станьте владельцем каталога `/var/www/html/` и удалите из него все содержимое:
 
         ```bash
-        sudo chown <имя пользователя> /var/www/html/ --recursive && \
+        sudo chown <имя_пользователя> /var/www/html/ --recursive && \
         rm /var/www/html/*
         ```
 
@@ -133,7 +131,7 @@
         ...
         [Session]
         session.save_handler = redis
-        session.save_path = "tcp://<FQDN хоста-мастера Redis>:6379?auth=<пароль>"
+        session.save_path = "tcp://<FQDN_хоста-мастера_{{ RD }}>:6379?auth=<пароль>"
         ```
 
       - Кластер {{ RD }} с шардированием
@@ -151,7 +149,7 @@
         Где `<FQDN1>`, `<FQDN2>` и `<FQDN3>` — полные доменные имена [хостов-мастеров кластера](../../managed-redis/operations/hosts.md#list). Например, для кластера из 3-х шардов с паролем `password` значение параметра `session.save_path` будет выглядеть так:
 
         ```ini
-        session.save_path = "seed[]=rc1a-t9h8gxqor5v6lcc3.{{ dns-zone }}:6379&seed[]=rc1b-7qxk0h3b8pupxsj9.{{ dns-zone }}:6379&seed[]=rc1c-spy1c1i4vwvj0n8z.{{ dns-zone }}:6379&auth=password"
+        session.save_path = "seed[]=rc1a-t9h8gxqo********.{{ dns-zone }}:6379&seed[]=rc1b-7qxk0h3b********.{{ dns-zone }}:6379&seed[]=rc1c-spy1c1i4********.{{ dns-zone }}:6379&auth=password"
         ```
 
     {% endlist %}
@@ -183,7 +181,7 @@
 1. Из ВМ подключитесь к кластеру {{ RD }} с помощью `redis-cli`:
 
     ```bash
-    redis-cli -c -h <FQDN хоста-мастера> -a <пароль>
+    redis-cli -c -h <FQDN_хоста-мастера> -a <пароль>
     ```
 
     Введите команду для просмотра хранящихся в {{ RD }} ключей:
@@ -214,15 +212,15 @@
     ```
 
     ```text
-    1) "PHPREDIS_SESSION:keb02haicgi0ijeju3ngqqnucq"
-    2) "PHPREDIS_SESSION:c5r0mbe1v84pn2b5kj1umun1sp"
+    1) "PHPREDIS_SESSION:keb02haicgi0ijeju3********"
+    2) "PHPREDIS_SESSION:c5r0mbe1v84pn2b5kj********"
     ```
 
     Как видно из результатов запроса, для каждой сессии в {{ RD }} создан свой ключ.
 
 ## Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 {% list tabs %}
 

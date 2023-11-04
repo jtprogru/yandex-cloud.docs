@@ -6,9 +6,9 @@ To connect to an API gateway via the WebSocket protocol:
 1. [Establish a connection](#connect).
 1. [Test the connection](#check).
 
-If you no longer need the created resources, [delete them](#clear-out).
+If you no longer need the resources you created, [delete them](#clear-out).
 
-## Before you begin {#before-you-begin}
+## Getting started {#before-you-begin}
 
 {% include [before-you-begin](../../_tutorials/_tutorials_includes/before-you-begin.md) %}
 
@@ -22,12 +22,12 @@ The cost of the resources includes charges for the number of API gateway request
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), select the folder where you wish to create an API gateway.
-   1. In the list of services, select **{{ api-gw-name }}**.
-   1. Click Create **API gateway**.
-   1. In the **Name** field, enter `websocket`.
-   1. (optional) In the **Description** field, enter a description.
-   1. In the **Specification** section, add a specification:
+   1. In the [management console]({{ link-console-main }}), select the folder where you want to create an API gateway.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_api-gateway }}**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.gateways.list.button_create }}**.
+   1. In the **{{ ui-key.yacloud.serverless-functions.gateways.form.field_name }}** field, enter `websocket`.
+   1. (Optional) In the **{{ ui-key.yacloud.serverless-functions.gateways.form.field_description }}** field, enter a description.
+   1. In the **{{ ui-key.yacloud.serverless-functions.gateways.form.field_spec }}** section, add a specification:
       ```yaml
       openapi: 3.0.0
       info:
@@ -60,7 +60,7 @@ The cost of the resources includes charges for the number of API gateway request
               content:
                 text/plain: '{"connection_id":"{X-Yc-Apigateway-Websocket-Connection-Id}"}'
       ```
-   1. Click **Create**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.gateways.form.button_create-gateway }}**.
 
 {% endlist %}
 
@@ -118,6 +118,6 @@ Open a new terminal window and test the connection using the returned connection
 
 {% endlist %}
 
-## How to delete created resources {#clear-out}
+## How to delete the resources you created {#clear-out}
 
 To stop paying for the resources created, delete the [API gateway](../operations/api-gw-delete.md).

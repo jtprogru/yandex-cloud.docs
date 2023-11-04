@@ -7,24 +7,23 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором создан балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
   1. Нажмите на имя нужного балансировщика.
-  1. Нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Редактировать**.
+  1. Нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.edit }}**.
   1. Измените параметры балансировщика.
-  1. В блоке **Обработчики** напротив нужного обработчика нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Редактировать**.
-  1. Измените параметры обработчика и нажмите **Сохранить**.
-  1. (Опционально) В блоке **Настройки логов**:
+  1. В блоке **{{ ui-key.yacloud.alb.label_listeners }}** измените параметры нужных обработчиков.
+  1. (Опционально) В блоке **{{ ui-key.yacloud.alb.section_logs-settings }}**:
   
       1. Измените [лог-группу](../../logging/concepts/log-group.md) {{ cloud-logging-name }}, в которую будут записываться логи балансировщика.
       1. Измените [правила отбрасывания логов](../concepts/application-load-balancer.md#discard-logs-rules):
 
-          * **HTTP-коды** — измените HTTP-коды.
-          * **Классы HTTP-кодов** — измените классы HTTP-кодов.
-          * **gRPC-коды** — измените gRPC-коды.
-          * **Доля отбрасываемых логов** — измените процент отбрасываемых логов.
+          * **{{ ui-key.yacloud.alb.label_discard-http-codes }}** — измените HTTP-коды.
+          * **{{ ui-key.yacloud.alb.label_discard-http-code-intervals }}** — измените классы HTTP-кодов.
+          * **{{ ui-key.yacloud.alb.label_discard-grpc-codes }}** — измените gRPC-коды.
+          * **{{ ui-key.yacloud.alb.label_discard-percent }}** — измените процент отбрасываемых логов.
 
-          Чтобы добавить еще одно правило, нажмите кнопку **Добавить правило отбрасывания логов**.
-  1. Внизу страницы нажмите кнопку **Сохранить**.
+          Чтобы добавить еще одно правило, нажмите кнопку **{{ ui-key.yacloud.alb.button_add-discard-rule }}**.
+  1. Внизу страницы нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -47,13 +46,13 @@
      Результат:
      
           
-     ```yaml
-     id: a5d88ep483cmbfm.....
+     ```bash
+     id: a5d88ep483cm********
      name: test-balancer2-updated
-     folder_id: aoe197919j8elpe.....
+     folder_id: aoe197919j8e********
      status: ACTIVE
      region_id: {{ region-id }}
-     network_id: c64l1c06d15178s.....
+     network_id: c64l1c06d151********
      listeners:
      - name: test-listener
        endpoints:
@@ -64,16 +63,16 @@
          - "80"
        http:
          handler:
-           http_router_id: a5dv7tjdo9gt2pq.....
+           http_router_id: a5dv7tjdo9gt********
      allocation_policy:
        locations:
        - zone_id: {{ region-id }}-a
-         subnet_id: buc4gsmpj8hvram.....
+         subnet_id: buc4gsmpj8hv********
        - zone_id: {{ region-id }}-b
-         subnet_id: blt6pcatjje62sq.....
+         subnet_id: blt6pcatjje6********
        - zone_id: {{ region-id }}-c
-         subnet_id: fo2ap2nrhjk9vpf.....
-     log_group_id: eolul9ap0bv02i8.....
+         subnet_id: fo2ap2nrhjk9********
+     log_group_id: eolul9ap0bv0********
      created_at: "2021-04-26T12:12:13.624832586Z"
      ```
      
@@ -105,14 +104,14 @@
 
           Результат:
 
-          ```yaml
+          ```bash
           done (42s)
-          id: ds76g2zpgp3fej1.....
+          id: ds76g2zpgp3f********
           name: test-load-balancer
-          folder_id: b1gug7dbelh690.....
+          folder_id: b1gug7dbelh********
           ...
           log_options:
-            log_group_id: e23p9bcvh6gra3t.....
+            log_group_id: e23p9bcvh6gr********
             discard_rules:
               - http_codes:
                   - "200"
@@ -161,13 +160,13 @@
 
      Результат обновления двух обработчиков:
 
-     ```yaml
+     ```bash
      done (42s)
-     id: ds76g8b2op3fej1.....
+     id: ds76g8b2op3f********
      name: test-load-balancer
-     folder_id: b1gu6g9ielh690a.....
+     folder_id: b1gu6g9ielh6********
      status: ACTIVE
-     network_id: enp0uulja5s3j1f.....
+     network_id: enp0uulja5s3********
      listeners:
      - name: tslistener
        endpoints:
@@ -178,7 +177,7 @@
          - "80"
        http:
          handler:
-           http_router_id: ds7d7b14b3fsv7q.....
+           http_router_id: ds7d7b14b3fs********
      - name: teststreamlistener
        endpoints:
        - addresses:
@@ -188,21 +187,21 @@
          - "443"
        stream:
          handler:
-           backend_group_id: ds77tero4f5h46l.....
+           backend_group_id: ds77tero4f5h********
      allocation_policy:
        locations:
        - zone_id: {{ region-id }}-a
-         subnet_id: e9bs1hp7lgdl1g3.....
+         subnet_id: e9bs1hp7lgdl********
        - zone_id: {{ region-id }}-b
-         subnet_id: e2le8i7hqa216f6.....
+         subnet_id: e2le8i7hqa21********
        - zone_id: {{ region-id }}-c
-         subnet_id: b0cgk1au6fn203f.....
-     log_group_id: ckgs4u5km3u8j9f.....
+         subnet_id: b0cgk1au6fn2********
+     log_group_id: ckgs4u5km3u8********
      security_group_ids:
-     - enp49ot04g63ih1.....
+     - enp49ot04g63********
      created_at: "2022-04-04T02:12:40.160629110Z"
      log_options:
-       log_group_id: e23p9bfjvsgra3t.....
+       log_group_id: e23p9bfjvsgr********
        discard_rules:
          - http_codes:
              - "200"
@@ -219,7 +218,7 @@
 
 - {{ TF }}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Откройте файл конфигурации {{ TF }} и измените фрагмент с описанием L7-балансировщика:
 
@@ -316,10 +315,10 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором создан балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
-  1. Напротив имени нужного балансировщика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Редактировать**.
-  1. В блоке **Обработчики** напротив имени нужного обработчика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Удалить**.
-  1. Нажмите **Сохранить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. Напротив имени нужного балансировщика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.edit }}**.
+  1. В блоке **{{ ui-key.yacloud.alb.label_listeners }}** напротив имени нужного обработчика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.delete }}**.
+  1. Нажмите **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -336,8 +335,8 @@
   1. Выполните команду:
 
      ```bash
-     yc alb load-balancer remove-listener <идентификатор или имя балансировщика> \
-       --listener-name=<имя обработчика>
+     yc alb load-balancer remove-listener <идентификатор_или_имя_балансировщика> \
+       --listener-name=<имя_обработчика>
      ```
 
      Результат:
@@ -348,7 +347,7 @@
 
 - {{ TF }}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Откройте файл конфигурации {{ TF }} и удалите блок `listener` в описании L7-балансировщика:
 
@@ -417,7 +416,7 @@
      Проверить изменение L7-балансировщика можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../cli/quickstart.md):
 
      ```bash
-     yc alb load-balancer get <имя L7-балансировщика>
+     yc alb load-balancer get <имя_L7-балансировщика>
      ```
 
 - API

@@ -1,3 +1,8 @@
+---
+title: "Getting information about a container"
+description: "Follow this guide to get information about a container."
+---
+
 # Getting information about a container
 
 {% list tabs %}
@@ -5,10 +10,10 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder with your container.
-   1. Select **{{ serverless-containers-name }}**.
-   1. On the left-hand panel, select **Containers**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
+   1. In the left-hand panel, select **{{ ui-key.yacloud.serverless-containers.label_containers }}**.
    1. Select the container.
-   1. The **Overview** page shows the container details.
+   1. The **{{ ui-key.yacloud.common.overview }}** page will show the container details.
 
 - CLI
 
@@ -29,7 +34,7 @@
    folder_id: b1gtmgn9gbvm********
    created_at: "2023-01-17T11:52:56.800Z"
    name: test
-   url: https://bba0hq6q1prb********.containers.yandexcloud.net/
+   url: https://bba0hq6q1prb********.{{ serverless-containers-host }}/
    status: ACTIVE
    ```
 

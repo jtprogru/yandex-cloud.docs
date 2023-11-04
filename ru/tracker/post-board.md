@@ -81,10 +81,10 @@ id | Идентификтор страны | Строка
 > POST /v2/boards/
 > Host: {{ host }}
 > Authorization: OAuth <токен>
-> X-Org-ID: <идентификатор организации>
+> X-Org-ID или X-Cloud-Org-ID: <идентификатор организации>
 >
 > {
->  "name" : "Testing",
+>  "name": "Testing",
 >  "boardType": "default",
 >  "defaultQueue": {
 >         "id": "111",
@@ -105,6 +105,11 @@ id | Идентификтор страны | Строка
 >      }
 > }
 > ```
+> {% note info %}
+>
+> Если у вас только организация {{ org-full-name }}, используйте заголовок `X-Cloud-Org-ID`, если только {{ ya-360 }} или оба типа организаций — `X-Org-ID`.
+>
+> {% endnote %}
 
 > Пример 2: Создать доску с названием `Testing`. Фильтр задать на языке запросов.
 >
@@ -114,10 +119,10 @@ id | Идентификтор страны | Строка
 > POST /v2/boards/
 > Host: {{ host }}
 > Authorization: OAuth <токен>
-> X-Org-ID: <идентификатор организации>
+> X-Org-ID или X-Cloud-Org-ID: <идентификатор организации>
 >
 > {
->  "name" : "Testing",
+>  "name": "Testing",
 >  "boardType": "default",
 >  "defaultQueue": {
 >         "id": "111",
@@ -143,16 +148,16 @@ id | Идентификтор страны | Строка
 
     ```json
     {
-      "self" : "{{ host }}/v2/boards/1",
-      "id" : 1,
-      "version" : 1,
-      "name" : "Тестирование", 
-      "columns" : 
+      "self": "{{ host }}/v2/boards/1",
+      "id": 1,
+      "version": 1,
+      "name": "Тестирование", 
+      "columns": 
       [ 
        {
-        "self" : "{{ host }}/v2/boards/1/columns/1387461731452",
-        "id" : "1387461731452",
-        "display" : "Открыт"
+        "self": "{{ host }}/v2/boards/1/columns/1387461731452",
+        "id": "1387461731452",
+        "display": "Открыт"
        },
         ...
       ],

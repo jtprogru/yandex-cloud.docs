@@ -9,6 +9,14 @@ When [creating](../index.md#create) or [editing](../index.md#update) an endpoint
 
 Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. Available only for clusters deployed in [{{ ydb-full-name }}](../../../../ydb/).
 
+
+{% note warning %}
+
+To create or edit an endpoint of a managed database, you need the [`ydb.viewer` role](../../../../ydb/security/index.md#ydb-viewer) or the primitive [`viewer` role](../../../../iam/concepts/access-control/roles.md#viewer) issued for the folder hosting a cluster of this managed database.
+
+{% endnote %}
+
+
 {% list tabs %}
 
 - Management console
@@ -50,6 +58,6 @@ Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. 
 
     * **{{ ui-key.yc-data-transfer.data-transfer.console.form.ydb.console.form.ydb.YdbTargetAdvancedSettings.path.title }}**: Specify the [subdirectory](https://ydb.tech/en/docs/concepts/datamodel/dir) to place tables in.
 
-        The table path you should get is `<path in Yandex Database>/<subdirectory>/<table>`.
+        The table path you should get is `<path_in_Yandex_Database>/<subdirectory>/<table>`.
 
 {% endlist %}

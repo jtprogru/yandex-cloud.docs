@@ -16,31 +16,34 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
         * Введите имя и описание триггера.
-        * В поле **Тип** выберите **Таймер**.
-        * В поле **Запускаемый ресурс** выберите **Функция**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_timer }}**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-    1. В блоке **Настройки таймера** укажите расписание вызова функции в формате [cron-выражения](../../concepts/trigger/timer.md#cron-expression).
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_timer }}**:
 
-    1. В блоке **Настройки функции** выберите функцию и укажите:
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_cron-expression }}** укажите расписание вызова функции в формате [cron-выражения](../../concepts/trigger/timer.md#cron-expression).
+        * (опционально) В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_cron-payload }}** укажите сообщение, которое будет передаваться в функцию при срабатывании таймера в поле `payload`. Тип данных — строка, длина которой не более 4096 символов.
+
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}** выберите функцию и укажите:
 
     	{% include [function-settings](../../../_includes/functions/function-settings.md) %}
 
-    1. (Опционально) В блоке **Настройки повторных запросов**:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
     	{% include [repeat-request.md](../../../_includes/functions/repeat-request.md) %}
 
-    1. (Опционально) В блоке **Настройки Dead Letter Queue** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -50,27 +53,32 @@
 
     Чтобы создать триггер, который вызывает функцию, выполните команду:
 
+    
     ```bash
     yc serverless trigger create timer \
-      --name <имя таймера> \
+      --name <имя_таймера> \
       --cron-expression '<cron-выражение>' \
-      --invoke-function-id <идентификатор функции> \
-      --invoke-function-service-account-id <идентификатор сервисного аккаунта> \
+      --payload <сообщение> \
+      --invoke-function-id <идентификатор_функции> \
+      --invoke-function-service-account-id <идентификатор_сервисного_аккаунта> \
       --retry-attempts 1 \
       --retry-interval 10s \
-      --dlq-queue-id <идентификатор очереди Dead Letter Queue> \
-      --dlq-service-account-id <идентификатор сервисного аккаунта>
+      --dlq-queue-id <идентификатор_очереди_Dead_Letter_Queue> \
+      --dlq-service-account-id <идентификатор_сервисного_аккаунта>
     ```
+  
 
     Где:
 
     * `--name` — имя таймера.
     * `--cron-expression` — расписание вызова функции в формате [cron-выражения](../../concepts/trigger/timer.md#cron-expression).
+    * `--payload` — сообщение, которое будет передаваться в функцию при срабатывании таймера. Длина строки должна быть не более 4096 символов.
     
     {% include [trigger-cli-param](../../../_includes/functions/trigger-cli-param.md) %}
 
     Результат:
 
+    
     ```text
     id: a1sfe084v4**********
     folder_id: b1g88tflru**********
@@ -79,6 +87,7 @@
     rule:
       timer:
         cron_expression: 5 12 * * ? *
+        payload: <сообщение>
         invoke_function_with_retry:
           function_id: d4eofc7n0m**********
           function_tag: $latest
@@ -91,12 +100,13 @@
             service-account-id: aje3932acd**********
     status: ACTIVE
     ```
+  
 
 - {{ TF }}
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы создать триггер, который запускает функцию:
 
@@ -109,6 +119,7 @@
      * `description` — описание триггера.
      * `timer` — настройки триггера:
        * `cron_expression` — расписание вызова функции в формате [cron-выражения](../../concepts/trigger/timer.md#cron-expression).
+       * `payload` — сообщение, которое будет передаваться в функцию при срабатывании таймера. Длина строки должна быть не более 4096 символов.
      * `function` — настройки функции, которую будет запускать триггер:
        * `id` — идентификатор функции.
 
@@ -116,13 +127,14 @@
 
      ```hcl
      resource "yandex_function_trigger" "my_trigger" {
-       name        = "<имя таймера>"
-       description = "<описание триггера>"
+       name        = "<имя_таймера>"
+       description = "<описание_триггера>"
        timer {
          cron_expression = "* * * * ? *"
+         payload         = "<сообщение>"
        }
        function {
-         id = "<идентификатор функции>"
+         id = "<идентификатор_функции>"
        }
      }
      ```
@@ -153,7 +165,7 @@
         После этого в указанном каталоге будут созданы все требуемые ресурсы. Проверить появление ресурсов и их настройки можно в [консоли управления]({{ link-console-main }}) или с помощью команд [CLI](../../../cli/quickstart.md):
 
         ```
-        yc serverless trigger get <идентификатор триггера>
+        yc serverless trigger get <идентификатор_триггера>
         ```
 
 - API

@@ -1,6 +1,18 @@
+---
+title: "How to connect to a Linux VM via SSH"
+description: "Using this guide, you can connect to a VM with an SSH key pair: the public key is placed on the VM and the private key is stored on the user device."
+---
+
 # Connecting to a Linux VM via SSH
 
-The recommended method for connecting to a [VM](../../concepts/vm.md) over SSH is based on using a key pair: the public key is placed on the VM and the private key is stored on the user's device. Connecting with a key pair is more secure than doing so with a username and password.
+The recommended method for connecting to a [VM](../../concepts/vm.md) over SSH uses a key pair: the public key is placed on the VM and the private key is stored on the user device. To enable another user to connect to your VM, add an SSH key for them by following this [guide](#vm-authorized-keys). Connecting with a key pair is more secure than doing so with a username and password.
+
+{% note info %}
+
+You cannot use an SSH key pair to connect to a VM with [access via OS Login](./os-login.md) enabled. However, it is recommended to always specify SSH keys when creating a VM: this way, you can [connect to a VM via SSH](#vm-connect) if you disable OS Login access for it.
+
+{% endnote %}
+
 
 ## Creating an SSH key pair {#creating-ssh-keys}
 
@@ -92,8 +104,6 @@ To connect, you can use the `ssh` utility on Linux/macOS/Windows 10 and [PuTTY](
 
 VM [security groups](../../../vpc/concepts/security-groups.md) must allow incoming TCP traffic to port 22.
 
-{% include [security-groups-note-vm](../../../_includes/vpc/security-groups-note-vm.md) %}
-
 To connect, specify the VM's [public IP address](../../../vpc/concepts/address.md#public-addresses). You can find out the public IP address in the management console. On the VM's page, go to the **{{ ui-key.yacloud.compute.instance.overview.section_network }}** section and find the **{{ ui-key.yacloud.compute.instance.overview.label_public-ipv4 }}** field. If you created a VM with an internal IP address only, [bind it to a public IP address](../vm-control/vm-attach-public-ip.md).
 
 You can also use the [internal IP addresses](../../../vpc/concepts/address.md#internal-addresses) and [FQDNs](../../../vpc/concepts/address.md#fqdn) to establish an SSH connection between the VMs on a single [cloud network](../../../vpc/concepts/network.md#network) in {{ yandex-cloud }}.
@@ -119,7 +129,7 @@ You can also use the [internal IP addresses](../../../vpc/concepts/address.md#in
    If this is the first time you connect to a VM, you will see a warning about an unknown host:
 
    ```text
-   The authenticity of host '130.193.40.101 (130.193.40.101)' can't be established.
+   The authenticity of host '130.193.40.101 (130.193.40.101)' cannot be established.
    ECDSA key fingerprint is SHA256:PoaSwqxRc8g6iOXtiH7ayGHpSN0MXwUfWHkGgpLELJ8.
    Are you sure you want to continue connecting (yes/no)?
    ```
@@ -147,7 +157,7 @@ You can also use the [internal IP addresses](../../../vpc/concepts/address.md#in
    If this is the first time you connect to a VM, you will see a warning about an unknown host:
 
    ```text
-   The authenticity of host '130.193.40.101 (130.193.40.101)' can't be established.
+   The authenticity of host '130.193.40.101 (130.193.40.101)' cannot be established.
    ECDSA key fingerprint is SHA256:PoaSwqxRc8g6iOXtiH7ayGHpSN0MXwUfWHkGgpLELJ8.
    Are you sure you want to continue connecting (yes/no)?
    ```

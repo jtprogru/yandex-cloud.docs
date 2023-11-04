@@ -4,3 +4,8 @@
 * [Устранение ошибок при назначении роли resource-manager.clouds.owner пользователю облака](resource-manager_clouds_owner-is-only-applicable-to-resources-of-type-resource-manager_cloud.md)
 * [Устранение ошибок при работе с приглашениями в облачную организацию](error-when-users-accepts-invite-to-organisation.md)
 * [Устранение ошибки The signature of response or assertion was invalid при авторизации федеративным аккаунтом](error-the-signature-of-response-or-assertion-was-invalid-when-using-federatadion-login.md)
+* [Устранение проблем при переносе облака между разными организациями](move-org-public-access-bindings-error.md)
+* [Устранение проблем при создании OAuth-токенов от имени учетных записей Яндекс ID](unauthorised-client-issue.md)
+* [Устранение ошибки OAuth token is invalid or expired](error-oauth-token-is-invalid-or-expired.md)
+* [Устранение ошибки Обратитесь к администратору организации за новым приглашением](invitation-already-accepted.md)
+* [Устранение ошибки Service account is not available](service-account-is-not-available.md)

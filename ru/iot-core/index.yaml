@@ -6,10 +6,14 @@ description:
     облачными ресурсами.
 meta:
   title: Yandex IoT Core
+  description: >-
+    Yandex IoT Core — это облачный отказоустойчивый MQTT-сервер, позволяющий
+    наладить двустороннюю защищенную связь между устройствами и локальными или
+    облачными ресурсами.
 links:
   - title: Начало работы
-    description: Создайте первый реестр и добавьте в него устройство
-    href: quickstart
+    description: Создайте первый реестр устройств или брокер
+    href: quickstart-overview
   - title: Пошаговые инструкции
     description: Инструкции по выполнению рутинных операций
     href: operations/

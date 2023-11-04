@@ -33,7 +33,6 @@ Syntax:
 	- [yc compute instance start](instance/start.md) — Start the specified virtual machine instance
 	- [yc compute instance restart](instance/restart.md) — Restart the specified virtual machine instance
 	- [yc compute instance attach-disk](instance/attach-disk.md) — Attach existing disk to the specified virtual machine instance
-	- [yc compute instance attach-new-disk](instance/attach-new-disk.md) — Attach new disk to the specified virtual machine instance
 	- [yc compute instance detach-disk](instance/detach-disk.md) — Detach disk from the specified virtual machine instance
 	- [yc compute instance attach-filesystem](instance/attach-filesystem.md) — Attach existing filesystem to the specified virtual machine instance
 	- [yc compute instance detach-filesystem](instance/detach-filesystem.md) — Detach filesystem from the specified virtual machine instance
@@ -41,6 +40,7 @@ Syntax:
 	- [yc compute instance add-one-to-one-nat](instance/add-one-to-one-nat.md) — Add one-to-one NAT to the specified network interface of virtual machine instance
 	- [yc compute instance remove-one-to-one-nat](instance/remove-one-to-one-nat.md) — Remove one-to-one NAT to the specified network interface of virtual machine instance
 	- [yc compute instance move](instance/move.md) — Move the specified virtual machine instance into the folder
+	- [yc compute instance relocate](instance/relocate.md) — Relocate the specified virtual machine instance to the zone
 	- [yc compute instance list-operations](instance/list-operations.md) — List operations for the specified instance
 - [yc compute disk](disk/index.md) — Manage disks
 	- [yc compute disk get](disk/get.md) — Show information about the specified disk
@@ -52,6 +52,7 @@ Syntax:
 	- [yc compute disk resize](disk/resize.md) — Resize the specified disk
 	- [yc compute disk delete](disk/delete.md) — Delete the specified disk
 	- [yc compute disk move](disk/move.md) — Move the specified disk into the folder
+	- [yc compute disk relocate](disk/relocate.md) — Relocate the specified disk to the zone
 	- [yc compute disk list-operations](disk/list-operations.md) — List operations for the specified disk
 - [yc compute disk-type](disk-type/index.md) — Show available disk types
 	- [yc compute disk-type get](disk-type/get.md) — Show information about the specified disk type
@@ -114,6 +115,8 @@ Syntax:
 	- [yc compute instance-group set-access-bindings](instance-group/set-access-bindings.md) — Set access bindings for the specified instance group and delete all existing access bindings if there were any
 	- [yc compute instance-group add-access-binding](instance-group/add-access-binding.md) — Add access binding for the specified instance group
 	- [yc compute instance-group remove-access-binding](instance-group/remove-access-binding.md) — Remove access binding for the specified instance group
+	- [yc compute instance-group rolling-restart](instance-group/rolling-restart.md) — Restart instances of the specified instance group respecting policies
+	- [yc compute instance-group rolling-recreate](instance-group/rolling-recreate.md) — Recreate instances of the specified instance group respecting policies
 - [yc compute placement-group](placement-group/index.md) — Manage placement groups
 	- [yc compute placement-group get](placement-group/get.md) — Show information about the specified placement group
 	- [yc compute placement-group list](placement-group/list.md) — List placement groups
@@ -136,6 +139,7 @@ Syntax:
 	- [yc compute host-group remove-labels](host-group/remove-labels.md) — Remove labels from the specified host group
 	- [yc compute host-group delete](host-group/delete.md) — Delete the specified host group
 	- [yc compute host-group list-hosts](host-group/list-hosts.md) — List hosts of the specified host group
+	- [yc compute host-group update-host](host-group/update-host.md) — Update host of the specified host group
 	- [yc compute host-group list-instances](host-group/list-instances.md) — List instances of the specified host group
 	- [yc compute host-group list-operations](host-group/list-operations.md) — List operations for the specified host group
 - [yc compute disk-placement-group](disk-placement-group/index.md) — Manage disk placement groups
@@ -168,6 +172,7 @@ Syntax:
 	- [yc compute gpu-cluster delete](gpu-cluster/delete.md) — Delete the specified GPU cluster
 	- [yc compute gpu-cluster list-operations](gpu-cluster/list-operations.md) — List operations for the specified GPU cluster
 	- [yc compute gpu-cluster list-instances](gpu-cluster/list-instances.md) — List instances created in the specified GPU cluster
+- [yc compute ssh](ssh/index.md) — Connect to instance
 
 #### Global Flags
 

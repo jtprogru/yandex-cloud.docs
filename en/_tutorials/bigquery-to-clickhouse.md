@@ -17,9 +17,9 @@ To migrate the database from Google BigQuery to {{ mch-name }}:
 1. [Set up the mapping of data from {{ objstorage-full-name }} to the {{ mch-name }} cluster](#create-view).
 1. [Analyze the data with {{ datalens-full-name }}](#datalens).
 
-If you no longer need these resources, [delete them](#clear-out).
+If you no longer need the resources you created, [delete them](#clear-out).
 
-## Before you begin
+## Getting started {#before-you-begin}
 
 To migrate your database, create Google Cloud and {{ yandex-cloud }} resources.
 
@@ -54,7 +54,7 @@ To migrate your database, create Google Cloud and {{ yandex-cloud }} resources.
 1. [Create a {{ mch-name }} cluster](../managed-clickhouse/operations/cluster-create.md) with any suitable configuration. When creating a cluster:
 
    * Use the service account you created earlier.
-   * Enable **DataLens access**.
+   * Enable the **{{ ui-key.yacloud.mdb.cluster.overview.label_access-datalens }}** parameter.
 
 1. [Use Zookeeper to enable fault-tolerance](../managed-clickhouse/operations/zk-hosts.md).
 
@@ -81,7 +81,7 @@ To migrate your database, create Google Cloud and {{ yandex-cloud }} resources.
 
    Where:
 
-   * `<Google Cloud service account>`:[Name of the Google Cloud service account](https://cloud.google.com/iam/docs/service-account-overview) in the format: `service-account-name@project-id.iam.gserviceaccount.com`.
+   * `<Google Cloud service account>`: [Name of the Google Cloud service account](service-account-name@project-id.iam.gserviceaccount.com), such as `service-account-name@project-id.iam.gserviceaccount.com`.
    * `<ID of the Google Cloud project>`: [Project ID in Google Cloud](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects).
 
 1. Create a `main.py` script file for data compression and migration:
@@ -247,7 +247,7 @@ The system will analyze the usage of this query in the search system, and the re
 
 ## Delete the resources you created {#clear-out}
 
-Delete the resources you no longer need to avoid paying for them:
+Delete the resources you no longer need to avoid being charged for them:
 
 1. [Delete the {{ mch-name }} cluster](../managed-clickhouse/operations/cluster-delete.md).
 1. [Delete all objects from the {{ objstorage-name }} bucket](../storage/operations/objects/delete-all.md), then [delete the bucket](../storage/operations/buckets/delete.md).

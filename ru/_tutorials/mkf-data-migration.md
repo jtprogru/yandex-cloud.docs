@@ -20,7 +20,6 @@
 * Вручную
 
     1. Подготовьте кластер-приемник:
-        * Включите [управление топиками](../managed-kafka/concepts/topics.md#management) через Admin API.
         * Создайте [пользователя-администратора](../managed-kafka/operations/cluster-accounts.md#create-account) с именем `admin-cloud`.
         * Включите настройку [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics).
         * Настройте [группы безопасности](../managed-kafka/operations/connect.md#configuring-security-groups), если это требуется для подключения к кластеру-приемнику.
@@ -29,26 +28,26 @@
     1. Убедитесь, что настройки сети, в которой размещен кластер-источник, разрешают подключение к нему из интернета.
     1. [Создайте для кластера-приемника коннектор](../managed-kafka/operations/cluster-connector.md#create-connector) с типом `MirrorMaker` и настройками:
 
-        * **Топики** — список топиков, которые нужно перенести. Также можно указать регулярное выражение для выбора топиков. Для переноса всех топиков укажите `.*`.
-        * В блоке **Кластер-источник** укажите параметры для подключения к кластеру-источнику:
-          * **Псевдоним** — префикс для обозначения кластера-источника в настройках коннектора. По умолчанию `source`. Топики в кластере-приемнике будут созданы с указанным префиксом.  
-          * **Бутстрап-серверы** — разделенный запятыми список FQDN хостов-брокеров кластера-источника с номерами портов, например:
+        * **{{ ui-key.yacloud.kafka.field_connector-config-mirror-maker-topics }}** — список топиков, которые нужно перенести. Также можно указать регулярное выражение для выбора топиков. Для переноса всех топиков укажите `.*`.
+        * В блоке **{{ ui-key.yacloud.kafka.field_connector-config-mirror-maker-source-cluster }}** укажите параметры для подключения к кластеру-источнику:
+          * **{{ ui-key.yacloud.kafka.field_connector-alias }}** — префикс для обозначения кластера-источника в настройках коннектора. По умолчанию `source`. Топики в кластере-приемнике будут созданы с указанным префиксом.  
+          * **{{ ui-key.yacloud.kafka.field_connector-bootstrap-servers }}** — разделенный запятыми список FQDN хостов-брокеров кластера-источника с номерами портов, например:
 
               ```text
               FQDN1:9091,FQDN2:9091,...,FQDN:9091
               ```
 
-          * **SASL имя пользователя**, **SASL пароль** — имя и пароль созданного ранее пользователя `admin-source`.
-          * **SASL механизм** — механизм шифрования имени и пароля `SCRAM-SHA-512`.
-          * **Протокол безопасности** — выберите протокол подключения коннектора:
+          * **{{ ui-key.yacloud.kafka.field_connector-sasl-username }}**, **{{ ui-key.yacloud.kafka.field_connector-sasl-password }}** — имя и пароль созданного ранее пользователя `admin-source`.
+          * **{{ ui-key.yacloud.kafka.field_connector-sasl-mechanism }}** — механизм шифрования имени и пароля `SCRAM-SHA-512`.
+          * **{{ ui-key.yacloud.kafka.field_connector-security-protocol }}** — выберите протокол подключения коннектора:
             * `SASL_PLAINTEXT` — если к кластеру-источнику подключаются без SSL;
             * `SASL_SSL` – если к кластеру-источнику подключаются с SSL.
 
-        * В блоке **Кластер-приемник** выберите опцию **Использовать этот кластер**.
+        * В блоке **{{ ui-key.yacloud.kafka.field_connector-config-mirror-maker-target-cluster }}** выберите опцию **{{ ui-key.yacloud.kafka.label_connector-this-cluster }}**.
 
 * С помощью {{ TF }}
 
-    1. Если у вас еще нет {{ TF }}, [установите его](../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
     1. Скачайте в ту же рабочую директорию файл конфигурации [kafka-mirrormaker-connector.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/kafka-connectors/kafka-mirrormaker-connector.tf).
 
@@ -57,7 +56,7 @@
         * сеть;
         * подсеть;
         * группа безопасности по умолчанию и правила, необходимые для подключения к кластеру из интернета;
-        * кластер {{ mkf-name }} с [управлением топиками](../managed-kafka/concepts/topics#management) через Admin API, с [пользователем-администратором](../managed-kafka/operations/cluster-accounts.md#create-account) `admin-cloud` и с включенной настройкой [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics);
+        * кластер {{ mkf-name }} с [пользователем-администратором](../managed-kafka/operations/cluster-accounts.md#create-account) `admin-cloud` и с включенной настройкой [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics);
         * MirrorMaker-коннектор.
 
     1. Укажите в файле `kafka-mirrormaker-connector.tf`:
@@ -109,7 +108,6 @@
 
     1. [Создайте кластер-приемник {{ mkf-name }}](../managed-kafka/operations/cluster-create.md):
 
-        * С включенным [управлением топиками](../managed-kafka/concepts/topics#management) через Admin API.
         * С [пользователем-администратором](../managed-kafka/operations/cluster-accounts.md#create-account) `admin-cloud`.
         * С включенной настройкой [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics).
 
@@ -117,7 +115,7 @@
 
 - С помощью {{ TF }}
 
-    1. Если у вас еще нет {{ TF }}, [установите его](../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
     1. Скачайте в ту же рабочую директорию файл конфигурации [kafka-mirror-maker.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/kafka-mirror-maker.tf).
 
@@ -126,7 +124,7 @@
         * сеть;
         * подсеть;
         * группа безопасности по умолчанию и правила, необходимые для подключения к кластеру и виртуальной машине из интернета;
-        * кластер {{ mkf-name }} с включенным [управлением топиками](../managed-kafka/concepts/topics#management) через Admin API, с [пользователем-администратором](../managed-kafka/operations/cluster-accounts.md#create-account) `admin-cloud` и с включенной настройкой [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics);
+        * кластер {{ mkf-name }} с [пользователем-администратором](../managed-kafka/operations/cluster-accounts.md#create-account) `admin-cloud` и с включенной настройкой [Auto create topics enable](../managed-kafka/concepts/settings-list.md#settings-auto-create-topics);
         * виртуальная машина с публичным доступом из интернета.
 
     1. Укажите в файле `kafka-mirror-maker.tf`:
@@ -188,16 +186,16 @@
 1. В домашней директории создайте каталог `mirror-maker` для хранения сертификатов Java Keystore и конфигураций MirrorMaker:
 
    ```bash
-   mkdir --parents /home/<домашняя директория>/mirror-maker
+   mkdir --parents /home/<домашняя_директория>/mirror-maker
    ```
 
-1. Выберите пароль для хранилища сертификатов, создайте хранилище и добавьте в него SSL-сертификат для подключения к кластеру:
+1. Выберите пароль для хранилища сертификатов не короче 6 символов, создайте хранилище и добавьте в него SSL-сертификат для подключения к кластеру:
 
    ```bash
    sudo keytool --noprompt -importcert -alias {{ crt-alias }} \
       -file {{ crt-local-dir }}{{ crt-local-file }} \
-      -keystore /home/<домашняя директория>/mirror-maker/keystore \
-      -storepass <пароль хранилища сертификатов, не короче 6 символов>
+      -keystore /home/<домашняя_директория>/mirror-maker/keystore \
+      -storepass <пароль_хранилища_сертификатов>
    ```
 
 1. Создайте в каталоге `mirror-maker` файл конфигурации MirrorMaker `mm2.properties`:
@@ -205,8 +203,8 @@
    ```text
    # Kafka clusters
    clusters=cloud, source
-   source.bootstrap.servers=<FQDN брокера кластера-источника>:9092
-   cloud.bootstrap.servers=<FQDN брокера 1 кластера-приемника>:9091, ..., <FQDN брокера N кластера-приемника>:9091
+   source.bootstrap.servers=<FQDN_брокера_кластера-источника>:9092
+   cloud.bootstrap.servers=<FQDN_брокера_1_кластера-приемника>:9091, ..., <FQDN_брокера_N_кластера-приемника>:9091
 
    # Source and target cluster settings
    source->cloud.enabled=true
@@ -258,8 +256,8 @@
    cloud.client.id=mm2_producer_test
    cloud.group.id=mm2_producer_group
    cloud.ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1
-   cloud.ssl.truststore.location=/home/<домашняя директория>/mirror-maker/keystore
-   cloud.ssl.truststore.password=<пароль хранилища сертификатов>
+   cloud.ssl.truststore.location=/home/<домашняя_директория>/mirror-maker/keystore
+   cloud.ssl.truststore.password=<пароль_хранилища_сертификатов>
    cloud.ssl.protocol=TLS
    cloud.security.protocol=SASL_SSL
    cloud.sasl.mechanism=SCRAM-SHA-512
@@ -286,7 +284,7 @@
 Запустите MirrorMaker на ВМ командой:
 
 ```bash
-<путь установки Kafka>/bin/connect-mirror-maker.sh /home/<домашняя директория>/mirror-maker/mm2.properties
+<путь_установки_Apache_Kafka>/bin/connect-mirror-maker.sh /home/<домашняя_директория>/mirror-maker/mm2.properties
 ```
 
 ### Проверьте наличие данных в топике кластера-приемника {#check-data-mkf}
@@ -297,7 +295,7 @@
 
 ### Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 {% list tabs %}
 

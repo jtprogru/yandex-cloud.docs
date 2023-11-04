@@ -7,9 +7,9 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором создан балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
   1. Нажмите на имя нужного балансировщика.
-  1. В блоке **Настройка логов** в поле **Лог-группа {{ cloud-logging-name }}** нажмите на имя лог-группы. 
+  1. В блоке **{{ ui-key.yacloud.alb.section_logs-settings }}** в поле **{{ ui-key.yacloud.alb.label_log-group }}** нажмите на имя лог-группы. 
 
 - CLI
 
@@ -31,25 +31,25 @@
 
       Результат:
 
-      ```yaml
-      id: a5d88ep483cmbfm.....
+      ```bash
+      id: a5d88ep483cm********
       name: test-balancer2
-      folder_id: aoe197919j8elpe.....
+      folder_id: aoe197919j8e********
       status: ACTIVE
       region_id: {{ region-id }}
-      network_id: c64l1c06d15178s.....
+      network_id: c64l1c06d151********
       allocation_policy:
         locations:
         - zone_id: {{ region-id }}-a
-          subnet_id: buc4gsmpj8hvram.....
+          subnet_id: buc4gsmpj8hv********
         - zone_id: {{ region-id }}-b
-          subnet_id: blt6pcatjje62sq.....
+          subnet_id: blt6pcatjje6********
         - zone_id: {{ region-id }}-c
-          subnet_id: fo2ap2nrhjk9vpf.....
-      log_group_id: eolul9ap0bv02i8.....
+          subnet_id: fo2ap2nrhjk9********
+      log_group_id: eolul9ap0bv0********
       created_at: "2021-04-26T12:12:13.624832586Z"
       log_options:
-        log_group_id: e23ujjda632o4h6.....
+        log_group_id: e23ujjda632o********
       ```
 
       Идентификатор лог-группы {{ cloud-logging-name }} будет указан в блоке `log_options` в поле `log_group_id`. Обратите внимание, поле `log_group_id`, приведенное после `subnet_id`, содержит другой идентификатор, который относится к устаревшему сервису логирования.
@@ -62,14 +62,14 @@
 
 {% endlist %}
 
-Если при создании L7-балансировщика в поле **Лог-группа {{ cloud-logging-name }}** вы оставили значение **Лог-группа по умолчанию**, чтобы узнать ее идентификатор:
+Если при создании L7-балансировщика в поле **{{ ui-key.yacloud.alb.label_log-group }}** вы оставили значение **{{ ui-key.yacloud.alb.label_default-log-group }}**, чтобы узнать ее идентификатор:
 
 {% list tabs %}
 
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором создан балансировщик.
-  1. Выберите сервис **{{ cloud-logging-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_logging }}**.
   1. Сохраните идентификатор лог-группы с именем `default`.
 
 - CLI
@@ -92,10 +92,10 @@
 
   Результат:
 
-  ```yaml
-  id: e23qfbb01na0tq7.....
-  folder_id: b1gvgqhc57450av.....
-  cloud_id: b1g3clmedscm7ui.....
+  ```bash
+  id: e23qfbb01na0********
+  folder_id: b1gvgqhc5745********
+  cloud_id: b1g3clmedscm********
   created_at: "2021-08-07T10:40:55.412Z"
   name: default
   description: Auto-created default group

@@ -6,15 +6,15 @@ To get started with {{ datalens-short-name }}:
 
 - New user
 
-   1. [Log in]({{ link-passport-login }}) to your Yandex account. If you don't have an account, [create](https://yandex.ru/support/passport/authorization/registration.html) one.
-   1. Open the {{ datalens-short-name }} [homepage]({{ link-datalens-main }}).
+   1. [Log in]({{ link-passport-login }}) to your Yandex account. If you do not have an account, [create](https://yandex.ru/support/passport/authorization/registration.html) one.
+   1. Open the {{ datalens-short-name }} [home page]({{ link-datalens-main }}).
    1. Click **Open Datalens**.
    1. Click **Log in**.
 
 - I'm already using {{ yandex-cloud }}
 
    1. [Log in]({{ link-passport-login }}) to your Yandex account.
-   1. Open the {{ datalens-short-name }} [homepage]({{ link-datalens-main }}).
+   1. Open the {{ datalens-short-name }} [home page]({{ link-datalens-main }}).
    1. Click **Open Datalens**.
    1. Select one of the options:
 
@@ -22,11 +22,11 @@ To get started with {{ datalens-short-name }}:
 
          {% note info %}
 
-         To activate a {{ datalens-short-name }} instance, the user must have the `admin` or `owner` role. For more information about roles, see [{#T}](../../organization/roles.md).
+         To activate a {{ datalens-short-name }} instance, the user must have the `admin` or `owner` role. For more information about roles, see [{#T}](../../organization/security/index.md).
 
          {% endnote %}
 
-      * If you have a cloud but no organization, click **Add new DataLens**. In the window that opens, enter your organization's name and description and click **Create organization and DataLens**. For more information about working with organizations, see [Getting started with organizations](../../organization/quick-start.md).
+      * If you have a cloud but no organization, click **Add new DataLens**. In the window that opens, enter your organization's name and description and click **Create organization and DataLens**. For more information about working with organizations, see [Getting started with organizations](../../organization/quickstart.md).
 
 {% endlist %}
 

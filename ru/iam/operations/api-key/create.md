@@ -14,6 +14,8 @@
 
 - CLI
 
+  {% include [cli-install](../../../_includes/cli-install.md) %}
+
   {% include [default-catalogue](../../../_includes/default-catalogue.md) %}
 
   1. Посмотрите описание команды создания API-ключа:
@@ -35,7 +37,7 @@
       |          ID          |       NAME       |          DESCRIPTION          |
       +----------------------+------------------+-------------------------------+
       | aje6o61dvog2******** | my-robot         |                               |
-      | aje9sda1ufvq******** | blabla           | bla bla bla is my description |
+      | aje9sda1ufvq******** | account_name     | account_description           |
       +----------------------+------------------+-------------------------------+
       ```
 
@@ -75,7 +77,7 @@
 
 - {{ TF }}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     1. Добавьте в конфигурационный файл параметры ресурса:
 

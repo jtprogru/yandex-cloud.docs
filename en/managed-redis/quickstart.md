@@ -14,7 +14,7 @@ To get started with the service:
 
 1. If no public access is set up for a cluster, it can only be connected to from inside {{ yandex-cloud }}. To connect to a cluster, create a VM in the same cloud network as the {{ RD }} cluster (with [Linux](../compute/quickstart/quick-create-linux.md)).
 1. [Connect](../compute/operations/vm-connect/ssh.md) to the VM via SSH.
-1. Install the [redis-cli](https://redis.io/topics/rediscli) utility on the VM. For example (for Ubuntu 20.04 LTS):
+1. Install the [redis-cli](https://redis.io/topics/rediscli) utility on the VM. For example (for [Ubuntu 20.04 LTS](/marketplace/products/yc/ubuntu-20-04-lts)):
 
    ```bash
    sudo apt install redis-tools
@@ -27,18 +27,16 @@ To get started with the service:
 1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
 1. Click **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
 1. Set the cluster parameters and click **{{ ui-key.yacloud.mdb.forms.button_create }}**. This process is described in detail in [{#T}](operations/cluster-create.md).
-1. Wait until the cluster is ready: its status on the {{ mrd-name }} dashboard changes to **Running** and its state to **Alive**. This may take some time.
+1. Wait until the cluster is ready: its status on the {{ mrd-name }} dashboard will change to **Running** and its state to **Alive**. This may take some time.
 
 ## Connect to the cluster {#connect}
 
-1. If TLS support is enabled in your cluster, set up an SSL certificate:
+1. If TLS support is enabled in your cluster, get an SSL certificate:
 
    {% include [install-certificate](../_includes/mdb/mrd/install-certificate.md) %}
 
 
 1. If you are using security groups for a cloud network, [configure them](operations/connect/index.md#configuring-security-groups) to enable all relevant traffic between the cluster and the connecting host.
-
-   {% include [preview-pp.md](../_includes/preview-pp.md) %}
 
 
 1. Connect to the cluster using `redis-cli`.

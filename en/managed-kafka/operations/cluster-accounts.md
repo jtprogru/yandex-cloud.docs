@@ -4,7 +4,7 @@ Users in {{ KF }}:
 * Keep the access permissions of data [producers and consumers](../concepts/producers-consumers.md) separate.
 
    A producer or consumer can only access [topics](../concepts/topics.md) that are allowed for their users. You can use the same user for multiple producers or consumers: the former get the rights to write data to certain topics and the latter get the read rights.
-* [Manage topics](cluster-topics.md#admin-api) if you enabled the **Manage topics via the API** setting when [creating a cluster](cluster-create.md). For more information, see [{#T}](../concepts/topics.md).
+* [Manage topics](cluster-topics.md#admin-api). For more information, see [{#T}](../concepts/topics.md).
 
 After [creating an {{ KF }} cluster](cluster-create.md), you can:
 * [{#T}](#create-user).
@@ -19,7 +19,7 @@ After [creating an {{ KF }} cluster](cluster-create.md), you can:
 
 {% note info %}
 
-If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the CLI, API, or {{ TF }} to create an admin user.
+To create an administrator user, use the command-line interface, API, or {{ TF }}.
 
 {% endnote %}
 
@@ -28,16 +28,16 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
 - Management console
 
    To create a user for a producer or consumer in a cluster:
-   1. In the [management console]({{ link-console-main }}), go to the desired folder.
-   1. In the list of services, select **{{ mkf-name }}**.
-   1. Click the name of the cluster and go to the **Users** tab.
-   1. Click **Add**.
+   1. In the [management console]({{ link-console-main }}), go to the appropriate folder.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. Click the cluster name and go to the **{{ ui-key.yacloud.mdb.cluster.switch_users }}** tab.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.users.button_add }}**.
    1. Enter your username and password.
 
       {% include [user-name-and-password-limits](../../_includes/mdb/mkf/note-info-user-name-and-pass-limits.md) %}
 
    1. [Grant permissions](#grant-permission) for relevant topics.
-   1. Click **Add**.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.users.popup-button_add }}**.
 
 - CLI
 
@@ -61,8 +61,8 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
         --permission topic=<topic name>,role=<user role: producer or consumer>
       ```
 
-   To create an [admin user](../concepts/topics.md#management) to manage topics in a cluster with **Manage topics via the API** enabled:
-   1. See the description of the CLI's create user command:
+   To create an [admin user](../concepts/topics.md#management) to manage topics in a cluster:
+   1. See the description of the create user CLI command:
 
       ```bash
       {{ yc-mdb-kf }} user create --help
@@ -84,16 +84,14 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
    1. Open the current {{ TF }} configuration file with an infrastructure plan.
 
       For more information about creating this file, see [{#T}](cluster-create.md).
-   1. Add a `user` section to the {{ mkf-name }} cluster description:
+   1. Add the `yandex_mdb_kafka_user` resource:
 
       ```hcl
-      resource "yandex_mdb_kafka_cluster" "<cluster name>" {
-         user {
-           name     = "<username>"
-           password = "<password>"
-           ...
-         }
-         ...
+      resource "yandex_mdb_kafka_user" "<username>" {
+        cluster_id = "<cluster ID>"
+        name       = "<username>"
+        password   = "<password>"
+        ...
       }
       ```
 
@@ -124,9 +122,9 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
          * The topic name in the `topicName` parameter. To find out the name, [retrieve a list of cluster topics](cluster-topics.md#list-topics).
          * Topic permissions in the `role` parameter: `ACCESS_ROLE_PRODUCER` for the producer or `ACCESS_ROLE_CONSUMER` for the consumer.
 
-   To create an [admin user](../concepts/topics.md#management) to manage topics in a cluster with **Manage topics via the API** enabled, when creating a user, pass a `permission` block in the `userSpec` parameter with the following values:
-   * `topicName`: `*`.
-   * `role`: `ACCESS_ROLE_ADMIN`.
+   To create an [admin user](../concepts/topics.md#management) to manage topics in a cluster, when creating a user, provide the `permission` block in the `userSpec` parameter with the following values:
+   * `topicName`: `*`
+   * `role`: `ACCESS_ROLE_ADMIN`
 
    {% include [user-name-and-password-limits](../../_includes/mdb/mkf/note-info-user-name-and-pass-limits.md) %}
 
@@ -139,11 +137,11 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the desired folder.
-   1. In the list of services, select **{{ mkf-name }}**.
-   1. Click the name of the cluster and go to the **Users** tab.
-   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the desired user and select **Change password**.
-   1. Set a new password and click **Edit**.
+   1. In the [management console]({{ link-console-main }}), go to the appropriate folder.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. Click the cluster name and go to the **{{ ui-key.yacloud.mdb.cluster.switch_users }}** tab.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the appropriate user and select **{{ ui-key.yacloud.mdb.cluster.users.button_action-password }}**.
+   1. Set a new password and click **{{ ui-key.yacloud.mdb.cluster.users.popup-password_button_change }}**.
 
    {% include [password-limits](../../_includes/mdb/mkf/note-info-password-limits.md) %}
 
@@ -168,16 +166,14 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
    1. Open the current {{ TF }} configuration file with an infrastructure plan.
 
       For more information about creating this file, see [{#T}](cluster-create.md).
-   1. In the {{ mkf-name }} cluster description, find the `user` block for the required user.
+   1. In the file, find the `yandex_mdb_kafka_user` resource for the required user.
    1. Change the value of the `password` field:
 
       ```hcl
-      resource "yandex_mdb_kafka_cluster" "<cluster name>" {
-         user {
-           ...
-           password = "<password>"
-         }
-         ...
+      resource "yandex_mdb_kafka_user" "<username>" {
+        ...
+        password = "<password>"
+        ...
       }
       ```
 
@@ -217,12 +213,12 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the desired folder.
-   1. In the list of services, select **{{ mkf-name }}**.
-   1. Click the name of the cluster and go to the **Users** tab.
-   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the desired user and select **Configure**.
+   1. In the [management console]({{ link-console-main }}), go to the appropriate folder.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. Click the cluster name and go to the **{{ ui-key.yacloud.mdb.cluster.switch_users }}** tab.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the appropriate user and select **{{ ui-key.yacloud.mdb.cluster.users.button_action-update }}**.
    1. [Grant](#grant-permission) or [revoke](#revoke-permission) permissions for topics, if necessary.
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.users.popup-button_save }}**.
 
 - CLI
 
@@ -237,7 +233,18 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
    1. Open the current {{ TF }} configuration file with an infrastructure plan.
 
       For more information about creating this file, see [{#T}](cluster-create.md).
-   1. In the {{ mkf-name }} cluster description, edit the `permission` section in the `user` section to [grant](#grant-permission) or [revoke](#revoke-permission) topic permissions.
+   1. In the file, find the `yandex_mdb_kafka_user` resource for the required user.
+   1. Edit the `permission` section to [grant](#grant-permission) or [revoke](#revoke-permission) topic permissions:
+
+      ```hcl
+      resource "yandex_mdb_kafka_user" "<username>" {
+        cluster_id = "<cluster ID>"
+        name       = "<username>"
+        password   = "<password>"
+        ...
+      }
+      ```
+
    1. Make sure the settings are correct.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
@@ -273,29 +280,31 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
 - Management console
 
    1. In the [management console]({{ link-console-main }}), go to the desired folder.
-   1. In the list of services, select **{{ mkf-name }}**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
    1. Select the cluster.
-   1. Go to the **Users** tab.
-   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the desired user and select **Configure**.
-   1. Find the desired topic in the list of topics.
+   1. Click the **{{ ui-key.yacloud.mdb.cluster.switch_users }}** tab.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the user to grant topic permissions to and select **{{ ui-key.yacloud.mdb.cluster.users.button_action-update }}**.
+   1. Click **+ {{ ui-key.yacloud.kafka.button_add-topic }}**. If you do not see this button, it means that the user is granted permissions to all existing cluster topics.
 
-      If the topic isn't in the list, add it:
-      1. Click **+ Add topic**. If there is no such button, it means that all existing cluster topics are added to this user.
-      1. Select the desired topic from the drop-down list.
+      If the user does not need permissions to certain topics, you can [revoke them](#revoke-permission).
 
-         {% note info %}
+   1. Select the appropriate topic from the drop-down list or enter its name:
 
-         If you enabled the **Manage topics via the API** setting when creating a cluster, you should enter the topic name manually. To grant access to all topics, enter a `*` in the **Topic** field.
+      1. Specify the following in the **{{ ui-key.yacloud.kafka.label_topic }}** field:
 
-         {% endnote %}
+         * `*` to allow access to any topics.
+         * Full topic name to allow access to a specific topic.
+         * `<prefix>*` to grant access to topics whose names start with the specified prefix. For example, if you have topics named `topic_a1`, `topic_a2`, and `a3`, and you set the `topic*` value, access will be granted to `topic_a1` and `topic_a2`.
 
-   1. Click the ![image](../../_assets/plus.svg) icon in the **Roles** column for the topic and select:
+      1. Click **{{ ui-key.yacloud.kafka.button_add-topic }}**.
+
+   1.  Click the ![image](../../_assets/plus.svg) icon in the **{{ ui-key.yacloud.mdb.dialogs.popup_field_roles }}** column for the topic and select:
       * `ACCESS_ROLE_CONSUMER`: Consumers using this user will be granted access to the topic.
       * `ACCESS_ROLE_PRODUCER`: Producers using this user will be granted access to the topic.
 
       You can select the `ACCESS_ROLE_CONSUMER` and `ACCESS_ROLE_PRODUCER` roles at the same time to make a user suitable for both producers and consumers.
    1. To grant permissions to other topics, repeat the steps.
-   1. (optional) If you granted permissions for a topic accidentally, [revoke them](#revoke-permission).
+   1. (Optional) If you granted permissions for a topic accidentally, [revoke them](#revoke-permission).
 
 - CLI
 
@@ -319,8 +328,11 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
       ```
 
       The following `--permission` parameters are available:
-      * `topic`: The name of the topic that the permissions are granted for.
-      * `role`: The user role, such as `producer`, `consumer`, or `admin`.
+      * `topic`: Name of the topic the permissions are granted for.
+
+         If the user does not need permissions to certain topics, you can [revoke them](#revoke-permission).
+
+      * `role`: User role, such as `producer`, `consumer`, or `admin`.
 
          The `admin` role is only available in a cluster with [Manage topics via Admin API](../concepts/topics.md#management) enabled if all topics are selected (`topic=*`).
 
@@ -340,23 +352,29 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
    1. Open the current {{ TF }} configuration file with an infrastructure plan.
 
       For more information about creating this file, see [{#T}](cluster-create.md).
-   1. In the {{ mkf-name }} cluster description, add a `permission` section to the `user` block:
+   1. In the file, find the `yandex_mdb_kafka_cluster` resource for the required user.
+   1. Add a `permission` section:
 
       ```hcl
-      resource "yandex_mdb_kafka_cluster" "<cluster name>" {
-         user {
-           name     = "<username>"
-           password = "<password>"
-           permission {
-             topic_name = "<topic name>"
-             role       = "<user role: ACCESS_ROLE_CONSUMER, ACCESS_ROLE_PRODUCER or ACCESS_ROLE_ADMIN>"
-           }
-         }
-         ...
+      resource "yandex_mdb_kafka_user" "<username>" {
+        ...
+        permission {
+          topic_name = "<topic>"
+          role       = "<user role: ACCESS_ROLE_CONSUMER, ACCESS_ROLE_PRODUCER, or ACCESS_ROLE_ADMIN>"
+        }
       }
       ```
 
+      Under `topic_name`, specify:
+
+      * `*` to allow access to any topics.
+      * Full topic name to allow access to a specific topic.
+      * `<prefix>*` to grant access to topics whose names start with the specified prefix. For example, if you have topics named `topic_a1`, `topic_a2`, and `a3`, and you set the `topic*` value, access will be granted to `topic_a1` and `topic_a2`.
+
       The `ACCESS_ROLE_ADMIN` is only available in a cluster with [Manage topics via Admin API](../concepts/topics.md) enabled with all topics selected (`topic_name = "*"`).
+
+      If the user does not need permissions to certain topics, you can [revoke them](#revoke-permission).
+
    1. Make sure the settings are correct.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
@@ -382,18 +400,18 @@ If a {{ mkf-name }} cluster has **Manage topics via the API** enabled, use the C
 
 ## Revoking user permissions {#revoke-permission}
 
-If, in a cluster with **Manage topics via the API** enabled, you revoke the `ACCESS_ROLE_ADMIN` role from the [admin user](../concepts/topics.md#management), you will no longer be able to manage topics. Do not revoke this role without first granting it to another user.
+If, in a cluster, you revoke the `ACCESS_ROLE_ADMIN` role from the [admin user](../concepts/topics.md#management), you will no longer be able to manage topics. Do not revoke this role without first granting it to another user.
 
 {% list tabs %}
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the desired folder.
-   1. In the list of services, select **{{ mkf-name }}**.
+   1. In the [management console]({{ link-console-main }}), go to the appropriate folder.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
    1. Select the cluster.
-   1. Go to the **Users** tab.
-   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the desired user and select **Configure**.
-   1. Find the desired topic in the list of topics.
+   1. Click the **{{ ui-key.yacloud.mdb.cluster.switch_users }}** tab.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the appropriate user and select **{{ ui-key.yacloud.mdb.cluster.users.button_action-update }}**.
+   1. Find the appropriate topic in the list of topics.
    1. Delete the role you no longer need: click the ![image](../../_assets/cross.svg) icon next to the role name. To revoke all permissions for a topic, delete it from the list: hover over the topic name and click ![image](../../_assets/cross.svg) at the end of the line.
 
 - CLI
@@ -419,7 +437,8 @@ If, in a cluster with **Manage topics via the API** enabled, you revoke the `ACC
    1. Open the current {{ TF }} configuration file with an infrastructure plan.
 
       For more information about creating this file, see [{#T}](cluster-create.md).
-   1. In the {{ mkf-name }} cluster description, edit or delete the `permission` section in the `user` block.
+   1. In the file, find the `yandex_mdb_kafka_user` resource for the required user.
+   1. Edit or delete the `permission` section.
    1. Make sure the settings are correct.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
@@ -445,17 +464,17 @@ If, in a cluster with **Manage topics via the API** enabled, you revoke the `ACC
 
 ## Deleting a user {#delete-account}
 
-If, in a cluster with **Manage topics via the API** enabled, you delete the [admin user](../concepts/topics.md#management) with the `ACCESS_ROLE_ADMIN` role, you will no longer be able to manage topics. Assign this role to another user before deleting it.
+If, in a cluster, you delete the [admin user](../concepts/topics.md#management) with the `ACCESS_ROLE_ADMIN` role, you will no longer be able to manage topics. Assign this role to another user before deleting it.
 
 {% list tabs %}
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the desired folder.
-   1. In the list of services, select **{{ mkf-name }}**.
-   1. Click the name of the cluster and go to the **Users** tab.
-   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the appropriate user and select **Delete**.
-   1. In the window that opens, click **Delete**.
+   1. In the [management console]({{ link-console-main }}), go to the appropriate folder.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. Click the cluster name and go to the **{{ ui-key.yacloud.mdb.cluster.switch_users }}** tab.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the appropriate user and select **{{ ui-key.yacloud.mdb.cluster.users.button_action-remove }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -474,7 +493,7 @@ If, in a cluster with **Manage topics via the API** enabled, you delete the [adm
    1. Open the current {{ TF }} configuration file with an infrastructure plan.
 
       For more information about creating this file, see [{#T}](cluster-create.md).
-   1. Delete the user block with a description of the required `user` from the {{ mkf-name }} cluster description.
+   1. Delete the `yandex_mdb_kafka_user` resource for the appropriate user.
    1. Make sure the settings are correct.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
@@ -503,9 +522,9 @@ If, in a cluster with **Manage topics via the API** enabled, you delete the [adm
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the desired folder.
-   1. In the list of services, select **{{ mkf-name }}**.
-   1. Click the name of the cluster and go to the **Users** tab.
+   1. In the [management console]({{ link-console-main }}), go to the appropriate folder.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. Click the cluster name and go to the **{{ ui-key.yacloud.mdb.cluster.switch_users }}** tab.
 
 - CLI
 

@@ -12,7 +12,7 @@ keywords:
 {% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
 
 
-{{ mes-short-name }} позволяет создавать резервные копии [индексов](../concepts/indexing.md) как средствами {{ yandex-cloud }}, так и с помощью механизма [снапшотов](https://cloud.yandex.ru/docs/glossary/snapshot) {{ ES }}. Подробнее о механизме снапшотов см. в [документации {{ ES }}](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-restore.html).
+{{ mes-short-name }} позволяет создавать резервные копии [индексов](../concepts/indexing.md) как средствами {{ yandex-cloud }}, так и с помощью механизма [снапшотов](../../glossary/snapshot.md) {{ ES }}. Подробнее о механизме снапшотов см. в [документации {{ ES }}](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-restore.html).
 
 ## Резервное копирование средствами {{ yandex-cloud }} {#cloud-backups}
 
@@ -30,12 +30,12 @@ keywords:
 - Консоль управления
 
   Чтобы получить список резервных копий кластера:
-  1. Перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Резервные копии**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
 
   Чтобы получить список всех резервных копий в каталоге:
-  1. Перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Выберите вкладку **Резервные копии**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Выберите вкладку **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
 
 - CLI
 
@@ -79,12 +79,12 @@ keywords:
 - Консоль управления
 
   Чтобы получить информацию о резервной копии существующего кластера:
-  1. Перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Резервные копии**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
 
   Чтобы получить информацию о резервной копии удаленного ранее кластера:
-  1. Перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Выберите вкладку **Резервные копии**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Выберите вкладку **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
 
 - CLI
 
@@ -95,7 +95,7 @@ keywords:
     Чтобы получить данные о резервной копии кластера {{ ES }}, выполните команду:
 
     ```bash
-    {{ yc-mdb-es }} backup get <идентификатор резервной копии>
+    {{ yc-mdb-es }} backup get <идентификатор_резервной_копии>
     ```
 
     Идентификатор резервной копии можно получить со [списком резервных копий](#list-backups).
@@ -116,9 +116,9 @@ keywords:
 
 - Консоль управления
 
-  1. Перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Резервные копии**.
-  1. Нажмите кнопку **Создать резервную копию**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
+  1. Нажмите кнопку ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud.mdb.cluster.backups.button_create }}**.
 
   {% include [no-prompt](../../_includes/mdb/backups/no-prompt.md) %}
 
@@ -139,7 +139,7 @@ keywords:
     1. Запросите создание резервной копии, указав идентификатор или имя кластера:
 
         ```bash
-        {{ yc-mdb-es }} cluster backup <идентификатор или имя кластера>
+        {{ yc-mdb-es }} cluster backup <имя_или_идентификатор_кластера>
         ```
 
         Идентификатор и имя кластера можно получить со [списком кластеров](cluster-list.md#list-clusters).
@@ -167,19 +167,19 @@ keywords:
 - Консоль управления
 
   Чтобы восстановить из резервной копии существующий кластер:
-  1. Перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Резервные копии**.
-  1. Нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) для нужной резервной копии, затем нажмите **Восстановить кластер**.
-  1. Задайте настройки нового кластера. В списке **Каталог** можно выбрать каталог для нового кластера.
-  1. Нажмите кнопку **Восстановить кластер**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
+  1. Нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) для нужной резервной копии, затем нажмите **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
+  1. Задайте настройки нового кластера. В списке **{{ ui-key.yacloud.common.folder }}** можно выбрать каталог для нового кластера.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_restore }}**.
 
   Чтобы восстановить из резервной копии удаленный ранее кластер:
-  1. Перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-  1. Выберите вкладку **Резервные копии**.
-  1. Найдите нужную резервную копию по времени создания и идентификатору кластера. В колонке **Имя** содержатся идентификаторы в формате `<идентификатор кластера>:<идентификатор резервной копии>`.
-  1. Нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) для нужной резервной копии, затем нажмите **Восстановить кластер**.
-  1. Задайте настройки нового кластера. В списке **Каталог** можно выбрать каталог для нового кластера.
-  1. Нажмите кнопку **Восстановить кластер**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+  1. Выберите вкладку **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
+  1. Найдите нужную резервную копию по времени создания и идентификатору кластера. В колонке **{{ ui-key.yacloud.common.name }}** содержатся идентификаторы в формате `<идентификатор_кластера>:<идентификатор_резервной_копии>`.
+  1. Нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) для нужной резервной копии, затем нажмите **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
+  1. Задайте настройки нового кластера. В списке **{{ ui-key.yacloud.common.folder }}** можно выбрать каталог для нового кластера.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_restore }}**.
 
   {{ mes-name }} запустит операцию создания кластера из резервной копии.
 
@@ -221,21 +221,21 @@ keywords:
         
         ```bash
         {{ yc-mdb-es }} cluster restore \
-           --backup-id=<идентификатор резервной копии> \
-           --name=<имя кластера> \
-           --environment=<окружение: PRESTABLE или PRODUCTION> \
-           --network-name=<имя сети> \
-           --host zone-id=<зона доступности>,`
-                 `subnet-id=<имя подсети>,`
-                 `assign-public-ip=<доступ к хосту через публичный IP-адрес: true или false>,`
-                 `type=<роль хоста: datanode или masternode> \
-           --datanode-resource-preset=<класс хостов с ролью Data node> \
-           --datanode-disk-size=<размер хранилища в гигабайтах для хостов с ролью Data node> \
-           --datanode-disk-type=<тип диска для хостов с ролью Data node> \
-           --masternode-resource-preset=<класс хостов с ролью Master node> \
-           --masternode-disk-size=<размер хранилища в гигабайтах для хостов с ролью Master node> \
-           --masternode-disk-type=<тип диска для хостов с ролью Master node: network-ssd> \
-           --admin-password=<пароль пользователя admin>
+           --backup-id=<идентификатор_резервной_копии> \
+           --name=<имя_кластера> \
+           --environment=<окружение> \
+           --network-name=<имя_сети> \
+           --host zone-id=<зона_доступности>,`
+                 `subnet-id=<имя_подсети>,`
+                 `assign-public-ip=<публичный_доступ>,`
+                 `type=<роль_хоста> \
+           --datanode-resource-preset=<класс_хостов_Data_node> \
+           --datanode-disk-size=<размер_хранилища_ГБ_Data_node> \
+           --datanode-disk-type=<тип_диска_Data_node> \
+           --masternode-resource-preset=<класс_хостов_Master_node> \
+           --masternode-disk-size=<размер_хранилища_ГБ_Master_node> \
+           --masternode-disk-type=<тип_диска_Master_node> \
+           --admin-password=<пароль_пользователя_admin>
         ```
 
 
@@ -245,7 +245,7 @@ keywords:
         * `--name` — имя кластера.
         * `--environment` — окружение:
 
-            * `PRESTABLE` — для тестирования, в том числе самого сервиса {{ ES }}. В Prestable-окружении раньше появляются новая функциональность, улучшения и   исправления ошибок. При этом не все обновления обеспечивают обратную совместимость.
+            * `PRESTABLE` — для тестирования. Prestable-окружение аналогично Production-окружению и на него также распространяется SLA, но при этом на нем раньше появляются новые функциональные возможности, улучшения и исправления ошибок. В Prestable-окружении вы можете протестировать совместимость новых версий с вашим приложением.
             * `PRODUCTION` — для стабильных версий ваших приложений.
 
         * `--network-name` — [имя сети](../../vpc/concepts/network.md#network).
@@ -255,10 +255,10 @@ keywords:
 
             
             * `subnet-name` — [имя подсети](../../vpc/concepts/network.md#subnet). Необходимо указывать, если в выбранной зоне доступности создано две или   больше подсетей.
-            * `assign-public-ip` — флаг, который указывается, если хосту требуется [публичный IP-адрес](../../vpc/concepts/address.md#public-addresses).
+            * `assign-public-ip` — флаг, который указывается, если для хоста требуется [публичный доступ](../concepts/network.md#public-access-to-a-host): : `true` или `false`.
 
 
-            * `type` — [роль хоста](../concepts/hosts-roles.md).
+            * `type` — [роль хоста](../concepts/hosts-roles.md): `datanode` или `masternode`.
 
         * `--datanode-resource-preset` — [класс хостов](../concepts/instance-types.md#available-flavors) с ролью Data node.
         * `--datanode-disk-size` — размер хранилища в гигабайтах для хостов с ролью Data node.
@@ -304,7 +304,7 @@ keywords:
 1. Найдите в списке репозиториев {{ ES }} тот, который содержит в себе резервные копии в виде снапшотов:
 
     ```http
-    GET https://admin:<пароль>@<FQDN_или_IP-адрес_хоста>:9200/_snapshot/_all
+    GET https://admin:<пароль>@<FQDN_хоста>:9200/_snapshot/_all
     ```
 
     Если нужного репозитория нет в списке — [подключите его](./s3-access.md).
@@ -312,7 +312,7 @@ keywords:
 1. Получите список снапшотов в репозитории:
 
     ```http
-    GET https://admin:<пароль>@<FQDN_или_IP-адрес_хоста>:9200/_snapshot/<репозиторий>/_all
+    GET https://admin:<пароль>@<FQDN_хоста>:9200/_snapshot/<репозиторий>/_all
     ```
 
     Каждой резервной копии соответствует один снапшот.
@@ -323,7 +323,7 @@ keywords:
 1. Найдите в списке репозиториев {{ ES }} тот, в котором нужно создать резервную копию в виде снапшота:
 
     ```http
-    GET https://admin:<пароль>@<FQDN_или_IP-адрес_хоста>:9200/_snapshot/_all
+    GET https://admin:<пароль>@<FQDN_хоста>:9200/_snapshot/_all
     ```
 
     Если нужного репозитория нет в списке — [подключите его](./s3-access.md).
@@ -331,7 +331,7 @@ keywords:
 1. [Создайте снапшот](https://www.elastic.co/guide/en/elasticsearch/reference/current/create-snapshot-api.html) нужных данных или целого кластера в выбранном репозитории:
 
     ```http
-    PUT https://admin:<пароль>@<FQDN_или_IP-адрес_хоста>:9200/_snapshot/<репозиторий>/<снапшот>
+    PUT https://admin:<пароль>@<FQDN_хоста>:9200/_snapshot/<репозиторий>/<снапшот>
     ```
 
 ### Восстановить кластер из снапшота {#restore-from-snapshot}
@@ -356,7 +356,7 @@ keywords:
 1. Закройте открытые индексы с помощью [{{ ES }} API](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-close.html):
 
     ```http
-    POST: https://admin:<пароль>@<FQDN_или_IP-адрес_хоста>:9200/<индекс>/_close
+    POST: https://admin:<пароль>@<FQDN_хоста>:9200/<индекс>/_close
     ```
 
     Для восстановления всего кластера закройте все открытые индексы. Для восстановления отдельных индексов закройте только их.

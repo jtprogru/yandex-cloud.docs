@@ -9,6 +9,8 @@ keywords:
 
 # Information about existing {{ ES }} clusters
 
+{% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
+
 You can request detailed information about each {{ mes-name }} cluster you created.
 
 ## Getting a list of clusters in a folder {#list-clusters}
@@ -17,7 +19,7 @@ You can request detailed information about each {{ mes-name }} cluster you creat
 
 - Management console
 
-   In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
+   In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
 
 - CLI
 
@@ -43,7 +45,7 @@ You can request detailed information about each {{ mes-name }} cluster you creat
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
    1. Click the name of the cluster you need.
 
 - CLI
@@ -76,9 +78,9 @@ The operation list shows operations with clusters and related resources (for exa
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
    1. Click the name of the cluster you need.
-   1. Go to the **Operations** tab.
+   1. Click the **{{ ui-key.yacloud.common.operations-key-value }}** tab.
 
 - CLI
 
@@ -89,7 +91,7 @@ The operation list shows operations with clusters and related resources (for exa
    To get a list of cluster operations, run the command:
 
    ```bash
-   {{ yc-mdb-es }} cluster list-operations <cluster name and ID>
+   {{ yc-mdb-es }} cluster list-operations <cluster name or ID>
    ```
 
    You can request a cluster name and ID with a [list of clusters in the folder](#list-clusters).

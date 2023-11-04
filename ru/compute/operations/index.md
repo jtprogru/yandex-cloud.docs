@@ -42,6 +42,7 @@ description: "Пошаговые инструкции по работе и уп�
 ## Управление виртуальной машиной {#vm-control}
 
 * [{#T}](vm-control/vm-stop-and-start.md)
+* [{#T}](vm-control/vm-reset-password.md)
 * [{#T}](vm-control/vm-attach-disk.md)
 * [{#T}](vm-control/vm-detach-disk.md)
 * [{#T}](vm-control/vm-change-zone.md)
@@ -60,12 +61,16 @@ description: "Пошаговые инструкции по работе и уп�
 * [{#T}](vm-connect/ssh.md)
 * [{#T}](vm-connect/rdp.md)
 * [{#T}](vm-connect/powershell.md)
+* [{#T}](vm-connect/os-login.md)
 * [{#T}](vm-connect/auth-inside-vm.md)
 * [{#T}](vm-operate/install-nvidia-drivers.md)
 * [{#T}](vm-connect/recovery-access.md)
 
 ## Управление агентом для сброса паролей {#guest-agent}
+
+* [{#T}](vm-guest-agent/check.md)
 * [{#T}](vm-guest-agent/install.md)
+* [{#T}](vm-guest-agent/uninstall.md)
 
 ## Создание диска {#disk-create}
 
@@ -73,12 +78,15 @@ description: "Пошаговые инструкции по работе и уп�
 * [{#T}](disk-create/empty-disk-blocksize.md)
 * [{#T}](disk-create/nonreplicated.md)
 * [{#T}](disk-create/from-snapshot.md)
+* [{#T}](disk-create/from-image.md)
 
 ## Управление диском {#disk-control}
 
 * [{#T}](disk-control/update.md)
 * [{#T}](disk-control/configure-schedule.md)
 * [{#T}](disk-control/disk-change-folder.md)
+* [{#T}](disk-control/disk-change-zone.md)
+* [{#T}](disk-control/disk-encrypt.md)
 * [{#T}](disk-control/delete.md)
 
 ## Снимки дисков {#snapshots}
@@ -88,12 +96,14 @@ description: "Пошаговые инструкции по работе и уп�
 * [{#T}](snapshot-control/create-schedule.md)
 * [{#T}](snapshot-control/update-schedule.md)
 * [{#T}](snapshot-control/stop-and-start-schedule.md)
+* [{#T}](snapshot-control/snapshot-encrypt.md)
 * [{#T}](snapshot-control/delete-schedule.md)
 
 
 ## Группы размещения дисков {#placement-groups}
 
 * [{#T}](disk-placement-groups/create.md)
+* [{#T}](disk-placement-groups/add-disk.md)
 * [{#T}](disk-placement-groups/remove-disk.md)
 
 
@@ -109,6 +119,7 @@ description: "Пошаговые инструкции по работе и уп�
 
 * [{#T}](image-control/get-list.md)
 * [{#T}](image-control/delete.md)
+* [{#T}](image-control/import.md)
 
 
 ## Файловые хранилища {#filesystem}
@@ -147,11 +158,16 @@ description: "Пошаговые инструкции по работе и уп�
 
 * [{#T}](instance-groups/update.md)
 * [{#T}](instance-groups/update-from-yaml.md)
+* [{#T}](instance-groups/move-group.md)
+* [{#T}](instance-groups/move-group-with-nlb.md)
+* [{#T}](instance-groups/move-group-with-alb.md)
 * [{#T}](instance-groups/enable-autohealing.md)
 * [{#T}](instance-groups/deploy/rolling-update.md)
 * [{#T}](instance-groups/deploy/zero-downtime.md)
 * [{#T}](instance-groups/pause-processes.md)
 * [{#T}](instance-groups/resume-processes.md)
+* [{#T}](instance-groups/rolling-restart.md)
+* [{#T}](instance-groups/rolling-recreate.md)
 * [{#T}](instance-groups/stop.md)
 * [{#T}](instance-groups/start.md)
 * [{#T}](instance-groups/delete.md)

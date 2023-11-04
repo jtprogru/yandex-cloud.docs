@@ -14,7 +14,7 @@ _Version_ contains the function code, run parameters, and all required dependenc
 
 To [create a version](../operations/function/version-manage.md), you can use the code editor or upload your code and its dependencies in one of the formats described in the table below. After you create a function, you no longer need the object with the code. You can delete it from storage.
 
-| Format | Management console | YC CLI |
+| Format | Management console | {{ yandex-cloud }} CLI |
 |----|----|----|
 | ZIP archive from your PC | ![image](../../_assets/common/yes.svg) | ![image](../../_assets/common/yes.svg) |
 | ZIP archive from S3, specifying the bucket and object | ![image](../../_assets/common/yes.svg) | ![image](../../_assets/common/yes.svg) |
@@ -59,13 +59,15 @@ A function instance processes one function call at a single point in time. If th
 
 {% note info %}
 
-Function calls are distributed across availability zones randomly. {{ sf-name }} does not guarantee their even distribution across zones. For example, all calls, regardless of their number, might end up in the same zone.
+Function calls are distributed across availability zones randomly. {{ sf-name }} does not guarantee their even distribution across zones. For example, all calls, no matter how many, might end up in the same zone.
 
 {% endnote %}
 
 #### Limits {#limits}
 
 When the number of function instances reaches the `zone_instances_limit`, {{ sf-name }} stops scaling it. If there are more function calls than instances available, the call is queued and treated as a call-in-progress. When the number of calls-in-progress reaches the `zone_requests_limit`, the service stops queuing calls and returns the `429 TooManyRequests` error.
+
+
 
 #### Provisioned instances {#provisioned-instances}
 
@@ -77,6 +79,13 @@ A _provisioned instance_ is a function instance that, when started, is guarantee
 {% include [provisioned-instances-price](../../_includes/functions/provisioned-instances-price.md) %}
 
 If the number of function calls exceeds the number of provisioned instances, {{ sf-name }} scales the function within the [quotas](limits.md#functions-quotas), but unprovisioned instances have a cold start when they are first started.
+
+Provisioned instances count towards the following [quotas](limits.md) even when they are not running:
+* Number of function instances per availability zone.
+* Total RAM for all running functions per availability zone.
+* Number of provisioned function instances per cloud.
+
+
 
 #### See also
 

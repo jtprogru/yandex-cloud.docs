@@ -1,3 +1,8 @@
+---
+title: "{{ managed-prometheus-full-name }}"
+description: "{{ managed-prometheus-full-name }} is a monitoring system compatible with {{ prometheus-name }}. You can use it to collect, store, and read metrics from your containers, applications, and infrastructure. The system uses the {{ prometheus-name }} data model and the {{ promql-name }} query language. Thus, you can work with dashboards existing in {{ grafana-name }}."
+---
+
 # {{managed-prometheus-full-name}}
 
 {% include [note-preview](../../../_includes/monitoring/prometheus-preview.md) %}
@@ -12,9 +17,9 @@
 
 To enable {{ managed-prometheus-name }} in the current folder:
 
-1. Open the {{ monitoring-full-name }} [service home page]({{ link-monitoring }}).
-1. In the left-hand panel, select **{{ prometheus-name }}**.
-1. Fill out the form and click **Send request**.
+1. Open the [service home page]({{ link-monitoring }}) {{ monitoring-full-name }}.
+1. In the left-hand panel, select **{{ ui-key.yacloud_monitoring.aside-navigation.menu-item.prometheus.title }}**.
+1. Fill out the form and click **{{ ui-key.yacloud_monitoring.prometheus.form.submit-button.text }}**.
 1. Wait until {{ yandex-cloud }} processes your request.
 1. Once the request is approved, the page will show links to the endpoints to be used for the current folder.
 
@@ -51,10 +56,10 @@ The system functionality will be enhanced in upcoming releases.
 
 The limits specified below are not technical system restrictions and can be increased by sending a request to the [support team]({{ link-console-support }}).
 
-* 200 requests per second and 3 MB/s per write in [Remote Write](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write) format.
+* 350 requests per second and 5 MB/s per write in [Remote Write](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write) format.
 * 10000 metrics per request per write.
-* 25 requests per second per read via the [Remote Read API](https://prometheus.io/docs/prometheus/latest/querying/remote_read_api).
-* 50 requests per second per read via the [HTTP API](https://prometheus.io/docs/prometheus/latest/querying/api/).
+* 100 requests per second per read via the [Remote Read API](https://prometheus.io/docs/prometheus/latest/querying/remote_read_api).
+* 100 requests per second per read via the [HTTP API](https://prometheus.io/docs/prometheus/latest/querying/api/).
 * 1 million unique metrics.
 * 29 unique labels per metric.
 * [Expired metrics](../../concepts/ttl.md) are deleted in 60 days.

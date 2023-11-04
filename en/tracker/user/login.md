@@ -14,19 +14,19 @@ Depending on your organization settings, you can use accounts of different types
 
 * Account on the domain connected to [{{ ya-360 }}]({{ link-ya-360 }}) (for example, `login@example.com`).
 
-* Account in the corporate account management system (for example, Active Directory or Google Workspace), if [single sign-on](../../organization/add-federation.md) is enabled.
+* Account in the corporate account management system, e.g., Active Directory or Google Workspace, if [single sign-on](../../organization/concepts/add-federation.md) is enabled.
 
-To create and edit issues, you'll need [full access](../access.md) to {{ tracker-name }}. If you only have read access to {{ tracker-name }}, contact your organization's administrator.
+To create and edit issues, you will need [full access](../access.md) to {{ tracker-name }}. If you have read-only access to {{ tracker-name }}, contact your organization's administrator.
 
 ## Logging in to {{ tracker-name }} {#auth}
 
 To log in to {{ tracker-full-name }}:
 
-1. Go to the [{{ tracker-name }}]({{ link-tracker }}). Click **Logging in to Yandex Tracker**.
+1. Go to the [{{ tracker-name }}]({{ link-tracker }}). Click **{{ ui-key.startrek.ui_components_promo_Page.login-button-label }}**.
 
 1. Select an account you use to work in {{ tracker-name }}:
 
-   * To log in using your Yandex or corporate email address, click **Log in to Yandex ID** and enter your username like `{{ example-account }}`or `login@example.com`. If you haven't created an [organization in {{ yandex-cloud }}](../../organization/), it will be created at your first login to {{ tracker-name }}.
+   * To log in using your Yandex or corporate email address, click **Log in to Yandex ID** and enter your username, such as `{{ example-account }}` or `login@example.com`. If you have not created an [organization in {{ yandex-cloud }}](../../organization/), it will be created at your first login to {{ tracker-name }}.
 
    * If your organization uses the Single Sign-On authentication scheme with an [identity federation](../add-users.md#federation), click **Log in via SSO**, specify the federation ID, and log in to your corporate account.
 
@@ -60,7 +60,7 @@ To switch the user account that was used to log in to {{ tracker-name }}:
 
 1. In the bottom-left panel, click the profile photo.
 
-1. Click the ![](../../_assets/tracker/svg/logout.svg) **Log out** button next to your login.
+1. Click ![](../../_assets/tracker/svg/logout.svg) **{{ ui-key.yacloud.common.button_logout }}** next to your username.
 
 1. Select a different user from the list or click **Log in to a different account**.
 

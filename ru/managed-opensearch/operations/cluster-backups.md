@@ -9,7 +9,7 @@ keywords:
 
 # Управление резервными копиями в {{ mos-name }}
 
-{{ mos-short-name }} позволяет создавать резервные копии [индексов](../concepts/indexing.md) как средствами {{ yandex-cloud }}, так и с помощью механизма [снапшотов](https://cloud.yandex.ru/docs/glossary/snapshot) {{ OS }}. Подробнее о механизме снапшотов см. в [документации {{ OS }}]({{ os.docs }}/opensearch/snapshots/snapshot-restore/).
+{{ mos-short-name }} позволяет создавать резервные копии [индексов](../concepts/indexing.md) как средствами {{ yandex-cloud }}, так и с помощью механизма [снапшотов](../../glossary/snapshot.md) {{ OS }}. Подробнее о механизме снапшотов см. в [документации {{ OS }}]({{ os.docs }}/opensearch/snapshots/snapshot-restore/).
 
 
 ## Резервное копирование средствами {{ yandex-cloud }} {#cloud-backups}
@@ -26,13 +26,13 @@ keywords:
 
     Чтобы получить список резервных копий кластера:
 
-    1. Перейдите на страницу каталога и выберите сервис **{{ mos-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку ![backups](../../_assets/mdb/backup.svg) **Резервные копии**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-opensearch }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку ![backups](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
 
     Чтобы получить список всех резервных копий в каталоге:
 
-    1. Перейдите на страницу каталога и выберите сервис **{{ mos-name }}**.
-    1. Выберите вкладку ![backups](../../_assets/mdb/backup.svg) **Резервные копии**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-opensearch }}**.
+    1. Выберите вкладку ![backups](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
 
 - API
 
@@ -52,13 +52,13 @@ keywords:
 
     Чтобы получить информацию о резервной копии существующего кластера:
 
-    1. Перейдите на страницу каталога и выберите сервис **{{ mos-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку ![backups](../../_assets/mdb/backup.svg) **Резервные копии**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-opensearch }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку ![backups](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
 
     Чтобы получить информацию о резервной копии удаленного ранее кластера:
 
-    1. Перейдите на страницу каталога и выберите сервис **{{ mos-name }}**.
-    1. Выберите вкладку ![backups](../../_assets/mdb/backup.svg) **Резервные копии**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-opensearch }}**.
+    1. Выберите вкладку ![backups](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
 
 - API
 
@@ -74,9 +74,9 @@ keywords:
 
 - Консоль управления
   
-    1. Перейдите на страницу каталога и выберите сервис **{{ mos-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку ![backups](../../_assets/mdb/backup.svg) **Резервные копии**.
-    1. Нажмите кнопку ![image](../../_assets/plus-sign.svg) **Создать резервную копию**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-opensearch }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку ![backups](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
+    1. Нажмите кнопку ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud.mdb.cluster.backups.button_create }}**.
 
     {% include [no-prompt](../../_includes/mdb/backups/no-prompt.md) %}
 
@@ -102,20 +102,20 @@ keywords:
 
     Чтобы восстановить из резервной копии существующий кластер:
 
-    1. Перейдите на страницу каталога и выберите сервис **{{ mos-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку ![backups](../../_assets/mdb/backup.svg) **Резервные копии**.
-    1. Нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) для нужной резервной копии, затем нажмите **Восстановить кластер**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-opensearch }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку ![backups](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
+    1. Нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) для нужной резервной копии, затем нажмите **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
     1. Задайте настройки нового кластера.
-    1. Нажмите кнопку **Восстановить кластер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_restore }}**.
 
     Чтобы восстановить из резервной копии удаленный ранее кластер:
 
-    1. Перейдите на страницу каталога и выберите сервис **{{ mos-name }}**.
-    1. Выберите вкладку ![backups](../../_assets/mdb/backup.svg) **Резервные копии**.
-    1. Найдите нужную резервную копию по времени создания и идентификатору кластера. В колонке **Имя** содержатся идентификаторы в формате `<идентификатор кластера>:<идентификатор резервной копии>`.
-    1. Нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) для нужной резервной копии, затем нажмите **Восстановить кластер**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-opensearch }}**.
+    1. Выберите вкладку ![backups](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}**.
+    1. Найдите нужную резервную копию по времени создания и идентификатору кластера. В колонке **{{ ui-key.yacloud.common.id }}** содержатся идентификаторы в формате `<идентификатор_кластера>:<идентификатор_резервной_копии>`.
+    1. Нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) для нужной резервной копии, затем нажмите **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
     1. Задайте настройки нового кластера.
-    1. Нажмите кнопку **Восстановить кластер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_restore }}**.
 
     {{ mos-name }} запустит операцию создания кластера из резервной копии.
 
@@ -140,7 +140,7 @@ keywords:
 1. Найдите в списке репозиториев {{ OS }} тот, который содержит в себе резервные копии в виде снапшотов:
 
     ```http
-    GET https://admin:<пароль>@<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/_all
+    GET https://admin:<пароль>@<идентификатор_хоста_{{ OS }}_с_ролью_DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/_all
     ```
 
    Если нужного репозитория нет в списке, [подключите его](s3-access.md).
@@ -148,7 +148,7 @@ keywords:
 1. Получите список снапшотов в репозитории:
 
     ```http
-    GET https://admin:<пароль>@<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/<имя репозитория>/_all
+    GET https://admin:<пароль>@<идентификатор_хоста_{{ OS }}_с_ролью_DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/<имя_репозитория>/_all
     ```
 
    Каждой резервной копии соответствует один снапшот.
@@ -158,7 +158,7 @@ keywords:
 1. Найдите в списке репозиториев {{ OS }} тот, в котором нужно создать резервную копию в виде снапшота:
 
     ```http
-    GET https://admin:<пароль>@<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/_all
+    GET https://admin:<пароль>@<идентификатор_хоста_{{ OS }}_с_ролью_DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/_all
     ```
 
     Если нужного репозитория нет в списке, [подключите его](s3-access.md).
@@ -166,7 +166,7 @@ keywords:
 1. [Создайте снапшот]({{ os.docs }}/opensearch/snapshots/snapshot-restore/#take-snapshots) нужных данных или целого кластера в выбранном репозитории:
 
     ```http
-    PUT https://admin:<пароль>@<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/<имя репозитория>/<имя снапшота>
+    PUT https://admin:<пароль>@<идентификатор_хоста_{{ OS }}_с_ролью_DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/<имя_репозитория>/<имя_снапшота>
     ```
 
 ### Восстановить кластер из снапшота {#restore-from-snapshot}
@@ -188,7 +188,7 @@ keywords:
 1. Закройте открытые индексы с помощью [{{ OS }} API]({{ os.docs }}/api-reference/index-apis/close-index/):
 
     ```http
-    POST: https://admin:<пароль>@<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }}/<имя индекса>/_close
+    POST: https://admin:<пароль>@<идентификатор_хоста_{{ OS }}_с_ролью_DATA>.{{ dns-zone }}:{{ port-mos }}/<имя_индекса>/_close
     ```
 
     Для восстановления всего кластера закройте все открытые индексы. Для восстановления отдельных индексов закройте только их.

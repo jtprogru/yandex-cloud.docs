@@ -1,6 +1,6 @@
 # Роли и права доступа в {{ tracker-name }}
 
-{{ tracker-full-name }} — один из [сервисов](../organization/manage-services.md), которые можно подключить к организации {{ yandex-cloud }}. Администратор организации, который подключил {{ tracker-name }}, также становится [администратором {{ tracker-name }}](#admin).
+{{ tracker-full-name }} — один из [сервисов](../organization/concepts/manage-services.md), которые можно подключить к организации {{ yandex-cloud }}. Администратор организации, который подключил {{ tracker-name }}, также становится [администратором {{ tracker-name }}](#admin).
 
 {% note info %}
 
@@ -48,14 +48,14 @@
 
 #### Администратор {#admin}
 
-Администратор имеет доступ ко всем элементам структуры {{ tracker-name }}. По умолчанию администратором {{ tracker-name }} является пользователь, который создал [организацию {{ yandex-cloud}}](../organization/). 
+Администратор имеет доступ ко всем элементам структуры {{ tracker-name }}. По умолчанию администратором {{ tracker-name }} является пользователь, который создал [организацию {{ yandex-cloud }}](../organization/). 
 
 Чтобы назначить администраторами других сотрудников, используйте [сервис {{ yandex-360 }}](https://yandex.ru/support/business/admin.html).
 
 Действия, доступные администратору:
 
 * Добавление в {{ tracker-name }} [пользователей](add-users.md) и настройка для них [уровня доступа](access.md).
-* Управление настройками {{ tracker-name }}: создание новых [статусов](manager/workflow-status-edit.md#create-status), [резолюций](manager/create-resolution.md#create-resolution) и [типов задач](manager/add-ticket-type.md#create-ticket-type), настройка [глобальных полей](user/create-param.md#section_global_field) задач, подключение [репозиториев](manager/add-repository.md).
+* Управление настройками {{ tracker-name }}: создание новых [статусов](manager/workflow-status-edit.md#create-status), [резолюций](manager/create-resolution.md#create-resolution) и [типов задач](manager/add-ticket-type.md#create-ticket-type), настройка [глобальных полей](user/create-param.md#section_global_field) задач, подключение [репозиториев](user/add-repository.md).
 * Управление [настройками очереди](manager/edit-queue-general.md).
 * Привязка к {{ tracker-name }} [платежного аккаунта](billing-account.md), который используется для оплаты услуг. 
 

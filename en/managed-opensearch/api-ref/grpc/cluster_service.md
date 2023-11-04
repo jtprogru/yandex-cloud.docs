@@ -97,6 +97,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup}
@@ -251,6 +253,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup2)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup2}
@@ -377,6 +381,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup4)**<br>OpenSearch type host groups of the cluster. 
+config | **oneof:** `opensearch_config_2`<br>
+&nbsp;&nbsp;opensearch_config_2 | **[config.OpenSearchConfig2](#OpenSearchConfig2)**<br> 
 
 
 ### NodeGroup {#NodeGroup4}
@@ -520,6 +526,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup6)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup6}
@@ -606,6 +614,8 @@ access | **[Access](#Access3)**<br>Access policy for external services.
 Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
+config | **oneof:** `opensearch_config_2`<br>
+&nbsp;&nbsp;opensearch_config_2 | **[config.OpenSearchConfig2](#OpenSearchConfig2)**<br> 
 
 
 ### DashboardsClusterUpdateSpec {#DashboardsClusterUpdateSpec}
@@ -712,6 +722,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup8)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup8}
@@ -893,6 +905,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup10)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup10}
@@ -1020,6 +1034,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup12)**<br>OpenSearch type host groups of the cluster. 
+config | **oneof:** `opensearch_config_2`<br>
+&nbsp;&nbsp;opensearch_config_2 | **[config.OpenSearchConfig2](#OpenSearchConfig2)**<br> 
 
 
 ### NodeGroup {#NodeGroup12}
@@ -1164,6 +1180,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup14)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup14}
@@ -1299,6 +1317,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup16)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup16}
@@ -1510,6 +1530,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup18)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup18}
@@ -1680,6 +1702,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup20)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup20}
@@ -1850,6 +1874,8 @@ Field | Description
 --- | ---
 plugins[] | **string**<br>Names of the cluster plugins. 
 node_groups[] | **[NodeGroup](#NodeGroup22)**<br>Host groups of the OpenSearch type. 
+config | **oneof:** `opensearch_config_set_2`<br>
+&nbsp;&nbsp;opensearch_config_set_2 | **[config.OpenSearchConfigSet2](#OpenSearchConfigSet2)**<br> 
 
 
 ### NodeGroup {#NodeGroup22}
@@ -2237,7 +2263,10 @@ Field | Description
 --- | ---
 resources | **[Resources](#Resources11)**<br>Resources allocated to the hosts. 
 hosts_count | **int64**<br>Number of hosts in the group. 
-roles[] | **[OpenSearch.GroupRole](#OpenSearch10)**<br>Roles of the host group. 
+roles[] | **[OpenSearch.GroupRole](#OpenSearch10)**<br>Opensearch roles applicable to the node group. 
+zone_ids[] | **string**<br>IDs of the availability zones for hosts 
+subnet_ids[] | **string**<br>IDs of the subnets for hosts 
+assign_public_ip | **bool**<br>Whether the hosts should get a public IP address. 
 
 
 ### Resources {#Resources11}
@@ -2383,6 +2412,9 @@ Field | Description
 --- | ---
 resources | **[Resources](#Resources12)**<br>Resources allocated to the hosts. 
 hosts_count | **int64**<br>Number of hosts in the group. 
+zone_ids[] | **string**<br>IDs of the availability zones for hosts 
+subnet_ids[] | **string**<br>IDs of the subnets for hosts 
+assign_public_ip | **bool**<br>Whether the hosts should get a public IP address. 
 
 
 ### Resources {#Resources12}

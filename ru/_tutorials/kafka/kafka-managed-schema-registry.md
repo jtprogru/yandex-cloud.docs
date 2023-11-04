@@ -6,19 +6,17 @@
 
 ## Перед началом работы {#before-you-begin}
 
-1. [Создайте кластер {{ mkf-name }}](../../managed-kafka/operations/cluster-create.md) любой подходящей конфигурации. При создании кластера включите опции **Реестр схем данных** и **Публичный доступ**.
+1. [Создайте кластер {{ mkf-name }}](../../managed-kafka/operations/cluster-create.md) любой подходящей конфигурации. При создании кластера включите опции **{{ ui-key.yacloud.kafka.field_schema-registry }}** и **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}**.
 
     1. [Создайте топик](../../managed-kafka/operations/cluster-topics.md#create-topic) с именем `messages` для обмена сообщениями между производителем и потребителем.
     1. [Создайте пользователя](../../managed-kafka/operations/cluster-accounts.md#create-account) с именем `user` и [выдайте ему права](../../managed-kafka/operations/cluster-accounts.md#grant-permission) на топик `messages`:
         * `ACCESS_ROLE_CONSUMER`,
         * `ACCESS_ROLE_PRODUCER`.
 
-1. В той же сети, что и кластер {{ mkf-name }}, [создайте виртуальную машину](../../compute/operations/vm-create/create-linux-vm.md) с Ubuntu 20.04 и публичным IP-адресом.
+1. В той же сети, что и кластер {{ mkf-name }}, [создайте виртуальную машину](../../compute/operations/vm-create/create-linux-vm.md) с [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts) и публичным IP-адресом.
 
 
 1. Если вы используете группы безопасности, [настройте их](../../managed-kafka/operations/connect.md#configuring-security-groups) так, чтобы был разрешен весь необходимый трафик между кластером {{ mkf-name }} и виртуальной машиной.
-
-    {% include [preview-pp.md](../../_includes/preview-pp.md) %}
 
 
 ## Создайте скрипты производителя и потребителя {#create-scripts}
@@ -59,17 +57,17 @@
     c = AvroConsumer(
         {
             "bootstrap.servers": ','.join([
-            "<FQDN 1-го хоста-брокера>:9091",
+            "<FQDN_хоста-брокера_1>:9091",
             ...
-            "<FQDN N-го хоста-брокера>:9091",
+            "<FQDN_хоста-брокера_N>:9091",
             ]),
             "group.id": "avro-consumer",
             "security.protocol": "SASL_SSL",
             "ssl.ca.location": "/usr/share/ca-certificates/{{ crt-local-file }}",
             "sasl.mechanism": "SCRAM-SHA-512",
             "sasl.username": "user",
-            "sasl.password": "<пароль пользователя user>",
-            "schema.registry.url": "https://<FQDN или IP-адрес сервера {{ mkf-msr }}>:443",
+            "sasl.password": "<пароль_пользователя_user>",
+            "schema.registry.url": "https://<FQDN_или_IP-адрес_сервера_Managed_Schema_Registry>:443",
             "schema.registry.basic.auth.credentials.source": "SASL_INHERIT",
             "schema.registry.ssl.ca.location": "/usr/share/ca-certificates/{{ crt-local-file }}",
             "auto.offset.reset": "earliest"
@@ -157,18 +155,18 @@
     avroProducer = AvroProducer(
         {
             "bootstrap.servers": ','.join([
-                "<FQDN 1-го хоста-брокера>:9091",
+                "<FQDN_хоста-брокера_1>:9091",
                 ...
-                "<FQDN N-го хоста-брокера>:9091",
+                "<FQDN_хоста-брокера_N>:9091",
             ]),
             "security.protocol": 'SASL_SSL',
             "ssl.ca.location": '/usr/share/ca-certificates/{{ crt-local-file }}',
             "sasl.mechanism": 'SCRAM-SHA-512',
             "sasl.username": 'user',
-            "sasl.password": '<пароль пользователя user>',
+            "sasl.password": '<пароль_пользователя_user>',
             "on_delivery": delivery_report,
             "schema.registry.basic.auth.credentials.source": 'SASL_INHERIT',
-            "schema.registry.url": 'https://<FQDN или IP-адрес сервера {{ mkf-msr }}>:443',
+            "schema.registry.url": 'https://<FQDN_или_IP-адрес_сервера_Managed_Schema_Registry>:443',
             "schema.registry.ssl.ca.location": "/usr/share/ca-certificates/{{ crt-local-file }}"
         },
         default_key_schema=key_schema,

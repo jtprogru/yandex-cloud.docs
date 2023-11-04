@@ -9,6 +9,14 @@
 
 Подключение к БД с указанием идентификатора кластера в {{ yandex-cloud }}. Доступно только для кластеров, развернутых в сервисе [{{ ydb-full-name }}](../../../../ydb/).
 
+
+{% note warning %}
+
+Для создания или редактирования эндпоинта управляемой базы данных вам потребуется [роль `ydb.viewer`](../../../../ydb/security/index.md#ydb-viewer) или примитивная [роль `viewer`](../../../../iam/concepts/access-control/roles.md#viewer), выданная на каталог кластера этой управляемой базы данных.
+
+{% endnote %}
+
+
 {% list tabs %}
 
 - Консоль управления
@@ -50,6 +58,6 @@
 
     * **{{ ui-key.yc-data-transfer.data-transfer.console.form.ydb.console.form.ydb.YdbTargetAdvancedSettings.path.title }}** — укажите [поддиректорию](https://ydb.tech/ru/docs/concepts/datamodel/dir) для размещения таблиц.
 
-        Итоговый путь размещения таблицы: `<путь в Yandex Database>/<поддиректория>/<таблица>`.
+        Итоговый путь размещения таблицы: `<путь_в_Yandex_Database>/<поддиректория>/<таблица>`.
 
 {% endlist %}

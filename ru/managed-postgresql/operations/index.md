@@ -7,8 +7,10 @@
 * [{#T}](update.md)
 * [{#T}](cluster-stop.md)
 * [{#T}](hosts.md)
+* [{#T}](host-migration.md)
 * [{#T}](replication-slots.md)
 * [{#T}](cluster-backups.md)
+* [{#T}](storage-space.md)
 * [{#T}](cluster-version-update.md)
 * [{#T}](cluster-delete.md)
 
@@ -16,6 +18,7 @@
 
 * [{#T}](connect.md)
 * [{#T}](web-sql-query.md)
+* [{#T}](copy-write-data.md)
 * [{#T}](databases.md)
 
 ## Пользователи {{ PG }}

@@ -1,3 +1,8 @@
+---
+title: "Как создать виртуальную машину с GPU"
+description: "Следуя данной инструкции, вы сможете создать виртуальную машину с GPU."
+---
+
 # Создание виртуальной машины с GPU
 
 В этом разделе приведена инструкция для создания [ВМ](../../concepts/vm.md) с GPU. Подробнее с конфигурациями ВМ вы можете ознакомиться в разделе [{#T}](../../concepts/gpus.md).
@@ -11,6 +16,10 @@
 {% list tabs %}
 
 - Консоль управления
+
+  
+  @[youtube](https://www.youtube.com/watch?v=1gFAfVA4XRM&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=2&pp=iAQB)
+
 
   {% include [create-vm-with-gpu](../../../_includes/compute/create/create-vm-with-gpu-console.md) %}
 
@@ -106,7 +115,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 
      ```hcl

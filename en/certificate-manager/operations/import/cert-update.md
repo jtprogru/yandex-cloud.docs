@@ -1,6 +1,6 @@
 # Renewing a custom certificate
 
-{{ certificate-manager-name }} doesn't manage [user certificates](../../concepts/imported-certificate.md). To make your certificate continuously available to your resources, be sure to renew it on time.
+{{ certificate-manager-name }} does not manage [custom certificates](../../concepts/imported-certificate.md). To make your certificate continuously available to your resources, be sure to renew it on time.
 
 To get a new version of a user certificate:
 
@@ -8,20 +8,20 @@ To get a new version of a user certificate:
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), select the [folder](../../../resource-manager/concepts/resources-hierarchy.md#folder) where the certificate was created.
-   1. In the list of services, select **{{ certificate-manager-name }}**.
+   1. In the [management console]({{ link-console-main }}), select the [folder](../../../resource-manager/concepts/resources-hierarchy.md#folder) the certificate was added to.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_certificate-manager }}**.
    1. Select the certificate you want to renew in the list.
-   1. In the window that opens, click **Renew certificate**.
-   1. In the window that opens, click **Add certificate** in the **Certificate** field.
-      1. Select how to add your certificate: **File** or **Text**.
-      1. Click **Add**.
-   1. In the **Intermediate certificate chain** field, click **Add chain**.
-      1. Select how to add your certificate: **File** or **Text**.
-      1. Click **Add**.
-   1. In the **Private key** field, click **Add private key**.
-      1. Select how to add your certificate: **File** or **Text**.
-      1. Click **Add**.
-   1. Click **Create**.
+   1. In the window that opens, click **{{ ui-key.yacloud.certificate-manager.overview.action_reimport }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.certificate-manager.import.button_add-certificate }}** in the **{{ ui-key.yacloud.certificate-manager.import.field_certificate }}** field.
+      1. Choose how to add it: `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}` or `{{ ui-key.yacloud.component.file-content-dialog.value_manual }}`.
+      1. Click **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+   1. In the **{{ ui-key.yacloud.certificate-manager.import.field_chain }}** field, click **{{ ui-key.yacloud.certificate-manager.import.button_add-chain }}**.
+      1. Choose how to add it: `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}` or `{{ ui-key.yacloud.component.file-content-dialog.value_manual }}`.
+      1. Click **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+   1. In the **{{ ui-key.yacloud.certificate-manager.import.field_privateKey }}** field, click **{{ ui-key.yacloud.certificate-manager.import.button_add-privateKey }}**.
+      1. Choose how to add it: `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}` or `{{ ui-key.yacloud.component.file-content-dialog.value_manual }}`.
+      1. Click **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+   1. Click **{{ ui-key.yacloud.common.button_update }}**.
 
 - CLI
 
@@ -47,7 +47,7 @@ To get a new version of a user certificate:
       +----------------------+--------+-------------+---------------------+----------+--------+
       |          ID          |  NAME  |   DOMAINS   |      NOT AFTER      |   TYPE   | STATUS |
       +----------------------+--------+-------------+---------------------+----------+--------+
-      | fpqmg47avvimp7rvmp30 | mycert | example.com | 2021-09-15 06:48:26 | IMPORTED | ISSUED |
+      | fpqmg47avvim******** | mycert | example.com | 2021-09-15 06:48:26 | IMPORTED | ISSUED |
       +----------------------+--------+-------------+---------------------+----------+--------+
       ```
 
@@ -55,7 +55,7 @@ To get a new version of a user certificate:
 
       ```bash
       yc certificate-manager certificate update \
-        --id fpqmg47avvimp7rvmp30 \
+        --id fpqmg47avvim******** \
         --chain myupdatedcert.pem \
         --key myupdatedkey.pem
       ```
@@ -68,14 +68,56 @@ To get a new version of a user certificate:
       Command result:
 
       ```bash
-      id: fpqmg47avvimp7rvmp30
-      folder_id: b1g7gvsi89m34qmcm3ke
+      id: fpqmg47avvim********
+      folder_id: b1g7gvsi89m3********
       created_at: "2020-09-15T06:54:44.916Z"
       ...
       issued_at: "2020-09-15T08:23:50.147668Z"
       not_after: "2021-09-15T08:12:57Z"
       not_before: "2020-09-15T08:12:57Z"
       ```
+
+- {{ TF }}
+
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+   1. Open the {{ TF }} configuration file and change the `certificate` and `private_key` parameters of the certificate:
+
+      {% cut "Sample certificate description in the {{ TF }} configuration" %}
+
+      ```
+      ...
+      resource "yandex_cm_certificate" "imported-certificate" {
+        name        = "my-certificate"
+        description = "this is a test certificate"
+
+        self_managed {
+          certificate = <<-EOT
+                        -----BEGIN CERTIFICATE-----
+                        MIIF...
+                        -----END CERTIFICATE-----
+                        EOT
+          private_key = <<-EOT
+                        -----BEGIN PRIVATE KEY-----
+                        MIIJ...
+                        -----END PRIVATE KEY-----
+                        EOT
+        }
+      }
+      ...
+      ```
+
+      {% endcut %}
+
+   1. Apply the changes:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+   You can check the certificate update using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
+
+   ```bash
+   yc certificate-manager certificate get <certificate_name>
+   ```
 
 - API
 

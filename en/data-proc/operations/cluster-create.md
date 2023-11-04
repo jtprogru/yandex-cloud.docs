@@ -1,19 +1,17 @@
 # Creating a {{ dataproc-name }} cluster
 
-To create a {{ dataproc-name }} cluster, the user must be assigned the `editor` and `dataproc.agent` roles. For more information, see the [role description](../security/index.md#roles).
+To create a {{ dataproc-name }} cluster, a user must be assigned the `editor` and `dataproc.agent` roles. For more information, see the [role description](../security/index.md#roles-list).
 
 
 ## Configure a network {#setup-network}
 
-In the subnet the subcluster with master host will connect to, [set up an NAT gateway](../../vpc/operations/create-nat-gateway.md). This will enable the subcluster to interact with {{ yandex-cloud }} services or hosts on other networks.
+Configure access to the internet from the subnet to which the subcluster with a master host will be be connected, e.g., using a [NAT gateway](../../vpc/operations/create-nat-gateway.md). This will enable the subcluster to interact with {{ yandex-cloud }} services or hosts on other networks.
 
 ## Configure security groups {#change-security-groups}
 
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% note warning %}
 
-Security groups must be created and configured before creating a cluster. If the selected security groups don't have the required rules, {{ yandex-cloud }} disables cluster creation.
+Security groups must be created and configured before creating a cluster. If the selected security groups do not have the required rules, {{ yandex-cloud }} disables cluster creation.
 
 {% endnote %}
 
@@ -22,12 +20,12 @@ Security groups must be created and configured before creating a cluster. If the
 
    * One rule for inbound and another one for outbound service traffic:
 
-      * Port range: `{{ port-any }}`.
-      * Protocol: `Any`.
-      * Source: `Security group`.
-      * Security group: `Self`.
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-any }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`)
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**/**{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-sg }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-sg-type }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-sg-type-self }}` (`Self`)
 
-   * A separate rule for outgoing HTTPS traffic. This will enable you to use [{{ objstorage-full-name }} buckets](../../storage/concepts/bucket.md), [UI Proxy](../concepts/interfaces.md), and cluster [autoscaling](../concepts/autoscaling.md).
+   * A separate rule for outgoing HTTPS traffic. This will allow you to use [{{ objstorage-full-name }} buckets](../../storage/concepts/bucket.md), [UI Proxy](../concepts/interfaces.md), and cluster [autoscaling](../concepts/autoscaling.md).
 
       You can set up this rule using one of the two methods:
 
@@ -35,22 +33,24 @@ Security groups must be created and configured before creating a cluster. If the
 
       - To all addresses
 
-         * Port range: `{{ port-https }}`.
-         * Protocol: `TCP`.
-         * Destination type: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-https }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
       - To the addresses used by {{ yandex-cloud }}
 
-         * Port range: `{{ port-https }}`.
-         * Protocol: `TCP`.
-         * Destination type: `CIDR`.
-         * CIDR blocks:
-            * `84.201.181.26/32`: Getting cluster status, running jobs, UI Proxy.
-            * `213.180.193.8/32`: Monitoring cluster status, autoscaling.
-            * `213.180.193.243/32`: Access to {{ objstorage-name }}.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-https }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**:
+            * `84.201.181.26/32`: Getting cluster status, running jobs, UI Proxy
+            * `158.160.59.216/32`: Monitoring cluster status, autoscaling
+            * `213.180.193.243/32`: Access to {{ objstorage-name }}
 
       {% endlist %}
+
+   * A rule that allows access to NTP servers for time syncing.
 
 If you plan to use multiple security groups for a cluster, enable all traffic between these groups.
 
@@ -75,9 +75,9 @@ A cluster must include a subcluster with a master host and at least one subclust
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create a cluster.
 
-   1. Click **Create resource** and select ![image](../../_assets/data-proc/data-proc.svg) **{{ dataproc-name }} cluster** from the drop-down list.
+   1. Click **{{ ui-key.yacloud.iam.folder.dashboard.button_add }}** and select ![image](../../_assets/data-proc/data-proc.svg) **{{ ui-key.yacloud.iam.folder.dashboard.value_data-proc }}** from the drop-down list.
 
-   1. Name the cluster in the **Cluster name** field. The naming requirements are as follows:
+   1. Enter a name for the cluster in the **{{ ui-key.yacloud.mdb.forms.base_field_name }}** field. The naming requirements are as follows:
 
       * It must be unique within the folder.
 
@@ -93,15 +93,15 @@ A cluster must include a subcluster with a master host and at least one subclust
 
       {% endnote %}
 
-   1. Enter the public part of your SSH key in the **SSH key** field. For information about how to generate and use SSH keys, see the [{{ compute-full-name }} documentation](../../compute/operations/vm-connect/ssh.md).
-   1. Select or create a [service account](../../iam/concepts/users/service-accounts.md) to be granted cluster access.
+   1. Enter the public part of your SSH key in the **{{ ui-key.yacloud.mdb.forms.config_field_public-keys }}** field. For information about how to generate and use SSH keys, see the [{{ compute-full-name }} documentation](../../compute/operations/vm-connect/ssh.md).
+   1. Select or create a [service account](../../iam/concepts/users/service-accounts.md) to be granted cluster access. Make sure to [assign](../security/index.md#grant-role) the `dataproc.agent` role to the cluster service account.
    1. Select the availability zone for the cluster.
    1. If necessary, configure the [properties of cluster components](../concepts/settings-list.md), jobs, and the environment.
    1. If necessary, specify the custom [initialization scripts](../concepts/init-action.md) of cluster hosts. For each script, specify:
 
-      * **URI**: Link to the initialization script in the `https://`, `http://`, `hdfs://`, or `s3a://` scheme.
-      * (Optional) **Timeout**: The script execution timeout (in seconds). If your initialization script runs longer than this time, it will be terminated.
-      * (Optional) **Arguments**: The list of arguments of your initialization script, enclosed in square brackets `[]` and separated by commas, for example:
+      * **{{ ui-key.yacloud.mdb.forms.field_initialization-action-uri }}**: Link to the initialization script in the `https://`, `http://`, `hdfs://`, or `s3a://` scheme.
+      * (Optional) **{{ ui-key.yacloud.mdb.forms.field_initialization-action-timeout }}**: Script execution timeout, in seconds. If your initialization script runs longer than this time period, it will be terminated.
+      * (Optional) **{{ ui-key.yacloud.mdb.forms.field_initialization-action-args }}**: List of arguments of your initialization script, enclosed in square brackets `[]` and separated by commas, such as:
 
          ```text
          ["arg1","arg2",...,"argN"]
@@ -117,12 +117,12 @@ A cluster must include a subcluster with a master host and at least one subclust
 
       {% endnote %}
 
-   1. Enable the **UI Proxy** option to access the [web interfaces of {{ dataproc-name }} components](../concepts/interfaces.md).
+   1. Enable the **{{ ui-key.yacloud.mdb.forms.config_field_ui_proxy }}** option to access the [web interfaces of {{ dataproc-name }} components](../concepts/interfaces.md).
 
    
    1. Cluster logs are saved in [{{ cloud-logging-full-name }}](../../logging/). Select a log group from the list or [create a new one](../../logging/operations/create-group.md).
 
-      To enable this functionality, [assign the cluster service account](../../iam/operations/roles/grant.md#access-to-sa) the `logging.writer` role. For more information, see the [{{ cloud-logging-full-name }} documentation](../../logging/security/index.md).
+      To enable this functionality, assign the [cluster service account](../../iam/operations/roles/grant.md#access-to-sa) the `logging.writer` role. For more information, see the [{{ cloud-logging-full-name }} documentation](../../logging/security/index.md).
 
 
    1. Configure subclusters: no more than one subcluster with a master host (called **Master**) and subclusters for data storage or processing.
@@ -138,7 +138,7 @@ A cluster must include a subcluster with a master host and at least one subclust
 
          In the subnet, you need to [set up an NAT gateway](../../vpc/operations/create-nat-gateway.md) for the subcluster with the master host. For more information, see [{#T}](#setup-network).
 
-      * To access subcluster hosts from the internet, select **Public access**. In this case, you can only connect to subcluster hosts over an SSL connection. For more information, see [{#T}](connect.md).
+      * To access subcluster hosts from the internet, select **{{ ui-key.yacloud.mdb.forms.field_assign-public-ip }}**. In this case, you can only connect to subcluster hosts over an SSL connection. For more information, see [{#T}](connect.md).
 
          {% note warning %}
 
@@ -150,20 +150,20 @@ A cluster must include a subcluster with a master host and at least one subclust
 
       {% include [note-info-service-account-roles](../../_includes/data-proc/service-account-roles.md) %}
 
-      1. Under **Add subcluster**, click **Add**.
-      1. In the **Roles** field, select `COMPUTENODE`.
-      1. Under **Scalability**, enable **Automatic scaling**.
+      1. Under **{{ ui-key.yacloud.mdb.forms.label_create-subcluster }}**, click **{{ ui-key.yacloud.mdb.forms.button_configure }}**.
+      1. In the **{{ ui-key.yacloud.mdb.forms.base_field_roles }}** field, select `COMPUTENODE`.
+      1. Under **{{ ui-key.yacloud.mdb.forms.section_scaling }}**, enable the **{{ ui-key.yacloud.mdb.forms.label_autoscaling-activated }}** setting.
       1. Set autoscaling parameters.
-      1. The default metric used for autoscaling is `yarn.cluster.containersPending`. To enable scaling based on CPU usage, disable the **Default scaling** option and set the target CPU utilization level.
-      1. Click **Add**.
+      1. The default metric used for autoscaling is `yarn.cluster.containersPending`. To enable scaling based on CPU usage, disable the **{{ ui-key.yacloud.compute.groups.create.field_default-utilization-target }}** setting and specify the target CPU utilization level.
+      1. Click **{{ ui-key.yacloud.mdb.forms.button_add-subcluster }}**.
 
    1. Configure additional cluster settings, if required:
 
-      **Deletion protection**: Manages cluster protection from accidental deletion by a user.
+      **{{ ui-key.yacloud.mdb.forms.label_deletion-protection }}**: Manages protection of the cluster from accidental deletion by a user.
 
       Enabled protection will not prevent a manual connection to a cluster to delete data.
 
-   1. Click **Create cluster**.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_create }}**.
 
 - CLI
 
@@ -225,16 +225,16 @@ A cluster must include a subcluster with a master host and at least one subclust
 
       {% note info %}
 
-      It must be unique within the folder. It may contain Latin letters, numbers, hyphens, and underscores. The name may not be longer than 63 characters.
+      The cluster name must be unique within the folder. It may contain Latin letters, numbers, hyphens, and underscores. The name may be up to 63 characters long.
 
       {% endnote %}
 
       Where:
 
-      * `--bucket`: The name of the bucket in {{ objstorage-full-name }} to store job dependencies and results. The cluster service account must have `READ and WRITE` permissions for this bucket.
-      * `--zone`: The [availability zone](../../overview/concepts/geo-scope.md) to host the cluster hosts.
-      * `--service-account-name`: The name of the [cluster service account](../../iam/concepts/users/service-accounts.md). Be sure to assign the cluster service account the `mdb.dataproc.agent` role.
-      * `--version`: The [image version](../concepts/environment.md).
+      * `--bucket`: Name of the bucket in {{ objstorage-full-name }} to store job dependencies and results. The cluster service account must have `READ and WRITE` permissions for this bucket.
+      * `--zone`: [Availability zone](../../overview/concepts/geo-scope.md) to host the cluster hosts.
+      * `--service-account-name`: Name of the [cluster service account](../../iam/concepts/users/service-accounts.md). Make sure to [assign](../security/index.md#grant-role) the `dataproc.agent` role to the cluster service account.
+      * `--version`: [Image version](../concepts/environment.md).
 
          {% include [note-light-weight-cluster](../../_includes/data-proc/note-light-weight-cluster.md) %}
 
@@ -244,8 +244,8 @@ A cluster must include a subcluster with a master host and at least one subclust
 
          {% endnote %}
 
-      * `--services`: A list of [components](../concepts/environment.md) that you want to use in the cluster. If this parameter is omitted, the default set is used: `hdfs`, `yarn`, `mapreduce`, `tez`, and `spark`.
-      * `--ssh-public-keys-file`: The full path to the file with the public part of the SSH key to be used to access the cluster hosts. For information about how to generate and use SSH keys, see the [{{ compute-full-name }} documentation](../../compute/operations/vm-connect/ssh.md).
+      * `--services`: List of [components](../concepts/environment.md) that you want to use in the cluster. If this parameter is omitted, the default set will be used: `hdfs`, `yarn`, `mapreduce`, `tez`, and `spark`.
+      * `--ssh-public-keys-file`: Full path to the file with the public part of the SSH key to be used to access the cluster hosts. For information about how to generate and use SSH keys, see the [{{ compute-full-name }} documentation](../../compute/operations/vm-connect/ssh.md).
       * `--subcluster`: Subcluster parameters:
          * `name`: Subcluster name.
          * `role`: Subcluster role (`masternode`, `datanode`, or `computenode`).
@@ -258,7 +258,7 @@ A cluster must include a subcluster with a master host and at least one subclust
 
             {% note warning %}
 
-            After you create your cluster, you can't request or disable public access to the subcluster. However, you can delete a data processing subcluster and then create it again with a relevant public access setting.
+            After you create your cluster, you cannot request or disable public access to the subcluster. However, you can delete a data processing subcluster and then create it again with a relevant public access setting.
 
             {% endnote %}
 
@@ -340,7 +340,7 @@ A cluster must include a subcluster with a master host and at least one subclust
       Where:
 
       * `URI`: Link to the initialization script in the `https://`, `http://`, `hdfs://`, or `s3a://` scheme.
-      * (Optional) `timeout`: Script execution timeout (in seconds). If your initialization script runs longer than this time, it will be terminated.
+      * (Optional) `timeout`: Script execution timeout (in seconds). If your initialization script runs longer than this time period, it will be terminated.
       * (Optional) `args`: Arguments separated by commas with which an initialization script must be executed.
 
 - {{ TF }}
@@ -352,7 +352,7 @@ A cluster must include a subcluster with a master host and at least one subclust
    1. Using the command line, navigate to the folder that will contain the {{ TF }} configuration files with an infrastructure plan. Create the directory if it does not exist.
 
    
-   1. If you do not have {{ TF }} yet, [install it and create a configuration file with provider settings](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   1. {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    1. Create a configuration file describing the [cloud network](../../vpc/concepts/network.md#network) and [subnets](../../vpc/concepts/network.md#subnet).
 
@@ -384,13 +384,13 @@ A cluster must include a subcluster with a master host and at least one subclust
 
       resource "yandex_resourcemanager_folder_iam_member" "dataproc" {
         folder_id = "<folder ID>"
-        role      = "mdb.dataproc.agent"
+        role      = "dataproc.agent"
         member    = "serviceAccount:${yandex_iam_service_account.<name of service account in {{ TF }}>.id}"
       }
 
       resource "yandex_resourcemanager_folder_iam_member" "bucket-creator" {
         folder_id = "<folder ID>"
-        role      = "editor"
+        role      = "dataproc.editor"
         member    = "serviceAccount:${yandex_iam_service_account.<name of service account in {{ TF }}>.id}"
       }
 
@@ -591,13 +591,13 @@ After your cluster's status changes to **Running**, you can [connect](connect.md
    * With the path to the public part of the SSH key: `/home/username/.ssh/id_rsa.pub`.
    * With the `master` subcluster for master hosts and a single `compute` subcluster for processing data:
 
-      * Of the `{{ host-class }}` class.
-      * With network SSD storage (`{{ disk-type-example }}`) of 20 GB.
-      * In the `{{ subnet-name }}` subnet.
-      * With public access.
+      * Class: `{{ host-class }}`
+      * Network SSD storage (`{{ disk-type-example }}`): 20 GB
+      * Subnet: `{{ subnet-name }}`
+      * Public access: Allowed
 
-   * In the security group `{{ security-group }}`.
-   * With protection against accidental cluster deletion.
+   * Security group: `{{ security-group }}`
+   * Protection against accidental cluster deletion: Enabled
 
    Run the following command:
 

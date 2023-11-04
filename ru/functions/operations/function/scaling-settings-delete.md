@@ -1,3 +1,8 @@
+---
+title: "Удалить настройки масштабирования функции"
+description: "Следуя данной инструкции, вы сможете удалить настройки масштабирования функции."
+---
+
 # Удалить настройки масштабирования функции
 
 {% list tabs %}
@@ -5,12 +10,12 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится функция.
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Выберите функцию.
-    1. В блоке **История версий** наведите курсор на тег версии функции (например, ![image](../../../_assets/settings.svg) `$latest`), для которой хотите удалить настройки масштабирования.
-    1. Во всплывающем окне нажмите кнопку **Изменить**.
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.item.overview.label_title-history }}** наведите курсор на тег версии функции (например, ![image](../../../_assets/settings.svg) `$latest`), для которой хотите удалить настройки масштабирования.
+    1. Во всплывающем окне нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.overview.button_edit-tag }}**.
     1. Чтобы удалить настройку масштабирования, сделайте ее значение равным нулю.
-    1. Нажмите кнопку **Сохранить**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -31,7 +36,7 @@
 
     {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).  
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}  
 
     Чтобы удалить настройки масштабирования:
 
@@ -96,9 +101,11 @@
 
     Чтобы удалить настройки масштабирования для функции, воспользуйтесь методом REST API [removeScalingPolicy](../../functions/api-ref/Function/removeScalingPolicy.md) для ресурса [Function](../../functions/api-ref/Function/index.md) или вызовом gRPC API [FunctionService/RemoveScalingPolicy](../../functions/api-ref/grpc/function_service.md#RemoveScalingPolicy).
 
+
 - {{ yandex-cloud }} Toolkit
 
     Удалить настройки масштабирования для функции можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}
 

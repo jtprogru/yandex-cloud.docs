@@ -14,7 +14,7 @@ description: "Вы можете запросить детальную инфор
 
 - Консоль управления
 
-  Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
+  Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
 
 - CLI
 
@@ -30,7 +30,7 @@ description: "Вы можете запросить детальную инфор
   +----------------------+------------+-----------------------------+--------+---------+
   |          ID          |    NAME    |         CREATED AT          | HEALTH | STATUS  |
   +----------------------+------------+-----------------------------+--------+---------+
-  | c9wlk4v14uq79r9cgcku | mymg       | 2018-11-02T10:04:14.645214Z | ALIVE  | RUNNING |
+  | c9wlk4v14uq7******** | mymg       | 2018-11-02T10:04:14.645214Z | ALIVE  | RUNNING |
   | ...                                                                                |
   +----------------------+------------+-----------------------------+--------+---------+
   ```
@@ -48,12 +48,13 @@ description: "Вы можете запросить детальную инфор
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
   1. Нажмите на имя нужного кластера.
 
   {% note tip %}
+
   
-  Чтобы запросить доступ к технологии [Point-in-Time-Recovery](../concepts/backup.md) (PITR) в режиме [Preview](../../overview/concepts/launch-stages.md), нажмите на ссылку **Запросить доступ** в строке **Point-in-time recovery** и заполните форму.
+  Чтобы запросить доступ к технологии [Point-in-Time-Recovery](../concepts/backup.md) (PITR) в режиме [Preview](../../overview/concepts/launch-stages.md), нажмите на ссылку **Запросить доступ** в строке **{{ ui-key.yacloud.mdb.cluster.overview.label_mongodb-pitr }}** и заполните форму.
 
 
   {% endnote %}
@@ -67,7 +68,7 @@ description: "Вы можете запросить детальную инфор
   Чтобы получить информацию о {{ MG }}-кластере, выполните команду:
 
   ```
-  {{ yc-mdb-mg }} cluster get <имя или идентификатор кластера>
+  {{ yc-mdb-mg }} cluster get <имя_или_идентификатор_кластера>
   ```
 
   Идентификатор и имя кластера можно запросить со [списком кластеров в каталоге](#list-clusters).
@@ -88,9 +89,9 @@ description: "Вы можете запросить детальную инфор
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
   1. Нажмите на имя нужного кластера.
-  1. На панели слева выберите ![image](../../_assets/mdb/operations.svg) **Операции**.
+  1. На панели слева выберите ![image](../../_assets/mdb/operations.svg) **{{ ui-key.yacloud.mongodb.cluster.switch_operations }}**.
 
 - CLI
 
@@ -101,7 +102,7 @@ description: "Вы можете запросить детальную инфор
   Чтобы получить список операций, выполните команду:
 
   ```
-  {{ yc-mdb-mg }} cluster list-operations <имя или идентификатор кластера>
+  {{ yc-mdb-mg }} cluster list-operations <имя_или_идентификатор_кластера>
   ```
 
   Идентификатор и имя кластера можно запросить со [списком кластеров в каталоге](#list-clusters).

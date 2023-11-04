@@ -9,10 +9,10 @@
 
 - Консоль управления
 
-    1. Перейдите [на страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mgp-name }}**.
-    1. Нажмите на имя нужного кластера, затем выберите вкладку ![hosts.svg](../../../_assets/mdb/hosts.svg) **Хосты**.
+    1. Перейдите [на страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-greenplum }}**.
+    1. Нажмите на имя нужного кластера, затем выберите вкладку ![hosts.svg](../../../_assets/mdb/hosts.svg) **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}**.
 
-    В списке хостов в колонке **Роль** указывается роль каждого хоста:
+    В списке хостов в колонке **{{ ui-key.yacloud.mdb.cluster.hosts.host_column_role }}** указывается роль каждого хоста:
 
     * `MASTER` — первичный хост-мастер (PRIMARY). Принимает пользовательские подключения.
     * `REPLICA` — резервный хост-мастер (STANDBY). Реплицирует данные первичного хоста-мастера.
@@ -28,14 +28,14 @@
 
     ```bash
     {{ yc-mdb-gp }} hosts list master \
-       --cluster-name=<имя кластера>
+       --cluster-name=<имя_кластера>
     ```
 
     Чтобы получить список хостов-сегментов в кластере, выполните команду:
 
     ```bash
     {{ yc-mdb-gp }} hosts list segment \
-       --cluster-name=<имя кластера>
+       --cluster-name=<имя_кластера>
     ```
 
     Имя кластера можно запросить со [списком кластеров в каталоге](../cluster-list.md#list-clusters).

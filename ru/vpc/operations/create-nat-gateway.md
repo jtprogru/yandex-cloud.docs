@@ -10,7 +10,7 @@
   1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_vpc }}**.
   1. На панели слева выберите **{{ ui-key.yacloud.vpc.switch_gateways }}**.
   1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
-  1. Задайте имя шлюза:
+  1. Задайте имя шлюза. Требования к имени:
 
       {% include [name-format](../../_includes/name-format.md) %}
    
@@ -92,7 +92,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
   
   Чтобы создать NAT-шлюз, указать его в качестве next hop в таблице [маршрутизации](../concepts/static-routes.md) и привязать таблицу к подсети используйте следующую конфигурацию:
   

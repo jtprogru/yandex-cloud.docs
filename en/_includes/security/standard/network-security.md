@@ -3,17 +3,17 @@
 This section provides users with recommendations on security settings in [{{ vpc-full-name }}](../../../vpc/).
 
 
-To isolate applications from each other, put resources in different [security groups](../../../vpc/concepts/security-groups.md), and, if strict isolation is required, in different [networks](../../../vpc/concepts/network.md#network). By default, internal network traffic is allowed, while traffic between networks is not. Traffic between networks is only allowed via [VMs](../../../compute/concepts/vm.md) with two network interfaces in different networks, VPN, or [{{ interconnect-full-name }}](../../../interconnect/).
+To isolate applications from each other, put resources in different [security groups](../../../vpc/concepts/security-groups.md), and, if strict isolation is required, in different [networks](../../../vpc/concepts/network.md#network). By default, internal network traffic is allowed, while traffic between networks is not. Traffic between networks is only allowed via a [VM](../../../compute/concepts/vm.md) with two network interfaces in different networks, VPN, or [{{ interconnect-full-name }}](../../../interconnect/index.yaml).
 
 #### 2.1 Cloud objects use a firewall or security groups {#firewall}
 
-With built-in security groups, you can manage VM access to resources and security groups in {{ yandex-cloud }} or resources on the internet. A security group is a set of rules for incoming and outgoing traffic that can be assigned to a VM's network interface. Security groups work like a stateful firewall: they monitor the status of sessions and, if a rule allows creating a session, they automatically allow response traffic. For instructions on how to set up security groups, see [{#T}](../../../vpc/operations/security-group-create.md). You can specify a security group in the VM settings.
+With built-in security groups, you can manage VM access to resources and security groups in {{ yandex-cloud }} or resources on the internet. A security group is a set of rules for incoming and outgoing traffic that can be assigned to a VM's network interface. Security groups work like a stateful firewall: they monitor the status of sessions and, if a rule allows a session to be created, they automatically allow response traffic. For instructions on how to set up security groups, see [{#T}](../../../vpc/operations/security-group-create.md). You can specify a security group in the VM settings.
 
 You can use security groups to protect:
-* VMs.
-* [Managed databases](/services#data-platform).
-* [{{ alb-full-name }}](../../../application-load-balancer/) [load balancers](../../../application-load-balancer/concepts/application-load-balancer.md).
-* [{{ managed-k8s-full-name }}](../../../managed-kubernetes/) [clusters](../../../managed-kubernetes/concepts/index.md#kubernetes-cluster).
+* VMs
+* [Managed databases](/services#data-platform)
+* [{{ alb-full-name }}](../../../application-load-balancer/) [load balancers](../../../application-load-balancer/concepts/application-load-balancer.md)
+* [{{ managed-k8s-full-name }}](../../../managed-kubernetes/) [clusters](../../../managed-kubernetes/concepts/index.md#kubernetes-cluster)
 
 The list of available services is being extended.
 
@@ -80,7 +80,7 @@ Make sure you use security groups in your [clouds](../../../resource-manager/con
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 * Apply security groups to any objects that have no group.
 * To apply security groups through {{ TF }}, [set up security groups (dev/stage/prod) using {{ TF }}](https://github.com/yandex-cloud/yc-solution-library-for-security/tree/master/network-sec/segmentation).
 * To use the NGFW, [install](https://github.com/yandex-cloud/yc-solution-library-for-security/tree/master/network-sec/checkpoint-1VM) the Check Point NGFW on your VM.
@@ -119,11 +119,11 @@ To apply security groups to your cloud objects in {{ vpc-name }}, make sure ther
       done
       ```
 
-   1. If each of the `SG_ID` combinations next to the `FOLDER_ID` of the folder hosting it has the `ID` specified, the recommendation is fulfilled. Otherwise, proceed to the "Instructions and solutions to use".
+   1. If each of the `SG_ID` combinations next to the `FOLDER_ID` of the folder hosting it has the `IDs` specified, the recommendation is fulfilled. Otherwise, proceed to the "Instructions and solutions to use".
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 Create a security group in each {{ vpc-name }} with restricted access rules, so that it can be assigned to cloud objects.
 
@@ -177,7 +177,7 @@ Make sure to only allow access through the ports that your application requires 
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 Delete the dangerous rule in each security group or edit it by specifying trusted IPs.
 
@@ -223,7 +223,7 @@ We recommend that you only allow access to your cloud infrastructure through con
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 [Delete](../../../cli/cli-ref/managed-services/vpc/security-group/index.md) the dangerous rule in each security group or specify trusted IPs.
 
@@ -272,7 +272,7 @@ We recommend that you only allow access to your cloud infrastructure through con
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 
 * All [materials](../../../vpc/ddos-protection/index.md) about DDoS protection in {{ yandex-cloud }}.
@@ -287,7 +287,7 @@ To enable administrators to establish remote connections to your cloud resources
    * [Creating a site-to-site VPN connection to {{ yandex-cloud }} using {{ TF }}](https://github.com/yandex-cloud/yc-solution-library-for-security/tree/master/network-sec/vpn).
    * Client VPN between remote devices and {{ yandex-cloud }}. As a remote access gateway, use a VM featuring a client VPN based on an [image]({{ link-cloud-marketplace }}?categories=network) from {{ marketplace-name }}.
 
-   For details, see the details in the [Creating a VPN connection using OpenVPN](../../../tutorials/routing/openvpn.md) section. You can also use certified data cryptographic security tools.
+   For more information, see the details in the [Creating a VPN connection using OpenVPN](../../../tutorials/routing/openvpn.md) section. You can also use certified data cryptographic security tools.
 * A dedicated private connection between a remote site and {{ yandex-cloud }} using {{ interconnect-name }}.
 
 To access the infrastructure using control protocols (such as SSH or RDP), create a bastion VM. You can do this using a free [Teleport](https://goteleport.com/) solution. Access to the bastion VM or VPN gateway from the internet must be restricted.
@@ -404,11 +404,11 @@ Regardless of which option you select for setting up outbound internet access, b
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 * If any VM has public IPs, make sure they are required. Otherwise, delete an external IP address in the VM settings.
 * If any NAT-Gateway is found, make sure it is required. Otherwise, delete it.
 * If any NAT instance is found, make sure it is required. Otherwise, delete it.
 
 #### 2.8 DNS queries are not passed to third-party recursive resolvers {#recursive-resolvers}
 
-To increase fault tolerance, some traffic can be routed to third-party recursive resolvers. To avoid this, contact [support](../../../support/overview.md).
+To increase fault tolerance, some traffic may be routed to third-party recursive resolvers. To avoid this, contact [support](../../../support/overview.md).

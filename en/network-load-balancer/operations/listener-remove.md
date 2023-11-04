@@ -1,3 +1,8 @@
+---
+title: "Deleting a listener"
+description: "Follow this guide to delete a listener."
+---
+
 # Deleting a listener
 
 {% list tabs %}
@@ -6,10 +11,11 @@
 
    To delete a [listener](../concepts/listener.md) for your network load balancer:
 
-   1. Open the **Load Balancer** section in the folder to delete the listener from.
+   1. In the [management console]({{ link-console-main }}), select the folder to delete a load balancer listener from.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
    1. Select the network load balancer for deleting the listener.
-   1. Under **Listeners**, click ![image](../../_assets/vertical-ellipsis.svg) in the line of the listener to delete.
-   1. In the menu that opens, click **Remove listener**.
+   1. Under **{{ ui-key.yacloud.load-balancer.network-load-balancer.section_listeners }}**, click ![image](../../_assets/horizontal-ellipsis.svg) in the line of the listener to delete.
+   1. In the menu that opens, click **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_delete-listener }}**.
 
 - CLI
 
@@ -30,7 +36,7 @@
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see the documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To delete a listener of a network load balancer created with {{ TF }}:
    1. Open the {{ TF }} configuration file and delete the fragment with the listener description.
@@ -59,7 +65,7 @@
 
 - API
 
-   Use the [removeListener](../api-ref/NetworkLoadBalancer/removeListener.md) API method and include the following in the request:
+   To remove a network load balancer's listener, use the [removeListener](../api-ref/NetworkLoadBalancer/removeListener.md) REST API method for the [NetworkLoadBalancer](../api-ref/NetworkLoadBalancer/index.md) resource or the [NetworkLoadBalancerService/RemoveListener](../api-ref/grpc/network_load_balancer_service.md#RemoveListener) gRPC API call and provide the following in the request:
 
    * Load balancer ID in the `networkLoadBalancerId` parameter.
    * Listener name in the `listenerName` parameter.

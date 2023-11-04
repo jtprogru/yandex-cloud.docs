@@ -1,5 +1,4 @@
 title: Yandex Cloud Backup
-stage: preview
 href: index.yaml
 items:
   - name: Начало работы
@@ -8,24 +7,40 @@ items:
     items:
       - name: Все инструкции
         href: operations/index.md
-      - name: Подключение ВМ к {{ backup-name }}
+      - name: ВМ в {{ backup-name }}
         items:
-          - name: Создать и подключить ВМ Linux
+          - name: Создать и подключить ВМ на Linux
             href: operations/create-vm.md
-          - name: Подключить ВМ Windows Server
+          - name: Создать и подключить ВМ на Windows
+            href: operations/create-vm-windows.md
+          - name: Подключить ВМ на Linux
+            href: operations/connect-vm-linux.md
+          - name: Подключить ВМ на Windows
             href: operations/connect-vm-windows.md
+          - name: Обновить подключение ВМ к {{ backup-name }}
+            href: operations/refresh-connection.md
+          - name: Удалить ВМ из {{ backup-name }}
+            href: operations/delete-vm.md
       - name: Политики резервного копирования
         items:
           - name: Создать политику
             href: operations/policy-vm/create.md
           - name: Изменить политику
             href: operations/policy-vm/update.md
+          - name: Изменить список ВМ в политике
+            href: operations/policy-vm/attach-and-detach-vm.md
           - name: Удалить политику
             href: operations/policy-vm/delete.md
       - name: Резервные копии
         items:
+          - name: Создать копию
+            href: operations/backup-vm/create.md
           - name: Восстановить ВМ из копии
             href: operations/backup-vm/recover.md
+          - name: Восстановить ВМ из копии другой ВМ
+            href: operations/backup-vm/non-native-recovery.md
+          - name: Восстановить на ВМ отдельные директории и файлы
+            href: operations/backup-vm/recover-file-by-file.md
           - name: Удалить копию
             href: operations/backup-vm/delete.md
   - name: Концепции
@@ -44,4 +59,84 @@ items:
     href: security/index.md
   - name: Правила тарификации
     href: pricing.md
+  - name: Справочник API
+    items:
+      - name: Аутентификация в API
+        href: api-ref/backup/authentication.md
+      - name: gRPC (англ.)
+        items:
+          - name: Overview
+            href: backup/api-ref/grpc/index.md
+          - name: BackupService
+            href: backup/api-ref/grpc/backup_service.md
+          - name: PolicyService
+            href: backup/api-ref/grpc/policy_service.md
+          - name: ProviderService
+            href: backup/api-ref/grpc/provider_service.md
+          - name: ResourceService
+            href: backup/api-ref/grpc/resource_service.md
+          - name: OperationService
+            href: backup/api-ref/grpc/operation_service.md
+      - name: REST (англ.)
+        items:
+          - name: Overview
+            href: backup/api-ref/index.md
+          - name: Backup
+            items:
+              - name: Overview
+                href: backup/api-ref/Backup/index.md
+              - name: delete
+                href: backup/api-ref/Backup/delete.md
+              - name: get
+                href: backup/api-ref/Backup/get.md
+              - name: list
+                href: backup/api-ref/Backup/list.md
+              - name: listArchives
+                href: backup/api-ref/Backup/listArchives.md
+              - name: listFiles
+                href: backup/api-ref/Backup/listFiles.md
+              - name: startRecovery
+                href: backup/api-ref/Backup/startRecovery.md
+          - name: Policy
+            items:
+              - name: Overview
+                href: backup/api-ref/Policy/index.md
+              - name: apply
+                href: backup/api-ref/Policy/apply.md
+              - name: create
+                href: backup/api-ref/Policy/create.md
+              - name: delete
+                href: backup/api-ref/Policy/delete.md
+              - name: execute
+                href: backup/api-ref/Policy/execute.md
+              - name: get
+                href: backup/api-ref/Policy/get.md
+              - name: list
+                href: backup/api-ref/Policy/list.md
+              - name: listApplications
+                href: backup/api-ref/Policy/listApplications.md
+              - name: revoke
+                href: backup/api-ref/Policy/revoke.md
+              - name: update
+                href: backup/api-ref/Policy/update.md
+          - name: Provider
+            items:
+              - name: Overview
+                href: backup/api-ref/Provider/index.md
+              - name: activate
+                href: backup/api-ref/Provider/activate.md
+              - name: listActivated
+                href: backup/api-ref/Provider/listActivated.md
+          - name: Resource
+            items:
+              - name: Overview
+                href: backup/api-ref/Resource/index.md
+              - name: delete
+                href: backup/api-ref/Resource/delete.md
+              - name: get
+                href: backup/api-ref/Resource/get.md
+              - name: list
+                href: backup/api-ref/Resource/list.md
+              - name: listTasks
+                href: backup/api-ref/Resource/listTasks.md
 base: ru/backup

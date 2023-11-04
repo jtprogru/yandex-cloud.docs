@@ -1,3 +1,8 @@
+---
+title: "How to manage data format schemas in {{ mch-name }}"
+description: "This guide describes how you can manage data format schemas in {{ mch-name }}."
+---
+
 # Managing data format schemas in {{ mch-name }}
 
 {% include [Format schemas intro](../../_includes/mdb/mch/format-schemas-intro.md) %}
@@ -13,15 +18,11 @@ Examples of working with the Cap'n Proto and Protobuf formats when inserting dat
 
 1. [Import](../../storage/operations/objects/upload.md) the file with the data format schema to {{ objstorage-full-name }}.
 
-1. Configure access to the schema file using one of the methods:
+1. Configure access to the schema file using a [service account](../../iam/concepts/users/service-accounts.md):
 
-   * Use a [service account](../../iam/concepts/users/service-accounts.md) (recommended). This method enables you to access the file without entering account information.
-
-      1\. [Connect a service account to a cluster](s3-access.md#connect-service-account).
-      2\. [Assign the account the role](s3-access.md#configure-acl) of `storage.viewer`.
-      3\. In the bucket ACL, [grant the account](../../storage/operations/buckets/edit-acl.md) `READ` permission.
-
-   * [Enable public access](../../storage/operations/objects/edit-acl.md) to the bucket containing the file.
+   1. [Connect a service account to a cluster](s3-access.md#connect-service-account).
+   1. [Assign the account the role](s3-access.md#configure-acl) of `storage.viewer`.
+   1. In the bucket ACL, [grant](../../storage/operations/buckets/edit-acl.md) the `READ` permission to the account.
 
 1. [Get a link](s3-access.md#get-link-to-object) to the schema file.
 
@@ -32,11 +33,11 @@ Examples of working with the Cap'n Proto and Protobuf formats when inserting dat
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click on the name of the cluster you need and select the **Data format schemas** tab.
-   1. Click **Add schema**.
-   1. In the **Add schema** dialog box, fill out the form by completing the **URL** field with the previously generated link to the format schema file.
-   1. Click **Add**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.clickhouse.cluster.switch_format-schemas }}** tab.
+   1. Click **{{ ui-key.yacloud.clickhouse.cluster.format-schemas.button-action_add-format-schema }}**.
+   1. In the **{{ ui-key.yacloud.clickhouse.cluster.format-schemas.dialog.title_add }}** dialog box, fill out the form by completing the **{{ ui-key.yacloud.clickhouse.cluster.format-schemas.dialog.field_format-schema-uri }}** field with the previously generated link to the format schema file.
+   1. Click **{{ ui-key.yacloud.clickhouse.cluster.format-schemas.dialog.label_add }}**.
 
 - CLI
 
@@ -88,7 +89,7 @@ Examples of working with the Cap'n Proto and Protobuf formats when inserting dat
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -123,9 +124,9 @@ To update the contents of a schema that is already connected to the cluster:
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click on the name of the cluster you need and select the **Data format schemas** tab.
-   1. Select the schema, click ![image](../../_assets/options.svg), and select **Edit**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.clickhouse.cluster.switch_format-schemas }}** tab.
+   1. Select the appropriate schema, click ![image](../../_assets/options.svg), and select **{{ ui-key.yacloud.clickhouse.cluster.format-schemas.table.button_action-edit-format-schema }}**.
 
 - CLI
 
@@ -166,7 +167,7 @@ To update the contents of a schema that is already connected to the cluster:
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -201,9 +202,9 @@ After disabling a format schema, the corresponding object is kept in the {{ objs
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click on the name of the cluster you need and select the **Data format schemas** tab.
-   1. Select the appropriate schema, click ![image](../../_assets/options.svg), and select **Delete**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.clickhouse.cluster.switch_format-schemas }}** tab.
+   1. Select the appropriate schema, click ![image](../../_assets/options.svg), and select **{{ ui-key.yacloud.clickhouse.cluster.format-schemas.table.button_action-delete-format-schema }}**.
 
 - CLI
 
@@ -232,7 +233,7 @@ After disabling a format schema, the corresponding object is kept in the {{ objs
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -255,8 +256,8 @@ After disabling a format schema, the corresponding object is kept in the {{ objs
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click on the name of the cluster you need and select the **Data format schemas** tab.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.clickhouse.cluster.switch_format-schemas }}** tab.
 
 - CLI
 

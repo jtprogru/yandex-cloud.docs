@@ -6,8 +6,10 @@ This section describes typical problems that may arise during [transfer](../oper
 * [{#T}](#api)
 * [{#T}](#network)
 * [{#T}](#clickhouse)
+* [{#T}](#elasticsearch)
 * [{#T}](#mongodb)
 * [{#T}](#mysql)
+* [{#T}](#opensearch)
 * [{#T}](#postgresql)
 * [{#T}](#ydb)
 * [{#T}](#yds)
@@ -19,15 +21,25 @@ Limitations on sources and targets while a transfer is running are described in 
 
 You can request log records about your resources from {{ yandex-cloud }} services. For more information, see [{#T}](../../support/request.md).
 
+
+Use the {{ yandex-cloud }} [mobile app](/mobile-app) to quickly view logs, monitor transfers, and get error details.
+
+
 ## General {#common}
 
 {% include [long-time](../../_includes/data-transfer/troubles/long-time.md) %}
+
+{% include [increment-copy](../../_includes/data-transfer/troubles/increment-copy.md) %}
 
 {% include [duplicates](../../_includes/data-transfer/troubles/duplicates.md) %}
 
 {% include [insufficiency-resources](../../_includes/data-transfer/troubles/insufficiency-resources.md) %}
 
 {% include [permission-denied](../../_includes/data-transfer/troubles/permission-denied.md) %}
+
+
+{% include [required-role](../../_includes/data-transfer/troubles/required-roles.md) %}
+
 
 ## API errors {#api}
 
@@ -57,6 +69,12 @@ Error example:
 
 {% include [no-new-tables](../../_includes/data-transfer/troubles/table-names.md) %}
 
+## {{ ES }} {#elasticsearch}
+
+{% include [ambiguous-object-resolution-es](../../_includes/data-transfer/troubles/elastic-opensearch/ambiguous-object-resolution-es.md) %}
+
+{% include [duplication](../../_includes/data-transfer/troubles/elastic-opensearch/duplication.md) %}
+
 ## {{ MG }} {#mongodb}
 
 {% include [string-size](../../_includes/data-transfer/troubles/mongodb/string-size.md) %}
@@ -68,6 +86,8 @@ Error example:
 {% include [sharded](../../_includes/data-transfer/troubles/mongodb/sharded.md) %}
 
 {% include [timeseries](../../_includes/data-transfer/troubles/mongodb/timeseries.md) %}
+
+{% include [cluster configuration](../../_includes/data-transfer/troubles/mongodb/cluster-configuration.md) %}
 
 ## {{ MY }} {#mysql}
 
@@ -82,6 +102,14 @@ Error example:
 {% include [binlog-bytes](../../_includes/data-transfer/troubles/mysql/binlog-bytes.md) %}
 
 {% include [drop-table-error](../../_includes/data-transfer/troubles/drop-table-error.md) %}
+
+{% include [timezone-shift](../../_includes/data-transfer/troubles/mysql/timezone-shift.md) %}
+
+## {{ OS }} {#opensearch}
+
+{% include [ambiguous-object-resolution-os](../../_includes/data-transfer/troubles/elastic-opensearch/ambiguous-object-resolution-os.md) %}
+
+{% include [duplication](../../_includes/data-transfer/troubles/elastic-opensearch/duplication.md) %}
 
 ## {{ PG }} {#postgresql}
 
@@ -127,6 +155,8 @@ Error example:
 ## {{ yds-full-name }} {#yds}
 
 {% include [overloaded](../../_includes/data-transfer/troubles/overloaded.md) %}
+
+{% include [redirects](../../_includes/data-transfer/troubles/data-streams/data-streams-redirects.md) %}
 
 
 

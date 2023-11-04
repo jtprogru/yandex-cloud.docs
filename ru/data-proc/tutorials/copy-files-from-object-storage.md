@@ -25,7 +25,7 @@
 
 ### Доступ в S3 с аутентификацией через IAM-токен сервисного аккаунта кластера {#s3-access-using-iam}
 
-1. При создании кластера укажите [сервисный аккаунт](../../iam/operations/sa/create.md#create-sa). Если кластер уже создан, добавьте сервисный аккаунт с помощью кнопки **Изменить кластер** в консоли управления.
+1. При создании кластера укажите [сервисный аккаунт](../../iam/operations/sa/create.md#create-sa). Если кластер уже создан, добавьте сервисный аккаунт с помощью кнопки **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** в консоли управления.
 
 1. У сервисного аккаунта должен быть доступ к нужному бакету. Для этого выдайте сервисному аккаунту права в [ACL бакета](../../storage/concepts/acl), либо роль `storage.viewer` или `storage.editor`.
 
@@ -165,7 +165,7 @@ hadoop distcp \
 * `spark:spark.hadoop.fs.s3a.committer.name` — используемый режим по умолчанию: `directory`, `magic` или `partitioned`.
 * `spark:spark.sql.parquet.output.committer.class : org.apache.spark.internal.io.cloud.BindingParquetOutputCommitter`.
 * `spark:spark.sql.sources.commitProtocolClass : org.apache.spark.internal.io.cloud.PathOutputCommitProtocol`.
-* (Опционально) `core:fs.s3a.committer.staging.conflict-mode` — действие при обнаружении в целевой таблице уже существующих партиций с данными (при использовании режима `partitioned`):
+* (опционально) `core:fs.s3a.committer.staging.conflict-mode` — действие при обнаружении в целевой таблице уже существующих партиций с данными (при использовании режима `partitioned`):
     * `append` — данные в существующей партиции дополняются новыми данными.
     * `fail` — при попытке перезаписи существующей партиции задание останавливается с ошибкой.
     * `replace` — данные в существующей партиции заменяются данными новой партиции.

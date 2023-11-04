@@ -1,3 +1,8 @@
+---
+title: "Удалить резервную копию"
+description: "Из статьи вы узнаете, как удалить резервную копию ВМ в **{{ backup-name }}**."
+---
+
 # Удалить резервную копию
 
 {% list tabs %}
@@ -5,9 +10,9 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором находится резервная копия.
-  1. Выберите сервис **{{ backup-name }}**.
-  1. Перейдите на вкладку ![backups](../../../_assets/backup/backups.svg) **Резервные копии**.
-  1. Напротив резервной копии, которую нужно удалить, нажмите ![image](../../../_assets/options.svg) и выберите **Удалить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_backup }}**.
+  1. Перейдите на вкладку ![backups](../../../_assets/backup/backups.svg) **{{ ui-key.yacloud.backup.label_backups }}**.
+  1. Напротив резервной копии, которую нужно удалить, нажмите ![image](../../../_assets/options.svg) и выберите **{{ ui-key.yacloud.common.delete }}**.
   1. Подтвердите удаление.
 
 - CLI
@@ -44,6 +49,10 @@
       * `--instance-id` — идентификатор ВМ, резервную копию которой нужно удалить.
 
   Подробнее о команде читайте в [справочнике CLI](../../../cli/cli-ref/managed-services/backup/backup/delete.md).
+
+- API
+
+  Чтобы удалить резервную копию, воспользуйтесь методом REST API [delete](../../backup/api-ref/Backup/delete.md) для ресурса [Backup](../../backup/api-ref/Backup/index.md) или вызовом gRPC API [BackupService/Delete](../../backup/api-ref/grpc/backup_service.md#Delete).
 
 {% endlist %}
 

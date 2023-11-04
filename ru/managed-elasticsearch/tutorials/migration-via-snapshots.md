@@ -1,8 +1,13 @@
+---
+title: "Миграция в {{ mes-name }} с помощью снапшотов"
+description: "Кластер {{ mes-name }} поддерживает механизм снапшотов. Это позволяет мигрировать в него данные из другого кластера {{ ES }}. Подробнее о механизме снапшотов см. в документации {{ ES }}."
+---
+
 # Миграция в {{ mes-name }} с помощью снапшотов
 
 {% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
 
-Кластер {{ mes-name }} поддерживает механизм [снапшотов](https://cloud.yandex.ru/docs/glossary/snapshot). Это позволяет мигрировать в него данные из другого кластера {{ ES }}. Подробнее о механизме снапшотов см. в [документации {{ ES }}](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-restore.html).
+Кластер {{ mes-name }} поддерживает механизм [снапшотов](../../glossary/snapshot.md). Это позволяет мигрировать в него данные из другого кластера {{ ES }}. Подробнее о механизме снапшотов см. в [документации {{ ES }}](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-restore.html).
 
 Чтобы мигрировать данные из *кластера-источника* {{ ES }} в *кластер-приемник* {{ mes-name }}:
 
@@ -48,7 +53,7 @@
 
 - С помощью {{ TF }}
 
-    1. Если у вас еще нет {{ TF }}, [установите его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
     1. Скачайте в ту же рабочую директорию файл конфигурации [mes-migration.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/mes-migration.tf). В файле описаны:
 
@@ -95,10 +100,10 @@
 
 1. [Настройте ACL](../../storage/operations/buckets/edit-acl.md) для бакета:
 
-    1. В выпадающем списке **Выберите пользователя** укажите созданный ранее сервисный аккаунт.
-    1. Задайте разрешения `READ + WRITE` для выбранного сервисного аккаунта.
-    1. Нажмите кнопку **Добавить**.
-    1. Нажмите кнопку **Сохранить**.
+    1. В выпадающем списке **{{ ui-key.yacloud.component.acl-dialog.label_select-placeholder }}** укажите созданный ранее сервисный аккаунт.
+    1. Задайте разрешения `READ и WRITE` для выбранного сервисного аккаунта.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.add }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 1. [Установите плагин](https://www.elastic.co/guide/en/elasticsearch/plugins/7.16/repository-s3.html) `repository-s3` на все хосты кластера-источника.
 
@@ -138,19 +143,19 @@
     1. Загрузите данные из хранилища ключей:
 
         ```bash
-        curl -X POST "https://<FQDN кластера-источника>:9200/_nodes/reload_secure_settings"
+        curl -X POST "https://<FQDN_кластера-источника>:9200/_nodes/reload_secure_settings"
         ```
 
     1. Зарегистрируйте репозиторий:
 
         ```bash
-        curl "https://<FQDN кластера-источника>:9200/_snapshot/<имя репозитория>" \
+        curl "https://<FQDN_кластера-источника>:9200/_snapshot/<имя_репозитория>" \
              -X PUT \
              -H 'Content-Type: application/json' -d '
                {
                  "type": "s3",
                  "settings": {
-                   "bucket": "<имя бакета>",
+                   "bucket": "<имя_бакета>",
                    "endpoint": "{{ s3-storage-host }}"
                  }
                }'
@@ -166,14 +171,14 @@
 
     ```bash
     curl -X PUT \
-         "https://<FQDN кластера-источника>:9200/_snapshot/<имя репозитория>/snapshot_1?wait_for_completion=true&pretty"
+         "https://<FQDN_кластера-источника>:9200/_snapshot/<имя_репозитория>/snapshot_1?wait_for_completion=true&pretty"
     ```
 
     Процесс создания снапшота может занять длительное время. Отслеживайте ход выполнения операции [с помощью инструментов {{ ES }}](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-take-snapshot.html#monitor-snapshot), например:
 
     ```bash
     curl -X GET \
-         "https://<FQDN кластера-источника>:9200/_snapshot/<имя репозитория>/snapshot_1/_status?pretty"
+         "https://<FQDN_кластера-источника>:9200/_snapshot/<имя_репозитория>/snapshot_1/_status?pretty"
     ```
 
 ## Восстановите снапшот в кластере-приемнике {#restore-snapshot}
@@ -183,13 +188,13 @@
 1. Подключите к кластеру-приемнику бакет {{ objstorage-name }} в качестве хранилища снапшотов:
 
     ```bash
-    curl "https://admin:<пароль пользователя admin>@<FQDN кластера-приемника>:9200/_snapshot/<имя репозитория>" \
+    curl "https://admin:<пароль_пользователя_admin>@<FQDN_кластера-приемника>:9200/_snapshot/<имя_репозитория>" \
          -X PUT \
          -H 'Content-Type: application/json' -d '
            {
              "type": "s3",
              "settings": {
-               "bucket": "<имя бакета>",
+               "bucket": "<имя_бакета>",
                "endpoint": "{{ s3-storage-host }}"
              }
            }'
@@ -215,14 +220,14 @@
 
     ```bash
     curl -X POST \
-         "https://admin:<пароль пользователя admin>@<FQDN кластера-приемника>:9200/_all/_close?pretty"
+         "https://admin:<пароль_пользователя_admin>@<FQDN_кластера-приемника>:9200/_all/_close?pretty"
     ```
 
     Пример восстановления снапшота целиком:
 
     ```bash
     curl -X POST \
-         "https://admin:<пароль пользователя admin>@<FQDN кластера-приемника>:9200/_snapshot/<имя репозитория>/snapshot_1/_restore"
+         "https://admin:<пароль_пользователя_admin>@<FQDN_кластера-приемника>:9200/_snapshot/<имя_репозитория>/snapshot_1/_restore"
     ```
 
 1. Запустите восстановление из снапшота на кластере-приемнике. Можно восстановить весь снапшот или отдельные индексы. Подробнее см. в [документации {{ ES }}](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-restore-snapshot.html).
@@ -231,9 +236,9 @@
 
     ```bash
     curl -X POST \
-         -H 'Content-Type: application/json' 'https://admin:<пароль пользователя admin>@<FQDN кластера-приемника>:9200/_snapshot/<имя репозитория>/snapshot_1/_restore' -d '
+         -H 'Content-Type: application/json' 'https://admin:<пароль_пользователя_admin>@<FQDN_кластера-приемника>:9200/_snapshot/<имя_репозитория>/snapshot_1/_restore' -d '
          {
-           "indices": "<список индексов>"
+           "indices": "<список_индексов>"
          }'
     ```
 
@@ -243,7 +248,7 @@
 
     ```bash
     curl -X GET \
-         "https://admin:<пароль пользователя admin>@<FQDN кластера-приемника>:9200/_snapshot/<имя репозитория>/snapshot_1/_status?pretty"
+         "https://admin:<пароль_пользователя_admin>@<FQDN_кластера-приемника>:9200/_snapshot/<имя_репозитория>/snapshot_1/_status?pretty"
     ```
 
 1. При необходимости после завершения операции восстановления [откройте все закрытые индексы](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html).
@@ -252,7 +257,7 @@
 
     ```bash
     curl -X POST \
-         "https://admin:<пароль пользователя admin>@<FQDN кластера-приемника>:9200/_all/_open?pretty"
+         "https://admin:<пароль_пользователя_admin>@<FQDN_кластера-приемника>:9200/_all/_open?pretty"
     ```
 
 ## Закончите миграцию {#finish-migration}

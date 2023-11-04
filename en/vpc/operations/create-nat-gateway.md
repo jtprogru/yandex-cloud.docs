@@ -10,11 +10,11 @@ To create and set up a NAT gateway:
    1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_vpc }}**.
    1. In the left-hand panel, select **{{ ui-key.yacloud.vpc.switch_gateways }}**.
    1. Click **{{ ui-key.yacloud.common.create }}**.
-   1. Enter a name for the gateway:
+   1. Enter a name for the gateway. The naming requirements are as follows:
 
       {% include [name-format](../../_includes/name-format.md) %}
 
-   1. (optional) Add a gateway description.
+   1. (Optional) Add a gateway description.
    1. The default gateway type is `{{ ui-key.yacloud.vpc.gateways.value_gateway-type-egress-nat }}`.
    1. Click **{{ ui-key.yacloud.common.save }}**.
    1. In the left-hand panel, select **{{ ui-key.yacloud.vpc.network.switch_route-table }}**.
@@ -28,7 +28,7 @@ To create and set up a NAT gateway:
    Next, link the route table to a subnet to route traffic from it via the NAT gateway:
 
    1. In the left-hand panel, select ![image](../../_assets/vpc/subnets.svg) **{{ ui-key.yacloud.vpc.switch_networks }}**.
-   1. In the line with the desired subnet, click ![image](../../_assets/options.svg).
+   1. In the required subnet row, click ![image](../../_assets/options.svg).
    1. In the menu that opens, select **{{ ui-key.yacloud.vpc.subnetworks.button_action-add-route-table }}**.
    1. In the window that opens, select the created table from the list.
    1. Click **{{ ui-key.yacloud.vpc.subnet.add-route-table.button_add }}**.
@@ -92,7 +92,7 @@ To create and set up a NAT gateway:
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To create a NAT gateway, specify it as the next hop in the [route](../concepts/static-routes.md) table, and link the table to the subnet, use the following configuration:
 

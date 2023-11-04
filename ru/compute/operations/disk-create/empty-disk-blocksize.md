@@ -1,3 +1,8 @@
+---
+title: "Как создать пустой диск с блоком большого размера"
+description: "Следуя данной инструкции, вы сможете создать пустой диск с блоком большого размера."
+---
+
 # Создать пустой диск с блоком большого размера
 
 {% include [default-catalogue](../../../_includes/compute/disk-blocksize.md) %}
@@ -29,6 +34,8 @@
         ```
 
        Данная команда создаст диск размером 40 ГБ и размером блока 8 КБ, с именем `big-disk` и описанием `my 8k blocksize disk via yc`.
+
+       Требования к имени диска:
 
        {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -63,7 +70,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   {% include [terraform-empty-disk-create](../../../_includes/compute/terraform-empty-disk-create.md) %}
 

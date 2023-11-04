@@ -1,0 +1,32 @@
+title: Yandex Managed Service for Apache Airflow™
+href: index.yaml
+items:
+  - name: Getting started
+    href: quickstart.md
+  - name: Step-by-step guides
+    items:
+      - name: All guides
+        href: operations/index.md
+      - name: Creating clusters
+        href: operations/cluster-create.md
+      - name: Updating clusters
+        href: operations/cluster-update.md
+      - name: Working with {{ AF }} interfaces
+        href: operations/af-interfaces.md
+      - name: Deleting clusters
+        href: operations/cluster-delete.md
+  - name: Concepts
+    items:
+      - name: Resource relationships
+        href: concepts/index.md
+      - name: Quotas and limits
+        href: concepts/limits.md
+      - name: Pricing policy
+        href: pricing.md
+  - name: Tutorials
+    items:
+      - name: Automating {{ dataproc-name }} operations
+        href: tutorials/data-proc-automation.md
+  - name: Access management
+    href: security/index.md
+base: en/managed-airflow

@@ -7,16 +7,16 @@ items:
     items:
       - name: All guides
         href: operations/index.md
-      - name: Operations with clusters
+      - name: Clusters
         items:
           - name: Getting information on existing clusters
             href: operations/cluster-list.md
           - name: Creating clusters
             href: operations/cluster-create.md
-          - name: Stopping and starting clusters
-            href: operations/cluster-stop.md
           - name: Changing {{ PG }} cluster settings
             href: operations/update.md
+          - name: Stopping and starting clusters
+            href: operations/cluster-stop.md
           - name: Managing PostgreSQL hosts
             href: operations/hosts.md
           - name: Managing replication slots
@@ -27,15 +27,17 @@ items:
             href: operations/cluster-version-update.md
           - name: Deleting clusters
             href: operations/cluster-delete.md
-      - name: Working with databases
+      - name: Databases
         items:
           - name: Connecting to a database
             href: operations/connect.md
           - name: SQL queries in the management console
             href: operations/web-sql-query.md
+          - name: Copying and populating a table
+            href: operations/copy-write-data.md
           - name: Managing databases
             href: operations/databases.md
-      - name: Working with users
+      - name: '{{ PG }} users'
         items:
           - name: Managing database users
             href: operations/cluster-users.md
@@ -51,7 +53,7 @@ items:
             href: operations/extensions/pgaudit.md
           - name: pgcrypto
             href: operations/extensions/pgcrypto.md
-      - name: Working with logs and monitoring
+      - name: Logs and monitoring
         items:
           - name: Viewing cluster logs
             href: operations/cluster-logs.md
@@ -103,9 +105,17 @@ items:
               Migrating databases from {{ mpg-full-name }} to {{
               objstorage-full-name }}
             href: tutorials/mpg-to-objstorage.md
+          - name: >-
+              Migrating data from {{ mmy-full-name }} to {{ mpg-name }} using {{
+              data-transfer-full-name }}
+            href: tutorials/mmy-to-mpg.md
+          - name: >-
+              Migrating data from {{ mpg-name }} to {{ mmy-full-name }} using {{
+              data-transfer-full-name }}
+            href: tutorials/mpg-to-mmy.md
   - name: Concepts
     items:
-      - name: Relationships between service resources
+      - name: Resource relationships
         href: concepts/index.md
       - name: Host classes
         items:

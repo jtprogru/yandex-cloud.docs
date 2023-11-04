@@ -7,11 +7,11 @@
 - Консоль управления
     
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится функция.
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Выберите функцию, для версии которой хотите добавить переменную окружения.
-    1. Перейдите на вкладку **Редактор**.
-    1. В блоке **Параметры** укажите переменную окружения и нажмите **Добавить**. Можно добавить несколько переменных окружения.
-    1. Нажмите кнопку **Создать версию**. Будет создана новая версия функции с указанными переменными окружения.
+    1. Перейдите на вкладку **{{ ui-key.yacloud.serverless-functions.item.switch_editor }}**.
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.item.editor.label_title-params }}** укажите переменную окружения и нажмите **{{ ui-key.yacloud.serverless-functions.item.editor.button_add-environment-variable }}**. Можно добавить несколько переменных окружения.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**. Будет создана новая версия функции с указанными переменными окружения.
     
 - CLI
 
@@ -52,7 +52,7 @@
 
     {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-    Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
     Чтобы добавить переменные окружения:
 
@@ -116,9 +116,11 @@
 
     Чтобы добавить переменные окружения, воспользуйтесь методом REST API [createVersion](../../functions/api-ref/Function/createVersion.md) для ресурса [Function](../../functions/api-ref/Function/index.md) или вызовом gRPC API [FunctionService/CreateVersion](../../functions/api-ref/grpc/function_service.md#CreateVersion).
 
+
 - {{ yandex-cloud }} Toolkit
 
     Добавить переменные окружения можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}
 

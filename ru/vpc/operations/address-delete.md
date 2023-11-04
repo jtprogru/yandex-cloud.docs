@@ -1,3 +1,8 @@
+---
+title: "Как удалить статический публичный IP-адрес"
+description: "Следуя данной инструкции, вы сможете удалить статический публичный IP-адрес."
+---
+
 # Удалить статический публичный IP-адрес
 
 {% note alert %}
@@ -59,7 +64,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы удалить статический публичный IP-адрес, созданный с помощью {{ TF }}:
 

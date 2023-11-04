@@ -1,19 +1,26 @@
+---
+title: "Migration to {{ mes-name }} using snapshots"
+description: "{{ mes-name }} clusters support taking snapshots. This allows you to migrate data from another {{ ES }} cluster to it. For more information about snapshots, see the {{ ES }} documentation."
+---
+
 # Migrating to {{ mes-name }} using snapshots
+
+{% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
 
 {{ mes-name }} clusters support the snapshot mechanism. This lets you migrate data from another {{ ES }} cluster to it. For more information about snapshots, see the [{{ ES }} documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-restore.html).
 
 To migrate data from the *source cluster* in {{ ES }} to the *target cluster* in {{ mes-name }}:
 
-1. [{#T}](#before-you-begin).
-1. [{#T}](#create-snapshot).
-1. [{#T}](#restore-snapshot).
-1. [{#T}](#finish-migration).
+1. [{#T}](#before-you-begin)
+1. [{#T}](#create-snapshot)
+1. [{#T}](#restore-snapshot)
+1. [{#T}](#finish-migration)
 
-If you no longer need the resources in use, [delete them](#clear-out).
+If you no longer need the resources you are using, [delete them](#clear-out).
 
 {% note warning %}
 
-You can't use a snapshot if the {{ ES }} version in the source cluster is higher than that in the target cluster. For example, you won't be able to restore a snapshot of an {{ ES }} 7.13 cluster in a {{ mes-name }} 7.11 cluster.
+You cannot use a snapshot if the {{ ES }} version in the source cluster is higher than that in the target cluster. For example, you will not be able to restore a snapshot of an {{ ES }} 7.13 cluster in a {{ mes-name }} 7.11 cluster.
 
 {% endnote %}
 
@@ -25,15 +32,13 @@ You can't use a snapshot if the {{ ES }} version in the source cluster is higher
 
 - Manually
 
-   
-   1. [Create a {{ objstorage-name }} bucket](../../storage/operations/buckets/create.md) with restricted access. This bucket will be used as a snapshot repository.
+   1. [Create an {{ objstorage-name }} bucket](../../storage/operations/buckets/create.md) with restricted access. This bucket will be used as a snapshot repository.
    1. [Create a service account](../../iam/operations/sa/create.md) and [assign](../../iam/operations/sa/assign-role-for-sa.md) the `storage.editor` role to it. A service account is required to access the bucket from the source and target clusters.
    1. [Create a static access key](../../iam/operations/sa/create-access-key.md) for the service account.
 
-
       {% note warning %}
 
-      Save the **key ID** and **secret key**. You will need them in the next steps.
+      Save the **key ID** and **secret key**. You will need them at the next steps.
 
       {% endnote %}
 
@@ -48,7 +53,7 @@ You can't use a snapshot if the {{ ES }} version in the source cluster is higher
 
 - Using {{ TF }}
 
-   1. If you do not have {{ TF }} yet, [install it](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   1. {% include [terraform-install](../../_includes/terraform-install.md) %}
    1. Download [the file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
    1. Download the [mes-migration.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/mes-migration.tf) configuration file to the same working directory. The file describes:
 
@@ -73,7 +78,7 @@ You can't use a snapshot if the {{ ES }} version in the source cluster is higher
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
    1. Create the required infrastructure:
 
@@ -95,14 +100,14 @@ You can't use a snapshot if the {{ ES }} version in the source cluster is higher
 
 1. [Set up the bucket ACL](../../storage/operations/buckets/edit-acl.md):
 
-   1. In the **Select user** drop-down list, specify the created service account.
-   1. Select the `READ + WRITE` permissions for the selected service account.
-   1. Click **Add**.
-   1. Click **Save**.
+   1. In the **{{ ui-key.yacloud.component.acl-dialog.label_select-placeholder }}** drop-down list, specify the created service account.
+   1. Select the `READ and WRITE` permissions for the selected service account.
+   1. Click **{{ ui-key.yacloud.common.add }}**.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 1. [Install the `repository-s3` plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/7.16/repository-s3.html) on all target cluster hosts.
 
-1. For the `repository-s3` plugin to work, restart the {{ ES }} and Kibana services on all the source cluster hosts.
+1. For the `repository-s3` plugin to work, restart the {{ ES }} and Kibana services on all source cluster hosts.
 
 1. Make sure you can [connect to the {{ mes-name }} target cluster](../operations/cluster-connect.md) using the {{ ES }} API and Kibana.
 1. Make sure the {{ ES }} source cluster can access the internet.
@@ -272,7 +277,7 @@ Some resources are not free of charge. To avoid paying for them, delete the reso
 - Manually
 
    * [Delete the service account](../../iam/operations/sa/delete.md)
-   * [Delete the snapshots](../../storage/operations/objects/delete.md) from the bucket and then delete the [entire bucket](../../storage/operations/buckets/delete.md).
+   * [Delete snapshots](../../storage/operations/objects/delete.md) from the bucket and then delete the [entire bucket](../../storage/operations/buckets/delete.md).
    * [Delete the {{ mes-name }} cluster](../operations/cluster-delete.md).
 
 - Using {{ TF }}
@@ -287,9 +292,9 @@ Some resources are not free of charge. To avoid paying for them, delete the reso
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

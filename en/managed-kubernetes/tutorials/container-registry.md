@@ -1,19 +1,21 @@
 # Integration with {{ container-registry-name }}
 
-To integrate {{ k8s }} with {{ container-registry-full-name }}, create the following resources: [service accounts](../../iam/concepts/users/service-accounts.md) for managing resources and respective access permissions, a [{{ k8s }} cluster](../concepts/index.md#kubernetes-cluster), a [node group](../concepts/index.md#node-group), a Docker registry, and a [Docker image](../../container-registry/concepts/docker-image.md). To facilitate authentication, configure Docker Credential Helper and make sure that a [pod](../concepts/index.md#pod) with an application from {{ container-registry-name }} launches using a service account with no additional authentication required.
+[{{ container-registry-full-name }}](../../container-registry/) is a service for storing and distributing [Docker images](../../container-registry/concepts/docker-image.md). Integration with it allows {{ managed-k8s-name }} to run [pods](../concepts/index.md#pod) with applications from Docker images stored in the {{ container-registry-name }} [registry](../../container-registry/concepts/registry.md). To interact with {{ container-registry-name }}, [set up](#config-ch) Docker Credential Helper. It allows you to access private registries via a [service account](../../iam/concepts/users/service-accounts.md).
+
+To integrate {{ managed-k8s-name }} with {{ container-registry-name }}:
 1. [Create service accounts](#create-sa).
    1. [Create a service account for resources](#res-sa).
-   1. [Create a service account for nodes](#node-sa).
-1. [Prepare the necessary {{ k8s }} resources](#create-k8s-res).
-   1. [Create a {{ k8s }} cluster](#create-cluster).
-   1. [Create a node group](#create-node-groups).
-1. [Prepare the necessary {{ container-registry-name }} resources](#create-cr-res).
+   1. [Create a service account for {{ managed-k8s-name }} nodes](#node-sa).
+1. [Prepare the required {{ k8s }} resources](#create-k8s-res).
+   1. [Create a {{ managed-k8s-name }} cluster](#create-cluster).
+   1. [Create a {{ managed-k8s-name }} node group](#create-node-groups).
+1. [Prepare the required {{ container-registry-name }} resources](#create-cr-res).
    1. [Create a registry](#registry-create).
-   1. [Configure a Credential helper](#config-ch).
+   1. [Configure a credential helper](#config-ch).
    1. [Prepare a Docker image](#docker-image).
-1. [Connect to the {{ k8s }} cluster](#cluster-connect).
+1. [Connect to the {{ managed-k8s-name }} cluster](#cluster-connect).
 1. [Run the test app](#test-app).
-1. [Delete the created resources](#delete-resources).
+1. [Delete the resources you created](#delete-resources).
 
 {% include [requirements](backup.md#requirements) %}
 
@@ -21,13 +23,13 @@ To integrate {{ k8s }} with {{ container-registry-full-name }}, create the follo
 
 ## Create service accounts {#create-sa}
 
-Create [service accounts](../../iam/operations/sa/create.md):
-* A service account for the resources with the [{{ roles-editor }}](../../resource-manager/security/#roles-list) role to the [folder](../../resource-manager/concepts/resources-hierarchy.md#folder) where the {{ k8s }} cluster is being created. The resources that the {{ k8s }} cluster needs will be created on behalf of this account.
-* A service account for nodes with the [{{ roles-cr-puller }}](../../container-registry/security/index.md#required-roles) role for the folder with the Docker image registry. Nodes will download the Docker images they require from the registry on behalf of this account.
+Create the following [service accounts](../../iam/operations/sa/create.md):
+* Service account for the resources with the [{{ roles-editor }}](../../resource-manager/security/#roles-list) [role](../../iam/concepts/access-control/roles.md) for the [folder](../../resource-manager/concepts/resources-hierarchy.md#folder) where the {{ managed-k8s-name }} cluster is created. The resources the {{ managed-k8s-name }} cluster needs will be created on behalf of this account.
+* Service account for [{{ managed-k8s-name }} nodes](../concepts/index.md#node-group) with the [{{ roles-cr-puller }}](../../container-registry/security/index.md#choosing-roles) role for the folder with the Docker image registry. {{ managed-k8s-name }} nodes will pull the required Docker images from the registry on behalf of this account.
 
 ### Create a service account for resources {#res-sa}
 
-To create a service account for making the resources required by the {{ k8s }} cluster.
+To create a service account for making the resources required by the {{ managed-k8s-name }} cluster.
 1. Write the folder ID from your CLI profile configuration to the variable:
 
    {% list tabs %}
@@ -91,9 +93,9 @@ To create a service account for making the resources required by the {{ k8s }} c
      --subject serviceAccount:$RES_SA_ID
    ```
 
-### Create a service account for nodes {#node-sa}
+### Create a service account for security group nodes {#node-sa}
 
-To create a service account that lets nodes download the necessary Docker images from the registry.
+To create a service account to be used by {{ managed-k8s-name }} nodes to download Docker images from the registry.
 1. Write the folder ID from your CLI profile configuration to the variable:
 
    {% list tabs %}
@@ -148,7 +150,7 @@ To create a service account that lets nodes download the necessary Docker images
 
    {% endlist %}
 
-1. Assign the service account the [{{ roles-cr-puller }}](../../container-registry/security/index.md#required-roles) role for the folder:
+1. Assign the service account the [{{ roles-cr-puller }}](../../container-registry/security/index.md#choosing-roles) role for the folder:
 
    ```bash
    yc resource-manager folder add-access-binding \
@@ -159,7 +161,7 @@ To create a service account that lets nodes download the necessary Docker images
 
 {% include [create-k8s-res](../../_includes/managed-kubernetes/create-k8s-res.md) %}
 
-## Prepare {{ container-registry-name }} resources {#create-cr-res}
+## Create resources {{ container-registry-name }} {#create-cr-res}
 
 ### Create a registry {#registry-create}
 
@@ -169,11 +171,11 @@ Create a container registry:
 yc container registry create --name yc-auto-cr
 ```
 
-### Configure Docker Credential helper {#config-ch}
+### Configure Docker credential helper {#config-ch}
 
-To facilitate authentication in {{ container-registry-name }}, configure [Docker Credential helper](../../container-registry/operations/authentication.md#cred-helper). It lets you use private {{ yandex-cloud }} registries without running the `docker login` command.
+To facilitate authentication in {{ container-registry-name }}, configure a [Docker credential helper](../../container-registry/operations/authentication.md#cred-helper). It enables you to use private {{ yandex-cloud }} registries without running the `docker login` command.
 
-To configure the Credential helper, run the following command:
+To configure a credential helper, run the following command:
 
 
 ```bash
@@ -239,7 +241,16 @@ Build a Docker image and push it to the registry.
    +----------------------+---------------------+-----------------------------+-------+-----------------+
    ```
 
-{% include [kubectl-connect](../../_includes/managed-kubernetes/kubectl-connect.md) %}
+## Connect to the {{ managed-k8s-name }} cluster {#cluster-connect}
+
+1. {% include [Install and configure kubectl](../../_includes/managed-kubernetes/kubectl-install.md) %}
+1. [Configure security groups](../../managed-kubernetes/operations/connect/security-groups.md#rules-master) for the {{ managed-k8s-name }} cluster.
+
+   {% note warning %}
+
+   [Security group](../../vpc/concepts/security-groups.md) settings may prevent connection to the {{ managed-k8s-name }} cluster.
+
+   {% endnote %}
 
 ## Run the test app {#test-app}
 
@@ -279,9 +290,8 @@ Start the pod with the app from the Docker image and make sure that no additiona
 
 ## Delete the resources you created {#delete-resources}
 
-Some resources are not free of charge. Delete the resources you no longer need to avoid paying for them:
-
-1. Delete a {{ k8s }} cluster:
+Some resources are not free of charge. To avoid paying for them, delete the resources you no longer need:
+1. Delete the {{ managed-k8s-name }} cluster:
 
    ```bash
    yc managed-kubernetes cluster delete --name k8s-demo
@@ -291,7 +301,7 @@ Some resources are not free of charge. Delete the resources you no longer need t
 
    {% note warning %}
 
-   Make sure you don't delete any service accounts before deleting the {{ k8s }} cluster.
+   Make sure not to delete any service accounts before deleting the {{ managed-k8s-name }} cluster.
 
    {% endnote %}
 
@@ -301,7 +311,7 @@ Some resources are not free of charge. Delete the resources you no longer need t
       yc iam service-account delete --id $RES_SA_ID
       ```
 
-   - Delete the service account created for nodes:
+   - Delete the service account created for {{ managed-k8s-name }} nodes:
 
       ```bash
       yc iam service-account delete --id $NODE_SA_ID
@@ -340,6 +350,6 @@ Some resources are not free of charge. Delete the resources you no longer need t
 
 #### See also {#see-also}
 
-* [{#T}](../../container-registry/concepts/docker-image.md).
-* [{#T}](../../container-registry/operations/authentication.md).
-* [{#T}](../../container-registry/operations/index.md).
+* [{#T}](../../container-registry/concepts/docker-image.md)
+* [{#T}](../../container-registry/operations/authentication.md)
+* [{#T}](../../container-registry/operations/index.md)

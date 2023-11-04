@@ -1,3 +1,8 @@
+---
+title: "Как создать подключение к {{ monitoring-name }}"
+description: "Следуя данной инструкции, вы сможете создать подключение к {{ monitoring-name }}."
+---
+
 # Создание подключения к {{ monitoring-name }}
 
 {% note info %}
@@ -8,6 +13,10 @@
 {% endnote %}
 
 Чтобы создать подключение к {{ monitoring-name }}:
+
+
+{% include [datalens-workbooks-collections-note](../../../_includes/datalens/operations/datalens-workbooks-collections-note.md) %}
+
 
 1. Перейдите на [страницу подключений]({{ link-datalens-main }}/connections).
 1. Нажмите кнопку **Создать подключение**.

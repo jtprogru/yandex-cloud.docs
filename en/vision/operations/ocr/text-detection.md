@@ -14,7 +14,19 @@ To do this in the [batchAnalyze](../../vision/api-ref/Vision/batchAnalyze.md) me
 
 ### Recognize text from an image {#basic}
 
+1. Prepare an image file that meets the requirements:
+
+    {% include [file-restrictions](../../../_includes/vision/file-restrictions.md) %}
+
+    {% note info %}
+
+    Need a sample image? Download an image of the [penguin crossing](https://{{ s3-storage-host }}/vision/penguins_sample.jpg) road sign.
+
+    {% endnote %}
+
 {% include [text-detection-steps](../../../_includes/vision/text-detection-steps.md) %}
+
+{% include [coordinate-definition-issue-note](../../../_includes/vision/coordinate-definition-issue-note.md) %}
 
 ### Recognize text from a PDF file {#pdf}
 
@@ -22,12 +34,13 @@ To do this in the [batchAnalyze](../../vision/api-ref/Vision/batchAnalyze.md) me
 1. Encode the PDF file as Base64:
 
     {% include [base64-encode-command](../../../_includes/vision/base64-encode-command.md) %}
+
 1. Create a file with the request body (for example, `body.json`).
 
     **body.json:**
     ```json
     {
-        "folderId": "b1gvmob95yysaplct532",
+        "folderId": "b1gvmob95yys********",
         "analyze_specs": [{
             "content": "iVBORw0KGgo...",
             "mime_type": "application/pdf",
@@ -37,13 +50,13 @@ To do this in the [batchAnalyze](../../vision/api-ref/Vision/batchAnalyze.md) me
                     "language_codes": ["*"]
                 }
             }]
-       }]
+        }]
     }
     ```
 
     Where:
-
-    * `analyze_specs: content`: A Base64-encoded PDF file.
+    * `folderId`: [ID of any folder](../../../resource-manager/operations/folder/get-id.md) for which your account has the `{{ roles-vision-user }}` role or higher.
+    * `analyze_specs: content`: Base64-encoded PDF file.
     * `analyze_specs: mime_type`: [MIME-type](https://en.wikipedia.org/wiki/Media_type) `application/pdf`.
 
 1. {% include [send-request](../../../_includes/vision/send-request.md) %}
@@ -63,12 +76,13 @@ To recognize a line of text:
 1. Encode the file as Base64:
 
     {% include [base64-encode-command](../../../_includes/vision/base64-encode-command.md) %}
+
 1. Create a file with the request body, e.g., `body.json`:
 
     **body.json:**
     ```json
     {
-        "folderId": "b1gvmob95yysaplct532",
+        "folderId": "b1gvmob95yys********",
         "analyze_specs": [{
             "content": "iVBORw0KGgo...",
             "features": [{
@@ -83,9 +97,9 @@ To recognize a line of text:
     ```
 
     Where:
-
+    * `folderId`: [ID of any folder](../../../resource-manager/operations/folder/get-id.md) for which your account has the `{{ roles-vision-user }}` role or higher.
     * `analyze_specs: content`: Image encoded in Base64.
-    * `analyze_specs: features: text_detection_config: model`: The model `line`.
+    * `analyze_specs: features: text_detection_config: model`: `line` model.
 
 1. {% include [send-request](../../../_includes/vision/send-request.md) %}
 
@@ -96,12 +110,13 @@ If you know the language of the text, specify it in the request to improve the q
 1. Encode the file as Base64:
 
     {% include [base64-encode-command](../../../_includes/vision/base64-encode-command.md) %}
+
 1. Create a file with the request body, e.g., `body.json`:
 
     **body.json:**
     ```json
     {
-        "folderId": "b1gvmob95yysaplct532",
+        "folderId": "b1gvmob95yys********",
         "analyze_specs": [{
             "content": "iVBORw0KGgo...",
             ...
@@ -116,7 +131,7 @@ If you know the language of the text, specify it in the request to improve the q
        **body.json:**
        ```json
        {
-           "folderId": "b1gvmob95yysaplct532",
+           "folderId": "b1gvmob95yys********",
            "analyze_specs": [{
                "content": "iVBORw0KGgo...",
                "features": [{
@@ -134,7 +149,7 @@ If you know the language of the text, specify it in the request to improve the q
        **body.json:**
        ```json
        {
-           "folderId": "b1gvmob95yysaplct532",
+           "folderId": "b1gvmob95yys********",
            "analyze_specs": [{
                "content": "iVBORw0KGgo...",
                "features": [{
@@ -156,6 +171,7 @@ If you know the language of the text, specify it in the request to improve the q
 ### Ready-to-use function for sending requests in bash {#oneliner}
 
 1. {% include [cli-install](../../../_includes/cli-install.md) %}
+
 1. Copy the function to the terminal:
 
     ```bash
@@ -190,7 +206,7 @@ If you know the language of the text, specify it in the request to improve the q
     vision_text_detection path/to/image.jpg
     ```
 
-    With the second argument, you can pass the MIME type. For example, to recognize a PDF file, call:
+   With the second argument, you can pass the MIME type. For example, to recognize a PDF file, call:
 
     ```bash
     vision_text_detection path/to/document.pdf application/pdf
@@ -288,10 +304,10 @@ The examples below show the script code for text recognition. Authentication is 
            },
        }
 
-        body, err := json.Marshal(&request)
-        if err != nil {
-            return "", err
-        }
+       body, err := json.Marshal(&request)
+       if err != nil {
+           return "", err
+       }
 
        req, err := http.NewRequest("POST", visionURL, bytes.NewReader(body))
        if err != nil {

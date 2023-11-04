@@ -32,4 +32,38 @@ For information about how to add a VM to a cluster, see [{#T}](./gpu-add-to-clus
       --new-name updated-gpu-cluster
       ```
 
+- {{ TF }}
+
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+   1. Open the {{ TF }} configuration file and edit the fragment with the GPU cluster description:
+
+      {% cut "Sample GPU cluster description in the {{ TF }} configuration" %}
+
+      ```
+      ...
+      resource "yandex_compute_gpu_cluster" "default" {
+        name               = "gpu-cluster-name"
+        interconnect_type  = "infiniband"
+        zone               = "{{ region-id }}-a"
+
+        labels = {
+          environment = "test"
+        }
+      }
+      ...
+      ```
+
+      {% endcut %}
+
+   1. Apply the changes:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+   You can check the cluster update using the [management console]({{ link-console-main }}) or using this [CLI](../../../cli/quickstart.md) command:
+
+   ```bash
+   yc compute gpu-cluster get <cluster_name>
+   ```
+
 {% endlist %}

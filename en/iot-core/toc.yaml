@@ -2,7 +2,13 @@ title: Yandex IoT Core
 href: index.yaml
 items:
   - name: Getting started
-    href: quickstart.md
+    items:
+      - name: Overview
+        href: quickstart-overview.md
+      - name: Device registry
+        href: quickstart.md
+      - name: Broker
+        href: quickstart-broker.md
   - name: Step-by-step guides
     items:
       - name: All guides
@@ -11,10 +17,16 @@ items:
         href: operations/publish.md
       - name: Subscribing a device or registry to receive messages
         href: operations/subscribe.md
+      - name: Exporting messages to {{ yds-name}}
+        href: operations/yds-export.md
       - name: Viewing the connection log
         href: operations/logs.md
       - name: Creating a trigger for a topic
-        href: operations/trigger-create.md
+        items:
+          - name: Device registry
+            href: operations/trigger-create.md
+          - name: Broker
+            href: operations/trigger-broker-create.md
       - name: Managing registries
         items:
           - name: Getting information about registries
@@ -117,6 +129,8 @@ items:
         href: tutorials/java.md
       - name: Writing data from a device to Managed Service for PostgreSQL
         href: tutorials/data-recording.md
+      - name: Testing message delivery
+        href: tutorials/message-delivery-check.md
   - name: Access management
     href: security/index.md
   - name: Pricing policy

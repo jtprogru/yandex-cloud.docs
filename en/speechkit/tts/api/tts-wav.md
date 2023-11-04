@@ -1,4 +1,4 @@
-# Synthesize speech in WAV format using API v1
+# Speech synthesis in WAV format using API v1
 
 The example shows how you can synthesize speech from text with [TTS markup](../markup/tts-markup.md) to a [WAV](https://en.wikipedia.org/wiki/WAV) file using the [API v1](../request.md).
 
@@ -38,7 +38,7 @@ The Yandex account or federated account are authenticated using an [IAM token](.
       Where:
 
       * `TEXT`: Text in [TTS markup](../markup/tts-markup.md) for synthesis.
-      * `FOLDER_ID`: [ID of the folder](../../../resource-manager/operations/folder/get-id.md).
+      * `FOLDER_ID`: [Folder ID](../../../resource-manager/operations/folder/get-id.md).
       * `IAM_TOKEN`: [IAM token](../../../iam/concepts/authorization/iam-token.md).
       * `lang`: [Language](../index.md#langs) of the text.
       * `voice`: [Voice](../voices.md) for speech synthesis.
@@ -67,8 +67,8 @@ The Yandex account or federated account are authenticated using an [IAM token](.
 
           static async Task Tts()
           {
-            const string iamToken = "<IAM token>"; // Specify the IAM token.
-            const string folderId = "<folder ID>"; // Specify the folder ID.
+            const string iamToken = "<IAM token>";
+            const string folderId = "<folder ID>";
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + iamToken);
@@ -165,7 +165,7 @@ The Yandex account or federated account are authenticated using an [IAM token](.
 
          Where:
 
-         * `FOLDER_ID`: [ID of the folder](../../../resource-manager/operations/folder/get-id.md).
+         * `FOLDER_ID`: [Folder ID](../../../resource-manager/operations/folder/get-id.md).
          * `IAM_TOKEN`: [IAM token](../../../iam/concepts/authorization/iam-token.md).
          * `--output`: Name of the file for audio recording.
          * `--text`: Text in [TTS markup](../markup/tts-markup.md) for synthesis.
@@ -183,7 +183,7 @@ The Yandex account or federated account are authenticated using an [IAM token](.
       $url = "https://tts.{{ api-host }}/speech/v1/tts:synthesize";
       $headers = ['Authorization: Bearer ' . $token];
       $post = array(
-          'text' => "I'm Yandex Sp+eech kit. I can turn any text into speech. Now y+ou can, too!",
+          'text' => "I'm Yandex Sp+eechkit. I can turn any text into speech. Now y+ou can, too!",
           'folderId' => $folderId,
           'lang' => 'ru-RU',
           'voice' => 'filipp',

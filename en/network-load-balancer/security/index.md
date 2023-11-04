@@ -18,22 +18,21 @@ In this section, you will learn:
 
 ## Which roles exist in the service {#roles-list}
 
-The chart below shows which roles are available in the service and how they inherit each other's permissions. For example, the `editor` role includes all `viewer` role permissions. You can find the description of each role under the chart.
+{% include [roles-intro](../../_includes/roles-intro.md) %}
 
-![image](../../_assets/network-load-balancer/security/service-roles-hierarchy.png)
+![image](../../_assets/network-load-balancer/security/service-roles-hierarchy.svg)
 
-Active roles in the service:
+### Service roles {#service-roles}
 
-* Service roles:
-   * {% include [resource-manager.clouds.owner](../../_includes/iam/roles/short-descriptions/resource-manager.clouds.owner.md) %}
-   * {% include [resource-manager.clouds.member](../../_includes/iam/roles/short-descriptions/resource-manager.clouds.member.md) %}
-   * {% include [load-balancer.viewer](../../_includes/iam/roles/short-descriptions/load-balancer.viewer.md) %}
-   * {% include [load-balancer.privateAdmin](../../_includes/iam/roles/short-descriptions/load-balancer.privateAdmin.md) %}
-   * {% include [load-balancer.admin](../../_includes/iam/roles/short-descriptions/load-balancer.admin.md) %}
-* Primitive roles:
-   * {% include [viewer](../../_includes/iam/roles/short-descriptions/viewer.md) %}
-   * {% include [editor](../../_includes/iam/roles/short-descriptions/editor.md) %}
-   * {% include [admin](../../_includes/iam/roles/short-descriptions/admin.md) %}
+* {% include [resource-manager.clouds.owner](../../_includes/iam/roles/short-descriptions/resource-manager.clouds.owner.md) %}
+* {% include [resource-manager.clouds.member](../../_includes/iam/roles/short-descriptions/resource-manager.clouds.member.md) %}
+* {% include [load-balancer.viewer](../../_includes/iam/roles/short-descriptions/load-balancer.viewer.md) %}
+* {% include [load-balancer.privateAdmin](../../_includes/iam/roles/short-descriptions/load-balancer.privateAdmin.md) %}
+* {% include [load-balancer.admin](../../_includes/iam/roles/short-descriptions/load-balancer.admin.md) %}
+
+### Primitive roles {#primitive-roles}
+
+{% include [roles-primitive](../../_includes/roles-primitive.md) %}
 
 ## What roles do I need {#choosing-roles}
 
@@ -54,7 +53,7 @@ Operations on target groups located in subnets, where the specified administrati
 | [Detach target groups](../operations/target-group-detach.md) | `detachTargetGroup` | `load-balancer.privateAdmin` / `load-balancer.admin` or `editor` for the load balancer |
 | [Get states of target groups](../operations/check-resource-health.md) | `getTargetStates` | `load-balancer.viewer` or `viewer` for the load balancer and the specified target groups |
 | [Add](../operations/listener-add.md) and [remove](../operations/listener-remove.md) listeners | `addListener`, `removeListener` | `load-balancer.privateAdmin` / `load-balancer.admin` or `editor` for the load balancer |
-| [Stop and start](../operations/load-balancer-stop.md) a load balancer | `stop`, `start` | `load-balancer.privateAdmin` / `load-balancer.admin` or `editor` for the load balancer |
+| [Stop and start](../operations/load-balancer-start-and-stop.md) a load balancer | `stop`, `start` | `load-balancer.privateAdmin` / `load-balancer.admin` or `editor` for the load balancer |
 | **Manage target groups** | |
 | [Create](../operations/target-group-create.md) and update target groups in folders | `create` | `load-balancer.privateAdmin` / `load-balancer.admin` or `editor` for the folder and subnets where target groups are located |
 | [Delete target groups](../operations/target-group-delete.md) | `update`, `delete` | `load-balancer.privateAdmin` / `load-balancer.admin` or `editor` for the target group and load balancer |

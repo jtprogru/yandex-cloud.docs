@@ -1,5 +1,7 @@
 # Создание новой очереди сообщений
 
+Очереди сообщений {{ message-queue-name }} позволяют передавать [сообщения](../concepts/message.md) между компонентами распределенных приложений. Передавать сообщения в очереди можно с помощью [API](../api-ref/index.md) или других поддерживаемых [инструментов](../instruments/index.md).
+
 Чтобы создать новую очередь сообщений:
 
 {% list tabs %}
@@ -7,46 +9,49 @@
 - Консоль управления
   
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создана очередь.
-  1. Откройте раздел **Message Queue**.
-  1. Нажмите кнопку **Создать очередь**.
-  1. Укажите имя очереди.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.ymq.queues.button_create }}**.
+  1. В блоке **{{ ui-key.yacloud.ymq.queue.form.section_base }}** заполните поля:
+      * **{{ ui-key.yacloud.common.name }}** — укажите имя очереди.
   
-     {% include [name](../../_includes/message-queue/ymq-name.md) %}
+        {% include [name](../../_includes/message-queue/ymq-name.md) %}
   
-  1. Выберите тип очереди **Стандартная** или **FIFO**.
-  1. Укажите стандартный таймаут видимости, который будет применяться к сообщениям в очереди после чтения получателем.
-  1. Укажите срок хранения сообщений.
-  1. Укажите максимальный размер сообщения.
-  1. Укажите задержку доставки: время, в течение которого новое сообщение нельзя получить из очереди.
-  1. Укажите время ожидания при получении сообщения.
-  1. Чтобы перенаправлять недоставленные сообщения в [очередь недоставленных сообщений (DLQ)](../concepts/dlq.md):
-      * Включите опцию **Перенаправлять недоставленные сообщения**.
-      * Укажите **Очередь недоставленных сообщений**.
-      * Задайте **Максимальное количество попыток чтения**.
-  1. Нажмите кнопку **Создать**.
+      * **{{ ui-key.yacloud.ymq.queue.form.switch_fifo-queue }}** — выберите тип очереди `{{ ui-key.yacloud.ymq.queue.form.type_switch_standard }}` или `{{ ui-key.yacloud.ymq.queue.form.type_switch_fifo }}`.
+      * **{{ ui-key.yacloud.ymq.queue.form.field_visibility-timeout }}** — укажите стандартный таймаут видимости, который будет применяться к сообщениям в очереди после чтения получателем.
+      * **{{ ui-key.yacloud.ymq.queue.form.field_keeping-time }}** — укажите максимальный срок хранения сообщений в очереди.
+      * **{{ ui-key.yacloud.ymq.queue.form.field_max-size }}** — укажите максимальный размер сообщения.
+      * **{{ ui-key.yacloud.ymq.queue.form.field_sending-delay }}** — укажите время, в течение которого новое сообщение нельзя получить из очереди.
+      * **{{ ui-key.yacloud.ymq.queue.form.field_receiving-delay }}** — укажите время ожидания при получении сообщения.
+  1. Чтобы перенаправлять недоставленные сообщения в [очередь недоставленных сообщений (DLQ)](../concepts/dlq.md), в блоке **{{ ui-key.yacloud.ymq.queue.form.section_message-settings }}**:
+      * Включите опцию **{{ ui-key.yacloud.ymq.queue.form.switch_redirect-messages }}**.
+      * Укажите **{{ ui-key.yacloud.ymq.queue.form.field_messages-queue }}**.
+      * Задайте **{{ ui-key.yacloud.ymq.queue.form.field_max-read-tries }}**.
+  1.  Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - AWS CLI
-  
-  Выполните в терминале команду:
-  
-  ```bash
-  aws sqs create-queue \
-    --queue-name <имя_очереди> \
-    --endpoint <эндпоинт>/
-  ```
-    
-  Где:
 
-  * `sample-queue` — имя очереди.
-  * `endpoint` — эндпоинт, например: `https://message-queue.{{ api-host }}/`.
-  
-  Результат:
+  1. [Установите и настройте](configuring-aws-cli.md) AWS CLI.
 
-  ```json
-  {
-      "QueueUrl": "https://message-queue.{{ api-host }}/aoeaql9r10cd9cfue7v6/000000000000002n034r/sample-queue"
-  }
-  ```
+  1. Выполните в терминале команду:
+  
+     ```bash
+     aws sqs create-queue \
+       --queue-name <имя_очереди> \
+       --endpoint <эндпоинт>
+     ```
+        
+     Где:
+
+     * `--queue-name` — имя создаваемой очереди, например `sample-queue`.
+     * `--endpoint` — эндпоинт в значении `https://message-queue.{{ api-host }}/`.
+      
+     Результат:
+
+     ```json
+     {
+         "QueueUrl": "https://message-queue.{{ api-host }}/aoeaql9r10cd********/000000000000002n034r/sample-queue"
+     }
+     ```
 
 - {{ TF }}
 

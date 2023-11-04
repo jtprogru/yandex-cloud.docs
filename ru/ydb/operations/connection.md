@@ -4,13 +4,14 @@
 
 Перед началом работы установите [{{ ydb-short-name }} CLI](https://ydb.tech/ru/docs/reference/ydb-cli/install). Для подключения к БД {{ ydb-full-name }} из {{ ydb-short-name }} CLI необходимо указать [эндпоинт и путь](#endpoint-and-path), а также [выбрать и настроить](#auth) режим аутентификации.
 
-{% note warning %}
+## Настройка групп безопасности {#configuring-security-groups}
 
-Для подключения к БД в Dedicated-режиме снаружи {{ yandex-cloud }} необходимо разрешить входящий и исходящий трафик по протоколу TCP на порте `2135`. Убедитесь, что в назначенной [группе безопасности](../../vpc/concepts/security-groups.md) есть соответствующее правило, или добавьте его.
+Для подключения к БД в {{ dd }}-режиме нужно разрешить входящий и исходящий трафик по протоколу TCP на порте `{{ ydb.port-dedicated }}`. Убедитесь, что в назначенной [группе безопасности](../../vpc/concepts/security-groups.md) есть соответствующее правило, или добавьте его:
 
-{% endnote %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
+* **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `{{ ydb.port-dedicated }}`.
+* **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`.
+* **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+* **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
 ## Получите реквизиты для подключения {#endpoint-and-path}
 
@@ -21,17 +22,17 @@
 - Консоль управления
 
   1. Перейдите в [консоль управления]({{ link-console-main }}).
-  1. Выберите каталог с вашей БД и перейдите в сервис **{{ ydb-full-name }}**.
+  1. Выберите каталог с вашей БД и перейдите в сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
   1. Выберите базу данных, для которой нужно получить эндпоинт и путь.
       
-      * Эндпоинт БД указан в блоке **Соединение** в строке **Эндпоинт**:
+      * Эндпоинт БД указан в блоке **{{ ui-key.yacloud.ydb.overview.section_connection }}** в первой части значения поля **{{ ui-key.yacloud.ydb.overview.label_endpoint }}** (часть до вхождения `/?database=`):
 
           >Например, эндпоинт для БД в режиме Serverless — `{{ ydb.ep-serverless }}`, для БД в режиме Dedicated — `{{ ydb.ep-dedicated }}`.
-      * Путь БД указан блоке **Соединение** в строке **Размещение базы данных**.  
+      * Путь БД указан в блоке **{{ ui-key.yacloud.ydb.overview.section_connection }}** во второй части значения поля **{{ ui-key.yacloud.ydb.overview.label_endpoint }}** (часть после вхождения `/?database=`).
       
           >Пример пути БД: `{{ ydb.path-serverless }}`.
 
-- YC CLI
+- {{ yandex-cloud }} CLI
 
   1. {% include [cli-install](../../_includes/cli-install.md) %}
   1. Получите список баз в каталоге:

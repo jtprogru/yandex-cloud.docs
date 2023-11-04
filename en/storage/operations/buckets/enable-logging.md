@@ -8,13 +8,15 @@ By default, logging is disabled. After you enable it, {{ objstorage-name }} will
 
 To log requests to the bucket:
 
-1. Use an existing target bucket or create a new target bucket named `bucket-logs`, for example. This is the bucket your logs will be written to.
+1. Use an existing target bucket or create a new one. This is the bucket your logs will be written to.
 
    {% cut "How to create a bucket" %}
 
    {% include [create-bucket](../../../_includes/storage/create-bucket.md) %}
 
    {% endcut %}
+
+{% include [target-backet-note](../../../_includes/storage/target-bucket-note.md) %}
 
 1. Enable logging in the source bucket that you want to track.
 
@@ -51,15 +53,15 @@ To log requests to the bucket:
 
          Where:
 
-         * `bucket`: Name of the source bucket to enable action logging for.
-         * `bucket-logging-status`: Path to the logging settings file.
+         * `--bucket`: Name of the source bucket to enable action logging for.
+         * `--bucket-logging-status`: Path to the logging settings file.
 
    - {{ TF }}
 
       {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
       
-      If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+      {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
       To enable logging for a bucket that you wish to monitor:
@@ -68,15 +70,15 @@ To log requests to the bucket:
 
          ```hcl
          resource "yandex_storage_bucket" "log_bucket" {
-           access_key = "<static_key_id>"
+           access_key = "<static_key_ID>"
            secret_key = "<private_key>"
-           bucket     = "my-tf-log-bucket"
+           bucket     = "<name_of_bucket_to_store_logs>"
          }
 
-         resource "yandex_storage_bucket" "b" {
-           access_key = "<static_key_id>"
+         resource "yandex_storage_bucket" "bucket" {
+           access_key = "<static_key_ID>"
            secret_key = "<private_key>"
-           bucket     = "my-tf-test-bucket"
+           bucket     = "<source_bucket_name>"
            acl        = "private"
 
            logging {
@@ -89,7 +91,7 @@ To log requests to the bucket:
          Where:
          * `access_key`: ID of the static access key.
          * `secret_key`: Value of the secret access key.
-         * `target_bucket`: Target bucket.
+         * `target_bucket`: Reference to the bucket that will store logs.
          * `target_prefix`: [Prefix of the key](../../concepts/server-logs.md#key-prefix) used for log objects, e.g., `logs/`.
 
          For more information about `yandex_storage_bucket` resource parameters in {{ TF }}, see the [provider documentation]({{ tf-provider-resources-link }}/storage_bucket#enable-logging).
@@ -98,7 +100,7 @@ To log requests to the bucket:
 
       {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
 
-      All the resources you need will then be created in the specified folder. You can check that the resources are there and their settings are correct using the [management console]({{ link-console-main }}).
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}).
 
    - API
 
@@ -109,7 +111,7 @@ To log requests to the bucket:
       ```xml
       <BucketLoggingStatus xmlns="http://doc.s3.amazonaws.com/2006-03-01">
         <LoggingEnabled>
-          <TargetBucket>bucket-logs</TargetBucket>
+          <TargetBucket>target bucket name</TargetBucket>
           <TargetPrefix>logs/</TargetPrefix>
         </LoggingEnabled>
       </BucketLoggingStatus>
@@ -163,7 +165,7 @@ To get the name of the target bucket and the prefix of the key for the log objec
    <?xml version="1.0" encoding="UTF-8"?>
    <BucketLoggingStatus>
       <LoggingEnabled>
-         <TargetBucket>bucket-logs</TargetBucket>
+         <TargetBucket>target bucket name</TargetBucket>
          <TargetPrefix>logs/</TargetPrefix>
       </LoggingEnabled>
    </BucketLoggingStatus>
@@ -173,15 +175,15 @@ To get the name of the target bucket and the prefix of the key for the log objec
 
 ## Get the logs {#get-logs}
 
-To get your logs, download the object with the `logs/` prefix from the `bucket-logs` bucket:
+To get logs, download the object prefixed with `logs/` from the target bucket:
 
 {% list tabs %}
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), select the folder where the `bucket-logs` bucket is located.
+   1. In the [management console]({{ link-console-main }}), select the folder where the target bucket with logs is located.
    1. Select **{{ objstorage-name }}**.
-   1. Click on the `bucket-logs` bucket name.
+   1. Click the name of the bucket with the logs.
    1. Click on the object name with the `logs/` prefix.
    1. Click **{{ ui-key.yacloud.storage.file.button_download }}**.
 
@@ -198,7 +200,7 @@ To disable logging, follow these steps:
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
    
-   For more information about {{ TF }}, [see our documentation](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
    To disable the logging mechanism:
@@ -210,15 +212,15 @@ To disable logging, follow these steps:
       ```hcl
       ...
       resource "yandex_storage_bucket" "log_bucket" {
-        access_key = "<static_key_id>"
+        access_key = "<static_key_ID>"
         secret_key = "<private_key>"
-        bucket     = "my-tf-log-bucket"
+        bucket     = "<name_of_bucket_to_store_logs>"
       }
 
-      resource "yandex_storage_bucket" "b" {
-        access_key = "<static_key_id>"
+      resource "yandex_storage_bucket" "bucket" {
+        access_key = "<static_key_ID>"
         secret_key = "<private_key>"
-        bucket     = "my-tf-test-bucket"
+        bucket     = "<source_bucket_name>"
         acl        = "private"
 
         logging {

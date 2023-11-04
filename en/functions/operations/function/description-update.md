@@ -1,3 +1,8 @@
+---
+title: "Updating the description of a function"
+description: "Follow this guide to update a function description."
+---
+
 # Updating the description of a function
 
 {% list tabs %}
@@ -5,11 +10,11 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), go to the folder where you want to change the [function](../../concepts/function.md) description.
-   1. Select **{{ sf-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
    1. Select a function.
-   1. In the top-right corner, click **Edit**.
+   1. In the top-right corner, click **{{ ui-key.yacloud.serverless-functions.list.button_action-edit }}**.
    1. In the window that opens, enter the description of the function.
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -26,15 +31,15 @@
    Result:
 
    ```
-   id: b097d9ous3gep99khe83
-   folder_id: aoek49ghmknnpj1ll45e
+   id: b097d9ous3ge********
+   folder_id: aoek49ghmknn********
    created_at: "2019-06-06T11:36:48.688Z"
    name: my-beta-function
    description: My beta function.
    labels:
      test: test
-   log_group_id: eolv6578frac08uh5h6s
-   http_invoke_url: https://functions.yandexcloud.net/b097d9ous3gep99khe83
+   log_group_id: eolv6578frac********
+   http_invoke_url: https://{{ sf-url }}/b097d9ous3ge********
    status: ACTIVE
    ```
 
@@ -42,7 +47,7 @@
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To update the function description:
 
@@ -87,7 +92,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -106,8 +111,10 @@
 
    To update a function description, use the [update](../../functions/api-ref/Function/update.md) REST API method for the [Function](../../functions/api-ref/Function/index.md) resource or the [FunctionService/Update](../../functions/api-ref/grpc/function_service.md#Update) gRPC API call.
 
+
 - {{ yandex-cloud }} Toolkit
 
    You can update the function description using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the IDE family on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 {% endlist %}

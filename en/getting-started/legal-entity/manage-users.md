@@ -4,11 +4,11 @@ The guide in this checklist item will help you add users to your created organiz
 
 ## Add a Yandex user {#add-user-yandex}
 
-If your employees have Yandex accounts, e.g., `login@yandex.ru`, they can use them to access {{yandex-cloud}} services enabled in your organization.
+If your employees have Yandex accounts, e.g., `login@yandex.ru`, they can use them to access {{ yandex-cloud }} services enabled in your organization.
 
 To add employee accounts to the organization, follow these steps:
 
-1. [Log in]({{ link-passport-login }}) to the organization's administrator account.
+1. [Log in]({{ link-passport-login }}) to the organization administrator account.
 1. Go to [{{ org-full-name }}]({{ link-org-main }}).
 1. In the left-hand panel, select [Users](https://org.cloud.yandex.ru/users) ![icon-users](../../_assets/organization/icon-users.svg).
 1. In the top-right corner, click **{{ ui-key.yacloud_org.page.users.action.invite-users }}**.
@@ -30,10 +30,10 @@ To add federation users to an organization:
    1. [Log in]({{ link-passport-login }}) to the organization's administrator account.
    1. Go to [{{ org-full-name }}]({{ link-org-main }}).
    1. In the left-hand panel, select [Users](https://org.cloud.yandex.ru/users) ![icon-users](../../_assets/organization/icon-users.svg).
-   1. In the top right corner, click ![icon-users](../../_assets/datalens/arrow-down.svg) → **Add federated users**.
+   1. In the top-right corner, click ![icon-users](../../_assets/datalens/arrow-down.svg) → **{{ ui-key.yacloud_org.page.users.action.add-federated-users }}**.
    1. Select the identity federation to add users from.
    1. List the Name IDs of users, separating them with line breaks.
-   1. Click **Add**. This will give the users access to the organization.
+   1. Click **{{ ui-key.yacloud_org.actions.add }}**. This will give the users access to the organization.
 
 - CLI
 
@@ -95,7 +95,7 @@ To add federation users to an organization:
 - CLI
 
    1. Choose a role from the list in [Roles](../../iam/concepts/access-control/roles.md).
-   1. [Get the user ID](../../organization/users-get.md).
+   1. [Get the user ID](../../organization/operations/users-get.md).
    1. Assign the role using the command:
 
    ```
@@ -106,12 +106,12 @@ To add federation users to an organization:
 
    Where:
 
-   * `<SERVICE-NAME>` is the name of the service that the resource belongs to (for example, `resource-manager`).
-   * `<RESOURCE>` is the resource category, for example, `cloud`.
-   * `<RESOURCE-NAME>` is the name of the resource. You can specify a resource by its name or ID.
-   * `<RESOURCE-ID>` is the resource ID.
-   * `<ROLE-ID>` is the role ID, for example `{{ roles-cloud-owner }}`.
-   * `<USER-ACCOUNT-ID>` is the ID of the user account assigned the role.
+   * `<SERVICE-NAME>`: Name of the service to whose resource a role, e.g., `resource-manager`, is assigned.
+   * `<RESOURCE>`: Resource category, e.g., `cloud`.
+   * `<RESOURCE-NAME>`: Name of the resource. You can specify a resource by its name or ID.
+   * `<RESOURCE-ID>`: Resource ID.
+   * `<ROLE-ID>`: Role ID, e.g., `{{ roles-cloud-owner }}`.
+   * `<USER-ACCOUNT-ID>`: ID of the user account to which the role is assigned.
 
    For example, assign the `viewer` role for the `mycloud` [cloud](../../resource-manager/concepts/resources-hierarchy.md#folder):
 
@@ -126,7 +126,7 @@ To add federation users to an organization:
    Use the `updateAccessBindings` method for the corresponding resource.
 
    1. Choose a role from the list in [Roles](../../iam/concepts/access-control/roles.md).
-   1. [Get the user ID](../../organization/users-get.md).
+   1. [Get the user ID](../../organization/operations/users-get.md).
    1. Create a request body, for example, in a `body.json` file. Set the `action` property to `ADD` and specify the `userAccount` type and user ID in the `subject` property:
 
    **body.json:**
@@ -161,7 +161,7 @@ To grant a user organization management permissions, assign them one of the foll
 
 * `organization-manager.organizations.owner`: The organization owner role.
 
-   The role lets you to appoint organization owners as well as use all the administrator privileges.
+   The role allows you to appoint organization owners as well as use all the administrator privileges.
 
    By default, the user who creates an organization is the organization owner.
 

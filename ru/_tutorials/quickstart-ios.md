@@ -7,9 +7,9 @@
 
 ## Перед началом работы {#before-begin}
 
-1. [Создайте сайт](../smartcaptcha/tutorials/mobile-app/website.md) для размещения {{ captcha-name }} (или воспользуйтесь готовым `{{ captcha-mobile-site }}`).
+1. [Разместите HTML-код](../smartcaptcha/tutorials/mobile-app/website.md) для работы {{ captcha-name }} (или воспользуйтесь готовым `{{ captcha-mobile-site }}`).
 1. Создайте капчу по [инструкции](../smartcaptcha/operations/create-captcha.md).
-1. [Получите ключи](../smartcaptcha/operations/get-keys.md) капчи. Скопируйте **ключ клиента** и **ключ сервера** на вкладке **Обзор** созданной вами капчи. **Ключ клиента** понадобится для загрузки страницы с капчей, **ключ сервера** — для получения результата прохождения капчи.
+1. [Получите ключи](../smartcaptcha/operations/get-keys.md) капчи. Скопируйте значения полей **{{ ui-key.yacloud.smartcaptcha.label_client-key }}** и **{{ ui-key.yacloud.smartcaptcha.label_server-key }}** на вкладке **{{ ui-key.yacloud.common.overview }}** созданной вами капчи. **{{ ui-key.yacloud.smartcaptcha.label_client-key }}** понадобится для загрузки страницы с капчей, **{{ ui-key.yacloud.smartcaptcha.label_server-key }}** — для получения результата прохождения капчи.
 
 ## Настройте JS часть сайта {#customize-js-part}
 
@@ -85,6 +85,8 @@ webControllerView.reload()
 ```
 
 ## Пример реализации на Swift с использованием {{ captcha-mobile-site }} {#ios-example}
+
+В этой секции описаны шаги, необходимые для создания приложения с капчей для iOS. См. пример готового приложения, содержащего все настроенные компоненты: [Yandex SmartCaptcha for iOS](https://github.com/yandex-cloud-examples/yc-smartcaptcha-ios-example/tree/main). 
 
 1. Создайте класс, который будет хранить **WKWebView**:
 

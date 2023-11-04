@@ -10,11 +10,11 @@ description: "Из статьи вы узнаете, как удалить тр�
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится триггер.
-    1. Выберите сервис **{{ sf-name }}**.
-    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **Триггеры**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
     1. Выберите триггер, который хотите удалить.
-    1. В правом верхнем углу страницы нажмите **Удалить**.
-    1. В открывшемся окне нажмите кнопку **Удалить**.
+    1. В правом верхнем углу страницы нажмите ![image](../../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.delete }}**.
+    1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.popup-confirm_button_delete }}**.
 
 - CLI
   
@@ -33,22 +33,23 @@ description: "Из статьи вы узнаете, как удалить тр�
     Результат:
     
     ```text
-    id: dd0gj5tsj2**********
-    folder_id: aoek49ghmk**********
-    created_at: "2019-08-28T12:26:25.675Z"
+    id: a1s9q2li6t**********
+    folder_id: b1g9hv2loa**********
+    created_at: "2023-08-01T12:36:14.321Z"
     name: my-trigger
-    description: My YMQ trigger.
+    description: Trigger for uploaded objects
     rule:
-      message_queue:
-        queue_id: yrn:yc:ymq:{{ region-id }}:aoek49ghmk**********:my-mq
-        service_account_id: bfbqqeo6jk**********
+      object_storage:
+        event_type:
+          - OBJECT_STORAGE_EVENT_TYPE_CREATE_OBJECT
+        bucket_id: **********
         batch_settings:
           size: "10"
           cutoff: 10s
         invoke_function:
-          function_id: b09e5lu91t**********
+          function_id: d4e5muirrt**********
           function_tag: $latest
-          service_account_id: bfbqqeo6jk**********
+          service_account_id: ajek0fou8e**********
     status: PAUSED
     ```
 

@@ -7,10 +7,10 @@ items:
     items:
       - name: Обзор
         href: quickstart/index.md
-      - name: Как распознать короткие аудиофайлы в API v2
+      - name: Как распознать короткие аудиофайлы в API v1
+        href: quickstart/stt-quickstart-v1.md
+      - name: Как распознать длинные аудиофайлы в API v2
         href: quickstart/stt-quickstart-v2.md
-      - name: Как распознать потоковое аудио в API v3
-        href: quickstart/stt-quickstart-v3.md
       - name: Как синтезировать речь в API v1
         href: quickstart/tts-quickstart-v1.md
       - name: Как синтезировать речь в API v3
@@ -31,6 +31,8 @@ items:
             href: stt/transcribation.md
       - name: Нормализация результатов распознавания
         href: stt/normalization.md
+      - name: Анализ результатов распознавания
+        href: stt/analysis.md
       - name: Расширение модели распознавания речи
         href: stt/additional-training.md
       - name: Определение конца фразы
@@ -54,27 +56,35 @@ items:
           - name: Список поддерживаемых фонем в SSML
             href: tts/markup/ssml-supported-phonemes.md
       - name: '{{ brand-voice-name }}'
-        href: tts/brand-voice/index.md
-      - name: Синтез по шаблонам
-        href: tts/templates.md
+        items:
+          - name: Обзор
+            href: tts/brand-voice/index.md
+          - name: Данные для {{ brand-voice-core }}
+            href: tts/brand-voice/bv-full-data-upload.md
+          - name: Данные для {{ brand-voice-cc-name }}
+            href: tts/templates.md
   - name: '{{ sk-hybrid-name }}'
     items:
       - name: О технологии
         href: hybrid-speechkit/index.md
       - name: Системные требования
         href: hybrid-speechkit/system-requirements.md
+      - name: Документация {{ sk-hybrid-name }}
+        href: ../speechkit-hybrid/
   - name: Справочники API
     items:
       - name: Аутентификация в API
         href: concepts/auth.md
       - name: Распознавание
         items:
+          - name: API v1
+            items:
+              - name: API синхронного распознавания
+                href: stt/api/request-api.md
           - name: API v2
             items:
               - name: API потокового распознавания
                 href: stt/api/streaming-api.md
-              - name: API синхронного распознавания
-                href: stt/api/request-api.md
               - name: API асинхронного распознавания
                 href: stt/api/transcribation-api.md
           - name: API v3 gRPC (англ.)
@@ -83,6 +93,10 @@ items:
                 href: stt-v3/api-ref/grpc/index.md
               - name: Recognizer
                 href: stt-v3/api-ref/grpc/stt_service.md
+              - name: AsyncRecognizer
+                href: stt-v3/api-ref/grpc/AsyncRecognizer.md
+              - name: OperationService
+                href: stt-v3/api-ref/grpc/operation_service.md
       - name: Синтез
         items:
           - name: API v1
@@ -93,6 +107,24 @@ items:
                 href: tts-v3/api-ref/grpc/index.md
               - name: Synthesizer
                 href: tts-v3/api-ref/grpc/tts_service.md
+  - name: SDK
+    items:
+      - name: О Python SDK
+        href: sdk/python/index.md
+      - name: Установка Python SDK
+        href: sdk/python/install.md
+      - name: Решение конфликта версий при установке Python SDK
+        href: sdk/python/version-conflict.md
+      - name: Аутентификация в Python SDK
+        href: sdk/python/auth.md
+      - name: Синхронное распознавание Python SDK
+        href: sdk/python/request.md
+      - name: Синтез Python SDK
+        href: sdk/python/synthesis.md
+      - name: Синтез по шаблонам Python SDK
+        href: sdk/python/templates-bvp-bvss.md
+      - name: Синтез по шаблонам {{ brand-voice-cc }} Python SDK
+        href: sdk/python/templates-bvcc.md
   - name: Практические руководства
     items:
       - name: Все руководства
@@ -105,7 +137,7 @@ items:
         href: stt/api/stt-language-labels-example.md
       - name: Потоковое распознавание API v2
         href: stt/api/streaming-examples.md
-      - name: Синхронное распознавание API v2
+      - name: Синхронное распознавание API v1
         href: stt/api/request-examples.md
       - name: Асинхронное распознавание формата LPCM — API v2
         href: stt/api/transcribation-lpcm.md

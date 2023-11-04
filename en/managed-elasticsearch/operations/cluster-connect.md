@@ -9,6 +9,8 @@ keywords:
 
 # Connecting to an {{ ES }} cluster
 
+{% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
+
 You can connect to the hosts in the {{ mes-name }} cluster with the [_Data node_ role](../concepts/hosts-roles.md#data-node):
 
 * Over the internet, if you configured public access for the appropriate host.
@@ -22,15 +24,9 @@ Regardless of the connection method, {{ mes-name }} only supports cluster host c
 
 ## Configuring security groups {#configuring-security-groups}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 {% include [sg-rules](../../_includes/mdb/sg-rules-connect.md) %}
 
-Settings of rules depend on the connection method you select:
+Rule settings depend on the connection method you select:
 
 {% list tabs %}
 
@@ -38,10 +34,10 @@ Settings of rules depend on the connection method you select:
 
    [Configure all the cluster security groups](../../vpc/operations/security-group-add-rule.md) to allow incoming traffic from any IP on ports 443 (Kibana GUI and Kibana API) and 9200 ({{ ES }}). To do this, create the following rules for incoming traffic:
 
-   * Port range: `443`, `9200`.
-   * Protocol: `TCP`.
-   * Source: `CIDR`.
-   * CIDR blocks: `0.0.0.0/0`.
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `443`, `9200`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
    A separate rule is created for each port.
 
@@ -49,10 +45,10 @@ Settings of rules depend on the connection method you select:
 
    1. [Configure all the security groups](../../vpc/operations/security-group-add-rule.md) of your cluster to allow incoming traffic on ports 443 (Kibana GUI and Kibana API) and 9200 ({{ ES }}) from the security group where your VM is located. To do this, create the following rules for incoming traffic in these security groups:
 
-      * Protocol: `TCP`.
-      * Port range: `443`, `9200`.
-      * Source: `Security group`.
-      * Security group: If a cluster and a VM are in the same security group, select `Self` as the value. Otherwise, specify the VM security group.
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `443`, `9200`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-sg }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-sg-type }}**: If your cluster and VM are in the same security group, select `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-sg-type-self }}` (`Self`) as the value. Otherwise, specify the VM security group.
 
       A separate rule is created for each port.
 
@@ -62,19 +58,19 @@ Settings of rules depend on the connection method you select:
 
       * For incoming traffic:
 
-         * Port range: `22`, `443`, and `9200`.
-         * Protocol: `TCP`.
-         * Source: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `22`, `443`, `9200`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
          A separate rule is created for each port.
 
       * For outgoing traffic:
 
-         * Port range: `{{ port-any }}`.
-         * Protocol: `Any`.
-         * Destination type: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-any }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`)
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
          This rule allows all outgoing traffic, which enables you to both connect to the cluster and install the certificates and utilities the VMs need to connect to the cluster.
 
@@ -95,35 +91,47 @@ For more information about security groups, see [{#T}](../concepts/network.md#se
 
 To use an encrypted connection, get an SSL certificate:
 
-{% list tabs %}
+{% include [install-certificate](../../_includes/mdb/mes/install-certificate.md) %}
 
-- Linux (Bash)
-
-   {% include [install-certificate](../../_includes/mdb/mes/install-certificate.md) %}
-
-   The certificate will be saved in the `$HOME/.elasticsearch/root.crt` folder.
-
-- Windows (PowerShell)
-
-   ```powershell
-   mkdir $HOME\.elasticsearch; curl -o $HOME\.elasticsearch\root.crt {{ crt-web-path }}
-   ```
-
-   The certificate will be saved in the `$HOME\.elasticsearch\root.crt` folder.
-
-{% endlist %}
-
-## Automatic selecting the host to connect to {#automatic-host-selection}
+## Automatically selecting a host for connection {#automatic-host-selection}
 
 When connecting to an {{ ES }} cluster, you can:
 
 * In the connection strings, explicitly specify the names of the hosts with the _Data node_ role.
 
-   This approach is suitable for any connection method. For example, you can use it to connect over the internet if only a few hosts are assigned a public IP address.
+   This approach is suitable for any connection method. For example, you can use it to connect over the internet if public access is only enabled for certain hosts.
 
-* Use a special FQDN in the format `c-<{{ ES }} cluster ID>.rw.{{ dns-zone }}` (such as, `https://c-e4ut2....rw.{{ dns-zone }}`).
+* Use a special FQDN, such as `c-<{{ ES }} cluster ID>.rw.{{ dns-zone }}` (e.g., `https://c-e4ut2....rw.{{ dns-zone }}`).
 
-   This approach is only suitable if all of the hosts with the _Data node_ role have a public IP address or connections are only made from {{ yandex-cloud }} virtual machines. This is because the host for the connection, which this FQDN is pointing to, is selected randomly from all the hosts with the _Data node_ role.
+   This approach is only suitable if public access is enabled for all of the hosts with the _Data node_ role or connections are only made from {{ yandex-cloud }} virtual machines. This is because the host for the connection, which this FQDN is pointing to, is selected randomly from all the hosts with the _Data node_ role.
+
+## Before you connect from a Docker container {#connection-docker}
+
+To connect to a {{ mes-name }} cluster from a Docker container, add the following lines to the Dockerfile:
+
+{% list tabs %}
+
+
+- Connecting without using SSL
+
+   ```bash
+   RUN apt-get update && \
+       apt-get install curl --yes
+   ```
+
+
+- Connecting via SSL
+
+   ```bash
+   RUN apt-get update && \
+       apt-get install wget curl --yes && \
+       mkdir --parents ~/.elasticsearch && \
+       wget "{{ crt-web-path }}" \
+            --output-document ~/.elasticsearch/root.crt && \
+       chmod 0600 ~/.elasticsearch/root.crt
+   ```
+
+{% endlist %}
 
 ## Sample connection strings {#connection-string}
 

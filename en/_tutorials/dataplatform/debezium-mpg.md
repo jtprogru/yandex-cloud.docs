@@ -14,15 +14,13 @@ In this article, you will learn how to create a virtual machine in {{ yandex-clo
 
 1. [Create a {{ mkf-name }} _target cluster_](../../managed-kafka/operations/cluster-create.md) in any applicable configuration with publicly available hosts.
 
-1. [Create a virtual machine](../../compute/operations/vm-create/create-linux-vm.md) with Ubuntu 20.04 and a public IP address.
+1. [Create a virtual machine](../../compute/operations/vm-create/create-linux-vm.md) with [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts) and a public IP address.
 
 
 1. If you are using security groups, configure them to enable connecting to the clusters both from the internet and from the created VM. In addition, enable connecting to this VM over SSH from the internet:
 
    * [Configuring {{ mkf-name }} cluster security groups](../../managed-kafka/operations/connect.md#configuring-security-groups).
    * [Configuring {{ mpg-name }} cluster security groups](../../managed-postgresql/operations/connect.md#configuring-security-groups).
-
-   {% include [preview-pp.md](../../_includes/preview-pp.md) %}
 
 
 1. [Connect to a virtual machine over SSH](../../compute/operations/vm-connect/ssh.md#vm-connect) and perform preliminary setup:
@@ -308,7 +306,7 @@ In this article, you will learn how to create a virtual machine in {{ yandex-clo
 
 ## Delete the resources you created {#clear-out}
 
-Delete the resources you no longer need to avoid paying for them:
+Delete the resources you no longer need to avoid being charged for them:
 
 1. Delete the [virtual machine](../../compute/operations/vm-control/vm-delete.md).
 

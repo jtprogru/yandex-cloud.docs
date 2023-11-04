@@ -10,7 +10,7 @@
   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
   1. На панели слева выберите ![image](../../../_assets/compute/disks-pic.svg) **{{ ui-key.yacloud.compute.switch_disks }}**.
   1. Нажмите кнопку **{{ ui-key.yacloud.compute.disks.button_create }}**.
-  1. Введите имя диска.
+  1. Введите имя диска. Требования к имени:
   
       {% include [name-format](../../../_includes/name-format.md) %}
   
@@ -19,6 +19,11 @@
   1. Выберите нужный тип диска: `{{ ui-key.yacloud.compute.instances.create-disk.value_network-hdd }}`, `{{ ui-key.yacloud.compute.instances.create-disk.value_network-ssd }}`, `{{ ui-key.yacloud.compute.instances.create-disk.value_network-ssd-io-m3 }}` или `{{ ui-key.yacloud.compute.instances.create-disk.value_network-ssd-nonreplicated }}`.
   1. Выберите нужный размер блока (минимальный объем хранения информации на диске). По умолчанию размер блоков всех создаваемых дисков равен 4 КБ, однако для дисков больше 8 ТБ этого недостаточно.
   1. Укажите нужный размер диска. Максимальный размер диска зависит от заданного размера блока.
+
+  
+  1. {% include [encryption-section-without-sa](../../../_includes/compute/encryption-section-without-sa.md) %}
+
+
   1. Если требуется, выберите [расписание](../../concepts/snapshot-schedule.md), по которому для диска будут автоматически создаваться [снимки](../../concepts/snapshot.md), или создайте его. Подробнее о настройках расписания см. в [инструкции](../snapshot-control/create-schedule.md).
   
      {% include [snapshot-disk-types](../../../_includes/compute/snapshot-disk-types.md) %}
@@ -47,6 +52,8 @@
       ```
   
       Данная команда создаст диск размером 10 ГБ с именем `first-disk` и описанием `my first disk via yc`.
+
+      Требования к имени диска:
   
       {% include [name-format](../../../_includes/name-format.md) %}
   
@@ -93,7 +100,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   {% include [terraform-empty-disk-create](../../../_includes/compute/terraform-empty-disk-create.md) %}
 

@@ -18,45 +18,45 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
         * Введите имя и описание триггера.
-        * В поле **Тип** выберите **{{ cloud-logging-name }}**.
-        * В поле **Запускаемый ресурс** выберите **Функция**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_logging }}**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-    1. В блоке **Настройки {{ cloud-logging-name }}** укажите:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_logging }}** укажите:
 
         * лог-группу;
-        * (опционально) типы ресурсов — ваши сервисы или сервисы {{ yandex-cloud }}, например `serverless.function`;
+        * (опционально) типы ресурсов, например функции {{ sf-name }} `serverless.function`;
         * (опционально) идентификаторы ваших ресурсов или ресурсов {{ yandex-cloud }}, например функций {{ sf-name }};
         * (опционально) уровни логирования.
 
        Триггер срабатывает, когда в указанную лог-группу добавляют записи, которые соответствуют всем опциональным настройкам. Если опциональная настройка не задана, триггер срабатывает при любом ее значении.
 
-    1. (Опционально) В блоке **Настройки группирования сообщений** укажите:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_batch-settings }}** укажите:
 
-        * размер группы сообщений. Допустимые значения от 1 до 100, значение по умолчанию — 1.
-        * максимальное время ожидания. Допустимые значения от 1 до 60 секунд, значение по умолчанию — 1 секунда.
+        * **{{ ui-key.yacloud.serverless-functions.triggers.form.field_ymq-cutoff }}**. Допустимые значения от 1 до 60 секунд, значение по умолчанию — 1 секунда.
+        * **{{ ui-key.yacloud.serverless-functions.triggers.form.field_size }}**. Допустимые значения от 1 до 100, значение по умолчанию — 1.
 
        Триггер группирует сообщения не дольше указанного времени ожидания и отправляет их в функцию. Число сообщений при этом не превышает указанный размер группы.
 
-    1. В блоке **Настройки функции** выберите функцию и укажите:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}** выберите функцию и укажите:
 
         {% include [function-settings](../../../_includes/functions/function-settings.md) %}
 
-    1. (Опционально) В блоке **Настройки повторных запросов**:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
         {% include [repeat-request.md](../../../_includes/functions/repeat-request.md) %}
 
-    1. (Опционально) В блоке **Настройки Dead Letter Queue** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -66,12 +66,17 @@
 
     Чтобы создать триггер, который вызывает функцию, выполните команду:
 
+    
     ```bash
     yc serverless trigger create logging \
       --name <имя триггера> \
       --log-group-name <имя лог-группы> \
       --batch-size 1 \
       --batch-cutoff 1s \
+      --resource-ids <идентификатор_ресурса> \
+      --resource-types <тип_ресурса> \
+      --stream-names <поток_логирования> \
+      --log-levels <уровень_логирования> \
       --invoke-function-id <идентификатор функции> \
       --invoke-function-service-account-id <идентификатор сервисного аккаунта> \
       --retry-attempts 1 \
@@ -79,18 +84,22 @@
       --dlq-queue-id <идентификатор очереди Dead Letter Queue> \
       --dlq-service-account-id <идентификатор сервисного аккаунта>
     ```
+  
 
     Где:
 
     * `--name` — имя триггера.
     * `--log-group-name` — имя лог-группы, при добавлении записей в которую будет вызываться функция.
-    * `--batch-size` — размер группы сообщений. Необязательный параметр. Допустимые значения от 1 до 100, значение по умолчанию — 1.
-    * `--batch-cutoff` — максимальное время ожидания. Необязательный параметр. Допустимые значения от 0 до 60 секунд, значение по умолчанию — 1 секунда. Триггер группирует сообщения не дольше `batch-cutoff` и отправляет их в функцию. Число сообщений при этом не превышает `batch-size`.
-    
+
+    {% include [batch-settings-messages](../../../_includes/functions/batch-settings-messages.md) %}
+
+    {% include [logging-cli-param](../../../_includes/functions/logging-cli-param.md) %}
+
     {% include [trigger-cli-param](../../../_includes/functions/trigger-cli-param.md) %}
 
     Результат:
 
+    
     ```text
     id: a1sfe084v4**********
     folder_id: b1g88tflru**********
@@ -99,6 +108,14 @@
     rule:
       logging:
         log-group-name: default
+        resource_type:
+          - serverless.functions
+        resource_id:
+          - d4e1gpsgam78********
+        stream_name:
+          - test
+        levels:
+          - INFO
         batch_settings:
           size: "1"
           cutoff: 1s
@@ -114,12 +131,13 @@
             service-account-id: aje3932a**********
     status: ACTIVE
     ```
+  
 
 - {{ TF }}
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы создать триггер для {{ cloud-logging-name }}:
 
@@ -136,6 +154,7 @@
           resource_types = [ "<тип ресурса>" ]
           resource_ids   = [ "<идентификатор ресурса>" ]
           levels         = [ "INFO", "ERROR" ]
+          stream_names   = [ "<поток логирования>" ]
           batch_cutoff   = 1
           batch_size     = 1
        function {
@@ -154,9 +173,11 @@
      * `description` — описание триггера.
      * `logging` — параметры записей, при добавлении в лог-группу которых будет срабатывать триггер, и настройки группирования сообщений:
         * `group_id` — идентификатор лог-группы.
-        * `resource_types` — типы ресурсов: ваши сервисы или сервисы {{ yandex-cloud }}, например `resource_types = [ "serverless.function" ]`. Можно указать сразу несколько сервисов. 
+        * `resource_types` — типы ресурсов, например функции {{ sf-name }} `resource_types = [ "serverless.function" ]`. Можно указать сразу несколько типов. 
         * `resource_ids` — идентификаторы ваших ресурсов или ресурсов {{ yandex-cloud }}, например функций `resource_ids = [ "<идентификатор функции>" ]`. Вы можете указать несколько идентификаторов. 
         * `levels` — уровни логирования. Например, `levels = [ "INFO", "ERROR"]`.
+        * `stream_names` — потоки логирования.
+          Триггер срабатывает, когда в указанную лог-группу добавляют записи, которые соответствуют всем следующим параметрам: `resource-ids`, `resource-types`, `stream-names` и `levels`. Если параметр не задан, триггер срабатывает при любом его значении.
         * `batch_cutoff` — максимальное время ожидания. Допустимые значения от 0 до 60 секунд. Триггер группирует сообщения не дольше указанного времени ожидания и отправляет их в функцию или контейнер. Число сообщений при этом не превышает указанный размер группы `batch-size`.
         * `batch_size` — размер группы сообщений. Допустимые значения от 1 до 100.
      * `function` — настройки функции, которую будет запускать триггер:

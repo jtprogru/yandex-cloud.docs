@@ -17,37 +17,33 @@
 
 ## Какие роли действуют в сервисе {#roles-list}
 
+### Сервисные роли {#service-roles}
+
 {% include [gitlab-viewer](../../_includes/iam/roles/gitlab-viewer.md) %}
 
 {% include [gitlab-editor](../../_includes/iam/roles/gitlab-editor.md) %}
 
 {% include [gitlab-admin](../../_includes/iam/roles/gitlab-admin.md) %}
 
-### {{ roles-viewer }} {#viewer}
-
-{% include [roles-viewer](../../_includes/roles-viewer.md) %}
-
-### {{ roles-editor }} {#editor}
-
-{% include [roles-editor](../../_includes/roles-editor.md) %}
-
-### {{ roles-admin }} {#admin}
-
-{% include [roles-admin](../../_includes/roles-admin.md) %}
-
-### {{ roles-cloud-member }} {#member}
+#### {{ roles-cloud-member }} {#member}
 
 {% include [roles-cloud-member](../../_includes/roles-cloud-member.md) %}
 
-### {{ roles-cloud-owner }} {#owner}
+#### {{ roles-cloud-owner }} {#owner}
 
 {% include [roles-cloud-owner](../../_includes/roles-cloud-owner.md) %}
+
+### Примитивные роли {#primitive-roles}
+
+{% include [roles-primitive](../../_includes/roles-primitive.md) %}
 
 ## Какие роли необходимы {#required-roles}
 
 Чтобы пользоваться сервисом, необходима [роль](../../iam/concepts/access-control/roles.md) `{{ roles.gitlab.editor }}` или выше на каталог, в котором создаются проекты. Роль `{{ roles.gitlab.viewer }}` позволит только просматривать список проектов и содержимое файлов, которые были загружены.
 
 Вы всегда можете назначить роль, которая дает более широкие разрешения. Например, назначить `{{ roles.gitlab.admin }}` вместо `{{ roles.gitlab.editor }}`.
+
+Для создания инстанса {{ GL }} дополнительно необходима роль [`{{ roles-vpc-user }}`](../../iam/concepts/access-control/roles.md#vpc-user).
 
 
 ## Что дальше {#whats-next}
@@ -56,3 +52,4 @@
 * [Как отозвать роль](../../iam/operations/roles/revoke.md).
 * [Подробнее об управлении доступом в {{ yandex-cloud }}](../../iam/concepts/access-control/index.md).
 * [Подробнее о наследовании ролей](../../resource-manager/concepts/resources-hierarchy.md#access-rights-inheritance).
+

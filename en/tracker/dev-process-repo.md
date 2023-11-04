@@ -22,9 +22,9 @@ To connect a repository:
 
    - For Bitbucket repositories, specify your Bitbucket login and a special password generated for {{ tracker-name }}.
 
-   For more information about the connection parameters, see [{#T}](manager/add-repository.md).
+   For more information about the connection parameters, see [{#T}](user/add-repository.md).
 
-1. To display related commits on the issue page, go to [your queue settings](manager/edit-queue-general.md#integration) and enable **Show "Commits" tab**.
+1. To display related commits on the issue page, go to [your queue settings](manager/edit-queue-general.md#integration) and enable **{{ ui-key.startrek.blocks-desktop_b-queue-form.commits }}**.
 
 To link a commit to an issue in {{ tracker-name }}, specify your [issue key](user/create-ticket.md#key) in a comment under the commit.
 

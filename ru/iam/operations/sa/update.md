@@ -1,3 +1,8 @@
+---
+title: "Изменение сервисного аккаунта"
+description: "Следуя данной инструкции, вы сможете изменить сервисный аккаунт."
+---
+
 # Изменение сервисного аккаунта
 
 {% list tabs %}
@@ -5,8 +10,8 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, которому принадлежит сервисный аккаунт.
-  1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
-  1. Нажмите значок ![image](../../../_assets/options.svg) напротив сервисного аккаунта и выберите **Редактировать**.
+  1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
+  1. Нажмите значок ![image](../../../_assets/options.svg) напротив сервисного аккаунта и выберите **{{ ui-key.yacloud.iam.folder.service-accounts.button_action-edit }}**.
   1. Измените имя сервисного аккаунта.
 
      Требования к формату имени:
@@ -14,7 +19,7 @@
      {% include [name-format](../../../_includes/name-format.md) %}
 
   1. Измените описание сервисного аккаунта.
-  1. Нажмите кнопку **Сохранить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.popup-robot_button_save }}**.
 
 - CLI
 
@@ -38,8 +43,8 @@
       +----------------------+------------------+-------------------------------+
       |          ID          |       NAME       |          DESCRIPTION          |
       +----------------------+------------------+-------------------------------+
-      | aje6o61dvog2h6g9a33s | my-robot         |                               |
-      | aje9sda1ufvqcmfksd3f | blabla           | bla bla bla is my description |
+      | aje6o61dvog2******** | my-robot         |                               |
+      | aje9sda1ufvq******** | account_name     | account_description           |
       +----------------------+------------------+-------------------------------+
       ```
 
@@ -61,7 +66,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы изменить имя или описание сервисного аккаунта:
 

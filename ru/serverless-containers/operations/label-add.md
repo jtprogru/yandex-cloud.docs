@@ -1,3 +1,8 @@
+---
+title: "Добавить метку контейнеру"
+description: "Следуя данной инструкции, вы сможете добавить метку контейнеру."
+---
+
 # Добавить метку контейнеру
 
 {% list tabs %}
@@ -24,7 +29,7 @@
     description: my beta container description
     labels:
       label: test
-    url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
+    url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
     status: ACTIVE
     ```
 
@@ -32,7 +37,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы добавить метку контейнеру, созданному с помощью {{ TF }}:
 

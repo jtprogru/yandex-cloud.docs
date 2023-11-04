@@ -16,13 +16,12 @@ To create a [VM](../../concepts/vm.md):
 
          {% include [name-format](../../../_includes/name-format.md) %}
 
-      * Select an [availability zone](../../../overview/concepts/geo-scope.md) to place the VM in.
+      * Select an [availability zone](../../../overview/concepts/geo-scope.md) to place your VM in.
    1. Under **{{ ui-key.yacloud.compute.instances.create.section_image }}**, select a public [image](../../concepts/image.md) with the software you want to use.
    1. (Optional) If you want to add more [disks](../../concepts/disk.md) to the VM, [select them](../vm-create/create-from-disks.md) under **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** by clicking the **{{ ui-key.yacloud.compute.instances.create.section_disk }}** tab.
 
    
    1. (Optional) If you want to add more [file stores](../../concepts/filesystem.md) to the VM, add them under **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** by clicking the **{{ ui-key.yacloud.compute.nfs.label_filesystems }}** tab. [Create](../filesystem/create.md) the storages first.
-
 
 
    1. Under **{{ ui-key.yacloud.compute.instances.create.section_platform }}**:
@@ -52,10 +51,24 @@ To create a [VM](../../concepts/vm.md):
 
       * Select the [appropriate security groups](../../../vpc/concepts/security-groups.md) in the **{{ ui-key.yacloud.component.compute.network-select.field_security-groups }}** field (if there is no such field, the VM will be enabled for all incoming and outgoing traffic).
    1. Under **{{ ui-key.yacloud.compute.instances.create.section_access }}**, specify the information required to access the instance:
-      * (optional) Select or create a [service account](../../../iam/concepts/index.md#sa). By using a service account, you can flexibly configure access rights for your resources.
+      * (Optional) Select or create a [service account](../../../iam/concepts/index.md#sa). With a service account, you can flexibly configure access rights for your resources.
+      * (Optional) [Enable VM access via OS Login](../vm-connect/os-login.md). The option is available for Linux images from [{{ marketplace-name }}](/marketplace) with `OS Login` in their names.
+
+         {% include notitle [preview](../../../_includes/note-preview-by-request.md) %}
+
       * Enter the username in the **{{ ui-key.yacloud.compute.instances.create.field_user }}** field.
       * In the **{{ ui-key.yacloud.compute.instances.create.field_key }}** field, paste the contents of the [public key](../vm-connect/ssh.md#creating-ssh-keys) file.
+
+         {% note info %}
+
+         You cannot specify custom SSH keys on VMs with access via OS Login enabled.
+
+         {% endnote %}
+
       * (Optional) Enable access to the [serial console](../index.md#serial-console) in the **{{ ui-key.yacloud.compute.instances.create.field_access-advanced }}** field, if required.
+
+      {% include [vm-connect-linux](../../../_includes/vm-connect-linux.md) %}
+
    1. Click **{{ ui-key.yacloud.compute.instances.create.button_create }}**.
 
    VM creation takes several minutes. When the VM status changes to `RUNNING`, proceed to [configuring software](setup.md). You can monitor VM statuses on the list of VMs in the folder.
@@ -128,7 +141,8 @@ To create a [VM](../../concepts/vm.md):
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the provider {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
    1. In the configuration file, describe the parameters of the resources you want to create:
 
       ```hcl
@@ -155,7 +169,7 @@ To create a [VM](../../concepts/vm.md):
         }
 
         metadata = {
-          user-data = "#cloud-config\nusers:\n  - name: <username>\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - ${file("<path_to_public_SSH_key>")}"
+          user-data = "#cloud-config\nusers:\n  - name: <username>\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ${file("<path_to_public_SSH_key>")}"
         }
       }
 
@@ -195,7 +209,7 @@ To create a [VM](../../concepts/vm.md):
       For more information about the resources that you can create using {{ TF }}, see the [provider documentation]({{ tf-provider-resources-link }}/compute_instance).
    1. Make sure the configuration files are valid.
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```bash
          terraform plan
@@ -209,7 +223,7 @@ To create a [VM](../../concepts/vm.md):
          terraform apply
          ```
 
-      1. Confirm the resource creation: type `yes` in the terminal and press **Enter**.
+      1. Confirm creating the resources: type `yes` in the terminal and press **Enter**.
 
       {% include [vm-create-check](../../../_includes/compute/vm-create-check.md) %}
 

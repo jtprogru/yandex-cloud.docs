@@ -8,20 +8,20 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../../resource-manager/concepts/resources-hierarchy.md#folder), в котором был создан сертификат.
-  1. В списке сервисов выберите **{{ certificate-manager-name }}**.
+  1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../../resource-manager/concepts/resources-hierarchy.md#folder), в который был добавлен сертификат.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_certificate-manager }}**.
   1. Выберите в списке сертификат, который необходимо обновить.
-  1. В открывшемся окне нажмите кнопку **Обновить сертификат**.
-  1. В открывшемся окне в поле **Сертификат** нажмите кнопку **Добавить сертификат**.
-     1. Выберите способ добавления: **Файл** или **Текст**.
-     1. Нажмите кнопку **Добавить**.
-  1. В поле **Цепочка промежуточных сертификатов** нажмите кнопку **Добавить цепочку**.
-     1. Выберите способ добавления: **Файл** или **Текст**.
-     1. Нажмите кнопку **Добавить**.
-  1. В поле **Приватный ключ** нажмите кнопку **Добавить приватный ключ**.
-     1. Выберите способ добавления: **Файл** или **Текст**.
-     1. Нажмите кнопку **Добавить**.
-  1. Нажмите кнопку **Создать**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.certificate-manager.overview.action_reimport }}**.
+  1. В открывшемся окне в поле **{{ ui-key.yacloud.certificate-manager.import.field_certificate }}** нажмите кнопку **{{ ui-key.yacloud.certificate-manager.import.button_add-certificate }}**.
+     1. Выберите способ добавления: `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}` или `{{ ui-key.yacloud.component.file-content-dialog.value_manual }}`.
+     1. Нажмите кнопку **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+  1. В поле **{{ ui-key.yacloud.certificate-manager.import.field_chain }}** нажмите кнопку **{{ ui-key.yacloud.certificate-manager.import.button_add-chain }}**.
+     1. Выберите способ добавления: `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}` или `{{ ui-key.yacloud.component.file-content-dialog.value_manual }}`.
+     1. Нажмите кнопку **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+  1. В поле **{{ ui-key.yacloud.certificate-manager.import.field_privateKey }}** нажмите кнопку **{{ ui-key.yacloud.certificate-manager.import.button_add-privateKey }}**.
+     1. Выберите способ добавления: `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}` или `{{ ui-key.yacloud.component.file-content-dialog.value_manual }}`.
+     1. Нажмите кнопку **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.button_update }}**.
 
 - CLI
 
@@ -47,7 +47,7 @@
      +----------------------+--------+-------------+---------------------+----------+--------+
      |          ID          |  NAME  |   DOMAINS   |      NOT AFTER      |   TYPE   | STATUS |
      +----------------------+--------+-------------+---------------------+----------+--------+
-     | fpqmg47avvimp7rvmp30 | mycert | example.com | 2021-09-15 06:48:26 | IMPORTED | ISSUED |
+     | fpqmg47avvim******** | mycert | example.com | 2021-09-15 06:48:26 | IMPORTED | ISSUED |
      +----------------------+--------+-------------+---------------------+----------+--------+
      ```
 
@@ -55,7 +55,7 @@
 
      ```bash
      yc certificate-manager certificate update \
-       --id fpqmg47avvimp7rvmp30 \
+       --id fpqmg47avvim******** \
        --chain myupdatedcert.pem \
        --key myupdatedkey.pem
      ```
@@ -68,14 +68,56 @@
      Результат выполнения команды:
 
      ```bash
-     id: fpqmg47avvimp7rvmp30
-     folder_id: b1g7gvsi89m34qmcm3ke
+     id: fpqmg47avvim********
+     folder_id: b1g7gvsi89m3********
      created_at: "2020-09-15T06:54:44.916Z"
      ...
      issued_at: "2020-09-15T08:23:50.147668Z"
      not_after: "2021-09-15T08:12:57Z"
      not_before: "2020-09-15T08:12:57Z"
      ```
+
+- {{ TF }}
+
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+  1. Откройте файл конфигурации {{ TF }} и измените параметры `certificate` и `private_key` сертификата:
+
+     {% cut "Пример описания сертификата в конфигурации {{ TF }}" %}
+
+     ```
+     ...
+     resource "yandex_cm_certificate" "imported-certificate" {
+       name        = "my-certificate"
+       description = "this is a test certificate"
+
+       self_managed {
+         certificate = <<-EOT
+                       -----BEGIN CERTIFICATE-----
+                       MIIF...
+                       -----END CERTIFICATE-----
+                       EOT
+         private_key = <<-EOT
+                       -----BEGIN PRIVATE KEY-----
+                       MIIJ...
+                       -----END PRIVATE KEY-----
+                       EOT
+       }
+     }
+     ...
+     ```
+
+     {% endcut %}
+
+  1. Примените изменения:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+  Проверить изменение сертификата можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../../cli/quickstart.md):
+
+    ```bash
+    yc certificate-manager certificate get <имя_сертификата>
+    ```
 
 - API
 

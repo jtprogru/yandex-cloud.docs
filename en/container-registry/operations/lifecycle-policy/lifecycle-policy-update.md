@@ -7,21 +7,21 @@ Once you create a [lifecycle policy](../../concepts/lifecycle-policy.md), you ca
 - Management console
 
   1. In the [management console]({{ link-console-main }}), select the [folder](../../../resource-manager/concepts/resources-hierarchy.md#folder) where the [registry](../../concepts/registry.md) was created.
-  1. In the list of services, select **{{ container-registry-name }}**.
+  1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_container-registry }}**.
   1. Select the registry and click the row with its name.
   1. Select the repository and click the row with its name.
-  1. In the left-hand panel, click ![lifecycle](../../../_assets/container-registry/lifecycle.svg) **Lifecycle**.
-  1. In the row with the lifecycle policy you need, click ![image](../../../_assets/options.svg) and select **Edit**.
+  1. In the left-hand panel, click ![lifecycle](../../../_assets/container-registry/lifecycle.svg) **{{ ui-key.yacloud.cr.registry.label_lifecycle }}**.
+  1. In the row with the lifecycle policy you need, click ![image](../../../_assets/options.svg) and select **{{ ui-key.yacloud.common.edit }}**.
   1. Edit the lifecycle policy parameters:
-     * **Name**.
-     * **Description**.
-     * **Status**.
-     * Under **Lifecycle policy rules**, update the rule parameters:
+     * **{{ ui-key.yacloud.common.name }}**.
+     * **{{ ui-key.yacloud.common.description }}**.
+     * **{{ ui-key.yacloud.common.label_status }}**.
+     * Under **{{ ui-key.yacloud.cr.registry.label_lifecycle-rules }}**, update the rule parameters:
 
        {% include [lifecycle-rules-console](../../../_includes/container-registry/lifecycle-rules-console.md) %}
 
-     * **Description**.
-   1. Click **Create**.
+     * **{{ ui-key.yacloud.common.description }}**.
+  1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -41,6 +41,38 @@ Once you create a [lifecycle policy](../../concepts/lifecycle-policy.md), you ca
      ```
 
      To find out the policy ID, get a [list of lifecycle policies in a repository or registry](lifecycle-policy-list.md#lifecycle-policy-list).
+
+- {{ TF }}
+
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+   1. Open the configuration file and edit the fragment with the policy description:
+
+      ```hcl
+      resource "yandex_container_repository_lifecycle_policy" "my_lifecycle_policy" {
+        name          = "best-policy"
+        status        = "active"
+        repository_id = "crpfvi6o4ra7********"
+
+        rule {
+          description   = "rule for applying policy"
+          untagged      = true
+          tag_regexp    = ".*"
+          retained_top  = 1
+          expire_period = "48h"
+        }
+      }
+      ```
+
+   1. Apply the changes:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+   This will update the lifecycle policy in the specified repository. You can check that the policy is updated using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
+
+   ```bash
+    yc container repository lifecycle-policy list --registry-id <registry_ID>
+   ```
 
 - API
 
@@ -155,7 +187,7 @@ Once you create a [lifecycle policy](../../concepts/lifecycle-policy.md), you ca
   yc container repository lifecycle-policy update crp6lg1868p3i0emkv1b --new-name new-policy
   ```
 
-  Where `new-name` is the new policy name.
+  Where `new-name` is the new policy name. The requirements are as follows:
 
   {% include [name-format](../../../_includes/name-format.md) %}
 

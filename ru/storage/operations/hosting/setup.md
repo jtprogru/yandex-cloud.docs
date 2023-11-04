@@ -86,7 +86,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Перед началом работы, получите [статические ключи доступа](../../../iam/operations/sa/create-access-key.md) — секретный ключ и идентификатор ключа, используемые для аутентификации в {{ objstorage-short-name }}.
 
@@ -167,7 +167,7 @@
   1. Перейдите на вкладку ![website](../../../_assets/storage/website.svg) **{{ ui-key.yacloud.storage.bucket.switch_website }}**.
   1. В разделе **{{ ui-key.yacloud.storage.bucket.website.switch_redirect }}** укажите:
       * Доменное имя хоста, на который будут перенаправляться все запросы к бакету.
-      * (опционально) Протокол, если указанный хост принимает запросы строго по определенному протоколу.
+      * (Опционально) Протокол, если указанный хост принимает запросы строго по определенному протоколу.
   1. Нажмите кнопку **{{ ui-key.yacloud.storage.bucket.website.button_save }}**.
 
 - {{ yandex-cloud }} CLI
@@ -225,7 +225,7 @@
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
   Чтобы настроить переадресацию всех запросов:
@@ -395,7 +395,7 @@
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
     
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
   Чтобы настроить условную переадресацию запросов:

@@ -1,3 +1,8 @@
+---
+title: "Настройки {{ ES }}"
+description: "Для кластера {{ mes-name }} можно задать настройки, которые относятся к {{ ES }}."
+---
+
 # Настройки {{ ES }}
 
 {% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
@@ -42,7 +47,7 @@
     [Добавьте файл сертификата в качестве расширения](../operations/cluster-extensions.md#add) кластера и укажите путь в формате:
 
     ```text
-    /etc/elasticsearch/extensions/<имя расширения>/<имя сертификата>
+    /etc/elasticsearch/extensions/<имя_расширения>/<имя_сертификата>
     ```
 
     Подробнее см. в [документации {{ ES }}]({{ links.es.reindex-api }}#reindex-ssl).

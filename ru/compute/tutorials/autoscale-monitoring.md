@@ -1,1 +1,5 @@
-{% include [autoscale-monitoring](../../_tutorials/infrastructure-management/autoscale-monitoring.md) %}
+---
+canonical: "{{ link-docs }}/tutorials/infrastructure-management/autoscale-monitoring"
+---
+
+{% include [autoscale-monitoring](../../_tutorials/infrastructure/autoscale-monitoring.md) %}

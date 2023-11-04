@@ -1,4 +1,4 @@
-# Linking a billing account
+# Link a billing account
 
 [Billing account](../../../billing/concepts/billing-account.md) is used to assign the user who pays for the computing resources, operation of [nodes](../../concepts/deploy/index.md#node), and storing of resources for all the community's projects.
 
@@ -6,7 +6,7 @@ You can [create a {{ yandex-cloud }} payment account](../../../billing/operation
 
 {% note warning %}
 
-If the selected billing account is suspended or has an overdue debt, you can't link it to your {{ ml-platform-name }} community. In this case, go to the [billing page]({{ link-console-billing }}) in the {{ yandex-cloud }} management console, select your account, and follow the prompts in the interface. When the billing account is activated, try to link it to {{ ml-platform-name }} again. More about [billing account](../../../billing/concepts/billing-account-statuses.md) statuses.
+If the selected billing account is suspended or has an overdue debt, you can't link it to your {{ ml-platform-name }} community. In this case, go to the [**Billing**]({{ link-console-billing }}) page in the {{ yandex-cloud }} management console, select your account, and follow the prompts in the interface. When the billing account is activated, try to link it to {{ ml-platform-name }} again. More about [billing account](../../../billing/concepts/billing-account-statuses.md) statuses.
 
 {% endnote %}
 
@@ -14,7 +14,7 @@ Only the community's administrator can link a billing account to it. To work wit
 
 {% note tip %}
 
-Billing account management can only be performed by users with a [Yandex account](../../../iam/concepts/index.md#passport). If you use {{ yandex-cloud }} via an [identity federation](../../../organization/add-federation.md), [contact]({{ link-console-support }}) support.
+Billing account management can only be performed by users with a [Yandex account](../../../iam/concepts/index.md#passport). If you use {{ yandex-cloud }} via an [identity federation](../../../organization/concepts/add-federation.md), [contact]({{ link-console-support }}) support.
 
 {% endnote %}
 

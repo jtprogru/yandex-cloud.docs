@@ -8,4 +8,7 @@ The service does not operate with resources.
 
 Resource | Description
 --- | ---
-[TextGeneration](TextGeneration/index.md) | 
+[Embeddings](Embeddings/index.md) | Service for obtaining embeddings for text data.
+[TextGeneration](TextGeneration/index.md) | Service for text generation and conversation.
+[TextGenerationAsync](TextGenerationAsync/index.md) | Service for asynchronous text generation.
+[Tokenizer](Tokenizer/index.md) | Service for tokenizing input text.

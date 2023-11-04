@@ -16,36 +16,38 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-    1. На панели слева выберите ![image](../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
         * Введите имя и описание триггера.
-        * В поле **Тип** выберите **{{ container-registry-name }}**.
-        * В поле **Запускаемый ресурс** выберите **Функция**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_container-registry }}**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-    1. В блоке **Настройки {{ container-registry-name }}**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_container-registry }}**:
 
-        * В поле **Реестр** выберите реестр, для событий с образами в котором необходимо создать триггер.
-        * В поле **Типы событий** выберите [события](../../functions/concepts/trigger/cr-trigger.md#event), после наступления которых триггер будет запускаться.
-        * (опционально) В поле **Имя Docker-образа** введите имя образа для [фильтрации](../../functions/concepts/trigger/cr-trigger.md#filter). Чтобы узнать имя Docker-образа, [получите список Docker-образов в реестре](../../container-registry/operations/docker-image/docker-image-list.md).
-        * (опционально) В поле **Тег Docker-образа** введите [тег образа](../../functions/concepts/trigger/cr-trigger.md#filter) для фильтрации.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_container-registry }}** выберите реестр, для событий с образами в котором необходимо создать триггер.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_event-types }}** выберите [события](../../functions/concepts/trigger/cr-trigger.md#event), после наступления которых триггер будет запускаться.
+        * (Опционально) В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_image-name }}** введите имя образа для [фильтрации](../../functions/concepts/trigger/cr-trigger.md#filter). Чтобы узнать имя Docker-образа, [получите список Docker-образов в реестре](../../container-registry/operations/docker-image/docker-image-list.md).
+        * (Опционально) В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_tag }}** введите [тег образа](../../functions/concepts/trigger/cr-trigger.md#filter) для фильтрации.
 
-    1. В блоке **Настройки функции** выберите функцию и укажите:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}** выберите функцию и укажите:
 
         {% include [function-settings](function-settings.md) %}
 
-    1. (Опционально) В блоке **Настройки повторных запросов**:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
         {% include [repeat-request.md](repeat-request.md) %}
+ 
+    
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
+ 
 
-    1. (Опционально) В блоке **Настройки Dead Letter Queue** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
-
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -55,18 +57,22 @@
 
     Чтобы создать триггер, который вызывает функцию, выполните команду:
 
+    
     ```bash
     yc serverless trigger create container-registry \
-      --name <имя триггера> \
-      --registry-id <идентификатор реестра> \
+      --name <имя_триггера> \
+      --registry-id <идентификатор_реестра> \
       --events 'create-image', 'delete-image', 'create-image-tag', 'delete-image-tag' \
-      --invoke-function-id <идентификатор функции> \
-      --invoke-function-service-account-id <идентификатор сервисного аккаунта> \
+      --batch-size <размер_группы> \
+      --batch-cutoff <максимальное_время_ожидания> \
+      --invoke-function-id <идентификатор_функции> \
+      --invoke-function-service-account-id <идентификатор_сервисного_аккаунта> \
       --retry-attempts 1 \
       --retry-interval 10s \
-      --dlq-queue-id <идентификатор очереди Dead Letter Queue> \
-      --dlq-service-account-id <идентификатор сервисного аккаунта>
+      --dlq-queue-id <идентификатор_очереди_Dead_Letter_Queue> \
+      --dlq-service-account-id <идентификатор_сервисного_аккаунта>
     ```
+  
 
     Где:
 
@@ -74,6 +80,8 @@
     * `--registry-id` — [идентификатор реестра](../../container-registry/operations/registry/registry-list.md).
     * `--events` — [события](../../functions/concepts/trigger/cr-trigger.md#event), после наступления которых триггер запускается.
     
+    {% include [batch-settings-events](batch-settings-events.md) %}
+
     {% include [trigger-cli-param](trigger-cli-param.md) %}
 
     Результат:
@@ -91,6 +99,9 @@
         - CONTAINER_REGISTRY_EVENT_TYPE_CREATE_IMAGE_TAG
         - CONTAINER_REGISTRY_EVENT_TYPE_DELETE_IMAGE_TAG
         registry_id: crtlds4tdfg12kil77**********
+        batch_settings:
+          size: "3"
+          cutoff: 20s
         invoke_function:
           function_id: d4eofc7n0m**********
           function_tag: $latest

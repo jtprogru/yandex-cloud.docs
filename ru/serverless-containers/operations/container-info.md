@@ -1,3 +1,8 @@
+---
+title: "Получить информацию о контейнере"
+description: "Следуя данной инструкции, вы сможете получить информацию о контейнере."
+---
+
 # Получить информацию о контейнере
 
 {% list tabs %}
@@ -5,10 +10,10 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится контейнер.
-    1. Выберите сервис **{{ serverless-containers-name }}**.
-    1. На панели слева выберите **Контейнеры**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
+    1. На панели слева выберите **{{ ui-key.yacloud.serverless-containers.label_containers }}**.
     1. Выберите контейнер.
-    1. На странице **Обзор** отобразится подробная информация о контейнере.
+    1. На странице **{{ ui-key.yacloud.common.overview }}** отобразится подробная информация о контейнере.
 
 - CLI
 
@@ -29,7 +34,7 @@
     folder_id: b1gtmgn9gbvm********
     created_at: "2023-01-17T11:52:56.800Z"
     name: test
-    url: https://bba0hq6q1prb********.containers.yandexcloud.net/
+    url: https://bba0hq6q1prb********.{{ serverless-containers-host }}/
     status: ACTIVE
     ```
 

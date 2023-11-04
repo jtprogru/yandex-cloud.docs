@@ -1,6 +1,9 @@
-# Set up the test agent's security group
+---
+title: "How to configure test agent security groups"
+description: "This guide describes how you can configure test agent security groups."
+---
 
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
+# Configuring test agent security groups
 
 {% note warning %}
 

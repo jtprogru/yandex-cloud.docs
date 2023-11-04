@@ -1,4 +1,4 @@
-title: Billing
+title: Yandex Cloud Billing
 href: index.yaml
 editable: false
 items:
@@ -22,6 +22,8 @@ items:
             href: operations/create-new-account.md
           - name: Changing your billing account data
             href: operations/change-data.md
+          - name: Downloading personal data linked to a billing account
+            href: operations/get-data.md
           - name: Linking a cloud to a billing account
             href: operations/pin-cloud.md
           - name: Deleting a billing account

@@ -1,19 +1,28 @@
 title: Yandex Managed Service for Elasticsearch
 description:
+  - С 11 апреля 2024 года сервис {{ mes-full-name }} перестанет быть доступен.
   - >-
-    С 11 апреля 2024 года сервис Yandex Managed Service for Elasticsearch
-    перестанет быть доступен.
-  - >-
-    С 20 июля 2023 года пользователи, которые пока не работали с Elasticsearch в
+    С 20 июля 2023 года пользователи, которые пока не работали с {{ ES }} в
     облаке, не могут создавать новые кластеры. Действующие пользователи сервиса
     могут работать с существующими кластерами и создавать новые. Подробнее см. в
-    <a href="/blog/posts/2023/06/managed-elasticsearch">анонсе Yandex Cloud</a>.
+    <a href="/blog/posts/2023/06/managed-elasticsearch">анонсе {{ yandex-cloud
+    }}</a>.
+  - >-
+    Вы можете <a
+    href="/docs/managed-opensearch/operations/cluster-create">создать кластер {{
+    OS }}</a> в {{ yandex-cloud }} в качестве альтернативы {{ ES }}, а также <a
+    href="/docs/managed-elasticsearch/tutorials/migration-to-opensearch">перенести
+    данные</a> из существующего кластера {{ ES }} в {{ mos-name }}.
+  - <hr>
   - >-
     Сервис Managed Service for Elasticsearch помогает разворачивать и
     поддерживать кластеры серверов Elasticsearch в инфраструктуре Yandex Cloud
   - "Инфраструктура Yandex Cloud <a href=\"/docs/security/conform\"> защищена</a> в соответствии со следующими стандартами: <ul> <li>Федеральный закон Российской Федерации «О персональных данных» № 152-ФЗ.</li> <li>Стандарт безопасности индустрии платежных карт (PCI\_DSS).</li> <li>Генеральный регламент о защите данных (GDPR).</li> <li>Стандарт ISO 27001.</li> <li>Стандарт ISO 27017.</li> <li>Стандарт ISO 27018.</li> <li>ГОСТ 57580.1-2017.</li> </ul>"
 meta:
   title: Yandex Managed Service for Elasticsearch
+  description: >-
+    Сервис Managed Service for Elasticsearch помогает разворачивать и
+    поддерживать кластеры серверов Elasticsearch в инфраструктуре Yandex Cloud.
 links:
   - title: Начало работы
     description: Создайте первый кластер баз данных

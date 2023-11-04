@@ -16,18 +16,22 @@ The chart update period is 15 seconds.
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder containing the API gateway.
-   1. Select **{{ api-gw-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_api-gateway }}**.
    1. Select the API gateway whose monitoring charts you want to view.
-   1. Go to the **Monitoring** tab.
-   1. The following charts open on the page:
+   1. Go to the **{{ ui-key.yacloud.serverless-functions.gateways.item.switch_monitoring }}** tab.
+   1. The following charts will open on the page:
 
-      * **Requests**: The number of API gateway requests.
+      * **Requests**: Number of API gateway requests. Metrics contain the following labels:
+         * **stable**: Events handled by the current {{ api-gw-short-name }} release.
+         * **canary**: Events handled by the [canary release](../concepts/extensions/canary.md).
+         * **total**: Events handled by the canary or current release.
+      * **Errors**: Number of API gateway access errors. Metrics contain the following labels:
+         * **stable**: Events that are not handled by the current {{ api-gw-short-name }} release.
+         * **canary**: Events that are not handled by the canary release.
+         * **total**: Events that are not handled by the canary or current release.
+      * **Latency**: Amount of time it takes for an API gateway request to run.
 
-      * **Errors**: The number of API gateway access errors.
-
-      * **Latency**: Amount of time its takes for an API gateway request to run.
-
-      * **Connections**: Number of web sockets connected to API gateway.
+      * **Connections**: Number of web sockets connected to an API gateway.
 
       * **Disconnections**: Web socket disconnections per second.
 

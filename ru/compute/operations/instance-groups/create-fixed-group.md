@@ -6,6 +6,8 @@
 
 {% include [sa.md](../../../_includes/instance-groups/sa.md) %}
 
+{% include [password-reset-note](../../../_includes/compute/password-reset-note.md) %}
+
 Чтобы создать группу ВМ фиксированного размера:
 
 {% list tabs %}
@@ -107,6 +109,10 @@
        allocation_policy:
          zones:
            - zone_id: {{ region-id }}-a
+             instance_tags_pool:
+             - first
+             - second
+             - third
        ```
 
        Где:
@@ -114,36 +120,40 @@
        * `scale_policy` — [политика масштабирования](../../concepts/instance-groups/policies/scale-policy.md) ВМ в группе.
        * `allocation_policy` — [политика распределения](../../concepts/instance-groups/policies/allocation-policy.md) ВМ по [зонам доступности](../../../overview/concepts/geo-scope.md) и регионам.
 
-  Полный код файла `specification.yaml`:
+     Полный код файла `specification.yaml`:
 
-  ```yaml
-  name: first-fixed-group
-  service_account_id: ajed6ilf11qg********
-  description: "This instance group was created from YAML config."
-  instance_template:
-    platform_id: standard-v3
-    resources_spec:
-      memory: 2g
-      cores: 2
-    boot_disk_spec:
-      mode: READ_WRITE
-      disk_spec:
-        image_id: fdvk34al8k5n********
-        type_id: network-hdd
-        size: 32g
-    network_interface_specs:
-      - network_id: c64mknqgnd8a********
-        primary_v4_address_spec: {}
-  deploy_policy:
-    max_unavailable: 1
-    max_expansion: 0
-  scale_policy:
-    fixed_scale:
-      size: 3
-  allocation_policy:
-    zones:
-      - zone_id: {{ region-id }}-a
-  ```
+     ```yaml
+     name: first-fixed-group
+     service_account_id: ajed6ilf11qg********
+     description: "This instance group was created from YAML config."
+     instance_template:
+       platform_id: standard-v3
+       resources_spec:
+         memory: 2g
+         cores: 2
+       boot_disk_spec:
+         mode: READ_WRITE
+         disk_spec:
+           image_id: fdvk34al8k5n********
+           type_id: network-hdd
+           size: 32g
+       network_interface_specs:
+         - network_id: c64mknqgnd8a********
+           primary_v4_address_spec: {}
+     deploy_policy:
+       max_unavailable: 1
+       max_expansion: 0
+     scale_policy:
+       fixed_scale:
+         size: 3
+     allocation_policy:
+       zones:
+         - zone_id: {{ region-id }}-a
+           instance_tags_pool:
+           - first
+           - second
+           - third
+     ```
 
   1. Создайте группу ВМ в каталоге по умолчанию:
 
@@ -161,7 +171,8 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 
      ```hcl
@@ -171,18 +182,18 @@
      }
 
      resource "yandex_resourcemanager_folder_iam_member" "editor" {
-       folder_id = "<идентификатор_каталога>"
-       role      = "editor"
-       member   = "serviceAccount:${yandex_iam_service_account.ig-sa.id}"
+       folder_id  = "<идентификатор_каталога>"
+       role       = "editor"
+       member     = "serviceAccount:${yandex_iam_service_account.ig-sa.id}"
        depends_on = [
          yandex_iam_service_account.ig-sa,
        ]
      }
 
      resource "yandex_compute_instance_group" "ig-1" {
-       name               = "fixed-ig"
-       folder_id          = "<идентификатор_каталога>"
-       service_account_id = "${yandex_iam_service_account.ig-sa.id}"
+       name                = "fixed-ig"
+       folder_id           = "<идентификатор_каталога>"
+       service_account_id  = "${yandex_iam_service_account.ig-sa.id}"
        deletion_protection = "<защита_от_удаления:_true_или_false>"
        depends_on          = [yandex_resourcemanager_folder_iam_member.editor]
        instance_template {
@@ -221,7 +232,7 @@
 
        deploy_policy {
          max_unavailable = 1
-         max_expansion = 0
+         max_expansion   = 0
        }
      }
 

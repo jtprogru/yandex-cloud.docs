@@ -15,19 +15,19 @@ Secret version control enables you to:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder the secret belongs to.
-   1. In the list of services, select **{{ lockbox-short-name }}**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
    1. Click the name of the secret you need.
-   1. Under **Versions**, click **Add version**.
+   1. Under **{{ ui-key.yacloud.lockbox.label_secret-versions-section }}**, click **{{ ui-key.yacloud.lockbox.button_add-version }}**.
    1. Add the following parameters:
-      * (optional) **Description**: Version description.
-      * **Key**: Non-secret name that identifies a value.
-      * **Value**: Explicitly represented secret data.
+      * (Optional) **{{ ui-key.yacloud.common.description }}**: Version description.
+      * **{{ ui-key.yacloud.lockbox.forms.label_key }}**: Non-secret name that identifies a value.
+      * **{{ ui-key.yacloud.lockbox.forms.label_value }}**: Explicitly represented secret data.
          You can create multiple key-value pairs per version.
-   1. Click **Add version**.
+   1. Click **{{ ui-key.yacloud.lockbox.button_add-version }}**.
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    1. In the configuration file, describe the parameters of the resources you want to create:
 
@@ -62,18 +62,18 @@ Secret version control enables you to:
 
       Where:
 
-      * `secret_id`: ID of the secret you are creating a version for. This parameter is required.
+      * `secret_id`: ID of the secret you are creating a version for. This is a required parameter.
       * `entries`: Section with secret parameters. For each secret, create a separate `entries` section. It may contain the following parameters:
-         * `key`: Secret key, which is a non-secret name that identifies a value. This parameter is required.
-         * `text_value`: Explicitly represented secret data. This parameter is required.
+         * `key`: Secret key, which is a non-secret name that identifies a value. This is a required parameter.
+         * `text_value`: Explicitly represented secret data. This is a required parameter.
 
-      For more information about the parameters of the `yandex_lockbox_secret_version` resource in Terraform, see the [provider documentation]({{ tf-provider-resources-link }}/lockbox_secret_version).
+      You can learn more about the parameters of the `yandex_lockbox_secret_version` resource in Terraform in the [provider documentation]({{ tf-provider-resources-link }}/lockbox_secret_version).
 
    1. Create resources:
 
       {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
 
-   This creates a new version of the specified secret. You can verify that the version is there and its configuration is correct using the [management console]({{ link-console-main }}) or the following [CLI](../../cli/quickstart.md) command:
+   This creates a new version of the specified secret. You can check the new version and its configuration using the [management console]({{ link-console-main }}) or this [CLI](../../cli/quickstart.md) command:
 
    ```bash
    yc lockbox secret list-versions <secret_ID>
@@ -92,9 +92,9 @@ Secret version control enables you to:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder the secret belongs to.
-   1. In the list of services, select **{{ lockbox-short-name }}**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
    1. Click the name of the secret you need.
-   1. Under **Versions**, you will see a list of all secret versions with information about them.
+   1. Under **{{ ui-key.yacloud.lockbox.label_secret-versions-section }}**, you will see a list of all secret versions with information about them.
    1. Click a version to see the details about its key-value pairs.
 
 - API
@@ -110,16 +110,16 @@ Secret version control enables you to:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder the secret belongs to.
-   1. In the list of services, select **{{ lockbox-short-name }}**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
    1. Click the name of the secret you need.
-   1. Under **Versions**, click ![image](../../_assets/horizontal-ellipsis.svg) next to the appropriate version.
-   1. Select **Create a new version based on this one**.
+   1. Under **{{ ui-key.yacloud.lockbox.label_secret-versions-section }}**, click ![image](../../_assets/horizontal-ellipsis.svg) next to the appropriate version.
+   1. Select **{{ ui-key.yacloud.lockbox.button_action-open-version-add-dialog }}**.
    1. Edit or add the following parameters:
-      * (optional) **Description**: Version description.
-      * **Key**: Non-secret name that identifies a value.
-      * **Value**: Explicitly represented secret data.
+      * (Optional) **{{ ui-key.yacloud.common.description }}**: Version description.
+      * **{{ ui-key.yacloud.lockbox.forms.label_key }}**: Non-secret name that identifies a value.
+      * **{{ ui-key.yacloud.lockbox.forms.label_value }}**: Explicitly represented secret data.
          You can create multiple key-value pairs per version.
-   1. Click **Add version**.
+   1. Click **{{ ui-key.yacloud.lockbox.button_add-version }}**.
 
 - API
 
@@ -134,11 +134,11 @@ Secret version control enables you to:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder the secret belongs to.
-   1. In the list of services, select **{{ lockbox-short-name }}**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
    1. Click the name of the secret you need.
-   1. Under **Versions**, click ![image](../../_assets/horizontal-ellipsis.svg) next to the appropriate version.
-   1. Select **Roll back to this version**.
-   1. Click **Roll back**.
+   1. Under **{{ ui-key.yacloud.lockbox.label_secret-versions-section }}**, click ![image](../../_assets/horizontal-ellipsis.svg) next to the appropriate version.
+   1. Select **{{ ui-key.yacloud.lockbox.button_action-use-as-basis }}**.
+   1. Click **{{ ui-key.yacloud.lockbox.button_use-as-basis-version-action-text }}**.
 
 - API
 
@@ -153,12 +153,12 @@ Secret version control enables you to:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder the secret belongs to.
-   1. In the list of services, select **{{ lockbox-short-name }}**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
    1. Click the name of the secret you need.
-   1. Under **Versions**, click ![image](../../_assets/horizontal-ellipsis.svg) next to the appropriate version.
-   1. Select **Schedule destruction**.
+   1. Under **{{ ui-key.yacloud.lockbox.label_secret-versions-section }}**, click ![image](../../_assets/horizontal-ellipsis.svg) next to the appropriate version.
+   1. Select **{{ ui-key.yacloud.lockbox.button_action-schedule-for-destruction }}**.
    1. Enter the time until destruction.
-   1. Click **Schedule**.
+   1. Click **{{ ui-key.yacloud.lockbox.forms.button_schedule-destruction }}**.
 
 - API
 

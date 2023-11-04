@@ -2,9 +2,9 @@
 
 To use {{ TF }} to create configurations and run a [VM](../../compute/concepts/vm.md) or an [instance group](../../compute/concepts/instance-groups/index.md) from a [{{ coi }}](../concepts/index.md), follow the steps below.
 
-## Get started {#before-begin}
+## Getting started {#before-begin}
 
-If you don't have {{ TF }}, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform). In this use case, a configuration file named `example.tf` and located in the `~/cloud-terraform` directory is used.
+{% include [terraform-install](../../_includes/terraform-install.md) %} In our example, we use a configuration file named `example.tf`, which is located in the `~/cloud-terraform` directory.
 
 ## Creating and running a VM from a {{ coi }} {#creating-vm}
 
@@ -104,7 +104,7 @@ Run the VM with a {{ coi }} using the {{ TF }} configuration.
         cd /Users/<username>/cloud-terraform
         ```
 
-     1. Run the check using this command:
+     1. Run a check using this command:
 
         ```bash
         terraform plan
@@ -117,14 +117,14 @@ Run the VM with a {{ coi }} using the {{ TF }} configuration.
         The refreshed state will be used to calculate this plan, but will not be
         persisted to local or remote state storage.
         ...
-        Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-        can't guarantee that exactly these actions will be performed if
+        Note: You did not specify an "-out" parameter to save this plan, so Terraform
+        cannot guarantee that exactly these actions will be performed if
         "terraform apply" is subsequently run.
         ```
 
   1. Deploy your resources in {{ yandex-cloud }}.
 
-     1. Run the following command:
+     1. Run this command:
 
         ```bash
         terraform apply
@@ -164,13 +164,13 @@ Run the VM with a {{ coi }} using the {{ TF }} configuration.
         external_ip = <public IP address>
         ```
 
-        The necessary resources are created in the folder. When creating a VM, it's assigned a public IP address and [hostname](../../vpc/concepts/address.md#fqdn) (FQDN).
+        The required resources will be created in the folder. Once created, the VM is assigned an IP address and a [host name](../../vpc/concepts/address.md#fqdn) (FQDN).
 
   1. Check the resources and their settings in the [management console]({{ link-console-main }}).
 
   1. Connect to the VM with the {{ coi }}.
 
-     1. Run the following command:
+     1. Run this command:
 
         ```bash
         ssh yc-user@<public IP address>
@@ -245,7 +245,7 @@ Run the VM with a {{ coi }} using the {{ TF }} configuration.
    resource "yandex_compute_instance_group" "ig-with-coi" {
      name = "ig-with-coi"
      folder_id = "<folder ID>"
-     service_account_id = "<ID of the service account>"
+     service_account_id = "<service account ID>"
      instance_template {
        platform_id = "standard-v3"
        resources {
@@ -267,7 +267,6 @@ Run the VM with a {{ coi }} using the {{ TF }} configuration.
          docker-container-declaration = file("${path.module}/declaration.yaml")
          user-data = file("${path.module}/cloud_config.yaml")
        }
-       service_account_id = "<service account ID>"
      }
      scale_policy {
        fixed_scale {
@@ -292,7 +291,7 @@ Run the VM with a {{ coi }} using the {{ TF }} configuration.
 
    * `token`: [OAuth token](../../iam/concepts/authorization/oauth-token.md) to access {{ yandex-cloud }}.
    * `name`: Name of the instance group.
-   * `folder_id`: [ID of the folder](../../resource-manager/operations/folder/get-id.md).
+   * `folder_id`: [Folder ID](../../resource-manager/operations/folder/get-id.md).
    * `instance_template.network_interface.network_id`: ID of the [network](../../vpc/concepts/network.md).
    * `instance_template.network_interface.subnet_ids`: List of [subnet](../../vpc/concepts/network.md#subnet) IDs.
    * `instance_template.service_account_id`: ID of the [service account](../../iam/concepts/users/service-accounts.md) authorized for this instance group.
@@ -324,7 +323,7 @@ Run the instance group with a {{ coi }} using the {{ TF }} configuration.
         cd /Users/<username>/cloud-terraform
         ```
 
-     1. Run the check using this command:
+     1. Run a check using this command:
 
         ```bash
         terraform plan
@@ -337,14 +336,14 @@ Run the instance group with a {{ coi }} using the {{ TF }} configuration.
         The refreshed state will be used to calculate this plan, but will not be
         persisted to local or remote state storage.
         ...
-        Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-        can't guarantee that exactly these actions will be performed if
+        Note: You did not specify an "-out" parameter to save this plan, so Terraform
+        cannot guarantee that exactly these actions will be performed if
         "terraform apply" is subsequently run.
         ```
 
   1. Deploy your resources in {{ yandex-cloud }}.
 
-     1. Run the following command:
+     1. Run this command:
 
         ```bash
         terraform apply
@@ -385,13 +384,13 @@ Run the instance group with a {{ coi }} using the {{ TF }} configuration.
         ]
         ```
 
-        The necessary resources are created in the folder. When creating each VM, it's assigned a public IP address and [hostname](../../vpc/concepts/address.md#fqdn) (FQDN).
+        The required resources will be created in the folder. When creating each VM, it's assigned a public IP address and [hostname](../../vpc/concepts/address.md#fqdn) (FQDN).
 
   1. Check the resources and their settings in the [management console]({{ link-console-main }}).
 
   1. Connect to one of the VMs with the {{ coi }}.
 
-     1. Run the following command:
+     1. Run this command:
 
         ```bash
         ssh yc-user@<public IP address of VM1>

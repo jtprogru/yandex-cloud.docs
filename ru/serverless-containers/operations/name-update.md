@@ -1,3 +1,8 @@
+---
+title: "Изменить имя контейнера"
+description: "Следуя данной инструкции, вы сможете изменить имя контейнера."
+---
+
 # Изменить имя контейнера
 
 {% list tabs %}
@@ -5,14 +10,14 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится контейнер.
-  1. Выберите сервис **{{ serverless-containers-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
   1. Выберите контейнер.
-  1. Нажмите кнопку **Редактировать**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.edit }}**.
   1. Измените имя контейнера. Формат имени:
 
       {% include [name-format](../../_includes/name-format.md) %}
 
-  1. Нажмите кнопку **Сохранить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -38,7 +43,7 @@
   created_at: "2021-08-17T07:53:10.219Z"
   name: my-beta-container
   description: my beta container description
-  url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
+  url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
   status: ACTIVE
   ```
 
@@ -46,7 +51,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы изменить имя контейнера, созданного с помощью {{ TF }}:
 

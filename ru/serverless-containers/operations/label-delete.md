@@ -1,3 +1,8 @@
+---
+title: "Удалить метку контейнера"
+description: "Следуя данной инструкции, вы сможете удалить метку контейнера."
+---
+
 # Удалить метку контейнера
 
 {% list tabs %}
@@ -18,7 +23,7 @@
     created_at: "2021-08-17T07:53:10.219Z"
     name: my-beta-container
     description: my beta container description
-    url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
+    url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
     status: ACTIVE
     ```
 
@@ -26,7 +31,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы удалить метку контейнера, созданного с помощью {{ TF }}:
 

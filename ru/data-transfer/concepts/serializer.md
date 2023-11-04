@@ -1,17 +1,94 @@
 # Сериализация
 
-Сериализация — процесс преобразования объекта данных в битовую последовательность во время передачи в приемники, которые работают с <q>сырыми</q> данными.
+Сериализация — процесс преобразования объекта данных в битовую последовательность во время передачи в приемники, которые работают с <q>сырыми</q> данными. К таким приемникам относятся:
 
-К таким приемникам относится [{{ objstorage-name }}](#serializer-s3), а также приемники, которые используют [очереди сообщений](#serializer-message-queue):
-
-* {{ KF }}
-* {{ yds-full-name }}
+* [{{ objstorage-name }}](#serializer-s3)
+* [Очереди сообщений {{ KF }} и {{ yds-full-name }}](#serializer-message-queue)
 
 Сериализацию можно настроить во время [создания](../operations/endpoint/index.md#create) или [изменения](../operations/endpoint/index.md#update) эндпоинта-приемника.
 
-## Сериализация {{ objstorage-name }} {#serializer-s3}
+## Сериализация при поставке в {{ objstorage-name }} {#serializer-s3}
 
-При сериализации {{ objstorage-name }} вы можете выбрать **{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageTarget.output_format.title }}**: `{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_JSON.title }}`, `{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_CSV.title }}` или `{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_RAW.title }}`. Для `{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_JSON.title }}` можно преобразовать комплексные значения в строки.
+При поставке в {{ objstorage-name }} вы можете выбрать **{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageTarget.output_format.title }}**: `{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_JSON.title }}`, `{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_CSV.title }}`, `PARQUET` или `{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_RAW.title }}`. Для `{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_JSON.title }}` доступна настройка **{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageTarget.any_as_string.title }}**.
+
+Выходной формат данных зависит не только от выбора настройки **{{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageTarget.output_format.title }}**, но и от типа и настроек правил конвертации эндпоинта-источника.
+
+Ниже представлены различия выходных данных при отсутствии правил конвертации для эндпоинта-источника.
+
+{% note info %}
+
+Примеры выходных данных для формата `PARQUET` не приводятся, так как это бинарный формат.
+
+{% endnote %}
+
+### {{ yds-full-name }} {#yds}
+
+Входные данные — два сообщения:
+
+```text
+Text string
+{"device_id":"iv9,"speed":"5"}
+```
+
+Выходные данные:
+
+{% list tabs %}
+
+- {{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_JSON.title }}
+
+    ```text
+    <имя_потока>,<ключ_сегмента>,<порядковый_номер_сообщения>,<дата_и_время_записи_данных>,Text string
+    <имя_потока>,<ключ_сегмента>,<порядковый_номер_сообщения>,<дата_и_время_записи_данных>,"{""device_id"":""iv9"",""speed"":5}"
+    ```
+
+- {{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_CSV.title }}
+
+    ```text
+    {"data":"Text string","partition":<ключ_сегмента>,"seq_no":<порядковый_номер_сообщения>,"topic":"<имя_потока>","write_time":"<дата_и_время_записи_данных>"}
+    {"data":"{\"device_id\":\"iv9\",\"speed\":5}","partition":<ключ_сегмента>,"seq_no":<порядковый_номер_сообщения>,"topic":"<имя_потока>","write_time":"<дата_и_время_записи_данных>"}
+    ```
+
+- {{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_RAW.title }}
+
+    ```text
+    Text string
+    {"device_id":"iv9,"speed":"5"}
+    ```
+
+{% endlist %}
+
+### {{ mpg-name }} {#pg}
+
+Входные данные — таблица:
+
+| device_id | speed |
+| --------- | ----- |
+| iv9       | 5     |
+| rhi       | 10    |
+
+Выходные данные:
+
+{% list tabs %}
+
+- {{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_JSON.title }}
+
+    ```text
+    {"device_id":"iv9","speed":5}
+    {"device_id":"rhi","speed":10}
+    ```
+
+- {{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_CSV.title }}
+
+    ```text
+    iv9,5,
+    rhi,10,
+    ````
+
+- {{ ui-key.yc-data-transfer.data-transfer.console.form.object_storage.console.form.object_storage.ObjectStorageSerializationFormatUI.OBJECT_STORAGE_SERIALIZATION_FORMAT_RAW.title }}
+
+    Не поддерживается.
+
+{% endlist %}
 
 ## Сериализация при поставке в очереди сообщений {#serializer-message-queue}
 
@@ -86,7 +163,7 @@
 
 * **key.converter.basic.auth.user.info** и **value.converter.basic.auth.user.info** — имя пользователя и пароль для авторизации в Confluent Schema Registry для ключей и значений при использовании конвертера `io.confluent.connect.json.JsonSchemaConverter`.
 
-    Формат значения: `<имя пользователя>:<пароль>`.
+    Формат значения: `<имя_пользователя>:<пароль>`.
 
 * **key.converter.ssl.ca** и **value.converter.ssl.ca** — содержимое SSL-сертификата Confluent Schema Registry для ключей и значений при использовании конвертера `io.confluent.connect.json.JsonSchemaConverter`.
 

@@ -1,11 +1,11 @@
-# Справочник событий
+# Справочник событий уровня конфигурации
 
-Значение поля `event_type` (_тип события_) аудитного лога определяется сервисом-источником события.
+Значение поля `event_type` (_тип события_) аудитного лога уровня конфигурации (Control Plane) определяется сервисом-источником события.
 
 Общий вид значения:
 
 ```text
-{{ at-event-prefix }}.audit.<имя сервиса>.<имя события>
+{{ at-event-prefix }}.audit.<имя_сервиса>.<имя_события>
 ```
 
 Ниже описаны события для сервисов:
@@ -16,15 +16,18 @@
 * [{{ certificate-manager-name }}](#certificate-manager)
 * [{{ dns-name }}](#dns)
 * [{{ sf-name }}](#functions)
+* [{{ backup-name }}](#backup)
 * [{{ cdn-name }}](#cdn)
 * [{{ cloud-logging-name }}](#cloud-logging)
 * [{{ compute-name }}](#compute)
 * [{{ container-registry-name }}](#container-registry)
 * [{{ dataproc-name }}](#dataproc)
+* [{{ data-transfer-name }}](#datatransfer)
 * [{{ iam-name }}](#iam)
 * [{{ iot-name }}](#iot)
 * [{{ kms-name }}](#kms)
 * [{{ lockbox-name }}](#lockbox)
+* [{{ mkf-short-name }}](#managed-service-for-kafka)
 * [{{ mch-short-name }}](#managed-service-for-clickhouse)
 * [{{ mgl-full-name }}](#managed-service-for-gitlab)
 * [{{ mgp-short-name }}](#managed-service-for-greenplum)
@@ -112,15 +115,40 @@
 `functions.CreateFunction` | Создание функции
 `functions.CreateFunctionVersion` | Создание версии функции
 `functions.DeleteFunction` | Удаление функции
+`functions.DeleteFunctionVersion` | Удаление версии функции
 `functions.RemoveFunctionTag` | Удаление тега функции
+`functions.RemoveScalingPolicy` | Удаление политики масштабирования функции
 `functions.SetFunctionTag` | Назначение тега функции
+`functions.SetFunctionAccessBindings` | Назначение привязок прав доступа для функции
+`functions.SetScalingPolicy` | Назначение политики масштабирования функции
 `functions.UpdateFunction` | Изменение функции
+`functions.UpdateFunctionAccessBindings` | Изменение привязок прав доступа для функции
 `mdbproxy.CreateProxy` | Создание прокси
 `mdbproxy.DeleteProxy` | Удаление прокси
 `mdbproxy.UpdateProxy` | Изменение прокси
 `triggers.CreateTrigger` | Создание триггера
 `triggers.DeleteTrigger` | Удаление триггера
 `triggers.UpdateTrigger` | Изменение триггера
+
+
+## {{ backup-name }} {#backup}
+
+Имя сервиса — `backup`.
+
+Имя события | Описание
+--- | ---
+`ApplyPolicy` | Применение политики резервного копирования
+`CreateDirectory` | Создание новой директории внутри ВМ
+`CreatePolicy` | Создание политики резервного копирования
+`DeleteBackup` | Удаление резервной копии
+`DeletePolicy` | Удаление политики резервного копирования
+`DeleteResource` | Удаление ВМ из сервиса {{ backup-name }}
+`ExecutePolicy` | Выполнение политики резервного копирования
+`RegisterResource` | Подключение ВМ к сервису {{ backup-name }}
+`RevokePolicy` | Отзыв политики резервного копирования
+`StartRecoverBackup` | Запуск восстановления ВМ
+`UpdatePolicy` | Изменение политики резервного копирования
+
 
 ## {{ cdn-name }} {#cdn}
 
@@ -146,8 +174,8 @@
 
 Имя события | Описание
 --- | ---
-`CreateCertificate` | Создание сертификата
-`CreateDomain` | Создание домена
+`CreateCertificate` | Добавление сертификата
+`CreateDomain` | Добавление домена
 `UpdateCertificate` | Изменение сертификата
 `UpdateDomain` | Изменение домена
 `DeleteCertificate` | Удаление сертификата
@@ -194,12 +222,14 @@
 `CrashInstance` | Аварийное отключение ВМ
 `CreateDisk` | Создание диска
 `CreateFilesystem` | Создание файловой системы
+`CreateGpuCluster` | Создание кластера GPU
 `CreateImage` | Создание образа диска
 `CreateInstance` | Создание ВМ
 `CreateSnapshot` | Создание снимка диска
 `CreateSnapshotSchedule` | Создание расписания снимков диска
 `DeleteDisk` | Удаление диска
 `DeleteFilesystem` | Удаление файловой системы
+`DeleteGpuCluster` | Удаление кластера GPU
 `DeleteImage` | Удаление образа диска
 `DeleteInstance` | Удаление ВМ
 `DeleteSnapshot` | Удаление снимка диска
@@ -216,6 +246,7 @@
 `StopInstance` | Остановка ВМ
 `UpdateDisk` | Изменение диска
 `UpdateFilesystem` | Изменение файловой системы
+`UpdateGpuCluster` | Изменение кластера GPU
 `UpdateImage` | Изменение образа диска
 `UpdateInstance` | Изменение ВМ
 `UpdateInstanceMetadata` | Изменение метаданных ВМ
@@ -228,6 +259,7 @@
 `instancegroup.DeleteInstanceGroupInstances` | Удаление ВМ из группы
 `instancegroup.PauseInstanceGroup` | Приостановка процессов управления группой ВМ
 `instancegroup.ResumeInstanceGroup` | Возобновление процессов управления группой ВМ
+`instancegroup.RollingRestartInstanceGroupInstances` | Поочередная перезагрузка виртуальных машин из группы
 `instancegroup.SetInstanceGroupAccessBindings` | Назначение ролей на группу ВМ
 `instancegroup.StartInstanceGroup` | Запуск группы ВМ
 `instancegroup.StopInstanceGroup` | Остановка группы ВМ
@@ -243,15 +275,20 @@
 --- | ---
 `CreateImage` | Создание образа
 `CreateImageTag` | Создание тега образа
+`CreateLifecyclePolicy` | Создание политики жизненного цикла
 `CreateRegistry` | Создание реестра
 `CreateRepository` | Создание репозитория
+`CreateScanPolicy` | Создание политики сканирования
 `DeleteImage` | Удаление образа
 `DeleteImageTag` | Удаление тега образа
+`DeleteLifecyclePolicy` | Удаление политики жизненного цикла
 `DeleteRegistry` | Удаление реестра
 `DeleteRepository` | Удаление репозитория
 `ScanImage` | Сканирование образа
 `UpdateIpPermission` | Изменение политики доступа с IP-адресов
+`UpdateLifecyclePolicy` | Изменение политики жизненного цикла
 `UpdateRegistry` | Изменение реестра
+`UpdateScanPolicy` | Изменение политики сканирования
 `UpdateRegistryAccessBindings` | Изменение привязок прав доступа на реестр  
 `UpdateRepositoryAccessBindings` | Изменение привязок прав доступа на репозиторий
 `SetRegistryAccessBindings`  | Назначение привязок прав доступа на реестр
@@ -271,6 +308,25 @@
 `StopCluster` | Остановка кластера
 `UpdateCluster` | Изменение кластера
 `UpdateSubcluster` | Изменение подкластера
+
+## {{ data-transfer-name }} {#datatransfer}
+
+Имя сервиса — `datatransfer`.
+
+Имя события | Описание
+--- | ---
+`ActivateTransfer` | Активация трансфера
+`CreateEndpoint` | Создание эндпоинта
+`CreateTransfer` | Создание трансфера
+`DeactivateTransfer` | Деактивация трансфера
+`DeleteEndpoint` | Удаление эндпоинта
+`DeleteTransfer` | Удаление трансфера
+`FreezeTransferVersion` | Фиксация для трансфера определенной версии data plane
+`RestartTransfer` | Перезапуск трансфера
+`UnfreezeTransferVersion` | Разрешение обновления трансфера до последней версии data planе
+`UpdateEndpoint` | Изменение эндпоинта
+`UpdateTransfer` | Изменение трансфера
+`UpdateTransferVersion` | Обновление версии data planе трансфера
 
 ## {{ iam-name }} {#iam}
 
@@ -325,12 +381,20 @@
 --- | ---
 `CancelDeleteSymmetricKey` | Отмена ранее запланированного уничтожения ключа
 `CancelSymmetricKeyVersionDestruction` | Отмена ранее запланированного уничтожения версии симметричного ключа
+`CreateAsymmetricEncryptionKey` | Создание асимметричной ключевой пары шифрования
+`CreateAsymmetricSignatureKey` | Создание ключевой пары электронной подписи
 `CreateSymmetricKey` | Создание симметричного ключа
+`DeleteAsymmetricEncryptionKey` | Изменение асимметричной ключевой пары шифрования
+`DeleteAsymmetricSignatureKey` | Изменение ключевой пары электронной подписи
 `DeleteSymmetricKey` | Удаление симметричного ключа
 `RotateSymmetricKey` | Ротация симметричного ключа
-`ScheduleSymmetricKeyVersionDestruction` | Запланирование уничтожения версии симметричного ключа
+`ScheduleSymmetricKeyVersionDestruction` | Назначение срока уничтожения версии симметричного ключа
+`SetAsymmetricEncryptionKeyAccessBindings` | Выбор привязок прав доступа для асимметричной ключевой пары шифрования
+`SetAsymmetricSignatureKeyAccessBindings` | Выбор привязок прав доступа для ключевой пары электронной подписи
 `SetPrimarySymmetricKeyVersion` | Выбор основной версии симметричного ключа
 `SetSymmetricKeyAccessBindings` | Выбор привязок прав доступа для симметричного ключа
+`UpdateAsymmetricEncryptionKey` | Изменение асимметричной ключевой пары шифрования
+`UpdateAsymmetricSignatureKey` | Изменение ключевой пары электронной подписи
 `UpdateSymmetricKey` | Изменение симметричного ключа
 `UpdateSymmetricKeyAccessBindings` | Изменение привязок прав доступа для симметричного ключа
 
@@ -352,8 +416,19 @@
 `UpdateSecret` | Изменение секрета
 `UpdateSecretAccessBindings` | Изменение привязок прав доступа для секрета
 
-\* Указанное событие по умолчанию не входит в аудитный лог. Чтобы добавить это событие в аудитный лог, обратитесь в [службу технической поддержки]({{ link-console-support }}). Шаблон обращения:
-«Просьба включить запись событий data plane Lockbox в audit trail `<id трейла>`».
+\* Указанное событие по умолчанию не входит в аудитный лог. Чтобы оценить возможность добавления этого события, обратитесь в [службу поддержки]({{ link-console-support }}).
+
+## {{ mkf-short-name }} {#managed-service-for-kafka}
+
+Имя сервиса — `mdb.kafka`
+
+Имя события | Описание
+--- | ---
+`CreateCluster` | Создание кластера
+`DeleteCluster` | Удаление кластера
+`StartCluster` | Запуск кластера
+`StopCluster` | Остановка кластера
+`UpdateCluster` | Изменение кластера
 
 ## {{ mch-short-name }} {#managed-service-for-clickhouse}
 
@@ -487,6 +562,7 @@
 `CreateCluster` | Создание кластера
 `CreateDatabase` | Создание базы данных
 `CreateUser` | Создание пользователя базы данных
+`DeleteBackup` | Удаление резервной копии
 `DeleteCluster` | Удаление кластера
 `DeleteClusterHosts` | Удаление хостов из кластера
 `DeleteDatabase` | Удаление базы данных
@@ -514,6 +590,7 @@
 `CreateCluster` | Создание кластера
 `CreateDatabase` | Создание базы данных
 `CreateUser` | Создание пользователя базы данных
+`DeleteBackup` | Удаление резервной копии
 `DeleteCluster` | Удаление кластера
 `DeleteClusterHosts` | Удаление хостов из кластера
 `DeleteDatabase` | Удаление базы данных
@@ -587,15 +664,17 @@
 `BucketHttpsUpdate` | Изменение HTTPS-конфигурации для бакета
 `BucketLifecycleUpdate` | Изменение жизненного цикла объекта в бакете
 `BucketPolicyUpdate` | Изменение политик доступа бакета
+`BucketTagsUpdate` | Изменение тегов бакета
 `BucketUpdate` | Изменение бакета
 `BucketWebsiteUpdate` | Изменение конфигурации веб-сайта
 `ObjectAclUpdate` | Изменение ACL объекта в бакете^*^
 `ObjectCreate` | Создание объекта в бакете ^*^
 `ObjectDelete` | Удаление объекта в бакете ^*^
 `ObjectUpdate` | Изменение объекта в бакете ^*^
+`ObjectTagsDelete` | Удаление тегов объекта
+`ObjectTagsUpdate` | Изменение тегов объекта
 
-\* Указанные события по умолчанию не входят в аудитный лог. Чтобы добавить эти события в аудитный лог, обратитесь в [службу технической поддержки]({{ link-console-support }}). Шаблон обращения:
-«Просьба включить запись событий data plane object storage в audit trail `<id трейла>`».
+\* Указанные события по умолчанию не входят в аудитный лог. Чтобы оценить возможность добавления этих событий, обратитесь в [службу поддержки]({{ link-console-support }}).
 
 ## {{ serverless-containers-name }} {#serverless-containers}
 
@@ -676,6 +755,8 @@
 
 Имя события | Описание
 --- | ---
+`AddressAttached` | Привязка адреса к облачному ресурсу
+`AddressDetached` | Отвязка адреса от облачного ресурса
 `CreateAddress` | Создание адреса облачных ресурсов
 `CreateGateway` | Создание шлюза
 `CreateNetwork` | Создание облачной сети

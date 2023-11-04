@@ -1,6 +1,6 @@
 # Загрузка аудитных логов в SIEM ArcSight
 
-Создайте трейл, который будет загружать аудитные логи ресурсов отдельного каталога в бакет {{ objstorage-full-name }} с включенным шифрованием. Затем настройте непрерывную доставку логов в SIEM ArcSight.
+Создайте трейл, который будет загружать аудитные логи уровня конфигурации (Control Plane) ресурсов отдельного каталога в бакет {{ objstorage-full-name }} с включенным шифрованием. Затем настройте непрерывную доставку логов в SIEM ArcSight.
 
 Для успешного прохождения руководства у вас должен быть установлен экземпляр ArcSight.
 
@@ -47,7 +47,7 @@
 
 Вы можете использовать готовую ВМ, у которой есть доступ к экземпляру ArcSight, или создать новую:
 
-1. [Создайте ВМ](../../compute/operations/vm-create/create-linux-vm.md) из образа Linux с операционной системой Ubuntu 20.04.
+1. [Создайте ВМ](../../compute/operations/vm-create/create-linux-vm.md) из образа Linux с операционной системой [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts).
 1. [Подключитесь к ВМ](../../compute/operations/vm-connect/ssh.md#vm-connect) по [SSH](../../glossary/ssh-keygen.md).
 
 ### Создайте бакет для аудитных логов {#create-backet}
@@ -57,17 +57,17 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать бакет, например, `example-folder`.
-  1. Выберите сервис **{{ objstorage-name }}**.
-  1. Нажмите **Создать бакет**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_storage }}**.
+  1. Нажмите **{{ ui-key.yacloud.storage.buckets.button_empty-create }}**.
   1. На странице создания бакета:
       1. Введите имя бакета в соответствии с [правилами именования](../../storage/concepts/bucket.md#naming).
       1. При необходимости ограничьте максимальный размер бакета.
 
          {% include [storage-no-max-limit](../../storage/_includes_service/storage-no-max-limit.md) %}
 
-      1. Выберите тип [доступа](../../storage/concepts/bucket.md#bucket-access) `Ограниченный`.
+      1. Выберите тип [доступа](../../storage/concepts/bucket.md#bucket-access) `{{ ui-key.yacloud.storage.bucket.settings.access_value_private }}`.
       1. Выберите [класс хранилища](../../storage/concepts/storage-class.md) по умолчанию.
-      1. Нажмите **Создать бакет**.
+      1. Нажмите **{{ ui-key.yacloud.storage.buckets.create.button_create }}**.
 
 {% endlist %}
 
@@ -78,12 +78,12 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог `example-folder`.
-  1. Выберите сервис **{{ kms-name }}**.
-  1. Нажмите **Создать** и укажите:
-     * **Имя** — `arcsight-kms`.
-     * **Алгоритм шифрования** — `AES-256`.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+  1. Нажмите **{{ ui-key.yacloud.kms.symmetric-keys.button_empty-create }}** и укажите:
+     * **{{ ui-key.yacloud.common.name }}** — `arcsight-kms`.
+     * **{{ ui-key.yacloud.kms.symmetric-key.form.field_algorithm }}** — `AES-256`.
      * Для остальных параметров оставьте значения по умолчанию.
-  1. Нажмите **Создать**.
+  1. Нажмите **{{ ui-key.yacloud.common.create }}**.
 
 {% endlist %}
 
@@ -94,9 +94,9 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в бакет, созданный ранее.
-  1. На панели слева выберите **Шифрование**.
-  1. В поле **Ключ {{ kms-short-name }}** выберите ключ `arcsight-kms`.
-  1. Нажмите **Сохранить**.
+  1. На панели слева выберите **{{ ui-key.yacloud.storage.bucket.switch_encryption }}**.
+  1. В поле **{{ ui-key.yacloud.storage.bucket.encryption.field_key }}** выберите ключ `arcsight-kms`.
+  1. Нажмите **{{ ui-key.yacloud.storage.bucket.encryption.button_save }}**.
 
 {% endlist %}
 
@@ -111,15 +111,15 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог `example-folder`.
-  1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
-  1. Нажмите **Создать сервисный аккаунт**.
+  1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
+  1. Нажмите **{{ ui-key.yacloud.iam.folder.service-accounts.button_add }}**.
   1. Введите имя сервисного аккаунта в соответствии с правилами именования:
   
        {% include [name-format](../../_includes/name-format.md) %}
 
        Например, `sa-arcsight`.
   
-  1. Нажмите **Создать**.
+  1. Нажмите **{{ ui-key.yacloud.iam.folder.service-account.popup-robot_button_add }}**.
   
 {% endlist %}
 
@@ -134,11 +134,11 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог `example-folder`.
-  1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
+  1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
   1. Выберите сервисный аккаунт `sa-arcsight-bucket` и нажмите на строку с его именем.
-  1. Нажмите **Создать новый ключ** на верхней панели.
-  1. Выберите **Создать статический ключ доступа**.
-  1. Задайте описание ключа и нажмите **Создать**.
+  1. Нажмите **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create-key-popup }}** на верхней панели.
+  1. Выберите **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create_service-account-key }}**.
+  1. Задайте описание ключа и нажмите **{{ ui-key.yacloud.iam.folder.service-account.overview.popup-key_button_create }}**.
   1. Сохраните идентификатор и секретный ключ.
 
       {% note alert %}
@@ -272,31 +272,32 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог `example-folder`.
-  2. Выберите сервис **{{ at-name }}**.
-  3. Нажмите **Создать трейл** и укажите:
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_audit-trails }}**.
+  1. Нажмите **{{ ui-key.yacloud.audit-trails.button_create-trail }}** и укажите:
 
-     * **Имя** — имя создаваемого трейла, например, `arcsight-trail`.
-     * **Описание** — описание трейла, необязательный параметр.
+     * **{{ ui-key.yacloud.common.name }}** — имя создаваемого трейла, например, `arcsight-trail`.
+     * **{{ ui-key.yacloud.common.description }}** — описание трейла, необязательный параметр.
 
-  4. В блоке **Фильтр** задайте параметры области сбора аудитных логов:
+  1. В блоке **{{ ui-key.yacloud.audit-trails.label_destination }}** задайте параметры объекта назначения:
 
-     * **Ресурс** — выберите `Каталог`.
-     * **Каталог** — не требует заполнения, содержит имя текущего каталога.
-
-  5. В блоке **Назначение** задайте параметры объекта назначения:
-
-     * **Назначение** — `{{ objstorage-name }}`.
-     * **Бакет** — имя бакета.
-     * **Префикс объекта** — необязательный параметр, участвует в [полном имени](../../audit-trails/concepts/format.md#log-file-name) файла аудитного лога.
+     * **{{ ui-key.yacloud.audit-trails.label_destination }}** — `{{ ui-key.yacloud.audit-trails.label_objectStorage }}`.
+     * **{{ ui-key.yacloud.audit-trails.label_bucket }}** — имя бакета.
+     * **{{ ui-key.yacloud.audit-trails.label_object-prefix }}** — необязательный параметр, участвует в [полном имени](../../audit-trails/concepts/format.md#log-file-name) файла аудитного лога.
   
-     {% note info %}
+     {% include [note-bucket-prefix](../../_includes/audit-trails/note-bucket-prefix.md) %}
+
+      * **{{ ui-key.yacloud.audit-trails.title_kms-key }}** — укажите ключ шифрования `arcsight-kms`, которым [зашифрован](../../storage/concepts/encryption.md) бакет.
   
-     Используйте [префикс](../../storage/concepts/object.md#key), если вы храните аудитные логи и сторонние данные в одном и том же бакете. Не используйте одинаковый префикс для логов и других объектов в бакете, так как в этом случае логи и сторонние объекты могут перезаписать друг друга.
-  
-     {% endnote %}
-  
-  6. В блоке **Сервисный аккаунт** выберите `sa-arcsight`.
-  7. Нажмите **Создать**.
+  1. В блоке **{{ ui-key.yacloud.audit-trails.label_service-account }}** выберите `sa-arcsight`.
+
+  1. В блоке **{{ ui-key.yacloud.audit-trails.label_path-filter-section }}** задайте параметры сбора аудитных логов уровня конфигурации:
+
+     * **{{ ui-key.yacloud.audit-trails.label_collecting-logs }}** — выберите `{{ ui-key.yacloud.common.enabled }}`.
+     * **{{ ui-key.yacloud.audit-trails.label_resource-type }}** — выберите `{{ ui-key.yacloud.audit-trails.label_resource-manager.folder }}`.
+     * **{{ ui-key.yacloud.audit-trails.label_resource-manager.folder }}** — не требует заполнения, содержит имя текущего каталога.
+
+  1. В блоке **{{ ui-key.yacloud.audit-trails.label_event-filter-section }}** в поле **{{ ui-key.yacloud.audit-trails.label_collecting-logs }}** выберите `{{ ui-key.yacloud.common.disabled }}`.
+  1. Нажмите **{{ ui-key.yacloud.common.create }}**.
 
   {% note warning %}
   

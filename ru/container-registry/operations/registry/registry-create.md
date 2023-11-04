@@ -7,12 +7,14 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создан реестр.
-  1. В списке сервисов выберите **{{ container-registry-name }}**.
-  1. Задайте имя реестра.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_container-registry }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.cr.overview.button_create }}**.
+  1. Задайте имя реестра. Требования к имени:
 
      {% include [name-format](../../../_includes/name-format.md) %}
 
-  1. Нажмите кнопку **Создать реестр**.
+  1. (опционально) Добавьте метки.
+  1. Нажмите кнопку **{{ ui-key.yacloud.cr.overview.popup-create_button_create }}**.
 
 - CLI
 
@@ -53,10 +55,11 @@
      created_at: "2019-01-09T14:34:06.601Z"
      ```
 
+     Требования к имени реестра:
+
      {% include [name-format](../../../_includes/name-format.md) %}
 
-     * Флаг `--name` — необязательный. Можно создать реестр без имени и обращаться к нему по идентификатору.
-     * Поле `name` — пользовательское, оно используется при листинге в YC CLI и **не используется** в Docker CLI.
+     Флаг `--name` необязательный, можно создать реестр без имени и обращаться к нему по идентификатору. Поле `name` пользовательское, оно используется при листинге в YC CLI и **не используется** в Docker CLI.
   1. Проверьте, что реестр создался:
 
      ```bash
@@ -79,7 +82,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
   1. Добавьте в конфигурационный файл параметры реестра, который необходимо создать. Например, файл с названием `example.tf` в директории `~/cloud-terraform`:
 
      ```hcl

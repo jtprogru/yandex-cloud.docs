@@ -9,21 +9,21 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором находится балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
-  1. В списке выберите нужный балансировщик, нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Редактировать**.
-  1. В блоке **Настройки логов**:
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. В списке выберите нужный балансировщик, нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.edit }}**.
+  1. В блоке **{{ ui-key.yacloud.alb.section_logs-settings }}**:
 
-      1. Включите опцию **Запись логов**.
+      1. Включите опцию **{{ ui-key.yacloud.alb.label_log-requests }}**.
       1. Выберите [лог-группу](../../logging/concepts/log-group.md) {{ cloud-logging-name }}, в которую будут записываться логи балансировщика.
-      1. Нажмите кнопку **Добавить правило отбрасывания логов** и настройте его [параметры](../concepts/application-load-balancer.md#discard-logs-rules):
+      1. Нажмите кнопку **{{ ui-key.yacloud.alb.button_add-discard-rule }}** и настройте его [параметры](../concepts/application-load-balancer.md#discard-logs-rules):
 
-          * **HTTP-коды** — добавьте HTTP-коды.
-          * **Классы HTTP-кодов** — добавьте классы HTTP-кодов.
-          * **gRPC-коды** — добавьте gRPC-коды.
-          * **Доля отбрасываемых логов** — добавьте процент отбрасываемых логов.
+          * **{{ ui-key.yacloud.alb.label_discard-http-codes }}** — добавьте HTTP-коды.
+          * **{{ ui-key.yacloud.alb.label_discard-http-code-intervals }}** — добавьте классы HTTP-кодов.
+          * **{{ ui-key.yacloud.alb.label_discard-grpc-codes }}** — добавьте gRPC-коды.
+          * **{{ ui-key.yacloud.alb.label_discard-percent }}** — добавьте процент отбрасываемых логов.
       
           Вы можете задать больше одного правила.
-  1. Нажмите **Сохранить**.
+  1. Нажмите **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -58,14 +58,14 @@
 
       Результат:
 
-      ```yaml
+      ```bash
       done (42s)
-      id: ds76g8b2op3fej1.....
+      id: ds76g8b2op3f*********
       name: test-load-balancer
-      folder_id: b1gu6g9ielh690a.....
+      folder_id: b1gu6g9ielh6********
       ...
       log_options:
-        log_group_id: e23p9bfj2kyra3t.....
+        log_group_id: e23p9bfj2kyr********
         discard_rules:
           - http_codes:
               - "200"
@@ -78,7 +78,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }},  [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Добавьте к описанию балансировщика в конфигурационном файле блок `log_options`:
 
@@ -126,21 +126,21 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором находится балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
-  1. В списке выберите нужный балансировщик, нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Редактировать**.
-  1. В блоке **Настройки логов**:
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. В списке выберите нужный балансировщик, нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.edit }}**.
+  1. В блоке **{{ ui-key.yacloud.alb.section_logs-settings }}**:
   
       1. Измените [лог-группу](../../logging/concepts/log-group.md) {{ cloud-logging-name }}, в которую будут записываться логи балансировщика.
       1. Измените [правила отбрасывания логов](../concepts/application-load-balancer.md#discard-logs-rules):
 
-          * **HTTP-коды** — измените HTTP-коды.
-          * **Классы HTTP-кодов** — измените классы HTTP-кодов.
-          * **gRPC-коды** — измените gRPC-коды.
-          * **Доля отбрасываемых логов** — измените процент отбрасываемых логов.
+          * **{{ ui-key.yacloud.alb.label_discard-http-codes }}** — измените HTTP-коды.
+          * **{{ ui-key.yacloud.alb.label_discard-http-code-intervals }}** — измените классы HTTP-кодов.
+          * **{{ ui-key.yacloud.alb.label_discard-grpc-codes }}** — измените gRPC-коды.
+          * **{{ ui-key.yacloud.alb.label_discard-percent }}** — измените процент отбрасываемых логов.
 
-          Чтобы добавить еще одно правило, нажмите кнопку **Добавить правило отбрасывания логов**.
+          Чтобы добавить еще одно правило, нажмите кнопку **{{ ui-key.yacloud.alb.button_add-discard-rule }}**.
 
-  1. Нажмите **Сохранить**.
+  1. Нажмите **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -173,14 +173,14 @@
 
       Результат:
 
-      ```yaml
+      ```bash
       done (42s)
-      id: ds76g8b2op3fej1.....
+      id: ds76g8b2op3f********
       name: test-load-balancer
-      folder_id: b1gu6g9ielh690a.....
+      folder_id: b1gu6g9ielh6********
       ...
       log_options:
-        log_group_id: e23p9bfj2kyra3t.....
+        log_group_id: e23p9bfj2kyr********
         discard_rules:
           - http_codes:
               - "200"
@@ -193,7 +193,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }},  [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. В конфигурационном файле с описанием балансировщика измените блок `log_options` с новыми настройками логирования:
 
@@ -241,10 +241,10 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором находится балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
-  1. В списке выберите нужный балансировщик, нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Редактировать**.
-  1. В блоке **Настройки логов** выключите опцию **Запись логов**.
-  1. Нажмите **Сохранить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. В списке выберите нужный балансировщик, нажмите ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.edit }}**.
+  1. В блоке **{{ ui-key.yacloud.alb.section_logs-settings }}** выключите опцию **{{ ui-key.yacloud.alb.label_log-requests }}**.
+  1. Нажмите **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -268,11 +268,11 @@
 
       Результат:
 
-      ```yaml
+      ```bash
       done (42s)
-      id: ds76g8b2op3fej1.....
+      id: ds76g8b2op3f********
       name: test-load-balancer
-      folder_id: b1gu6g9ielh690a.....
+      folder_id: b1gu6g9ielh6********
       ...
       log_options:
         disable: true
@@ -280,7 +280,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. В конфигурационном файле с описанием балансировщика удалите блок `log_options`:
 

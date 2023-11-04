@@ -14,15 +14,13 @@
 
 1. [Создайте _кластер-приемник_ {{ mkf-name }}](../../managed-kafka/operations/cluster-create.md) любой подходящей конфигурации с хостами в публичном доступе.
 
-1. [Создайте виртуальную машину](../../compute/operations/vm-create/create-linux-vm.md) с Ubuntu 20.04 и публичным IP-адресом.
+1. [Создайте виртуальную машину](../../compute/operations/vm-create/create-linux-vm.md) с [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts) и публичным IP-адресом.
 
 
 1. Если вы используете группы безопасности, настройте их так, чтобы к кластерам можно было подключаться из интернета и созданной виртуальной машины, а к ней — из интернета по [SSH](../../glossary/ssh-keygen.md):
 
     * [Настройка групп безопасности кластера {{ mkf-name }}](../../managed-kafka/operations/connect.md#configuring-security-groups).
     * [Настройка групп безопасности кластера {{ mpg-name }}](../../managed-postgresql/operations/connect.md#configuring-security-groups).
-
-    {% include [preview-pp.md](../../_includes/preview-pp.md) %}
 
 
 1. [Подключитесь к виртуальной машине по SSH](../../compute/operations/vm-connect/ssh.md#vm-connect) и выполните ее предварительную настройку:
@@ -67,7 +65,7 @@
             -importcert \
             -alias YandexCA -file /usr/local/share/ca-certificates/Yandex/{{ crt-local-file }} \
             -keystore /etc/debezium/keystore.jks \
-            -storepass <пароль JKS> \
+            -storepass <пароль_JKS> \
             --noprompt
         ```
 
@@ -101,9 +99,9 @@
 
     ```sql
     INSERT INTO public.measurements VALUES
-        ('iv9a94th6rztooxh5ur2', '2020-06-05 17:27:00', 55.70329032, 37.65472196,  427.5,    0, 23.5, 17, NULL),
-        ('rhibbh3y08qmz3sdbrbu', '2020-06-06 09:49:54', 55.71294467, 37.66542005, 429.13, 55.5, NULL, 18, 32),
-        ('iv9a94th678tooxh5ur2', '2020-06-07 15:00:10', 55.70985913, 37.62141918,  417.0, 15.7, 10.3, 17, NULL);
+        ('iv9a94th6rzt********', '2020-06-05 17:27:00', 55.70329032, 37.65472196,  427.5,    0, 23.5, 17, NULL),
+        ('rhibbh3y08qm********', '2020-06-06 09:49:54', 55.71294467, 37.66542005, 429.13, 55.5, NULL, 18, 32),
+        ('iv9a94th678t********', '2020-06-07 15:00:10', 55.70985913, 37.62141918,  417.0, 15.7, 10.3, 17, NULL);
     ```
 
 1. Создайте публикацию для добавленной таблицы:
@@ -132,10 +130,10 @@
     name=debezium-mpg
     connector.class=io.debezium.connector.postgresql.PostgresConnector
     plugin.name=pgoutput
-    database.hostname=c-<идентификатор кластера>.rw.{{ dns-zone }}
+    database.hostname=c-<идентификатор_кластера>.rw.{{ dns-zone }}
     database.port=6432
     database.user=user1
-    database.password=<пароль пользователя user1>
+    database.password=<пароль_пользователя_user1>
     database.dbname=db1
     database.server.name=mpg
     table.include.list=public.measurements
@@ -146,7 +144,7 @@
     snapshot.mode=always
     ```
 
-    Здесь:
+    Где:
 
     * `name` — логическое имя коннектора Debezium. Используется для внутренних нужд коннектора.
     * `database.hostname` — [особый FQDN](../../managed-postgresql/operations/connect.md#fqdn-master) для подключения к хосту-мастеру кластера-источника.
@@ -166,9 +164,9 @@
 
 1. [Создайте топик](../../managed-kafka/operations/cluster-topics.md#create-topic), в который будут помещаться данные, поступающие от кластера-источника:
 
-    * **Имя** — `mpg.public.measurements`.
+    * **{{ ui-key.yacloud.common.name }}** — `mpg.public.measurements`.
 
-        Имена топиков для данных [конструируются](https://debezium.io/documentation/reference/connectors/postgresql.html#postgresql-topic-names) по принципу `<имя сервера>.<имя схемы>.<имя таблицы>`.
+        Имена топиков для данных [конструируются](https://debezium.io/documentation/reference/connectors/postgresql.html#postgresql-topic-names) по принципу `<имя_сервера>.<имя_схемы>.<имя_таблицы>`.
 
         Согласно [файлу настроек коннектора Debezium](#setup-debezium):
 
@@ -179,16 +177,16 @@
 
 1. Создайте служебный топик для отслеживания состояния коннектора:
 
-    * **Имя** — `__debezium-heartbeat.mpg`.
+    * **{{ ui-key.yacloud.common.name }}** — `__debezium-heartbeat.mpg`.
 
-        Имена служебных топиков [конструируются](https://debezium.io/documentation/reference/connectors/postgresql.html#postgresql-property-heartbeat-topics-prefix) по принципу `<префикс для heartbeat>.<имя сервера>`.
+        Имена служебных топиков [конструируются](https://debezium.io/documentation/reference/connectors/postgresql.html#postgresql-property-heartbeat-topics-prefix) по принципу `<префикс_для_heartbeat>.<имя_сервера>`.
 
         Согласно [файлу настроек коннектора Debezium](#setup-debezium):
 
         * Префикс `__debezium-heartbeat` указан в параметре `heartbeat.topics.prefix`.
         * Имя сервера `mpg` указано в параметре `database.server.name`.
 
-    * **Политика очистки лога** — `Compact`.
+    * **{{ ui-key.yacloud.kafka.label_topic-cleanup-policy }}** — `Compact`.
 
     Если необходимо получать данные из нескольких кластеров-источников, создайте для каждого из них отдельный служебный топик.
 
@@ -204,19 +202,19 @@
 
     ```ini
     # AdminAPI connect properties
-    bootstrap.servers=<FQDN хоста-брокера 1>:9091,...,<FQDN хоста-брокера N>:9091
+    bootstrap.servers=<FQDN_хоста-брокера_1>:9091,...,<FQDN_хоста-брокера_N>:9091
     sasl.mechanism=SCRAM-SHA-512
     security.protocol=SASL_SSL
     ssl.truststore.location=/etc/debezium/keystore.jks
-    ssl.truststore.password=<пароль JKS>
-    sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="debezium" password="<пароль пользователя debezium>";
+    ssl.truststore.password=<пароль_JKS>
+    sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="debezium" password="<пароль_пользователя_debezium>";
 
     # Producer connect properties
     producer.sasl.mechanism=SCRAM-SHA-512
     producer.security.protocol=SASL_SSL
     producer.ssl.truststore.location=/etc/debezium/keystore.jks
-    producer.ssl.truststore.password=<пароль JKS>
-    producer.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="debezium" password="<пароль пользователя debezium>";
+    producer.ssl.truststore.password=<пароль_JKS>
+    producer.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="debezium" password="<пароль_пользователя_debezium>";
 
     # Worker properties
     plugin.path=/etc/debezium/plugins/
@@ -242,7 +240,7 @@
     ```bash
     kafkacat \
         -C \
-        -b <FQDN хоста-брокера-1>:9091,...,<FQDN хоста-брокера N>:9091 \
+        -b <FQDN_хоста-брокера_1>:9091,...,<FQDN_хоста-брокера_N>:9091 \
         -t mpg.db1.measurements \
         -X security.protocol=SASL_SSL \
         -X sasl.mechanisms=SCRAM-SHA-512 \
@@ -265,7 +263,7 @@
     "payload": {
         "before": null,
         "after": {
-            "device_id": "iv9a94th6rztooxh5ur2",
+            "device_id": "iv9a94th6rzt********",
             "datetime": 1591378020000000,
             "latitude": 55.70329,
             "longitude": 37.65472,
@@ -301,14 +299,14 @@
 1. [Подключитесь к кластеру-источнику](../../managed-postgresql/operations/connect.md) и добавьте еще одну строку в таблицу `measurements`:
 
     ```sql
-    INSERT INTO public.measurements VALUES ('iv7b74th678tooxh5ur2', '2020-06-08 17:45:00', 53.70987913, 36.62549834, 378.0, 20.5, 5.3, 20, NULL);
+    INSERT INTO public.measurements VALUES ('iv7b74th678t********', '2020-06-08 17:45:00', 53.70987913, 36.62549834, 378.0, 20.5, 5.3, 20, NULL);
     ```
 
 1. Убедитесь, что в терминале с запущенной утилитой `kafkacat` отобразились сведения о добавленной строке.
 
 ## Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 1. [Удалите виртуальную машину](../../compute/operations/vm-control/vm-delete.md).
 

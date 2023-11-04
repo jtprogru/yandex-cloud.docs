@@ -38,19 +38,15 @@ To get started with the service:
 ## Create a cluster {#cluster-create}
 
 1. In the management console, select the folder where you want to create a DB cluster.
-1. Select **{{ mmy-name }}**.
-1. Click **Create cluster**.
-1. Set the {{ mmy-name }} cluster parameters and click **Create cluster**. This process is described in detail in [{#T}](operations/cluster-create.md).
+1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
+1. Click **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
+1. Set the {{ mmy-name }} cluster parameters and click **{{ ui-key.yacloud.mdb.forms.button_create }}**. This process is described in detail in [{#T}](operations/cluster-create.md).
 1. Wait until the {{ mmy-name }} cluster is ready: its status on the {{ mmy-name }} dashboard will change to **Running** and its state to **Alive**. This may take some time.
 
 ## Connect to the DB {#connect}
 
 
 1. If you are using [security groups](../vpc/concepts/security-groups.md) for a cloud network, [configure them](operations/connect.md#configuring-security-groups) to enable all relevant traffic between the {{ mmy-name }} cluster and the connecting host.
-
-   {% include [preview-pp.md](../_includes/preview-pp.md) %}
-
-   {% include [security-groups-note](../_includes/vpc/security-groups-note-services.md) %}
 
 
 1. To connect to the DB server, get an SSL certificate:

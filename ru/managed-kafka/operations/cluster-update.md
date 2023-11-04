@@ -2,7 +2,6 @@
 
 После создания кластера {{ mkf-name }} вы можете:
 
-* [{#T}](#enable-api)
 * [{#T}](#change-brokers).
 * [{#T}](#change-zookeeper).
 * [{#T}](#change-disk-size) (недоступно для [хранилища](../concepts/storage.md) на нереплицируемых SSD-дисках).
@@ -10,77 +9,6 @@
 * [{#T}](#change-kafka-settings).
 * [{#T}](#move-cluster) из текущего каталога в другой каталог.
 * [{#T}](#change-sg-set).
-
-## Включить управление пользователями и топиками с помощью Admin API {#enable-api}
-
-{% note info %}
-
-Включенную настройку управления топиками через {{ KF }} Admin API невозможно выключить.
-
-{% endnote %}
-
-Чтобы [управлять топиками через Admin API {{ KF }}](../concepts/topics.md#management):
-
-{% list tabs %}
-
-- Консоль управления
-
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mkf-name }}**.
-  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **Изменить кластер**.
-  1. Включите настройку **Управление топиками через API**.
-  1. [Создайте пользователя-администратора](./cluster-accounts.md#create-user).
-
-- CLI
-
-  {% include [cli-install](../../_includes/cli-install.md) %}
-
-  {% include [default-catalogue](../../_includes/default-catalogue.md) %}
-
-  Чтобы включить управление топиками через Admin API:
-
-    1. Выполните команду:
-
-        ```bash
-        {{ yc-mdb-kf }} cluster update <имя или идентификатор кластера> --unmanaged-topics=true
-        ```
-
-    1. [Создайте пользователя-администратора](./cluster-accounts.md#create-user).
-
-- {{ TF }}
-
-    1. Откройте актуальный конфигурационный файл {{ TF }} с планом инфраструктуры.
-
-        О том, как создать такой файл, см. в разделе [{#T}](cluster-create.md).
-
-    1. Измените в описании кластера {{ mkf-name }} значение параметра `unmanaged_topics`, чтобы включить управление топиками через Admin API:
-
-        ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
-          config {
-            unmanaged_topics = true
-            ...
-          }
-          ...
-        }
-        ```
-
-    1. [Создайте пользователя-администратора](./cluster-accounts.md#create-user).
-
-- API
-
-  Чтобы включить управление топиками через Admin API:
-
-  1. Воспользуйтесь методом REST API [update](../api-ref/Cluster/update.md) для ресурса [Cluster](../api-ref/Cluster/index.md) или вызовом gRPC API [ClusterService/Update](../api-ref/grpc/cluster_service.md#Update) и передайте в запросе:
-
-      * Идентификатор кластера в параметре `clusterId`. Чтобы узнать идентификатор, [получите список кластеров в каталоге](cluster-list.md#list-clusters).
-      * Новую конфигурацию кластера в параметре `configSpec`. В конфигурации укажите значение параметра `"unmanagedTopics": true`.
-      * Список изменяемых полей конфигурации кластера в параметре `updateMask`.
-
-      {% include [Node API updateMask](../../_includes/note-api-updatemask.md) %}
-
-  1. [Создайте пользователя-администратора](./cluster-accounts.md#create-user).
-
-{% endlist %}
 
 ## Изменить класс и количество хостов-брокеров {#change-brokers}
 
@@ -90,13 +18,13 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mkf-name }}**.
-  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **Изменить кластер**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
   1. Измените требуемые настройки:
-     * Чтобы изменить класс [хостов-брокеров](../concepts/brokers.md), выберите новый [**Класс хоста**](../concepts/instance-types.md).
-     * Измените **Количество брокеров в зоне**.
+     * Чтобы изменить класс [хостов-брокеров](../concepts/brokers.md), выберите новый [**{{ ui-key.yacloud.mdb.forms.section_resource }}**](../concepts/instance-types.md).
+     * Измените **{{ ui-key.yacloud.kafka.label_brokers-per-az }}**.
 
-  1. Нажмите кнопку **Сохранить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -110,7 +38,7 @@
 
      ```bash
      {{ yc-mdb-kf }} cluster list
-     {{ yc-mdb-kf }} cluster get <имя или идентификатор кластера>
+     {{ yc-mdb-kf }} cluster get <имя_или_идентификатор_кластера>
      ```
 
   1. Посмотрите описание команды CLI для изменения кластера:
@@ -122,13 +50,13 @@
   1. Чтобы увеличить количество хостов-брокеров, выполните команду:
   
      ```bash
-     {{ yc-mdb-kf }} cluster update <имя или идентификатор кластера> --brokers-count <число>
+     {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> --brokers-count <число>
      ```
 
   1. Чтобы изменить класс хоста-брокера, выполните команду:
 
      ```bash
-     {{ yc-mdb-kf }} cluster update <имя или идентификатор кластера> --resource-preset <класс хоста>
+     {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> --resource-preset <класс_хоста>
      ```
 
 - {{ TF }}
@@ -140,9 +68,9 @@
     1. Измените в описании кластера {{ mkf-name }} значение параметра `brokers_count`, чтобы увеличить количество хостов-брокеров:
 
         ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
+        resource "yandex_mdb_kafka_cluster" "<имя_кластера>" {
           config {
-            brokers_count = <количество хостов-брокеров>
+            brokers_count = <количество_хостов-брокеров>
             ...
           }
           ...
@@ -152,11 +80,11 @@
     1. Измените в описании кластера {{ mkf-name }} значение параметра `resource_preset_id` в блоке `kafka.resources`, чтобы задать новый класс хостов-брокеров:
 
         ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
+        resource "yandex_mdb_kafka_cluster" "<имя_кластера>" {
           ...
           kafka {
             resources {
-              resource_preset_id = "<класс хостов-брокеров>"
+              resource_preset_id = "<класс_хостов-брокеров>"
               ...
             }
           }
@@ -193,10 +121,10 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mkf-name }}**.
-  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **Изменить кластер**.
-  1. Выберите новый [**Класс хоста Zookeeper**](../concepts/instance-types.md).
-  1. Нажмите кнопку **Сохранить**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+  1. Выберите новый [**{{ ui-key.yacloud.kafka.section_zookeeper-resources }}**](../concepts/instance-types.md).
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -210,7 +138,7 @@
 
      ```bash
      {{ yc-mdb-kf }} cluster list
-     {{ yc-mdb-kf }} cluster get <имя или идентификатор кластера>
+     {{ yc-mdb-kf }} cluster get <имя_или_идентификатор_кластера>
      ```
 
   1. Посмотрите описание команды CLI для изменения кластера:
@@ -222,8 +150,8 @@
   1. Чтобы изменить класс хостов {{ ZK }}, выполните команду:
 
      ```bash
-     {{ yc-mdb-kf }} cluster update <имя или идентификатор кластера> \
-       --zookeeper-resource-preset <класс хоста>
+     {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> \
+       --zookeeper-resource-preset <класс_хоста>
      ```
 
 - Terraform
@@ -235,11 +163,11 @@
     1. Измените в описании кластера {{ mkf-name }} значение параметра `resource_preset_id` в блоке `zookeeper.resources`, чтобы задать новый класс хостов {{ ZK }}:
 
         ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
+        resource "yandex_mdb_kafka_cluster" "<имя_кластера>" {
           ...
           zookeeper {
             resources {
-              resource_preset_id = "<класс хостов {{ ZK }}>"
+              resource_preset_id = "<класс_хостов_{{ ZK }}>"
               ...
             }
           }
@@ -286,10 +214,10 @@
 
   Чтобы увеличить размер хранилища для кластера:
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mkf-name }}**.
-  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **Изменить кластер**.
-  1. Измените настройки в блоке **Хранилище**.
-  1. Нажмите кнопку **Сохранить**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+  1. Измените настройки в блоке **{{ ui-key.yacloud.mdb.forms.section_storage }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -308,8 +236,8 @@
   1. Чтобы изменить объем хранилища хостов-брокеров, выполните команду:
   
      ```bash
-     {{ yc-mdb-kf }} cluster update <имя или идентификатор кластера> \
-       --disk-size <объем хранилища>
+     {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> \
+       --disk-size <объем_хранилища>
      ```
 
      Если не указаны единицы размера, то используются гигабайты.
@@ -317,8 +245,8 @@
   1. Чтобы изменить объем хранилища хостов {{ ZK }}, выполните команду:
 
      ```bash
-     {{ yc-mdb-kf }} cluster update <имя или идентификатор кластера> \
-       --zookeeper-disk-size <размер диска>
+     {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> \
+       --zookeeper-disk-size <размер_диска>
      ```
 
      Если не указаны единицы размера, то используются гигабайты.
@@ -334,18 +262,18 @@
     1. Измените в описании кластера {{ mkf-name }} значение параметра `disk_size` в блоках `kafka.resources` и `zookeeper.resources` для хостов {{ KF }} и {{ ZK }} соответственно:
 
         ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
+        resource "yandex_mdb_kafka_cluster" "<имя_кластера>" {
           ...
           kafka {
             resources {
-              disk_size = <размер хранилища в гигабайтах>
+              disk_size = <размер_хранилища_ГБ>
               ...
             }
             ...
           }
           zookeeper {
             resources {
-              disk_size = <размер хранилища в гигабайтах>
+              disk_size = <размер_хранилища_ГБ>
               ...
             }
           }
@@ -379,21 +307,15 @@
 
 ## Изменить настройки групп безопасности и публичного доступа {#change-sg-set}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 {% list tabs %}
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mkf-name }}**.
-  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **Изменить кластер**.
-  1. В блоке **Сетевые настройки** выберите группы безопасности для сетевого трафика кластера.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_network-settings }}** выберите группы безопасности для сетевого трафика кластера.
   1. Установите или отключите публичный доступ к кластеру при помощи опции **Публичный доступ**.
-  1. Нажмите кнопку **Сохранить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
   [Перезагрузите кластер](./cluster-stop.md), чтобы изменение настройки публичного доступа вступило в силу.
 
@@ -414,10 +336,15 @@
   1. Укажите нужные группы безопасности и настройку публичного доступа в команде изменения кластера:
 
       ```bash
-      {{ yc-mdb-kf }} cluster update <имя кластера> \
-         --security-group-ids <список групп безопасности> \
-         --assign-public-ip=<публичный доступ к кластеру: true или false>
+      {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> \
+         --security-group-ids <список_групп_безопасности> \
+         --assign-public-ip=<публичный_доступ>
       ```
+
+      Где:
+
+      * `--security-group-ids` — список идентификаторов групп безопасности кластера.
+      * `--assign-public-ip` — публичный доступ к кластеру: `true` или `false`.
 
   [Перезагрузите кластер](./cluster-stop.md), чтобы изменение настройки публичного доступа вступило в силу.
 
@@ -430,16 +357,20 @@
     1. Измените значения параметров `security_group_ids` и `assign_public_ip` в описании кластера:
 
         ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
+        resource "yandex_mdb_kafka_cluster" "<имя_кластера>" {
           ...
-          security_group_ids = [ <список идентификаторов групп безопасности кластера> ]
+          security_group_ids = [ <список_групп_безопасности> ]
           ...
           config {
-            assign_public_ip = "<публичный доступ к кластеру: true или false>"
+            assign_public_ip = "<публичный_доступ>"
             ...
             }
         }
         ```
+
+        Где:
+        * `security_group_ids` — список идентификаторов групп безопасности кластера.
+        * `assign_public_ip` — публичный доступ к кластеру: `true` или `false`.
 
     1. Проверьте корректность настроек.
 
@@ -479,13 +410,13 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mkf-name }}**.
-  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **Изменить кластер**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
   1. Измените дополнительные настройки кластера:
 
      {% include [extra-settings](../../_includes/mdb/mkf/extra-settings.md) %}
 
-  1. Нажмите кнопку **Сохранить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -504,17 +435,17 @@
     1. Выполните команду, передав список настроек, которые хотите изменить:
 
         ```bash
-        {{ yc-mdb-kf }} cluster update <идентификатор или имя кластера> \
-           --maintenance-window type=<тип технического обслуживания: anytime или weekly>,`
-                               `day=<день недели для типа weekly>,`
-                               `hour=<час дня для типа weekly> \
-           --datatransfer-access=<true или false> \
-           --deletion-protection=<защита от удаления кластера: true или false>
+        {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> \
+           --maintenance-window type=<тип_технического_обслуживания>,`
+                               `day=<день_недели>,`
+                               `hour=<час_дня> \
+           --datatransfer-access=<доступ_к_кластеру> \
+           --deletion-protection=<защита_от_удаления>
         ```
 
     Вы можете изменить следующие настройки:
 
-    * `--maintenance-window` — настройки времени [технического обслуживания](../concepts/maintenance.md) (в т. ч. для выключенных кластеров):
+    * `--maintenance-window` — настройки времени [технического обслуживания](../concepts/maintenance.md) (в т. ч. для выключенных кластеров), где `type` — тип технического обслуживания:
 
         {% include [maintenance-window](../../_includes/mdb/cli/maintenance-window-description.md) %}
 
@@ -537,9 +468,9 @@
     1. Чтобы включить защиту кластера от непреднамеренного удаления пользователем вашего облака, добавьте к описанию кластера поле `deletion_protection` со значением `true`:
 
         ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
+        resource "yandex_mdb_kafka_cluster" "<имя_кластера>" {
           ...
-          deletion_protection = <защита от удаления кластера: true или false>
+          deletion_protection = <защита_от_удаления>
         }
         ```
 
@@ -585,13 +516,13 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mkf-name }}**.
-  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **Изменить кластер**.
-  1. В блоке **Настройки Kafka** нажмите кнопку **Настроить**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем выберите **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_settings-kafka }}** нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_configure-settings }}**.
 
      Подробнее см. в разделе [Настройки {{ KF }}](../concepts/settings-list.md).
 
-  1. Нажмите кнопку **Сохранить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -610,11 +541,16 @@
     1. Измените [настройки {{ KF }}](../concepts/settings-list.md#cluster-settings) в команде изменения кластера (в примере приведены не все настройки):
 
         ```bash
-        {{ yc-mdb-kf }} cluster update <идентификатор или имя кластера> \
-           --compression-type <тип сжатия> \
-           --log-flush-interval-messages <количество сообщений в логе, необходимое для их сброса на диск> \
-           --log-flush-interval-ms <максимальное время хранения сообщений в памяти перед сбросом на диск>
+        {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> \
+           --compression-type <тип_сжатия> \
+           --log-flush-interval-messages <количество_сообщений_в_логе> \
+           --log-flush-interval-ms <максимальное_время_хранения_сообщений>
         ```
+
+        Где:
+
+        * `--log-flush-interval-messages` — количество сообщений в логе, необходимое для их сброса на диск.
+        * `--log-flush-interval-ms` — максимальное время хранения сообщений в памяти перед сбросом на диск.
 
 - {{ TF }}
 
@@ -625,14 +561,14 @@
     1. Измените в описании кластера {{ mkf-name }} значения параметров в блоке `kafka.kafka_config` (в примере приведены не все [настройки](../concepts/settings-list.md#cluster-settings)):
 
         ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
+        resource "yandex_mdb_kafka_cluster" "<имя_кластера>" {
           ...
           config {
             kafka {
               ...
               kafka_config {
-                compression_type            = "<тип сжатия>"
-                log_flush_interval_messages = <максимальное число сообщений в памяти>
+                compression_type            = "<тип_сжатия>"
+                log_flush_interval_messages = <максимальное_количество_сообщений_в_памяти>
                 ...
               }
             }
@@ -690,8 +626,8 @@
     1. Укажите каталог назначения в команде перемещения кластера:
 
         ```bash
-        {{ yc-mdb-kf }} cluster move <идентификатор кластера> \
-           --destination-folder-name=<имя каталога назначения>
+        {{ yc-mdb-kf }} cluster move <идентификатор_кластера> \
+           --destination-folder-name=<имя_каталога_назначения>
         ```
 
         Идентификатор кластера можно получить со [списком кластеров в каталоге](cluster-list.md#list-clusters).
@@ -707,15 +643,13 @@
 
 ## Изменить группы безопасности {#change-sg-set}
 
-{% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% list tabs %}
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mkf-name }}**.
-  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем **Изменить кластер**.
-  1. В блоке **Сетевые настройки** выберите группы безопасности для сетевого трафика кластера.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+  1. В строке с нужным кластером нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg), затем **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_network-settings }}** выберите группы безопасности для сетевого трафика кластера.
 
 - CLI
 
@@ -734,8 +668,8 @@
   1. Укажите нужные группы безопасности в команде изменения кластера:
 
       ```bash
-      {{ yc-mdb-kf }} cluster update <имя кластера> \
-         --security-group-ids <список групп безопасности>
+      {{ yc-mdb-kf }} cluster update <имя_или_идентификатор_кластера> \
+         --security-group-ids <список_групп_безопасности>
       ```
 
 - {{ TF }}
@@ -747,9 +681,9 @@
     1. Измените значение параметра `security_group_ids` в описании кластера:
 
         ```hcl
-        resource "yandex_mdb_kafka_cluster" "<имя кластера>" {
+        resource "yandex_mdb_kafka_cluster" "<имя_кластера>" {
           ...
-          security_group_ids = [ <список идентификаторов групп безопасности кластера> ]
+          security_group_ids = [ <список_групп_безопасности> ]
         }
         ```
 

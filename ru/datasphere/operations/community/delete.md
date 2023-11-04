@@ -1,4 +1,15 @@
+---
+title: "Как удалить сообщество"
+description: "Следуя данной инструкции, вы сможете удалить сообщество."
+---
+
 # Удалить сообщество
+
+{% note info %}
+
+Удалить можно только те сообщества, на которые вам [назначена](../../../organization/security/index.md#add-role) роль `{{ roles-datasphere-communities-editor }}` или `{{ roles-datasphere-communities-admin }}`.
+
+{% endnote %}
 
 1. Откройте [главную страницу]({{ link-datasphere-main }}) {{ ml-platform-name }}.
 1. На панели слева выберите ![community-panel](../../../_assets/datasphere/communities.svg) **{{ ui-key.yc-ui-datasphere.common.spaces }}**.

@@ -38,6 +38,8 @@ sourcePath: overlay/quickstart/document-api/aws-setup.md
           yc iam service-account create --name my-robot
           ```
 
+          Требования к имени сервисного аккаунта:
+
           {% include [name-format](../../../_includes/name-format.md) %}
 
     - API
@@ -57,10 +59,10 @@ sourcePath: overlay/quickstart/document-api/aws-setup.md
     - Консоль управления
 
       1. Перейдите в каталог, которому принадлежит сервисный аккаунт.
-      1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
+      1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
       1. Выберите сервисный аккаунт и нажмите на строку с его именем.
-      1. Нажмите кнопку **Создать новый ключ** на верхней панели.
-      1. Выберите пункт **Создать статический ключ доступа**.
+      1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create-key-popup }}** на верхней панели.
+      1. Выберите пункт **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create_service-account-key }}**.
       1. Задайте описание ключа, чтобы потом было проще найти его в консоли управления.
       1. Сохраните идентификатор и секретный ключ.
 
@@ -124,7 +126,7 @@ sourcePath: overlay/quickstart/document-api/aws-setup.md
     ```
 
     В результате будут созданы файлы `~/.aws/credentials` и `~/.aws/config` (`C:\Users\USERNAME\.aws\credentials` и `C:\Users\USERNAME\.aws\config` в Windows).
-1. Проверьте корректность настройки, запустив команду листинга таблиц в [созданной](../../operations/manage-databases.md) ранее БД. В качестве значения `--endpoint` укажите Document API эндпоинт, доступный на вкладке **Обзор** вашей базы данных в [консоли управления]({{ link-console-main }}).
+1. Проверьте корректность настройки, запустив команду листинга таблиц в [созданной](../../operations/manage-databases.md) ранее БД. В качестве значения `--endpoint` укажите Document API эндпоинт, доступный на вкладке **{{ ui-key.yacloud.ydb.database.switch_overview }}** вашей базы данных в [консоли управления]({{ link-console-main }}).
 
     ```bash
     aws dynamodb list-tables \

@@ -1,3 +1,8 @@
+---
+title: "Adding a listener to a network load balancer"
+description: "Follow this guide to add a listener to a network load balancer."
+---
+
 # Adding a listener to a network load balancer
 
 {% list tabs %}
@@ -7,12 +12,12 @@
    To add a [listener](../concepts/listener.md) to a network load balancer:
 
    1. In the [management console]({{ link-console-main }}), select the folder where you need to add a listener to a load balancer.
-   1. In the list of services, select **{{ network-load-balancer-name }}**.
-   1. In the line of the load balancer to add a listener to, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Add listener**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
+   1. In the line of the load balancer to add a listener to, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.label_add-listener }}**.
    1. In the window that opens, set the listener parameters:
 
-      * **Name**.
-      * **Protocol**: **TCP** or **UDP**.
+      * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-name }}**.
+      * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-protocol }}**: `{{ ui-key.yacloud.common.label_tcp }}` or `{{ ui-key.yacloud.common.label_udp }}`.
 
          {% note info %}
 
@@ -20,9 +25,9 @@
 
          {% endnote %}
 
-      * **Port** where the listener will listen for incoming traffic. The acceptable values are from `1` to `32767`.
-      * **Target port**, to which the load balancer will redirect traffic. The acceptable values are from `1` to `32767`.
-      * Click **Add**.
+      * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-port }}** where the listener will listen for incoming traffic. The acceptable values are from `1` to `32767`.
+      * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-target-port }}** the load balancer will redirect traffic to. The acceptable values are from `1` to `32767`.
+      * Click **{{ ui-key.yacloud.common.add }}**.
 
 - CLI
 
@@ -52,7 +57,7 @@
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see the documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    1. Open the {{ TF }} configuration file and add the `listener` section to the network load balancer description.
 
@@ -92,16 +97,7 @@
 
 - API
 
-   Use the [addListener](../api-ref/NetworkLoadBalancer/addListener.md) API method and include the following in the request:
-
-   * Load balancer ID in the `networkLoadBalancerId` parameter.
-   * Listener name in the `listenerSpec.name` parameter.
-   * Listener port in the `listenerSpec.port` parameter.
-   * Listener protocol in the `listenerSpec.protocol` parameter.
-   * Listener target port in the `listenerSpec.targetPort` parameter.
-   * Listener external address specification in the `listenerSpec.externalAddressSpec` parameter.
-
-   You can get the load balancer ID with a [list of network load balancers in the folder](load-balancer-list.md#list).
+   To add a listener to the network load balancer, use the [addListener](../api-ref/NetworkLoadBalancer/addListener.md) REST API method for the [NetworkLoadBalancer](../api-ref/NetworkLoadBalancer/index.md) resource or the [NetworkLoadBalancerService/AddListener](../api-ref/grpc/network_load_balancer_service.md#AddListener) gRPC API call.
 
 {% endlist %}
 
@@ -111,11 +107,11 @@
 
 Add a listener with the following test specifications to the `test-load-balancer`:
 
-* Name: `test-listener`.
-* Port: `80`.
-* Target port: `81`.
-* Protocol: `TCP`.
-* IP version: `ipv4`.
+* Name: `test-listener`
+* Port: `80`
+* Target port: `81`
+* Protocol: `TCP`
+* IP version: `ipv4`
 
 {% list tabs %}
 

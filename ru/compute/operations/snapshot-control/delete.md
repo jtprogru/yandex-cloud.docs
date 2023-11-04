@@ -1,3 +1,8 @@
+---
+title: "Как удалить снимок диска"
+description: "Следуя данной инструкции, вы сможете удалить снимок диска."
+---
+
 # Удалить снимок диска
 
 {% note warning %}
@@ -47,7 +52,7 @@
 
 - {{ TF }}
 
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Если вы создавали снимок диска с помощью {{ TF }}, вы можете удалить его:
   1. В командной строке перейдите в папку, где расположен конфигурационный файл {{ TF }}.

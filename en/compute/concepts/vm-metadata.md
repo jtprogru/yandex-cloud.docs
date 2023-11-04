@@ -60,7 +60,7 @@ You can provide metadata when creating or [updating](../operations/vm-control/vm
         - name: <username>
           groups: sudo
           shell: /bin/bash
-          sudo: ['ALL=(ALL) NOPASSWD:ALL']
+          sudo: 'ALL=(ALL) NOPASSWD:ALL'
           ssh-authorized-keys:
             - <SSH_key_contents>
       ```
@@ -72,7 +72,7 @@ You can provide metadata when creating or [updating](../operations/vm-control/vm
       ```hcl
       ...
       metadata = {
-        user-data = "#cloud-config\nusers:\n  - name: <username>\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - <SSH_key _contents>")}"
+        user-data = "#cloud-config\nusers:\n  - name: <username>\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - <SSH_key _contents>"
       }
       ...
       ```
@@ -133,7 +133,7 @@ The list of keys that are processed in {{ yandex-cloud }} public images depends 
 
     ```json
     "metadata": {
-      "user-data": "#cloud-config\nusers:\n  - name: user\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAB3Nza......OjbSMRX user@example.com\n      - ssh-ed25519 AAAAB3Nza......Pu00jRN user@desktop"
+      "user-data": "#cloud-config\nusers:\n  - name: user\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAB3Nza......OjbSMRX user@example.com\n      - ssh-ed25519 AAAAB3Nza......Pu00jRN user@desktop"
     }
     ```
 
@@ -195,7 +195,9 @@ If you created your VM before June 9, 2023, and you cannot get its identity docu
 
 ### Signed identity documents {#signed-identity-documents}
 
-An identity document can be signed to then verify the obtained document.
+If you are going to use the contents of an identity document for critical tasks, check the contents and validate the document before using it.
+
+Apart from identity documents, the VM metadata service provides their cryptographic signatures. You can use these signatures to verify a document's origin, validity, and integrity.
 
 {% list tabs %}
 
@@ -212,7 +214,7 @@ An identity document can be signed to then verify the obtained document.
       * **GCE**:
 
          ```bash
-         curl -H Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/vendor/identity/document > rsa2048
+         curl -H Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/vendor/identity/rsa > rsa2048
          ```
 
       * **EC2**:
@@ -251,7 +253,7 @@ An identity document can be signed to then verify the obtained document.
 
    1. Verify the signature and save the contents of the document to a file named `document`:
 
-      ```
+      ```bash
       openssl smime -verify -in rsa2048 -inform PEM -certfile certificate -noverify | tee document
       ```
 

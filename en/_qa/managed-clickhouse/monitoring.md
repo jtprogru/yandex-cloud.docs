@@ -5,7 +5,7 @@
 For all DBMS types, you can track:
 
 - CPU, memory, network, or disk usage, in absolute terms.
-- Memory, network, or disk usage as a percentage of the set limits for the corresponding cluster's host class.
+- Memory, network, or disk usage as a percentage of the set limits for the corresponding cluster host class.
 - The amount of data in the DB cluster and the remaining free space in data storage.
 
 For DB hosts, you can track metrics specific to the corresponding type of DBMS. For example, for {{ PG }}, you can track:
@@ -25,16 +25,20 @@ Logs of any level are written to a disk's system partition with 20 GB allocated,
 
 Follow the instructions in [{#T}](../../managed-clickhouse/operations/monitoring.md) to track the host state or set up alerts.
 
+#### How do I monitor space used by data in hybrid storage? {#hybrid}
+
+Use the `ch_s3_disk_parts_size` metric in {{ monitoring-full-name }}. It shows the amount of space used by [MergeTree]({{ ch.docs }}/engines/table-engines/mergetree-family/mergetree/) table parts in {{ objstorage-name }}. The metric is only available for {{ mch-name }} clusters with the [hybrid storage](../../managed-clickhouse/concepts/storage.md#hybrid-storage-features) configured. You can learn how to make a request using the metric in [this guide](../../managed-clickhouse/tutorials/hybrid-storage.md#metrics).
+
 #### How do I set up an alert that is triggered once a certain disk space percentage is used up? {#disk-space-percentage}
 
 [Create an alert](../../managed-clickhouse/operations/monitoring.md#monitoring-integration) with the `disk.used_bytes` metric in {{ monitoring-full-name }}. This metric shows the disk space usage in the {{ mch-name }} cluster.
 
-For `disk.used_bytes`, use notification thresholds. Here are their recommended values:
+For `disk.used_bytes`, use notification thresholds. The recommended values are as follows:
 
-* `Alarm`: 95% of disk space.
-* `Warning`: 80% of disk space.
+* `{{ ui-key.yacloud_monitoring.alert.status_alarm }}`: 95% of the disk space.
+* `{{ ui-key.yacloud_monitoring.alert.status_warn }}`: 80% of the disk space.
 
-The thresholds are only set in bytes. For example, here are the recommended values for a disk of 100 GB:
+Thresholds are set in bytes only. For example, the recommended values for a 100 GB disk are as follows:
 
-* `Alarm`: `102005473280` bytes (95%).
-* `Warning`: `85899345920` bytes (80%).
+* `{{ ui-key.yacloud_monitoring.alert.status_alarm }}`: `102,005,473,280` bytes (95%).
+* `{{ ui-key.yacloud_monitoring.alert.status_warn }}`: `85,899,345,920` bytes (80%).

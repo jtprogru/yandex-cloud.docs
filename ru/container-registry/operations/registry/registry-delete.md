@@ -1,3 +1,8 @@
+---
+title: "Как удалить реестр"
+description: "Следуя данной инструкции, вы сможете удалить реестр."
+---
+
 # Удалить реестр
 
 {% note info %}
@@ -13,10 +18,10 @@
 - Консоль управления
 
   Чтобы удалить реестр:
-  1. Откройте раздел **{{ container-registry-name }}** в [каталоге](../../../resource-manager/concepts/resources-hierarchy.md#folder), где требуется удалить реестр.
+  1. Откройте раздел **{{ ui-key.yacloud.iam.folder.dashboard.label_container-registry }}** в [каталоге](../../../resource-manager/concepts/resources-hierarchy.md#folder), где требуется удалить реестр.
   1. Нажмите значок ![image](../../../_assets/vertical-ellipsis.svg) в строке реестра, который требуется удалить.
-  1. В открывшемся меню нажмите кнопку **Удалить**.
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+  1. В открывшемся меню нажмите кнопку **{{ ui-key.yacloud.common.delete }}**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.cr.overview.popup-confirm_button_delete }}**.
 
 - CLI
 

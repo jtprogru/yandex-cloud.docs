@@ -14,7 +14,7 @@ The transfer type you select depends on data changes on the source endpoint, req
 
 The _{{ dt-type-copy }}_ transfer is designed for transferring the state of the source database to the target without keeping it up-to-date. Changes that occurred on the source after the transfer is completed will not be transferred. This type of transfers can be useful when there is no writing load on the source or there is no need to keep the target database up-to-date, for example, [when deploying test environments](./use-cases.md#testing).
 
-When the transfer is ready, its status automatically switches to {{ dt-status-copy }}. It's maintained until all the data in the source is transferred to the target. Then the transfer is automatically deactivated and switches its status to {{ dt-status-finished }}.
+When the transfer is ready, its status automatically switches to {{ dt-status-copy }}. It is maintained until all data in the source is transferred to the target. Then the transfer is automatically deactivated and switches its status to {{ dt-status-finished }}.
 
 The transition between statuses for the _{{ dt-type-copy }}_ transfer type is shown below:
 
@@ -22,9 +22,9 @@ The transition between statuses for the _{{ dt-type-copy }}_ transfer type is sh
 
 {{ data-transfer-full-name }} supports three types of data copy:
 
-* _{{ dt-copy-snapshot }}_: Copies all data from the source to the target when activating a transfer. This type of copy may take a long time if the amount of data to transfer is large. In addition, a one-time copy operation doesn't factor in data changes. You can recopy the data only after the previous operation is completed.
-* _{{ dt-copy-regular }}_: Copies all data from the source to the target at certain intervals of time. This copy method lets you set up regular data delivery. It's recommended for small tables that are frequently modified.
-* _{{ dt-copy-regular-incremental }}_: Only copies the data that has been modified in the source since the previous copy operation to the target at certain intervals of time. This approach allows you to arrange data delivery to the target with the minimum possible latency and load on the data source. However, it does not allow you to factor data delete operations in the source.
+* _{{ dt-copy-snapshot }}_: Copies all data from the source to the target when activating a transfer. This type of copy may take a long time if the amount of data to transfer is large. In addition, one-time copying does not factor in data changes. You can recopy the data only after the previous operation is completed.
+* _{{ dt-copy-regular }}_: Copies all data from the source to the target at certain time intervals. This copy method lets you set up regular data delivery. It is recommended for small tables that are frequently modified.
+* _{{ dt-copy-regular-incremental }}_: Copies to the target at certain time intervals only the data that has been modified in the source since the previous copy. This approach allows you to arrange data delivery to the target with the minimum possible latency and load on the data source. However, it does not allow you to factor in data delete operations in the source. For more information, see [{#T}](./regular-incremental-copy.md).
 
 ### Replication {#replication}
 
@@ -38,9 +38,9 @@ The transition between statuses for the _{{ dt-type-repl }}_ transfer type is sh
 
 ### Copy and replication {#copy-and-replication}
 
-The _{{ dt-type-copy-repl }}_ transfer combines the features of the _{{ dt-type-copy }}_ and _{{ dt-type-repl }}_ transfers, i.e., the source data is completely transferred to the target and is kept up-to-date. Typically, such transfers are used in migration scenarios.
+The _{{ dt-type-copy-repl }}_ transfer combines the features of _{{ dt-type-copy }}_ and _{{ dt-type-repl }}_ transfers, i.e., the source data is completely transferred to the target and is kept up-to-date. Typically, such transfers are used in migration scenarios.
 
-After successful [activation](../operations/transfer.md#activate) and preparation for work, the status of the transfer automatically switches to {{ dt-status-copy }}. It's maintained until all the data in the source is transferred to the target.
+After successful [activation](../operations/transfer.md#activate) and preparation for work, the status of the transfer automatically switches to {{ dt-status-copy }}. It is maintained until all data in the source is transferred to the target.
 
 Then the status of the transfer switches to {{ dt-status-repl }}: all changes occurring on the source are automatically transferred to the target.
 
@@ -77,6 +77,6 @@ The current transfer status determines available actions with transfers. For mor
 
 * {{ dt-status-error }}: Assigned to the transfer if any issues occur.
 
-   A transfer's status may switch to **{{ dt-status-error }}** during activation, data replication, or copying. Depending on the status that preceded the error, the transfer can be [reactivated](../operations/transfer.md#activate) or [restarted](../operations/transfer.md#reupload). Errors may occur both on the source and the target.
+   A transfer's status may switch to **{{ dt-status-error }}** during activation, data replication, or copying. Depending on the status that preceded the error, the transfer can be [reactivated](../operations/transfer.md#activate). Errors may occur both on the source and the target.
 
    Learn more about possible error causes and how to resolve them in [{#T}](../troubleshooting/index.md).

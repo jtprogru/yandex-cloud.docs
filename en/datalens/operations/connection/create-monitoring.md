@@ -1,3 +1,8 @@
+---
+title: "How to create a {{ monitoring-name }} connection"
+description: "This guide describes how you can create a {{ monitoring-name }} connection."
+---
+
 # Creating a {{ monitoring-name }} connection
 
 {% note info %}
@@ -8,6 +13,10 @@ Use the [Yandex Monitoring query language](../../../monitoring/concepts/querying
 {% endnote %}
 
 To create a {{ monitoring-name }} connection:
+
+
+{% include [datalens-workbooks-collections-note](../../../_includes/datalens/operations/datalens-workbooks-collections-note.md) %}
+
 
 1. Go to the [connections page]({{ link-datalens-main }}/connections).
 1. Click **Create connection**.

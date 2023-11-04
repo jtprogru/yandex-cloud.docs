@@ -1,3 +1,8 @@
+---
+title: "Как подключить внешние узлы к кластеру {{ managed-k8s-name }}"
+description: "Следуя данной инструкции, вы сможете подключить внешние узлы к кластеру {{ managed-k8s-name }}."
+---
+
 # Подключение внешних узлов к кластеру
 
 {% note info %}
@@ -6,19 +11,21 @@
 
 {% endnote %}
 
-Внешние серверы подключаются в виде узлов к кластеру {{ managed-k8s-name }} с помощью специальных ресурсов {{ k8s }} API. Определения ([CustomResourceDefinitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions)) этих ресурсов автоматически предустановлены в кластер.
+Внешние серверы подключаются в виде узлов к кластеру {{ managed-k8s-name }} с помощью специальных ресурсов {{ k8s }} API. Определения ([CustomResourceDefinitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions)) этих ресурсов автоматически предустановлены в кластер {{ managed-k8s-name }}.
 
 ## Требования для подключения внешних узлов к кластеру {#requirements}
 
 Чтобы подключить внешние узлы к кластеру {{ managed-k8s-name }}, необходимо соответствие кластера и подключаемых серверов [определенным требованиям](../concepts/external-nodes.md#requirements).
 
-## Обзор подключения {#summary}
+## Перед началом работы {#before-you-begin}
 
-Для подключения внешних узлов необходимо [создать объект группы узлов](#node-group-create) в {{ k8s }} API кластера.
+1. [Создайте кластер {{ managed-k8s-name }}](kubernetes-cluster/kubernetes-cluster-create.md) любой подходящей конфигурации.
+1. {% include [Install and configure kubectl](../../_includes/managed-kubernetes/kubectl-install.md) %}
+1. [Создайте объект группы узлов](#node-group-create) в {{ k8s }} API кластера {{ managed-k8s-name }}.
 
-После создания объекта группы вы можете [добавлять узлы](#add-node) в кластер {{ managed-k8s-name }} и [удалять узлы](#remove-node) из кластера.
+   После создания объекта группы вы можете [добавлять узлы](#add-node) в кластер {{ managed-k8s-name }} и [удалять узлы](#remove-node) из кластера.
 
-При возникновении проблем с подключением, обратитесь к разделу [Диагностика проблем](#troubleshooting).
+   При возникновении проблем с подключением обратитесь к разделу [Диагностика проблем](#troubleshooting).
 
 ## Создание группы узлов {#node-group-create}
 
@@ -39,7 +46,7 @@
 
 - CLI
 
-  1. Сохраните в YAML-файл `ext-nodegroup.yaml` спецификацию объекта типа `NodeGroup` группы API `mks.yandex.cloud/v1alpha1` в [пространстве имен](../concepts/index.md#namespace) `yandex-system`:
+  1. Сохраните в YAML-файл `ext-nodegroup.yaml` спецификацию объекта типа `NodeGroup` группы {{ managed-k8s-name }} API `mks.yandex.cloud/v1alpha1` в [пространстве имен](../concepts/index.md#namespace) `yandex-system`:
 
      ```yaml
      apiVersion: mks.yandex.cloud/v1alpha1
@@ -135,7 +142,7 @@
 Для автоматической установки необходимо создать в кластере {{ managed-k8s-name }} секрет, содержащий приватный [SSH-ключ](../../glossary/ssh-keygen.md) для подключения к серверам. Создайте секрет:
 
 ```bash
-kubectl -n yandex-system create secret generic <имя секрета> --from-file=ssh-privatekey=<путь к файлу SSH-ключа> --type=kubernetes.io/ssh-auth
+kubectl -n yandex-system create secret generic <имя_секрета> --from-file=ssh-privatekey=<путь_к_файлу_SSH-ключа> --type=kubernetes.io/ssh-auth
 ```
 
 В спецификации ресурса `NodeGroup` укажите имя соответствующего секрета:
@@ -166,7 +173,7 @@ kubectl -n yandex-system create secret generic <имя секрета> --from-fi
     ...
     provisionBySsh:
       sshKeySecret:
-        name: <имя секрета>
+        name: <имя_секрета>
         namespace: system
   ```
 
@@ -180,7 +187,7 @@ kubectl -n yandex-system create secret generic <имя секрета> --from-fi
 1. После создания объекта NodeGroup в кластере {{ managed-k8s-name }} становится доступен секрет, содержащий `kubeconfig` для использования на подключаемых серверах. Получите его с помощью `kubectl`, настроенного на работу с кластером {{ managed-k8s-name }}, и сохраните его в файл:
 
    ```bash
-   kubectl -n yandex-system get secret <имя объекта NodeGroup>-maintainer-kube-config -o json | jq -r '.data."kube-config"' | base64 -d
+   kubectl -n yandex-system get secret <имя_объекта_NodeGroup>-maintainer-kube-config -o json | jq -r '.data."kube-config"' | base64 -d
    ```
 
 1. Сохраните полученный `kubeconfig` на подключаемом сервере:

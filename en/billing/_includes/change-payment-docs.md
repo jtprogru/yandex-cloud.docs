@@ -1,11 +1,16 @@
 Your request should contain:
 
-* For individual entrepreneurs
-  * A scanned copy of an extract from the [Unified State Register of Individual Entrepreneurs (USRIE)](https://egrul.nalog.ru/index.html).
-  * Your Yandex username (the one you used to create your billing account) or the ID of your [billing account](../../billing/concepts/billing-account.md).
+{% list tabs %}
 
-* For  businesses
+- Individual entrepreneurs
+
+  * Scanned copy of an extract from the [Unified State Register of Individual Entrepreneurs (USRIE)](https://egrul.nalog.ru/index.html) (for Russia) or a similar register of individual entrepreneurs.
+  * [Billing account](../../billing/concepts/billing-account.md) ID.
+
+- Businesses
+
   * Full company name.
-  * A copy of the minutes or resolution on the appointment of the general director.
-  * Your Yandex username (the one you used to create your billing account) or the ID of your billing account.
+  * Copy of the minutes or resolution on the appointment of the general director.
+  * [Billing account](../../billing/concepts/billing-account.md) ID.
 
+{% endlist %}

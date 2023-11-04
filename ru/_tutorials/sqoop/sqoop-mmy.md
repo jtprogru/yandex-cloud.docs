@@ -16,8 +16,8 @@
 
 1. [Создайте кластер {{ mmy-name }}](../../managed-mysql/operations/cluster-create.md) любой подходящей вам [конфигурации](../../managed-mysql/concepts/instance-types.md) со следующими настройками:
 
-    * базой данных `db1`;
-    * пользователем `user1`.
+    * **{{ ui-key.yacloud.mdb.forms.database_field_name }}** — `db1`;
+    * **{{ ui-key.yacloud.mdb.forms.database_field_user-login }}** — `user1`.
 
 1. Чтобы импортировать данные в бакет {{ objstorage-name }}:
 
@@ -36,11 +36,9 @@
     * [к виртуальной машине и кластеру {{ dataproc-name }}](../../data-proc/operations/connect.md);
     * [к кластеру {{ mmy-name }}](../../managed-mysql/operations/connect.md#configure-security-groups).
 
-    {% include [preview-pp.md](../../_includes/preview-pp.md) %}
-
 ### С помощью {{ TF }} {#create-terraform}
 
-1. Если у вас еще нет {{ TF }}, [установите его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+1. {% include [terraform-install](../../_includes/terraform-install.md) %}
 1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
 1. Скачайте в ту же рабочую директорию файл конфигурации [clusters-mysql-data-proc-and-vm.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/sqoop/clusters-mysql-data-proc-and-vm.tf).
 
@@ -124,7 +122,7 @@
 Пусть:
 
 {% include [Shared settings](./shared-properties.md) %}
-* Идентификатор кластера {{ mmy-name }}: `c9qgcd6lplrsjt9jhtuu`.
+* Идентификатор кластера {{ mmy-name }}: `c9qgcd6lplrs********`.
 
 {% list tabs %}
 
@@ -135,7 +133,7 @@
 
         ```bash
         sqoop import "-Dorg.apache.sqoop.splitter.allow_text_splitter=true" \
-            --connect "jdbc:mysql://c-c9qgcd6lplrsjt9jhtuu.rw.{{ dns-zone }}:{{ port-mmy }}/db1" \
+            --connect "jdbc:mysql://c-c9qgcd6lplrs********.rw.{{ dns-zone }}:{{ port-mmy }}/db1" \
             --username "user1" \
             --P \
             --table "persons" \
@@ -150,7 +148,7 @@
 
         ```bash
         sqoop import "-Dorg.apache.sqoop.splitter.allow_text_splitter=true" \
-            --connect "jdbc:mysql://c-c9qgcd6lplrsjt9jhtuu.rw.{{ dns-zone }}:{{ port-mmy }}/db1" \
+            --connect "jdbc:mysql://c-c9qgcd6lplrs********.rw.{{ dns-zone }}:{{ port-mmy }}/db1" \
             --username "user1" \
             --table "persons" \
             --target-dir "import-directory" \
@@ -165,7 +163,7 @@
 
         ```bash
         sqoop import "-Dorg.apache.sqoop.splitter.allow_text_splitter=true" \
-            --connect "jdbc:mysql://c-c9qgcd6lplrsjt9jhtuu.rw.{{ dns-zone }}:{{ port-mmy }}/db1" \
+            --connect "jdbc:mysql://c-c9qgcd6lplrs********.rw.{{ dns-zone }}:{{ port-mmy }}/db1" \
             --username "user1" \
             --P \
             --table "persons" \
@@ -183,7 +181,7 @@
 
         ```bash
         sqoop import "-Dorg.apache.sqoop.splitter.allow_text_splitter=true" \
-            --connect "jdbc:mysql://c-c9qgcd6lplrsjt9jhtuu.rw.{{ dns-zone }}:{{ port-mmy }}/db1" \
+            --connect "jdbc:mysql://c-c9qgcd6lplrs********.rw.{{ dns-zone }}:{{ port-mmy }}/db1" \
             --username "user1" \
             --P \
             --table "persons" \

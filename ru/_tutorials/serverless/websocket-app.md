@@ -265,7 +265,7 @@ git clone --branch sls-demo-0323 https://github.com/yandex-cloud-examples/yc-ser
    echo "export SERVICE_ACCOUNT_GAME_ID=<идентификатор_сервисного_аккаунта>" >> ~/.bashrc && . ~/.bashrc
    ```
 
-1. Назначьте сервисному аккаунту роль `editor`:
+1. Назначьте сервисному аккаунту роль `{{ roles-editor }}`:
 
    ```bash
    echo "export YC_FOLDER_ID=$(yc config get folder-id)" >> ~/.bashrc && . ~/.bashrc
@@ -276,7 +276,7 @@ git clone --branch sls-demo-0323 https://github.com/yandex-cloud-examples/yc-ser
    
    yc resource-manager folder add-access-binding $YC_FOLDER_ID \
    --subject serviceAccount:$SERVICE_ACCOUNT_GAME_ID \
-   --role editor
+   --role {{ roles-editor }}
    ```
 
 1. Создайте авторизованный ключ для сервисного аккаунта:
@@ -668,9 +668,9 @@ git clone --branch sls-demo-0323 https://github.com/yandex-cloud-examples/yc-ser
 1. Передайте новые значения в секрет `game-secrets`:
 
     1. В [консоли управления]({{ link-console-main }}) выберите ваш рабочий каталог.
-    1. Выберите сервис **{{ message-queue-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
     1. Выберите очередь `capturing-queue`.
-    1. Скопируйте значение из поля **URL** и сохраните его в переменную `YMQ_CAPTURE_QUEUE_URL`:
+    1. Скопируйте значение из поля **{{ ui-key.yacloud.ymq.queue.overview.label_url }}** и сохраните его в переменную `YMQ_CAPTURE_QUEUE_URL`:
 
        ```bash
        echo "export YMQ_CAPTURE_QUEUE_URL=<URL>" >> ~/.bashrc && . ~/.bashrc
@@ -708,7 +708,7 @@ git clone --branch sls-demo-0323 https://github.com/yandex-cloud-examples/yc-ser
 
 При развертывании проекта создались следующие сервисные аккаунты:
 * `apigw-s3-viewer` с ролью `storage.viewer` для чтения объектов из бакета {{ objstorage-name }}.
-* `apigw-fn-caller` с ролью `functions.functionInvoker` для вызова функций {{ sf-name }}.
+* `apigw-fn-caller` с ролью `{{ roles-functions-invoker }}` для вызова функций {{ sf-name }}.
 
 1. Сохраните идентификаторы сервисных аккаунтов `apigw-s3-viewer` и `apigw-fn-caller` в переменные `APIGW_S3_VIEWER_ID` и `APIGW_FN_CALLER_ID`:
 

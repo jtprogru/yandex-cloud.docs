@@ -3,13 +3,13 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create your container.
-   1. Select **{{ serverless-containers-name }}**.
-   1. Click **Create container**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
+   1. Click **{{ ui-key.yacloud.serverless-containers.button_create-container }}**.
    1. Enter a name and a description for the container. The name format is as follows:
 
       {% include [name-format](../../_includes/name-format.md) %}
 
-   1. Click **Create**.
+   1. Click **{{ ui-key.yacloud.common.create }}**.
 
 
 - CLI
@@ -31,7 +31,7 @@
    folder_id: b1gqvft7kjk3********
    created_at: "2021-07-09T14:49:00.891Z"
    name: my-beta-container
-   url: https://bba3fva6ka5g********.containers.yandexcloud.net/
+   url: https://bba3fva6ka5g********.{{ serverless-containers-host }}/
    status: ACTIVE
    ```
 
@@ -39,7 +39,7 @@
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To create a container and a container [revision](../../serverless-containers/operations/manage-revision.md):
 
@@ -51,7 +51,7 @@
 
    1. In the configuration file, describe the parameters of the resources you want to create:
 
-      * `name`: Container name. This parameter is required. The naming requirements are as follows:
+      * `name`: Container name. This is a required parameter. The naming requirements are as follows:
 
          {% include [name-format](../../_includes/name-format.md) %}
 
@@ -87,7 +87,7 @@
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```
          terraform plan
@@ -103,9 +103,9 @@
          terraform apply
          ```
 
-      1. Confirm the resource creation: type `yes` in the terminal and press **Enter**.
+      1. Confirm creating the resources: type `yes` in the terminal and press **Enter**.
 
-      Once you are done, all the resources you need will be created in the specified folder. You can verify that the resources are there and their configuration is correct using the [management console]({{ link-console-main }}) or the following [CLI](../../cli/) command:
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}) or this [CLI](../../cli/) command:
 
       ```
       yc serverless container list

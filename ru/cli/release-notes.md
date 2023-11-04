@@ -2,13 +2,194 @@
 
 ## Текущая версия {#latest-release}
 
+### Версия 0.113.0 (31.10.23) {#version0.113.0}
+
+#### Изменения в сервисах {{ yandex-cloud }} {#services}
+
+##### {{ managed-k8s-name }} {#k8s}
+
+* В команду `yc k8s node-group update` добавлен параметр `--location`. Это параметр позволяет изменить [зону доступности](../overview/concepts/geo-scope.md), в которой развернута группа узлов.
+
+##### Сервисы управляемых баз данных {#managed-db}
+
+**{{ mkf-name }}**
+
+* Команды `yc managed-kafka cluster create` и `yc managed-kafka cluster update`: флаг `--unmanaged-topics` помечен как `deprecated`. Соответствующее поле больше не отправляется в запросах API, но флаг останется для сохранения обратной совместимости.
+
+**{{ mos-name }}**
+
+* Добавлена группа команд `yc managed-opensearch` для управления базами данных {{ mos-name }}.
+
+**{{ mch-name }}**
+
+* Для команды `yc managed-clickhouse cluster --mongodb-source` добавлена настройка `options`.
+* Для команды `yc managed-clickhouse cluster set-compression` добавлена настройка `level`.
+
+##### {{ compute-name }} {#compute}
+
+* Добавлена возможность замены переменных окружения в шаблонах, загружаемых с помощью команды `--metadata-from-file`.
+
+##### {{ vpc-name }} {#vpc}
+
+* Добавлена команда `yc vpc subnet relocate`.
+
+## Предыдущие релизы {#previous-releases}
+
+### Версия 0.112.0 (12.10.23) {#version0.112.0}
+
+#### Изменения в сервисах {{ yandex-cloud }} {#services}
+
+###### {{ compute-name }} {#compute}
+
+* Поддержано подключение к CentOS 7 с помощью команды `yc compute ssh`.
+* Добавлены команды `yc compute instance relocate` и `yc compute disk relocate` для перемещения ВМ и дисков между зонами доступности.
+
+### Версия 0.111.0 (21.09.23) {#version0.111.0}
+
+#### Изменения в сервисах {{ yandex-cloud }} {#services}
+
+##### {{ compute-name }} {#compute}
+
+* Поддержан параметр `--network-interface` в команде `yc compute instance relocate`.
+* Добавлена группа команд `yc compute ssh` для подключения к ВМ по сертификату, выписанному с помощью OS Login, и экспорта этого сертификата. OS Login используется для предоставления пользователям доступа к ВМ по SSH через {{ iam-short-name }}.
+
+##### {{ mpg-name }}
+
+* В команды `yc managed-postgresql cluster create`, `yc managed-postgresql cluster update` и `yc managed-postgresql cluster restore` добавлено значение `16` для флага `--postgresql-version string`. Оно позволяет создать кластер {{ PG }} версии 16.
+
+
+##### {{ iot-name }} {#iot}
+
+* Добавлена группа команд `yc iot registry yds-export` для управления экспортом сообщений из IoT в Data Streams.
+
+
+
+##### {{ cloud-logging-name }} {#cloud-logging}
+
+* Исправлена ошибка вывода `yc logging read` для форматов json и json-rest
+
+
+
+##### {{ sf-name }} {#serverless-functions}
+
+В команду `yc serverless function version create` добавлены параметры асинхронного вызова:
+* `--async-max-retries` - для указания максимального количества попыток вызова функции
+* `--async-service-account-id` - для указания сервисного аккаунта для вызова функции
+* `--async-success-ymq-arn` - для указания очереди для успешного результата
+* `--async-success-sa-id` - для указания сервисного аккаунта для записи в очередь успешного результата
+* `--async-failure-ymq-arn` - для указания очереди для неуспешного результата
+* `--async-failure-sa-id` - для указания сервисного аккаунта для записи в очередь неуспешного результата
+
+
+### Версия 0.110.0 (14.09.23) {#version0.110.0}
+
+#### Изменения в сервисах {{ yandex-cloud }} {#services}
+
+
+##### {{ api-gw-name }} {#api-gw}
+
+* В команды `yc serverless api-gateway create` и `yc serverless api-gateway update` добавлены параметры:
+  * `--variables` — для указания значений параметров спецификации.
+  * `--canary-weight` — для указания доли входящих запросов, обрабатываемых канареечным релизом шлюза.
+  * `--canary-variables` — для указания значений параметров спецификации канареечного релиза.
+
+* Добавлена команда `yc serverless api-gateway release-canary` для замены параметров спецификации параметрами канареечного релиза и удаления последнего.
+
+* Добавлена команда `yc serverless api-gateway rollback-canary` для отключения канареечного релиза за счет установки параметру `weight` значения, равного `0`.
+
+
+
+##### {{ iam-name }} {#iam}
+
+* Удалены группы команд `yc iam federation` и `yc iam certificate` для управления SAML-совместимыми федерациями на уровне каталога. Для работы с SAML-совместимыми федерациями теперь используйте группу команд `yc organization-manager federation`.
+
+
+##### {{ ig-name }} {#instance-groups}
+
+Исправлена проблема команды `yc compute instance-group update`, когда не обрабатывалось имя группы ВМ, если для конфигурации использовался файл в формате YAML.
+
+##### {{ compute-name }} {#compute}
+
+* В командах `yc compute instance create` и `yc compute instance update` добавлен флаг `--placement-group-partition` для указания номера раздела в группе размещения (partition).
+
+
+##### {{ cloud-logging-name }} {#cloud-logging}
+
+* В команде `yc logging read` убрали ограничение для флага `--limit`. Теперь можно выводить более 1000 записей.
+
+
+##### Сервисы управляемых баз данных {#managed-db}
+
+**{{ mmg-name }}**
+
+* Добавлена возможность создавать шардированый кластер. Если в конфигурации присутствуют соответствующие типы хостов, то кластер будет создан автоматически.
+* В команды `yc mongodb cluster create`, `yc mongodb cluster update` и `yc mongodb cluster restore` добавлен параметр `--performance-diagnostics`.
+
+**{{ mpg-name }}**
+
+* Добавлена команда `yc managed-postgresql backup delete` для удаления ручных бэкапов.
+* В команду `yc managed-postgresql cluster update` добавлены флаги:
+  * `--disk-size-autoscaling` — для управления настройками сервиса автоматического увеличения диска.
+  * `--yandexquery-access` — для разрешения доступа к кластеру из сервиса {{ yq-full-name }}.
+
+**{{ mch-name }}**
+
+* В команды `yc managed-clickhouse cluster create` и `yc managed-clickhouse cluster update` добавлен флаг `--cloud-storage-prefer-not-to-merge`, позволяющий отключать слияние частей данных в {{ objstorage-name }}.
+
+### Версия 0.109.0 (10.08.23) {#version0.109.0}
+
+#### Изменения в сервисах {{ yandex-cloud }} {#services}
+
+##### {{ sf-name }} {#cloud-functions}
+
+* В команду `yc serverless trigger create mail` добавлена возможность настройки бакета для сохранения вложений письма.
+* В команды `yc serverless trigger create iot-devices`, `yc serverless trigger create iot-broker`, `yc serverless trigger create object-storage`, `yc serverless trigger create container-registry` и `yc serverless trigger create mail`:
+  * Добавлен параметр `--batch-size` для указания размера группы сообщений.
+  * Добавлен параметр `--batch-cutoff` для указазания максимального времени формирования группы.
+* В команду `yc serverless trigger create logging` добавлен параметр `--stream-names` для фильтрации по имени потока логов.
+* Добавлена команда `yc serverless function version delete` для удаления версий функций.
+
+##### {{ kms-name }} {#kms}
+
+*  В команды ассиметричного шифрования и подписи `yc kms asymmetric-encryption-crypto decrypt`, `yc kms asymmetric-signature-crypto sign` и `yc kms asymmetric-signature-crypto sign-hash` добавлены параметры `--inform` и `--outform` для указания формата входных и выходных данных.
+*  В командах подписи `yc kms asymmetric-signature-crypto sign` и `yc kms asymmetric-signature-crypto sign-hash` параметр `--signature-file`, указывающий на файл, в который надо сохранить полученное значение подписи, переименован в `--signature-output-file`.
+
+##### {{ managed-k8s-name }} {#k8s}
+
+* В команду `yc k8s node-group create` добавлен параметр `--gpu-cluster-id` для добавления узла из группы узлов в кластер с GPU.
+* В команду `yc k8s node-group create` добавлен параметр `--gpu-environment` для настройки предустановленного окружения для узлов с GPU.
+
+##### {{ compute-name }} {#compute}
+
+* В команду создания группы размещения дисков `yc compute disk-placement-group create` добавлен параметр `--strategy` для указания стартегии размещения. Может принимать значения `SPREAD` или `PARTITION`.
+* В команду создания группы размещения дисков `yc compute disk-placement-group create` добавлен флаг `--partition-count`. Задает количество разделов для группы со стратегией `PARTITION`.
+* В команду создания диска `yc compute disk create` добавлен флаг `--disk-placement-group-partition` для указания номера раздела в группе размещения.
+* Добавлена колонка `PLACEMENT GROUP` в таблице со списком дисков, получаемых командой `yc compute disk list`.
+* Добавлена колонка `STRATEGY` в таблице со списком групп размещения дисков, получаемых командой `yc compute disk-placement-group list`.
+
+##### {{ cloud-logging-name }} {#cloud-logging}
+
+* Добавлена группа `yc logging sink`.
+
+##### {{ ig-name }} {#instance-groups}
+
+* Добавлены команды `yc compute instance-group rolling-restart` и `yc compute instance-group rolling-recreate` для перезапуска и пересоздания ВМ в группе с учетом ограничений группы.
+
+##### {{ dns-name }} {#dns}
+
+* Добавлена команда `yc dns zone update-private-networks` для атомарного изменения списка сетей для приватных зон.
+
+##### Сервисы управляемых баз данных {#managed-db}
+
+**{{ mmg-name }}**
+
+* Добавлена команда `yc managed-mongodb backup delete` для удаления резервных копий.
+
 ### Версия 0.108.1 (06.07.23) {#version0.108.1}
 
 #### Изменения в CLI {#cli}
 
 * Команда `oslogin` временно удалена.
-
-## Предыдущие релизы {#previous-releases}
 
 ### Версия 0.108.0 (04.07.23) {#version0.108.0}
 
@@ -474,7 +655,7 @@
 ##### {{ org-name }} {#organization}
 
 * В команды из группы `yc organization-manager federation saml` добавлен параметр `--organization-id` для указания идентификатора организации. Исправлена ошибка, возникавшая в этих командах при указании имени SAML-совместимой федерации как позиционного аргумента.
-* Добавлена группа команд `yc organization-manager group` для управления [группами пользователей](../organization/manage-groups.md).
+* Добавлена группа команд `yc organization-manager group` для управления [группами пользователей](../organization/operations/manage-groups.md).
 
 
 ### Версия 0.94.0 (16.08.22) {#version0.94.0}
@@ -2139,8 +2320,7 @@
 **Улучшено**
 
 * При запуске `yc` с флагом `--help` или `-h`, помощь открывается в интерактивном режиме в `less` (`$PAGER`) на linux и macOS, в `more` на windows. Это убирает необходимость отматывать вывод помощи наверх.
-* Debug логи выполнения и взаимодействия с API теперь сохраняются не в директорию установки, а в директорию конфигурации 
-`$HOME/.config/yandex-cloud/logs`. Это устраняет проблему, когда `yc`, установленный как отдельный бинарный файл, неожиданно сохранял лог рядом и мог не иметь на это прав.
+* Debug логи выполнения и взаимодействия с API теперь сохраняются не в директорию установки, а в директорию конфигурации `$HOME/.config/yandex-cloud/logs`. Это устраняет проблему, когда `yc`, установленный как отдельный бинарный файл, неожиданно сохранял лог рядом и мог не иметь на это прав.
 * Debug логи сохраняются и в случае успешных запросов. В случае обращения в поддержку по поводу проблемы возникшей в процессе выполнения команды `yc`, вероятно, мы сможем помочь быстрее, если вы приложите сохраненный лог.
 
 **Исправлено**
@@ -2208,7 +2388,7 @@
 
 #### {{ iam-name }} {#iam}
 
-* Добавлены команды для создания и управления SAML-совместимыми федерациями удостоверений и сертификатами к ним: `yc iam federation` и `yc iam certificate`. Подробнее про SAML-совместимые федерации удостоверений можно узнать в [документации](../organization/add-federation.md).
+* Добавлены команды для создания и управления SAML-совместимыми федерациями удостоверений и сертификатами к ним: `yc iam federation` и `yc iam certificate`. Подробнее про SAML-совместимые федерации удостоверений можно узнать в [документации](../organization/concepts/add-federation.md).
 
 
 ### Версия 0.50.0 (27.01.20) {#version0.50.0}
@@ -2385,7 +2565,7 @@
 
 **Исправлено**
 
-* Для Windows Subsystem for Linux (WSL) при авторизации в CLI с помощью [SAML-совместимых федераций удостоверений](../organization/add-federation.md) теперь корректно происходит переход в браузер.
+* Для Windows Subsystem for Linux (WSL) при авторизации в CLI с помощью [SAML-совместимых федераций удостоверений](../organization/concepts/add-federation.md) теперь корректно происходит переход в браузер.
 
 
 ### Версия 0.43.0 (11.11.19) {#version0.43.0}
@@ -2393,7 +2573,7 @@
 
 #### Изменения в CLI {#cli}
 
-* Добавлена возможность авторизации в CLI с помощью [SAML-совместимых федераций удостоверений](../organization/add-federation.md).
+* Добавлена возможность авторизации в CLI с помощью [SAML-совместимых федераций удостоверений](../organization/concepts/add-federation.md).
 
   Для этого выполните команду `yc init --federation-id=<FEDERATION_ID>`, после чего можно использовать CLI для работы от имени пользователя этой федерации.
 

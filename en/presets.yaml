@@ -13,7 +13,7 @@ default:
   mmy-full-name: Yandex Managed Service for MySQL
   mrd-full-name: Yandex Managed Service for Redis
   mkf-full-name: Yandex Managed Service for Apache Kafka®
-  maf-full-name: Yandex Managed Service for Apache Airflow®
+  maf-full-name: Yandex Managed Service for Apache Airflow™
   mes-full-name: Yandex Managed Service for Elasticsearch
   mos-full-name: Yandex Managed Service for OpenSearch
   mms-full-name: Yandex Managed Service for SQL Server
@@ -24,7 +24,7 @@ default:
   adv-ddos-protection: Advanced Yandex DDoS Protection
   monitoring-full-name: Yandex Monitoring
   unified-agent-full-name: Yandex Unified Agent
-  managed-prometheus-full-name: Managed Service for Prometheus
+  managed-prometheus-full-name: Yandex Managed Service for Prometheus®
   prometheus-name: Prometheus
   promql-name: PromQL
   grafana-name: Grafana
@@ -35,6 +35,7 @@ default:
   speechkit-full-name: Yandex SpeechKit
   speechkit-pro-full-name: Yandex SpeechKit Pro
   brand-voice-full-name: Yandex SpeechKit Brand Voice
+  speechsense-full-name: Yandex SpeechSense
   network-load-balancer-full-name: Yandex Network Load Balancer
   message-queue-full-name: Yandex Message Queue
   cloud-apps-full-name: Yandex Cloud Apps
@@ -69,7 +70,9 @@ default:
   cloud-desktop-full-name: Yandex Cloud Desktop
   marketplace-full-name: Yandex Cloud Marketplace
   yq-full-name: Yandex Query
+  search-api-full-name: Yandex Search API
   captcha-full-name: Yandex SmartCaptcha
+  sws-full-name: Yandex Smart Web Security
   backup-full-name: Yandex Cloud Backup
   metastore-full-name: Hive Metastore
   preview-stage: <code><b><small>Preview</small></b></code>
@@ -78,6 +81,9 @@ default:
   storage-aws-cli-alias: ycs3
   yagpt-full-name: YandexGPT
   billing-name: Yandex Cloud Billing
+  console-full-name: Yandex Cloud Console
+  video-full-name: Yandex Cloud Video
+  postbox-full-name: Yandex Cloud Postbox
   cloud-beaver:
     name: Cloud Beaver
     short-name: Cloud Beaver
@@ -94,14 +100,14 @@ default:
   mmy-name: Managed Service for MySQL
   mrd-name: Managed Service for Redis
   mkf-name: Managed Service for Apache Kafka®
-  maf-name: Managed Service for Apache Airflow®
+  maf-name: Managed Service for Apache Airflow™
   mes-name: Managed Service for Elasticsearch
   mos-name: Managed Service for OpenSearch
   mms-name: Managed Service for SQL Server
   mgp-name: Managed Service for Greenplum®
   mgl-name: Managed Service for GitLab
   monitoring-name: Monitoring
-  managed-prometheus-name: Managed Service for Prometheus
+  managed-prometheus-name: Yandex Managed Service for Prometheus®
   vpc-name: Virtual Private Cloud
   ddos-protection-name: DDoS Protection
   dsvm-name: Data Science Virtual Machine
@@ -115,6 +121,7 @@ default:
   brand-voice-premium-name: SpeechKit Brand Voice Premium
   brand-voice-cc-name: SpeechKit Brand Voice Call Center
   sk-hybrid-name: SpeechKit Hybrid
+  speechsense-name: SpeechSense
   network-load-balancer-name: Network Load Balancer
   message-queue-name: Message Queue
   cloud-apps-name: Cloud Apps
@@ -153,12 +160,19 @@ default:
   load-testing-name: Load Testing
   cloud-desktop-name: Cloud Desktop
   captcha-name: SmartCaptcha
+  sws-name: Smart Web Security
   yt-name: YT
+  ytsaurus-name: YTsaurus
   eventhub-name: EventHub
   logbroker-name: Logbroker
   logfeller-name: Logfeller
   backup-name: Cloud Backup
+  search-api-name: Search API
   yagpt-name: YandexGPT
+  postbox-name: Yandex Cloud Postbox
+  websql-name: WebSQL
+  websql-full-name: Yandex WebSQL
+  video-name: Cloud Video
   iam-short-name: IAM
   resmgr-short-name: Resource Manager
   compute-short-name: Compute Cloud
@@ -169,7 +183,7 @@ default:
   mrd-short-name: Managed Service for Redis
   mmy-short-name: Managed Service for MySQL
   mkf-short-name: Managed Service for Apache Kafka®
-  maf-short-name: Managed Service for Apache Airflow®
+  maf-short-name: Managed Service for Apache Airflow™
   mms-short-name: Managed Service for SQL Server
   mes-short-name: Managed Service for Elasticsearch
   mos-short-name: Managed Service for OpenSearch
@@ -216,7 +230,9 @@ default:
   backup-short-name: Cloud Backup
   yq-short-name: YQ
   datalens-public: DataLens Public
+  search-api: Search API
   speechkit-slug: speechkit
+  ocr-max-filesize: 20 MB
   price-per-hour-count-per-second: Prices are shown for 1 hour of use. Billing occurs per second.
   roles-alb-viewer: alb.viewer
   roles-alb-editor: alb.editor
@@ -230,6 +246,7 @@ default:
   roles-data-transfer-admin: data-transfer.admin
   roles-data-transfer-private-admin: data-transfer.privateAdmin
   roles-data-transfer-viewer: data-transfer.viewer
+  roles-data-transfer-auditor: data-transfer.auditor
   roles-datasphere-admin: datasphere.admin
   roles-datasphere-user: datasphere.user
   roles-datasphere-project-viewer: datasphere.community-projects.viewer
@@ -244,7 +261,17 @@ default:
   roles-datalens-instances-user: datalens.instances.user
   roles-datalens-instances-admin: datalens.instances.admin
   roles-datalens-admin: datalens.admin
+  roles-datalens-visitor: datalens.visitor
+  roles-datalens-collections-admin: datalens.collections.admin
+  roles-datalens-collections-editor: datalens.collections.editor
+  roles-datalens-collections-limitedViewer: datalens.collections.limitedViewer
+  roles-datalens-collections-viewer: datalens.collections.viewer
+  roles-datalens-workbooks-admin: datalens.workbooks.admin
+  roles-datalens-workbooks-editor: datalens.workbooks.editor
+  roles-datalens-workbooks-limitedViewer: datalens.workbooks.limitedViewer
+  roles-datalens-workbooks-viewer: datalens.workbooks.viewer
   roles-functions-ivoker: serverless.functions.invoker
+  roles-functions-invoker: functions.functionInvoker
   roles-image-user: compute.images.user
   roles-monitoring-viewer: monitoring.viewer
   roles-monitoring-editor: monitoring.editor
@@ -288,6 +315,11 @@ default:
         cluster-admin: k8s.cluster-api.cluster-admin
         editor: k8s.cluster-api.editor
         viewer: k8s.cluster-api.viewer
+    maf:
+      admin: managed-airflow.admin
+      editor: managed-airflow.editor
+      viewer: managed-airflow.viewer
+      user: managed-airflow.user
     mch:
       admin: managed-clickhouse.admin
       auditor: managed-clickhouse.auditor
@@ -347,6 +379,7 @@ default:
   roles-organization-admin: organization-manager.admin
   roles-organization-owner: organization-manager.organizations.owner
   roles-organization-viewer: organization-manager.viewer
+  roles-iam-sa-tokencreator: iam.serviceAccounts.tokenCreator
   roles-admin: admin
   roles-owner: owner
   roles-editor: editor
@@ -388,6 +421,10 @@ default:
   crt-local-dir: /usr/local/share/ca-certificates/Yandex/
   crt-local-file: YandexInternalRootCA.crt
   crt-alias: YandexCA
+  crt-web-path-root: https://storage.yandexcloud.net/cloud-certs/RootCA.pem
+  crt-local-file-root: RootCA.crt
+  crt-web-path-int: https://storage.yandexcloud.net/cloud-certs/IntermediateCA.pem
+  crt-local-file-int: IntermediateCA.crt
   mdb-host: mdb.cloud.yandex.net
   dns-zone: mdb.yandexcloud.net
   network-name: default
@@ -410,8 +447,9 @@ default:
   GL: GitLab
   GLR: GitLab Runner
   GP: Greenplum®
+  GLA: GitLab Agent
   KF: Apache Kafka®
-  AF: Apache Airflow®
+  AF: Apache Airflow™
   KFC: Kafka Connect
   MG: MongoDB
   MP: Metrics Provider
@@ -425,6 +463,7 @@ default:
   TF: Terraform
   TF-full: Hashicorp Terraform
   TF-version: '0.90'
+  grpcio-tools-version: 1.46.3
   CK: ClickHouse Keeper
   ZK: ZooKeeper
   metrika: Yandex Metrica
@@ -434,6 +473,8 @@ default:
   DS: YDS
   ssms: SQL Server Management Studio
   pgadmin: "pgAdmin\_4"
+  google-looker: Looker Studio
+  YZ: Yezzey
   tag-con: <code><b><small>Management console</small></b></code>
   tag-cli: <code><b><small>CLI</small></b></code>
   tag-tf: <code><b><small>Terraform</small></b></code>
@@ -444,6 +485,8 @@ default:
   zone-id: ru-central1-c
   subnet-name: default-ru-central1-c
   region-id: ru-central1
+  device-id: b91qprkvbks9********
+  registry-id: b9100l5i0ms9********
   compute-ubuntu-lts-image-id: fd81hgrcv6lsnkremf32
   host-class: s2.micro
   b1-nano: b1.nano (2 × 5% vCPU, 2 GB)
@@ -494,6 +537,7 @@ default:
   s2-7xlarge: s2.7xlarge (80 vCPU, 320 GB)
   v100-broadwell: Intel Broadwell with NVIDIA® Tesla® V100
   t4-ice-lake: Intel Ice Lake with NVIDIA® Tesla® T4
+  highfreq-ice-lake: Intel Ice Lake Compute-Optimized
   v100-cascade-lake: Intel Cascade Lake with NVIDIA® Tesla® V100
   a100-epyc: AMD EPYC™ with NVIDIA® Ampere® A100
   h100-sapphire-rapids: Intel Sapphire Rapids with NVIDIA® Hopper® H100
@@ -606,7 +650,8 @@ default:
   ca-address: https://storage.yandexcloud.net/mqtt/rootCA.crt
   mqtt-server-address: mqtt.cloud.yandex.net
   mqtt-server-port: 8883
-  sf-url: https://functions.yandexcloud.net
+  sf-url: functions.yandexcloud.net
+  serverless-containers-host: containers.yandexcloud.net
   coi: Container Optimized Image
   yc-install-path: /yandexcloud-yc/install.sh
   yc-windows-path: /yandexcloud-yc/install.ps1
@@ -617,12 +662,14 @@ default:
   link-console-quotas: https://console.cloud.yandex.com/cloud?section=quotas
   link-console-access-management: https://console.cloud.yandex.com/iam
   link-console-iam-users: https://console.cloud.yandex.ru/iam?section=users
-  link-console-support: https://console.cloud.yandex.com/support
+  link-console-support: https://support.yandex.cloud/
+  link-console-settings: https://console.cloud.yandex.com/settings
   link-cloud-calculator: /prices#calculator
   link-cloud-services: /services
   link-cloud-services-infrastructure: /services#infrastructure-network
   link-cloud-marketplace: /marketplace
   link-cloud-terms-of-use: https://yandex.ru/legal/cloud_termsofuse/?lang=en
+  link-cloud-aup: https://yandex.ru/legal/cloud_aup/?lang=ru
   link-yandex-connect: https://connect.yandex.com
   link-passport-login: https://passport.yandex.com/auth
   link-sla-greenplum: https://yandex.com/legal/cloud_sla_greenplum/
@@ -631,14 +678,18 @@ default:
     https://storage.yandexcloud.net/yc-compliance/certificates/PCI_DSS_Guide_EN.pdf
   link-pci-dss-ru: >-
     https://storage.yandexcloud.net/yc-compliance/certificates/YC_PCI_DSS_Guide.pdf
+  link-calc: https://cloud.yandex.com/prices#calculator
   link-cloud-oauth: >-
     https://oauth.yandex.com/authorize?response_type=token&client_id=1a6990aa636648e9b2ef855fa7bec2fb
   link-cloud-partners: https://partners.cloud.yandex.ru/
   link-app-android: https://play.google.com/store/apps/details?id=ru.yandex.cloud
   link-app-ios: https://apps.apple.com/ru/app/yandex-cloud/id1515465314
   link-cloud-notifications: https://console.cloud.yandex.com/cloud?section=notifications
+  link-cloud-communications: https://console.cloud.yandex.com/folders?openSettings=communications
   link-datalens-main: https://datalens.yandex.com
   link-datalens-settings: https://datalens.yandex.com/settings
+  link-speechsense-main: https://speechsense.cloud.yandex.ru/
+  link-docs: https://cloud.yandex.com/docs
   link-org-main: https://org.cloud.yandex.com/
   link-org-acl: https://org.cloud.yandex.ru/acl
   link-org-users: https://org.cloud.yandex.ru/users
@@ -647,6 +698,8 @@ default:
   link-forms-b2b: https://forms.yandex.com/cloud/admin
   link-monitoring: https://monitoring.cloud.yandex.com
   link-support-mail: cloud@support.yandex.ru
+  link-video-main: https://video.cloud.yandex.ru/
+  link-cloud-desktop-showcase: https://console.cloud.yandex.com/showcase/cloud-desktop
   link-ya-360-notfree: https://yandex.ru/support/business/payment/disable-free-version.html
   link-yandex: https://yandex.com
   links:
@@ -728,6 +781,9 @@ default:
     aws-ep: >-
       https://docapi.serverless.yandexcloud.net/ru-central1/b1gia87mbaomkfvs6rgl/etnudu2n9ri35luqe4h1
     version-cdc: 22.5
+    document-api-endpoint: https://docapi.serverless.yandexcloud.net
+  oracle:
+    docs: https://docs.oracle.com/en/database/oracle/oracle-database/19
   stt-short-fileSize: 1 MB
   stt-short-audioLength: 30 seconds
   stt-short-channelsCount: 1
@@ -748,12 +804,16 @@ default:
   jlab: Jupyter
   dd: Dedicated
   ds: Serverlesss
+  search-api-request-ch: 400 characters
+  search-api-request-w: 40 words
+  yagpt-max-tokens: 7400
   ds-api-addr: datasphere.api.cloud.yandex.net:443
   api-host-sk: api.cloud.yandex.net
   api-host-sk-stt: stt.api.cloud.yandex.net
   api-host-sk-tts: tts.api.cloud.yandex.net
   speechkit-stt-alias: speechkit.stt.stable
   speechkit-tts-alias: speechkit.tts.stable
+  speechsense-endpoint: api.talk-analytics.yandexcloud.net:443
   mp-test-product-id: f2e4tmlj4qqciunhr7e6
   mp-test-sku-id: dn272e8979uvek5cnuhk
   dt-status-copy: '**Copying**'
@@ -775,9 +835,9 @@ default:
     https://stat.ripe.net/widget/announced-prefixes#w.resource%3DAS200350%26w.min_peers_seeing%3D0
   k8s-api-link: >-
     https://v1-22.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/
-  k8s-versions-rapid: 1.23, 1.24, 1.25, 1.26, 1.27
-  k8s-versions-regular: 1.23, 1.24
-  k8s-versions-stable: 1.23, 1.24
+  k8s-versions-rapid: 1.23, 1.24, 1.25, 1.26, 1.27, 1.28
+  k8s-versions-regular: 1.23, 1.24, 1.25, 1.26, 1.27
+  k8s-versions-stable: 1.23, 1.24, 1.25, 1.26, 1.27
   cic-bgp-asn: 200350
   cic-pbc-subnet: 178.210.118.46/31
   cic-pbc-subnet-client: 178.210.118.46
@@ -787,6 +847,7 @@ default:
   tf-docs-link: https://terraform-provider.yandexcloud.net
   tf-provider-link: https://terraform-provider.yandexcloud.net/
   tf-provider-resources-link: https://terraform-provider.yandexcloud.net/Resources
+  tf-provider-datasources-link: https://terraform-provider.yandexcloud.net/DataSources
   tf-provider-dt-endpoint: https://terraform-provider.yandexcloud.net/Resources/datatransfer_endpoint
   tf-provider-dt-transfer: https://terraform-provider.yandexcloud.net/Resources/datatransfer_transfer
   tf-provider-k8s-cluster: https://terraform-provider.yandexcloud.net/Resources/kubernetes_cluster
@@ -804,6 +865,7 @@ default:
   tf-provider-alb-targetgroup: https://terraform-provider.yandexcloud.net/Resources/alb_target_group
   tf-provider-alb-backendgroup: https://terraform-provider.yandexcloud.net/Resources/alb_backend_group
   terraform-mirror: https://hashicorp-releases.yandexcloud.net/terraform/
+  packer-source-link: github.com/hashicorp/yandex
   api-host: api.cloud.yandex.net
   api-host-kms-symcrypto: kms.yandex
   api-host-kms: kms.api.cloud.yandex.net
@@ -814,6 +876,10 @@ default:
   api-host-lockbox: lockbox.api.cloud.yandex.net
   api-host-data-transfer: datatransfer.api.cloud.yandex.net
   api-host-mdb: mdb.api.cloud.yandex.net
+  api-host-iot-broker: iot-broker.api.cloud.yandex.net
+  api-host-iot-data: iot-data.api.cloud.yandex.net
+  api-host-monitoring-1: monitoring.api.cloud.yandex.net
+  api-host-monitoring-2: monitoring.cloud.yandex.ru
   dns-mx-host: mx.cloud.yandex.net
   dns-ns-host-sld: yandexcloud.net
   ms-kms-host: kms.cloud.yandex.net
@@ -858,7 +924,7 @@ default:
       - Other
   link-saml: https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language
   registry: cr.yandex
-  cos-external-ip-examples:
+  external-ip-examples:
     - 84.201.155.117
     - 84.252.131.221
   api-url-prefix: /docs
@@ -896,26 +962,33 @@ default:
           100|int|string: ₸2000
           250|int|string: ₸1800
           6|int|string: ₸2200
+  sku|KZT|backup:
+    protected_vms:
+      v1|string: ₸1194.0000
+    used_space:
+      v1|month|string: ₸21.0000
   sku|KZT|cdn:
     api:
       network:
         inet:
           egress|string: ₸4.8000
     logs:
-      raw|int|string: ₸30000
-      shielding|int|string: ₸21000
+      raw|int|string: ₸25000
+      shielding|int|string: ₸17500
   sku|KZT|compute:
     hostgroup:
       cpu:
         c100:
           v1|string: ₸6.5794
           v3|string: ₸5.9139
+          v4|string: ₸9.7000
       localssd:
         v1|month|string: ₸44.0000
         v1|string: ₸0.0611
       ram:
         v1|string: ₸1.7423
         v3|string: ₸1.5665
+        v4|string: ₸1.7500
     image|month|string: ₸15.6000
     snapshot|month|string: ₸15.6000
     vm:
@@ -933,6 +1006,7 @@ default:
             preemptible:
               v3|string: ₸1.8000
             v3|string: ₸4.5000
+          highfreq-v3|string: ₸8.8000
           preemptible:
             v2|string: ₸1.6000
             v3|string: ₸1.4500
@@ -962,6 +1036,10 @@ default:
           v2|string: ₸1247.6000
           v3|string: ₸1858.5000
         gpu-standard|string: ₸1247.6000
+        infiniband:
+          ic:
+            preemptible|string: ₸318.0000
+          ic|string: ₸318.0000
         standard:
           v3-t4:
             preemptible|string: ₸80.0000
@@ -971,6 +1049,7 @@ default:
           preemptible:
             v3|string: ₸0.5500
           v3|string: ₸1.4000
+        highfreq-v3|string: ₸1.6000
         preemptible:
           v2|string: ₸0.3500
           v3|string: ₸0.3500
@@ -1008,22 +1087,35 @@ default:
       clickhouse:
         v1:
           cpu:
+            c100|month|string: ₸8208.0000
             c100|string: ₸11.4000
+            c20|month|string: ₸1476.0000
             c20|string: ₸2.0500
+            c5|month|string: ₸108.0000
             c5|string: ₸0.1500
+            c50|month|string: ₸2448.0000
             c50|string: ₸3.4000
+          ram|month|string: ₸1872.0000
           ram|string: ₸2.6000
         v2:
           cpu:
+            c100|month|string: ₸6912.0000
             c100|string: ₸9.6000
+            c20|month|string: ₸1476.0000
             c20|string: ₸2.0500
+            c5|month|string: ₸108.0000
             c5|string: ₸0.1500
+            c50|month|string: ₸2448.0000
             c50|string: ₸3.4000
+          ram|month|string: ₸1872.0000
           ram|string: ₸2.6000
         v3:
           cpu:
+            c100|month|string: ₸6192.0000
             c100|string: ₸8.6000
+            c50|month|string: ₸2196.0000
             c50|string: ₸3.0500
+          ram|month|string: ₸1692.0000
           ram|string: ₸2.3500
       elasticsearch:
         v2:
@@ -1235,22 +1327,35 @@ default:
       clickhouse:
         v1:
           cpu:
+            c100|month|string: ₸5112.0000
             c100|string: ₸7.1000
+            c20|month|string: ₸2016.0000
             c20|string: ₸2.8000
+            c5|month|string: ₸864.0000
             c5|string: ₸1.2000
+            c50|month|string: ₸2808.0000
             c50|string: ₸3.9000
+          ram|month|string: ₸1152.0000
           ram|string: ₸1.6000
         v2:
           cpu:
+            c100|month|string: ₸4356.0000
             c100|string: ₸6.0500
+            c20|month|string: ₸2016.0000
             c20|string: ₸2.8000
+            c5|month|string: ₸864.0000
             c5|string: ₸1.2000
+            c50|month|string: ₸2808.0000
             c50|string: ₸3.9000
+          ram|month|string: ₸1152.0000
           ram|string: ₸1.6000
         v3:
           cpu:
+            c100|month|string: ₸3924.0000
             c100|string: ₸5.4500
+            c50|month|string: ₸2520.0000
             c50|string: ₸3.5000
+          ram|month|string: ₸1008.0000
           ram|string: ₸1.4000
       kafka:
         v2:
@@ -1288,6 +1393,8 @@ default:
     network-nvme:
       allocated|month|string: ₸59.5500
       allocated|string: ₸0.0827
+    network-ssd-io-m3:
+      allocated|month|string: ₸99.0000
     network-ssd-nonreplicated:
       allocated|month|string: ₸44.0000
   sku|KZT|network:
@@ -1298,13 +1405,19 @@ default:
     ingress:
       inet:
         antiddos:
-          qrator|string: ₸14.5800
+          qrator|string: ₸12.1500
     public_fips:
       deallocated|string: ₸1.5500
     public_fips|string: ₸1.2000
   sku|KZT|nlb:
     balancer:
       active|string: ₸3.9000
+  sku|KZT|searchapi:
+    requests:
+      day:
+        v1|int|string: ₸2400
+      night:
+        v1|int|string: ₸1800
   sku|KZT|serverless:
     containers:
       compute:
@@ -1354,6 +1467,12 @@ default:
             102400|string: ₸5.7500
             51200|string: ₸6.0000
           egress|string: Free
+      options:
+        cold|string: ₸4.8500
+        ice|string: ₸9.7000
+        standard|pricingRate:
+          10|string: ₸1.9500
+        standard|string: Free
       post:
         cold|string: ₸5.9000
         ice|string: ₸11.8000
@@ -1376,10 +1495,14 @@ default:
   sku|KZT|support:
     business:
       fixed_consumption:
-        v1|string: ₸36000.0000
+        v1|string: Free
+    organization:
+      business:
+        fixed_consumption:
+          v1|int|string: ₸15000
     standard:
       fixed_consumption:
-        v1|string: ₸5400.0000
+        v1|string: Free
   sku|KZT|v1:
     commitment:
       selfcheckout:
@@ -1399,11 +1522,21 @@ default:
             ch:
               cpu:
                 c100:
+                  v2|month|string: ₸5875.2000
                   v2|string: ₸8.1600
+                  v3|month|string: ₸5263.2000
                   v3|string: ₸7.3100
               ram:
+                v2|month|string: ₸1591.2000
                 v2|string: ₸2.2100
+                v3|month|string: ₸1438.2000
                 v3|string: ₸1.9975
+            greenplum:
+              cpu:
+                c100:
+                  v3|string: ₸9.1375
+              ram:
+                v3|string: ₸2.4225
             kafka:
               cpu:
                 c100:
@@ -1420,6 +1553,12 @@ default:
               ram:
                 v2|string: ₸2.1675
                 v3|string: ₸1.9550
+            opensearch:
+              cpu:
+                c100:
+                  v3|string: ₸7.1400
+              ram:
+                v3|string: ₸2.9750
             pg:
               cpu:
                 c100:
@@ -1458,11 +1597,21 @@ default:
             ch:
               cpu:
                 c100:
+                  v2|month|string: ₸5391.3600
                   v2|string: ₸7.4880
+                  v3|month|string: ₸4829.7600
                   v3|string: ₸6.7080
               ram:
+                v2|month|string: ₸1460.1600
                 v2|string: ₸2.0280
+                v3|month|string: ₸1319.7600
                 v3|string: ₸1.8330
+            greenplum:
+              cpu:
+                c100:
+                  v3|string: ₸8.3850
+              ram:
+                v3|string: ₸2.2230
             kafka:
               cpu:
                 c100:
@@ -1479,6 +1628,12 @@ default:
               ram:
                 v2|string: ₸1.9890
                 v3|string: ₸1.7940
+            opensearch:
+              cpu:
+                c100:
+                  v3|string: ₸6.5520
+              ram:
+                v3|string: ₸2.7300
             pg:
               cpu:
                 c100:
@@ -1517,14 +1672,6 @@ default:
                 basic|string: ₸7.3800
                 gold|string: ₸8.7000
                 platinum|string: ₸10.0200
-          greenplum:
-            cpu:
-              c100:
-                v2|string: ₸6.3720
-                v3|string: ₸5.7300
-            ram:
-              v2|string: ₸1.5420
-              v3|string: ₸1.3980
           mongodb:
             cpu:
               c100:
@@ -1548,14 +1695,6 @@ default:
                 basic|string: ₸7.1400
                 gold|string: ₸8.4000
                 platinum|string: ₸9.6600
-          greenplum:
-            cpu:
-              c100:
-                v2|string: ₸4.8960
-                v3|string: ₸4.4040
-            ram:
-              v2|string: ₸1.1820
-              v3|string: ₸1.0740
           mongodb:
             cpu:
               c100:
@@ -1578,21 +1717,28 @@ default:
   sku|KZT|yds:
     events:
       puts|pricingRate:
-        2|string: ₸7.0800
+        2|string: ₸5.9000
     reserved_resources:
       128k:
-        12h|string: ₸0.8000
+        12h|string: ₸0.6667
+        1h|pricingRate:
+          744|string: ₸0.5000
         1h|string: Free
-        24h|string: ₸1.2000
-        4h|string: ₸0.7000
+        24h|string: ₸1.0000
+        4h|string: ₸0.5833
       1m:
-        12h|string: ₸3.8000
-        24h|string: ₸5.6000
-        4h|string: ₸2.6000
+        12h|string: ₸3.1667
+        24h|string: ₸4.6667
+        4h|string: ₸2.1667
       512k:
-        12h|string: ₸2.4000
-        24h|string: ₸3.6000
-        4h|string: ₸1.6000
+        12h|string: ₸2.0000
+        24h|string: ₸3.0000
+        4h|string: ₸1.3333
+    reserved_storage|month|string: ₸54.0000
+    reserved_throughput:
+      128k|month|string: ₸240.0000
+      1m|month|string: ₸1200.0000
+      512k|month|string: ₸720.0000
   sku|KZT|ymq:
     queue:
       fifo:
@@ -1638,6 +1784,11 @@ default:
           100|int|string: ₽400
           250|int|string: ₽360
           6|int|string: ₽440
+  sku|RUB|backup:
+    protected_vms:
+      v1|string: ₽238.8000
+    used_space:
+      v1|month|string: ₽4.2000
   sku|RUB|cdn:
     api:
       network:
@@ -1652,12 +1803,14 @@ default:
         c100:
           v1|string: ₽1.3159
           v3|string: ₽1.1828
+          v4|string: ₽1.9400
       localssd:
         v1|month|string: ₽8.8000
         v1|string: ₽0.0122
       ram:
         v1|string: ₽0.3485
         v3|string: ₽0.3133
+        v4|string: ₽0.3500
     image|month|string: ₽3.1200
     snapshot|month|string: ₽3.1200
     vm:
@@ -1675,6 +1828,7 @@ default:
             preemptible:
               v3|string: ₽0.3600
             v3|string: ₽0.9000
+          highfreq-v3|string: ₽1.7600
           preemptible:
             v2|string: ₽0.3200
             v3|string: ₽0.2900
@@ -1704,6 +1858,10 @@ default:
           v2|string: ₽249.5200
           v3|string: ₽371.7000
         gpu-standard|string: ₽249.5200
+        infiniband:
+          ic:
+            preemptible|string: ₽63.6000
+          ic|string: ₽63.6000
         standard:
           v3-t4:
             preemptible|string: ₽16.0000
@@ -1713,6 +1871,7 @@ default:
           preemptible:
             v3|string: ₽0.1100
           v3|string: ₽0.2800
+        highfreq-v3|string: ₽0.3200
         preemptible:
           v2|string: ₽0.0700
           v3|string: ₽0.0700
@@ -1760,22 +1919,35 @@ default:
       clickhouse:
         v1:
           cpu:
+            c100|month|string: ₽1641.6000
             c100|string: ₽2.2800
+            c20|month|string: ₽295.2000
             c20|string: ₽0.4100
+            c5|month|string: ₽21.6000
             c5|string: ₽0.0300
+            c50|month|string: ₽489.6000
             c50|string: ₽0.6800
+          ram|month|string: ₽374.4000
           ram|string: ₽0.5200
         v2:
           cpu:
+            c100|month|string: ₽1382.4000
             c100|string: ₽1.9200
+            c20|month|string: ₽295.2000
             c20|string: ₽0.4100
+            c5|month|string: ₽21.6000
             c5|string: ₽0.0300
+            c50|month|string: ₽489.6000
             c50|string: ₽0.6800
+          ram|month|string: ₽374.4000
           ram|string: ₽0.5200
         v3:
           cpu:
+            c100|month|string: ₽1238.4000
             c100|string: ₽1.7200
+            c50|month|string: ₽439.2000
             c50|string: ₽0.6100
+          ram|month|string: ₽338.4000
           ram|string: ₽0.4700
       elasticsearch:
         v2:
@@ -1987,22 +2159,35 @@ default:
       clickhouse:
         v1:
           cpu:
+            c100|month|string: ₽1022.4000
             c100|string: ₽1.4200
+            c20|month|string: ₽403.2000
             c20|string: ₽0.5600
+            c5|month|string: ₽172.8000
             c5|string: ₽0.2400
+            c50|month|string: ₽561.6000
             c50|string: ₽0.7800
+          ram|month|string: ₽230.4000
           ram|string: ₽0.3200
         v2:
           cpu:
+            c100|month|string: ₽871.2000
             c100|string: ₽1.2100
+            c20|month|string: ₽403.2000
             c20|string: ₽0.5600
+            c5|month|string: ₽172.8000
             c5|string: ₽0.2400
+            c50|month|string: ₽561.6000
             c50|string: ₽0.7800
+          ram|month|string: ₽230.4000
           ram|string: ₽0.3200
         v3:
           cpu:
+            c100|month|string: ₽784.8000
             c100|string: ₽1.0900
+            c50|month|string: ₽504.0000
             c50|string: ₽0.7000
+          ram|month|string: ₽201.6000
           ram|string: ₽0.2800
       kafka:
         v2:
@@ -2040,6 +2225,8 @@ default:
     network-nvme:
       allocated|month|string: ₽11.9100
       allocated|string: ₽0.0165
+    network-ssd-io-m3:
+      allocated|month|string: ₽19.8000
     network-ssd-nonreplicated:
       allocated|month|string: ₽8.8000
   sku|RUB|network:
@@ -2057,6 +2244,12 @@ default:
   sku|RUB|nlb:
     balancer:
       active|string: ₽0.7800
+  sku|RUB|searchapi:
+    requests:
+      day:
+        v1|int|string: ₽480
+      night:
+        v1|int|string: ₽360
   sku|RUB|serverless:
     containers:
       compute:
@@ -2106,6 +2299,12 @@ default:
             102400|string: ₽1.1500
             51200|string: ₽1.2000
           egress|string: Free
+      options:
+        cold|string: ₽0.9700
+        ice|string: ₽1.9400
+        standard|pricingRate:
+          10|string: ₽0.3900
+        standard|string: Free
       post:
         cold|string: ₽1.1800
         ice|string: ₽2.3600
@@ -2128,10 +2327,14 @@ default:
   sku|RUB|support:
     business:
       fixed_consumption:
-        v1|int|string: ₽6000
+        v1|int|string: Free
+    organization:
+      business:
+        fixed_consumption:
+          v1|int|string: ₽3000
     standard:
       fixed_consumption:
-        v1|int|string: ₽900
+        v1|int|string: Free
   sku|RUB|v1:
     commitment:
       selfcheckout:
@@ -2151,11 +2354,21 @@ default:
             ch:
               cpu:
                 c100:
+                  v2|month|string: ₽1175.0400
                   v2|string: ₽1.6320
+                  v3|month|string: ₽1052.6400
                   v3|string: ₽1.4620
               ram:
+                v2|month|string: ₽318.2400
                 v2|string: ₽0.4420
+                v3|month|string: ₽287.6400
                 v3|string: ₽0.3995
+            greenplum:
+              cpu:
+                c100:
+                  v3|string: ₽1.8275
+              ram:
+                v3|string: ₽0.4845
             kafka:
               cpu:
                 c100:
@@ -2172,6 +2385,12 @@ default:
               ram:
                 v2|string: ₽0.4335
                 v3|string: ₽0.3910
+            opensearch:
+              cpu:
+                c100:
+                  v3|string: ₽1.4280
+              ram:
+                v3|string: ₽0.5950
             pg:
               cpu:
                 c100:
@@ -2210,11 +2429,21 @@ default:
             ch:
               cpu:
                 c100:
+                  v2|month|string: ₽1078.2720
                   v2|string: ₽1.4976
+                  v3|month|string: ₽965.9520
                   v3|string: ₽1.3416
               ram:
+                v2|month|string: ₽292.0320
                 v2|string: ₽0.4056
+                v3|month|string: ₽263.9520
                 v3|string: ₽0.3666
+            greenplum:
+              cpu:
+                c100:
+                  v3|string: ₽1.6770
+              ram:
+                v3|string: ₽0.4446
             kafka:
               cpu:
                 c100:
@@ -2231,6 +2460,12 @@ default:
               ram:
                 v2|string: ₽0.3978
                 v3|string: ₽0.3588
+            opensearch:
+              cpu:
+                c100:
+                  v3|string: ₽1.3104
+              ram:
+                v3|string: ₽0.5460
             pg:
               cpu:
                 c100:
@@ -2269,14 +2504,6 @@ default:
                 basic|string: ₽1.2300
                 gold|string: ₽1.4500
                 platinum|string: ₽1.6700
-          greenplum:
-            cpu:
-              c100:
-                v2|string: ₽1.0620
-                v3|string: ₽0.9550
-            ram:
-              v2|string: ₽0.2570
-              v3|string: ₽0.2330
           mongodb:
             cpu:
               c100:
@@ -2300,14 +2527,6 @@ default:
                 basic|string: ₽1.1900
                 gold|string: ₽1.4000
                 platinum|string: ₽1.6100
-          greenplum:
-            cpu:
-              c100:
-                v2|string: ₽0.8160
-                v3|string: ₽0.7340
-            ram:
-              v2|string: ₽0.1970
-              v3|string: ₽0.1790
           mongodb:
             cpu:
               c100:
@@ -2334,6 +2553,8 @@ default:
     reserved_resources:
       128k:
         12h|string: ₽0.1333
+        1h|pricingRate:
+          744|string: ₽0.1000
         1h|string: Free
         24h|string: ₽0.2000
         4h|string: ₽0.1167
@@ -2345,6 +2566,11 @@ default:
         12h|string: ₽0.4000
         24h|string: ₽0.6000
         4h|string: ₽0.2667
+    reserved_storage|month|string: ₽10.8000
+    reserved_throughput:
+      128k|month|string: ₽48.0000
+      1m|month|string: ₽240.0000
+      512k|month|string: ₽144.0000
   sku|RUB|ymq:
     queue:
       fifo:
@@ -2387,26 +2613,33 @@ default:
           250|string: $2.880000
           6|string: $3.520000
         v1|string: Free
+  sku|USD|backup:
+    protected_vms:
+      v1|string: $1.910400
+    used_space:
+      v1|month|string: $0.033600
   sku|USD|cdn:
     api:
       network:
         inet:
           egress|string: $0.007680
     logs:
-      raw|string: $64.102565
-      shielding|string: $44.871796
+      raw|string: $40.000000
+      shielding|string: $28.000000
   sku|USD|compute:
     hostgroup:
       cpu:
         c100:
           v1|string: $0.010527
           v3|string: $0.009462
+          v4|string: $0.015520
       localssd:
         v1|month|string: $0.070400
         v1|string: $0.000098
       ram:
         v1|string: $0.002788
         v3|string: $0.002506
+        v4|string: $0.002800
     image|month|string: $0.024960
     snapshot|month|string: $0.024960
     vm:
@@ -2424,6 +2657,7 @@ default:
             preemptible:
               v3|string: $0.002880
             v3|string: $0.007200
+          highfreq-v3|string: $0.014080
           preemptible:
             v2|string: $0.002560
             v3|string: $0.002320
@@ -2453,6 +2687,10 @@ default:
           v2|string: $1.996160
           v3|string: $2.973600
         gpu-standard|string: $1.996160
+        infiniband:
+          ic:
+            preemptible|string: $0.508800
+          ic|string: $0.508800
         standard:
           v3-t4:
             preemptible|string: $0.128000
@@ -2462,6 +2700,7 @@ default:
           preemptible:
             v3|string: $0.000880
           v3|string: $0.002240
+        highfreq-v3|string: $0.002560
         preemptible:
           v2|string: $0.000560
           v3|string: $0.000560
@@ -2491,22 +2730,35 @@ default:
       clickhouse:
         v1:
           cpu:
+            c100|month|string: $13.132800
             c100|string: $0.018240
+            c20|month|string: $2.361600
             c20|string: $0.003280
+            c5|month|string: $0.172800
             c5|string: $0.000240
+            c50|month|string: $3.916800
             c50|string: $0.005440
+          ram|month|string: $2.995200
           ram|string: $0.004160
         v2:
           cpu:
+            c100|month|string: $11.059200
             c100|string: $0.015360
+            c20|month|string: $2.361600
             c20|string: $0.003280
+            c5|month|string: $0.172800
             c5|string: $0.000240
+            c50|month|string: $3.916800
             c50|string: $0.005440
+          ram|month|string: $2.995200
           ram|string: $0.004160
         v3:
           cpu:
+            c100|month|string: $9.907200
             c100|string: $0.013760
+            c50|month|string: $3.513600
             c50|string: $0.004880
+          ram|month|string: $2.707200
           ram|string: $0.003760
       elasticsearch:
         v2:
@@ -2523,6 +2775,15 @@ default:
             basic|string: $0.016800
             gold|string: $0.019680
             platinum|string: $0.022640
+      greenplum:
+        v2:
+          cpu:
+            c100|string: $0.019120
+          ram|string: $0.005040
+        v3:
+          cpu:
+            c100|string: $0.017200
+          ram|string: $0.004560
       kafka:
         v2:
           cpu:
@@ -2697,22 +2958,35 @@ default:
       clickhouse:
         v1:
           cpu:
+            c100|month|string: $8.179200
             c100|string: $0.011360
+            c20|month|string: $3.225600
             c20|string: $0.004480
+            c5|month|string: $1.382400
             c5|string: $0.001920
+            c50|month|string: $4.492800
             c50|string: $0.006240
+          ram|month|string: $1.843200
           ram|string: $0.002560
         v2:
           cpu:
+            c100|month|string: $6.969600
             c100|string: $0.009680
+            c20|month|string: $3.225600
             c20|string: $0.004480
+            c5|month|string: $1.382400
             c5|string: $0.001920
+            c50|month|string: $4.492800
             c50|string: $0.006240
+          ram|month|string: $1.843200
           ram|string: $0.002560
         v3:
           cpu:
+            c100|month|string: $6.278400
             c100|string: $0.008720
+            c50|month|string: $4.032000
             c50|string: $0.005600
+          ram|month|string: $1.612800
           ram|string: $0.002240
       kafka:
         v2:
@@ -2750,6 +3024,8 @@ default:
     network-nvme:
       allocated|month|string: $0.095280
       allocated|string: $0.000132
+    network-ssd-io-m3:
+      allocated|month|string: $0.158400
     network-ssd-nonreplicated:
       allocated|month|string: $0.070400
   sku|USD|network:
@@ -2760,13 +3036,19 @@ default:
     ingress:
       inet:
         antiddos:
-          qrator|string: $0.031154
+          qrator|string: $0.019440
     public_fips:
       deallocated|string: $0.002480
     public_fips|string: $0.001920
   sku|USD|nlb:
     balancer:
       active|string: $0.006240
+  sku|USD|searchapi:
+    requests:
+      day:
+        v1|string: $3.840000
+      night:
+        v1|string: $2.880000
   sku|USD|serverless:
     containers:
       compute:
@@ -2816,6 +3098,12 @@ default:
             102400|string: $0.009200
             51200|string: $0.009600
           egress|string: Free
+      options:
+        cold|string: $0.007760
+        ice|string: $0.015520
+        standard|pricingRate:
+          10|string: $0.003120
+        standard|string: Free
       post:
         cold|string: $0.009440
         ice|string: $0.018880
@@ -2838,10 +3126,14 @@ default:
   sku|USD|support:
     business:
       fixed_consumption:
-        v1|string: $76.923078
+        v1|string: Free
+    organization:
+      business:
+        fixed_consumption:
+          v1|int|string: $24
     standard:
       fixed_consumption:
-        v1|string: $11.538462
+        v1|string: Free
   sku|USD|v1:
     commitment:
       selfcheckout:
@@ -2861,11 +3153,21 @@ default:
             ch:
               cpu:
                 c100:
+                  v2|month|string: $9.400320
                   v2|string: $0.013056
+                  v3|month|string: $8.421120
                   v3|string: $0.011696
               ram:
+                v2|month|string: $2.545920
                 v2|string: $0.003536
+                v3|month|string: $2.301120
                 v3|string: $0.003196
+            greenplum:
+              cpu:
+                c100:
+                  v3|string: $0.014620
+              ram:
+                v3|string: $0.003876
             kafka:
               cpu:
                 c100:
@@ -2882,6 +3184,12 @@ default:
               ram:
                 v2|string: $0.003468
                 v3|string: $0.003128
+            opensearch:
+              cpu:
+                c100:
+                  v3|string: $0.011424
+              ram:
+                v3|string: $0.004760
             pg:
               cpu:
                 c100:
@@ -2920,11 +3228,21 @@ default:
             ch:
               cpu:
                 c100:
+                  v2|month|string: $8.626176
                   v2|string: $0.011981
+                  v3|month|string: $7.727616
                   v3|string: $0.010733
               ram:
+                v2|month|string: $2.336256
                 v2|string: $0.003245
+                v3|month|string: $2.111616
                 v3|string: $0.002933
+            greenplum:
+              cpu:
+                c100:
+                  v3|string: $0.013416
+              ram:
+                v3|string: $0.003557
             kafka:
               cpu:
                 c100:
@@ -2941,6 +3259,12 @@ default:
               ram:
                 v2|string: $0.003182
                 v3|string: $0.002870
+            opensearch:
+              cpu:
+                c100:
+                  v3|string: $0.010483
+              ram:
+                v3|string: $0.004368
             pg:
               cpu:
                 c100:
@@ -2979,14 +3303,6 @@ default:
                 basic|string: $0.015769
                 gold|string: $0.018590
                 platinum|string: $0.021410
-          greenplum:
-            cpu:
-              c100:
-                v2|string: $0.013615
-                v3|string: $0.012244
-            ram:
-              v2|string: $0.003295
-              v3|string: $0.002987
           mongodb:
             cpu:
               c100:
@@ -3010,14 +3326,6 @@ default:
                 basic|string: $0.015256
                 gold|string: $0.017949
                 platinum|string: $0.020641
-          greenplum:
-            cpu:
-              c100:
-                v2|string: $0.010462
-                v3|string: $0.009410
-            ram:
-              v2|string: $0.002526
-              v3|string: $0.002295
           mongodb:
             cpu:
               c100:
@@ -3042,21 +3350,28 @@ default:
   sku|USD|yds:
     events:
       puts|pricingRate:
-        2|string: $0.015128
+        2|string: $0.009440
     reserved_resources:
       128k:
-        12h|string: $0.001709
+        12h|string: $0.001067
+        1h|pricingRate:
+          744|string: $0.000800
         1h|string: Free
-        24h|string: $0.002564
-        4h|string: $0.001496
+        24h|string: $0.001600
+        4h|string: $0.000933
       1m:
-        12h|string: $0.008120
-        24h|string: $0.011966
-        4h|string: $0.005556
+        12h|string: $0.005067
+        24h|string: $0.007467
+        4h|string: $0.003467
       512k:
-        12h|string: $0.005128
-        24h|string: $0.007692
-        4h|string: $0.003419
+        12h|string: $0.003200
+        24h|string: $0.004800
+        4h|string: $0.002133
+    reserved_storage|month|string: $0.086400
+    reserved_throughput:
+      128k|month|string: $0.384000
+      1m|month|string: $1.920000
+      512k|month|string: $1.152000
   sku|USD|ymq:
     queue:
       fifo:
@@ -3163,168 +3478,6 @@ default:
           edit: Edit
         blocks_w-grid-preview:
           data_type: Data type
-    datalens:
-      chartkit:
-        menu:
-          export:
-            format_markdown: Markdown
-      collections:
-        action_create: Create
-      component:
-        chart-save-controls:
-          button_save-as-new: Save as copy
-        chartkit-alerts:
-          view:
-            button_save: Save
-        dialog-create-editor-chart:
-          view:
-            button_apply: Save
-        dialog-rename-entry:
-          view:
-            button_apply: Done
-        dl-dialog-filter:
-          view:
-            button_apply: Apply filter
-            label_operation: Operation
-            label_select-column-left-title: Available
-        dl-field-editor:
-          view:
-            button_create: Create
-        navigation:
-          view:
-            button_create: Create
-            button_create-connection: Create connection
-            button_create-dashboard: Create dashboard
-            button_create-dataset: Create dataset
-            switch_dashboards: Dashboards
-            switch_root: All objects
-        operations:
-          label_operation-in: Belongs to a set
-      connections:
-        connectors-list:
-          view:
-            label_connector-ch_billing_analytics: Yandex Cloud Billing
-            label_connector-clickhouse: ClickHouse
-        form:
-          button_add-connection: Create connection
-          button_create: Create
-          button_create-connection: Create connection
-          button_create-dataset: Create dataset
-          button_specify-manually: Specify manually
-          button_verify: Check connection
-          field_cache-ttl-sec: "Cache TTL in\_seconds"
-          field_click-house-port: HTTP interface port
-          field_cloud-and-folder: Cloud and folder
-          field_cluster: Cluster
-          field_fill-mode: Connection
-          field_host-name: Hostname
-          field_password: Password
-          field_raw-sql-level: Raw SQL level
-          field_username: Username
-          value_default: Default
-          value_raw-sql-level-off: Forbid
-      dash:
-        action-panel:
-          view:
-            button_add: Add
-            button_connections: Links
-            button_edit: Edit
-            button_tabs: Tabs
-            value_rename: Rename
-            value_widget: Chart
-        chartkit-menu:
-          view:
-            button_edit: Edit
-        connections-dialog:
-          edit:
-            button_add: Add
-            button_save: Save
-            value_output: Outgoing link
-        control-dialog:
-          edit:
-            button_add: Add
-            button_save: Save
-            field_dataset: Dataset
-            field_field: Field
-            field_multiselectable: Multiple choice
-            field_title: Title
-            label_default-value: Default value
-        navigation-input:
-          edit:
-            button_choose: Select
-        tabs-dialog:
-          edit:
-            button_add-tab: Add
-            button_save: Save
-        widget-dialog:
-          edit:
-            button_add: Add
-            button_save: Save
-            field_autoheight: Auto height
-            field_description: Description
-            field_title: Title
-            field_widget: Chart
-      dataset:
-        dataset-editor:
-          modify:
-            button_add-field: Add field
-            button_create: Create
-            button_create-widget: Create chart
-            button_save: Save
-            column_aggregation: Aggregation
-            value_dataset: Fields
-            value_sum: Sum
-        sources-tab:
-          modify:
-            button_add-connection: Add
-            label_sources: Connections
-      dc:
-        billing:
-          column_cost: Cost
-          column_credit: Credit
-        mdb:
-          section_resource: Resources
-      main:
-        landing:
-          view:
-            button_connect-data-source: Create connection
-            button_create-dashboards: Create dashboard
-            button_create-dataset: Create dataset
-            button_create-widget: Create chart
-      wizard:
-        add_field_item: Field
-        button_apply: Apply
-        button_apply-filter: Apply filter
-        button_choose-dataset: Select dataset
-        button_save: Save
-        button_save-as: Save as
-        label_bars-color: Color
-        label_datasets: Datasets
-        label_gradient-type: Gradient type
-        label_thresholds: Set threshold values
-        label_visualization-area: Stacked area chart
-        label_visualization-column: Column chart
-        label_visualization-flat-table: Table
-        label_visualization-pie: Pie chart
-        label_visualization-pivot-table: Pivot table
-        number-field-formatting:
-          view:
-            field_format: Format
-            field_precision: Precision
-            field_rank-delimiter: Show thousands separator
-            value_format-percent: Percent
-            value_rank-delimiter-hide: Hide
-            value_unit-m: Millions, M
-        section_color: Color
-        section_colors: Colors
-        section_columns: Columns
-        section_dimensions: Dimensions
-        section_filters: Chart filters
-        section_measures: Measures
-        section_rows: Rows
-        section_sort: Sorting
-        section_x: X
-        section_y: 'Y'
     forms:
       common:
         blocks_correct-answers:
@@ -3337,6 +3490,8 @@ default:
         blocks_integration-group:
           title-email: Mail
           title-wiki: Wiki
+        blocks_need-auth:
+          login: Login
         blocks_quiz-result:
           correct-answers: See correct answers
         blocks_share:
@@ -3348,6 +3503,9 @@ default:
           simple_form-button-text: Submit
     startrek-backend:
       applinks:
+        otrs:
+          status:
+            closed: Closed
         samsara:
           resolution:
             duplicate: Duplicate
@@ -3369,6 +3527,9 @@ default:
           default:
             filter:
               name: All queue issues
+      events:
+        event:
+          IssueCreated: ' Issue Created'
       fields:
         issue:
           access: Access
@@ -3376,6 +3537,7 @@ default:
           assignee-key-value: Assignee
           author-key-value: Author
           boards: Boards
+          checklistItems: Checklist
           commentWithExternalMessageCount: Number of comments with message
           commentWithoutExternalMessageCount: Number of comments without message
           commits-key-value: Commits
@@ -3525,6 +3687,8 @@ default:
                     type: Queue team responded
         trigger:
           condition:
+            field:
+              checklist: Checklist
             type:
               and: AND
               calculate:
@@ -3538,6 +3702,7 @@ default:
                 update: Issue changed
               fieldBecameEqual: became equal to
               fieldBecameNotEmpty: Field value set.
+              fieldChangedCondition: Field value changed
               fieldEquals: is equal to
               fieldIsEmpty: Field value is empty
               or: Or
@@ -3646,6 +3811,7 @@ default:
                 comment: Add comment
                 issue: Create issue
               duty: Get duty
+              transition: Change issue status
     startrek:
       blocks_touch_b-related-issues:
         delete: Delete link
@@ -3721,7 +3887,6 @@ default:
         new-agile-board: New board
         new-dashboard: New dashboard
         new-queue: New queue
-        queues: Queues
         settings: Personal settings
       blocks-desktop_b-page_type_projects:
         deadline: Deadline
@@ -3743,6 +3908,7 @@ default:
         field-tags: Tags
         issue-status-open: Open
         issue-summary: Issue name
+        issue-type-task: Task
         title: Card view
       blocks-desktop_b-page-agile-admin-tab_type_columns:
         issues-limit: Maximum number of issues per column
@@ -3793,15 +3959,18 @@ default:
         subscribe: Subscribe
       blocks-desktop_b-page-issues:
         page-title: Filters
-      blocks-desktop_b-page-projects:
-        create: Create project
       blocks-desktop_b-page-queue-admin-tab_type_autoaction-editor:
         action_add-action: Add new action
         action_add-condition: Add condition
+        action_save: Save
         filter-type--query: Query
+        label_actions: Issue actions
         label_filter: Filter settings
+        label_name: Name
+        label_time: Update once per
         type-toggle--create: Create issues
         type-toggle--update: Update issues
+        type-toggle-label: Type of auto action
       blocks-desktop_b-page-queue-admin-tab_type_autoactions:
         button-create: Create auto action
         title: Auto actions
@@ -3817,8 +3986,13 @@ default:
         field--allow-external-mailing: Allow to send emails outside of the intranet
         field--allow-externals: Allow access for externals
         field--default-priority: Default priority of issues
+        issue-types-config--title--resolutions: 'Resolutions:'
+        issue-types-config--title--type: 'Issue type:'
+        issue-types-config--title--workflow: 'Workflow:'
       blocks-desktop_b-page-queue-admin-tab_type_form-editor:
         create-btn: Create
+        edit-btn: Save
+        form-link-label: Link to the form
       blocks-desktop_b-page-queue-admin-tab_type_forms:
         add-btn: Add form
       blocks-desktop_b-page-queue-admin-tab_type_macro-editor:
@@ -3838,12 +4012,11 @@ default:
         access-denied-msg: Message for users without access
         allow-external: Allow access for external users
         column-title--create: Create issues
+        column-title--grant: Queue settings
         column-title--read: View issues
         column-title--write: Edit issues
         issues-access: Access control
-        reset: Reset
         save: Save
-        tab--components: Issues with component
         tab--queue: All issues
         update-access-denied-msg-btn: Edit
       blocks-desktop_b-page-queue-admin-tab_type_sla:
@@ -3862,6 +4035,7 @@ default:
         action_save: Save
         label_actions: Actions
         label_conditions: Trigger conditions
+        label_name: Name
       blocks-desktop_b-page-queue-admin-tab_type_triggers:
         bulk-move-button: Change trigger order
         button-create: Create trigger
@@ -3870,21 +4044,17 @@ default:
       blocks-desktop_b-page-queue-admin-tab_type_types:
         add-issue-type: Add issue type
         save: Save
-      blocks-desktop_b-page-queue-admin-tab_type_workflows:
-        actions--copy: Copy
-        copy-queue-workflow: Copy workflow from another queue
       blocks-desktop_b-page-queue-admin:
         group-title--automatization: Automation
         tab-title--events: Changelog
         tab-title--fields: Queue fields
         tab-title--forms: Forms integration
+        tab-title--integrations: Integrations (beta)
         tab-title--main: Basic settings
         tab-title--permissions: Access
         tab-title--sla: SLA
         tab-title--team: Queue team
         tab-title--triggers: Triggers
-        tab-title--types: Issue types
-        tab-title--workflows: Workflow
       blocks-desktop_b-page-queue-description:
         description: Queue description
       blocks-desktop_b-page-queue:
@@ -3926,9 +4096,6 @@ default:
         add-issue-key-in-email-checkbox: Add the issue number in the subject line
         advanced-settings: Advanced settings
         advanced-settings-show: Show advanced settings
-        choose-issue-type: Choose issue type
-        choose-resolutions: Choose resolutions
-        choose-workflow: Workflow
         commits: Show "Сommits" tab
         department: Department
         goals: ' Show "Goals" tab'
@@ -3951,13 +4118,11 @@ default:
         show-create-issue-form--team: Team only
         status-on-link: Status after adding external link
         voting: Voting in issues
-      blocks-desktop_b-queue-issue-type__workflow-table:
-        button-name: Button name
-      blocks-desktop_b-queue-issue-type:
-        workflow-view-label: Statuses and transitions
       blocks-desktop_b-queues-info:
         admin: Configure
         projects: Projects
+      blocks-desktop_b-related-issues__title:
+        is_epic_of: Epic issues
       blocks-desktop_b-screen:
         worklog: Time spent
       blocks-desktop_b-subscriptions-header:
@@ -3980,9 +4145,12 @@ default:
         pivot: Pivot report
         queue-hint: Queue
         timesheet: Timesheet report
+      blocks-desktop_calendar-editor--overrides-modal:
+        add-button: Add
       blocks-desktop_calendar-editor--working-time-select:
         option--daily24x7: Round the clock
       blocks-desktop_comment-form:
+        invite_to_comment: Invite to comment
         save: Save
         send: Submit
       blocks-desktop_comment:
@@ -4034,11 +4202,14 @@ default:
         common--header--settings--title: Settings
         queue--tabs--gantt--title: Gantt chart
         ticket--buttons--workflow_buttons--content-link: More
+        ticket--main--action_new--title: Create issue
         ticket--tabs--invites--title: Invitation to comments
       blocks-desktop_i-autocomplete-control:
         assign-me: Me
       blocks-desktop_i-ticket-subscription:
         worklogs: Time spent
+      blocks-desktop_i-typed-field:
+        assign-to-me: Assign to me
       blocks-desktop_issue-reminder:
         save-btn: Save
       blocks-desktop_issue-reply-form:
@@ -4051,12 +4222,12 @@ default:
       blocks-desktop_issues-filter-save-modal:
         action_submit: Save
       blocks-desktop_issues-filter-update-modal:
+        access-rights: Access control
         access-rights--read: View
         access-rights--share: Add to shared folder
         access-rights--write: Edit
         action_submit: Save
         filter-remove-confirm-submit: Delete
-        permissions-group--groups: Groups
       blocks-desktop_issues-filter:
         action--add-field: Add filter
         action--apply-query: Apply
@@ -4075,7 +4246,7 @@ default:
         my-settings: Personal settings
         new-issue: Create issue
       blocks-desktop_migration-button:
-        migrate-button: Switch to our new technologies
+        migrate-button: Update your board
       blocks-desktop_onboarding-form:
         template-1: Scrum
       blocks-desktop_page-admin-tab_type_fields:
@@ -4088,7 +4259,6 @@ default:
         field-type--uri: URL
         table-head--type: Type
       blocks-desktop_page-admin-tab_type_repositories:
-        connect: Connect repository
         status--success: Connected
       blocks-desktop_page-admin-tab:
         create--resolutions: Create resolution
@@ -4102,6 +4272,8 @@ default:
       blocks-desktop_page-agile-boards:
         create: Create board
         filter-type--favorite: Favorites
+      blocks-desktop_queue-access-msg-modal:
+        add-button: Save
       blocks-desktop_queue-new-presets:
         category--business: Creating products and services
         category--development: Development
@@ -4130,6 +4302,7 @@ default:
         preset-title--development-preset: Basic development model
         preset-title--kanban-development-preset: Kanban
         preset-title--outsource-development-preset: Software development as a service
+        preset-title--quick-start-preset: Start now
         preset-title--scrum-development-preset: Scrum
         preset-title--tiered-support-preset: Multi-tiered support
       blocks-desktop_repository-modal:
@@ -4178,6 +4351,9 @@ default:
         field--author: Reporter
         field--followers: Followers
         field--resolution: Resolution
+      blocks-desktop_st-gantt-issue-update-modal:
+        label:
+          due-date: Deadline
       blocks-desktop_st-tokens-chooser:
         choose-from-list-button: Choose colors
       blocks-desktop_trigger-action:
@@ -4231,13 +4407,6 @@ default:
         title: Conditions to be met
       blocks-desktop_wiki-widget-copy-url:
         title: Get the Wiki code
-      blocks-desktop_workflow-condition:
-        type--all: all
-        type--any: any
-      blocks-desktop_workflow-editor--action_tab_general:
-        name-en--label: Button name in English
-        name-ru--label: Button name in Russian
-        target-status--label: Transition to status
       blocks-desktop_workflow-editor--action_tab_screen:
         comment-enable: Form for comments
         linking-enable: Adding links on transition screen
@@ -4245,31 +4414,16 @@ default:
         screen-title--label-en: Screen title
         screen-title--label-ru: Screen title
         worklogs-enable: Form for time spent
-      blocks-desktop_workflow-editor--action:
-        tab-title--conditions: Conditions
-        tab-title--functions: Functions
-        tab-title--general: General information
-        tab-title--screen: Screen
       blocks-desktop_workflow-editor--step_tab_actions-on-comment:
-        make-no-transition: Do nothing
-        make-transition: Make transition
         on-assignee-comment-only: Only if comment was left by assignee
-        prev-status: Return to previous status
         revert-assignee: Set assignee from previous status
-        select-action: Choose an action
-      blocks-desktop_workflow-editor--step_tab_create-action:
-        name-en--label: Button name in English
-        target-status--label: Transition to status
       blocks-desktop_workflow-editor--step:
         button--submit: Save
-        tab-title--actions-on-comment: Actions on comment
         tab-title--create-action: Add transition
       blocks-desktop_workflow-editor:
-        add-status-popup--name: Transition button name in Russian
-        add-status-popup--name-en: Transition button name
-        sidebar-add-status: Add status
         sidebar-title: Statuses and transitions
       components_Checklist:
+        header-title: Checklist
         new-item-button-caption: Add item
       components_ChecklistItem_ChecklistItemForm:
         button-submit: Save
@@ -4307,6 +4461,9 @@ default:
         every-week: Every
         every-work-day: Every work day
       components_QueuePresetOnboarding:
+        preset-name--hr-preset: HR processes
+        preset-name--hrProcesses: Personnel management
+        preset-name--recruitment-preset: Recruitment
         preset-name--scrum-development-preset: Scrum
       lib_goals-info:
         status--BLOCKED: Blocked
@@ -4320,8 +4477,14 @@ default:
       ui_components_AddWorklogDialog:
         apply-button: Save
         duration-label: Time spent
+      ui_components_admin-repositories_ConnectRepositoryDialog_fields_UrlField:
+        server-url-label: Link to repository
+      ui_components_admin-repositories_ConnectRepositoryDialog:
+        connect: Connect
+        token-label: Token
       ui_components_agile_agile-board_AgileBoardActionsMenu:
         delete-board-menu-item: Delete board
+        filters-manage: Manage filters
         migration-rollback: Switch back to the old version
       ui_components_agile_agile-board_AgileBoardAddColumnButton:
         new-column-button: Add column
@@ -4339,6 +4502,8 @@ default:
         issue-actions--delete-from-board: Remove from board
         issue-actions--move-down: Move to bottom of column
         issue-actions--move-up: Move to top of column
+      ui_components_agile_agile-board_AgileBoardIssuesImportButton:
+        import-issues: Import issues
       ui_components_agile_agile-board_AgileBoardMigrationForm:
         submit-btn: Start switching
       ui_components_agile_agile-board_AgileBoardUnusedStatuses:
@@ -4352,6 +4517,8 @@ default:
         backlog-default-column: Backlog
       ui_components_agile_common_AddIssueButton:
         add-issue-button: Add issue
+      ui_components_agile_common_AgileFilterParamsPicker:
+        save: Save
       ui_components_agile_common_AgileFilters:
         action-title-save: Save
         all-issues-filter-title: All issues
@@ -4429,6 +4596,11 @@ default:
         write-comment: Write a comment
       ui_components_Confirm:
         ok-button-text: 'Yes'
+      ui_components_create-issue-popup_CreateIssuePageLink:
+        open-create-form: Open full form
+      ui_components_create-issue-popup_NewIssueForm:
+        create: Create
+        issue-name: Issue name
       ui_components_CreateIssueForm:
         create-issue: Create issue
       ui_components_CreateIssueLinkButton:
@@ -4437,6 +4609,7 @@ default:
         existing-issue: Existing issue
         new-issue: New issue
       ui_components_dashboard_DashboardActionsMenu:
+        delete-action: Delete
         set-start-page-action: Set as start page
       ui_components_dashboard_DashboardHeader:
         dashboard-header-add-button: Add
@@ -4477,16 +4650,25 @@ default:
         search-placeholder: Search by issue name
       ui_components_FilterEditorPane:
         all-issues-filter-title: All issues
+        reset-button: Reset
       ui_components_FilterExportMenu:
         menu-item-export: Export
         title: Filter actions
       ui_components_FilterFieldsSelect:
         applyChanges: Apply
+      ui_components_FormField_TimeTrackingBlock:
+        field-comment-title: Comment
+        field-datetime-title: Date to log work for
+        field-estimation-title: Overall task estimation
+        field-remain-title: Time left
+        field-spent-title: Time spent
       ui_components_Gantt_IssueActionsCell:
+        choose-color: Choose color
         issue-action-menu-title: Issue actions menu
       ui_components_Gantt:
         color-type-by-manual: manual
         color-type-by-parameter: by task parameters
+        color-type-monochrome: monochrome
         delete-link: Remove link
         scale-days: Week
         scale-month: Month
@@ -4504,6 +4686,8 @@ default:
         create-template-item: Create template
       ui_components_issue-links_ExternalLinksCollapse:
         external-relations: Links to external applications
+      ui_components_issue-links_InternalLinksCollapse:
+        relations: Related issues
       ui_components_IssueActionsButton:
         menu-item-create-subticket: Create sub-issue
       ui_components_IssueBulkActionPanel:
@@ -4544,7 +4728,6 @@ default:
         filter-waiting: Waiting for response
         filters: Filters
         issues-list: Issues
-        queue: Queue
         queues: Queues
       ui_components_IssueMenu:
         add-notification: Add reminder
@@ -4559,10 +4742,14 @@ default:
         move-issue: Change queue
         title: Actions
         to-subissue: Convert to sub-issue
+      ui_components_issues_create-issue-popup_NewIssueForm:
+        milestone-type: Milestone
       ui_components_issues-import_IssuesImportDialog:
         import: Import
       ui_components_issues-import_IssuesImportFilters:
         add-parameters: Add parameters
+      ui_components_IssuesGroupHeader:
+        no-epic: No epic
       ui_components_IssueSidebar:
         add-sidebar-field: Edit parameters list
       ui_components_IssuesPresetSelect:
@@ -4571,6 +4758,8 @@ default:
         preset_deadline: Deadline approaching
         preset-deadline: Deadline approaching
         show-closed-issues: Show completed issues
+      ui_components_IssueTable2:
+        row-actions: Actions
       ui_components_IssueTabs:
         description-tab: Description
         fields-tab: Parameters
@@ -4583,17 +4772,17 @@ default:
         save: Save
       ui_components_NavigationBar_BoardsPanel:
         create-button: Create board
+        menu-group-my-link: Full list of boards created by me
       ui_components_NavigationBar_IssuesPanel:
         all-items-link: All issues
         caption: Issues
         filter-items-link: Full list of filtered issues
         search-input-placeholder: Search by issue name
-      ui_components_NavigationBar_ProjectsPanel:
-        all-projects-link: All projects
       ui_components_NavigationBar:
         appearance-title: Interface
         boards: Boards
         issue-lists-menu-item: Issues
+        new-ui: New interface
         start-page-title: Start page
         templates-settings: Template management
       ui_components_new-process_ProcessTypeStep:
@@ -4612,6 +4801,8 @@ default:
         create-account: Create new account
       ui_components_page-admin_BillingScreen:
         create-account: Create
+      ui_components_page-admin_ChangeOrganizationModal:
+        add-button: Change organization
       ui_components_page-admin_OrganizationSmallPane:
         add-org-button: Add organization
       ui_components_page-admin_OrgMainInfoPane:
@@ -4627,12 +4818,11 @@ default:
         access-level_read_only: Read
         title_access: Access to Tracker
       ui_components_page-admin_PageAdmin:
+        access-and-payment: Access and payment
         menu-item-groups: Groups
-        menu-item-issue-statuses: Issue statuses
         menu-item-orgs: Organizations
         menu-item-repositories: Repositories
         menu-item-users: Users
-        tracker-settings: Tracker Settings
       ui_components_page-issues_touch_FilterSettingsMenu:
         item-filters: Filters
         item-group: Grouping
@@ -4668,11 +4858,20 @@ default:
       ui_components_page-queue-admin_AliasesStateList:
         action-add-mail: Add an email
         action-domain: Connect a domain
+      ui_components_page-queue-admin_queue-admin-tab-integrations-forms_components_FormsMenu:
+        add-form: Add form
+        create-new: Create new
       ui_components_page-queue-admin_QueueActionsMenu:
         remove-queue-action: Delete queue
       ui_components_page-queue-admin_QueueAdminPageContent:
         menu-item-aliases: Mailboxes
+        menu-item-autoactions: Auto actions
         menu-item-calendars: Schedules
+        menu-item-forms: Form integration
+        menu-item-permissions: Permissions
+        menu-item-timetracking: Time tracking
+        menu-item-types: Issue types
+        menu-item-workflows: Workflows
       ui_components_page-queue-admin_Signature:
         alias-title: Alias
       ui_components_PageAgileBoard_PageAgileBoardHeader_EnableBacklogButton:
@@ -4687,8 +4886,9 @@ default:
         change-title-and-description: Change title and description
         create-new: Create form
         create-new-template: Create new form
-        empty-template: No form
+        description-placeholder: Add a description of the issue so the assignee knows what to do
         switch-to-admin-panel: Switch to admin panel
+        try-yandex-forms: Try Yandex Forms for creating issues
       ui_components_PageCreateIssueForm:
         continue: Continue
       ui_components_PageHiThere:
@@ -4704,6 +4904,11 @@ default:
         subscribe: Subscribe
         subscribe-all: Subscribe to all notifications
         subscribe-new-tickets: Subscribe to new issues
+      ui_components_portfolios_Header:
+        description-tab: About the portfolio
+        projects-tab: Projects
+      ui_components_portfolios_PortfolioMenu:
+        remove-portfolio: Delete portfolio
       ui_components_Project_Header_IssuesImportButton:
         import-issues: Import issues
       ui_components_Project:
@@ -4727,6 +4932,11 @@ default:
         description-tab: About the project
         gantt-tab: Gantt chart
         issues-tab: Issue list
+      ui_components_projects_hooks:
+        copy-to-clipboard: Copy link
+        delete-from-project: Delete from project
+        issue-actions--move-down: Move to bottom of list
+        issue-actions--move-up: Move to top of list
       ui_components_projects_list_FilterPane:
         preset-author: I'm author
         preset-client: I'm a client
@@ -4747,12 +4957,56 @@ default:
         filter-macro-empty_: No value
       ui_components_promo_Page:
         login-button-label: Log in to Tracker
+      ui_components_queue-admin-tab-integrations_IntegrationForms:
+        settings-button-text: Setting up forms
+        title: Forms
       ui_components_queue-admin-tab-main_QueueAdminTabMain:
         save: Save
+      ui_components_queue-admin-tab-timetracking_TimetackingForm:
+        field-can-assignee-update-time: Allow the assignee to edit logged time
+        field-show-time-field-on-close: Automatically calculate spent time when closing the task
+        field-track-time-in-issues: Advanced time tracking
+        field-use-remaining-time: Display the Time left field
+        field-use-summary-time: Display the Overall task estimation field
+        field-working-calendar: Work schedule
+        save: Save
+      ui_components_queue-admin-tab-workflows_CopyWorkflowDialog:
+        action-copy: Copy
+        label-name: New workflow name
+        label-queue: Copy from queue
+        label-workflow: Copying workflow
+      ui_components_queue-admin-tab-workflows_IssueTypesListCell:
+        remove-issue-type: Remove issue type from the queue
+      ui_components_queue-admin-tab-workflows_OrgAdminEntityForm:
+        create: Create
+      ui_components_queue-admin-tab-workflows_StatusEdit:
+        action-export-transitions: Copy transitions from this status to another
+        action-import-transitions: Paste transitions from another status
+        action-remove: Remove from workflow
+        add-transition: Add
+        meta-status-title: Allow transitions from any status
+        settings-comment: Changing the status when commenting
+        transitions-title: Transitions
+      ui_components_queue-admin-tab-workflows_StatusTypesDialog:
+        apply-button: Apply
       ui_components_queue-admin-tab-workflows_StatusTypeSelector:
         status-canceled-name: Canceled
+      ui_components_queue-admin-tab-workflows_TransitionEdit:
+        action-export-settings: Copy settings from this transition to another
+        action-import-settings: Paste settings from another transition
+        field-from-status: Source status
+        field-name-en-title: Name in English
+        field-name-ru-title: Name
+        field-to-status: New status
+        settings-conditions: Transition conditions
+        settings-functions: Automation
+        settings-screen: Transition screen
       ui_components_queue-admin-tab-workflows_TransitionEditPageScreen:
+        enable-transition-screen: Enable transition screen
         time-spent: Time spent
+      ui_components_queue-admin-tab-workflows_WorkflowsStateList:
+        action-new-process: Create workflow
+        default-type-title: Default issue type
       ui_components_QueueAdminTemplateOptions:
         allow-empty-template: Allow issues to be created without a form
         always: Always
@@ -4766,6 +5020,12 @@ default:
         added-columns: Added
       ui_components_TextEditor:
         submit: Send
+      ui_components_timetracking-history-dialog_TimeTrackingDialogBody:
+        column-comment: Comment
+        column-date: Log date
+        column-spent: Time spent
+      ui_components_timetracking-history-dialog_TimeTrackingHistoryDialog:
+        title: Time tracking history
       ui_components_TrackerSearch:
         queues: Queues
       ui_components_TrackerSelect:
@@ -4774,6 +5034,22 @@ default:
         screen-next-button: Continue
       ui_components_workflow-conditions_ConditionsMenu:
         add-condition: Add condition
+      ui_components_workflow-conditions_WorkflowGroupCondition:
+        add-conditions-group: Add condition group
+      ui_components_workflow-functions_WorkflowFunctionMenu:
+        menu-title: Add automation
+      ui_components_workflow-functions:
+        type-AddCommentFunction: Add comment
+        type-AddTextToFieldFunction: Fill in the field
+        type-CalculateFieldFunction: Enter totals in the field
+        type-MoveUsersFunction: Move or copy the list of users to another field
+        type-NotifyBillingFunction: Send notification
+        type-RemoveFieldValueFunction: Clear field content
+        type-RemoveUsersFromCcFunction: Delete user from observers
+        type-SendEmailFunction: Send email
+        type-SetActiveSprintFunction: Set active sprint
+        type-SetCurrentTimeFunction: Enter current time in field
+        type-UnsetResolutionFunction: Unset resolution
     yacloud_billing_account:
       cloud-billing-account:
         account_label_new: New payer
@@ -4783,13 +5059,40 @@ default:
         section_person-type: Payer type
         section_persons: Payers
     yacloud_components:
+      acl:
+        action:
+          add-role: Add role
+          apply: Save
+          select-subject: Select subject
+        button:
+          add-role: Add role
+        label:
+          title: Configuring access bindings
+      marketplace:
+        label_product-ids: Product IDs
+      organization:
+        action:
+          select: Continue
       settings:
+        field_theme: Interface theme
         field_theme-contrast: Contrast
+        label_monitoring-name: Monitoring
+      usermenu:
+        label_login: Log in
     yacloud_monitoring:
       actions:
         common:
+          add: Add
           apply: Apply
+          copy: Copy
+          create: Create
+          deactivate: Deactivate
+          delete: Delete
+          edit: Edit
+          save: Save
       alert-template:
+        field:
+          evaluation-window: Evaluation window
         threshold-status:
           alarm: Alarm
           warn: Warning
@@ -4797,70 +5100,442 @@ default:
           max: Maximum
           min: Minimum
       alert:
+        button_add-channel: Add channel
         button_create-alert: Create alert
+        label_alarm: Alarm
         label_evaluation-period: Evaluation window
         label_evaluation-type: Aggregation function
+        label_evaluation-window: Evaluation window
         label_trigger-condition: Condition
+        label_warning: Warning
+        section_alert-conditions: Alert parameters
+        section_metrics: Metrics
+        section_notifications: Notification channels
+        status_alarm: Alarm
+        status_error: Error
+        status_no_data: No data
+        status_ok: OK
+        status_warn: Warning
+        title_aggregation-last_non_nan: Last
+        title_aggregation-min: Minimum
         title_comparison-eq: Equals to
+        title_comparison-gt: Greater than
         title_comparison-gte: Greater than or equals
         title_comparison-lte: Less than or equals
+        title_comparison-ne: Not equals to
+        title_conditions: Alert condition
+        title_description: Description
+        title_name: Name
+      aside-navigation:
+        menu-item:
+          alerts:
+            title: Alerts
+          channels:
+            title: Notification channels
+          dashboards:
+            title: Dashboards
+          explorer:
+            title: Metric Explorer
+          project:
+            title: Project
+          prometheus:
+            title: Prometheus
+      channel:
+        button_create: Create
+        button_new-channel: Create channel
+        field_method: Method
+        field_name: Name
+        field_recipients: Recipients
+        status-description_error: Failed to send
+        status-description_resource_exhausted: Resource exhausted
+        status-description_success: Success
+        title_method-email: Email
+        title_method-push: Push notifications
+        title_method-sms: SMS
+      component:
+        parametrizer:
+          dashboard:
+            field-hidden-key-value: Don't show in UI
+            multivalue-key-value: Multivalue
+          default-value: Default value
+          type:
+            custom: Custom
+            query: Label
+            text-field: Text
+        share-button:
+          share: Share
+        share-form:
+          fields:
+            parameters:
+              values:
+                current: Selected
+                default: Default
+            time-window:
+              title: Time range
+              values:
+                dynamic: Dynamic
+                static: Fixed
       dashboard:
         dash:
           create-alert: Create alert
         tab:
           service-dashboards: Service dashboards
+        widget-placeholder:
+          add-graph: Graph
+          add-text: Text
+          add-title: Heading
+        widget-settings:
+          title: Title
       dialog:
         confirm:
           button_continue: Continue
+      header:
+        title:
+          mx-mode: Metric Explorer
       homepage:
+        button_alerts-action: Create alert
+        button_dashboards-action: Create dashboard
         title_service-dashboards: Service dashboards
+      monitoring-alerts:
+        channel-table:
+          repeat: Re-notification
+        label:
+          query-to-check: Query to check
+          sent-notify-statuses: Notification statuses
+        list-table:
+          evaluation-stats-single: Evaluation status
+        status:
+          alarm: Alarm
+          warn: Warning
+        threshold-table:
+          evaluation-type: Aggregation function
+          trigger-condition: Comparison function
+        threshold-type:
+          at-all-times: All values
+          at-least-one: At least one value
+          avg: Average
+          count: Count
+          last-non-nan: Last value
+          max: Maximum
+          min: Minimum
+          sum: Sum
+        title:
+          evaluation-window: Evaluation window
+          time-shift: Evaluation delay
+      project:
+        tab:
+          access:
+            title: Access
+      prometheus:
+        form:
+          submit-button:
+            text: Submit request
+      service:
+        field:
+          function: Aggregation function
+      services:
+        label_managed-elasticsearch: Managed Service for Elasticsearch
+        label_mysql: Managed Service for MySQL
+        label_postgresql: Managed Service for PostgreSQL
+      wizard:
+        tab:
+          axes: Axes
     yacloud_org:
+      actions:
+        add: Add
+        save-changes: Save
+      common:
+        resource-acl:
+          label_groups: Groups
+          label_inherited-bindings: Inherited roles
+          label_service-accounts: Service accounts
+      component:
+        form-file-upload:
+          method:
+            manual: Text
+        subject-select-dialog:
+          action_apply: Save
+          title_dialog: Adding participants
       entity:
+        certificate:
+          action:
+            add: Adding a certificate
+        federation:
+          field:
+            autocreateUsers: Automatically create users
+            cookieMaxAge: Cookie lifetime
+            encryptedAssertions: Sign authentication requests
+            forceAuthn: Mandatory re-authentication (ForceAuthn) in IdP
+            issuer: IdP Issuer
+            ssoBinding: Single Sign-On method
+            ssoUrl: Link to the IdP login page
+        group:
+          action_add-acl: Assign roles
+          action_add-member: Add member
+          action_create: Create group
+          action_edit: Edit
+          action_update-acl: Configure access
+          title_tab-access: Group access rights
+          title_tab-members: Members
         invitation:
           action_send-invitation: Send invitation
+          label_option-actual: Pending
+          label_row-action-delete: Delete invitation
+          label_row-action-resend: Resend
+        user:
+          action:
+            acl: Assign bindings
+            remove: Remove from organization
+          caption:
+            federation: Federation
+            user: User
+            userId: ID
       form:
+        acl:
+          edit:
+            action:
+              subject:
+                select: Select subject
         federation:
+          action:
+            create: Create federation
           create:
             action:
               create: Create federation
+        group-mapping:
+          create:
+            add: Add
+          field:
+            idp: Mapping group in IdP
+          note:
+            group-name: Group name
+            iam-group: IAM group
+            tab-idp: IdP group
+        organization:
+          select:
+            action:
+              enter: Log in
+      forms:
+        action:
+          save: Save
       page:
+        context:
+          action:
+            create: Create new organization
+        settings:
+          action:
+            edit: Edit data
         users:
           action:
+            add-federated-users: Add federated users
             invite-users: Invite users
+          label_tab-invitations: Invitations
+      pages:
+        acl: Access bindings
+        create: Create organization
+        federations: Federations
+        groups: Groups
+        raw_services: Clouds & services
+        settings: Organization information
+        users: Users
     yacloud_portal:
+      common:
+        units:
+          label_gigabyte: GB
+          label_megabyte: MB
+      component:
+        file-input:
+          button_choose: Choose a file
+          button_choose-multiple: Choose files
       subAccount:
         detail:
           column_cost: Cost
     yacloud:
+      airflow:
+        button_create-cluster: Create a cluster
+        section_admin-password: User
+        section_airflow-configuration: Airflow configuration
+        section_dependencies: Dependencies
+        section_scheduler: Scheduler configuration
+        section_storage: DAG file storage
+        section_triggerer: Triggerer configuration
+        section_webserver: Web server configuration
+        section_workers: Worker configuration
       alb:
+        button_add-backend: Add backend
+        button_add-discard-rule: Add discard rule
+        button_add-healthcheck: Add health check
         button_add-listener: Add listener
         button_add-route: Add route
+        button_add-sni-match: Add SNI match
+        button_add-target: Add target resource
+        button_add-targets: Add targets
         button_backend-group-create: Create backend group
         button_http-router-create: Create HTTP router
         button_load-balancer-create: Create L7 load balancer
+        button_routes-sort: Sort
+        button_select: Select
+        button_target-group-create: Create target group
         button_virtual-host-add: Add virtual host
+        column_target: IP address
         label_address-auto: Automatically
+        label_address-list: List
+        label_affinity-connection: By IP address
+        label_affinity-cookie: By cookie
+        label_affinity-header: By HTTP header
+        label_alb-create-form: Manual
         label_authority: Authority
         label_backend-group: Backend group
         label_backend-groups: Backend groups
         label_backend-type: Type
         label_backend-weight: Weight
         label_backends: Backends
+        label_body: Response body
         label_bucket: Bucket
+        label_certificate: Certificates
+        label_default-log-group: Default log group
+        label_detailed-settings: Advanced settings
+        label_discard-grpc-codes: gRPC codes
+        label_discard-http-code-intervals: HTTP code classes
+        label_discard-http-codes: HTTP codes
+        label_discard-percent: Share of discarded logs
+        label_enable-proxy-protocol: PROXY protocol
+        label_fqmn: FQMN
+        label_grpc-status-code: gRPC status code
+        label_hc_host: Authority
+        label_hc-type-grpc: gRPC
+        label_hc-type-http: HTTP
+        label_hc-type-stream: Stream
+        label_healthchecks: Health checks
+        label_healthy: Healthy threshold
+        label_host-rewrite: Host header rewrite
         label_http-methods: HTTP methods
         label_http-router: HTTP router
         label_http-routers: HTTP routers
+        label_http-status-code: HTTP status code
+        label_idle-timeout: Idle timeout, seconds
+        label_interval: Interval
+        label_lb-settings: Load balancing settings
+        label_listener-type-http: HTTP
+        label_listener-type-stream: Stream
         label_listeners: Listeners
+        label_load-balancers: Load balancers
+        label_load-balancing-mode: Balancing mode
+        label_locality-aware-routing: Locality aware routing
+        label_log-group: Cloud Logging log group
+        label_log-requests: Write logs
+        label_match-exact: Matches
         label_match-prefix: Starts with
+        label_match-regex: Regular expression
+        label_panic-threshold: Panic mode threshold
         label_path: Path
         label_port: Port
+        label_prefix-rewrite: Rewrite path or start
+        label_proto-grpc: gRPC
+        label_proto-grpc-plain: Plain-text
+        label_proto-grpc-tls: Encrypted
         label_proto-http: HTTP
+        label_proto-http-plain: HTTP
+        label_proto-http-tls: HTTPS
+        label_proto-stream: Stream
+        label_proto-stream-plain: Plain-text
+        label_proto-stream-tls: Encrypted
+        label_protocol: Protocol
+        label_protocol-settings: Protocol settings
+        label_protocol-type: Protocol
+        label_receive: Receive
+        label_redirect-to-https: Redirect to HTTPS
+        label_replace: Rewrite path or start
+        label_replace-host: Replace host
+        label_replace-port: Replace port
+        label_replace-scheme: Replace scheme
         label_route-action: Action
+        label_route-action-redirect: Forward
         label_route-action-route: Routing
+        label_route-action-statusResponse: Response
+        label_route-type: Type
+        label_send: Send
+        label_server-names: Server names
+        label_service-name: Service name
+        label_session-affinity: Session affinity
+        label_sni: SNI
+        label_strict-locality: Strict locality
+        label_strict-query: Delete query parameters
+        label_tab-capacity-stats: Capacity statistics
+        label_tab-http-stats: HTTP statistics
+        label_target-group: Target group
+        label_target-groups: Target groups
         label_target-private-ip: Outside VPC
+        label_targets: Targets
+        label_timeout: Timeout, s
+        label_trusted-ca: Trusted CA certificate
+        label_unhealthy: Unhealthy threshold
+        label_upgrade-types: Valid values for the Upgrade header
+        label_use-http2: HTTP/2
         label_virtual-hosts: Virtual hosts
+        label_web-socket: WebSocket
         section_allocation-settings: Allocation
+        section_autoscale-settings: Autoscaling settings
+        section_common-address-specs: Receiving and processing traffic
+        section_default-sni-match: Main listener
         section_external-address-specs: Public IP address
+        section_internal-address-specs: Internal IP address
+        section_logs-settings: Log settings
+      audit-trails:
+        button_create-trail: Create trail
+        button_process-in-yq: Process in YQ
+        label_bucket: Bucket
+        label_cloudLogging: Cloud Logging
+        label_collecting-logs: Collecting events
+        label_dataStream: Data Streams
+        label_destination: Destination
+        label_event-filter-section: Collecting events from the service level (Data plane)
+        label_object-prefix: Object prefix
+        label_objectStorage: Object Storage
+        label_organization-manager:
+          organization: Organization
+        label_path-filter-section: Collecting events from the configuration level (Control plane)
+        label_resource-manager:
+          cloud: Cloud
+          folder: Folder
+        label_resource-type: Resource
+        label_service-account: Service account
+        label_stream-name: Data stream
+        title_kms-key: Encryption key
+      backup:
+        action_add-to-recovery-list: Add to list of files to be recovered
+        action_detach-instance: Detach from policy
+        action_recovery: Restore VM
+        action_recovery-start: Recover
+        button_action-activate: Activate
+        button_attach-instance: Attach VM
+        button_attach-instance-submit: Attach
+        button_create-policy: Create policy
+        context_current-vm: current
+        field_delete-old-vm: Delete outdated VM
+        field_recover-to-vm: Target VM
+        field_repeat-period-type: Create backups
+        field_vm-instances: Cloud Backup
+        files-recovery:
+          value_location-custom: Custom
+          value_location-original: Original
+          value_overwrite-all: Overwrite all files in folder
+          value_overwrite-none: Do not overwrite files
+          value_overwrite-older: Overwrite only existing files
+        label_backups: Backups
+        label_create: Connected
+        label_instances: Virtual machines
+        label_linked-instances: Virtual machines
+        label_policies: Backup policies
+        title_backup: Backups
+        value_period-time-daily: Every day
+        value_period-time-hourly: Every hour
+        value_period-time-monthly: By month
+        value_period-time-weekly: Every week
+        value_retention-save-all: Retain all backups
+        value_retention-save-last-f: Only the last
+        value_scheme-full: Full
+        value_scheme-incremental: Incremental
       billing:
         account:
           bind-cloud:
@@ -4882,6 +5557,7 @@ default:
             account_label_new: New payer
             account-type_label_company: Business account
             account-type_label_individual: Individual account
+            label_title: Create a billing account
             payment-type_label_card: Bank card
             payment-type_label_invoice: Bank transfer
             section_persons: Payers
@@ -4893,6 +5569,7 @@ default:
           dashboard-overview:
             button_refill: Top up account
             popup-refill_button_company-action: Issue receipt
+            popup-refill_button_individual-action: Top up account
           dashboard-resources:
             button_action-rename-account: Rename
             button_bind-cloud: Link cloud
@@ -4919,6 +5596,7 @@ default:
             label_service: Services
             label_to: To
             label_total: Total
+            tab_product: By product
             value_cost: Consumption
           exports:
             button_open-yandex-query: Process in YQ
@@ -4941,13 +5619,17 @@ default:
           overview:
             button_bind-card-apply: Apply
             card_label_edit: Change bank card
+            payment-type_label_card: Bank card
+            payment-type_label_invoice: Wire transfer
             section_account-data: General information
             section_card: Bank card
             usage-type_label_paid: Paid version
           reconciliation-reports:
             action_download-with-facsimile: Download signed report
+            action_download-without-facsimile: Download unsigned report
             action_request-report: Request reconciliation report
             action_request-report-short: Request
+            field_actions: Actions
             value_completed: Done
           switch_acts: Reporting documents
           switch_budgets: Budgets
@@ -4977,84 +5659,252 @@ default:
           purchase:
             button_purchase: Purchase commitment
         label_accounts: Accounts
+        label_service: Billing
         switch_accounts: List of accounts
       cdn:
+        button_activate-shielding: Activate
         button_add-domain: Add domain name
+        button_origins-group-create: Create origin group
+        button_resource-activate-raw-logs: Activate
+        button_resource-content-prefetch-cache: Preload content
         button_resource-content-purge-cache: Purge cache
         button_resource-create: Create resource
+        button_resource-deactivate-raw-logs: Deactivate
+        column_name: Name
         field_access: End-user access to content
+        field_group-name: Group name
+        field_origin-state: Priority
+        label_access: Access to content
         label_activate-provider-empty-container_action-text: Activate provider
         label_additional: Additional
         label_balancer: L7 load balancer
+        label_bucket: Bucket
+        label_bucket-key-prefix: Prefix
+        label_cache-hit-ratio: Cache hit ratio
         label_certificate-type: Certificate type
         label_content-query-type: Content query
+        label_custom-host-header: Header value
         label_dns-settings_title: DNS settings
+        label_headers: Header
         label_host-header: Host header
         label_ip-address: IP address
+        label_metrics-requests: Requests
+        label_metrics-send-bytes: Sent
+        label_metrics-shield-bytes: Loaded by Origin shielding
+        label_metrics-total-bytes: All traffic
+        label_metrics-upstream-bytes: Upstream from origins
+        label_origins-group: Origin group
+        label_origins-groups-list: Origin groups
         label_personal-domain: Domain name
         label_protocol: Origin request protocol
         label_redirect: Redirect clients
         label_resource-cache: Caching
+        label_resource-cache-browser-cache: Browser
+        label_resource-cache-browser-cache-enabled: Browser caching
+        label_resource-cache-cdn-cache: CDN
         label_resource-cache-cdn-cache-enabled: CDN caching
+        label_resource-cache-cdn-cache-settings-type-custom-settings: Custom settings
+        label_resource-cache-cdn-cache-settings-type-source-settings: Same as origin
         label_resource-content: Content
+        label_resource-content-compress-true: Compress
+        label_resource-content-gzip-on: GZip
+        label_resource-content-optimize-true: Optimize delivery
+        label_resource-content-prefetch-cache-paths: File path
+        label_resource-content-purging-cache-paths: File path
         label_resource-content-purging-cache-type: Purge type
+        label_resource-content-purging-cache-type-full: Full
         label_resource-content-purging-cache-type-selective: Selective
+        label_resource-content-slice: Segmentation of large files
+        label_resource-http-headers: HTTP headers and methods
+        label_resource-http-headers-allowed-methods: Allowed methods
+        label_resource-http-headers-cors: CORS when responding to client requests
+        label_resource-http-headers-cors-access: Access-Control-Allow-Origin header
+        label_resource-http-headers-cors-settings-http-origin-for-source-domains: Same as Origin if on the list
+        label_resource-http-headers-http-methods: Client request methods
+        label_resource-http-headers-request-headers: Origin request headers
+        label_resource-http-headers-response-headers: Client response headers
+        label_resource-raw-logs: Export logs
+        label_resources-list: CDN resources
+        label_responses-hit: Responses hit
+        label_responses-miss: Response miss
+        label_responses2xx: Responses with 2xx codes
         label_section-additional: Additional
+        label_section-content: Content
         label_section-domain: Domain names for content distribution
+        label_section-origins-list: Origin
+        label_shielding: Origin shielding
+        label_shielding-location: Location
+        label_shielding-settings-title: Shielding settings
         label_source-type: Origin type
-        md_value_certificate-le: Let's Encrypt^®^
+        label_status-active: Active
+        label_status-backup: Backup
+        value_active: Active
+        value_backup: Backup
+        value_certificate-custom: Your certificate
+        value_certificate-no: Don't use
         value_certificate-status-ready: Issued
         value_do-not-use: Don't use
+        value_host-header-custom: Custom
+        value_host-header-default: Primary domain name
         value_host-header-resend: Forward
+        value_protocol-match: HTTP and HTTPS
+        value_query-type-group-origin: From origin group
         value_query-type-one-origin: From one origin
         value_redirect-http-to-https: HTTP to HTTPS
+        value_redirect-https-to-http: HTTPS to HTTP
         value_source-type-balancer: L7 load balancer
+        value_source-type-bucket: Bucket
+        value_source-type-url: Server
+      certificate-manager:
+        action_import: User certificate
+        action_request: Let's Encrypt certificate
+        button_add: Add certificate
+        domain:
+          action_bind-certificate: Bind certificate
+          action_edit: Edit
+          form:
+            button_bind: Link
+            field_certificate: Certificate
+            field_domain: Domain
+        import:
+          button_add-certificate: Add certificate
+          button_add-chain: Add chain
+          button_add-privateKey: Add private key
+          field_certificate: Certificate
+          field_chain: Intermediate certificate chain
+          field_privateKey: Private key
+        label_domains: Domains
+        metadata:
+          field_name: Name
+        overview:
+          action_edit-meta: Edit
+          action_reimport: Renew certificate
+          challenge_label_dns-record-set: Cloud DNS
+          challenge_label_http-content: Contents
+          challenge_label_http-url: Link for hosting file
+          challenge_label_value: Value
+          section_challenges: Check rights for domains
+        request:
+          button_request: Create
+          challenge-type_label_dns: DNS
+          challenge-type_label_http: HTTP
+          field_domains: Domains
       clickhouse:
         button_create-cluster: Create ClickHouse cluster
         cluster:
+          databases:
+            popup-add_button_add: Add
           explore:
             button_execute: Execute
+            button_explain: Explain
+            button_explain-analyze: Explain analyze
             button_submit-creds: Connect
+            label_offset: Query result offset
             label_password: Password
+            label_username: Database username
+          format-schemas:
+            button-action_add-format-schema: Add schema
+            dialog:
+              field_format-schema-uri: URL
+              label_add: Add
+              title_add: Add schema
+            table:
+              button_action-delete-format-schema: Delete
+              button_action-edit-format-schema: Edit
+          ml-models:
+            button_action-delete-ml-model: Delete
+            button_action-edit-ml-model: Edit
+            button-action_add-ml-model: Add model
+            field_ml-model-name: Name
+            field_ml-model-type: Type
+            field_ml-model-uri: URL
+            label_add-ml-model: Add
+          switch_backups: Backups
+          switch_databases: Databases
           switch_datalens: DataLens
+          switch_dictionaries: Dictionaries
+          switch_explore: SQL
+          switch_format-schemas: Data format schemas
+          switch_logs: Logs
+          switch_ml-models: Machine learning
+          switch_monitoring: Monitoring
+          switch_operations: Operations
+          switch_shard-groups: Shard groups
+          switch_shards: Shards
           switch_users: Users
+        hosts:
+          dialog:
+            field_copy_schema: Copy data schema
+        switch_backups: Backups
         switch_list: Clusters
+        title_clickhouse: ClickHouse
+        title_zookeeper: ZooKeeper
+      cloud-apps:
+        button_install: Install
+        label_marketplace: Marketplace
+        section_resources: Application resources
       common:
         add: Add
+        all: All
         apply: Apply
         availability: Availability
+        button_cron-15min: Every 15 minutes
+        button_cron-1min: Every minute
         button_cron-day: Every day
+        button_logout: Log out
+        button_update: Update
+        cancel: Cancel
         clone: Clone
         continue: Continue
         create: Create
+        create-new: Create new
         delete: Delete
         description: Description
         disabled: Disabled
         edit: Edit
         enabled: Enabled
+        folder: Folder
         id: ID
         import: Import
         label_auto: Auto
+        label_create-new_female: Create new
+        label_filters: Filters
+        label_http: HTTP
         label_https: HTTPS
         label_key: Key
         label_list: List
-        label_seconds_many: seconds
+        label_status: Status
+        label_subnet: Subnet
+        label_tcp: TCP
+        label_udp: UDP
         label_value: Value
         labels: Labels
         logs: Logs
+        metric: Metric
         monitoring: Monitoring
         move: Move
         name: Name
+        not-selected: Not selected
         open: Open
         operations-key-value: Operations
+        operations:
+          column_status: Status
         overview: Overview
         password: Password
         remove: Delete
         resource-acl:
           button_add-federation-user: Add federation user
           button_assign-binding: Edit roles
+          button_new-bindings: Assign bindings
+          button_remove-bindings: Remove bindings
           label_access-bindings: Access bindings
+          label_bindings: Roles
+          label_groups: Groups
+          label_inherited-bindings: Inherited roles
+          label_service-account: Service account
+          label_service-accounts: Service accounts
         save: Save
+        save-changes: Save changes
         section-base: General information
         select: Select
         start: Start
@@ -5068,7 +5918,22 @@ default:
           label_time-min_zero: minutes
           label_time-sec_many: seconds
         user: User
+        value: Value
       component:
+        acl-dialog:
+          button_remove-new: Cancel
+          button_revoke: Revoke
+          column_permissions: Permissions
+          label_select-placeholder: Select a user
+          label_select-section-service-accounts: Service accounts
+          label_title: ACL editing
+        acl:
+          update-dialog:
+            button_add-role: Add role
+            button_select-subject: Select subject
+            label_title: Configure permissions
+        certificates:
+          button_empty-add: Add certificate
         compute:
           network-select:
             field_address: IP address
@@ -5094,23 +5959,49 @@ default:
             field_memory: RAM
             field_platform: Platform
             field_preemptible: Preemptible
+            label_platform-standard-v2: Intel Cascade Lake
             label_sw-accelerated-net: Software accelerated network
         console-dashboard:
+          button_action-change-org: Change organization
           button_action-create-folder: Create folder
+          button_cancel-deletion: Cancel deletion
         dns-integration:
           button_add-domain: Create record
         docs:
           label_title: Documentation
+        file-content-dialog:
+          button_submit: Add
+          field_content: Content
+          field_file: File
+          field_method: Method
+          value_manual: Text
+          value_upload: File
+        files-recovery-container:
+          action_start-recovery: Recover files
+          title_recovery-container: To recover
+        iam-delete-folder-or-cloud-dialog:
+          field_folder-delete-after: Folder deletion period
+          label_delete-now: Delete now
         image-field:
           button_custom-image: Enter link
+        ip-address-form:
+          label_button-save: Save
+          label_field-search-type: Search type
+        key-values-input:
+          label_key: Key
+          label_value: Value
         label-set:
           button_add-label: Add label
+          label_labels: Labels
         mdb:
           settings:
+            button_reset: Reset
+            label_delete: Delete
             popup_settings-submit: Save
         navigation-menu:
           label_account: Account
           label_billing: Billing
+          label_monitoring: Monitoring
           label_notifications: Notifications
         service-account-select:
           button_create-account-new: Create new account
@@ -5121,9 +6012,6 @@ default:
           label_no-symmetric-key: Not selected
         table-input:
           popup_title: Add row
-        user-account:
-          label_link-login: Login
-          label_logout: Log out
         vpc-security-group-select:
           label_add-security-group: Add security group
         vpc:
@@ -5131,8 +6019,13 @@ default:
             button_create: Create
             field_advanced: Advanced
             field_is-default: Create subnets
+            field_name: Name
           create-subnetwork-dialog:
             button_create: Create
+            field_cidr: CIDR
+            field_description: Description
+            field_name: Name
+            field_zone: Availability zone
           network-select:
             button_create-network: Create network
             button_create-subnetwork: Add subnet
@@ -5141,6 +6034,9 @@ default:
           button_attach: Attach
           field_auto-delete: Delete automatically
           field_instance: VM
+        disk-form:
+          field_size: Size
+          field_type: Type
         disks:
           button_action-attach: Attach
           button_action-delete: Delete
@@ -5159,6 +6055,7 @@ default:
           edit:
             label_title: Changing an instance group
           overview:
+            section_base: General information
             section_instances-state: VM states
           switch_instances: List of VMs
           switch_logs: Logs
@@ -5179,6 +6076,7 @@ default:
             field_alb-pre-checks-timeout: Traffic timeout
             field_auto-scale-type: Autoscaling type
             field_cooldown-duration: Stabilization period
+            field_default-utilization-target: Default scaling
             field_deletion-protection: Deletion protection
             field_deploy-max-creating: Create simultaneously
             field_deploy-max-deleting: Stop simultaneously
@@ -5208,6 +6106,7 @@ default:
             field_target-group-attached: Create target group
             field_target-group-description: Description of the target group
             field_target-group-name: Name of the target group
+            field_utilization-target: CPU utilization target, %
             field_warmup-duration: Instance warmup period
             field_zone: Availability zone
             label_custom-metrics: Metrics
@@ -5250,6 +6149,7 @@ default:
             field_security-groups-ids: Security groups
           edit:
             button_update: Save changes
+          label_vm: Virtual machine instance
           overview:
             button_action-edit: Edit VM
             button_action-stop: Stop
@@ -5297,13 +6197,20 @@ default:
             button_net_empty-create: Create a network
             column_disk-size: Size
             field_access-advanced: Advanced
+            field_coi-arguments: Command arguments
+            field_coi-command: Command
+            field_coi-env: Environment variables
             field_coi-image: Docker image
             field_coi-name: Name
+            field_coi-privileged: Run Docker container in privileged mode
+            field_coi-restart-policy: Restart policy
+            field_coi-stdin: Allocate an stdin buffer for a running Docker container
+            field_coi-tty: Attach a TTY to the Docker container
+            field_description: Description
             field_instance-group-address: Public address
             field_instance-group-network: Network
             field_key: SSH key
             field_name: Name
-            field_password: Password
             field_serial-port-enable: Grant access to serial console
             field_service-account: Service account
             field_user: Login
@@ -5318,24 +6225,32 @@ default:
             label_add-disk: Add disk
             label_add-network-interface: Add network interface
             label_backup: Backups
+            label_network: Network
             section_access: Access
             section_base: Basic parameters
             section_coi: Docker container settings
             section_disk: Disks
             section_image: Image/boot disk selection
+            section_monitoring: Monitoring
             section_network: Network settings
             section_placement: Placement
             section_platform: Computing resources
             section_storages: Disks
             section_storages_ru: Disks and file storages
+            unified-agent: Agent for delivering metrics
             value_address-auto: Auto
             value_address-none: No address
+            value_coi-restart-always: Always
+            value_coi-restart-never: Never
+            value_coi-restart-on-failure: On-Failure
           label_title: Virtual machines
           popup-confirm_button_delete: Delete
           popup-confirm_button_gr-stop: Stop
           popup-confirm_button_restart: Restart
           popup-confirm_button_start: Start
           popup-confirm_button_stop: Stop
+        landing:
+          action_create-resource: Create resource
         nfs:
           button_attach-filesystem-to-the-instance: Attach file storage
           button_attach-instance-to-the-filesystem: Attach to VM
@@ -5344,6 +6259,8 @@ default:
           label_attached-instances: Virtual machines
           label_filesystems: File storages
         placement-group:
+          disks:
+            button_add-disk: Add disk
           switch_disks: List of disks
         placement-groups:
           button_create: Create
@@ -5387,19 +6304,48 @@ default:
           label_scan-status-READY: Ready
           label_scan-status-RUNNING: Running
           label_start-scan: Scan
+          label_tag: Tags
+          popup-confirm_button_delete: Delete
+          section_overview: Overview of Docker image
         overview:
           button_create: Create registry
+          popup-confirm_button_delete: Delete
           popup-create_button_create: Create registry
+          popup-update_button_update: Edit
         registry:
           button_change-scan-settings: Edit settings
+          button_lifecycle-dry-run: Dry run
           button_select-repositories: Select repositories
-          field_scan-on-upload: Scan images on upload
+          button_update-ip-permissions: Set
+          label_add-scan-rule: Add scan rule
           label_all-repositories: All repositories
-          label_only-selected: Only selected
-          label_repositories: Repositories
+          label_expire-period-days: Expire period, in days
+          label_ip-permissions: Access for IP address
+          label_lifecycle: Lifecycle
+          label_lifecycle-dry-runs: Lifecycle dru runs
+          label_lifecycle-rules: Lifecycle policy rules
+          label_retained-top: Retained top
+          label_selected: Selected
+          label_tag-regexp: Tag regexp
+          label_untagged: Untagged
           label_vulnerabilities-scanner: Vulnerability scanner
+          overview:
+            button_registry-acl: ACL registry
+            button_repository-acl: Configure ACL
+            section_images: Docker images
+            section_repositories: Repositories
+          title_scan-on-push: Scan Docker images when uploading
+          title_scheduled-scan: Scheduled Docker image scans
+        switch_registry: Registries
       data-streams:
+        button_connect: Connect
+        button_create-stream: Create stream
+        button_update-stream: Update
         label_data-introspection: Data viewer
+        label_data-storage-size-limit: Size Limit
+        label_data-storage-time-limit: Time Limit
+        label_data-stream: Data stream
+        label_database: Database
       data-transfer:
         button_create-endpoint: Create endpoint
         button_create-transfer: Create transfer
@@ -5411,7 +6357,7 @@ default:
           section-endpoint: Endpoint parameters
         label_connector-operation-ACTIVATE: Activate
         label_connector-operation-DEACTIVATE: Deactivate
-        label_connector-operation-REUPLOAD: Reload
+        label_connector-status-CREATING: Creating
         label_connector-status-DONE: Completed
         label_connector-status-RUNNING: Replicating
         label_connectors: Transfers
@@ -5421,13 +6367,31 @@ default:
         label_endpoint-type-KAFKA: Kafka
         label_endpoint-type-MONGO_V2: MongoDB
         label_endpoint-type-MYSQL: MySQL
+        label_endpoint-type-OBJECT_STORAGE: Object Storage
         label_endpoint-type-POSTGRES: PostgreSQL
+        label_endpoint-type-YDB: YDB
+        label_endpoint-type-YDS_ru: Yandex Data Streams
         label_endpoints: Endpoints
         label_monitoring: Monitoring
       dataproc:
         jobs:
+          button_create: Submit job
+          field_args: Arguments
+          field_continue-on-failure: Continue on failure
+          field_driver: Driver
+          field_files: Files
+          field_hive-job-type: Hive
+          field_job-type: Job type
+          field_main-class: Main class
+          field_main-jar: Main jar
           field_main-python-file: Main python file
+          field_mapreduce-job-type: Mapreduce
           field_properties: Properties
+          field_pyspark-job-type: PySpark
+          field_query-file-uri: Query file uri
+          field_script-variables: Script variables
+          field_spark-job-type: Spark
+        switch_operations: Operations
       dns:
         button_add-record: Add record
         button_record-set-create: Create record
@@ -5436,119 +6400,360 @@ default:
         label_auto-select-zone: Detect automatically
         label_dns-internal-settings: DNS settings for internal addresses
         label_form-ttl: TTL (in seconds)
+        label_networks: Networks
+        label_private: Internal
         label_public: Public
+        label_records: Data
         label_zone: Zone
+        label_zone-record-sets: Records
+      elasticsearch:
+        auth:
+          auth-providers: Access control
+          provider-enabled: Enabled
+          provider-hint: Hint
+          provider-icon: Icon
+          provider-type: Provider type
+          saml_settings: SAML settings
+          saml-attribute_dn: attribute_dn
+          saml-attribute_email: attribute_email
+          saml-attribute_groups: attribute_groups
+          saml-attribute_name: attribute_name
+          saml-attribute_principal: attribute_principal
+          saml-idp_entity_id: idp_entity_id
+          saml-idp_metadata_file: idp_metadata_file
+          saml-kibana_url: kibana_url
+          saml-sp_entity_id: sp_entity_id
+        base_field_edition: Edition
+        button_add-hosts: Add hosts
+        label_kibana: Kibana
       forms:
+        label_form-id: ID
         label_form-list: List
         label_service-account-select: Service account
       gitlab:
+        action_create-backup: Create backup
+        button_create-instance: Create instance
         button_setup-omniauth: Configure
+        field_admin-email: Email
+        field_admin-login: Login
+        label_admin-section: Administrator data
+        label_configuration-section: Configuration
+        title_backups: Backups
         title_omniauth: OmniAuth
       greenplum:
         action_expand-open: Expand cluster
         action_expand-start: Save
+        cluster:
+          perf-diag:
+            label_action-terminate-query: Terminate query
+            label_action-terminate-session: Terminate session
+            label_field-query-cpu-time: CPU time
+            label_field-query-peak-memory: Peak memory
+            label_filter-entity-query: Queries
+            label_filter-entity-session: Sessions
+            label_query-field-read-bytes: Disk R
+            label_query-field-running-time-seconds: CPU Time
+            label_query-field-spill-total-bytes: Spill
+            label_query-field-total-time: Total time
+            label_query-field-vm-peak-kb: Peak memory
+            label_query-field-write-bytes: Disk W
+            section_command-center: Command center
+            title_consumption-history: Usage history
+            title_current-state: Current state
+            title_states-history: State history
         field_expand-add-segments-per-host-count: Add segments to host
         field_expand-duration: Redistribution timeout
         field_expand-segment-host-count: Number of new segment hosts
+        section_cloud-storage: Hybrid storage
+        section_resource-master: Master
+        section_resource-segment: Segment
         wizard:
           action_open-wizard: Open wizard
       iam:
         cloud:
+          change-org:
+            button_change: Change
+          edit:
+            popup-edit-cloud_button_save: Save
           folders-create:
             button_create: Create
             field_default-net: Create a default network
           folders:
+            button_cancel-deletion: Cancel deletion
+            popup-edit_button_save: Save
             section_folders: Folders
           incident-notifications:
+            button_open-dialog: Add
+            label_inherited-subscribers: Default subscribers
+            label_subscribers-dialog-header: Adding users
             label_users: Users
           overview:
             label_id: ID
           quotas:
+            label_quota-name-compute:
+              disks:
+                count: Number of disks
+              hddDisks:
+                size: Total HDD capacity
+              instanceCores:
+                count: Number of vCPUs for instances
+              instances:
+                count: Number of instances
+              ssdDisks:
+                size: Total SSD capacity
             label_quota-name-mdb:
               hdd:
                 size: HDD storage capacity
               ssd:
                 size: SSD storage capacity
           switch_overview: Overview
+          switch_quotas: Quotas
         folder:
           dashboard:
             button_add: Create resource
+            label_api-gateway: API Gateway
             label_application-load-balancer: Application Load Balancer
+            label_audit-trails: Audit Trails
+            label_backup: Cloud Backup
             label_cdn: Cloud CDN
+            label_certificate-manager: Certificate Manager
+            label_cloud-apps: Cloud Apps
+            label_cloud-desktop: Cloud Desktop
             label_compute: Compute Cloud
             label_container-registry: Container Registry
             label_data-proc: Data Proc
+            label_data-streams: Data Streams
+            label_data-transfer: Data Transfer
+            label_data-transfer_ru: Yandex Data Transfer
+            label_datalens: DataLens
             label_datasphere: DataSphere
             label_dns: Cloud DNS
+            label_iot-core: IoT Core
             label_kms: Key Management Service
             label_load-balancer: Network Load Balancer
             label_load-testing: Load Testing
             label_lockbox: Lockbox
             label_logging: Cloud Logging
-            label_managed-clickhouse: Managed Service for ClickHouse
-            label_managed-gitlab: Managed Service for GitLab
-            label_managed-greenplum: Managed Service for Greenplum
-            label_managed-kubernetes: Managed Service for Kubernetes
-            label_managed-redis: Managed Service for Redis
+            label_managed-airflow: Managed Service for&nbsp;Apache&nbsp;Airflow™
+            label_managed-clickhouse: Managed Service for&nbsp;ClickHouse
+            label_managed-elasticsearch: Managed Service for&nbsp;Elasticsearch
+            label_managed-gitlab: Managed Service for&nbsp;GitLab
+            label_managed-greenplum: Managed Service for&nbsp;Greenplum
+            label_managed-kafka: Managed Service for&nbsp;Kafka
+            label_managed-kubernetes: Managed Service for&nbsp;Kubernetes
+            label_managed-mongodb: Managed Service for&nbsp;MongoDB
+            label_managed-mysql: Managed Service for&nbsp;MySQL
+            label_managed-opensearch: Managed Service for&nbsp;OpenSearch
+            label_managed-postgresql: Managed Service for&nbsp;PostgreSQL
+            label_managed-redis: Managed Service for&nbsp;Redis
             label_mdb: Managed Databases
             label_message-queue: Message Queue
             label_monitoring: Monitoring
             label_products: All services
+            label_search-api: Search API
+            label_serverless-containers: Serverless Containers
             label_serverless-functions: Cloud Functions
+            label_smartcaptcha: SmartCaptcha
+            label_smartcaptcha_ru: Yandex SmartCaptcha
+            label_smartwebsecurity: Smart Web Security
             label_storage: Object Storage
+            label_vdi: Cloud Desktop
             label_vpc: Virtual Private Cloud
+            label_ydb: Managed Service for&nbsp;YDB
+            label_ymq: Message Queue
+            value_audit-trails: Audit trail
             value_compute: Virtual machine instance
             value_data-proc: Data Proc cluster
+            value_data-streams: Data Streams
             value_data-transfer: Data Transfer
+            value_managed-clickhouse: ClickHouse cluster
+            value_serverless-functions: Function
+            value_storage: Bucket
             value_vpc: Network
+            value_ydb: YDB database
           service-account:
             label_add-role: Add role
             overview:
               action_download-keys-file: Download file with keys
+              button_action-delete: Delete
+              button_action-delete-access-key: Delete
+              button_action-delete-api-key: Delete
+              button_create_api_key: Create API key
               button_create_key: Create authorized key
               button_create_service-account-key: Create static access key
               button_create-key-popup: Create new key
               field_key-description: Description
               label_id: ID
+              label_title: Overview
+              popup-confirm_button_delete: Delete
               popup-key_button_close: Close
               popup-key_button_create: Create
+              section_keys: Authorized keys
+              section_service-account-keys: Access keys
             popup-robot_button_add: Create
+            popup-robot_button_save: Save
             popup-robot_field_name: Name
           service-accounts:
             button_action-delete: Delete
+            button_action-edit: 'Edit '
             button_add: Create service account
+            column_roles: Roles in folder
             popup-confirm_button_delete: Delete
           switch_incident-notifications: Notifications
           switch_service-accounts: Service accounts
+          switch_service-notifications: Service notifications
+        users:
+          button_tune-role: Configure roles
+          label_folders-roles: Roles for folders
+          label_user-listing-allowed-admins-title: Administrators
+          label_user-listing-allowed-everybody-title: All users
+      iot:
+        button_add-alias: Add alias
+        button_add-device: Add device
+        button_add-label: Add label
+        button_add-password: Add password
+        button_add-yds-export: Add export
+        button_create-broker: Create broker
+        button_create-registry: Create registry
+        label_aliases: Aliases
+        label_brokers: Brokers
+        label_certificates: Certificates
+        label_devices: Devices
+        label_mqtt-topic-filter: MQTT topic filter
+        label_passwords: Passwords
+        label_registries: Registries
+        label_yds-exports: Export to Data Stream
       k8s:
         cluster:
+          marketplace:
+            button_install: Install
+            button_release-uninstall: Uninstall
+            section_releases: Installed applications
+          switch_custom-resources: Custom resources
+          switch_marketplace: Marketplace
           switch_workloads: Workload
+        clusters:
+          button_create: Create cluster
+          create:
+            field_address-type: Public address
+            field_kms-key: Encryption key
+            switch_auto: Auto
+        custom-resources:
+          label_tab-resources: Resources
+        node-groups:
+          create:
+            field_driverless-gpu: Do not install GPU drivers
+            field_key: SSH key
+            section_gpu-settings: GPU settings
+        workloads:
+          label_tab-yaml: YAML
+      kafka:
+        button_add-topic: Add topic
+        button_create-connector: Create connector
+        button_create-topic: Create topic
+        button_delete-topic: Delete topic
+        button_edit-connector: Edit connector
+        field_connector-access-key-id: Access key ID
+        field_connector-alias: Alias
+        field_connector-bootstrap-servers: Bootstrap servers
+        field_connector-bucket-name: Bucket
+        field_connector-compression-type: Compression type
+        field_connector-config-mirror-maker-source-cluster: Source cluster
+        field_connector-config-mirror-maker-target-cluster: Target cluster
+        field_connector-config-mirror-maker-topics: Topics
+        field_connector-endpoint: Endpoint
+        field_connector-file-max-records: Max record per file
+        field_connector-region: Region
+        field_connector-s3-connection: S3 connection
+        field_connector-sasl-mechanism: SASL mechanism
+        field_connector-sasl-password: SASL password
+        field_connector-sasl-username: SASL username
+        field_connector-secret-access-key: Secret access key
+        field_connector-security-protocol: Security protocol
+        field_connector-ssl-truststore-certificates: Certificate in PEM format
+        field_schema-registry: Schema registry
+        label_brokers-per-az: Number of brokers in zone
+        label_connector-this-cluster: Use this cluster
+        label_connectors: Connectors
+        label_filter_origin: Origin
+        label_max-message-bytes: Maximum batch size
+        label_min-insync-replicas: Minimum number of in-sync replicas
+        label_partitions: Number of partitions
+        label_replication-factor: Replication factor
+        label_topic: Topic
+        label_topic-cleanup-policy: Cleanup policy
+        label_topic-compression-type: Compression type
+        label_topic-delete-delay: Delete delay, ms
+        label_topic-flush-messages: Flush messages
+        label_topic-flush-ms: Flush, ms
+        label_topic-min-compaction-lag: Min compaction lag, ms
+        label_topic-preallocate: Pre-allocation of the segment file
+        label_topic-retention-bytes: Retention, bytes
+        label_topic-retention-ms: Retention, ms
+        label_topics: Topics
+        section_properties: Additional properties
+        section_topic-config: Topic settings
+        section_zookeeper-resources: ZooKeeper host class
       kms:
+        asymmetric-key:
+          form:
+            label_encryption: Encryption
+            label_signature: Signature
+            title_algorithm: Algorithm
+            title_type: Type
+        asymmetric-keys:
+          action_public-key: Public key
+          button_download: Download
+          title_create: Creating a key
+          title_key-type-encryption: Encryption
+        switch_asymmetric-keys: Asymmetric keys
+        switch_symmetric-keys: Symmetric keys
         symmetric-key:
           create:
             button_create: Create
           form:
             field_algorithm: Encryption algorithm
             field_rotation: Rotation period, days
+            value_no-rotation: No rotation
+          overview:
+            button_action-cancel-destruction: Cancel destruction
+            button_action-delete: Delete
+            button_action-rotate: Rotate
+            button_action-schedule-destruction: Schedule destruction
+            button_action-set-primary: Make primary
+            column_version-destroy: Destruction date
+            label_rotation: Rotation period
+            label_title-versions: Versions
+            popup-confirm_button_delete: Delete
         symmetric-keys:
           button_create: Create
           button_empty-create: Create key
       load-balancer:
         network-load-balancer:
+          button_attach-tg: Attach target group
           button_create: Create a network load balancer
+          button_start: Start
+          button_stop: Stop
           column_ip-address: IP address
           form:
             button_create-target-group: Create target group
+            field_listener-address: IP address
             field_listener-name: Name
             field_listener-port: Port
+            field_listener-protocol: Protocol
+            field_listener-subnet-id: Subnet
             field_listener-target-port: Target port
+            field_network-load-balancer-type: Type
             label_add-listener: Add listener
             label_add-target-group: Add target group
             label_address-type: Public address
             label_edit-health-check: Configure
+            label_internal: Internal
             label_target-group-id: Target group
             section_listeners: Listeners
             section_target-groups: Target groups
+          label_delete-listener: Remove listener
+          label_detach-action: Detach
           label_health-check: Health check
           label_health-check-healthy-threshold: Healthy threshold
           label_health-check-interval: Interval in sec
@@ -5558,6 +6763,12 @@ default:
           label_health-check-protocol: Type
           label_health-check-timeout: Timeout in sec
           label_health-check-unhealthy-threshold: Unhealthy threshold
+          section_attached-target-groups: Target groups
+          section_listeners: Listeners
+        target-group:
+          button_create: Create target group
+          label_list: Target groups
+          label_targets-section-title: Targets
       load-testing:
         button_add-bucket: Link bucket
         button_add-overload-test-id: Add ID
@@ -5573,12 +6784,11 @@ default:
         field_target-address: Target address
         field_target-port: Target port
         label_agents-list: Agents
-        label_bucket-source: Bucket
+        label_choose-from-bucket: Select from bucket
         label_import-tests-from-overload: Import tests from Overload
         label_local-source: From computer
         label_monitoring-report: Monitoring
         label_rps: Responses per second
-        label_save-source: Save to Object Storage
         label_settings-type-config: Config
         label_settings-type-form: Form
         label_test-config: Config
@@ -5589,81 +6799,234 @@ default:
         meta-section: Test information
         restart: Restart
         section_agent: Agent
-        test-data-section: Test data
+        test-data-section: Attached files
       lockbox:
+        button_action-open-version-add-dialog: Create a new version from this one
+        button_action-schedule-for-destruction: Schedule destruction
+        button_action-use-as-basis: Roll back to this version
+        button_activate-secret: Activate secret
+        button_add-version: Add version
         button_create-secret: Create secret
+        button_deactivate-secret: Deactivate
+        button_use-as-basis-version-action-text: Roll back
         forms:
           button_add-pair: Add pair
+          button_schedule-destruction: Schedule
+          field_deletion-protection: Don't destroy secret
+          field_kms-key: KMS key
           label_key: Key
           label_value: Value
           section_version: Version
+        label_secret-general-section: Information about secret
+        label_secret-id: ID
+        label_secret-versions-section: Versions
+        label_section-overview: Overview
+        label_section-secrets: Secrets
+      logging:
+        button_create-group: Create group
+        button_create-sink: Create sink
+        button_execute: Run
+        column_header-level: Level
+        column_header-message: Message
+        column_header-time: Time
+        label_destination: Destination
+        label_export: Export logs
+        label_groups: Groups
+        label_loggroup: Log group
+        label_retention-period: Log retention
+        label_sinks: Sinks
       marketplace-v2:
         button_use: Use
       mdb:
         cluster:
           backups:
+            action_delete-backup: Delete
             button_create: Create backup
+            button_delete: Delete backup
             button_restore: Restore cluster
+            column_name: Name
+            label_title: Backups
+          databases:
+            button_action-manage-extensions: Configure PostgreSQL extensions
+            button_action-remove: Delete
+            button_add: Add
+            column_extensions: PostgreSQL extensions
+          delete-dialog:
+            popup-confirm_button_delete: Delete
+          diagnostics:
+            label_indexes: Suggested indexes
+            label_interval-first: Interval 1
+            label_interval-second: Interval 2
+            label_profiling: Profiling
+            label_queries: Queries
+            label_sessions: Sessions
+          dictionaries:
+            button_action-delete: Delete dictionary
+            button_submit: Save
+            button-action_add-dictionary: Add dictionary
+            column_attributes-expression: Expression
+            column_attributes-hierarchical: Hierarchical
+            column_attributes-injective: Injective
+            column_attributes-name: Name
+            column_attributes-nullValue: Default value
+            column_attributes-type: Data type
+            field_collection: Collection
+            field_db: Database
+            field_fixed-lifetime: Period duration
+            field_host: Host
+            field_hosts: Hosts
+            field_http-format: File format
+            field_http-url: URL
+            field_invalidate-query: Check dictionary status
+            field_layout-type: Memory storage
+            field_name: Name
+            field_password: Password
+            field_port: Port
+            field_postgresql-ssl-mode: SSL mode
+            field_range-lifetime-max: Maximum
+            field_range-lifetime-min: Minimum
+            field_replicas: Replicas
+            field_size-in-cells: Cache size
+            field_structure-attributes: Data column
+            field_structure-id: Numeric key
+            field_table: Table
+            field_update-interval: Period
+            field_user: User
+            field_where: Selection condition
+            label_fixed-lifetime: fixed
+            label_range-lifetime: variable
+          explain:
+            value_buffers: Buffers
+            value_cost: Cost
+            value_time: Time
           hosts:
             button_add-host: Add host
+            button_add-zookeeper: Add ZooKeeper hosts
+            button_create-zookeeper: Set up ZooKeeper hosts
+            button_manual-failover: Switch master
             button_rebalance-cluster: Rebalance cluster
             button_rebalance-cluster-short: Rebalance
+            host_column_name: Host FQDN
+            host_column_public-ip: Public access
+            host_column_role: Role
             label_title: Hosts
             popup-confirm_button: Confirm
             switch_monitoring: Monitoring
             switch_overview: Overview
           logs:
             button_load-more: Load more
+            label_hosts: Hosts
+            label_severity: "\_Severity"
           overview:
             button_action-connect: Connect
             button_action-delete: Delete cluster
             button_action-edit: Edit cluster
             button_action-start: Start cluster
             button_action-stop: Stop cluster
+            label_access-datalens: DataLens access
+            label_anytime-maintenance-warning-value: Arbitrary time
+            label_bucket: Bucket name
+            label_hdd: Storage
+            label_health: State
+            label_mongodb-pitr: Point-in-time recovery
+            label_network: Cloud network
+            label_service-account: Service account
+            label_services: Services
+            label_status: Status
+            label_storage-enabled: enabled
+            section_additional: Advanced settings
+            section_resource: Resources
+            section_ui-proxy: UI Proxy
           shards:
+            button_action-edit: Edit
             button_action-remove: Remove
             button_add: Add shard
+            button_sharding-enable: Enable
             popup-confirm_button_delete: Remove
           start-dialog:
             popup-confirm_button: Start
           stop-dialog:
             popup-confirm_button: Stop
+          subclusters:
+            button_action-delete: Delete
+            button_action-edit: Modify
+            button_create: Add subcluster
+          switch_backups: Backups
+          switch_hosts: Hosts
+          switch_jobs: Jobs
+          switch_logs: Logs
           switch_monitoring: Monitoring
+          switch_subclusters: Subclusters
+          switch_users: Users
           users:
+            button_action-password: Change password
+            button_action-remove: Delete
             button_action-update: Configure
+            button_add: Add
             button_advanced-settings: Additional settings
+            button_remove: Remove
+            popup-add_button_add: Add
+            popup-button_add: Add
             popup-button_save: Save
+            popup-password_button_change: Edit
         clusters:
+          button_action-connect: Connect
           button_action-delete: Delete
           button_action-move: Move
+          button_action-start: Start
+          button_action-stop: Stop
           button_create: Create cluster
+          button_empty-create: Create cluster
+          column_availability: Availability
+          label_title: Clusters
         datalens:
-          button-action_activate: Activate
           button-action_new-connection: Create connection
+          label_activate-datalens-title: DataLens not activated
         dialogs:
+          button_add-database: Add database
+          button_advanced-settings: DBMS settings
+          popup_button_cancel: Cancel
           popup_button_move-cluster: Move
+          popup_button_save: Save
+          popup_field_permissions: Database
+          popup_field_roles: Roles
+          popup-add-db_button_add: Add
           popup-confirm-delete-cluster_button: Delete
+          popup-confirm-remove-subcluster_button: Delete
+          popup-confirm-switch-master_auto: Choose master host automatically
           popup-confirm-switch-master_button: Switch
           popup-confirm-switch-master_label_confirmation: I want to switch the master
           popup-confirm-switch-master_label-title: Switch master host
         forms:
+          additional-field-cloud-storage: Hybrid storage
           additional-field-datalens: DataLens access
+          additional-field-datatransfer: Data Transfer access
           additional-field-metrika: Access from Metrica and AppMetrica
           additional-field-serverless: Serverless access
+          additional-field-sox: IDM
           additional-field-websql: Access from the management console
+          additional-field-yandex-query: ''
+          backup-retain-period: Retention period for automatic backups, days
           backup-window-start: Backup start time (UTC)
+          base_field_description: Description
           base_field_environment: Environment
           base_field_folder: Folder
+          base_field_hosts-count: Hosts
           base_field_name: Cluster name
+          base_field_roles: Roles
           base_field_service-account: Service account
           base_field_shard-name: Shard name
           base_field_version: Version
           button_add-host: Add host
           button_add-initialization-action: Add
+          button_add-subcluster: Add
+          button_configure: Add
           button_configure-settings: Settings
           button_create: Create cluster
           button_create-shard: Create shard
+          button_create-subcluster: Add subcluster
           button_edit: Save changes
+          button_expand-zookeeper-settings: Configure ZooKeeper
           button_restore: Restore cluster
           config_field_bucket: Bucket name
           config_field_form-bucket-type: Bucket ID format
@@ -5683,18 +7046,33 @@ default:
           database_field_user-password: Password
           field_assign-public-ip: Public access
           field_cluster-mode: Cluster sharding
+          field_copy_schema: Copy the data schema
+          field_date: Date and time of recovery (UTC)
+          field_diagnostics-enabled: Statistics sampling
+          field_diagnostics-sessions-interval: Sessions sampling interval
+          field_diagnostics-statements-interval: Statements sampling interval
           field_initialization-action-args: Arguments
+          field_initialization-action-timeout: Timeout
           field_initialization-action-uri: URI
           field_security-group: Security groups
           host_column_assign_public_ip: Public access
           host_column_shard-name: Shard name
           host_column_subnetwork: Subnet
           host_column_zone: Availability zone
+          label_autoscaling-activated: Autoscaling
+          label_create-subcluster: ' Add subcluster'
           label_deletion-protection: Deletion protection
+          label_disk-size: Size
+          label_diskTypeId: Disk type
+          label_greenplum_pool_client-idle-timeout: Client Idle Timeout
+          label_greenplum_pool_mode: Mode
+          label_greenplum_pool_size: Size
           label_master-subcluster: Master
           label_max-size-units: GB
           label_network: Network
           maintenance-window-type: Maintenance window
+          network_field_form-type: Network ID format
+          network_field_subnetwork: Subnet
           new_section_resource: Resources
           resource_presets_field_gen_v3: Intel Ice Lake
           resource_presets_field-generation: Platform
@@ -5702,26 +7080,119 @@ default:
           section_additional: Advanced settings
           section_base: Basic parameters
           section_config: Cluster configuration
+          section_configuration: Configuration
+          section_database: Database
           section_disk: Size of storage
           section_host: Hosts
           section_network: Network settings
           section_network-settings: Network settings
+          section_pooler: Connection pooler
           section_resource: Host class
+          section_scaling: Scaling
           section_service-settings: Service settings
           section_settings: DBMS settings
+          section_settings-kafka: Kafka Settings
+          section_storage: Storage
           section_subclusters: Subclusters
+          section_user: User
+          section_zookeeper-disk: ZooKeeper storage size
+          section_zookeeper-hosts: ZooKeeper hosts
+          section_zookeeper-resource: ZooKeeper host class
           value_maintenance-type-anytime: arbitrary
           value_maintenance-type-weekly: by schedule
         hosts:
           dialog:
             button_choose: Save
             field_public_ip: Public access
+            field_subnetworks: Subnet
+            field_zones: Availability zone
+        shard-groups:
+          button_add-group: Create shard group
+      metastore:
+        field_s3config-access-key-id: Access key ID
+        field_s3config-secret-access-key: Secret key
+        label_metastore: Metastore
+        title_s3config: S3 access settings
+      mongodb:
+        cluster:
+          shards:
+            button_enable_sharding: Enable sharding
+            label_custom: Advanced
+            label_standard: Standard
+          switch_backups: Backups
+          switch_databases: Databases
+          switch_diagnostics: Performance diagnostics
+          switch_hosts: Hosts
+          switch_logs: Logs
+          switch_monitoring: Monitoring
+          switch_operations: Operations
+          switch_shards: Shards
+          switch_users: Users
+        hosts:
+          action_resetup-host: Resynchronize
+          action_stepdown-host: Step down
       monitoring:
         button_create-alert: Create alert
         button_open-in-monitoring: Open in Monitoring
       mysql:
         cluster:
+          switch_backups: Backups
+          switch_databases: Databases
+          switch_datalens: DataLens
+          switch_diagnostics: Performance diagnostics
           switch_explore: SQL
+          switch_hosts: Hosts
+          switch_logs: Logs
+          switch_monitoring: Monitoring
+          switch_operations: Operations
+          switch_users: Users
+        field_backup_priority: Backup priority
+        field_priority: Master priority
+      opensearch:
+        auth:
+          button_save: Save
+          button_settings: Settings
+          field_dashboards-url: kibana_url
+          field_enabled: Enable
+          field_idp-entity-id: idp_entity_id
+          field_roles-key: roles_key
+          field_sp-entity-id: sp_entity_id
+          field_subject-key: subject_key
+          section_auth: Authorization sources
+        cluster:
+          node-groups:
+            action_add-node-group: Add node group
+            action_add-virtual-node-group: Add virtual node group
+            action_create-node-group: Create node group
+            action_delete: Delete
+            title_node-groups: Node groups
+            title_virtual-node-group: Virtual node group
+        title_dashboards: Dashboards
+        title_data-node: Data node
+        title_opensearch-dashboards-section: OpenSearch Dashboards
+      page:
+        welcome:
+          button_send: Log in
+      postgresql:
+        cluster:
+          additional-field-pooling_mode: Pooling mode
+          switch_backups: Backups
+          switch_databases: Databases
+          switch_datalens: DataLens
+          switch_diagnostics: Performance diagnostics
+          switch_explore: SQL
+          switch_hosts: Hosts
+          switch_logs: Logs
+          switch_monitoring: Monitoring
+          switch_operations: Operations
+          switch_users: Users
+        databases:
+          dialog:
+            button_submit: Configure
+        hosts:
+          dialog:
+            button_choose: Save
+        switch_backups: Backups
       redis:
         cluster:
           switch_backups: Backups
@@ -5730,84 +7201,259 @@ default:
           switch_shards: Shards
         field_tls-support: TLS support
         switch_backups: Backups
+      search-api:
+        test-query:
+          label_button-run-test: Run test
+          label_field-method: Request method
+          label_field-query: Search query text
+          label_search_type-international: International
+          label_search_type-russian: Russian
+          label_search_type-turkish: Turkish
+          label_title: Test queries
+      serverless-containers:
+        button_create-container: Create container
+        button_deploy-revision: Create revision
+        label_containers: Containers
+        label_editor: Editor
+        label_timeout: Timeout, s
+        label_url: Link to invoke
+        section_image: Image settings
+        section_parameters: Settings
+        section-revisions: Revisions
       serverless-functions:
         create:
           button_create: Create
+        gateways:
+          domains:
+            button_add: Attach
+          form:
+            button_create-gateway: Create
+            button_update-gateway: Save
+            field_description: Description
+            field_name: Name
+            field_spec: Specification
+            label_canary-release: Canary release
+            label_canary-share: Share of requests in canary release
+            label_canary-variables: Variables for canary release
+            label_section-variables: Variable settings
+          item:
+            switch_domains: Domains
+            switch_logs: Logs
+            switch_monitoring: Monitoring
+          list:
+            button_action-delete: Delete
+            button_action-edit: Edit
+            button_create: Create API gateway
+            popup-confirm_button_delete: Delete
+          overview:
+            button_action-edit: Edit
+            label_domain: Default domain
+            label_id: ID
+            section_base: General information
         item-form:
           field_name: Name
         item:
           editor:
             button_action-continue: Continue
-            button_create: Create version
-            button_deploy-version: Create version
+            button_add-environment-variable: Add
+            button_deploy-version: Save changes
             create-file: Create file
+            field_bucket: Bucket
             field_entry: Entrypoint
             field_environment-variables: Environment variables
+            field_file: File
             field_method: Method
+            field_object: Object
             field_resources-memory: Memory
+            field_runtime: Runtime environment
             field_timeout: Timeout, sec
-            label_lang-bash: Bash
-            label_lang-python: Python
-            label_lockbox-secret: Yandex Lockbox secrets
+            label_add-folder: Add bucket
+            label_async: Asynchronous call
+            label_bucket: Bucket
+            label_bucket-prefix: Folder
+            label_failed-sa: Destination for unsuccessful result
+            label_lockbox-secret: Lockbox secrets
+            label_mount-point-name: Mount point
+            label_mount-point-path: Mount path
+            label_mq: Message Queue
+            label_success-sa: Destination for successful result
             label_title: Editor
             label_title-params: Parameters
             label_title-source: Function code
+            label_tries-count: Number of attempts
+            label_turn-on-button: Enable
             label_with-template: Add files with code examples
+            option_queues-mq: Message queue
+            option_queues-unset: Not specified
+            title_mount-files: Mounted buckets
             value_method-editor: Code editor
+            value_method-storage: Object Storage
             value_method-zip-file: ZIP archive
-          logs:
-            button_editor-create: Create in editor
           overview:
-            label_latest-memory: Memory
-            label_latest-timeout: Timeout
-            label_title-environment-vars: Environment variables
+            button_edit-tag: Edit
+            button_editor-create: Сreate in editor
+            label_all-users-invoke: Public function
+            label_invoke-link: Link to invoke
+            label_title: Overview
+            label_title-history: Version history
             label_title-latest-version: Last version
+            label_title-metadata: General information
           switch_editor: Editor
+          switch_logs: Logs
+          switch_monitoring: Monitoring
+          switch_overview: Overview
           switch_testing: Testing
           testing:
             button_run-test: Run test
+            field_execution-result: Function status
+            field_function-output: Function output
+            field_payload: Payload
+            field_payload-template: Payload template
+            field_tag: Version tag
+            label_title-test-result: Test result
+            value_alice-skill: Alice's skill
+            value_empty: Without preset
+            value_http-request: HTTPS invoke
+            value_ymq-trigger: Trigger for Message Queue
         list:
+          button_action-delete: Delete
+          button_action-edit: Edit
           button_create: Create function
+          popup-confirm_button_delete: Delete
+        switch_list: Functions
+        switch_list-mdb-proxy: Database connections
         switch_list-triggers: Triggers
         triggers:
           form:
             button_create-function: Create function
             button_create-trigger: Create trigger
+            button_update-trigger: Save
+            field_broker: Broker
             field_bucket: Bucket
+            field_container-registry: Registry
             field_cron-expression: Cron expression
+            field_cron-payload: Payload
+            field_cutoff: Waiting time, s
+            field_description: Description
+            field_device: Device
             field_dlq_service-account: Service account
             field_event-types: Event types
             field_function: Function
             field_function_service-account: Service account
             field_function-tag: Function version tag
+            field_image-name: Docker image name
             field_invoke: Launched resource
+            field_log-group: Log group
+            field_mqtt-topic: MQTT topic
             field_name: Name
+            field_prefix: Object key prefix
+            field_registry: Registry
+            field_resource-type: Resource types
+            field_retry-attempts: Number of attempts
+            field_retry-interval: Interval
             field_service-account: Service account
+            field_size: Batch size
+            field_suffix: Object key suffix
+            field_tag: Docker image tag
             field_type: Type
+            field_ymq-cutoff: Waiting time
+            label_any-budget: Any budget
             label_billing-budget: Budget
+            label_cloud-logs: Cloud Logs
+            label_container: Container
+            label_container-registry: Container Registry
+            label_data-streams: Data Streams
             label_function: Function
+            label_iot: IoT Core (device)
+            label_iot-broker: IoT Core (broker)
+            label_logging: Cloud Logging
+            label_mail: Email
             label_storage: Object Storage
             label_timer: Timer
+            label_ymq: Message Queue
             section_base: Basic settings
+            section_batch-settings: Batch message settings
             section_billing-budget: Budget settings
+            section_cloud-logs: Cloud Logs settings
+            section_container: Container settings
+            section_container-registry: Container Registry settings
+            section_data-streams: Data Streams settings
             section_dlq: Dead Letter Queue settings
             section_function: Function settings
+            section_function-retry: Repeat request settings
+            section_iot: IoT Core message settings
+            section_logging: Cloud Logging settings
             section_storage: Object Storage settings
             section_timer: Timer settings
+            section_ymq: Message Queue message settings
+            value_event-type-create-image-tag: Create Docker image tag
             value_event-type-create-object: Create object
           list:
             button_create: Create trigger
+            popup-confirm_button_delete: Delete
+      serverless-mdb-proxy:
+        list:
+          button_create: Create connection
       settings:
-        appearance:
-          field_theme: Interface theme
-        experiments:
-          label_title: Experiments
         label_settings: Settings
-        lang:
-          label_title: Language and region
         switch_appearance: Appearance
-        switch_experiments: Experiments
         switch_lang: Language and region
+      smart-web-security:
+        action_empty: Create
+        attach-dialog:
+          action_add-balancer: Add load balancer
+          action_connect: Connect
+          label_balancer: Load balancer
+          label_http-router: HTTP router
+          label_virtual-host: Virtual host
+        form:
+          button_add-rule: Add rule
+          label_action-allow: Allow
+          label_action-deny: Deny
+          label_default-action: Action for the default base rule
+          section_security-rules: Security rules
+        overview:
+          action_attach-to-host: Connect to host
+          action_disconnect-host: Disconnect from profile
+          action_edit-profile: Edit
+          cell_mode-api: API protection
+          cell_mode-full: Full protection
+          cell_sec-action-allow: Allow
+          cell_sec-action-deny: Deny
+          column_action-type: Action
+          column_dry-run-rule: Only logging
+          column_priority: Priority
+          column_rule-conditions: Conditions
+          column_type: Type
+          condition_and: and
+          condition_full-trafic: All traffic
+          condition_name-authority: Host
+          condition_name-header: HTTP header
+          condition_name-httpMethod: HTTP method
+          condition_name-ip-range: IP
+          condition_name-requestUri: Request URI
+          condition_or: or
+          label_base-rule: Base
+          label_smart-protection-rule: Smart Protection
+          title_connected-to-the-hosts: Connected hosts
+          title_security-rules: Security rules
+        title_default-template: From a preset template
+        title_no-template: From scratch
+      smartcaptcha:
+        button_captcha-settings-create: Create captcha
+        label_additional-challenge: Additional challenge
+        label_allowed-sites: Site list
+        label_captcha-settings-list: Captcha list
+        label_client-key: Client key
+        label_complexity: Complexity
+        label_main-challenge: Main challenge
+        label_section-customization: Сustomize style
+        label_section-style: Style
+        label_server-key: Server key
+        value_complexity-easy: Easy
+        value_complexity-hard: Hard
+        value_complexity-medium: Medium
+        value_config-standard: Standard
       storage:
         bucket:
           button_action-delete: Delete
@@ -5823,17 +7469,22 @@ default:
             button_save: Save
             field_key: KMS Key
           https:
-            button_create-certificate: Go to Certificate Manager
+            button_action-configure: Configure
             button_empty-action: Configure
             button_save: Save
             field_certificate: Certificate
+            field_certificate-manager: Certificate
             field_source: Source
+            value_method-certificate-manager: Certificate Manager
+            value_method-custom: Your certificate
           lifecycle:
             button_lifecycle_empty-create: Configure
             button_save: Save
             field_date: Trigger date
             field_days: Trigger time
             field_description: Description
+            field_max-size: Maximum size in bytes
+            field_min-size: Minimum size in bytes
             field_no-prefix: All objects
             field_prefix: Prefix
             field_status: Status
@@ -5841,6 +7492,11 @@ default:
             value_expiration-date: Exact date
             value_expiration-days: Number of days
             value_expired-object-delete-marker: Deletion marker without noncurrent versions
+            value_type-abort-incomplete-multipart-upload: AbortIncompleteMultipartUpload
+            value_type-expiration: Expiration
+            value_type-transition: Transition
+            value_type-version-expiration: NoncurrentVersionExpiration
+            value_type-version-transition: NoncurrentVersionTransition
           policy:
             button_add-resource: Add resource
             button_add-value: Add value
@@ -5860,10 +7516,12 @@ default:
             access_value_private: Restricted
             access_value_public: Public
             button_save: Save
+            class_value_cold: Cold
             class_value_standard: Standard
             field_access-config-read: Read access to settings
             field_access-list: Object listing access
             field_access-read: Object read access
+            field_class: Storage class
             field_name: ' Name'
             field_size-limit: Max size
             label_size-limit-disabled: No limit
@@ -5880,6 +7538,7 @@ default:
             field_error: Error page
             field_http-redirect-code: Response code
             field_index: Home page
+            field_link: Link
             label_routing-condition: Condition
             label_routing-redirect: Redirect
             select_condition_prefix: Key prefix
@@ -5898,6 +7557,7 @@ default:
           button_permissions: Bucket ACL
           create:
             button_create: Create bucket
+          label_title: Buckets
         button_upload: Upload
         file:
           action_file-restore: Restore
@@ -5909,12 +7569,31 @@ default:
           label_lifetime: Lifetime
           popup-confirm_button_delete: Delete
         permissions-dialog:
+          button_add: Add
           button_save: Save
           label_title: ACL editing
+        switch_buckets: Buckets
       support:
         contact:
           label_title: Queries
         label_service: Support
+      vdi:
+        button_acl: Configure ACL
+        button_add-image: Add image
+        button_desktop-create: Create desktop
+        button_download-rdp: Download RDP file
+        button_empty-create-desktop-group: Create desktop group
+        button_reset-password: Reset password
+        button_restart: Restart
+        button_start: Start
+        button_stop: Stop
+        label_desktop: Desktop
+        label_desktop-images: Images
+        label_desktops: Desktops
+        label_image: Image in Compute Cloud
+        label_image-source: Image source
+        section_access: Access
+        section_disks: Disks
       vpc:
         add-static-route:
           button_add: Add
@@ -5938,6 +7617,7 @@ default:
           button_move-gateway: Move
           field_type: Type
           value_gateway-type-egress-nat: Egress NAT
+        label_network: Network
         network:
           overview:
             button_create_subnetwork: Add subnet
@@ -5968,6 +7648,8 @@ default:
               value_sg-rule-sg-type-self: Current
               value_tcp: TCP
               value_udp: UDP
+            label_destination-type-cidr: CIDR
+            label_destination-type-security-group: Security group
             label_egress: Egress
             label_ingress: Ingress
           switch_overview: Overview
@@ -5995,8 +7677,7 @@ default:
         subnet:
           add-route-table:
             button_add: Link
-          add-toute-table:
-            button_add: Link
+            popup-route-table_field_route-table-id: Route table
         subnetworks:
           button_action-add-route-table: Link routing table
           button_action-egress-nat-enable: Enable egress NAT
@@ -6021,27 +7702,107 @@ default:
         switch_gateways: Gateways
         switch_networks: Subnets
         switch_security-groups: Security groups
+        title_network-map-page: Cloud network map
       ydb:
         browse:
+          button_create: Create
           button_sql-query: New SQL query
           dialogs:
+            button_create-directory: Create directory
             tooltip_create_pk: Primary key
           info:
             column_name: Name
             column_type: Type
+          menu_directory: Directory
+          menu_table: Table
+        constants:
+          menu_delete: Delete
+          menu_edit: Edit
         database:
           switch_browse: Navigation
+          switch_monitoring: Monitoring
+          switch_overview: Overview
+        databases:
+          button_create: Create a database
+          label_title: Databases
+        forms:
+          button_create-database: Create a database
+          button_create-network-new: Create new
+          button_create-subnetwork-new: Create new
+          button_update-database: Update database
+          field_network: Cloud network
+          field_public-ips: Public IP addresses
+          field_subnetworks: Subnets
+          label_dedicated-type: Dedicated
+          label_field_database-type: Database type
+          label_field_name: Name
+          label_section-compute: Computing resources
+          label_section-network: Network
+          label_section-storage: Storage groups
+          label_serverless-type: Serverless
+          label_text-public-ips: Assign
         overview:
-          label_database: Database
+          button_action-delete: Delete
+          button_action-edit: Edit
+          label_document-endpoint: Document API endpoint
           label_endpoint: Endpoint
-      ylb:
-        health-check:
-          label_http: HTTP
-          label_tcp: TCP
+          label_serverless-billing: Pricing
+          label_serverless-limits: Limits
+          label_title: Overview
+          section_connection: Connection
+        sql:
+          button_run: Run
+          label_query: Query
+          label_status_running: Running
+        table:
+          create:
+            button_create: Create table
+          edit:
+            button_update: Alter table
+          form:
+            button_add-split-point: Add split point
+            column_index-key: Key
+            column_name: Name
+            column_primary-key: Primary key
+            column_shard: Partition key
+            column_sort: Sort key
+            column_type: Type
+            field_autopartition-by-load: By load
+            field_autopartition-by-size: By size
+            field_autopartition-by-size-mb: Auto-partitioning by size in MB
+            field_autopartition-max: Maximum number of partitions
+            field_autopartition-min: Minimum number of partitions
+            field_key-bloom-filter: Bloom filter for primary key
+            field_name: Name
+            field_type: Table type
+            field_uniform-partitions: Count
+            label_columns: Columns
+            label_document-table: Document table
+            label_row-table: Row table
+            value_partitions-explicit: Explicitly
+            value_partitions-none: None
+            value_partitions-uniform: Evenly
       ymq:
         queue:
+          form:
+            field_keeping-time: Message retention
+            field_max-read-tries: Maximum number of read attempts
+            field_max-size: Maximum message size
+            field_messages-queue: Undelivered messages queue
+            field_receiving-delay: Timeout for receiving messages
+            field_sending-delay: Delivery delay
+            field_visibility-timeout: Standard visibility timeout
+            section_base: Basic parameters
+            section_message-settings: Configure undelivered message queues
+            switch_fifo-queue: Type
+            switch_redirect-messages: Redirect undelivered messages
+            type_switch_fifo: FIFO
+            type_switch_standard: Standard
           overview:
+            label_msg-count: Messages in the queue
+            label_queue-arn: ARN
             label_url: URL
+            section_base: General information
         queues:
           button_create: Create queue
     yc-data-transfer:
@@ -6114,6 +7875,7 @@ default:
                         title: Connection settings
                       sharding_settings:
                         title: Sharding settings
+                      title: Endpoint parameters
                     ClickHouseTargetAdvancedSettings:
                       alt_names:
                         title: Rename tables
@@ -6164,6 +7926,11 @@ default:
                         title: Number of retries
                       service_account_id:
                         title: Service account
+                    SchemaTableFilterEntry:
+                      schema:
+                        title: Schema
+                      table:
+                        title: Table
                     Serializer:
                       Debezium:
                         parameters:
@@ -6393,7 +8160,6 @@ default:
                       consumer:
                         title: Consumer
                       topics:
-                        array_item_label: Topic
                         title: Topics
                     LogbrokerConnectionType:
                       cluster:
@@ -6651,16 +8417,77 @@ default:
                         title: Folder name
                       bucket:
                         title: Bucket
+                      region:
+                        title: Region
                       service_account_id:
                         title: Service account
+                    ObjectStorageDataSchema:
+                      infer:
+                        title: Automatically
                     ObjectStorageSerializationFormatUI:
                       OBJECT_STORAGE_SERIALIZATION_FORMAT_CSV:
                         title: CSV
                       OBJECT_STORAGE_SERIALIZATION_FORMAT_JSON:
                         title: JSON
                       OBJECT_STORAGE_SERIALIZATION_FORMAT_RAW:
-                        title: Raw Data
+                        title: Raw data
+                    ObjectStorageSource:
+                      ObjectStorageEventSource:
+                        SQS:
+                          aws_access_key_id:
+                            title: AWS Access Key ID
+                          aws_secret_access_key:
+                            title: AWS Secret Access Key
+                          endpoint:
+                            title: Endpoint
+                          owner_id:
+                            title: Queue owner account ID
+                          queue_name:
+                            title: Queue name
+                          region:
+                            title: Region
+                          use_ssl:
+                            title: Use SSL
+                          verify_ssl_cert:
+                            title: Verify SSL certificate
+                      ObjectStorageReaderFormat:
+                        Csv:
+                          additional_options:
+                            title: Additional reader options
+                          block_size:
+                            title: Block size
+                          delimiter:
+                            title: Delimiter
+                          double_quote:
+                            title: Double quote
+                          encoding:
+                            title: Encoding
+                          escape_char:
+                            title: Escape char
+                          newlines_in_values:
+                            title: Allow line breaks in values.
+                          quote_char:
+                            title: Quote char
+                        csv:
+                          title: CSV
+                        Jsonl:
+                          block_size:
+                            title: Block size
+                          newlines_in_values:
+                            title: Allow line breaks in values.
+                          unexpected_field_behavior:
+                            title: Unexpected field behavior
+                        jsonl:
+                          title: JSON Lines
+                        parquet:
+                          title: Parquet
+                      path_pattern:
+                        title: Path pattern
+                      result_schema:
+                        title: Result table schema
                     ObjectStorageTarget:
+                      advanced_settings:
+                        title: Advanced settings
                       any_as_string:
                         title: Convert complex data to strings
                       connection_settings:
@@ -6819,6 +8646,9 @@ default:
                         title: Cron expression
                       interval:
                         title: Period
+                    RegularSnapshotSettings:
+                      increment_delay_seconds:
+                        title: Wait for transaction completion time, in seconds
                     Runtime:
                       multi_yt:
                         title: Multi YT
@@ -7052,9 +8882,9 @@ default:
                           title: Columns
                       Provider:
                         aws_access_key_id:
-                          title: AWS Access Key ID
+                          title: Access Key ID
                         aws_secret_access_key:
-                          title: AWS Secret Access Key
+                          title: Secret Access Key
                         bucket:
                           title: Bucket
                         endpoint:
@@ -7075,39 +8905,9 @@ default:
                     title: YT cluster
         transfer:
           transfer:
-            ColumnsFilter:
-              exclude_columns:
-                title: Excluded columns (regular expressions)
-              include_columns:
-                title: Included columns (regular expressions)
-            RenameTable:
-              new_name:
-                title: Target table name
-              original_name:
-                title: Source table name
-            Table:
-              name_space:
-                title: Named schema
-              name:
-                title: Table name
-            TablesFilter:
-              exclude_tables:
-                title: Excluded tables (regular expressions)
-              include_tables:
-                title: Included tables (regular expressions)
-            ToStringTransformer:
-              columns:
-                title: Columns
-              tables:
-                title: Tables
             Transformation:
               transformers:
                 array_item_label: Transformation
-            Transformer:
-              filter_columns:
-                title: Columns filter
-              rename_tables:
-                title: Rename tables
     yc-ui-datasphere:
       alias:
         private: Private
@@ -7127,7 +8927,7 @@ default:
         access: Access
         activate: Activate
         add: Add
-        add-chanel: Add channel
+        add-link: Add link
         add-member: Add member
         add-new: Add
         alias: Alias
@@ -7139,11 +8939,12 @@ default:
         cell: Cell
         checkpoint: Checkpoint
         clone: Clone
-        communication: Communication
+        communication: Communications
         copy-link: Copy link
         create: Create
         create-community: Create community
         create-resource: Create resource
+        datasets: Datasets
         deactivate: Deactivate
         dedicated: Dedicated
         default: Default
@@ -7157,6 +8958,8 @@ default:
         general: General settings
         link: Link
         manage-labels: Manage labels
+        member:
+          remove: Remove
         members: Members
         more: More
         name: Name
@@ -7166,7 +8969,9 @@ default:
         port: Port
         prefix: Prefix
         resize: Resize
+        resources: Resources
         response: Response
+        restrictions: Restrictions
         save: Save
         serverless: Serverless
         share: Share
@@ -7183,8 +8988,11 @@ default:
         create-template: Create template
         running: Running
         template-name: Template name
+      dedicated-mode:
+        serverless-mode: Serverless mode
       docker:
         build-path: Build path
+        credentials-switcher-label: Docker Hub authentication data
         docker-template: Docker template
         dockerfile: Docker file
         repository: Docker name
@@ -7200,6 +9008,9 @@ default:
         per-time: Total unit limit per hour
         period-of-inactivity: Period of inactivity
         security-group: Security group
+      invite-link:
+        reset-invitation-link: Recreate invite link
+        reset-link: Recreate link
       main-page:
         recent-projects: Recent projects
       new-alias:
@@ -7298,6 +9109,12 @@ default:
         node: Node
         s3: S3 Connector
         secret: Secret
+      restrictions:
+        CHANGING_DISK_SIZE: Changing the size of project storage
+        DATAPROC_TEMPLATES: Data Proc templates
+        NODES_AND_ALIASES: Deploying models
+        project-mode: Project mode
+        SERVERLESS_BACKGROUND_CELLS: Background cells
       s3-page:
         mode-read: Read only
         mode-read-write: Read and write
@@ -7306,6 +9123,7 @@ default:
         name: Name
       spaces-page:
         community-resources: Community resources
+        configurations: Configurations
       transferring:
         title: Transfer projects
         transfer-selected-projects: Transfer selected projects
@@ -7314,11 +9132,20 @@ default:
       helmChart:
         name: >-
           cr.yandex/yc-marketplace/yandex-cloud/yc-alb-ingress/yc-alb-ingress-controller-chart
-        tag: v0.1.16
+        tag: v0.1.23
     yc_argo-cd:
       helmChart:
         name: cr.yandex/yc-marketplace/yandex-cloud/argo/chart/argo-cd
-        tag: 5.4.3-7
+        tag: 5.46.8-6
+    yc_cert-manager-webhook-yandex:
+      helmChart:
+        name: >-
+          cr.yandex/yc-marketplace/yandex-cloud/cert-manager-webhook-yandex/helm/cert-manager-webhook-yandex
+        tag: 1.0.6
+    yc_chaos-mesh:
+      helmChart:
+        name: cr.yandex/yc-marketplace/yandex-cloud/chaos-mesh/chaos-mesh
+        tag: 2.6.1-1b
     yc_crossplane:
       helmChart:
         name: cr.yandex/yc-marketplace/crossplane/crossplane/crossplane
@@ -7326,12 +9153,16 @@ default:
     yc_csi-s3:
       helmChart:
         name: cr.yandex/yc-marketplace/yandex-cloud/csi-s3/csi-s3
-        tag: 0.31.8
+        tag: 0.35.5
     yc_external-secrets:
       helmChart:
         name: >-
           cr.yandex/yc-marketplace/yandex-cloud/external-secrets/chart/external-secrets
         tag: 0.5.5
+    yc_externaldns:
+      helmChart:
+        name: cr.yandex/yc-marketplace/yandex-cloud/externaldns/helm/externaldns
+        tag: 0.5.0
     yc_falco:
       helmChart:
         name: cr.yandex/yc-marketplace/falco
@@ -7342,36 +9173,40 @@ default:
         tag: 7.16.3-5
     yc_fluent-bit:
       helmChart:
-        name: >-
-          cr.yandex/yc-marketplace/yandex-cloud/fluent-bit/fluent-bit-cloud-logging
-        tag: 1.0-7
+        name: cr.yandex/yc-marketplace/yandex-cloud/fluent-bit/fluent-bit
+        tag: 2.1.7-2
     yc_gateway-api:
       helmChart:
         name: >-
           cr.yandex/yc-marketplace/yandex-cloud/gateway-api/gateway-api-helm/gateway-api
-        tag: 0.4.20
+        tag: 0.4.25
     yc_gitlab-agent:
       helmChart:
         name: >-
           cr.yandex/yc-marketplace/yandex-cloud/gitlab-org/gitlab-agent/chart/gitlab-agent
-        tag: 1.10.0-4
+        tag: 1.16.0-1
     yc_gitlab-runner:
       helmChart:
         name: >-
           cr.yandex/yc-marketplace/yandex-cloud/gitlab-org/gitlab-runner/chart/gitlab-runner
-        tag: 0.49.1-8
+        tag: 0.54.0-8
+    yc_istio:
+      helmChart:
+        name: cr.yandex/yc-marketplace/yandex-cloud/istio/istio
+        tag: 1.18.0-1a
     yc_kyverno:
       helmChart:
-        name: cr.yandex/yc-marketplace/yandex-cloud/marketplace/charts/kyverno
-        tag: 2.3.2
+        name: cr.yandex/yc-marketplace/multi-kyverno
+        tag: 1.0.0
     yc_loki:
       helmChart:
         name: cr.yandex/yc-marketplace/yandex-cloud/grafana/loki/chart/loki
         tag: 1.0.4
     yc_metric-provider:
       helmChart:
-        name: cr.yandex/yc-marketplace/yandex-cloud/metric-provider/chart
-        tag: 0.1.10
+        name: >-
+          cr.yandex/yc-marketplace/yandex-cloud/metric-provider/chart/metric-provider
+        tag: 0.1.11
     yc_node-local-dns:
       helmChart:
         name: cr.yandex/yc-marketplace/k8s.gcr.io/node-local-dns/chart
@@ -7387,4 +9222,8 @@ default:
     yc_vault-yckms-k8s:
       helmChart:
         name: cr.yandex/yc-marketplace/yandex-cloud/vault/chart/vault
-        tag: 0.22.0-1
+        tag: 0.25.0-1
+    yc_velero-yc-csi:
+      helmChart:
+        name: cr.yandex/yc-marketplace/yandex-cloud/velero-yc-csi/helm/velero
+        tag: 2.30.3

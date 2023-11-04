@@ -1,6 +1,6 @@
 # Настройка HTTPS
 
-Если бакет используется для [хостинга статического сайта](../../concepts/hosting.md), то для доступа к сайту по протоколу [HTTPS](https://ru.wikipedia.org/wiki/HTTPS) необходимо загрузить собственный сертификат безопасности и соответствующий ему секретный ключ.
+Если бакет используется для [хостинга статического сайта](../../concepts/hosting.md), то для доступа к сайту по протоколу [HTTPS](../../../glossary/ssl-certificate.md) необходимо загрузить собственный сертификат безопасности и соответствующий ему секретный ключ.
 
 {{ objstorage-name }} поддерживает только [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail)-encoded сертификаты.
 
@@ -23,7 +23,7 @@
     1. Нажмите на имя необходимого бакета.
     1. Перейдите на вкладку **{{ ui-key.yacloud.storage.bucket.switch_https }}**.
     1. В отобразившейся панели справа нажмите кнопку **{{ ui-key.yacloud.storage.bucket.https.button_empty-action }}**.
-    1. В поле **{{ ui-key.yacloud.storage.bucket.https.field_source }}** выберите **{{ ui-key.yacloud.storage.bucket.https.button_create-certificate }}**.
+    1. В поле **{{ ui-key.yacloud.storage.bucket.https.field_source }}** выберите **{{ ui-key.yacloud.storage.bucket.https.value_method-certificate-manager }}**.
     1. В поле **{{ ui-key.yacloud.storage.bucket.https.field_certificate }}** выберите сертификат в появившемся списке. 
     
         {% note info %}
@@ -49,11 +49,12 @@
   1. Выполните следующую команду:
 
      ```bash
-     yc storage bucket set-https <имя_бакета> --certificate-id 
+     yc storage bucket set-https --name <имя_бакета> --certificate-id <идентификатор_сертификата> 
      ```  
 
      Где:
-     * `--certificate-id` - идентификатор сертификата {{ certificate-manager-name }}.
+     * `--name` — имя бакета, для которого настраивается HTTPS;
+     * `--certificate-id` — идентификатор сертификата в {{ certificate-manager-name }}.
 
      Результат:
 
@@ -67,7 +68,7 @@
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
   Чтобы выбрать сертификат из {{ certificate-manager-name }}:
@@ -146,16 +147,22 @@ cat domain.pem intermediate.pem rootca.pem > bundle.pem
 - Консоль управления
 
    1. В [консоли управления]({{ link-console-main }}) выберите каталог.
-   1. Выберите сервис **{{ objstorage-name }}**.
+   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_storage }}**.
    1. Нажмите на имя необходимого бакета.
-   1. Перейдите на вкладку **HTTPS**.
-   1. В отобразившейся панели справа нажмите кнопку **Настроить**.
-   1. В поле **Источник** выберите **Свой сертификат**.
+   1. Перейдите на вкладку **{{ ui-key.yacloud.storage.bucket.switch_https }}**.
+   1. В отобразившейся панели справа нажмите кнопку **{{ ui-key.yacloud.storage.bucket.https.button_action-configure }}**.
+   1. В поле **{{ ui-key.yacloud.storage.bucket.https.field_source }}** выберите `{{ ui-key.yacloud.storage.bucket.https.value_method-custom }}`.
    1. Добавьте сертификат и секретный ключ.
-   1. Нажмите кнопку **Сохранить**.
+   1. Нажмите кнопку **{{ ui-key.yacloud.storage.bucket.https.button_save }}**.
 
 - API
 
   Чтобы загрузить собственный сертификат безопасности, воспользуйтесь методом REST API [setHTTPSConfig](../../api-ref/Bucket/setHTTPSConfig.md) для ресурса [Bucket](../../api-ref/Bucket/index.md) или вызовом gRPC API [BucketService/SetHTTPSConfig](../../api-ref/grpc/bucket_service.md#SetHTTPSConfig).
 
 {% endlist %}
+
+{% note info %}
+
+{% include [public-link](../../../_includes/storage/public-link.md) %}
+
+{% endnote %}

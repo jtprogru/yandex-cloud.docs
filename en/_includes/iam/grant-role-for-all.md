@@ -6,15 +6,15 @@ For example, allow any authenticated user to view folder information:
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the desired folder.
-   1. Go to the **Access bindings** tab.
-   1. Click **Assign bindings**.
-   1. In the **Configure access bindings** window, click **Select user**.
-   1. Select the **Groups** section.
-   1. Select the **All authenticated users** group.
-   1. Click **Add role**.
+   1. In the [management console]({{ link-console-main }}), go to the appropriate folder.
+   1. Go to the **{{ ui-key.yacloud.common.resource-acl.label_access-bindings }}** tab.
+   1. Click **{{ ui-key.yacloud.common.resource-acl.button_new-bindings }}**.
+   1. In the **{{ ui-key.yacloud_components.acl.label.title }}** window, click ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud_org.form.acl.edit.action.subject.select }}**.
+   1. Go to the **{{ ui-key.yacloud_org.common.resource-acl.label_groups }}** section.
+   1. Select the `All authenticated users` group.
+   1. Click ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud_components.acl.action.add-role }}**.
    1. Select the `resource-manager.viewer` role.
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud_components.acl.action.apply }}**.
 
 - CLI
 
@@ -52,11 +52,11 @@ For example, allow any authenticated user to view folder information:
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    {% note alert %}
 
-   Don't create the resource together with the `yandex_resourcemanager_folder_iam_policy` resource. They will conflict with each other.
+   Do not create the resource together with the `yandex_resourcemanager_folder_iam_policy` resource. They will conflict with each other.
 
    {% endnote %}
 
@@ -64,8 +64,8 @@ For example, allow any authenticated user to view folder information:
 
    1. Describe the parameters of the folder role in a configuration file:
 
-      * `folder_id`: [ID of the folder](../../resource-manager/operations/folder/get-id.md) to grant permissions for. This parameter is required.
-      * `role`: Role being assigned. This parameter is required.
+      * `folder_id`: [ID of the folder](../../resource-manager/operations/folder/get-id.md) to grant permissions for. This is a required parameter.
+      * `role`: Role being assigned. This is a required parameter.
 
          {% note info %}
 
@@ -73,7 +73,7 @@ For example, allow any authenticated user to view folder information:
 
          {% endnote %}
 
-      * `member`: User to assign the role to. To add all users, create an entry in the format `system:<allUsers|allAuthenticatedUsers>`, where `<allUsers|allAuthenticatedUsers>` is one of [system groups](../../iam/concepts/access-control/system-group.md). This parameter is required.
+      * `member`: User to assign the role to. To add all users, create an entry in the format `system:<allUsers|allAuthenticatedUsers>`, where `<allUsers|allAuthenticatedUsers>` is one of [system groups](../../iam/concepts/access-control/system-group.md). This is a required parameter.
 
       Example of the configuration file structure:
 
@@ -109,7 +109,7 @@ For example, allow any authenticated user to view folder information:
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
       ```
@@ -118,7 +118,7 @@ For example, allow any authenticated user to view folder information:
 
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-      You can verify the change in the folder using the [management console]({{ link-console-main }}) or the following [CLI](../../cli/quickstart.md) command:
+      You can check the folder update using the [management console]({{ link-console-main }}) or this [CLI](../../cli/quickstart.md) command:
 
       ```
       yc resource-manager folder list-access-bindings <folder name>|<folder ID>

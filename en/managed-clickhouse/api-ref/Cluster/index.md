@@ -42,13 +42,24 @@ A set of methods for managing ClickHouse clusters.
             "minBytesForWidePart": "integer",
             "minRowsForWidePart": "integer",
             "ttlOnlyDropParts": true,
-            "allowRemoteFsZeroCopyReplication": true
+            "allowRemoteFsZeroCopyReplication": true,
+            "mergeWithTtlTimeout": "integer",
+            "mergeWithRecompressionTtlTimeout": "integer",
+            "maxPartsInTotal": "integer",
+            "maxNumberOfMergesWithTtlInPool": "integer",
+            "cleanupDelayPeriod": "integer",
+            "numberOfFreeEntriesInPoolToExecuteMutation": "integer",
+            "maxAvgPartSizeForTooManyParts": "integer",
+            "minAgeToForceMergeSeconds": "integer",
+            "minAgeToForceMergeOnPartitionOnly": true,
+            "mergeSelectingSleepMs": "integer"
           },
           "compression": [
             {
               "method": "string",
               "minPartSize": "string",
-              "minPartSizeRatio": "number"
+              "minPartSizeRatio": "number",
+              "level": "integer"
             }
           ],
           "dictionaries": [
@@ -147,7 +158,8 @@ A set of methods for managing ClickHouse clusters.
                 "host": "string",
                 "port": "string",
                 "user": "string",
-                "password": "string"
+                "password": "string",
+                "options": "string"
               },
               "postgresqlSource": {
                 "db": "string",
@@ -184,7 +196,10 @@ A set of methods for managing ClickHouse clusters.
             "securityProtocol": "string",
             "saslMechanism": "string",
             "saslUsername": "string",
-            "saslPassword": "string"
+            "saslPassword": "string",
+            "enableSslCertificateVerification": true,
+            "maxPollIntervalMs": "integer",
+            "sessionTimeoutMs": "integer"
           },
           "kafkaTopics": [
             {
@@ -193,7 +208,10 @@ A set of methods for managing ClickHouse clusters.
                 "securityProtocol": "string",
                 "saslMechanism": "string",
                 "saslUsername": "string",
-                "saslPassword": "string"
+                "saslPassword": "string",
+                "enableSslCertificateVerification": true,
+                "maxPollIntervalMs": "integer",
+                "sessionTimeoutMs": "integer"
               }
             }
           ],
@@ -211,6 +229,7 @@ A set of methods for managing ClickHouse clusters.
           "maxPartitionSizeToDrop": "integer",
           "builtinDictionariesReloadInterval": "integer",
           "timezone": "string",
+          "geobaseEnabled": true,
           "geobaseUri": "string",
           "queryLogRetentionSize": "integer",
           "queryLogRetentionTime": "integer",
@@ -230,12 +249,32 @@ A set of methods for managing ClickHouse clusters.
           "textLogRetentionTime": "integer",
           "textLogLevel": "string",
           "opentelemetrySpanLogEnabled": true,
+          "opentelemetrySpanLogRetentionSize": "integer",
+          "opentelemetrySpanLogRetentionTime": "integer",
+          "queryViewsLogEnabled": true,
+          "queryViewsLogRetentionSize": "integer",
+          "queryViewsLogRetentionTime": "integer",
+          "asynchronousMetricLogEnabled": true,
+          "asynchronousMetricLogRetentionSize": "integer",
+          "asynchronousMetricLogRetentionTime": "integer",
+          "sessionLogEnabled": true,
+          "sessionLogRetentionSize": "integer",
+          "sessionLogRetentionTime": "integer",
+          "zookeeperLogEnabled": true,
+          "zookeeperLogRetentionSize": "integer",
+          "zookeeperLogRetentionTime": "integer",
+          "asynchronousInsertLogEnabled": true,
+          "asynchronousInsertLogRetentionSize": "integer",
+          "asynchronousInsertLogRetentionTime": "integer",
           "backgroundPoolSize": "integer",
+          "backgroundMergesMutationsConcurrencyRatio": "integer",
           "backgroundSchedulePoolSize": "integer",
           "backgroundFetchesPoolSize": "integer",
           "backgroundMovePoolSize": "integer",
           "backgroundDistributedSchedulePoolSize": "integer",
           "backgroundBufferFlushSchedulePoolSize": "integer",
+          "backgroundMessageBrokerSchedulePoolSize": "integer",
+          "backgroundCommonPoolSize": "integer",
           "defaultDatabase": "string",
           "totalMemoryProfilerStep": "integer",
           "totalMemoryTrackerSampleProbability": "number"
@@ -256,13 +295,24 @@ A set of methods for managing ClickHouse clusters.
             "minBytesForWidePart": "integer",
             "minRowsForWidePart": "integer",
             "ttlOnlyDropParts": true,
-            "allowRemoteFsZeroCopyReplication": true
+            "allowRemoteFsZeroCopyReplication": true,
+            "mergeWithTtlTimeout": "integer",
+            "mergeWithRecompressionTtlTimeout": "integer",
+            "maxPartsInTotal": "integer",
+            "maxNumberOfMergesWithTtlInPool": "integer",
+            "cleanupDelayPeriod": "integer",
+            "numberOfFreeEntriesInPoolToExecuteMutation": "integer",
+            "maxAvgPartSizeForTooManyParts": "integer",
+            "minAgeToForceMergeSeconds": "integer",
+            "minAgeToForceMergeOnPartitionOnly": true,
+            "mergeSelectingSleepMs": "integer"
           },
           "compression": [
             {
               "method": "string",
               "minPartSize": "string",
-              "minPartSizeRatio": "number"
+              "minPartSizeRatio": "number",
+              "level": "integer"
             }
           ],
           "dictionaries": [
@@ -361,7 +411,8 @@ A set of methods for managing ClickHouse clusters.
                 "host": "string",
                 "port": "string",
                 "user": "string",
-                "password": "string"
+                "password": "string",
+                "options": "string"
               },
               "postgresqlSource": {
                 "db": "string",
@@ -398,7 +449,10 @@ A set of methods for managing ClickHouse clusters.
             "securityProtocol": "string",
             "saslMechanism": "string",
             "saslUsername": "string",
-            "saslPassword": "string"
+            "saslPassword": "string",
+            "enableSslCertificateVerification": true,
+            "maxPollIntervalMs": "integer",
+            "sessionTimeoutMs": "integer"
           },
           "kafkaTopics": [
             {
@@ -407,7 +461,10 @@ A set of methods for managing ClickHouse clusters.
                 "securityProtocol": "string",
                 "saslMechanism": "string",
                 "saslUsername": "string",
-                "saslPassword": "string"
+                "saslPassword": "string",
+                "enableSslCertificateVerification": true,
+                "maxPollIntervalMs": "integer",
+                "sessionTimeoutMs": "integer"
               }
             }
           ],
@@ -425,6 +482,7 @@ A set of methods for managing ClickHouse clusters.
           "maxPartitionSizeToDrop": "integer",
           "builtinDictionariesReloadInterval": "integer",
           "timezone": "string",
+          "geobaseEnabled": true,
           "geobaseUri": "string",
           "queryLogRetentionSize": "integer",
           "queryLogRetentionTime": "integer",
@@ -444,12 +502,32 @@ A set of methods for managing ClickHouse clusters.
           "textLogRetentionTime": "integer",
           "textLogLevel": "string",
           "opentelemetrySpanLogEnabled": true,
+          "opentelemetrySpanLogRetentionSize": "integer",
+          "opentelemetrySpanLogRetentionTime": "integer",
+          "queryViewsLogEnabled": true,
+          "queryViewsLogRetentionSize": "integer",
+          "queryViewsLogRetentionTime": "integer",
+          "asynchronousMetricLogEnabled": true,
+          "asynchronousMetricLogRetentionSize": "integer",
+          "asynchronousMetricLogRetentionTime": "integer",
+          "sessionLogEnabled": true,
+          "sessionLogRetentionSize": "integer",
+          "sessionLogRetentionTime": "integer",
+          "zookeeperLogEnabled": true,
+          "zookeeperLogRetentionSize": "integer",
+          "zookeeperLogRetentionTime": "integer",
+          "asynchronousInsertLogEnabled": true,
+          "asynchronousInsertLogRetentionSize": "integer",
+          "asynchronousInsertLogRetentionTime": "integer",
           "backgroundPoolSize": "integer",
+          "backgroundMergesMutationsConcurrencyRatio": "integer",
           "backgroundSchedulePoolSize": "integer",
           "backgroundFetchesPoolSize": "integer",
           "backgroundMovePoolSize": "integer",
           "backgroundDistributedSchedulePoolSize": "integer",
           "backgroundBufferFlushSchedulePoolSize": "integer",
+          "backgroundMessageBrokerSchedulePoolSize": "integer",
+          "backgroundCommonPoolSize": "integer",
           "defaultDatabase": "string",
           "totalMemoryProfilerStep": "integer",
           "totalMemoryTrackerSampleProbability": "number"
@@ -470,13 +548,24 @@ A set of methods for managing ClickHouse clusters.
             "minBytesForWidePart": "integer",
             "minRowsForWidePart": "integer",
             "ttlOnlyDropParts": true,
-            "allowRemoteFsZeroCopyReplication": true
+            "allowRemoteFsZeroCopyReplication": true,
+            "mergeWithTtlTimeout": "integer",
+            "mergeWithRecompressionTtlTimeout": "integer",
+            "maxPartsInTotal": "integer",
+            "maxNumberOfMergesWithTtlInPool": "integer",
+            "cleanupDelayPeriod": "integer",
+            "numberOfFreeEntriesInPoolToExecuteMutation": "integer",
+            "maxAvgPartSizeForTooManyParts": "integer",
+            "minAgeToForceMergeSeconds": "integer",
+            "minAgeToForceMergeOnPartitionOnly": true,
+            "mergeSelectingSleepMs": "integer"
           },
           "compression": [
             {
               "method": "string",
               "minPartSize": "string",
-              "minPartSizeRatio": "number"
+              "minPartSizeRatio": "number",
+              "level": "integer"
             }
           ],
           "dictionaries": [
@@ -575,7 +664,8 @@ A set of methods for managing ClickHouse clusters.
                 "host": "string",
                 "port": "string",
                 "user": "string",
-                "password": "string"
+                "password": "string",
+                "options": "string"
               },
               "postgresqlSource": {
                 "db": "string",
@@ -612,7 +702,10 @@ A set of methods for managing ClickHouse clusters.
             "securityProtocol": "string",
             "saslMechanism": "string",
             "saslUsername": "string",
-            "saslPassword": "string"
+            "saslPassword": "string",
+            "enableSslCertificateVerification": true,
+            "maxPollIntervalMs": "integer",
+            "sessionTimeoutMs": "integer"
           },
           "kafkaTopics": [
             {
@@ -621,7 +714,10 @@ A set of methods for managing ClickHouse clusters.
                 "securityProtocol": "string",
                 "saslMechanism": "string",
                 "saslUsername": "string",
-                "saslPassword": "string"
+                "saslPassword": "string",
+                "enableSslCertificateVerification": true,
+                "maxPollIntervalMs": "integer",
+                "sessionTimeoutMs": "integer"
               }
             }
           ],
@@ -639,6 +735,7 @@ A set of methods for managing ClickHouse clusters.
           "maxPartitionSizeToDrop": "integer",
           "builtinDictionariesReloadInterval": "integer",
           "timezone": "string",
+          "geobaseEnabled": true,
           "geobaseUri": "string",
           "queryLogRetentionSize": "integer",
           "queryLogRetentionTime": "integer",
@@ -658,12 +755,32 @@ A set of methods for managing ClickHouse clusters.
           "textLogRetentionTime": "integer",
           "textLogLevel": "string",
           "opentelemetrySpanLogEnabled": true,
+          "opentelemetrySpanLogRetentionSize": "integer",
+          "opentelemetrySpanLogRetentionTime": "integer",
+          "queryViewsLogEnabled": true,
+          "queryViewsLogRetentionSize": "integer",
+          "queryViewsLogRetentionTime": "integer",
+          "asynchronousMetricLogEnabled": true,
+          "asynchronousMetricLogRetentionSize": "integer",
+          "asynchronousMetricLogRetentionTime": "integer",
+          "sessionLogEnabled": true,
+          "sessionLogRetentionSize": "integer",
+          "sessionLogRetentionTime": "integer",
+          "zookeeperLogEnabled": true,
+          "zookeeperLogRetentionSize": "integer",
+          "zookeeperLogRetentionTime": "integer",
+          "asynchronousInsertLogEnabled": true,
+          "asynchronousInsertLogRetentionSize": "integer",
+          "asynchronousInsertLogRetentionTime": "integer",
           "backgroundPoolSize": "integer",
+          "backgroundMergesMutationsConcurrencyRatio": "integer",
           "backgroundSchedulePoolSize": "integer",
           "backgroundFetchesPoolSize": "integer",
           "backgroundMovePoolSize": "integer",
           "backgroundDistributedSchedulePoolSize": "integer",
           "backgroundBufferFlushSchedulePoolSize": "integer",
+          "backgroundMessageBrokerSchedulePoolSize": "integer",
+          "backgroundCommonPoolSize": "integer",
           "defaultDatabase": "string",
           "totalMemoryProfilerStep": "integer",
           "totalMemoryTrackerSampleProbability": "number"
@@ -700,7 +817,8 @@ A set of methods for managing ClickHouse clusters.
       "enabled": true,
       "moveFactor": "number",
       "dataCacheEnabled": true,
-      "dataCacheMaxSize": "integer"
+      "dataCacheMaxSize": "integer",
+      "preferNotToMerge": true
     },
     "sqlDatabaseManagement": true,
     "sqlUserManagement": true,
@@ -766,10 +884,21 @@ config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>minBytesF
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>minRowsForWidePart | **integer** (int64)<br><p>Minimum number of rows in a data part that can be stored in <strong>Wide</strong> format.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree/#min_bytes_for_wide_part">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>ttlOnlyDropParts | **boolean** (boolean)<br><p>Enables or disables complete dropping of data parts where all rows are expired in MergeTree tables.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/settings/settings/#ttl_only_drop_parts">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>allowRemoteFsZeroCopyReplication | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>mergeWithTtlTimeout | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>mergeWithRecompressionTtlTimeout | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>maxPartsInTotal | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>maxNumberOfMergesWithTtlInPool | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>cleanupDelayPeriod | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>numberOfFreeEntriesInPoolToExecuteMutation | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>maxAvgPartSizeForTooManyParts | **integer** (int64)<br><p>The 'too many parts' check according to 'parts_to_delay_insert' and 'parts_to_throw_insert' will be active only if the average part size (in the relevant partition) is not larger than the specified threshold. If it is larger than the specified threshold, the INSERTs will be neither delayed or rejected. This allows to have hundreds of terabytes in a single table on a single server if the parts are successfully merged to larger parts. This does not affect the thresholds on inactive parts or total parts. Default: 1 GiB Min version: 22.10 See in-depth description in <a href="https://github.com/ClickHouse/ClickHouse/blob/f9558345e886876b9132d9c018e357f7fa9b22a3/src/Storages/MergeTree/MergeTreeSettings.h#L80">ClickHouse GitHub</a></p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>minAgeToForceMergeSeconds | **integer** (int64)<br><p>Merge parts if every part in the range is older than the value of min_age_to_force_merge_seconds. Default: 0 - disabled Min_version: 22.10 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/merge-tree-settings#min_age_to_force_merge_seconds">ClickHouse documentation</a></p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>minAgeToForceMergeOnPartitionOnly | **boolean** (boolean)<br><p>Whether min_age_to_force_merge_seconds should be applied only on the entire partition and not on subset. Default: false Min_version: 22.11 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/merge-tree-settings#min_age_to_force_merge_seconds">ClickHouse documentation</a></p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>mergeTree.<br>mergeSelectingSleepMs | **integer** (int64)<br><p>Sleep time for merge selecting when no part is selected. A lower setting triggers selecting tasks in background_schedule_pool frequently, which results in a large number of requests to ClickHouse Keeper in large-scale clusters. Default: 5000 Min_version: 21.10 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/settings#merge_selecting_sleep_ms">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>compression[] | **object**<br><p>Compression settings for the ClickHouse cluster. See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server_settings/settings/#compression">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>compression[].<br>method | **string**<br><p>Compression method to use for the specified combination of ``minPartSize`` and ``minPartSizeRatio``.</p> <ul> <li>LZ4: <a href="https://lz4.github.io/lz4/">LZ4 compression algorithm</a>.</li> <li>ZSTD: <a href="https://facebook.github.io/zstd/">Zstandard compression algorithm</a>.</li> </ul> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>compression[].<br>minPartSize | **string** (int64)<br><p>Minimum size of a part of a table.</p> <p>The minimum value is 1.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>compression[].<br>minPartSizeRatio | **number** (double)<br><p>Minimum ratio of a part relative to the size of all the data in the table.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>compression[].<br>level | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[] | **object**<br><p>Configuration of external dictionaries to be used by the ClickHouse cluster. See in-depth description in <a href="https://clickhouse.com/docs/en/query_language/dicts/external_dicts/">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>name | **string**<br><p>Required. Name of the external dictionary.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>structure | **object**
@@ -843,6 +972,7 @@ config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>mong
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>mongodbSource.<br>port | **string** (int64)<br><p>Port to use when connecting to the host.</p> <p>Acceptable values are 0 to 65535, inclusive.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>mongodbSource.<br>user | **string**<br><p>Required. Name of the MongoDB database user.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>mongodbSource.<br>password | **string**<br><p>Password of the MongoDB database user.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>mongodbSource.<br>options | **string**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>postgresqlSource | **object** <br>`config.clickhouse.config.effectiveConfig.dictionaries[]` includes only one of the fields `httpSource`, `mysqlSource`, `clickhouseSource`, `mongodbSource`, `postgresqlSource`<br>
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>postgresqlSource.<br>db | **string**<br><p>Required. Name of the PostrgreSQL database.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>dictionaries[].<br>postgresqlSource.<br>table | **string**<br><p>Required. Name of the table in the specified database to be used as the dictionary source.</p> 
@@ -858,13 +988,16 @@ config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>graphiteRollup[].<br>pa
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>graphiteRollup[].<br>patterns[].<br>regexp | **string**<br><p>Pattern for metric names.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>graphiteRollup[].<br>patterns[].<br>function | **string**<br><p>Required. Name of the aggregating function to apply to data of the age specified in ``retention``.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[] | **object**<br><p>Required. Age of data to use for thinning.</p> <p>Must contain at least one element.</p> 
-config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>age | **string** (int64)<br><p>Minimum age of the data in seconds.</p> <p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>age | **string** (int64)<br><p>Minimum age of the data in seconds.</p> <p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>precision | **string** (int64)<br><p>Precision of determining the age of the data, in seconds.</p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafka | **object**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafka.<br>securityProtocol | **string**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafka.<br>saslMechanism | **string**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafka.<br>saslUsername | **string**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafka.<br>saslPassword | **string**
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafka.<br>enableSslCertificateVerification | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafka.<br>maxPollIntervalMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafka.<br>sessionTimeoutMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[] | **object**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>name | **string**<br><p>Required.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>settings | **object**<br><p>Required.</p> 
@@ -872,6 +1005,9 @@ config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>setti
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>settings.<br>saslMechanism | **string**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>settings.<br>saslUsername | **string**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>settings.<br>saslPassword | **string**
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>settings.<br>enableSslCertificateVerification | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>settings.<br>maxPollIntervalMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>kafkaTopics[].<br>settings.<br>sessionTimeoutMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>rabbitmq | **object**
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>rabbitmq.<br>username | **string**<br><p><a href="https://clickhouse.com/docs/en/engines/table-engines/integrations/rabbitmq/">RabbitMQ</a> username</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>rabbitmq.<br>password | **string**<br><p><a href="https://clickhouse.com/docs/en/engines/table-engines/integrations/rabbitmq/">RabbitMQ</a> password</p> 
@@ -885,6 +1021,7 @@ config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>maxTableSizeToDrop | **
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>maxPartitionSizeToDrop | **integer** (int64)<br><p>Maximum size of the partition that can be deleted using a DROP query.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>builtinDictionariesReloadInterval | **integer** (int64)<br><p>The setting is deprecated and has no effect.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>timezone | **string**<br><p>The server's time zone to be used in DateTime fields conversions. Specified as an IANA identifier.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>geobaseEnabled | **boolean** (boolean)<br><p>Enable or disable geobase.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>geobaseUri | **string**<br><p>Address of the archive with the user geobase in Object Storage.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>queryLogRetentionSize | **integer** (int64)<br><p>The maximum size that query_log can grow to before old data will be removed. If set to 0, automatic removal of query_log data based on size is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>queryLogRetentionTime | **integer** (int64)<br><p>The maximum time that query_log records will be retained before removal. If set to 0, automatic removal of query_log data based on time is disabled.</p> 
@@ -903,13 +1040,33 @@ config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>textLogEnabled | **bool
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>textLogRetentionSize | **integer** (int64)<br><p>The maximum size that text_log can grow to before old data will be removed. If set to 0, automatic removal of text_log data based on size is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>textLogRetentionTime | **integer** (int64)<br><p>The maximum time that text_log records will be retained before removal. If set to 0, automatic removal of text_log data based on time is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>textLogLevel | **string**<br><p>Logging level for text_log system table. Possible values: TRACE, DEBUG, INFORMATION, WARNING, ERROR.</p> 
-config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>opentelemetrySpanLogEnabled | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>opentelemetrySpanLogEnabled | **boolean** (boolean)<br><p>Enable or disable opentelemetry_span_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>opentelemetrySpanLogRetentionSize | **integer** (int64)<br><p>The maximum size that opentelemetry_span_log can grow to before old data will be removed. If set to 0 (default), automatic removal of opentelemetry_span_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>opentelemetrySpanLogRetentionTime | **integer** (int64)<br><p>The maximum time that opentelemetry_span_log records will be retained before removal. If set to 0, automatic removal of opentelemetry_span_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>queryViewsLogEnabled | **boolean** (boolean)<br><p>Enable or disable query_views_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>queryViewsLogRetentionSize | **integer** (int64)<br><p>The maximum size that query_views_log can grow to before old data will be removed. If set to 0 (default), automatic removal of query_views_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>queryViewsLogRetentionTime | **integer** (int64)<br><p>The maximum time that query_views_log records will be retained before removal. If set to 0, automatic removal of query_views_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>asynchronousMetricLogEnabled | **boolean** (boolean)<br><p>Enable or disable asynchronous_metric_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>asynchronousMetricLogRetentionSize | **integer** (int64)<br><p>The maximum size that asynchronous_metric_log can grow to before old data will be removed. If set to 0 (default), automatic removal of asynchronous_metric_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>asynchronousMetricLogRetentionTime | **integer** (int64)<br><p>The maximum time that asynchronous_metric_log records will be retained before removal. If set to 0, automatic removal of asynchronous_metric_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>sessionLogEnabled | **boolean** (boolean)<br><p>Enable or disable session_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>sessionLogRetentionSize | **integer** (int64)<br><p>The maximum size that session_log can grow to before old data will be removed. If set to 0 (default), automatic removal of session_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>sessionLogRetentionTime | **integer** (int64)<br><p>The maximum time that session_log records will be retained before removal. If set to 0, automatic removal of session_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>zookeeperLogEnabled | **boolean** (boolean)<br><p>Enable or disable zookeeper_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>zookeeperLogRetentionSize | **integer** (int64)<br><p>The maximum size that zookeeper_log can grow to before old data will be removed. If set to 0 (default), automatic removal of zookeeper_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>zookeeperLogRetentionTime | **integer** (int64)<br><p>The maximum time that zookeeper_log records will be retained before removal. If set to 0, automatic removal of zookeeper_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>asynchronousInsertLogEnabled | **boolean** (boolean)<br><p>Enable or disable asynchronous_insert_log system table. Default value: false. Minimal required ClickHouse version: 22.10.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>asynchronousInsertLogRetentionSize | **integer** (int64)<br><p>The maximum size that asynchronous_insert_log can grow to before old data will be removed. If set to 0 (default), automatic removal of asynchronous_insert_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>asynchronousInsertLogRetentionTime | **integer** (int64)<br><p>The maximum time that asynchronous_insert_log records will be retained before removal. If set to 0, automatic removal of asynchronous_insert_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundPoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundMergesMutationsConcurrencyRatio | **integer** (int64)<br><p>Sets a ratio between the number of threads and the number of background merges and mutations that can be executed concurrently. For example, if the ratio equals to 2 and background_pool_size is set to 16 then ClickHouse can execute 32 background merges concurrently. This is possible, because background operations could be suspended and postponed. This is needed to give small merges more execution priority. You can only increase this ratio at runtime. To lower it you have to restart the server. The same as for background_pool_size setting background_merges_mutations_concurrency_ratio could be applied from the default profile for backward compatibility. Default: 2 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings#background_merges_mutations_concurrency_ratio">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundFetchesPoolSize | **integer** (int64)<br><p>Sets the number of threads performing background fetches for tables with <strong>ReplicatedMergeTree</strong> engines. Default value: 8.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings/#background_fetches_pool_size">ClickHouse documentation</a>.</p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundMovePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundDistributedSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundBufferFlushSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundMessageBrokerSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>backgroundCommonPoolSize | **integer** (int64)<br><p>The maximum number of threads that will be used for performing a variety of operations (mostly garbage collection) for *MergeTree-engine tables in a background. Default: 8 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings#background_common_pool_size">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>defaultDatabase | **string**<br><p>The default database.</p> <p>To get a list of cluster databases, see <a href="https://cloud.yandex.com/en/docs/managed-clickhouse/operations/databases#list-db">Yandex Managed ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>totalMemoryProfilerStep | **integer** (int64)<br><p>Sets the memory size (in bytes) for a stack trace at every peak allocation step. Default value: <strong>4194304</strong>.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings/#total-memory-profiler-step">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>effectiveConfig.<br>totalMemoryTrackerSampleProbability | **number** (double)
@@ -930,10 +1087,21 @@ config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>minBytesForWid
 config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>minRowsForWidePart | **integer** (int64)<br><p>Minimum number of rows in a data part that can be stored in <strong>Wide</strong> format.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree/#min_bytes_for_wide_part">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>ttlOnlyDropParts | **boolean** (boolean)<br><p>Enables or disables complete dropping of data parts where all rows are expired in MergeTree tables.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/settings/settings/#ttl_only_drop_parts">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>allowRemoteFsZeroCopyReplication | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>mergeWithTtlTimeout | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>mergeWithRecompressionTtlTimeout | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>maxPartsInTotal | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>maxNumberOfMergesWithTtlInPool | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>cleanupDelayPeriod | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>numberOfFreeEntriesInPoolToExecuteMutation | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>maxAvgPartSizeForTooManyParts | **integer** (int64)<br><p>The 'too many parts' check according to 'parts_to_delay_insert' and 'parts_to_throw_insert' will be active only if the average part size (in the relevant partition) is not larger than the specified threshold. If it is larger than the specified threshold, the INSERTs will be neither delayed or rejected. This allows to have hundreds of terabytes in a single table on a single server if the parts are successfully merged to larger parts. This does not affect the thresholds on inactive parts or total parts. Default: 1 GiB Min version: 22.10 See in-depth description in <a href="https://github.com/ClickHouse/ClickHouse/blob/f9558345e886876b9132d9c018e357f7fa9b22a3/src/Storages/MergeTree/MergeTreeSettings.h#L80">ClickHouse GitHub</a></p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>minAgeToForceMergeSeconds | **integer** (int64)<br><p>Merge parts if every part in the range is older than the value of min_age_to_force_merge_seconds. Default: 0 - disabled Min_version: 22.10 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/merge-tree-settings#min_age_to_force_merge_seconds">ClickHouse documentation</a></p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>minAgeToForceMergeOnPartitionOnly | **boolean** (boolean)<br><p>Whether min_age_to_force_merge_seconds should be applied only on the entire partition and not on subset. Default: false Min_version: 22.11 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/merge-tree-settings#min_age_to_force_merge_seconds">ClickHouse documentation</a></p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>mergeTree.<br>mergeSelectingSleepMs | **integer** (int64)<br><p>Sleep time for merge selecting when no part is selected. A lower setting triggers selecting tasks in background_schedule_pool frequently, which results in a large number of requests to ClickHouse Keeper in large-scale clusters. Default: 5000 Min_version: 21.10 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/settings#merge_selecting_sleep_ms">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>compression[] | **object**<br><p>Compression settings for the ClickHouse cluster. See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server_settings/settings/#compression">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>compression[].<br>method | **string**<br><p>Compression method to use for the specified combination of ``minPartSize`` and ``minPartSizeRatio``.</p> <ul> <li>LZ4: <a href="https://lz4.github.io/lz4/">LZ4 compression algorithm</a>.</li> <li>ZSTD: <a href="https://facebook.github.io/zstd/">Zstandard compression algorithm</a>.</li> </ul> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>compression[].<br>minPartSize | **string** (int64)<br><p>Minimum size of a part of a table.</p> <p>The minimum value is 1.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>compression[].<br>minPartSizeRatio | **number** (double)<br><p>Minimum ratio of a part relative to the size of all the data in the table.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>compression[].<br>level | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[] | **object**<br><p>Configuration of external dictionaries to be used by the ClickHouse cluster. See in-depth description in <a href="https://clickhouse.com/docs/en/query_language/dicts/external_dicts/">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>name | **string**<br><p>Required. Name of the external dictionary.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>structure | **object**<br>Required. Set of attributes for the external dictionary. For in-depth description, see [ClickHouse documentation](https://clickhouse.com/docs/en/query_language/dicts/external_dicts_dict_structure/).
@@ -1007,6 +1175,7 @@ config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>mongodbSo
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>mongodbSource.<br>port | **string** (int64)<br><p>Port to use when connecting to the host.</p> <p>Acceptable values are 0 to 65535, inclusive.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>mongodbSource.<br>user | **string**<br><p>Required. Name of the MongoDB database user.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>mongodbSource.<br>password | **string**<br><p>Password of the MongoDB database user.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>mongodbSource.<br>options | **string**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>postgresqlSource | **object**<br>PostgreSQL source for the dictionary. <br>`config.clickhouse.config.userConfig.dictionaries[]` includes only one of the fields `httpSource`, `mysqlSource`, `clickhouseSource`, `mongodbSource`, `postgresqlSource`<br>
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>postgresqlSource.<br>db | **string**<br><p>Required. Name of the PostrgreSQL database.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>dictionaries[].<br>postgresqlSource.<br>table | **string**<br><p>Required. Name of the table in the specified database to be used as the dictionary source.</p> 
@@ -1022,13 +1191,16 @@ config.<br>clickhouse.<br>config.<br>userConfig.<br>graphiteRollup[].<br>pattern
 config.<br>clickhouse.<br>config.<br>userConfig.<br>graphiteRollup[].<br>patterns[].<br>regexp | **string**<br><p>Pattern for metric names.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>graphiteRollup[].<br>patterns[].<br>function | **string**<br><p>Required. Name of the aggregating function to apply to data of the age specified in ``retention``.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[] | **object**<br><p>Required. Age of data to use for thinning.</p> <p>Must contain at least one element.</p> 
-config.<br>clickhouse.<br>config.<br>userConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>age | **string** (int64)<br><p>Minimum age of the data in seconds.</p> <p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>age | **string** (int64)<br><p>Minimum age of the data in seconds.</p> <p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>precision | **string** (int64)<br><p>Precision of determining the age of the data, in seconds.</p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafka | **object**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafka.<br>securityProtocol | **string**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafka.<br>saslMechanism | **string**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafka.<br>saslUsername | **string**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafka.<br>saslPassword | **string**
+config.<br>clickhouse.<br>config.<br>userConfig.<br>kafka.<br>enableSslCertificateVerification | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>kafka.<br>maxPollIntervalMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>kafka.<br>sessionTimeoutMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[] | **object**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>name | **string**<br><p>Required.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>settings | **object**<br><p>Required.</p> 
@@ -1036,6 +1208,9 @@ config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>settings.<
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>settings.<br>saslMechanism | **string**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>settings.<br>saslUsername | **string**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>settings.<br>saslPassword | **string**
+config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>settings.<br>enableSslCertificateVerification | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>settings.<br>maxPollIntervalMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>kafkaTopics[].<br>settings.<br>sessionTimeoutMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>rabbitmq | **object**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>rabbitmq.<br>username | **string**<br><p><a href="https://clickhouse.com/docs/en/engines/table-engines/integrations/rabbitmq/">RabbitMQ</a> username</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>rabbitmq.<br>password | **string**<br><p><a href="https://clickhouse.com/docs/en/engines/table-engines/integrations/rabbitmq/">RabbitMQ</a> password</p> 
@@ -1049,6 +1224,7 @@ config.<br>clickhouse.<br>config.<br>userConfig.<br>maxTableSizeToDrop | **integ
 config.<br>clickhouse.<br>config.<br>userConfig.<br>maxPartitionSizeToDrop | **integer** (int64)<br><p>Maximum size of the partition that can be deleted using a DROP query.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>builtinDictionariesReloadInterval | **integer** (int64)<br><p>The setting is deprecated and has no effect.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>timezone | **string**<br><p>The server's time zone to be used in DateTime fields conversions. Specified as an IANA identifier.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>geobaseEnabled | **boolean** (boolean)<br><p>Enable or disable geobase.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>geobaseUri | **string**<br><p>Address of the archive with the user geobase in Object Storage.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>queryLogRetentionSize | **integer** (int64)<br><p>The maximum size that query_log can grow to before old data will be removed. If set to 0, automatic removal of query_log data based on size is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>queryLogRetentionTime | **integer** (int64)<br><p>The maximum time that query_log records will be retained before removal. If set to 0, automatic removal of query_log data based on time is disabled.</p> 
@@ -1067,13 +1243,33 @@ config.<br>clickhouse.<br>config.<br>userConfig.<br>textLogEnabled | **boolean**
 config.<br>clickhouse.<br>config.<br>userConfig.<br>textLogRetentionSize | **integer** (int64)<br><p>The maximum size that text_log can grow to before old data will be removed. If set to 0, automatic removal of text_log data based on size is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>textLogRetentionTime | **integer** (int64)<br><p>The maximum time that text_log records will be retained before removal. If set to 0, automatic removal of text_log data based on time is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>textLogLevel | **string**<br><p>Logging level for text_log system table. Possible values: TRACE, DEBUG, INFORMATION, WARNING, ERROR.</p> 
-config.<br>clickhouse.<br>config.<br>userConfig.<br>opentelemetrySpanLogEnabled | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>userConfig.<br>opentelemetrySpanLogEnabled | **boolean** (boolean)<br><p>Enable or disable opentelemetry_span_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>opentelemetrySpanLogRetentionSize | **integer** (int64)<br><p>The maximum size that opentelemetry_span_log can grow to before old data will be removed. If set to 0 (default), automatic removal of opentelemetry_span_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>opentelemetrySpanLogRetentionTime | **integer** (int64)<br><p>The maximum time that opentelemetry_span_log records will be retained before removal. If set to 0, automatic removal of opentelemetry_span_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>queryViewsLogEnabled | **boolean** (boolean)<br><p>Enable or disable query_views_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>queryViewsLogRetentionSize | **integer** (int64)<br><p>The maximum size that query_views_log can grow to before old data will be removed. If set to 0 (default), automatic removal of query_views_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>queryViewsLogRetentionTime | **integer** (int64)<br><p>The maximum time that query_views_log records will be retained before removal. If set to 0, automatic removal of query_views_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>asynchronousMetricLogEnabled | **boolean** (boolean)<br><p>Enable or disable asynchronous_metric_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>asynchronousMetricLogRetentionSize | **integer** (int64)<br><p>The maximum size that asynchronous_metric_log can grow to before old data will be removed. If set to 0 (default), automatic removal of asynchronous_metric_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>asynchronousMetricLogRetentionTime | **integer** (int64)<br><p>The maximum time that asynchronous_metric_log records will be retained before removal. If set to 0, automatic removal of asynchronous_metric_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>sessionLogEnabled | **boolean** (boolean)<br><p>Enable or disable session_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>sessionLogRetentionSize | **integer** (int64)<br><p>The maximum size that session_log can grow to before old data will be removed. If set to 0 (default), automatic removal of session_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>sessionLogRetentionTime | **integer** (int64)<br><p>The maximum time that session_log records will be retained before removal. If set to 0, automatic removal of session_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>zookeeperLogEnabled | **boolean** (boolean)<br><p>Enable or disable zookeeper_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>zookeeperLogRetentionSize | **integer** (int64)<br><p>The maximum size that zookeeper_log can grow to before old data will be removed. If set to 0 (default), automatic removal of zookeeper_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>zookeeperLogRetentionTime | **integer** (int64)<br><p>The maximum time that zookeeper_log records will be retained before removal. If set to 0, automatic removal of zookeeper_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>asynchronousInsertLogEnabled | **boolean** (boolean)<br><p>Enable or disable asynchronous_insert_log system table. Default value: false. Minimal required ClickHouse version: 22.10.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>asynchronousInsertLogRetentionSize | **integer** (int64)<br><p>The maximum size that asynchronous_insert_log can grow to before old data will be removed. If set to 0 (default), automatic removal of asynchronous_insert_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>asynchronousInsertLogRetentionTime | **integer** (int64)<br><p>The maximum time that asynchronous_insert_log records will be retained before removal. If set to 0, automatic removal of asynchronous_insert_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundPoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundMergesMutationsConcurrencyRatio | **integer** (int64)<br><p>Sets a ratio between the number of threads and the number of background merges and mutations that can be executed concurrently. For example, if the ratio equals to 2 and background_pool_size is set to 16 then ClickHouse can execute 32 background merges concurrently. This is possible, because background operations could be suspended and postponed. This is needed to give small merges more execution priority. You can only increase this ratio at runtime. To lower it you have to restart the server. The same as for background_pool_size setting background_merges_mutations_concurrency_ratio could be applied from the default profile for backward compatibility. Default: 2 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings#background_merges_mutations_concurrency_ratio">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundFetchesPoolSize | **integer** (int64)<br><p>Sets the number of threads performing background fetches for tables with <strong>ReplicatedMergeTree</strong> engines. Default value: 8.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings/#background_fetches_pool_size">ClickHouse documentation</a>.</p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundMovePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundDistributedSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundBufferFlushSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundMessageBrokerSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>userConfig.<br>backgroundCommonPoolSize | **integer** (int64)<br><p>The maximum number of threads that will be used for performing a variety of operations (mostly garbage collection) for *MergeTree-engine tables in a background. Default: 8 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings#background_common_pool_size">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>defaultDatabase | **string**<br><p>The default database.</p> <p>To get a list of cluster databases, see <a href="https://cloud.yandex.com/en/docs/managed-clickhouse/operations/databases#list-db">Yandex Managed ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>totalMemoryProfilerStep | **integer** (int64)<br><p>Sets the memory size (in bytes) for a stack trace at every peak allocation step. Default value: <strong>4194304</strong>.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings/#total-memory-profiler-step">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>userConfig.<br>totalMemoryTrackerSampleProbability | **number** (double)
@@ -1094,10 +1290,21 @@ config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>minBytesFor
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>minRowsForWidePart | **integer** (int64)<br><p>Minimum number of rows in a data part that can be stored in <strong>Wide</strong> format.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree/#min_bytes_for_wide_part">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>ttlOnlyDropParts | **boolean** (boolean)<br><p>Enables or disables complete dropping of data parts where all rows are expired in MergeTree tables.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/settings/settings/#ttl_only_drop_parts">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>allowRemoteFsZeroCopyReplication | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>mergeWithTtlTimeout | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>mergeWithRecompressionTtlTimeout | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>maxPartsInTotal | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>maxNumberOfMergesWithTtlInPool | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>cleanupDelayPeriod | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>numberOfFreeEntriesInPoolToExecuteMutation | **integer** (int64)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>maxAvgPartSizeForTooManyParts | **integer** (int64)<br><p>The 'too many parts' check according to 'parts_to_delay_insert' and 'parts_to_throw_insert' will be active only if the average part size (in the relevant partition) is not larger than the specified threshold. If it is larger than the specified threshold, the INSERTs will be neither delayed or rejected. This allows to have hundreds of terabytes in a single table on a single server if the parts are successfully merged to larger parts. This does not affect the thresholds on inactive parts or total parts. Default: 1 GiB Min version: 22.10 See in-depth description in <a href="https://github.com/ClickHouse/ClickHouse/blob/f9558345e886876b9132d9c018e357f7fa9b22a3/src/Storages/MergeTree/MergeTreeSettings.h#L80">ClickHouse GitHub</a></p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>minAgeToForceMergeSeconds | **integer** (int64)<br><p>Merge parts if every part in the range is older than the value of min_age_to_force_merge_seconds. Default: 0 - disabled Min_version: 22.10 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/merge-tree-settings#min_age_to_force_merge_seconds">ClickHouse documentation</a></p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>minAgeToForceMergeOnPartitionOnly | **boolean** (boolean)<br><p>Whether min_age_to_force_merge_seconds should be applied only on the entire partition and not on subset. Default: false Min_version: 22.11 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/merge-tree-settings#min_age_to_force_merge_seconds">ClickHouse documentation</a></p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>mergeTree.<br>mergeSelectingSleepMs | **integer** (int64)<br><p>Sleep time for merge selecting when no part is selected. A lower setting triggers selecting tasks in background_schedule_pool frequently, which results in a large number of requests to ClickHouse Keeper in large-scale clusters. Default: 5000 Min_version: 21.10 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/settings/settings#merge_selecting_sleep_ms">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>compression[] | **object**<br><p>Compression settings for the ClickHouse cluster. See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server_settings/settings/#compression">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>compression[].<br>method | **string**<br><p>Compression method to use for the specified combination of ``minPartSize`` and ``minPartSizeRatio``.</p> <ul> <li>LZ4: <a href="https://lz4.github.io/lz4/">LZ4 compression algorithm</a>.</li> <li>ZSTD: <a href="https://facebook.github.io/zstd/">Zstandard compression algorithm</a>.</li> </ul> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>compression[].<br>minPartSize | **string** (int64)<br><p>Minimum size of a part of a table.</p> <p>The minimum value is 1.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>compression[].<br>minPartSizeRatio | **number** (double)<br><p>Minimum ratio of a part relative to the size of all the data in the table.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>compression[].<br>level | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[] | **object**<br><p>Configuration of external dictionaries to be used by the ClickHouse cluster. See in-depth description in <a href="https://clickhouse.com/docs/en/query_language/dicts/external_dicts/">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>name | **string**<br><p>Required. Name of the external dictionary.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>structure | **object**<br>Required. Set of attributes for the external dictionary. For in-depth description, see [ClickHouse documentation](https://clickhouse.com/docs/en/query_language/dicts/external_dicts_dict_structure/).
@@ -1171,6 +1378,7 @@ config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>mongod
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>mongodbSource.<br>port | **string** (int64)<br><p>Port to use when connecting to the host.</p> <p>Acceptable values are 0 to 65535, inclusive.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>mongodbSource.<br>user | **string**<br><p>Required. Name of the MongoDB database user.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>mongodbSource.<br>password | **string**<br><p>Password of the MongoDB database user.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>mongodbSource.<br>options | **string**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>postgresqlSource | **object**<br>PostgreSQL source for the dictionary. <br>`config.clickhouse.config.defaultConfig.dictionaries[]` includes only one of the fields `httpSource`, `mysqlSource`, `clickhouseSource`, `mongodbSource`, `postgresqlSource`<br>
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>postgresqlSource.<br>db | **string**<br><p>Required. Name of the PostrgreSQL database.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>dictionaries[].<br>postgresqlSource.<br>table | **string**<br><p>Required. Name of the table in the specified database to be used as the dictionary source.</p> 
@@ -1186,13 +1394,16 @@ config.<br>clickhouse.<br>config.<br>defaultConfig.<br>graphiteRollup[].<br>patt
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>graphiteRollup[].<br>patterns[].<br>regexp | **string**<br><p>Pattern for metric names.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>graphiteRollup[].<br>patterns[].<br>function | **string**<br><p>Required. Name of the aggregating function to apply to data of the age specified in ``retention``.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[] | **object**<br><p>Required. Age of data to use for thinning.</p> <p>Must contain at least one element.</p> 
-config.<br>clickhouse.<br>config.<br>defaultConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>age | **string** (int64)<br><p>Minimum age of the data in seconds.</p> <p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>age | **string** (int64)<br><p>Minimum age of the data in seconds.</p> <p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>graphiteRollup[].<br>patterns[].<br>retention[].<br>precision | **string** (int64)<br><p>Precision of determining the age of the data, in seconds.</p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafka | **object**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafka.<br>securityProtocol | **string**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafka.<br>saslMechanism | **string**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafka.<br>saslUsername | **string**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafka.<br>saslPassword | **string**
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafka.<br>enableSslCertificateVerification | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafka.<br>maxPollIntervalMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafka.<br>sessionTimeoutMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[] | **object**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>name | **string**<br><p>Required.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>settings | **object**<br><p>Required.</p> 
@@ -1200,6 +1411,9 @@ config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>setting
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>settings.<br>saslMechanism | **string**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>settings.<br>saslUsername | **string**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>settings.<br>saslPassword | **string**
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>settings.<br>enableSslCertificateVerification | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>settings.<br>maxPollIntervalMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>kafkaTopics[].<br>settings.<br>sessionTimeoutMs | **integer** (int64)<br><p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>rabbitmq | **object**
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>rabbitmq.<br>username | **string**<br><p><a href="https://clickhouse.com/docs/en/engines/table-engines/integrations/rabbitmq/">RabbitMQ</a> username</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>rabbitmq.<br>password | **string**<br><p><a href="https://clickhouse.com/docs/en/engines/table-engines/integrations/rabbitmq/">RabbitMQ</a> password</p> 
@@ -1213,6 +1427,7 @@ config.<br>clickhouse.<br>config.<br>defaultConfig.<br>maxTableSizeToDrop | **in
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>maxPartitionSizeToDrop | **integer** (int64)<br><p>Maximum size of the partition that can be deleted using a DROP query.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>builtinDictionariesReloadInterval | **integer** (int64)<br><p>The setting is deprecated and has no effect.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>timezone | **string**<br><p>The server's time zone to be used in DateTime fields conversions. Specified as an IANA identifier.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>geobaseEnabled | **boolean** (boolean)<br><p>Enable or disable geobase.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>geobaseUri | **string**<br><p>Address of the archive with the user geobase in Object Storage.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>queryLogRetentionSize | **integer** (int64)<br><p>The maximum size that query_log can grow to before old data will be removed. If set to 0, automatic removal of query_log data based on size is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>queryLogRetentionTime | **integer** (int64)<br><p>The maximum time that query_log records will be retained before removal. If set to 0, automatic removal of query_log data based on time is disabled.</p> 
@@ -1231,13 +1446,33 @@ config.<br>clickhouse.<br>config.<br>defaultConfig.<br>textLogEnabled | **boolea
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>textLogRetentionSize | **integer** (int64)<br><p>The maximum size that text_log can grow to before old data will be removed. If set to 0, automatic removal of text_log data based on size is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>textLogRetentionTime | **integer** (int64)<br><p>The maximum time that text_log records will be retained before removal. If set to 0, automatic removal of text_log data based on time is disabled.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>textLogLevel | **string**<br><p>Logging level for text_log system table. Possible values: TRACE, DEBUG, INFORMATION, WARNING, ERROR.</p> 
-config.<br>clickhouse.<br>config.<br>defaultConfig.<br>opentelemetrySpanLogEnabled | **boolean** (boolean)
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>opentelemetrySpanLogEnabled | **boolean** (boolean)<br><p>Enable or disable opentelemetry_span_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>opentelemetrySpanLogRetentionSize | **integer** (int64)<br><p>The maximum size that opentelemetry_span_log can grow to before old data will be removed. If set to 0 (default), automatic removal of opentelemetry_span_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>opentelemetrySpanLogRetentionTime | **integer** (int64)<br><p>The maximum time that opentelemetry_span_log records will be retained before removal. If set to 0, automatic removal of opentelemetry_span_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>queryViewsLogEnabled | **boolean** (boolean)<br><p>Enable or disable query_views_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>queryViewsLogRetentionSize | **integer** (int64)<br><p>The maximum size that query_views_log can grow to before old data will be removed. If set to 0 (default), automatic removal of query_views_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>queryViewsLogRetentionTime | **integer** (int64)<br><p>The maximum time that query_views_log records will be retained before removal. If set to 0, automatic removal of query_views_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>asynchronousMetricLogEnabled | **boolean** (boolean)<br><p>Enable or disable asynchronous_metric_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>asynchronousMetricLogRetentionSize | **integer** (int64)<br><p>The maximum size that asynchronous_metric_log can grow to before old data will be removed. If set to 0 (default), automatic removal of asynchronous_metric_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>asynchronousMetricLogRetentionTime | **integer** (int64)<br><p>The maximum time that asynchronous_metric_log records will be retained before removal. If set to 0, automatic removal of asynchronous_metric_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>sessionLogEnabled | **boolean** (boolean)<br><p>Enable or disable session_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>sessionLogRetentionSize | **integer** (int64)<br><p>The maximum size that session_log can grow to before old data will be removed. If set to 0 (default), automatic removal of session_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>sessionLogRetentionTime | **integer** (int64)<br><p>The maximum time that session_log records will be retained before removal. If set to 0, automatic removal of session_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>zookeeperLogEnabled | **boolean** (boolean)<br><p>Enable or disable zookeeper_log system table. Default value: false.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>zookeeperLogRetentionSize | **integer** (int64)<br><p>The maximum size that zookeeper_log can grow to before old data will be removed. If set to 0 (default), automatic removal of zookeeper_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>zookeeperLogRetentionTime | **integer** (int64)<br><p>The maximum time that zookeeper_log records will be retained before removal. If set to 0, automatic removal of zookeeper_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>asynchronousInsertLogEnabled | **boolean** (boolean)<br><p>Enable or disable asynchronous_insert_log system table. Default value: false. Minimal required ClickHouse version: 22.10.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>asynchronousInsertLogRetentionSize | **integer** (int64)<br><p>The maximum size that asynchronous_insert_log can grow to before old data will be removed. If set to 0 (default), automatic removal of asynchronous_insert_log data based on size is disabled.</p> <p>The minimum value is 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>asynchronousInsertLogRetentionTime | **integer** (int64)<br><p>The maximum time that asynchronous_insert_log records will be retained before removal. If set to 0, automatic removal of asynchronous_insert_log data based on time is disabled.</p> <p>The minimum value is 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundPoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundMergesMutationsConcurrencyRatio | **integer** (int64)<br><p>Sets a ratio between the number of threads and the number of background merges and mutations that can be executed concurrently. For example, if the ratio equals to 2 and background_pool_size is set to 16 then ClickHouse can execute 32 background merges concurrently. This is possible, because background operations could be suspended and postponed. This is needed to give small merges more execution priority. You can only increase this ratio at runtime. To lower it you have to restart the server. The same as for background_pool_size setting background_merges_mutations_concurrency_ratio could be applied from the default profile for backward compatibility. Default: 2 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings#background_merges_mutations_concurrency_ratio">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundFetchesPoolSize | **integer** (int64)<br><p>Sets the number of threads performing background fetches for tables with <strong>ReplicatedMergeTree</strong> engines. Default value: 8.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings/#background_fetches_pool_size">ClickHouse documentation</a>.</p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundMovePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundDistributedSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundBufferFlushSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundMessageBrokerSchedulePoolSize | **integer** (int64)<br><p>Value must be greater than 0.</p> 
+config.<br>clickhouse.<br>config.<br>defaultConfig.<br>backgroundCommonPoolSize | **integer** (int64)<br><p>The maximum number of threads that will be used for performing a variety of operations (mostly garbage collection) for *MergeTree-engine tables in a background. Default: 8 See in-depth description in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings#background_common_pool_size">ClickHouse documentation</a></p> <p>Value must be greater than 0.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>defaultDatabase | **string**<br><p>The default database.</p> <p>To get a list of cluster databases, see <a href="https://cloud.yandex.com/en/docs/managed-clickhouse/operations/databases#list-db">Yandex Managed ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>totalMemoryProfilerStep | **integer** (int64)<br><p>Sets the memory size (in bytes) for a stack trace at every peak allocation step. Default value: <strong>4194304</strong>.</p> <p>More info see in <a href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings/#total-memory-profiler-step">ClickHouse documentation</a>.</p> 
 config.<br>clickhouse.<br>config.<br>defaultConfig.<br>totalMemoryTrackerSampleProbability | **number** (double)
@@ -1267,6 +1502,7 @@ config.<br>cloudStorage.<br>enabled | **boolean** (boolean)<br><p>Whether to use
 config.<br>cloudStorage.<br>moveFactor | **number** (double)<br><p>Acceptable values are 0 to 1, inclusive.</p> 
 config.<br>cloudStorage.<br>dataCacheEnabled | **boolean** (boolean)
 config.<br>cloudStorage.<br>dataCacheMaxSize | **integer** (int64)
+config.<br>cloudStorage.<br>preferNotToMerge | **boolean** (boolean)
 config.<br>sqlDatabaseManagement | **boolean** (boolean)<br><p>Whether database management through SQL commands is enabled.</p> 
 config.<br>sqlUserManagement | **boolean** (boolean)<br><p>Whether user management through SQL commands is enabled.</p> 
 config.<br>embeddedKeeper | **boolean** (boolean)<br><p>Whether cluster should use embedded Keeper instead of Zookeeper.</p> 
@@ -1313,6 +1549,7 @@ Method | Description
 [listShards](listShards.md) | Retrieves a list of shards that belong to the specified cluster.
 [move](move.md) | Moves a ClickHouse cluster to the specified folder.
 [rescheduleMaintenance](rescheduleMaintenance.md) | Reschedules planned maintenance operation.
+[restartHosts](restartHosts.md) | 
 [restore](restore.md) | Creates a new ClickHouse cluster using the specified backup.
 [start](start.md) | Starts the specified ClickHouse cluster.
 [stop](stop.md) | Stops the specified ClickHouse cluster.

@@ -30,12 +30,18 @@ links:
   - title: Cloud Backup
     description: Резервное копирование ресурсов Yandex Cloud
     href: backup/
+  - title: Cloud Desktop
+    description: Виртуальная инфраструктура рабочих столов
+    href: cloud-desktop/
   - title: Cloud Interconnect
     description: Подключение к ресурсам Yandex Cloud по выделенному каналу
     href: interconnect/
   - title: Cloud Logging
     description: Логи сервисов и пользовательских приложений
     href: logging/
+  - title: Cloud Video
+    description: Видеохостинг и проведение онлайн-трансляций
+    href: video/
   - title: Compute Cloud
     description: Виртуальные машины и диски
     href: compute/
@@ -81,6 +87,9 @@ links:
   - title: Yandex Lockbox
     description: Создание и хранение секретов
     href: lockbox/
+  - title: Managed Service for Apache Airflow™
+    description: Управление кластерами Apache Airflow™
+    href: managed-airflow/
   - title: Managed Service for Apache Kafka®
     description: Управление кластерами Apache Kafka®
     href: managed-kafka/
@@ -132,6 +141,9 @@ links:
   - title: Cloud Organization
     description: Облачные сервисы для корпоративных клиентов
     href: organization/
+  - title: Cloud Postbox
+    description: Облачные сервисы для корпоративных клиентов
+    href: postbox/
   - title: Обзор платформы Yandex Cloud
     description: Обзор облачных ресурсов Yandex Cloud
     href: overview/
@@ -155,9 +167,15 @@ links:
   - title: SmartCaptcha
     description: Инструмент для верификации запросов
     href: smartcaptcha/
+  - title: Smart Web Security
+    description: Сервис для продвинутой защиты от DDoS-атак
+    href: smartwebsecurity/
   - title: '{{ speechkit-name }}'
     description: Комплекс технологий распознавания и синтеза речи
     href: speechkit/
+  - title: SpeechSense
+    description: Речевая аналитика
+    href: speechsense/
   - title: Object Storage
     description: Масштабируемое хранилище данных
     href: storage/
@@ -179,6 +197,9 @@ links:
   - name: '{{ ydb-name }}'
     description: Распределенная отказоустойчивая Distributed SQL СУБД
     href: ydb/
+  - title: WebSQL
+    description: SQL-запросы к кластеру управляемых баз данных.
+    href: websql/
   - title: Query
     description: Аналитические и потоковые запросы в реальном времени
     href: query/

@@ -6,7 +6,6 @@
 * [создать трансфер](#create);
 * [изменить трансфер](#update);
 * [активировать трансфер](#activate);
-* [перезагрузить трансфер](#reupload);
 * [деактивировать трансфер](#deactivate);
 * [удалить трансфер](#delete).
 
@@ -77,31 +76,20 @@
 
             Укажите полное имя объекта. В зависимости от типа источника используйте соответствующую схему именования:
 
-            * {{ CH }} — `<имя базы>.<путь до таблицы>`;
-            * {{ GP }} — `<имя схемы>.<путь до таблицы>`;
-            * {{ MG }} — `<имя базы>.<путь до коллекции>`;
-            * {{ MY }} — `<имя базы>.<путь до таблицы>`;
-            * {{ PG }} — `<имя схемы>.<путь до таблицы>`;
-            * Oracle — `<имя схемы>.<путь до таблицы>`;
+            * {{ CH }} — `<имя_базы>.<путь_до_таблицы>`;
+            * {{ GP }} — `<имя_схемы>.<путь_до_таблицы>`;
+            * {{ MG }} — `<имя_базы>.<путь_до_коллекции>`;
+            * {{ MY }} — `<имя_базы>.<путь_до_таблицы>`;
+            * {{ PG }} — `<имя_схемы>.<путь_до_таблицы>`;
+            * Oracle — `<имя_схемы>.<путь_до_таблицы>`;
             * {{ ydb-short-name }} — путь до таблицы.
 
             Если указанный объект находится в списке исключенных таблиц или коллекций в настройках эндпоинта-источника, или имя объекта введено некорректно, трансфер завершится с ошибкой. Работающий трансфер типа {{ dt-type-repl }} или {{ dt-type-copy-repl }} завершится сразу, незапущенный трансфер — в момент активации.
 
-       * (Опционально) **{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.Transfer.transformation.title }}** — правила [преобразований данных](../concepts/data-transformation.md). Эта настройка появляется только если источник и приемник имеют разные типы.
-            * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Transformer.rename_tables.title }}** — настройки переименования таблиц:
-                * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.RenameTable.original_name.title }}**:
-                    * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Table.name_space.title }}** — схема именования в зависимости от типа источника. Например, схема для {{ PG }} или база данных для {{ MY }}. Если источник не поддерживает абстракции схемы или базы данных, как например в {{ ydb-short-name }}, оставьте поле пустым.
-                    * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Table.name.title }}** — имя таблицы в источнике.
-                * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.RenameTable.new_name.title }}**:
-                    * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Table.name_space.title }}** — схема именования в зависимости от типа приемника. Например, схема для {{ PG }} или база данных для {{ MY }}. Если источник не поддерживает абстракции схемы или базы данных, как например в {{ ydb-short-name }}, оставьте поле пустым.
-                    * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Table.name.title }}** — новое имя таблицы в приемнике.
-            * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Transformer.filter_columns.title }}** — настройки переноса столбцов. Если для трансфера заданы и переименование таблиц, и фильтр колонок, то в фильтре колонок должны быть указаны исходные имена таблиц в источнике. Имена таблиц и колонок указываются с помощью регулярных выражений. Списки исключенных таблиц и колонок при конфликте с включенными имеют приоритет.
-                * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.ToStringTransformer.tables.title }}**:
-                    * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.TablesFilter.include_tables.title }}** — имена таблиц, для которых будут действовать настройки переноса столбцов.
-                    * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.TablesFilter.exclude_tables.title }}** — имена таблиц, для которых настройки переноса столбцов действовать не будут.
-                * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.ToStringTransformer.columns.title }}**:
-                    * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.ColumnsFilter.include_columns.title }}** — имена столбцов в списке включенных таблиц, которые должны переноситься.
-                    * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.ColumnsFilter.exclude_columns.title }}** — имена столбцов в списке включенных таблиц, которые переноситься не должны.
+       * (Опционально) **{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.Transfer.transformation.title }}** — правила [преобразований данных](../concepts/data-transformation.md). Эта настройка появляется только если источник и приемник имеют разные типы. Некоторые трансформеры могут иметь ограничения и применимы не для всех типов пар источник-приемник.
+
+           {% include [list-of-transformers](../../_includes/data-transfer/list-of-transformers.md) %}
+
     1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
@@ -121,17 +109,11 @@
     1. Укажите параметры трансфера в команде создания:
 
         ```bash
-        {{ yc-dt }} transfer create <имя трансфера> \
-           --source-id=<идентификатор эндпоинта-источника> \
-           --target-id=<идентификатор эндпоинта-приемника> \
-           --type=<тип трансфера: snapshot-only, increment-only или snapshot-and-increment>
+        {{ yc-dt }} transfer create <имя_трансфера> \
+           --source-id=<идентификатор_эндпоинта-источника> \
+           --target-id=<идентификатор_эндпоинта-приемника> \
+           --type=<тип_трансфера>
         ```
-
-        {% note info %}
-
-        Имя трансфера должно быть уникальным в каталоге. Оно может содержать латинские буквы, цифры и дефис. Максимальная длина имени 63 символа.
-
-        {% endnote %}
 
         Где:
 
@@ -142,13 +124,17 @@
             * `increment-only` — [репликация](../concepts/transfer-lifecycle.md#replication).
             * `snapshot-and-increment` — [копирование и репликация](../concepts/transfer-lifecycle.md#copy-and-replication).
 
+        {% note info %}
+
+        Имя трансфера должно быть уникальным в каталоге. Оно может содержать латинские буквы, цифры и дефис. Максимальная длина имени 63 символа.
+
+        {% endnote %}
+
 - {{ TF }}
 
     {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-    
-    Если у вас еще нет {{ TF }}, [установите его и настройте провайдер](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-
+    {% include [terraform-install](../../_includes/terraform-install.md) %}
 
     Чтобы создать трансфер:
 
@@ -157,13 +143,13 @@
        Пример структуры конфигурационного файла:
 
        ```hcl
-       resource "yandex_datatransfer_transfer" "<имя трансфера в {{ TF }}>" {
-         folder_id   = "<идентификатор каталога>"
-         name        = "<имя трансфера>"
-         description = "<описание трансфера>"
-         source_id   = "<идентификатор эндпоинта-источника>"
-         target_id   = "<идентификатор эндпоинта-приемника>"
-         type        = "<тип трансфера>"
+       resource "yandex_datatransfer_transfer" "<имя_трансфера_в_{{ TF }}>" {
+         folder_id   = "<идентификатор_каталога>"
+         name        = "<имя_трансфера>"
+         description = "<описание_трансфера>"
+         source_id   = "<идентификатор_эндпоинта-источника>"
+         target_id   = "<идентификатор_эндпоинта-приемника>"
+         type        = "<тип_трансфера>"
        }
        ```
 
@@ -188,7 +174,7 @@
 
     ```hcl
        provisioner "local-exec" {
-          command = "yc --profile <профиль> datatransfer transfer activate ${yandex_datatransfer_transfer.<имя Terraform-ресурса трансфера>.id
+          command = "yc --profile <профиль> datatransfer transfer activate ${yandex_datatransfer_transfer.<имя_Terraform-ресурса_трансфера>.id
        }
     ```
 
@@ -241,31 +227,20 @@
 
             Укажите полное имя объекта. В зависимости от типа источника используйте соответствующую схему именования:
 
-            * {{ CH }} — `<имя базы>.<путь до таблицы>`;
-            * {{ GP }} — `<имя схемы>.<путь до таблицы>`;
-            * {{ MG }} — `<имя базы>.<путь до коллекции>`;
-            * {{ MY }} — `<имя базы>.<путь до таблицы>`;
-            * {{ PG }} — `<имя схемы>.<путь до таблицы>`;
-            * Oracle — `<имя схемы>.<путь до таблицы>`;
+            * {{ CH }} — `<имя_базы>.<путь_до_таблицы>`;
+            * {{ GP }} — `<имя_схемы>.<путь_до_таблицы>`;
+            * {{ MG }} — `<имя_базы>.<путь_до_коллекции>`;
+            * {{ MY }} — `<имя_базы>.<путь_до_таблицы>`;
+            * {{ PG }} — `<имя_схемы>.<путь_до_таблицы>`;
+            * Oracle — `<имя_схемы>.<путь_до_таблицы>`;
             * {{ ydb-short-name }} — путь до таблицы.
 
             Если указанный объект находится в списке исключенных таблиц или коллекций в настройках эндпоинта-источника, или имя объекта введено некорректно, трансфер завершится с ошибкой. Работающий трансфер типа {{ dt-type-repl }} или {{ dt-type-copy-repl }} завершится сразу, незапущенный трансфер — в момент активации.
 
         * (Опционально) **{{ ui-key.yc-data-transfer.data-transfer.console.form.transfer.console.form.transfer.Transfer.transformation.title }}** — правила [преобразований данных](../concepts/data-transformation.md). Эта настройка появляется только если источник и приемник имеют разные типы.
-            * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Transformer.rename_tables.title }}** — настройки переименования таблиц:
-               * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.RenameTable.original_name.title }}**:
-                   * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Table.name_space.title }}** — схема именования в зависимости от типа источника. Например, схема для {{ PG }} или база данных для {{ MY }}. Если источник не поддерживает абстракции схемы или базы данных, как например в {{ ydb-short-name }}, оставьте поле пустым.
-                   * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Table.name.title }}** — имя таблицы в источнике.
-               * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.RenameTable.new_name.title }}**:
-                   * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Table.name_space.title }}** — схема именования в зависимости от типа приемника. Например, схема для {{ PG }} или база данных для {{ MY }}. Если источник не поддерживает абстракции схемы или базы данных, как например в {{ ydb-short-name }}, оставьте поле пустым.
-                   * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Table.name.title }}** — новое имя таблицы в приемнике.
-            * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.Transformer.filter_columns.title }}** — настройки переноса столбцов. Если для трансфера заданы и переименование таблиц, и фильтр колонок, то в фильтре колонок должны быть указаны исходные имена таблиц в источнике. Имена таблиц и колонок указываются с помощью регулярных выражений. Списки исключенных таблиц и колонок при конфликте с включенными имеют приоритет.
-               * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.ToStringTransformer.tables.title }}**:
-                   * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.TablesFilter.include_tables.title }}** — имена таблиц, для которых будут действовать настройки переноса столбцов.
-                   * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.TablesFilter.exclude_tables.title }}** — имена таблиц, для которых настройки переноса столбцов действовать не будут.
-               * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.ToStringTransformer.columns.title }}**:
-                   * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.ColumnsFilter.include_columns.title }}** — имена столбцов в списке включенных таблиц, которые должны переноситься.
-                   * **{{ ui-key.yc-data-transfer.data-transfer.transfer.transfer.ColumnsFilter.exclude_columns.title }}** — имена столбцов в списке включенных таблиц, которые переноситься не должны.
+
+           {% include [list-of-transformers](../../_includes/data-transfer/list-of-transformers.md) %}
+
     1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
@@ -285,9 +260,9 @@
     1. Выполните команду, передав список настроек, которые хотите изменить:
 
         ```bash
-        {{ yc-dt }} transfer update <идентификатор трансфера> \
-           --name=<имя трансфера> \
-           --description=<описание трансфера>
+        {{ yc-dt }} transfer update <идентификатор_трансфера> \
+           --name=<имя_трансфера> \
+           --description=<описание_трансфера>
         ```
 
         Идентификатор трансфера можно получить со [списком трансферов в каталоге](#list).
@@ -343,7 +318,7 @@
     Чтобы активировать трансфер, выполните команду:
 
     ```bash
-    {{ yc-dt }} transfer activate <идентификатор трансфера>
+    {{ yc-dt }} transfer activate <идентификатор_трансфера>
     ```
 
     Идентификатор трансфера можно получить со [списком трансферов в каталоге](#list).
@@ -356,21 +331,9 @@
 
 {% endlist %}
 
-## Перезагрузить трансфер {#reupload}
 
-Если вы предполагаете, что этап репликации трансфера может завершиться ошибкой (например, из-за [изменения схемы переносимых данных](db-actions.md) на источнике), принудительно перезагрузите трансфер.
+{% include [мобильное приложение](../../_includes/data-transfer/use-mobile-app.md) %}
 
-{% list tabs %}
-
-- Консоль управления
-
-    1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ data-transfer-full-name }}**.
-    1. На панели слева выберите ![image](../../_assets/data-transfer/transfer.svg) **{{ ui-key.yacloud.data-transfer.label_connectors }}**.
-    1. Нажмите на значок ![ellipsis](../../_assets/horizontal-ellipsis.svg) рядом с именем нужного трансфера и выберите пункт **{{ ui-key.yacloud.data-transfer.label_connector-operation-REUPLOAD }}**.
-
-{% endlist %}
-
-Подробнее см. в разделе [{#T}](../concepts/transfer-lifecycle.md).
 
 ## Деактивировать трансфер {#deactivate}
 
@@ -401,7 +364,7 @@
     Чтобы деактивировать трансфер, выполните команду:
 
     ```bash
-    {{ yc-dt }} transfer deactivate <идентификатор трансфера>
+    {{ yc-dt }} transfer deactivate <идентификатор_трансфера>
     ```
 
     Идентификатор трансфера можно получить со [списком трансферов в каталоге](#list).
@@ -420,7 +383,11 @@
 
 {% endnote %}
 
-Подробнее см. в разделе [{#T}](../concepts/transfer-lifecycle.md).
+Подробнее см. в разделе [{#T}](../concepts/transfer-lifecycle.md). 
+
+
+{% include [мобильное приложение](../../_includes/data-transfer/use-mobile-app.md) %}
+
 
 ## Удалить трансфер {#delete}
 
@@ -443,7 +410,7 @@
     Чтобы удалить трансфер, выполните команду:
 
     ```bash
-    {{ yc-dt }} transfer delete <идентификатор трансфера>
+    {{ yc-dt }} transfer delete <идентификатор_трансфера>
     ```
 
     Идентификатор трансфера можно получить со [списком трансферов в каталоге](#list).

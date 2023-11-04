@@ -1,6 +1,6 @@
 # Connecting to a sharded {{ RD }} cluster
 
-To connect to a [sharded](../../concepts/sharding.md) Redis cluster, in connection strings, specify the IP addresses or FQDNs of master hosts in each shard.
+To connect to a [sharded](../../concepts/sharding.md) Redis cluster, in connection strings, specify the FQDNs of master hosts in each shard.
 
 Encrypted connection is supported via port `{{ port-mrd-tls }}` and unencrypted via port `{{ port-mrd }}`.
 
@@ -47,6 +47,8 @@ You can only use graphical IDEs to connect to cluster hosts through an SSL tunne
    1. Click **Ready** to save the database connection settings.
 
 {% endlist %}
+
+{% include [How to connect from a Dockerfile](../../../_includes/mdb/mrd/connect/docker-and-redis.md) %}
 
 ## Sample connection strings {#connection-string}
 

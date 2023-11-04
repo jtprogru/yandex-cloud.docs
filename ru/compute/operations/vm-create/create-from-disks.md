@@ -1,16 +1,22 @@
+---
+title: "Как создать виртуальную машину из набора дисков"
+description: "Следуя данной инструкции, вы сможете создать виртуальную машину из набора существующих дисков."
+---
+
 # Создать виртуальную машину из набора дисков
 
 Создать [ВМ](../../concepts/vm.md) можно из существующих [дисков](../../concepts/disk.md). Диски должны находиться в одной из [зон доступности](../../../overview/concepts/geo-scope.md) и не быть добавленными к другим ВМ.
 
 {% include [disk-auto-delete](../../_includes_service/disk-auto-delete.md) %}
 
-Чтобы создать ВМ из набора дисков:
-
 {% list tabs %}
 
 - Консоль управления
 
-  Чтобы создать ВМ:
+  
+  @[youtube](https://www.youtube.com/watch?v=SsM2c6YW5sg&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=8&pp=iAQB)
+
+
   1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../../resource-manager/concepts/resources-hierarchy.md#folder), в котором будет создана ВМ.
   1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
   1. Справа сверху нажмите **{{ ui-key.yacloud.compute.instances.button_create }}**.
@@ -23,13 +29,23 @@
 
      * Выберите зону доступности, в которой будет находиться ВМ.
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_image }}** выберите один из [образов](../../concepts/image.md).
+
+  
+  1. {% include [encryption-section-boot](../../../_includes/compute/encryption-section-boot.md) %}
+
+
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** [добавьте диск](create-from-disks.md):
      * Нажмите **{{ ui-key.yacloud.compute.instances.create.label_add-disk }}**.
      * Введите имя диска.
      * Выберите [тип диска](../../concepts/disk.md#disks_types).
      * Укажите нужный размер блока.
      * Укажите нужный размер диска.
-     * (опционально) Включите опцию **{{ ui-key.yacloud.compute.instances.create-disk.field_auto-delete }}**, если нужно автоматически удалять диск при удалении ВМ, к которой он будет подключен.
+
+     
+     * {% include [encryption-section-secondary](../../../_includes/compute/encryption-section-secondary.md) %}
+
+
+     * (Опционально) Включите опцию **{{ ui-key.yacloud.compute.instances.create-disk.field_auto-delete }}**, если нужно автоматически удалять диск при удалении ВМ, к которой он будет подключен.
      * Выберите наполнение `{{ ui-key.yacloud.compute.instances.create-disk.value_source-disk }}`.
      * Нажмите **{{ ui-key.yacloud.compute.instances.create-disk.button_create }}**.
 
@@ -45,7 +61,7 @@
      * Выберите [платформу](../../concepts/vm-platforms.md).
      * Укажите [гарантированную долю](../../../compute/concepts/performance-levels.md) и необходимое количество vCPU, а также объем RAM.
      * При необходимости сделайте ВМ [прерываемой](../../concepts/preemptible-vm.md).
-     * (опционально) Включите [программно-ускоренную сеть](../../concepts/software-accelerated-network.md).
+     * (Опционально) Включите [программно-ускоренную сеть](../../concepts/software-accelerated-network.md).
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
 
      {% include [network-settings](../../../_includes/compute/network-settings.md) %}
@@ -55,7 +71,7 @@
 
 
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_access }}** укажите данные для доступа на ВМ:
-     * (опционально) Выберите или создайте [сервисный аккаунт](../../../iam/concepts/users/service-accounts.md). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
+     * (Опционально) Выберите или создайте [сервисный аккаунт](../../../iam/concepts/users/service-accounts.md). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
      * В поле **{{ ui-key.yacloud.compute.instances.create.field_user }}** введите имя пользователя.
 
        {% note alert %}
@@ -130,7 +146,7 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).  
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы создать ВМ из набора дисков:
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:

@@ -10,11 +10,11 @@ Create and execute a [function](../../concepts/function.md) in Node.js that welc
 
 - Management console
 
-    1. In the [management console]({{ link-console-main }}), go to the folder where you want to create a function.
-    1. Select **{{ sf-name }}**.
-    1. Click **Create function**.
-    1. Enter a name for the function: `nodejs-function`.
-    1. Click **Create**.
+    1. In the [management console]({{ link-console-main }}), select the folder where you want to create a function.
+    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+    1. Click **{{ ui-key.yacloud.serverless-functions.list.button_create }}**.
+    1. Name the function: `nodejs-function`.
+    1. Click **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -33,10 +33,10 @@ Create and execute a [function](../../concepts/function.md) in Node.js that welc
     ```
     id: b09bhaokchn9********
     folder_id: aoek49ghmknn********
-    created_at: "2019-06-14T10:03:37.475Z"
+    created_at: "2023-08-16T19:01:37.475Z"
     name: nodejs-function
     log_group_id: eolm8aoq9vcp********
-    http_invoke_url: https://functions.yandexcloud.net/b09bhaokchn9********
+    http_invoke_url: https://{{ sf-url }}/b09bhaokchn9********
     status: ACTIVE
     ```
 
@@ -44,9 +44,11 @@ Create and execute a [function](../../concepts/function.md) in Node.js that welc
 
     You can create a function using the [create](../../functions/api-ref/Function/create.md) API method.
 
-- Yandex Cloud Toolkit
 
-    You can create a function using the [Yandex Cloud Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the family of IDEs on the [IntelliJ platform](https://www.jetbrains.com/opensource/idea/) from [JetBrains](https://www.jetbrains.com/).
+- {{ yandex-cloud }} Toolkit
+
+    You can create a function using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the IDE family on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 {% endlist %}
 
@@ -57,20 +59,19 @@ Create and execute a [function](../../concepts/function.md) in Node.js that welc
 ### Prepare a ZIP archive with the function code {#create-js-zip}
 
 1. Save the following code to a file named `hello.js`:
-
-    ```js
-    exports.handler = async function (event, context) {
-        name = event.queryStringParameters.name
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Content-Type': 'text/plain'
-            },
-            'isBase64Encoded': false,
-            'body': `Hello, ${name}!`
-        }
-    };
-    ```
+   ```js
+   exports.handler = async function (event, context) {
+       name = event.queryStringParameters.name
+       return {
+           'statusCode': 200,
+           'headers': {
+               'Content-Type': 'text/plain'
+           },
+           'isBase64Encoded': false,
+           'body': `Hello, ${name}!`
+       }
+   };
+   ```
 
 1. Add the `hello.js` file to the `hello-js.zip` archive.
 
@@ -79,19 +80,20 @@ Create and execute a [function](../../concepts/function.md) in Node.js that welc
 {% list tabs %}
 
 - Management console
-    1. In the [management console]({{ link-console-main }}), go to the folder where the function is located.
-    1. Select **{{ sf-name }}**.
+
+    1. In the [management console]({{ link-console-main }}), select the folder containing your function.
+    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Select `nodejs-function`.
-    1. Under **Latest version**, click **Create in editor**.
+    1. Under **{{ ui-key.yacloud.serverless-functions.item.overview.label_title-latest-version }}**, click **{{ ui-key.yacloud.serverless-functions.item.overview.button_editor-create }}**.
+    1. Select the `nodejs16` runtime environment and click **{{ ui-key.yacloud.serverless-functions.item.editor.button_action-continue }}**.
     1. Set the version parameters:
-        * **Runtime environment:** `nodejs12`.
-        * **Method:** ZIP archive.
-        * **File:** `hello-js.zip`.
-        * **Entry point:** `hello.handler`.
-        * **Timeout, seconds:** 3.
-        * **RAM:** 128 MB.
-        * **Service account:** Not selected.
-    1. Click **Create version**.
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_method }}**: `{{ ui-key.yacloud.serverless-functions.item.editor.value_method-zip-file }}`
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_file }}**: Attach `hello-js.zip`
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_entry }}**: `hello.handler`
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_timeout }}**: `3`
+        * **{{ ui-key.yacloud.serverless-functions.item.editor.field_resources-memory }}**: `128 {{ ui-key.yacloud.common.units.label_megabyte }}`
+        * **{{ ui-key.yacloud.forms.label_service-account-select }}**: `{{ ui-key.yacloud.component.service-account-select.label_no-service-account }}`
+    1. Click **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**.
 
 - CLI
 
@@ -101,33 +103,36 @@ Create and execute a [function](../../concepts/function.md) in Node.js that welc
 
     To create a function version, run the command:
 
+    
     ```
     yc serverless function version create \
       --function-name=nodejs-function \
-      --runtime nodejs12 \
+      --runtime nodejs16 \
       --entrypoint hello.handler \
       --memory 128m \
       --execution-timeout 3s \
       --source-path ./hello-js.zip
     ```
+  
 
     Where:
 
-    * `--function-name`: The name of the function you want to create a version of.
-    * `--runtime`: The runtime environment.
-    * `--entrypoint`: The entry point specified in `<function file name>.<handler name>` format.
-    * `--memory`: The amount of RAM.
-    * `--execution-timeout`: The maximum function execution time before the timeout is reached.
+    * `--function-name`: Name of the function you want to create a version of.
+    * `--runtime`: Runtime environment.
+    * `--entrypoint`: Entry point specified in the `<function file name>.<handler name>` format.
+    * `--memory`: Amount of RAM.
+    * `--execution-timeout`: Maximum function execution time before the timeout is reached.
     * `--source-path`: ZIP archive with the function code and required dependencies.
 
     Result:
 
+    
     ```
     done (1s)
     id: d4evvn8obisa********
     function_id: d4elpv8pft63********
-    created_at: "2020-08-01T19:09:19.531Z"
-    runtime: nodejs12
+    created_at: "2023-08-16T19:09:19.531Z"
+    runtime: nodejs16
     entrypoint: hello.handler
     resources:
         memory: "134217728"
@@ -138,14 +143,17 @@ Create and execute a [function](../../concepts/function.md) in Node.js that welc
     - $latest
     log_group_id: ckg3qh8h363p********
     ```
+  
 
 - API
 
     You can create a function version using the [createVersion](../../functions/api-ref/Function/createVersion.md) API method.
 
-- Yandex Cloud Toolkit
 
-    You can create a function version using the [Yandex Cloud Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the family of IDEs on the [IntelliJ platform](https://www.jetbrains.com/opensource/idea/) from [JetBrains](https://www.jetbrains.com/).
+- {{ yandex-cloud }} Toolkit
+
+    You can create a function version using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the IDE family on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 {% endlist %}
 

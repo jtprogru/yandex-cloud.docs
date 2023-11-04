@@ -145,7 +145,7 @@ To grant a user access to cloud resources, assign the user a [role](../../../iam
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    1. Describe the properties of the cloud access rights in a configuration file:
       * `cloud_id`: Cloud ID. You can get a list of available clouds using the [CLI](../../../cli/quickstart.md) command: `yc resource-manager cloud list`.
@@ -153,7 +153,7 @@ To grant a user access to cloud resources, assign the user a [role](../../../iam
       * `member`: User to assign the role to. Each `yandex_resourcemanager_cloud_iam_member` resource may have one of the following values:
          * `userAccount:<user ID>`: [User ID](../../../iam/operations/users/get.md).
          * `serviceAccount:<ID of service account>`: [ID of the service account](../../../iam/operations/sa/get-id.md).
-         * `federatedUser:<federated user ID>`: [ID of the federated user](../../../organization/users-get.md).
+         * `federatedUser:<federated user ID>`: [ID of the federated user](../../../organization/operations/users-get.md).
 
       Example of the configuration file structure:
 
@@ -191,7 +191,7 @@ To grant a user access to cloud resources, assign the user a [role](../../../iam
       terraform plan
       ```
 
-      The terminal displays a list of resources to be created and their parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal displays a list of resources to be created and their parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
    1. Apply the configuration changes:
 
       ```bash
@@ -223,7 +223,7 @@ To grant a user access to cloud resources, assign the user a [role](../../../iam
 
    {% endnote %}
 
-   1. Make sure the resource doesn't have any roles that you don't want to lose:
+   1. Make sure the resource has no roles assigned that you would rather not lose:
 
       ```bash
       yc resource-manager cloud list-access-binding my-cloud
@@ -281,6 +281,7 @@ To grant a user access to cloud resources, assign the user a [role](../../../iam
 
    {% endnote %}
 
+
    ```bash
    curl -X POST \
        -H 'Content-Type: application/json' \
@@ -337,7 +338,7 @@ To grant a user access to cloud resources, assign the user a [role](../../../iam
       terraform plan
       ```
 
-      The terminal displays a list of resources to be created and their parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal displays a list of resources to be created and their parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
    1. Apply the configuration changes:
 
       ```bash
@@ -353,7 +354,7 @@ To grant a user access to cloud resources, assign the user a [role](../../../iam
 
 ## Cloud access for service accounts {#access-to-sa}
 
-A service account can only be assigned roles for the cloud that it belongs to.
+A service account can be [assigned](../../../iam/operations/sa/assign-role-for-sa.md#binding-role-resource) roles for any cloud and folder within the organization it belongs to.
 
 Allow the `test-sa` service account to manage the `my-cloud` cloud and its resources:
 
@@ -471,7 +472,7 @@ Allow the `test-sa` service account to manage the `my-cloud` cloud and its resou
       terraform plan
       ```
 
-      The terminal displays a list of resources to be created and their parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal displays a list of resources to be created and their parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
    1. Apply the configuration changes:
 
       ```bash

@@ -1,0 +1,32 @@
+title: Yandex Managed Service for Apache Airflow™
+href: index.yaml
+items:
+  - name: Начало работы
+    href: quickstart.md
+  - name: Пошаговые инструкции
+    items:
+      - name: Все инструкции
+        href: operations/index.md
+      - name: Создание кластера
+        href: operations/cluster-create.md
+      - name: Изменение кластера
+        href: operations/cluster-update.md
+      - name: Работа с интерфейсами {{ AF }}
+        href: operations/af-interfaces.md
+      - name: Удаление кластера
+        href: operations/cluster-delete.md
+  - name: Концепции
+    items:
+      - name: Взаимосвязь ресурсов сервиса
+        href: concepts/index.md
+      - name: Квоты и лимиты
+        href: concepts/limits.md
+      - name: Правила тарификации
+        href: pricing.md
+  - name: Практические руководства
+    items:
+      - name: Автоматизация работы с {{ dataproc-name }}
+        href: tutorials/data-proc-automation.md
+  - name: Управление доступом
+    href: security/index.md
+base: ru/managed-airflow

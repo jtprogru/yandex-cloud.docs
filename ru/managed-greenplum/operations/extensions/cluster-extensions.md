@@ -41,7 +41,7 @@ SELECT extname FROM pg_extension;
 Подключитесь к выбранной базе данных и выполните команду:
 
 ```sql
-CREATE EXTENSION <имя расширения>;
+CREATE EXTENSION <имя_расширения>;
 ```
 
 Подробнее см. в [документации {{ GP }}](https://greenplum.docs.pivotal.io/6latest/ref_guide/sql_commands/CREATE_EXTENSION.html).
@@ -71,13 +71,13 @@ CREATE EXTENSION <имя расширения>;
 || [pgcrypto]({{ gp.docs.pivotal }}/latest/ref_guide/modules/pgcrypto.html)
 Добавляет функции шифрования данных. Подробнее см. в разделе [{#T}](./pgcrypto.md).
 | 1.1 ||
-|| [plperl]({{ gp.docs.vmware }}/5/greenplum-database/GUID-ref_guide-extensions-pl_perl.html)
+|| [plperl]({{ gp.docs.vmware }}/5/greenplum-database/ref_guide-extensions-pl_perl.html)
 Включает поддержку процедурного языка PL/Perl.
 | 1.0 ||
-|| [plpgsql]({{ gp.docs.vmware }}/5/greenplum-database/GUID-ref_guide-extensions-pl_sql.html)
+|| [plpgsql]({{ gp.docs.vmware }}/5/greenplum-database/ref_guide-extensions-pl_sql.html)
 Включает поддержку процедурного языка PL/pgSQL.
 | 1.0 ||
-|| [postgis]({{ gp.docs.vmware }}/5/greenplum-database/GUID-ref_guide-extensions-postGIS.html)
+|| [postgis]({{ gp.docs.vmware }}/5/greenplum-database/ref_guide-extensions-postGIS.html)
 Добавляет возможности хранения и обработки объектов геоинформационных систем (ГИС) в базах данных {{ PG }}.
 | 2.1.5 ||
 || [postgres_fdw]({{ gp.docs.pivotal }}/latest/ref_guide/modules/postgres_fdw.html)
@@ -89,6 +89,9 @@ CREATE EXTENSION <имя расширения>;
 || uuid-cb
 Добавляет возможность генерации и валидации уникальных идентификаторов по требованиям Центробанка РФ. Подробнее см. в разделе [{#T}](./uuid-cb.md).
 | 1.0 ||
+|| [{{ YZ }}](../../tutorials/yezzey.md). Расширение от {{ yandex-cloud }}
+Переносит [таблицы AO и AOCO](../../concepts/tables.md) с дисков кластера {{ mgp-name }} в холодное хранилище {{ objstorage-full-name }}. Так данные хранятся в служебном бакете в сжатом и зашифрованном виде.
+| 1.8 ||
 |#
 
 {% include [greenplum-trademark](../../../_includes/mdb/mgp/trademark.md) %}

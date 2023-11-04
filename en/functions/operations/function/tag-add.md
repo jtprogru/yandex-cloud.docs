@@ -1,6 +1,6 @@
 # Adding a function version tag
 
-When creating a new version, it's assigned the `$latest` [tag](../../concepts/function.md#) by default.
+When creating a new version, it is assigned the `$latest` [tag](../../concepts/function.md#) by default.
 
 {% list tabs %}
 
@@ -19,10 +19,10 @@ When creating a new version, it's assigned the `$latest` [tag](../../concepts/fu
    Result:
 
    ```
-   id: b09ch6pmpohfc9sogj5f
-   function_id: b097d9ous3gep99khe83
-   created_at: "2019-06-13T09:12:38.464Z"
-   runtime: python37
+   id: b09ch6pmpohf********
+   function_id: b097d9ous3ge********
+   created_at: "2023-08-22T09:12:38.464Z"
+   runtime: python311
    entrypoint: test.handler
    resources:
      memory: "134217728"
@@ -32,14 +32,14 @@ When creating a new version, it's assigned the `$latest` [tag](../../concepts/fu
    tags:
    - beta
    - first
-   log_group_id: eolv6578frac08uh5h6s
+   log_group_id: eolv6578frac********
    ```
 
 - {{ TF }}
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To add a version tag:
 
@@ -52,7 +52,7 @@ When creating a new version, it's assigned the `$latest` [tag](../../concepts/fu
           name               = "test-function"
           description        = "Test function"
           user_hash          = "first-function"
-          runtime            = "python37"
+          runtime            = "python311"
           entrypoint         = "main"
           memory             = "128"
           execution_timeout  = "10"
@@ -84,7 +84,7 @@ When creating a new version, it's assigned the `$latest` [tag](../../concepts/fu
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -93,7 +93,7 @@ When creating a new version, it's assigned the `$latest` [tag](../../concepts/fu
       ```
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-   You can verify that the tags are there in the [management console]({{ link-console-main }}) or using this [CLI](../../../cli/quickstart.md) command:
+   You can check the new tags using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
 
    ```
    yc serverless function version list --function-name <function name>
@@ -103,8 +103,10 @@ When creating a new version, it's assigned the `$latest` [tag](../../concepts/fu
 
    To add a function version tag, use the [setTag](../../functions/api-ref/Function/setTag.md) REST API method for the [Function](../../functions/api-ref/Function/index.md) resource or the [FunctionService/SetTag](../../functions/api-ref/grpc/function_service.md#SetTag) gRPC API call.
 
+
 - {{ yandex-cloud }} Toolkit
 
    You can add a tag using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the IDE family on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 {% endlist %}

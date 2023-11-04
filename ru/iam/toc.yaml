@@ -3,6 +3,8 @@ href: index.yaml
 items:
   - name: Начало работы
     items:
+      - name: Обзор
+        href: quickstart-overview.md
       - name: Как управлять доступом к ресурсам
         href: quickstart.md
       - name: Как работать с сервисными аккаунтами
@@ -115,6 +117,9 @@ items:
     href: security/index.md
   - name: Правила тарификации
     href: pricing.md
+  - name: Справочник ролей
+    href: roles-reference.md
+    hidden: true
   - name: Справочник API
     items:
       - name: Аутентификация в API

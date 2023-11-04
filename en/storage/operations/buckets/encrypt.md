@@ -11,7 +11,7 @@ Data in {{ objstorage-short-name }} is encrypted using [envelope encryption](../
 {% endnote %}
 
 
-To decrypt objects, the user must have both the {{ objstorage-name }} role and the `kms.keys.decrypter` role that allows reading the encryption key (see the [role description](../../../kms/security/index.md#service)).
+{% include [encryption-roles](../../../_includes/storage/encryption-roles.md) %}
 
 
 ## Adding encryption to a bucket {#add}
@@ -31,9 +31,9 @@ To decrypt objects, the user must have both the {{ objstorage-name }} role and t
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
-   Before you start, [get an IAM token](../../../iam/operations/iam-token/create-for-sa.md#via-cli) for your service account and save it to a file.
+   To get started, [obtain an IAM token](../../../iam/operations/iam-token/create-for-sa.md#via-cli) for your service account and save it to a file.
 
    1. In the configuration file, describe the parameters of the resources you want to create:
 
@@ -83,7 +83,7 @@ To decrypt objects, the user must have both the {{ objstorage-name }} role and t
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
          ```
          terraform plan
          ```
@@ -100,7 +100,7 @@ To decrypt objects, the user must have both the {{ objstorage-name }} role and t
 
       1. Confirm that you want to create the resources.
 
-      All the resources you need will then be created in the specified folder. You can check that the resources are there and their settings are correct using the [management console]({{ link-console-main }}).
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}).
 
 {% endlist %}
 
@@ -121,7 +121,7 @@ To decrypt objects, the user must have both the {{ objstorage-name }} role and t
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
    
-   For more information about {{ TF }}, [see the documentation](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
    To disable encryption for a bucket created using {{ TF }}:
@@ -134,12 +134,12 @@ To decrypt objects, the user must have both the {{ objstorage-name }} role and t
       ...
       resource "yandex_storage_bucket" "test" {
         bucket     = "my-bucket"
-        access_key = "123JE02jKxusnc23ZnUzc"
-        secret_key = "ExamP1eSecReTKeykdokKK38800"
+        access_key = "123JE02jKxusn********"
+        secret_key = "ExamP1eSecReTKeykdo********"
         server_side_encryption_configuration { // Delete this section to disable encryption
           rule {
             apply_server_side_encryption_by_default {
-              kms_master_key_id = "abjbeb2bgg4ljno7aqqo"
+              kms_master_key_id = "abjbeb2bgg4l********"
               sse_algorithm     = "aws:kms"
             }
           }
@@ -170,7 +170,7 @@ To decrypt objects, the user must have both the {{ objstorage-name }} role and t
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 

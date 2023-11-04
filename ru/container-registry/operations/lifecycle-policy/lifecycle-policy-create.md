@@ -7,23 +7,23 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../../resource-manager/concepts/resources-hierarchy.md#folder), в котором создан [реестр](../../concepts/registry.md).
-  1. В списке сервисов выберите **{{ container-registry-name }}**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_container-registry }}**.
   1. Выберите реестр и нажмите на строку с его именем.
   1. Выберите репозиторий и нажмите на строку с его именем.
-  1. На панели слева нажмите ![lifecycle](../../../_assets/container-registry/lifecycle.svg) **Жизненный цикл**.
-  1. В правом верхнем углу нажмите кнопку **Создать**.
+  1. На панели слева нажмите ![lifecycle](../../../_assets/container-registry/lifecycle.svg) **{{ ui-key.yacloud.cr.registry.label_lifecycle }}**.
+  1. В правом верхнем углу нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
   1. Задайте параметры политики удаления:
-     * (Опционально) **Имя**.
-     * (Опционально) **Описание**.
-     * **Статус** — статус политики удаления после создания. Не рекомендуется создавать сразу активную политику со статусом `ACTIVE`.
-     * В блоке **Правила политики удаления** добавьте правила:
-       1. Нажмите кнопку **Добавить**.
+     * (Опционально) **{{ ui-key.yacloud.common.name }}**.
+     * (Опционально) **{{ ui-key.yacloud.common.description }}**.
+     * **{{ ui-key.yacloud.common.label_status }}** — статус политики удаления после создания. Не рекомендуется создавать сразу активную политику со статусом `ACTIVE`.
+     * В блоке **{{ ui-key.yacloud.cr.registry.label_lifecycle-rules }}** добавьте правила:
+       1. Нажмите кнопку **{{ ui-key.yacloud.common.add }}**.
        1. Задайте параметры правила:
 
           {% include [lifecycle-rules-console](../../../_includes/container-registry/lifecycle-rules-console.md) %}
 
-          * (Опционально) **Описание**.
-  1. Нажмите кнопку **Создать**.
+          * (Опционально) **{{ ui-key.yacloud.common.description }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -47,7 +47,7 @@
      * `repository-name` — имя репозитория.
      * `rules` — путь к файлу с описанием политик.
      * `description` — (опционально) описание политики удаления.
-     * `name` — (опционально) имя политики.
+     * `name` — (опционально) имя политики. Требования к имени:
 
        {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -88,6 +88,52 @@
      |                      |             |                      |          |                     | tests                         |
      +----------------------+-------------+----------------------+----------+---------------------+-------------------------------+
      ```
+
+- {{ TF }}
+
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+  1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
+
+      ```hcl
+      resource "yandex_container_repository_lifecycle_policy" "my_lifecycle_policy" {
+        name          = "<имя_политики>"
+        status        = "<статус_политики>"
+        repository_id = "<идентификатор_репозитория>"
+
+        rule {
+          description   = "<описание_правила>"
+          untagged      = true
+          tag_regexp    = ".*"
+          retained_top  = 1
+          expire_period = "48h"
+        }
+      }
+      ```
+
+      Где:
+
+      * `name` — имя политики.
+      * `status` — статус политики. Может принимать значения `active` и `disabled`.
+      * `repository_id` — идентификатор репозитория.
+      * `rule` — блок с правилом политики. Содержит следующие параметры:
+        * `description` — описание правила.
+        * `untagged` — если значение параметра `true`, то правило применяется ко всем Docker-образам без тега.
+        * `tag_regexp` — тег Docker-образа для фильтрации. Поддерживаются регулярные выражения языка Java. Например, выражение `test.*` позволяет получить все образы с тегами, начинающимися на `test`.
+        * `retained_top` — количество Docker-образов, которые не будут удалены, даже если подходят под правила политики удаления.
+        * `expire_period` — время, через которое Docker-образ попадает под политику удаления. Формат параметра — число и единица измерения `s`, `m`, `h` или `d` (секунды, минуты, часы или дни). `expire_period` должен быть кратен 24 часам.
+      
+      Более подробную информацию о параметрах ресурса `yandex_container_repository_lifecycle_policy` в {{ TF }}, см. в [документации провайдера]({{ tf-provider-resources-link }}/container_repository_lifecycle_policy).
+
+  1. Создайте ресурсы:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+  После этого в указанном репозитории будет создана политика удаления. Проверить появление политики и ее настройки можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../../cli/quickstart.md):
+
+    ```bash
+     yc container repository lifecycle-policy list --registry-id <идентификатор_реестра>
+    ```
 
 - API
 

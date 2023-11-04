@@ -5,7 +5,7 @@ You can connect to {{ mkf-name }} cluster hosts:
 * Over the internet if you configured public access for the cluster [when creating it](cluster-create.md). You can only connect to this type of cluster using an [SSL connection](#get-ssl-cert).
 
 
-* From {{ yandex-cloud }} virtual machines located in the same [cloud network](../../vpc/concepts/network.md). If the cluster isn't publicly available, you don't need to use an SSL connection to connect to such VMs.
+* From {{ yandex-cloud }} virtual machines located in the same [cloud network](../../vpc/concepts/network.md). If the cluster is not publicly available, you do not need to use an SSL connection to connect to such VMs.
 
 
 
@@ -24,15 +24,9 @@ There are ready-made {{ KF }} API implementations for most popular programming l
 
 ## Configuring security groups {#configuring-security-groups}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 {% include [sg-rules](../../_includes/mdb/sg-rules-connect.md) %}
 
-Settings of rules depend on the connection method you select:
+Rule settings depend on the connection method you select:
 
 {% list tabs %}
 
@@ -40,53 +34,53 @@ Settings of rules depend on the connection method you select:
 
    [Configure all security groups](../../vpc/operations/security-group-add-rule.md) in the cluster to allow incoming traffic on port {{ port-mkf-ssl }} from any IP address. To do this, create the following rule for incoming traffic:
 
-   * Port range: `{{ port-mkf-ssl }}`.
-   * Protocol: `TCP`.
-   * Source: `CIDR`.
-   * CIDR blocks: `0.0.0.0/0`.
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** : `{{ port-mkf-ssl }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
    To allow connections to [{{ mkf-msr }}](../concepts/managed-schema-registry.md), add a rule for incoming traffic:
 
-   * Port range: `{{ port-https }}`.
-   * Protocol: `TCP`.
-   * Source: `CIDR`.
-   * CIDR blocks: `0.0.0.0/0`.
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** : `{{ port-https }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+   * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
 - With a VM in {{ yandex-cloud }}
 
    1. [Configure all security groups](../../vpc/operations/security-group-add-rule.md) in the cluster to allow incoming traffic from the security group where the VM is located on ports {{ port-mkf-ssl }} and {{ port-mkf-text }}. To do this, create the following rule for incoming traffic in these groups:
 
-      * Port range: `{{ port-mkf-ssl }}-{{ port-mkf-text }}`.
-      * Protocol: `TCP`.
-      * Source: `Security group`.
-      * Security group: If a cluster and a VM are in the same security group, select `Self` (`Self`) as the value. Otherwise, specify the VM security group.
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `{{ port-mkf-ssl }}-{{ port-mkf-text }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** : `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** : `{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-sg-type }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-sg-type }}**: If your cluster and VM are in the same security group, select `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-sg-type-self }}` (`Self`) as the value. Otherwise, specify the VM security group.
 
       To allow connections to [{{ mkf-msr }}](../concepts/managed-schema-registry.md), add a rule for incoming traffic:
 
-      * Port range: `{{ port-https }}`.
-      * Protocol: `TCP`.
-      * Source: `CIDR`.
-      * CIDR blocks: `0.0.0.0/0`.
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** : `{{ port-https }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+      * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
-   1. [Configure the security group](../../vpc/operations/security-group-add-rule.md) where the VM is located to allow connections to the VM and traffic between the VM and the cluster hosts.
+   1. [Configure the security group](../../vpc/operations/security-group-add-rule.md) where the VM is located to enable connections to the VM and traffic between the VM and the cluster hosts.
 
-      Example of rules for a VM:
+      For example, you can set the following rules for a VM:
 
       * For incoming traffic:
-         * Port range: `{{ port-ssh }}`.
-         * Protocol: `TCP`.
-         * Source: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** : `{{ port-ssh }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
          This rule allows you to connect to the VM over SSH.
 
       * For outgoing traffic:
-         * Protocol: `Any`.
-         * Port range: `{{ port-any }}`.
-         * Destination type: `CIDR`.
-         * CIDR blocks: `0.0.0.0/0`.
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`)
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** : `{{ port-any }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`
+         * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0`
 
-      This rule allows all outgoing traffic, which enables you to both connect to the cluster and install the certificates and utilities the VMs need to connect to the cluster.
+         This rule allows all outgoing traffic, which enables you to both connect to the cluster and install the certificates and utilities the VMs need to connect to the cluster.
 
 {% endlist %}
 
@@ -105,23 +99,37 @@ For more information about security groups, see [{#T}](../concepts/network.md#se
 
 To use an encrypted connection, get an SSL certificate:
 
+{% include [install-certificate](../../_includes/mdb/mkf/install-certificate.md) %}
+
+The resulting SSL certificate is also used when working with [{{ mkf-msr }}](../concepts/managed-schema-registry.md).
+
+## Before you connect from a Docker container {#connection-docker}
+
+To connect to a {{ mkf-name }} cluster from a Docker container, add the following lines to the Dockerfile:
+
 {% list tabs %}
 
-- Linux (Bash)
 
-   {% include [install-certificate](../../_includes/mdb/mkf/install-certificate.md) %}
+- Connecting without using SSL
 
-
-- Windows (PowerShell)
-
-   ```powershell
-   mkdir $HOME\.kafka; curl.exe -o $HOME\.kafka\{{ crt-local-file }} {{ crt-web-path }}
+   ```bash
+   RUN apt-get update && \
+       apt-get install kafkacat --yes
    ```
 
 
-{% endlist %}
+- Connecting via SSL
 
-The resulting SSL certificate is also used when working with [{{ mkf-msr }}](../concepts/managed-schema-registry.md).
+   ```bash
+   RUN apt-get update && \
+       apt-get install wget kafkacat --yes && \
+       mkdir --parents {{ crt-local-dir }} && \
+       wget "{{ crt-web-path }}" \
+            --output-document {{ crt-local-dir }}{{ crt-local-file }} && \
+       chmod 0655 {{ crt-local-dir }}{{ crt-local-file }}
+   ```
+
+{% endlist %}
 
 ## Sample connection strings {#connection-string}
 

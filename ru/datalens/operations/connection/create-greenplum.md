@@ -12,6 +12,10 @@ description: "Из статьи вы узнаете, как подключить
 Чтобы создать подключение к {{ GP }}:
 
 
+{% include [datalens-workbooks-collections-note](../../../_includes/datalens/operations/datalens-workbooks-collections-note.md) %}
+
+
+
 1. Перейдите на [страницу подключений]({{ link-datalens-main }}/connections).
 
 
@@ -66,3 +70,7 @@ description: "Из статьи вы узнаете, как подключить
 1. Укажите название подключения и нажмите кнопку **Создать**.
 
 {% include [datalens-check-host](../../../_includes/datalens/operations/datalens-check-host.md) %}
+
+## Дополнительные настройки {#additional-settings}
+
+{% include [datalens-db-connection-export-settings](../../../_includes/datalens/operations/datalens-db-connection-export-settings.md) %}

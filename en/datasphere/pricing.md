@@ -2,7 +2,7 @@
 editable: false
 ---
 
-# Pricing for {{ ml-platform-name }}
+# {{ ml-platform-name }} pricing
 
 
 
@@ -22,6 +22,10 @@ When performing computations and training models in the [{{ dd }} mode](concepts
 
 You are separately charged for [data storage](#storage) in datasets and project storage expansion.
 
+### Running jobs in {{ ml-platform-name }} Jobs {#jobs}
+
+When you run computations remotely using [{{ ml-platform-name }} Jobs](concepts/jobs.md), you pay for the computation time in the selected computing resource configuration. You also pay for [storing data](#prices-jobs) required to run jobs: their cache, logs, input data, and execution results.
+
 ### Using models {#node}
 
 {% include [pricing nodes](../_includes/datasphere/nodes-pricing-warn.md) %}
@@ -32,7 +36,7 @@ You are separately charged for [data storage](#storage) in datasets and project 
 
 The cost of using integration with the {{ dataproc-name }} service takes into account:
 * {{ ml-platform-name }} c1.4 configuration computing resources.
-   These resources are created for integration with the {{ dataproc-name }} cluster and are charged while calculations are running on the cluster.
+   These resources are created for integration with the {{ dataproc-name }} cluster and are charged while computations are running on the cluster.
 * The entire lifetime of the {{ dataproc-name }} cluster according to the [{{ dataproc-full-name }} pricing policy](../data-proc/pricing.md).
 
 Learn more about [integration with {{ dataproc-name }}](concepts/data-proc.md).
@@ -51,28 +55,12 @@ The monthly usage rate is based on 720 hours a month.
 
 ## Pricing {#prices}
 
-Prices for using configurations apply to [{{ ml-platform-name }} {{ ds }}](concepts/project.md#serverless) and [{{ ml-platform-name }} {{ dd }}](concepts/project.md#dedicated) and when you [use models](../datasphere/concepts/deploy/index.md#node).
+Prices for using configurations apply to [{{ ml-platform-name }} {{ ds }}](concepts/project.md#serverless), [background operations](../datasphere/concepts/async.md), [{{ ml-platform-name }} {{ dd }}](concepts/project.md#dedicated) and when you [use models](../datasphere/concepts/deploy/index.md#node).
 
 
 
 
 {% include [usd-unit-and-resource.md](../_pricing/datasphere/usd-unit-and-resource.md) %}
-
-
-### Performing background operations {#async}
-
-{% note alert %}
-
-From July 10, 2023, the performing of background operations will be charged according to the rules of [use of computing resources](#paug).
-
-{% endnote %}
-
-Learn more about [background operations](../datasphere/concepts/async.md).
-
-
-
-
-{% include [usd-async.md](../_pricing/datasphere/usd-async-new.md) %}
 
 
 ### Storing data inside {{ ml-platform-name }} {#prices-storage}
@@ -91,6 +79,22 @@ Learn more about [background operations](../datasphere/concepts/async.md).
 
 
 {% include [usd-data-storage.md](../_pricing/datasphere/usd-dataset.md) %}
+
+
+#### Models {#prices-models}
+
+
+
+
+{% include [usd-model.md](../_pricing/datasphere/usd-model.md) %}
+
+
+#### {{ ml-platform-name }} Jobs {#prices-jobs}
+
+
+
+
+{% include [usd-jobs.md](../_pricing/datasphere/usd-jobs.md) %}
 
 
 ### Egress traffic {#prices-traffic}

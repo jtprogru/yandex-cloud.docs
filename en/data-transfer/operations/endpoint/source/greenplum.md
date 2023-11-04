@@ -1,9 +1,9 @@
 ---
-title: "How to configure a {{ GP }} source endpoint in {{ data-transfer-full-name }}"
-description: "In this tutorial, you'll learn how to set up a {{ GP }} source endpoint in {{ data-transfer-full-name }}."
+title: "How to configure a source {{ GP }} endpoint in {{ data-transfer-full-name }}"
+description: "In this tutorial, you will learn how to set up a source {{ GP }} endpoint in {{ data-transfer-full-name }}."
 ---
 
-# Configuring a {{ GP }} source endpoint
+# Configuring {{ GP }} source endpoints
 
 When [creating](../index.md#create) or [editing](../index.md#update) an endpoint, you can define:
 
@@ -13,6 +13,14 @@ When [creating](../index.md#create) or [editing](../index.md#update) an endpoint
 
 
 ## {{ mgp-name }} cluster {#managed-service}
+
+
+{% note warning %}
+
+To create or edit an endpoint of a managed database, you need the [`{{ roles.mgp.viewer }}` role](../../../../managed-greenplum/security/index.md#mgp-viewer) or the primitive [`viewer` role](../../../../iam/concepts/access-control/roles.md#viewer) issued for the folder hosting a cluster of this managed database.
+
+{% endnote %}
+
 
 Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. Available only for clusters deployed in [{{ mgp-full-name }}](../../../../managed-greenplum/).
 
@@ -56,11 +64,11 @@ Connecting to the database with explicitly specified network addresses and ports
 
       If a table is partitioned, to exclude it from the list, make sure to list all of its partitions.
 
-      Both lists support expressions in the following format:
+      The lists include the name of the [schema]({{gp.docs.vmware}}/6/greenplum-database/admin_guide-ddl-ddl-schema.html) (description of DB contents, structure, and integrity constraints) and the table name. Both lists support expressions in the following format:
 
-      * `<schema name>.<table name>`: Fully qualified table name.
-      * `<schema name>.*`: All tables in the specified schema.
-      * `<table name>`: Table in the default schema.
+      * `<schema_name>.<table_name>`: Fully qualified table name.
+      * `<schema_name>.*`: All tables in the specified schema.
+      * `<table_name>`: Table in the default schema.
 
    * **{{ ui-key.yc-data-transfer.data-transfer.console.form.greenplum.console.form.greenplum.GpSourceAdvancedSettings.strong_consistency.title }}**: When enabled, {{ data-transfer-name }} will apply additional steps to the source to assure [snapshot consistency](#snapshot-consistency).
 
@@ -74,18 +82,18 @@ Connecting to the database with explicitly specified network addresses and ports
 
 The service performs operations on a {{ GP }} cluster with the [READ COMMITTED]({{ gp.docs.pivotal }}/6-19/ref_guide/sql_commands/SET_TRANSACTION.html) `level of isolation`.
 
-{{ data-transfer-name }} supports operation with activated [sharded copy](../../../concepts/sharded.md) for a {{ GP }} source.
+{{ data-transfer-name }} supports operation with [parallel copy](../../../concepts/sharded.md) enabled for a {{ GP }} source.
 
-During operation with enabled sharded copy, {{ data-transfer-name }} maintains an open transaction on the {{ GP }} master host. If this transaction is interrupted, a transfer will return an error.
+During operation with parallel copy enabled, {{ data-transfer-name }} maintains an open transaction on the {{ GP }} master host. If this transaction is interrupted, a transfer will return an error.
 
-With sharded copy disabled, a transfer will move data from such {{ GP }} objects as `TABLE`, `VIEW`, `FOREIGN TABLE`, and `EXTERNAL TABLE`. Data from these objects will be treated as data from ordinary tables and processed by the target accordingly. With activated sharded copy, a transfer will only move tables (`TABLE` objects). Tables with the [DISTRIBUTED REPLICATED]({{ gp.docs.pivotal }}/6-19/admin_guide/distribution.html) `allocation policy` are not transferred.
+With parallel copy disabled, a transfer will move data from {{ GP }} objects such as `TABLE`, `VIEW`, `FOREIGN TABLE`, and `EXTERNAL TABLE`. Data from these objects will be treated as data from ordinary tables and processed by the target accordingly. With parallel copy enabled, a transfer will only move tables (`TABLE` objects). Tables with the `DISTRIBUTED REPLICATED`({{ gp.docs.pivotal }}/6-19/admin_guide/distribution.html) [allocation policy] will not be transferred.
 
 ### Snapshot consistency {#snapshot-consistency}
 
-When starting a transfer with disabled sharded copy (default), the service creates the copy working only with the {{ GP }} cluster's [master host](../../../../managed-greenplum/concepts/index.md). The tables being copied are accessed in [ACCESS SHARE]({{ gp.docs.vmware }}/6/greenplum-database/GUID-ref_guide-sql_commands-LOCK.html) `lock mode`. Snapshot consistency is achieved through {{ GP }} mechanisms.
+When starting a transfer with parallel copy disabled (by default), the service copies data only interacting with the {{ GP }} cluster's [master host](../../../../managed-greenplum/concepts/index.md). The copied tables are accessed in [ACCESS SHARE]({{ gp.docs.vmware }}/6/greenplum-database/ref_guide-sql_commands-LOCK.html) `lock mode`. Snapshot consistency is achieved through {{ GP }} mechanisms.
 
-When starting a transfer with sharded copy enabled, the service will create the copy working both with the {{ GP }} cluster's master host and [segment hosts](../../../../managed-greenplum/concepts/index.md) in utility mode. Access to the tables to be copied locks the tables in `ACCESS SHARE` or `SHARE` mode depending on the Snapshot consistency setting.
+When starting a transfer with parallel copy enabled, the service copies data interacting with both the {{ GP }} cluster's master host and [segment hosts](../../../../managed-greenplum/concepts/index.md) in utility mode. Access to the tables to be copied locks the tables in `ACCESS SHARE` or `SHARE` mode depending on the Snapshot consistency setting.
 
-To guarantee snapshot consistency, transfers with sharded copy enabled need to assure that data in the tables being transferred remains static. For `ACCESS SHARE` locks (default), the service does not guarantee that the data will remain static: this must be assured externally. For `SHARE` locks, the {{ GP }} mechanisms guarantee that data in the source tables remains static.
+To guarantee snapshot consistency, transfers with parallel copy enabled need to ensure that data in the tables being transferred remains static. For `ACCESS SHARE` locks (by default), the service does not guarantee that the data will remain static: this must be assured externally. For `SHARE` locks, the {{ GP }} mechanisms guarantee that data in the source tables remains static.
 
 {% include [greenplum-trademark](../../../../_includes/mdb/mgp/trademark.md) %}

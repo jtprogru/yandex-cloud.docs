@@ -9,7 +9,7 @@
 ## Перед началом работы {#before-you-begin}
 
 1. Перейдите в [консоль управления]({{ link-console-main }}), затем войдите в {{ yandex-cloud }} или зарегистрируйтесь, если вы еще не зарегистрированы.
-1. На странице [**Биллинг**]({{ link-console-billing }}) убедитесь, что у вас подключен [платежный аккаунт](../billing/concepts/billing-account.md) и он находится в статусе `ACTIVE` или `TRIAL_ACTIVE`. Если платежного аккаунта нет, [создайте его](../billing/quickstart/index.md#create_billing_account).
+1. На странице [**{{ ui-key.yacloud.component.navigation-menu.label_billing }}**]({{ link-console-billing }}) убедитесь, что у вас подключен [платежный аккаунт](../billing/concepts/billing-account.md) и он находится в статусе `ACTIVE` или `TRIAL_ACTIVE`. Если платежного аккаунта нет, [создайте его](../billing/quickstart/index.md#create_billing_account).
 1. Убедитесь, что в вашем облаке существует бакет для хранения аудитного лога, при необходимости [создайте новый бакет](../storage/quickstart.md#the-first-bucket) с ограниченным доступом.
 1. [Создайте](../iam/operations/sa/create.md) сервисный аккаунт и назначьте ему роли:
 
@@ -26,8 +26,8 @@
         ```
         yc resource-manager folder add-access-binding \
           --role storage.uploader \
-          --id <идентификатор каталога> \
-          --service-account-id <идентификатор сервисного аккаунта>
+          --id <идентификатор_каталога> \
+          --service-account-id <идентификатор_сервисного_аккаунта>
         ```
 
         Где:
@@ -36,13 +36,13 @@
         * `id` — идентификатор каталога, в котором будет находиться трейл.
         * `service-account-id` — идентификатор сервисного аккаунта.
 
-      * Назначьте роль [`audit-trails.viewer`](./security/index.md#roles) на организацию, с которой будут собираться аудитные логи:
+      * Назначьте роль [`audit-trails.viewer`](./security/index.md#roles-list) на организацию, с которой будут собираться аудитные логи:
 
         ```
-        yc organization-manager organization add-access-binding 
+        yc organization-manager organization add-access-binding \
           --role audit-trails.viewer \
-          --id <идентификатор организации> \
-          --service-account-id <идентификатор сервисного аккаунта>
+          --id <идентификатор_организации> \
+          --service-account-id <идентификатор_сервисного_аккаунта>
         ```
 
         Где:
@@ -61,29 +61,36 @@
 
 ## Создание трейла {#the-trail-creation}
 
-Чтобы создать первый трейл в {{ at-name }} и запустить процесс управления аудитными логами:
+Чтобы создать первый трейл в {{ at-name }} и запустить процесс управления аудитными логами уровня конфигурации:
 
 {% list tabs %}
 
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите разместить трейл.
-  1. Выберите сервис **{{ at-name }}**.
-  1. Нажмите кнопку **Создать трейл**.
-  1. В поле **Имя** укажите имя создаваемого трейла.
-  1. В поле **Описание** задайте описание трейла, необязательный параметр.
-  1. В блоке **Фильтр** задайте параметры области сбора аудитных логов:
-      * **Ресурс** — выберите `Организация`.
-      * **Организация** — не требует заполнения, содержит имя текущей организации.
-  1. В блоке **Назначение** задайте параметры объекта назначения:
-      * **Назначение** —  `{{ objstorage-name }}`.
-      * **Бакет** — выберите бакет, в который будут загружаться аудитные логи.
-      * **Префикс объекта** — необязательный параметр, участвует в [полном имени](./concepts/format.md#log-file-name) файла аудитного лога.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_audit-trails }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.audit-trails.button_create-trail }}**.
+  1. В поле **{{ ui-key.yacloud.common.name }}** укажите имя создаваемого трейла.
+  1. В поле **{{ ui-key.yacloud.common.description }}** задайте описание трейла, необязательный параметр.
+  1. В блоке **{{ ui-key.yacloud.audit-trails.label_destination }}** задайте параметры объекта назначения:
+
+      * **{{ ui-key.yacloud.audit-trails.label_destination }}** — `{{ ui-key.yacloud.audit-trails.label_objectStorage }}`.
+      * **{{ ui-key.yacloud.audit-trails.label_bucket }}** — выберите бакет, в который будут загружаться аудитные логи.
+      * **{{ ui-key.yacloud.audit-trails.label_object-prefix }}** — необязательный параметр, участвует в [полном имени](./concepts/format.md#log-file-name) файла аудитного лога.
       
       {% include [note-bucket-prefix](../_includes/audit-trails/note-bucket-prefix.md) %}
+      * **{{ ui-key.yacloud.audit-trails.title_kms-key }}** — если выбранный бакет [зашифрован](../storage/concepts/encryption.md), укажите ключ шифрования.
 
-  1. В блоке **Сервисный аккаунт** выберите сервисный аккаунт, от имени которого трейл будет загружать файлы аудитного лога в бакет.
-  1. Нажмите кнопку **Создать**.
+  1. В блоке **{{ ui-key.yacloud.audit-trails.label_service-account }}** выберите сервисный аккаунт, от имени которого трейл будет загружать файлы аудитного лога в бакет.
+  1. В блоке **{{ ui-key.yacloud.audit-trails.label_path-filter-section }}** задайте параметры сбора аудитных логов уровня конфигурации:
+
+      * **{{ ui-key.yacloud.audit-trails.label_collecting-logs }}** — выберите `{{ ui-key.yacloud.common.enabled }}`.
+      * **{{ ui-key.yacloud.audit-trails.label_resource-type }}** — выберите `{{ ui-key.yacloud.audit-trails.label_organization-manager.organization }}`.
+      * **{{ ui-key.yacloud.audit-trails.label_organization-manager.organization }}** — не требует заполнения, содержит имя текущей организации.
+      * **{{ ui-key.yacloud.audit-trails.label_resource-manager.cloud }}** — оставьте значение по умолчанию `{{ ui-key.yacloud.common.all }}`.
+
+  1. {% include [data-plane-on-console](../_includes/audit-trails/data-plane-on-console.md) %}
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 {% endlist %}
 
@@ -108,5 +115,5 @@
 
 ## Что дальше {#whats-next}
 
-* Узнайте о [формате аудитных логов](./concepts/format.md).
-* Узнайте о [событиях](./concepts/events.md).
+* Узнайте больше о [сервисе](./concepts/index.md).
+* Узнайте о [типах аудитных логов](./concepts/control-plane-vs-data-plane.md).

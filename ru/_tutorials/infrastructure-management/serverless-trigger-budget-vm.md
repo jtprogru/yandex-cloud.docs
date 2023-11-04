@@ -42,7 +42,7 @@ git clone https://github.com/yandex-cloud-examples/yc-serverless-trigger-budget
     1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
     1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-accounts.button_add }}**.
     1. Введите имя сервисного аккаунта `service-account-for-budget`.
-    1. Нажмите **{{ ui-key.yacloud.iam.folder.service-account.label_add-role }}** и назначьте сервисному аккаунту роли `compute.admin`, `iam.serviceAccounts.user` и `serverless.functions.invoker`.
+    1. Нажмите **{{ ui-key.yacloud.iam.folder.service-account.label_add-role }}** и назначьте сервисному аккаунту роли `compute.admin`, `iam.serviceAccounts.user` и `{{ roles-functions-invoker }}`.
     1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.popup-robot_button_add }}**.
 
 - CLI
@@ -98,7 +98,7 @@ git clone https://github.com/yandex-cloud-examples/yc-serverless-trigger-budget
 
         Сохраните идентификатор сервисного аккаунта `service-account-for-budget`.
 
-    1. Назначьте сервисному аккаунту роли `compute.admin`, `iam.serviceAccounts.user` и `serverless.functions.invoker` на каталог:
+    1. Назначьте сервисному аккаунту роли `compute.admin`, `iam.serviceAccounts.user` и `{{ roles-functions-invoker }}` на каталог:
         ```bash
         yc resource-manager folder add-access-binding <идентификатор_каталога> \
            --role compute.admin \
@@ -109,7 +109,7 @@ git clone https://github.com/yandex-cloud-examples/yc-serverless-trigger-budget
            --subject serviceAccount:<идентификатор_сервисного_аккаунта>
 
         yc resource-manager folder add-access-binding <идентификатор_каталога> \
-           --role serverless.functions.invoker \
+           --role {{ roles-functions-invoker }} \
            --subject serviceAccount:<идентификатор_сервисного_аккаунта>
         ```
 
@@ -122,7 +122,7 @@ git clone https://github.com/yandex-cloud-examples/yc-serverless-trigger-budget
 
     Чтобы создать сервисный аккаунт, воспользуйтесь методом [create](../../iam/api-ref/ServiceAccount/create.md) для ресурса [ServiceAccount](../../iam/api-ref/ServiceAccount/index.md).
 
-    Чтобы назначить сервисному аккаунта роли `compute.admin`, `iam.serviceAccounts.user` и `serverless.functions.invoker` на каталог, воспользуйтесь методом [setAccessBindings](../../iam/api-ref/ServiceAccount/setAccessBindings.md) для ресурса [ServiceAccount](../../iam/api-ref/ServiceAccount/index.md).
+    Чтобы назначить сервисному аккаунта роли `compute.admin`, `iam.serviceAccounts.user` и `{{ roles-functions-invoker }}` на каталог, воспользуйтесь методом [setAccessBindings](../../iam/api-ref/ServiceAccount/setAccessBindings.md) для ресурса [ServiceAccount](../../iam/api-ref/ServiceAccount/index.md).
 
 {% endlist %}
 
@@ -150,13 +150,13 @@ zip src.zip index.go go.mod
         1. Укажите способ загрузки **{{ ui-key.yacloud.serverless-functions.item.editor.value_method-zip-file }}** и выберите архив, который создали на предыдущем шаге.
         1. Укажите точку входа `index.StopComputeInstances`.
         1. В блоке **{{ ui-key.yacloud.serverless-functions.item.editor.label_title-params }}** укажите:
-            * **{{ ui-key.yacloud.serverless-functions.item.overview.label_latest-timeout }}** — `5 {{ ui-key.yacloud.common.label_seconds_many }}`;
-            * **{{ ui-key.yacloud.serverless-functions.item.overview.label_latest-memory }}** — `512 {{ ui-key.yacloud.common.units.label_megabyte }}`;
-            * **{{ ui-key.yacloud.serverless-functions.triggers.form.field_function_service-account }}** — `service-account-for-budget`;
-            * **{{ ui-key.yacloud.serverless-functions.item.overview.label_title-environment-vars }}**:
+            * **{{ ui-key.yacloud.serverless-functions.item.editor.field_timeout }}** — `5`;
+            * **{{ ui-key.yacloud.serverless-functions.item.editor.field_resources-memory }}** — `512 {{ ui-key.yacloud.common.units.label_megabyte }}`;
+            * **{{ ui-key.yacloud.forms.label_service-account-select }}** — `service-account-for-budget`;
+            * **{{ ui-key.yacloud.serverless-functions.item.editor.field_environment-variables }}**:
                 * `FOLDER_ID` — идентификатор каталога, в котором вы хотите останавливать виртуальные машины.
                 * `TAG` — `target-for-stop`.
-        1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_create }}**.
+        1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**.
 
 - CLI
 
@@ -173,7 +173,7 @@ zip src.zip index.go go.mod
         created_at: "2022-12-07T10:44:13.156Z"
         name: function-for-budget
         log_group_id: ckg6bie2rtgd********
-        http_invoke_url: https://functions.yandexcloud.net/d4eiqjdbqt7s********
+        http_invoke_url: https://{{ sf-url }}/d4eiqjdbqt7s********
         status: ACTIVE
         ```
 
@@ -245,7 +245,7 @@ zip src.zip index.go go.mod
     1. В левом верхнем углу нажмите кнопку ![image](../../_assets/main-menu.svg) **{{ ui-key.yacloud.iam.folder.dashboard.label_products }}**.
     1. Выберите сервис ![image](../../_assets/billing.svg) [**{{ billing-name }}**]({{ link-console-billing }}).
     1. На странице **{{ ui-key.yacloud.billing.account.label_accounts }}** выберите платежный аккаунт.
-    1. Перейдите на вкладку **{{ ui-key.yacloud.billing.account.switch_budgets }}** и нажмите **Создать бюджет**.
+    1. Перейдите на вкладку **{{ ui-key.yacloud.billing.account.switch_budgets }}** и нажмите **{{ ui-key.yacloud.billing.account.budgets.button_create }}**.
     1. В блоке **{{ ui-key.yacloud.common.section-base }}** укажите:
         * Имя бюджета — `vm-budget`.
         * Тип бюджета — `{{ ui-key.yacloud.billing.account.budgets.label_type-expense }}`.

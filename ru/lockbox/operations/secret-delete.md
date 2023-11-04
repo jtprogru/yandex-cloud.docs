@@ -7,11 +7,11 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, которому принадлежит секрет.
-  1. В списке сервисов выберите сервис **{{ lockbox-short-name }}**.
-  1. В меню слева выберите **Секреты**.
+  1. В списке сервисов выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
+  1. В меню слева выберите **{{ ui-key.yacloud.lockbox.label_section-secrets }}**.
   1. Напротив нужного секрета нажмите значок ![image](../../_assets/horizontal-ellipsis.svg).
-  1. В открывшемся меню выберите пункт **Удалить**.
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+  1. В открывшемся меню выберите пункт **{{ ui-key.yacloud.common.delete }}**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -78,7 +78,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Откройте файл конфигурации {{ TF }} и удалите фрагмент с описанием секрета:
 

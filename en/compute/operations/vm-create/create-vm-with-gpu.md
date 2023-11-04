@@ -1,6 +1,11 @@
+---
+title: "How to create a VM with a GPU"
+description: "Use this guide to create a VM with a GPU."
+---
+
 # Creating a VM with a GPU
 
-This section provides guidelines for creating a [VM](../../concepts/vm.md) with a GPU. For more information about VM configurations, see [{#T}](../../concepts/gpus.md).
+This section explains how to create a [VM](../../concepts/vm.md) with a GPU. For more information about VM configurations, see [{#T}](../../concepts/gpus.md).
 
 By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.md#cloud) has a zero [quota](../../concepts/limits.md#quotas) for creating VMs with GPUs. To change the [quota]({{ link-console-quotas }}), contact [technical support]({{ link-console-support }}).
 
@@ -11,6 +16,7 @@ By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.m
 {% list tabs %}
 
 - Management console
+
 
    {% include [create-vm-with-gpu](../../../_includes/compute/create/create-vm-with-gpu-console.md) %}
 
@@ -62,18 +68,18 @@ By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.m
         {% include [gpu-zones](../../../_includes/compute/gpu-zones.md) %}
 
 
-        
+
       * `platform`: ID of the [platform](../../concepts/vm-platforms.md):
 
         {% include [gpu-platforms-api](../../../_includes/compute/gpu-platforms-api.md) %}
-        
-      * `cores`: [The number of vCPUs](../../concepts/gpus.md).
-      * `memory`: Amount of RAM.
-      * `gpus`: Number of GPUs.
+
+      * `cores`: [Number of vCPUs](../../concepts/gpus.md)
+      * `memory`: Amount of RAM
+      * `gpus`: Number of GPUs
       * `preemptible`: If you need to make the VM [preemptible](../../concepts/preemptible-vm.md).
-        
-        
-      * `create-boot-disk`: [Image](../images-with-pre-installed-software/get-list.md) of the OS.
+
+
+      * `create-boot-disk`: OS [image](../images-with-pre-installed-software/get-list.md).
 
         {% include [gpu-os](../../../_includes/compute/gpu-os.md) %}
 
@@ -106,25 +112,25 @@ By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.m
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the provider {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
    1. In the configuration file, describe the parameters of the resources you want to create:
 
       ```hcl
       resource "yandex_compute_instance" "vm-1" {
-
-        name        = "vm-with-gpu"
-        zone        = "<availability zone>"
-        platform_id = "gpu-standard-v3"
+        name                      = "vm-with-gpu"
+        allow_stopping_for_update = true
+        platform_id               = "standard-v3"
+        zone                      = "<availability_zone>"
 
         resources {
-          cores  = <number of vCPU cores>
-          memory = <amount of RAM, GB>
-          gpus   = <number of GPUs>
+          cores  = <number_of_vCPU_cores>
+          memory = <amount_of_RAM_in_GB>
+          gpus   = <number_of_GPUs>
         }
 
         boot_disk {
           initialize_params {
-            image_id = "<image ID>"
+            image_id = "<image_ID>"
           }
         }
 
@@ -134,7 +140,7 @@ By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.m
         }
 
         metadata = {
-          ssh-keys = "<username>:<SSH key contents>"
+          ssh-keys = "<username>:<SSH_key_contents>"
         }
       }
 
@@ -144,7 +150,7 @@ By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.m
 
       resource "yandex_vpc_subnet" "subnet-1" {
         name       = "subnet1"
-        zone       = "<availability zone>"
+        zone       = "<availability_zone>"
         network_id = "${yandex_vpc_network.network-1.id}"
       }
       ```
@@ -152,17 +158,19 @@ By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.m
       Where:
       * `yandex_compute_instance`: Description of the VM:
          * `name`: VM name.
+         * {% include [terraform-allow-stopping](../../../_includes/compute/terraform-allow-stopping.md) %}
+         * `platform_id`: ID of the [platform](../../concepts/vm-platforms.md):
          * `zone`: ID of the [availability zone](../../../overview/concepts/geo-scope.md) that will host your VM.
 
-              
-           {% include [gpu-zones](../../../_includes/compute/gpu-zones.md) %}
-   
-
            
+           {% include [gpu-zones](../../../_includes/compute/gpu-zones.md) %}
+
+
+
          * `platform_id`: ID of the [platform](../../concepts/vm-platforms.md):
 
            {% include [gpu-platforms-api](../../../_includes/compute/gpu-platforms-api.md) %}
- 
+
 
          * `resources`: Number of vCPU cores and the amount of RAM available to the VM. The values must match the selected [platform](../../concepts/vm-platforms.md).
          * `boot_disk`: Boot [disk](../../concepts/disk.md) settings. Specify the ID of the selected [image](../../concepts/image.md). You can get the image ID from the [list of public images](../images-with-pre-installed-software/get-list.md).
@@ -170,7 +178,7 @@ By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.m
             {% include [gpu-os](../../../_includes/compute/gpu-os.md) %}
 
          * `network_interface`: [Network](../../../vpc/concepts/network.md#network) settings. Specify the ID of the selected [subnet](../../../vpc/concepts/network.md#network). To automatically assign a [public IP address](../../../vpc/concepts/address.md#public-addresses) to the VM, set `nat = true`.
-         * `metadata`: In the metadata, pass the public key for VM access via SSH. For more information, see [{#T}](../../concepts/vm-metadata.md).
+         * `metadata`: In the metadata, provide the public key for VM access via SSH. For more information, see [{#T}](../../concepts/vm-metadata.md).
       * `yandex_vpc_network`: Description of the cloud network.
       * `yandex_vpc_subnet`: Description of the subnet your VM will connect to.
 
@@ -180,26 +188,13 @@ By default, the [cloud](../../../resource-manager/concepts/resources-hierarchy.m
 
       {% endnote %}
 
-      For more information on resources that you can create with {{ TF }}, see the [provider documentation]({{ tf-provider-link }}/).
-   1. Make sure the configuration files are valid.
-      1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      For more information about resources you can create with {{ TF }}, see the [provider documentation]({{ tf-provider-link }}/).
 
-         ```bash
-         terraform plan
-         ```
+   1. Create resources:
 
-      If the configuration is described correctly, the terminal will display a list of created resources and their parameters. If the configuration contains any errors, {{ TF }} will point them out.
-   1. Deploy cloud resources.
-      1. If the configuration does not contain any errors, run this command:
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
 
-         ```bash
-         terraform apply
-         ```
-
-      1. Confirm that you want to create the resources.
-
-      Once you are done, all the resources you need will be created in the specified folder. You can check that the resources are there and their settings are correct using the [management console]({{ link-console-main }}).
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}).
 
 {% endlist %}
 

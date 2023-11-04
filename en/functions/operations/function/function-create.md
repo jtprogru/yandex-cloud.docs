@@ -1,3 +1,8 @@
+---
+title: "Creating a function"
+description: "Follow this guide to create a function."
+---
+
 # Creating a function
 
 {% list tabs %}
@@ -5,13 +10,13 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create a function.
-   1. Select **{{ sf-name }}**.
-   1. Click **Create function**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.list.button_create }}**.
    1. Enter a name and description for the function. The name format is as follows:
 
       {% include [name-format](../../../_includes/name-format.md) %}
 
-   1. Click **Create**.
+   1. Click **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -28,12 +33,12 @@
    Result:
 
    ```
-   id: b09bhaokchn9pnbrlseb
-   folder_id: aoek49ghmknnpj1ll45e
+   id: b09bhaokchn9********
+   folder_id: aoek49ghmknn********
    created_at: "2019-06-14T10:03:37.475Z"
    name: python_function
-   log_group_id: eolm8aoq9vcppsieej6h
-   http_invoke_url: https://functions.yandexcloud.net/b09bhaokchn9pnbrlseb
+   log_group_id: eolm8aoq9vcp********
+   http_invoke_url: https://{{ sf-url }}/b09bhaokchn9********
    status: ACTIVE
    ```
 
@@ -41,7 +46,7 @@
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To create a function:
 
@@ -49,15 +54,15 @@
 
       * `yandex_function`: Description of the function being created and its source code:
          * `name`: Function name.
-         * `folder_id`: ID of the folder.
+         * `folder_id`: Folder ID.
          * `description`: Text description of the function.
          * `labels`: Function labels in `key:value` format.
-         * `user_hash`: An arbitrary string that identifies the function version. When the function changes, update this string, too. The function will update when this string is updated.
-         * `runtime`: The function [runtime environment](../../concepts/runtime/index.md).
+         * `user_hash`: Arbitrary string that identifies the function version. When the function changes, update this string, too. The function will update when this string is updated.
+         * `runtime`: Function [runtime environment](../../concepts/runtime/index.md).
          * `entrypoint`: Function name in the source code that will serve as an entry point to the applications.
-         * `memory`: The amount of memory allocated for function execution, in MB.
+         * `memory`: Amount of memory allocated for function execution, in MB.
          * `execution_timeout`: Function execution timeout.
-         * `service_account_id`: ID of the service account that should be used to invoke the function.
+         * `service_account_id`: ID of the service account to invoke the function under.
          * `environment`: Environment variables in `key:value` format.
          * `tags`: Function tags.
          * `version`: Function version.
@@ -122,7 +127,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -131,7 +136,7 @@
       ```
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-      You can verify that the resources are there and their configuration is correct using the [management console]({{ link-console-main }}) or the following [CLI](../../../cli/quickstart.md) command:
+      You can check the new resources and their configuration using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
 
       ```
       yc serverless function list
@@ -141,8 +146,10 @@
 
    To create a function, use the [create](../../functions/api-ref/Function/create.md) REST API method for the [Function](../../functions/api-ref/Function/index.md) resource or the [FunctionService/Create](../../functions/api-ref/grpc/function_service.md#Create) gRPC API call.
 
+
 - {{ yandex-cloud }} Toolkit
 
    You can create a function using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the IDE family on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 {% endlist %}

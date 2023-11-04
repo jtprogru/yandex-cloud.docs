@@ -1,5 +1,7 @@
 # Issues from {{ tracker-full-name }}
 
+{% include [actions-alert](../../_includes/wiki/actions-alert.md) %}
+
 [{{ tracker-full-name }}]({{ link-tracker }}) is a service for managing your projects and activities. You can read more about the service features in the [{{ tracker-full-name }} documentation](../../tracker/).
 
 {{ tracker-full-name }} users can place a link to an issue or a list of issues on {{ wiki-name }} pages.
@@ -9,7 +11,7 @@
 
 You can place _magic links_ to specific issues on the [pages created in the new or old editor](../pages-types.md). These links always include the key, name, status of the issue, and the assignee's username. To insert a link to an issue, copy its key and paste it in the text of the page.
 
-Example:
+For example:
 
 | Markup | Result |
 ----- | -----
@@ -29,7 +31,7 @@ Using the `not_var{{tasks}}` block, you can add an automatically generated list 
 
    {% note info %}
 
-   The `url` parameter of the `tasks` block doesn't support the `"` character. If this character is present in the filter's URL copied from the address bar, replace it with `%22`.
+   The `url` parameter of the `tasks` block does not support the `"` character. If this character is present in the filter's URL copied from the address bar, replace it with `%22`.
 
    {% endnote %}
 
@@ -43,13 +45,13 @@ Using dynamic tables, you can add a list of issues and their main parameters to 
 
 1. Add the required number of rows and list the issue keys in them.
 
-1. Create additional columns. As the data type, select ![](../../_assets/wiki/svg/type-task-parameters.svg) **Issue parameters**, such as the issue's **Summary**, **Reporter**, or **Type**.
+1. Create additional columns. As the data type, select ![](../../_assets/wiki/svg/type-task-parameters.svg) **Issue parameters**, such as the issue's **{{ ui-key.beta-wiki.blocks_common_newgrid.blocks_b-grid-table-head.title }}**, **{{ ui-key.beta-wiki.blocks_common_newgrid.blocks_b-grid-table-head.author }}**, or **{{ ui-key.beta-wiki.blocks_common_newgrid.blocks_b-grid-table-head.type }}**.
 
 1. Save the table.
 
 As a result, the columns with the issue parameters are filled in automatically. The resulting table can be [embedded in a {{ wiki-name }} page](../add-grid.md).
 
-Example:
+For example:
 
 ![](../../_assets/wiki/tickets-grid-example.png)
 

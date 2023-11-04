@@ -36,6 +36,7 @@ shard | Идентификатор шарда
 ### Метрики диска {#managed-clickhouse-disk-metrics}
 | Имя<br/>Тип, единицы измерения | Описание |
 | ----- | ----- |
+| `ch_s3_disk_parts_size`<br/>`DGAUGE`, байты | Место, занятое кусками таблиц [MergeTree]({{ ch.docs }}/engines/table-engines/mergetree-family/mergetree/) в сервисе {{ objstorage-full-name }} при настроенном [гибридном хранилище](../../../managed-clickhouse/concepts/storage.md#hybrid-storage-features) {{ mch-name }}. |
 | `disk.free_bytes`<br/>`DGAUGE`, байты | Свободное место. | 
 | `disk.free_inodes`<br/>`DGAUGE`, штуки | Свободное количество inodes. | 
 | `disk.total_bytes`<br/>`DGAUGE`, байты | Доступное место. | 
@@ -70,14 +71,14 @@ shard | Идентификатор шарда
 | ----- | ----- |
 | `mem.guarantee_bytes`<br/>`DGAUGE`, байты | Гарантированный размер оперативной памяти. | 
 | `mem.limit_bytes`<br/>`DGAUGE`, байты | Предельный размер оперативной памяти. | 
-| `mem.active_bytes`<br/>`DGAUGE`, байты | Использование оперативной памяти, тип потребления `active`. | 
+| `mem.active_bytes`<br/>`DGAUGE`, байты | Объем оперативной памяти, которая используется наиболее часто и освобождается только в крайнем случае. | 
 | `mem.available_bytes`<br/>`DGAUGE`, байты | Использование оперативной памяти, тип потребления `available`. | 
 | `mem.buffers_bytes`<br/>`DGAUGE`, байты | Использование оперативной памяти, тип потребления `buffers`.  | 
 | `mem.cached_bytes`<br/>`DGAUGE`, байты | Использование оперативной памяти, тип потребления `cached`.  | 
-| `mem.free_bytes`<br/>`DGAUGE`, байты | Использование оперативной памяти, тип потребления `free`.  |
+| `mem.free_bytes`<br/>`DGAUGE`, байты | Объем свободной оперативной памяти, доступной для использования, без учета `mem.buffers_bytes` и `mem.cached_bytes`.  |
 | `mem.shared_bytes`<br/>`DGAUGE`, байты | Использование оперативной памяти, тип потребления `shared`.  | 
 | `mem.total_bytes`<br/>`DGAUGE`, байты | Использование оперативной памяти, тип потребления `total`.  | 
-| `mem.used_bytes`<br/>`DGAUGE`, байты | Использование оперативной памяти, тип потребления `used`.  | 
+| `mem.used_bytes`<br/>`DGAUGE`, байты | Объем оперативной памяти, которую в данный момент используют запущенные процессы.  | 
 
 ### Метрики сети {#managed-clickhouse-net-metrics}
 | Имя<br/>Тип, единицы измерения | Описание |

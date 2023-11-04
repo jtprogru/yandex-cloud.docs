@@ -1,3 +1,8 @@
+---
+title: "Посмотреть настройки масштабирования контейнера"
+description: "Следуя данной инструкции, вы сможете посмотреть настройки масштабирования контейнера."
+---
+
 # Посмотреть настройки масштабирования контейнера
 
 {% list tabs %}
@@ -5,8 +10,8 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится контейнер.
-    1. Выберите сервис **{{ serverless-containers-name }}**.
-    1. Выберите контейнер. Количество подготовленных экземпляров отображается в блоке **Ревизии**, в строке с активной ревизией контейнера.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
+    1. Выберите контейнер. Количество подготовленных экземпляров отображается в блоке **{{ ui-key.yacloud.serverless-containers.section-revisions }}**, в строке с активной ревизией контейнера.
 
 - CLI
 
@@ -29,7 +34,7 @@
 	container_id: flhqle7d5o**********
 	created_at: "2022-09-14T12:48:55.914Z"
 	image:
-	  image_url: cr.cloud-preprod.yandex.net/crtrvt9l6f**********/billing-test
+	  image_url: {{ registry }}/crtrvt9l6f**********/billing-test
 	  image_digest: sha256:e3aaa4c9af7d99ea5e4e4236bc540a3cc826d1f1344a601ddb9cbc**********
 	resources:
 	  memory: "134217728"

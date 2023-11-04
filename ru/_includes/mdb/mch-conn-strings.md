@@ -41,6 +41,8 @@
 
 {% endlist %}
 
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
+
 После выполнения команды введите пароль пользователя для завершения процедуры подключения.
 
 После подключения к СУБД выполните команду `SELECT version();`.
@@ -62,13 +64,15 @@
 * Подключение с SSL
 
     ```bash
-    curl --cacert {{ crt-local-dir }}{{ crt-local-file }} \
+    curl --cacert {{ crt-local-dir }}{{ crt-local-file-root }} \
          --header "X-ClickHouse-User: <имя пользователя БД>" \
          --header "X-ClickHouse-Key: <пароль пользователя БД>" \
          'https://<FQDN любого хоста {{ CH }}>:8443/?database=<имя БД>&query=SELECT%20version()'
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 ### Go {#go}
 
@@ -150,7 +154,7 @@ sudo apt update && sudo apt install --yes golang git
         const DB_USER = "<имя пользователя БД>"
         const DB_PASS = "<пароль пользователя БД>"
 
-        const CACERT = "{{ crt-local-dir }}{{ crt-local-file }}"
+        const CACERT = "{{ crt-local-dir }}{{ crt-local-file-root }}"
 
         caCert, err := ioutil.ReadFile(CACERT)
         if err != nil {
@@ -189,6 +193,8 @@ sudo apt update && sudo apt install --yes golang git
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Подключение:**
 
@@ -351,7 +357,7 @@ go run connect.go
         String DB_USER    = "<имя пользователя БД>";
         String DB_PASS    = "<пароль пользователя БД>";
 
-        String CACERT     = "{{ crt-local-dir }}{{ crt-local-file }}";
+        String CACERT     = "{{ crt-local-dir }}{{ crt-local-file-root }}";
 
         String DB_URL = String.format("jdbc:clickhouse://%s:8443/%s?ssl=1&sslmode=strict&sslrootcert=%s", DB_HOST, DB_NAME, CACERT);
 
@@ -369,6 +375,8 @@ go run connect.go
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Подключение:**
 
@@ -444,7 +452,7 @@ npm install querystring
     const DB_USER = "<имя пользователя БД>";
     const DB_PASS = "<пароль пользователя БД>";
 
-    const CACERT = "{{ crt-local-dir }}{{ crt-local-file }}";
+    const CACERT = "{{ crt-local-dir }}{{ crt-local-file-root }}";
 
     const options = {
         'method': 'GET',
@@ -472,6 +480,8 @@ npm install querystring
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Подключение:**
 
@@ -567,11 +577,13 @@ node app.js
     Port = 8443
     Proto = https
     SSLMode = allow
-    CertificateFile = {{ crt-local-dir }}{{ crt-local-file }}
+    CertificateFile = {{ crt-local-dir }}{{ crt-local-file-root }}
     CALocation = /etc/ssl/certs/ca-certificates.crt
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Подключение:**
 
@@ -594,7 +606,7 @@ isql -v ClickHouse
     * Подключение без SSL
 
         * **Name** — имя подключения.
-        * **Host** — FQDN любого хоста {{ CH }}.
+        * **Host** — [FQDN любого хоста {{ CH }}](../../managed-clickhouse/operations/connect.md#fqdn).
         * **Port** — `{{ port-mch-http }}`.
         * **Database** — имя БД.
         * **User** — имя пользователя БД.
@@ -603,7 +615,7 @@ isql -v ClickHouse
     * Подключение с SSL
 
         * **Name** — имя подключения.
-        * **Host** — FQDN любого хоста {{ CH }}.
+        * **Host** — [FQDN любого хоста {{ CH }}](../../managed-clickhouse/operations/connect.md#fqdn).
         * **Port** — `{{ port-mch-http }}`.
         * **Database** — имя БД.
         * **SSLMode** — `allow`.
@@ -688,7 +700,7 @@ isql -v ClickHouse
         ];
 
         $ssl = [
-            'cafile' => '{{ crt-local-dir }}{{ crt-local-file }}',
+            'cafile' => '{{ crt-local-dir }}{{ crt-local-file-root }}',
             'verify_peer' => true,
         ];
 
@@ -709,6 +721,8 @@ isql -v ClickHouse
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Подключение:**
 
@@ -741,6 +755,8 @@ php connect.php
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 ### Python (clickhouse-driver) {#python-clickhouse-driver}
 
@@ -783,12 +799,14 @@ pip3 install clickhouse-driver
                     port=9440,
                     secure=True,
                     verify=True,
-                    ca_certs='{{ crt-local-dir }}{{ crt-local-file }}')
+                    ca_certs='{{ crt-local-dir }}{{ crt-local-file-root }}')
 
     print(client.execute('SELECT version()'))
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Подключение:**
 
@@ -842,7 +860,7 @@ pip3 install requests
         params={
             'query': 'SELECT version()',
         },
-        verify='/usr/local/share/ca-certificates/Yandex/YandexCA.crt',
+        verify='{{ crt-local-dir }}{{ crt-local-file-root }}',
         headers={
             'X-ClickHouse-User': '<имя пользователя БД>',
             'X-ClickHouse-Key': '<пароль пользователя БД>',
@@ -853,6 +871,8 @@ pip3 install requests
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Подключение:**
 
@@ -926,7 +946,7 @@ sudo apt update && sudo apt install --yes ruby
     req.add_field("X-ClickHouse-Key", DB_PASS)
 
     conn = Net::HTTP.new(uri.host, uri.port)
-    conn.ca_file = "{{ crt-local-dir }}{{ crt-local-file }}"
+    conn.ca_file = "{{ crt-local-dir }}{{ crt-local-file-root }}"
     conn.use_ssl = true
     conn.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
@@ -935,6 +955,8 @@ sudo apt update && sudo apt install --yes ruby
     ```
 
 {% endlist %}
+
+О том, как получить FQDN хоста, см. [инструкцию](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Подключение:**
 

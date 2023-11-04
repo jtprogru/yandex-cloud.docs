@@ -16,12 +16,12 @@ You can create other resources manually or using {{ TF }}.
 
 1. [Create an {{ mmy-name }} cluster](../../managed-mysql/operations/cluster-create.md) in any suitable [configuration](../../managed-mysql/concepts/instance-types.md) with the following settings:
 
-   * A database named `db1`.
-   * A user named `user1`.
+   * **{{ ui-key.yacloud.mdb.forms.database_field_name }}**: `db1`
+   * **{{ ui-key.yacloud.mdb.forms.database_field_user-login }}**: `user1`
 
 1. To import the data to the {{ objstorage-name }} bucket:
 
-   1. [Create a bucket](../../storage/operations/buckets/create.md).
+   1. [Create a bucket](../../storage/operations/buckets/create.md) with restricted access.
    1. [Create a service account](../../iam/operations/sa/create.md).
    1. [Grant this service account](../../storage/operations/buckets/edit-acl.md) read and write permissions for this bucket.
 
@@ -35,8 +35,6 @@ You can create other resources manually or using {{ TF }}.
 
    * [To the VM instance and the {{ dataproc-name }} cluster](../../data-proc/operations/connect.md).
    * [To the {{ mmy-name }} cluster](../../managed-mysql/operations/connect.md#configure-security-groups).
-
-   {% include [preview-pp.md](../../_includes/preview-pp.md) %}
 
 ### Using {{ TF }} {#create-terraform}
 
@@ -76,7 +74,7 @@ You can create other resources manually or using {{ TF }}.
    terraform validate
    ```
 
-   If there are any errors in the configuration files, {{ TF }} will point to them.
+   If there are any errors in the configuration files, {{ TF }} will point them out.
 
 1. Create the required infrastructure:
 
@@ -88,7 +86,7 @@ You can create other resources manually or using {{ TF }}.
 
 ## Preparing the source cluster {#prepare}
 
-1. [Connect to the](../../managed-mysql/operations/connect.md) `db1` database of the {{ mmy-full-name }} cluster on behalf of `user1`.
+1. [Connect to the](../../managed-mysql/operations/connect.md) `db1` database of the {{ mmy-full-name }} cluster as `user1`.
 1. Add test data to the database. The example uses a simple table with people's names and ages:
 
    1. Create a table:
@@ -131,7 +129,7 @@ Let:
 * {{ objstorage-name }}
 
    1. [Complete all the prerequisite steps](../../data-proc/operations/sqoop-usage.md#object-storage).
-   1. Run the command:
+   1. Run this command:
 
       ```bash
       sqoop import "-Dorg.apache.sqoop.splitter.allow_text_splitter=true" \
@@ -139,14 +137,14 @@ Let:
           --username "user1" \
           --P \
           --table "persons" \
-          --target-dir "s3a://my-bucket/import-directory" \
+          --target-dir "s3a://<bucket_name>/import-directory" \
           --split-by "age"
       ```
 
 * HDFS directory
 
    1. [Complete all the prerequisite steps](../../data-proc/operations/sqoop-usage.md#hdfs).
-   1. Run the command:
+   1. Run this command:
 
       ```bash
       sqoop import "-Dorg.apache.sqoop.splitter.allow_text_splitter=true" \
@@ -161,7 +159,7 @@ Let:
 * Apache Hive
 
    1. [Complete all the prerequisite steps](../../data-proc/operations/sqoop-usage.md#apache-hive).
-   1. Run the command:
+   1. Run this command:
 
       ```bash
       sqoop import "-Dorg.apache.sqoop.splitter.allow_text_splitter=true" \
@@ -179,7 +177,7 @@ Let:
 * Apache HBase
 
    1. [Complete all the prerequisite steps](../../data-proc/operations/sqoop-usage.md#apache-hbase).
-   1. Run the command:
+   1. Run this command:
 
       ```bash
       sqoop import "-Dorg.apache.sqoop.splitter.allow_text_splitter=true" \
@@ -199,9 +197,9 @@ Let:
 
 {% include [Check import](./check-import.md) %}
 
-## Deletе created resources {#clear-out}
+## Delete the resources you created {#clear-out}
 
-Some resources are not free of charge. Delete the resources you no longer need to avoid paying for them:
+Some resources are not free of charge. To avoid paying for them, delete the resources you no longer need:
 
 {% list tabs %}
 
@@ -230,9 +228,9 @@ Some resources are not free of charge. Delete the resources you no longer need t
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

@@ -16,15 +16,15 @@ There are three ways to migrate data from a third-party _source cluster_ to a {{
 
 * [Migrating data using logical replication](#logical-replication).
 
-   [_Logical replication_](https://www.postgresql.org/docs/current/logical-replication.html) uses the [subscriptions](https://www.postgresql.org/docs/current/sql-createsubscription.html) mechanism. This lets you migrate data to the target cluster with minimal downtime.
+   [_Logical replication_](https://www.postgresql.org/docs/current/logical-replication.html) uses the [subscriptions](https://www.postgresql.org/docs/current/sql-createsubscription.html) mechanism. It allows you to migrate data to the target cluster with minimal downtime.
 
-   Use this method only if, for some reason, it's not possible to migrate data using {{ data-transfer-full-name }}.
+   Use this method only if, for some reason, it is not possible to migrate data using {{ data-transfer-full-name }}.
 
 * [Transferring data by creating and restoring a logical dump](#backup).
 
    A _logical dump_ is a file with a set of commands running which one by one you can restore the state of a database. It is created using the `pg_dump` utility. To ensure that a logical dump is complete, before creating it, switch the source cluster to <q>read-only</q> mode.
 
-   Use this method only if, for some reason, it's not possible to transfer data using any of the above methods.
+   Use this method only if, for some reason, it is not possible to transfer data using any of the above methods.
 
 ## Transferring data using {{ data-transfer-full-name }} {#data-transfer}
 
@@ -57,14 +57,14 @@ Create the required resources:
 
    Create a [{{ mpg-name }} target cluster](../../managed-postgresql/operations/cluster-create.md) with any suitable configuration. In this case:
 
-   * The {{ PG }} version must be the same or higher than the version in the source cluster. Migration with a {{ PG }} version downgrade is impossible.
+   * The {{ PG }} version must be the same or higher than the version in the source cluster. You cannot perform migration while downgrading {{ PG }} version.
    * When creating a cluster, specify the same database name as in the source cluster.
    * Enable the same [{{ PG }} extensions](../../managed-postgresql/operations/extensions/cluster-extensions.md) as in the source cluster.
 
 * Using Terraform
 
    1. If you do not have {{ TF }} yet, [install and configure it](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-   1. Download [the file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
+   1. Download the [file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
    1. Download the configuration file [data-migration-pgsql-mpg.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/data-migration-pgsql-mpg/data-migration-pgsql-mpg.tf) to the same working directory.
 
       This file describes:
@@ -89,7 +89,7 @@ Create the required resources:
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
    1. Create the required infrastructure:
 
@@ -101,18 +101,18 @@ Create the required resources:
 
 ### Set up the source cluster {#source-setup}
 
-1. Specify the necessary SSL and WAL settings in the `postgresql.conf` file. On Debian and Ubuntu Linux distributions, the default path to this file is `/etc/postgresql/<{{ PG }} version>/main/postgresql.conf`.
-   1. We recommend using SSL for migrating data: this will not only help encrypt data, but also compress it. For more information, see [SSL Support](https://www.postgresql.org/docs/current/libpq-ssl.html) and [Database Connection Control Functions](https://www.postgresql.org/docs/current/libpq-connect.html) in the {{ PG }} documentation.
+1. Specify the required SSL and WAL settings in the `postgresql.conf` file. On Debian and Ubuntu Linux distributions, the default path to this file is `/etc/postgresql/<{{ PG }} version>/main/postgresql.conf`.
+   1. We recommend using SSL for migrating data: this will help not only encrypt data, but also compress it. For more information, see [SSL Support](https://www.postgresql.org/docs/current/libpq-ssl.html) and [Database Connection Control Functions](https://www.postgresql.org/docs/current/libpq-connect.html) in the {{ PG }} documentation.
 
-      To enable SSL, set the desired value in the configuration:
+      To enable SSL, set the appropriate value in the configuration:
 
       ```ini
       ssl = on                   # on, off
       ```
 
-   1. Change the logging level for [Write Ahead Log (WAL)](https://www.postgresql.org/docs/current/static/wal-intro.html) to add the information needed for logical replication. To do this, set the value of the [wal_level](https://www.postgresql.org/docs/current/runtime-config-wal.html#RUNTIME-CONFIG-WAL-SETTINGS) as `logical`.
+   1. Change the logging level for [Write Ahead Log (WAL)](https://www.postgresql.org/docs/current/static/wal-intro.html) to add the information needed for logical replication. To do this, set the value of the [wal_level](https://www.postgresql.org/docs/current/runtime-config-wal.html#RUNTIME-CONFIG-WAL-SETTINGS) to `logical`.
 
-      The setting can be changed in `postgresql.conf`. Find the line with the `wal_level` setting, comment it out if necessary, and set the value as `logical`:
+      The setting can be changed in `postgresql.conf`. Find the line with the `wal_level` setting, comment it out, if required, and set the value to `logical`:
 
       ```ini
       wal_level = logical                    # minimal, replica, or logical
@@ -129,7 +129,7 @@ Create the required resources:
       hostssl         replication    all             <host address>      md5
       ```
 
-   * If you don't use SSL:
+   * If you do not use SSL:
 
       ```txt
       host         all            all             <host address>      md5
@@ -284,9 +284,9 @@ Delete the resources you no longer need to avoid paying for them:
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -296,7 +296,7 @@ Delete the resources you no longer need to avoid paying for them:
 
 ## Transferring data by creating and restoring a logical dump {#backup}
 
-Create a dump of the necessary database in the source cluster using the `pg_dump` utility. To restore the dump in the target cluster, use the `pg_restore` utility.
+Create a dump of the database you need in the source cluster using the `pg_dump` utility. To restore the dump in the target cluster, use the `pg_restore` utility.
 
 {% note info %}
 
@@ -322,23 +322,23 @@ Create the required resources:
 
    1. Create a [{{ mpg-name }} target cluster](../../managed-postgresql/operations/cluster-create.md) with any suitable configuration. The following parameters must be the same as in the source cluster:
 
-      * Version {{ PG }}.
-      * Username.
+      * {{ PG }} version
+      * Username
 
          {% include [user-name-restore](../../_includes/mdb/mpg/note-user-name-restore.md) %}
 
-      * [{{ PG }} extensions](../../managed-postgresql/operations/extensions/cluster-extensions.md).
+      * [{{ PG }} extensions](../../managed-postgresql/operations/extensions/cluster-extensions.md)
 
    1. (Optional step) [Create a VM](../../compute/operations/vm-create/create-linux-vm.md) based on [Ubuntu 20.04 LTS](/marketplace/products/yc/ubuntu-20-04-lts) with the following parameters:
 
-      * **Disks and file storage** → **Size**: Sufficient to store both archived and unarchived dumps.
+      * **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** → **{{ ui-key.yacloud.compute.disk-form.field_size }}**: Sufficient to store both archived and unarchived dumps.
 
          The recommended size is two or more times the total dump and dump archive size.
 
-      * **Network settings**:
+      * **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
 
-         * **Subnet**: Select a subnet on the cloud network hosting the target cluster.
-         * **Public address**: Select `Auto` or one address from a list of reserved IPs.
+         * **{{ ui-key.yacloud.component.compute.network-select.field_subnetwork }}**: Select a subnet on the cloud network hosting the target cluster.
+         * **{{ ui-key.yacloud.component.compute.network-select.field_external }}**: Select `{{ ui-key.yacloud.component.compute.network-select.switch_auto }}` or one address from a list of reserved IPs.
 
    
    1. If you use security groups for the intermediate VM and the {{ mpg-name }} cluster, [configure them](../../managed-postgresql/operations/connect.md#configure-security-groups).
@@ -349,7 +349,7 @@ Create the required resources:
 * Using {{ TF }}
 
    1. If you do not have {{ TF }} yet, [install and configure it](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-   1. Download [the file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
+   1. Download the [file with provider settings](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Place it in a separate working directory and [specify the parameter values](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
    1. Download the configuration file [data-restore-pgsql-mpg.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/data-migration-pgsql-mpg/data-restore-pgsql-mpg.tf) to the same working directory.
 
       This file describes:
@@ -384,7 +384,7 @@ Create the required resources:
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
    1. Create the required infrastructure:
 
@@ -397,7 +397,7 @@ Create the required resources:
 ### Create a database dump {#dump}
 
 1. Switch the database to the <q>read-only</q> mode.
-1. Create a dump using the [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html) utility. To speed up the process, run it in multithreaded mode by passing the number of available CPU cores in the `--jobs` argument:
+1. Create a dump using the [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html) utility. To speed up the process, run it in multithreaded mode by providing the number of available CPU cores in the `--jobs` argument:
 
    ```bash
    pg_dump --host=<IP address of FQDN of the source cluster master host> \
@@ -420,7 +420,7 @@ The required amount of RAM and processor cores depends on the amount of data to 
 
 To prepare the virtual machine to restore the dump:
 
-1. In the management console, [create a new VM](../../compute/operations/vm-create/create-linux-vm.md) from an [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts) image on **{{ marketplace-name }}**. The VM parameters depend on the size of the database you want to migrate. The minimum configuration (1 core, 2 GB RAM, 10 GB disk space) should be sufficient to migrate a database that's up to 1 GB in size. The bigger the database being migrated, the more RAM and storage space you need (at least twice as large as the size of the database).
+1. In the management console, [create a new VM](../../compute/operations/vm-create/create-linux-vm.md) from an [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts) image on **{{ ui-key.yacloud.compute.instances.create.image_value_marketplace }}**. The VM parameters depend on the size of the database you want to migrate. The minimum configuration (1 core, 2 GB RAM, 10 GB disk space) should be sufficient to migrate a database up to 1 GB in size. The larger the database being migrated, the more RAM and storage space you need (at least twice as large as the size of the database).
 
 
     The virtual machine must be in the same network and availability zone as the {{ PG }} cluster. Additionally, the VM must be assigned a public IP address so that you can load the dump from outside {{ yandex-cloud }}.
@@ -506,9 +506,9 @@ Delete the resources you no longer need to avoid paying for them:
 
 * Manually
 
-   1. [Delete the {{ mpg-full-name }} cluster](../../managed-postgresql/operations/cluster-delete.md).
-   1. If you created an intermediate virtual machine, [delete it](../../compute/operations/vm-control/vm-delete.md).
-   1. If you reserved public static IP addresses, release and [delete them](../../vpc/operations/address-delete.md).
+   * [Delete a {{ mpg-full-name }} cluster](../../managed-postgresql/operations/cluster-delete.md).
+   * If you created an intermediate virtual machine, [delete it](../../compute/operations/vm-control/vm-delete.md).
+   * If you reserved public static IP addresses, release and [delete them](../../vpc/operations/address-delete.md).
 
 * Using {{ TF }}
 
@@ -520,9 +520,9 @@ Delete the resources you no longer need to avoid paying for them:
       terraform validate
       ```
 
-      If there are any errors in the configuration files, {{ TF }} will point to them.
+      If there are any errors in the configuration files, {{ TF }} will point them out.
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

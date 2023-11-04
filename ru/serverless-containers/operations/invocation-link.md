@@ -1,3 +1,8 @@
+---
+title: "Получить ссылку для вызова"
+description: "Следуя данной инструкции, вы сможете получить ссылку для вызова."
+---
+
 # Получить ссылку для вызова
 
 {% list tabs %}
@@ -5,8 +10,8 @@
 - Консоль управления
 
 	1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится контейнер.
-	1. Выберите сервис **{{ serverless-containers-name }}**.
-	1. Выберите контейнер. Ссылка для вызова будет в поле **Ссылка для вызова**.
+	1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
+	1. Выберите контейнер. Ссылка для вызова будет в поле **{{ ui-key.yacloud.serverless-containers.label_url }}**.
 
 - CLI
 
@@ -24,7 +29,7 @@
 	created_at: "2021-08-17T07:53:10.219Z"
 	name: my-beta-container
 	description: my beta container description
-	url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
+	url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
 	status: ACTIVE
 	```
 

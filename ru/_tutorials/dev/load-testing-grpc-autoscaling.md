@@ -16,8 +16,6 @@
 
 1. Зарегистрируйте [доменное имя](../../dns/concepts/resource-record.md) для вашего сайта.
 1. Если для вашего [облака](../../resource-manager/concepts/resources-hierarchy.md#cloud) включены [группы безопасности](../../vpc/concepts/security-groups.md), [создайте](../../vpc/operations/security-group-create.md) группу с правилами, описанными в разделе [{#T}](../../application-load-balancer/tools/k8s-ingress-controller/security-groups.md).
-
-   Если группы безопасности недоступны в вашем облаке, для ресурсов будет разрешен весь входящий и исходящий трафик, и дополнительной настройки не требуется.
 1. [Подготовьте кластер {{ managed-k8s-name }}](../../managed-kubernetes/quickstart.md) к работе.
 1. [Установите Metrics Provider](../../managed-kubernetes/operations/applications/metrics-provider.md).
 1. Установите Ingress-контроллер:
@@ -112,7 +110,7 @@
 
    {% endnote %}
 
-1. [Создайте](../../certificate-manager/operations/managed/cert-create.md) [сертификат](../../certificate-manager/concepts/managed-certificate.md) от `Let's Encrypt®`.
+1. [Добавьте](../../certificate-manager/operations/managed/cert-create.md) [сертификат](../../certificate-manager/concepts/managed-certificate.md) от `Let's Encrypt®`.
 1. [Пройдите](../../certificate-manager/operations/managed/cert-validate.md) процедуры проверки прав на домен.
 
 ## Установите Ingress {#install-ingress}
@@ -305,14 +303,14 @@
 
    * `target` — название вашего сайта и порт (для HTTPS: 443).
    
-6. [Запустите тест](../../load-testing/tutorials/loadtesting-grpc.md#run-test):
+1. [Запустите тест](../../load-testing/tutorials/loadtesting-grpc.md#run-test):
 
-   * В блоке настроек **{{ ui-key.yacloud.load-testing.test-data-section }}** выберите **{{ ui-key.yacloud.load-testing.label_local-source }}**, нажмите **Прикрепить файл** и загрузите подготовленный ранее файл `ammo.json`.
+   * В блоке **{{ ui-key.yacloud.load-testing.test-data-section }}** нажмите **Выбрать файлы** и выберите сохраненный ранее файл `ammo.json`.
    * В блоке настроек **{{ ui-key.yacloud.load-testing.label_test-settings }}**:
      * В поле **{{ ui-key.yacloud.load-testing.field_settings-type }}** выберите **{{ ui-key.yacloud.load-testing.label_settings-type-config }}**.
-     * В поле **{{ ui-key.yacloud.load-testing.field_config-file }}** нажмите **Прикрепить файл** и загрузите подготовленный ранее файл `load.yaml`.
+     * В поле **{{ ui-key.yacloud.load-testing.field_config-file }}** нажмите **{{ ui-key.yacloud_portal.component.file-input.button_choose-multiple }}** и загрузите подготовленный ранее файл `load.yaml`.
 
-7. Наблюдайте за прохождением теста:
+1. Наблюдайте за прохождением теста:
 
    1. В [консоли управления]({{ link-console-main }}) выберите сервис {{ ui-key.yacloud.iam.folder.dashboard.label_managed-kubernetes }}.
    1. Выберите ваш тестовый кластер.

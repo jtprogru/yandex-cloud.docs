@@ -2,6 +2,8 @@
 
 The serial console allows you to access a [VM](../../concepts/vm.md) regardless of the [network](../../../vpc/concepts/network.md#network) or OS status. For example, you can use the console to troubleshoot VM issues or when there are problems with SSH access.
 
+To use the serial console, you need the `сompute.admin` or `{{ roles-editor }}` [role](../../security/index.md).
+
 Serial console access is disabled by default.
 
 {% include [sc-warning](../../../_includes/compute/serial-console-warning.md) %}
@@ -59,7 +61,7 @@ To enable access to the serial console when creating a VM, set the `serial-port-
       ```
 
       This command will create a VM:
-      * With Ubuntu.
+      * With [Ubuntu](/marketplace?tab=software&search=Ubuntu&categories=os).
       * Named `first-instance`.
       * In the `{{ region-id }}-a` [availability zone](../../../overview/concepts/geo-scope.md).
       * With the serial console active.

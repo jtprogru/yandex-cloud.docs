@@ -1,6 +1,6 @@
-# Создать пользовательский сертификат
+# Добавить пользовательский сертификат
 
-Создание пользовательского сертификата рассмотрим на примере самоподписанного сертификата. Требования к пользовательскому сертификату приведены на странице [{#T}](../../concepts/imported-certificate.md).
+Добавление пользовательского сертификата рассмотрим на примере самоподписанного сертификата. Требования к пользовательскому сертификату приведены на странице [{#T}](../../concepts/imported-certificate.md).
 
 ## Создание файла самоподписанного сертификата {#create-file}
 
@@ -35,37 +35,38 @@
 * `-newkey` — будет создан новый файл приватного ключа.
 * `rsa:4096` — алгоритм и длина ключа.
 * `-nodes` — не шифровать файл приватного ключа.
+* `-keyout` — имя файла, в котором будет сохранен приватный ключ.
 * `-out` — имя файла сертификата.
 * `-days` — срок действия сертификата.
 * `-subj` — значение Common Name владельца сертификата.
 
 Запущенная с указанными параметрами команда `req` выпустит самоподписанный сертификат, для которого она также сгенерирует приватный ключ.
 
-## Создание пользовательского самоподписанного сертификата {#create-certificate}
+## Добавление пользовательского самоподписанного сертификата {#create-certificate}
 
-Чтобы создать пользовательский сертификат:
+Чтобы добавить пользовательский сертификат в {{ certificate-manager-name }}:
 
 {% list tabs %}
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создан пользовательский сертификат.
-  1. В списке сервисов выберите **{{ certificate-manager-name }}**.
-  1. Нажмите кнопку **Добавить сертификат**.
-  1. В открывшемся меню выберите **Пользовательский сертификат**.
-  1. В открывшемся окне в поле **Имя** введите имя пользовательского сертификата.
+  1. В [консоли управления]({{ link-console-main }}) выберите каталог, в который будет добавлен пользовательский сертификат.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_certificate-manager }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.certificate-manager.button_add }}**.
+  1. В открывшемся меню выберите **{{ ui-key.yacloud.certificate-manager.action_import }}**.
+  1. В открывшемся окне в поле **{{ ui-key.yacloud.certificate-manager.metadata.field_name }}** введите имя пользовательского сертификата.
   1. (Опционально) В поле **Описание** введите описание пользовательского сертификата.
-  1. В поле **Сертификат** нажмите кнопку **Добавить сертификат**.
-     1. Выберите способ добавления **Файл**.
-     1. Нажмите кнопку **Выбрать файл**.
+  1. В поле **{{ ui-key.yacloud.certificate-manager.import.field_certificate }}** нажмите кнопку **{{ ui-key.yacloud.certificate-manager.import.button_add-certificate }}**.
+     1. Выберите способ добавления `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}`.
+     1. Нажмите кнопку **Прикрепить файл**.
         1. В открывшемся окне выберите файл самоподписанного сертификата`cert.pem`.
-     1. Нажмите кнопку **Добавить**.
-  1. В поле **Приватный ключ** нажмите кнопку **Добавить приватный ключ**.
-     1. Выберите способ добавления **Файл**.
-     1. Нажмите кнопку **Выбрать файл**.
+     1. Нажмите кнопку **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+  1. В поле **{{ ui-key.yacloud.certificate-manager.import.field_privateKey }}** нажмите кнопку **{{ ui-key.yacloud.certificate-manager.import.button_add-privateKey }}**.
+     1. Выберите способ добавления `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}`.
+     1. Нажмите кнопку **Прикрепить файл**.
         1. В открывшемся окне выберите файл приватного ключа `key.pem`.
-     1. Нажмите кнопку **Добавить**.
-  1. Нажмите кнопку **Создать**.
+     1. Нажмите кнопку **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -96,8 +97,8 @@
      Результат выполнения команды:
 
      ```bash
-     id: fpqmg47avvimp7rvmp30
-     folder_id: b1g7gvsi89m34qmcm3ke
+     id: fpqmg47avvim********
+     folder_id: b1g7gvsi89m3********
      created_at: "2020-09-15T06:54:44.916325Z"
      ...
      issued_at: "2020-09-15T06:54:44.916325Z"
@@ -105,9 +106,108 @@
      not_before: "2020-09-15T06:48:26Z"
      ```
 
+- {{ TF }}
+
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+  1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
+
+          
+     ```hcl
+     resource "yandex_cm_certificate" "user-certificate" {
+       name    = "<имя_сертификата>"
+
+       self_managed {
+         certificate = <<-EOT
+                       -----BEGIN CERTIFICATE-----
+                       <содержимое_сертификата>
+                       -----END CERTIFICATE-----
+                       EOT
+         private_key = <<-EOT
+                       -----BEGIN PRIVATE KEY-----
+                       <содержимое_закрытого_ключа_сертификата>
+                       -----END PRIVATE KEY-----
+                       EOT
+       }
+     }
+     ```
+
+
+
+     Где:
+
+     * `name` — имя сертификата.
+     * `certificate` — содержимое файла с [сертификатом](../../concepts/imported-certificate.md).
+     * `private_key` — содержимое файла с закрытым ключом.
+
+     Более подробную информацию о параметрах ресурса `yandex_cm_certificate` в {{ TF }}, см. в [документации провайдера]({{ tf-provider-resources-link }}/cm_certificate).
+
+  1. Создайте ресурсы:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+  После этого в указанный каталог будет добавлен сертификат. Проверить появление сертификата и его настройки можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../../cli/quickstart.md):
+
+    ```bash
+     yc certificate-manager certificate get <имя_сертификата>
+    ```
+
 - API
 
-  Чтобы создать сертификат, воспользуйтесь методом REST API [create](../../api-ref/Certificate/create.md) для ресурса [Certificate](../../api-ref/Certificate/) или вызовом gRPC API [CertificateService/Create](../../api-ref/grpc/certificate_service.md#Create).
+  Чтобы добавить сертификат, воспользуйтесь методом REST API [create](../../api-ref/Certificate/create.md) для ресурса [Certificate](../../api-ref/Certificate/) или вызовом gRPC API [CertificateService/Create](../../api-ref/grpc/certificate_service.md#Create).
+
+{% endlist %}
+
+В списке сертификатов появится новый сертификат со статусом `Issued`.
+
+## Хранение публичной части сертификата в {{ lockbox-name }} {#create-lockbox}
+
+Вы можете хранить публичную часть пользовательского сертификата {{ certificate-manager-name }} в [{{ lockbox-name }}](../../../lockbox/quickstart.md). Чтобы добавить сертификат:
+
+{% list tabs %}
+
+- {{ TF }}
+
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+  1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
+
+      ```hcl
+        resource "yandex_cm_certificate" "example-lockbox" {
+        name    = "<имя_секрета>"
+
+      self_managed {
+          certificate = <<-EOT
+                        -----BEGIN CERTIFICATE-----
+                        <содержимое_сертификата>
+                        -----END CERTIFICATE-----
+                        EOT
+          private_key_lockbox_secret {
+            id  = "<идентификатор_секрета>"
+            key = "<ключ_секрета>"
+          }
+        }
+      }
+      ```
+
+      Где:
+
+      * `name` — имя секрета {{ lockbox-short-name }}.
+      * `certificate` — содержимое файла с [сертификатом](../../concepts/imported-certificate.md).
+      * `id` — идентификатор секрета {{ lockbox-short-name }}.
+      * `key` — ключ секрета {{ lockbox-short-name }}, значение которого содержит приватный ключ сертификата.
+
+      Более подробную информацию о параметрах ресурса `yandex_cm_certificate` см. в [документации провайдера]({{ tf-provider-resources-link }}/cm_certificate).
+
+  1. Создайте ресурсы:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+  После этого в указанный каталог будет добавлен сертификат. Проверить появление сертификата и его настройки можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../../cli/quickstart.md):
+
+    ```bash
+    yc certificate-manager certificate get <имя_сертификата>
+    ```
 
 {% endlist %}
 

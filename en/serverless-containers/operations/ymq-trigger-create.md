@@ -1,20 +1,14 @@
-# Creating trigger for {{ message-queue-name }} that sends messages to {{ serverless-containers-name }} container
+# Creating a trigger for {{ message-queue-name }} that sends messages to a {{ serverless-containers-name }} container
 
-Create a [trigger for a {{ message-queue-short-name }} message queue](../concepts/trigger/ymq-trigger.md) and process the messages using the {{ serverless-containers-name }} [container](../concepts/container.md).
+Create a [trigger for a message queue in {{ message-queue-short-name }}](../concepts/trigger/ymq-trigger.md) and process the messages using the {{ serverless-containers-name }} [container](../concepts/container.md).
 
-{% note warning %}
-
-* You can only create a trigger for a standard message queue.
-* The trigger must be in the same cloud as the queue that messages are read from.
-* Only one trigger can be created for each message queue.
-
-{% endnote %}
+{% include [ymq-trigger-note.md](../../_includes/functions/ymq-trigger-note.md) %}
 
 ## Getting started {#before-begin}
 
 To create a trigger, you need:
 
-* A container that the trigger will invoke. If you don't have a container:
+* A container that the trigger will invoke. If you do not have a container:
 
    * [Create a container](create.md).
    * [Create a container revision](manage-revision.md#create).
@@ -23,11 +17,11 @@ To create a trigger, you need:
 
    * To invoke a container.
    * To read from the queue the trigger receives messages from.
-   * (optional) To write to the [Dead Letter Queue](../../serverless-containers/concepts/dlq.md).
+   * (Optional) To write to a [Dead Letter Queue](../../serverless-containers/concepts/dlq.md).
 
-   You can use the same service account or different ones. If you don't have a service account, [create one](../../iam/operations/sa/create.md).
+   You can use the same service account or different ones. If you do not have a service account, [create one](../../iam/operations/sa/create.md).
 
-* A message queue that the trigger receives messages from. If you don't have a queue, [create one](../../message-queue/operations/message-queue-new-queue.md).
+* A message queue that the trigger receives messages from. If you do not have a queue, [create one](../../message-queue/operations/message-queue-new-queue.md).
 
 ## Creating a trigger {#trigger-create}
 
@@ -39,30 +33,30 @@ To create a trigger, you need:
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create your trigger.
 
-   1. Open **{{ serverless-containers-name }}**.
+   1. Open **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
 
-   1. On the left-hand panel, select ![image](../../_assets/functions/triggers.svg) **Triggers**.
+   1. In the left-hand panel, select ![image](../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-   1. Under **Basic parameters**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
       * Enter a name and description for the trigger.
-      * In the **Type** field, select **{{ message-queue-name }}**.
-      * In the **Launched resource** field, select **Container**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** field, select `{{ ui-key.yacloud.serverless-functions.triggers.form.label_ymq }}`.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** field, select `{{ ui-key.yacloud.serverless-functions.triggers.form.label_container }}`.
 
-   1. Under **{{ message-queue-name }} settings**, select a message queue and a service account with rights to read messages from this message queue.
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_ymq }}**, select a message queue and a service account with rights to read messages from this message queue.
 
-   1. (optional) Under **Batch message settings**, specify:
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_batch-settings }}**, specify:
 
-      * Batch size. Values can be from 1 to 10. The default is 1.
-      * Maximum wait time. Values can be from 0 to 20 seconds. The default is 10 seconds.
+      * Batch size. The values may range from 1 to 10. The default value is 1.
+      * Maximum wait time. The values may range from 0 to 20 seconds. The default value is 10 seconds.
 
       The trigger groups messages for a period of time not exceeding the specified timeout and sends them to a container. However, the number of messages does not exceed the specified group size.
 
    1. {% include [container-settings](../../_includes/serverless-containers/container-settings.md) %}
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -98,8 +92,8 @@ To create a trigger, you need:
    * `--invoke-container-id`: Container ID.
    * `--queue-service-account-name`: Service account with rights to read messages from the queue.
    * `--invoke-container-service-account-id`: Service account with rights to invoke the container.
-   * `--batch-size`: Message batch size. This is an optional parameter. Values can be from 1 to 10. The default is 1.
-   * `--batch-cutoff`: Maximum waiting time. This is an optional parameter. Values can be from 0 to 20 seconds. The default is 10 seconds. The trigger groups messages for a period not exceeding `batch-cutoff` and sends them to a container. At the same time, the number of messages does not exceed `batch-size`.
+   * `--batch-size`: Message batch size. This is an optional parameter. The values may range from 1 to 10. The default value is 1.
+   * `--batch-cutoff`: Maximum wait time. This is an optional parameter. The values may range from 0 to 20 seconds. The default value is 10 seconds. The trigger groups messages for a period not exceeding `batch-cutoff` and sends them to a container. The number of messages cannot exceed `batch-size`.
 
    Result:
 
@@ -139,11 +133,12 @@ To create a trigger, you need:
 
    Check that the number of enqueued messages is decreasing. To do this, view the queue statistics:
 
-   1. In the [management console]({{ link-console-main }}), open **{{ message-queue-name }}**.
+   1. In the [management console]({{ link-console-main }}), open **{{ ui-key.yacloud.iam.folder.dashboard.label_ymq }}**.
    1. Select the queue that you created the trigger for.
-   1. Go to **Monitoring**. View the **Messages in queue** chart.
+   1. Go to **{{ ui-key.yacloud.common.monitoring }}**. Check the **{{ ui-key.yacloud.ymq.queue.overview.label_msg-count }}** chart.
 
 {% endlist %}
+
 
 ## See also {#see-also}
 

@@ -6,7 +6,7 @@ Create a [trigger for {{ cloud-logging-name }}](../concepts/trigger/cloud-loggin
 
 {% include [trigger-before-you-begin](../../_includes/serverless-containers/trigger-before-you-begin.md) %}
 
-* The log group that activates the trigger when records are added to it. If you don't have a log group, [create one](../../logging/operations/create-group.md).
+* A log group that activates the trigger when entries are added there. If you do not have a log group, [create one](../../logging/operations/create-group.md).
 
 ## Creating a trigger {#trigger-create}
 
@@ -18,43 +18,43 @@ Create a [trigger for {{ cloud-logging-name }}](../concepts/trigger/cloud-loggin
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create your trigger.
 
-   1. Open **{{ serverless-containers-name }}**.
+   1. Open **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
 
-   1. On the left-hand panel, select ![image](../../_assets/functions/triggers.svg) **Triggers**.
+   1. In the left-hand panel, select ![image](../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-   1. Under **Basic parameters**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
       * Enter a name and description for the trigger.
-      * In the **Type** field, select **{{ cloud-logging-name }}**.
-      * In the **Launched resource** field, select **Container**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** field, select `{{ ui-key.yacloud.serverless-functions.triggers.form.label_logging }}`.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** field, select `{{ ui-key.yacloud.serverless-functions.triggers.form.label_container }}`.
 
-   1. Under **{{ cloud-logging-name }} settings**, specify:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_logging }}**, specify:
 
-      * The log group.
-      * (Optional) Resource types: {{ yandex-cloud }} or your services, such as, `serverless.function`.
+      * Log group.
+      * (Optional) Resource types, such as `serverless.function` for {{ sf-name }} functions.
       * (Optional) IDs of {{ yandex-cloud }} or your resources, such as {{ serverless-containers-name }} containers.
       * (Optional) Logging levels.
 
-      A trigger activates when records that match all the optional settings are added to the specified log group. If an optional setting is undefined, the trigger activates for any value of the setting.
+      A trigger fires when records that match all the optional settings are added to the specified log group. If an optional setting is not specified, the trigger fires for any value of the setting.
 
-   1. (optional) Under **Batch message settings**, specify:
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_batch-settings }}**, specify:
 
-      * Batch size. Valid values range from 1 to 100. The default is 1.
-      * Maximum wait time. Valid values range from 1 to 60 seconds. The default is 1 second.
+      * Batch size. The values may range from 1 to 100. The default value is 1.
+      * Maximum wait time. The values may range from 1 to 60 seconds. The default value is 1 second.
 
       The trigger groups messages for a period of time not exceeding the specified timeout and sends them to a container. However, the number of messages does not exceed the specified group size.
 
    1. {% include [container-settings](../../_includes/serverless-containers/container-settings.md) %}
 
-   1. (optional) Under **Repeat request settings**:
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
       {% include [repeat-request](../../_includes/serverless-containers/repeat-request.md) %}
 
-   1. (optional) **Under Dead Letter Queue settings**, select the Dead Letter Queue and the service account with write privileges for this queue.
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}**, select the Dead Letter Queue and the service account with write privileges for this queue.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -64,12 +64,17 @@ Create a [trigger for {{ cloud-logging-name }}](../concepts/trigger/cloud-loggin
 
    To create a trigger that invokes a container, run this command:
 
+   
    ```bash
    yc serverless trigger create logging \
      --name <trigger_name> \
      --log-group-name <log_group_name> \
      --batch-size 1 \
      --batch-cutoff 1s \
+     --resource-ids <resource_ID> \
+     --resource-types <resource_type> \
+     --stream-names <logging_stream> \
+     --log-levels <logging_level> \
      --invoke-container-id <container_ID> \
      --invoke-container-service-account-id <service_account_ID> \
      --retry-attempts 1 \
@@ -78,17 +83,21 @@ Create a [trigger for {{ cloud-logging-name }}](../concepts/trigger/cloud-loggin
      --dlq-service-account-id <service_account_ID>
    ```
 
+
    Where:
 
    * `--name`: Trigger name.
    * `--log-group-name`: Name of the log group that invokes a container when records are added.
-   * `--batch-size`: Message batch size. This is an optional parameter. Valid values range from 1 to 100. The default is 1.
-   * `--batch-cutoff`: Maximum waiting time. This is an optional parameter. Valid values range from 0 to 60 seconds. The default is 1 second. The trigger groups messages for a period not exceeding `batch-cutoff` and sends them to a container. At the same time, the number of messages does not exceed `batch-size`.
+
+   {% include [batch-settings-messages](../../_includes/serverless-containers/batch-settings-messages.md) %}
+
+   {% include [logging-cli-param](../../_includes/functions/logging-cli-param.md) %}
 
    {% include [trigger-cli-param](../../_includes/serverless-containers/trigger-cli-param.md) %}
 
    Result:
 
+   
    ```text
    id: a1s5msktij**********
    folder_id: b1gmit33hg**********
@@ -97,6 +106,14 @@ Create a [trigger for {{ cloud-logging-name }}](../concepts/trigger/cloud-loggin
    rule:
      logging:
        log_group_id: e23bidnftl**********
+       resource_type:
+         - serverless.functions
+       resource_id:
+         - d4e1gpsgam78********
+       stream_name:
+         - test
+       levels:
+         - INFO
        batch_settings:
          size: "1"
          cutoff: 1s
@@ -111,6 +128,7 @@ Create a [trigger for {{ cloud-logging-name }}](../concepts/trigger/cloud-loggin
            service-account-id: aje3lebfem**********
    status: ACTIVE
    ```
+
 
 - API
 

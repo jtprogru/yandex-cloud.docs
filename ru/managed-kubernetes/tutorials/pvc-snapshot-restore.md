@@ -1,6 +1,6 @@
 # Работа со снапшотами
 
-В {{ managed-k8s-name }} доступны [снапшоты](https://cloud.yandex.ru/docs/glossary/snapshot) — копии дисков [PersistentVolume](../concepts/volume.md#provisioning-volumes) на определенный момент времени. Подробнее о механизме снапшотов см. в [документации Kubernetes](https://kubernetes.io/docs/concepts/storage/volume-snapshots/).
+В {{ managed-k8s-name }} доступны [снапшоты](../../glossary/snapshot.md) — копии дисков [PersistentVolume](../concepts/volume.md#provisioning-volumes) на определенный момент времени. Подробнее о механизме снапшотов см. в [документации Kubernetes](https://kubernetes.io/docs/concepts/storage/volume-snapshots/).
 
 Чтобы создать снапшот, а потом восстановить его:
 1. [{#T}](#create-pvc-pod).
@@ -21,7 +21,7 @@
 
    - С помощью {{ TF }}
 
-     1. Если у вас еще нет {{ TF }}, [установите его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+     1. {% include [terraform-install](../../_includes/terraform-install.md) %}
      1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
      1. Скачайте в ту же рабочую директорию файл конфигурации кластера [k8s-cluster.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/managed-kubernetes/k8s-cluster.tf). В файле описаны:
         * Сеть.
@@ -126,7 +126,7 @@
 1. Убедитесь, что в файл `/data/out.txt` попадают записи даты и времени. Для этого [выполните команду](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/) на поде:
 
    ```bash
-   kubectl exec pod -- tail /data/out.txt
+   kubectl exec pod-source -- tail /data/out.txt
    ```
 
    Результат:
@@ -143,7 +143,7 @@
 
    ```yaml
    ---
-   apiVersion: snapshot.storage.k8s.io/v1beta1
+   apiVersion: snapshot.storage.k8s.io/v1
    kind: VolumeSnapshot
    metadata:
      name: new-snapshot-test
@@ -279,7 +279,7 @@
 
 ## Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 1. Удалите кластер {{ managed-k8s-name }}:
 

@@ -5,16 +5,22 @@
 * С помощью стандартных интерфейсов {{ yandex-cloud }} (CLI, [API](../../glossary/rest-api.md), консоль управления). Способ подходит, если вы хотите добавлять, изменять и удалять пользователей и их индивидуальные настройки, используя возможности сервиса {{ mch-full-name }}.
 * С помощью SQL-запросов к кластеру. Способ подходит, если вы хотите использовать уже существующее у вас решение для создания и управления пользователями или если вы используете [RBAC](https://ru.wikipedia.org/wiki/Управление_доступом_на_основе_ролей).
 
+{% note warning %}
+
+В кластере {{ mch-name }} можно одновременно использовать только один способ управления пользователями — с помощью стандартных интерфейсов или SQL-запросов.
+
+{% endnote %}
+
 ## Управление пользователями через SQL {#sql-user-management}
 
-Чтобы включить управление, выберите опцию **Управление пользователями через SQL** при [создании](cluster-create.md) или [изменении настроек](update.md#SQL-management) кластера.
+Чтобы включить управление, выберите опцию **{{ ui-key.yacloud.mdb.forms.database_field_sql-user-management }}** при [создании](cluster-create.md) или [изменении настроек](update.md#SQL-management) кластера.
 
 В кластере с включенным управлением пользователями через SQL:
 
 * Управление пользователями через стандартные интерфейсы {{ yandex-cloud }} (CLI, API, консоль управления) недоступно.
-* Невозможно включить управление пользователями с помощью стандартных интерфейсов {{ yandex-cloud }}. 
+* Невозможно включить управление пользователями с помощью стандартных интерфейсов {{ yandex-cloud }} (CLI, API, консоль управления).
 * Существующие пользователи и настройки пользователей, созданные с помощью стандартных интерфейсов {{ yandex-cloud }}, будут сохранены.
-* Управление пользователями осуществляется с помощью учетной записи `admin`. Пароль для нее задается при выборе опции **Управление пользователями через SQL**.
+* Управление пользователями осуществляется с помощью учетной записи `admin`. Пароль для нее задается при выборе опции **{{ ui-key.yacloud.mdb.forms.database_field_sql-user-management }}**.
 
 Подробнее об управлении пользователями через SQL см. в [документации {{ CH }}]({{ ch.docs }}/operations/access-rights).
 
@@ -24,8 +30,8 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Нажмите на имя нужного кластера, затем выберите вкладку **Пользователи**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Нажмите на имя нужного кластера, затем выберите вкладку **{{ ui-key.yacloud.clickhouse.cluster.switch_users }}**.
 
 - CLI
 
@@ -65,9 +71,9 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Пользователи**.
-  1. Нажмите кнопку **Добавить**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.clickhouse.cluster.switch_users }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.users.button_add }}**.
   1. Введите имя пользователя базы данных и пароль.
 
       {% include [user-name-and-password-limits](../../_includes/mdb/mch/note-info-user-name-and-pass-limits.md) %}
@@ -77,12 +83,12 @@
      1. Повторите предыдущий шаг, пока не будут выбраны все требуемые базы данных.
      1. Чтобы удалить базу, добавленную по ошибке, нажмите на значок ![image](../../_assets/cross.svg) справа от имени базы.
   1. Задайте [дополнительные настройки](../concepts/settings-list.md) для пользователя:
-     1. Настройте [квоты](../concepts/settings-list.md#quota-settings) в разделе **Дополнительные настройки → Quotas**:
+     1. Настройте [квоты](../concepts/settings-list.md#quota-settings) в разделе **{{ ui-key.yacloud.mdb.cluster.users.button_advanced-settings }} → Quotas**:
         1. Чтобы добавить квоту, нажмите на значок ![image](../../_assets/plus.svg) или кнопку **+ Quotas**. Вы можете добавить несколько квот, которые будут действовать одновременно.
-        1. Чтобы удалить квоту, нажмите на значок ![image](../../_assets/options.svg) справа от имени квоты и выберите пункт **Удалить**.
+        1. Чтобы удалить квоту, нажмите на значок ![image](../../_assets/options.svg) справа от имени квоты и выберите пункт **{{ ui-key.yacloud.component.mdb.settings.label_delete }}**.
         1. Чтобы изменить квоту, задайте требуемые значения настроек для нее.
-     1. Настройте [{{ CH }}](../concepts/settings-list.md#user-level-settings) в разделе **Дополнительные настройки → Settings**.
-  1. Нажмите кнопку **Добавить**.
+     1. Настройте [{{ CH }}](../concepts/settings-list.md#user-level-settings) в разделе **{{ ui-key.yacloud.mdb.cluster.users.button_advanced-settings }} → Settings**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.users.popup-button_add }}**.
 
   См. также: [пример создания пользователя с правами «только чтение»](#example-create-readonly-user).
 
@@ -188,10 +194,10 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Пользователи**.
-  1. Нажмите на значок ![image](../../_assets/options.svg) и выберите пункт **Изменить пароль**.
-  1. Задайте новый пароль и нажмите кнопку **Изменить**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.clickhouse.cluster.switch_users }}**.
+  1. Нажмите на значок ![image](../../_assets/options.svg) и выберите пункт **{{ ui-key.yacloud.mdb.cluster.users.button_action-password }}**.
+  1. Задайте новый пароль и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.users.popup-password_button_change }}**.
 
   {% include [password-limits](../../_includes/mdb/mch/note-info-password-limits.md) %}
 
@@ -344,20 +350,20 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Пользователи**.
-  1. Нажмите на значок ![image](../../_assets/options.svg) и выберите пункт **Настроить**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.clickhouse.cluster.switch_users }}**.
+  1. Нажмите на значок ![image](../../_assets/options.svg) и выберите пункт **{{ ui-key.yacloud.mdb.cluster.users.button_action-update }}**.
   1. Настройте права пользователя на доступ к определенным базам данных:
      1. Чтобы предоставить доступ к требуемым базам данных:
         1. Нажмите на значок ![image](../../_assets/plus-sign.svg) и выберите базу данных из выпадающего списка.
         1. Повторите предыдущий шаг, пока не будут выбраны все требуемые базы данных. 
      1. Чтобы удалить базу, нажмите на значок ![image](../../_assets/cross.svg) справа от имени базы.
-  1. Настройте [квоты](../concepts/settings-list.md#quota-settings) для пользователя в разделе **Дополнительные настройки → Quotas**:
+  1. Настройте [квоты](../concepts/settings-list.md#quota-settings) для пользователя в разделе **{{ ui-key.yacloud.mdb.cluster.users.button_advanced-settings }} → Quotas**:
      1. Чтобы добавить квоту, нажмите **+ Quotas**. Вы можете добавить несколько квот, которые будут действовать одновременно.
-     1. Чтобы удалить квоту, нажмите на значок ![image](../../_assets/options.svg) справа от имени квоты и выберите пункт **Удалить**.
+     1. Чтобы удалить квоту, нажмите на значок ![image](../../_assets/options.svg) справа от имени квоты и выберите пункт **{{ ui-key.yacloud.component.mdb.settings.label_delete }}**.
      1. Чтобы изменить квоту, задайте требуемые значения настроек для нее.
-  1. Измените [настройки {{ CH }}](../concepts/settings-list.md#dbms-user-settings) для пользователя в разделе **Дополнительные настройки → Settings**.   
-  1. Нажмите кнопку **Сохранить**.
+  1. Измените [настройки {{ CH }}](../concepts/settings-list.md#dbms-user-settings) для пользователя в разделе **{{ ui-key.yacloud.mdb.cluster.users.button_advanced-settings }} → Settings**.   
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.users.popup-button_save }}**.
 
 - CLI
 
@@ -533,9 +539,9 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Пользователи**.
-  1. Нажмите на значок ![image](../../_assets/options.svg) и выберите пункт **Удалить**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.clickhouse.cluster.switch_users }}**.
+  1. Нажмите на значок ![image](../../_assets/options.svg) и выберите пункт **{{ ui-key.yacloud.mdb.cluster.users.button_action-remove }}**.
 
 - CLI
 
@@ -604,14 +610,14 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Нажмите на кластер с именем `mych` и выберите вкладку **Пользователи**.
-  1. Нажмите кнопку **Добавить**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Нажмите на кластер с именем `mych` и выберите вкладку **{{ ui-key.yacloud.clickhouse.cluster.switch_users }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.users.button_add }}**.
   1. Введите имя пользователя базы данных `ro-user` и пароль `Passw0rd`.
   1. Нажмите на значок ![image](../../_assets/plus-sign.svg) и выберите базу данных `db1` из выпадающего списка.
-  1. Выберите **Дополнительные настройки → Settings → Readonly**.
+  1. Выберите **{{ ui-key.yacloud.mdb.cluster.users.button_advanced-settings }} → Settings → Readonly**.
   1. В поле **Readonly** укажите значение `1`.
-  1. Нажмите кнопку **Добавить**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.users.popup-button_add }}**.
 
 - CLI
 

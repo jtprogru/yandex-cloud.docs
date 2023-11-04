@@ -11,8 +11,6 @@
 
 ## Настройка групп безопасности {#configuring-security-groups}
 
-{% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% include [sg-rules](../../_includes/mdb/sg-rules-connect.md) %}
 
 Для обеспечения работоспособности кластера {{ mgp-name }} и сетевой связности между его хостами необходимо, чтобы хотя бы в одной из его групп безопасности были правила, разрешающие любой входящий и исходящий трафик по любому протоколу с любых IP-адресов.
@@ -34,18 +32,18 @@
         Пример правил для ВМ:
 
         * Для входящего трафика:
-            * Диапазон портов — `22`.
-            * Протокол — `TCP`.
-            * Источник — `CIDR`.
-            * CIDR блоки — `0.0.0.0/0`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `22`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-source }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
             Это правило позволяет подключаться к ВМ по протоколу [SSH](../../glossary/ssh-keygen.md).
 
         * Для исходящего трафика:
-            * Диапазон портов — `{{ port-any }}`.
-            * Протокол — `Любой` (`Any`).
-            * Назначение — `CIDR`.
-            * CIDR блоки — `0.0.0.0/0`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}** — `{{ port-any }}`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_any }}` (`Any`).
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}** — `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+            * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}** — `0.0.0.0/0`.
 
             Это правило разрешает любой исходящий трафик, что позволяет не только подключаться к кластеру, но и устанавливать на ВМ необходимые для этого сертификаты и утилиты.
 
@@ -64,6 +62,34 @@
 {% include [install-certificate](../../_includes/mdb/mgp/install-certificate.md) %}
 
 {% include [ide-ssl-cert](../../_includes/mdb/mdb-ide-ssl-cert.md) %}
+
+## FQDN хоста {{ GP }} {#fqdn}
+
+Для подключения к хосту-мастеру потребуется его [FQDN](../concepts/network.md#hostname) — доменное имя. Его можно получить несколькими способами:
+
+* [Запросите список хостов в кластере](hosts/cluster-hosts.md#list-hosts).
+* Скопируйте команду для подключения к кластеру в [консоли управления]({{ link-console-main }}). Команда содержит список FQDN хостов-мастеров. Чтобы получить команду, перейдите на страницу кластера и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-connect }}**.
+* Посмотрите FQDN в консоли управления:
+
+   1. Перейдите на страницу кластера.
+   1. Перейдите в раздел **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}**.
+   1. Скопируйте значение в столбце **{{ ui-key.yacloud.mdb.cluster.hosts.host_column_name }}**.
+
+Для первичного хоста-мастера также используется [особый FQDN](#fqdn-master).
+
+## Особый FQDN первичного мастера {#fqdn-master}
+
+Чтобы вручную не подключаться к другому хосту-мастеру, если текущий станет недоступен, можно использовать особый FQDN вида `c-<идентификатор_кластера>.rw.{{ dns-zone }}`. Он всегда указывает на первичный хост-мастер. К этому FQDN разрешено подключаться и выполнять операции чтения и записи.
+
+Пример подключения к первичному хосту-мастеру в кластере с идентификатором `c9qash3nb1v9********`:
+
+```bash
+psql "host=c-c9qash3nb1v9********.rw.{{ dns-zone }} \
+      port={{ port-mgp }} \
+      sslmode=verify-full \
+      dbname=<имя_БД> \
+      user=<имя_пользователя>"
+```
 
 ## Подключение из графических IDE {#connection-ide}
 
@@ -88,7 +114,7 @@
                 * **URL** — строка подключения. Используйте [особый FQDN первичного мастера](#fqdn-master):
 
                     ```http
-                    jdbc:postgresql://c-<идентификатор кластера>.rw.{{ dns-zone }}:{{ port-mgp }}/<имя БД>
+                    jdbc:postgresql://c-<идентификатор_кластера>.rw.{{ dns-zone }}:{{ port-mgp }}/<имя_БД>
                     ```
 
             1. Нажмите ссылку **Download**, чтобы загрузить драйвер соединения.
@@ -105,7 +131,7 @@
         1. Выберите из списка БД **{{ GP }}**.
         1. Нажмите кнопку **Далее**.
         1. Укажите параметры подключения на вкладке **Главное**:
-            * **Хост** — [особый FQDN первичного мастера](#fqdn-master): `c-<идентификаторкластера>.rw.{{ dns-zone }}`;
+            * **Хост** — [особый FQDN первичного мастера](#fqdn-master): `c-<идентификатор_кластера>.rw.{{ dns-zone }}`;
             * **Порт** — `{{ port-mgp }}`;
             * **База данных** — имя БД для подключения;
             * В блоке **Аутентификация** укажите имя и пароль пользователя БД.
@@ -152,6 +178,34 @@ column "wait_event_type" does not exist LINE 10: wait_event_type || ': ' || wait
 
 При работе с другими вкладками в {{ pgadmin }} эта ошибка не возникает.
 
+## Подготовка к подключению из Docker-контейнера {#connection-docker}
+
+Чтобы подключаться к кластеру {{ mgp-name }} из Docker-контейнера, добавьте в Dockerfile строки:
+
+{% list tabs %}
+
+
+* Подключение без SSL
+
+    ```bash
+    RUN apt-get update && \
+        apt-get install postgresql-client --yes
+    ```
+
+
+* Подключение с SSL
+
+    ```bash
+    RUN apt-get update && \
+        apt-get install wget postgresql-client --yes && \
+        mkdir --parents ~/.postgresql && \
+        wget "{{ crt-web-path }}" \
+             --output-document ~/.postgresql/root.crt && \
+        chmod 0600 ~/.postgresql/root.crt
+    ```
+
+{% endlist %}
+
 ## Примеры строк подключения {#connection-string}
 
 {% include [conn-strings-environment](../../_includes/mdb/mgp/conn-strings-env.md) %}
@@ -160,29 +214,13 @@ column "wait_event_type" does not exist LINE 10: wait_event_type || ': ' || wait
 
 Для подключения к кластеру с публичным доступом [подготовьте SSL-сертификат](#get-ssl-cert). В примерах предполагается, что SSL-сертификат `root.crt` расположен в директории:
 
-* `/home/<домашняя директория>/.postgresql/` для Ubuntu;
+* `/home/<домашняя_директория>/.postgresql/` для Ubuntu;
 * `$HOME\AppData\Roaming\postgresql` для Windows.
 
-Подключиться к кластеру можно как с использованием обычного FQDN первичного мастера, так и его [особого FQDN](#fqdn-master).
+Подключиться к кластеру можно как с использованием обычного FQDN хоста-мастера, так и [особого FQDN](#fqdn-master) первичного хоста-мастера. О том, как получить FQDN хоста, см. [инструкцию](#fqdn).
 
 {% include [see-fqdn-in-console](../../_includes/mdb/see-fqdn-in-console.md) %}
 
 {% include [mgp-connection-strings](../../_includes/mdb/mgp/conn-strings.md) %}
-
-## Особый FQDN первичного мастера {#fqdn-master}
-
-Наравне с обычными FQDN, которые можно запросить со списком хостов в кластере, {{ mgp-name }} предоставляет особый FQDN, который также можно использовать для подключения к кластеру.
-
-FQDN вида `c-<идентификатор кластера>.rw.{{ dns-zone }}` всегда указывает на первичный хост-мастер. К этому FQDN разрешено подключаться и выполнять операции чтения и записи.
-
-Пример подключения к первичному хосту-мастеру в кластере с идентификатором `c9qash3nb1v9ulc8j9nm`:
-
-```bash
-psql "host=c-c9qash3nb1v9ulc8j9nm.rw.{{ dns-zone }} \
-      port={{ port-mgp }} \
-      sslmode=verify-full \
-      dbname=<имя БД> \
-      user=<имя пользователя>"
-```
 
 {% include [greenplum-trademark](../../_includes/mdb/mgp/trademark.md) %}

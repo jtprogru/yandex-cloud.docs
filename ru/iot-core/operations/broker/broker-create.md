@@ -1,3 +1,8 @@
+---
+title: "Как создать брокер"
+description: "Следуя данной инструкции, вы сможете создать брокер."
+---
+
 # Создание брокера
 
 {% include [note-pp](../../../_includes/iot-core/note-pp.md) %}
@@ -7,69 +12,115 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором вы хотите создать брокер.
-  1. Выберите сервис **{{ iot-short-name }}**.
-  1. На панели слева выберите **Брокеры**
-  1. Нажмите кнопку **Создать брокер**.
-  1. В блоке **Общая информация** укажите:
-      * **Имя** брокера. Например, `my-broker`.
-      * (опционально) **Описание** — дополнительную информацию о брокере.
-      * (опционально) **Пароль**, который будете использовать для доступа к брокеру. Для создания пароля можно воспользоваться [генератором паролей](https://passwordsgenerator.net/). Не забудьте сохранить пароль, он вам понадобится.
-      * (опционально) Для присвоения брокеру метки заполните поля **Ключ**, **Значение** и нажмите кнопку **Добавить метку**.
-  1. (Опционально) Добавьте [сертификаты](../../operations/certificates/create-certificates.md):
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_iot-core }}**.
+  1. На панели слева выберите **{{ ui-key.yacloud.iot.label_brokers }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.iot.button_create-broker }}**.
+  1. В блоке **{{ ui-key.yacloud.common.section-base }}** укажите:
+
+      * **{{ ui-key.yacloud.common.name }}** брокера. Например, `my-broker`.
+      * (Опционально) **{{ ui-key.yacloud.common.description }}** — дополнительную информацию о брокере.
+      * (Опционально) **{{ ui-key.yacloud.common.password }}**, если будете использовать его вместо сертификата для доступа к брокеру. Для создания пароля можно воспользоваться [генератором паролей](https://passwordsgenerator.net/).
+
+          {% note info %}
+
+          Сохраните пароль, он вам понадобится для [аутентификации](../../concepts/authorization.md).
+
+          {% endnote %}
+
+      * (Опционально) Для присвоения брокеру метки заполните поля **{{ ui-key.yacloud.component.key-values-input.label_key }}** и **{{ ui-key.yacloud.component.key-values-input.label_value }}** и нажмите кнопку **{{ ui-key.yacloud.iot.button_add-label }}**.
+
+  1. (Опционально) Добавьте [сертификат](../certificates/create-certificates.md):
+
       * Чтобы добавить файл:
-        1. Выберите способ **Файл**.
-        1. Нажмите **Выбрать файл**.
-        1. Выберите файл сертификата на вашем компьютере и нажмите **Открыть**.
-        1. Нажмите **Добавить**.
+
+          1. Выберите способ `{{ ui-key.yacloud.component.file-content-dialog.value_upload }}`.
+          1. Нажмите кнопку **Прикрепить файл**.
+          1. Выберите файл с публичным ключом сертификата и нажмите кнопку **Открыть**.
+          1. Нажмите кнопку **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+
       * Чтобы добавить текст:
-        1. Выберите способ **Текст**.
-        1. Вставьте тело сертификата в поле **Содержимое**.
-        1. Нажмите **Добавить**.
-  1. Нажмите кнопку **Создать**.
+
+          1. Выберите способ `{{ ui-key.yacloud.component.file-content-dialog.value_manual }}`.
+          1. Вставьте публичный ключ сертификата в поле **{{ ui-key.yacloud.component.file-content-dialog.field_content }}**.
+          1. Нажмите кнопку **{{ ui-key.yacloud.component.file-content-dialog.button_submit }}**.
+
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
-  
+
   {% include [cli-install](../../../_includes/cli-install.md) %}
-  
+
   {% include [default-catalogue](../../../_includes/default-catalogue.md) %}
-  
+
   1. Создайте брокер:
-  
+
+      ```bash
+      yc iot broker create --name <название брокера>
       ```
-      yc iot broker create --name my-broker
-      ```
-	 
+
+      Требования к названию брокера:
+
       {% include [name-format](../../../_includes/name-format.md) %}
 
       Результат:
-	   
-      ```
+
+      ```text
       id: b91ki3851h**********
       folder_id: aoek49ghmk*********
       created_at: "2022-05-28T11:29:42.420Z"
-      name: my-broker
+      name: <название брокера>
+      status: ACTIVE
       ```
-	 
-  1. Проверьте, что брокер создался:
-  
+
+  1. (Опционально) Присвойте брокеру пароль для аутентификации с помощью [логина и пароля](../../concepts/authorization.md#log-pass):
+
+      ```bash
+      yc iot broker password add --broker-name <название брокера>
       ```
-      yc iot broker list
-	    ```
-	  
-	    Результат:
-	    ```
-      +----------------------+-------------+
-      |          ID          |    NAME     |
-      +----------------------+-------------+
-      | b91ki3851h********** |  my-broker  |
-      +----------------------+-------------+
+
+      Команда предложит ввести пароль. Требования к паролю:
+
+      * пароль должен содержать цифры, буквы в верхнем и нижнем регистре, специальные символы;
+      * длина пароля — не менее 14 символов.
+
+      Результат:
+
+      ```text
+      broker_id: b91ki3851h**********
+      id: aoek49ghmk*********
+      created_at: "2022-05-28T11:32:42.420Z"
+      ```
+
+  1. (Опционально) Добавьте брокеру сертификат для аутентификации с помощью [сертификатов](../../concepts/authorization.md#certs):
+
+      ```bash
+      yc iot broker certificate add \
+         --broker-name <название брокера> \
+         --certificate-file <сертификат>
+      ```
+
+      Где:
+
+      * `--broker-name` — имя брокера;
+      * `--certificate-file` — путь к публичному ключу сертификата, например `cert.pem`.
+
+      Результат:
+
+      ```text
+      broker_id: b91ki3851h**********
+      fingerprint: 1f21cf6d0183d****
+      certificate_data: |
+         -----BEGIN CERTIFICATE-----
+         MIIEpDCCAow...
+         -----END CERTIFICATE-----
+      created_at: "2023-07-11T16:20:53.466370019Z"
       ```
 
 - {{ TF }} 
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).  
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
    
   {% note info %}
 
@@ -82,10 +133,10 @@
   1. Опишите в конфигурационном файле параметры ресурса, который необходимо создать:
 
      * `yandex_iot_core_broker` — параметры брокера:
-       * `name` — имя брокера.
-       * `description` — описание брокера.
-       * `labels` — метки брокера в формате `ключ:значение`.
-       * `certificates` — список сертификатов брокера для авторизации с помощью [сертификатов](../../concepts/authorization.md#certs).
+       * `name` — имя брокера;
+       * `description` — описание брокера;
+       * `labels` — метки брокера в формате `ключ:значение`;
+       * `certificates` — список сертификатов брокера для аутентификации с помощью [сертификатов](../certificates/create-certificates.md).
 
       Пример структуры ресурса в конфигурационном файле:
       

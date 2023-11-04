@@ -10,10 +10,12 @@ description: "Страница содержит все инструкции дл
 * [{#T}](community/create.md)
 * [{#T}](community/add-user.md)
 * [{#T}](community/manage-community-labels.md)
+* [{#T}](community/manage-community-config.md)
 * [{#T}](community/link-channel.md)
 * [{#T}](community/link-ba.md)
 * [{#T}](community/billing-details.md)
 * [{#T}](community/delete.md)
+* [{#T}](community/delete-user.md)
 
 ## Управление проектом {#project}
 
@@ -25,6 +27,8 @@ description: "Страница содержит все инструкции дл
 * [{#T}](projects/update.md)
 * [{#T}](projects/restrictions.md)
 * [{#T}](projects/delete.md)
+* [{#T}](projects/delete-user.md)
+* [{#T}](projects/remote-connect.md)
 
 ## Работа в ноутбуке {#notebook}
 
@@ -34,8 +38,11 @@ description: "Страница содержит все инструкции дл
 * [{#T}](projects/install-dependencies.md)
 * [{#T}](projects/clear-kernel-state.md)
 * [{#T}](projects/snippets.md)
+* [{#T}](projects/clear-outputs.md)
 * [{#T}](projects/work-with-git.md)
+* [{#T}](projects/work-with-jobs.md)
 * [{#T}](user-images-cell.md)
+* [{#T}](projects/templates.md)
 
 ## Работа с ресурсами {#resources}
 
@@ -47,6 +54,7 @@ description: "Страница содержит все инструкции дл
 
 ## Подключение к источникам данных {#connections-to-data-sources}
 
+* [{#T}](data/s3-connectors.md)
 * [{#T}](data/connect-to-s3.md)
 * [{#T}](data/connect-to-clickhouse.md)
 * [{#T}](data/connect-to-postgresql.md)
@@ -75,3 +83,4 @@ description: "Страница содержит все инструкции дл
 ## Дополнительные возможности {{ ml-platform-name }} {#additional-feature}
 
 * [{#T}](migration.md)
+

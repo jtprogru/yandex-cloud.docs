@@ -22,7 +22,7 @@ To configure {{ TF }} state storage in {{ objstorage-name }} and use it to creat
 
 If you no longer need the resources you created, [delete them](#clear-out).
 
-{{ TF }} and its providers are distributed under the [Mozilla Public License](https://github.com/hashicorp/terraform/blob/main/LICENSE).
+{{ TF }} and its providers are distributed under the [Business Source License](https://github.com/hashicorp/terraform/blob/main/LICENSE).
 
 ## Prepare your cloud {#before-you-begin}
 
@@ -64,7 +64,7 @@ The cost of supporting this infrastructure includes:
 
 ## Create a bucket {#create-service-account}
 
-[Create a bucket](../../storage/operations/buckets/create.md) with any name, for example, `terraform-object-storage-tutorial`. It stores the {{ TF }} state file.
+[Create a bucket](../../storage/operations/buckets/create.md) with restricted access. It stores the {{ TF }} state file.
 
 ## Configure the backend {#set-up-backend}
 

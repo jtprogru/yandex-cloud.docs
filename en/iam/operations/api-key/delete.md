@@ -1,3 +1,8 @@
+---
+title: "Deleting API keys"
+description: "Follow this guide to delete an API key."
+---
+
 # Deleting API keys
 
 {% list tabs %}
@@ -5,14 +10,16 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder the service account belongs to.
-   1. At the top of the screen, go to the **Service accounts** tab.
-   1. Choose a service account and click the line with its name.
-   1. In the **Authorized keys** list, find an API key to be deleted.
+   1. At the top of the screen, go to the **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}** tab.
+   1. Choose a service account and click the row with its name.
+   1. In the **{{ ui-key.yacloud.iam.folder.service-account.overview.section_keys }}** list, find an API key to be deleted.
    1. Click ![image](../../../_assets/options.svg) in the row of the key.
-   1. Select **Delete**.
-   1. In the window that opens, click **Delete**.
+   1. Select **{{ ui-key.yacloud.iam.folder.service-account.overview.button_action-delete-access-key }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.iam.folder.service-account.overview.popup-confirm_button_delete }}**.
 
 - CLI
+
+   {% include [cli-install](../../../_includes/cli-install.md) %}
 
    1. Get a list of API key `IDs` for a specific service account. Specify the service account name in the `--service-account-name` parameter:
 
@@ -53,7 +60,7 @@
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    1. Open the {{ TF }} configuration file and delete the fragment with the API key description.
 
@@ -74,7 +81,7 @@
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```
          terraform plan
@@ -90,9 +97,9 @@
          terraform apply
          ```
 
-      1. Confirm the resource creation: type `yes` in the terminal and press **Enter**.
+      1. Confirm creating the resources: type `yes` in the terminal and press **Enter**.
 
-      Once you are done, all the resources you need will be created in the specified folder. You can verify that the resources are there and properly configured in the [management console]({{ link-console-main }}) or using the following CLI command:
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}) and this CLI command:
 
       ```
       yc iam key list --service-account-id <service account ID>

@@ -1,9 +1,9 @@
-# Управление доступом {{ at-name }}
+# Управление доступом в {{ at-name }}
 
 В этом разделе вы узнаете:
 
 * [на какие ресурсы можно назначить роль](#resources);
-* [какие роли действуют в сервисе](#roles).
+* [какие роли действуют в сервисе](#roles-list).
 
 {% include notitle [about-access-management](../../_includes/iam/about-access-management.md) %}
 

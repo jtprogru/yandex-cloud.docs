@@ -1,3 +1,8 @@
+---
+title: "Как удалить образ диска"
+description: "Следуя данной инструкции, вы сможете удалить образ диска."
+---
+
 # Удалить образ диска
 
 {% note warning %}
@@ -50,7 +55,7 @@
 
 - {{ TF }}
 
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Если вы создавали образ с помощью {{ TF }}, вы можете удалить его:
   1. В командной строке перейдите в папку, где расположен конфигурационный файл {{ TF }}.

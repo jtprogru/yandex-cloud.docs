@@ -71,13 +71,13 @@ Adds a data type for storing <q>key-value</q> pairs in a single field.
 || [pgcrypto]({{ gp.docs.pivotal }}/latest/ref_guide/modules/pgcrypto.html)
 Adds data encryption functions. For more information, see [{#T}](./pgcrypto.md).
 | 1.1 ||
-|| [plperl]({{ gp.docs.vmware }}/5/greenplum-database/GUID-ref_guide-extensions-pl_perl.html)
+|| [plperl]({{ gp.docs.vmware }}/5/greenplum-database/ref_guide-extensions-pl_perl.html)
 Enables support for the PL/Perl procedural language.
 | 1.0 ||
-|| [plpgsql]({{ gp.docs.vmware }}/5/greenplum-database/GUID-ref_guide-extensions-pl_sql.html)
+|| [plpgsql]({{ gp.docs.vmware }}/5/greenplum-database/ref_guide-extensions-pl_sql.html)
 Enables support for the PL/pgSQL procedural language.
 | 1.0 ||
-|| [postgis]({{ gp.docs.vmware }}/5/greenplum-database/GUID-ref_guide-extensions-postGIS.html)
+|| [postgis]({{ gp.docs.vmware }}/5/greenplum-database/ref_guide-extensions-postGIS.html)
 Allows GIS (Geographic Information System) objects to be stored and handled in {{ PG }} databases.
 | 2.1.5 ||
 || [postgres_fdw]({{ gp.docs.pivotal }}/latest/ref_guide/modules/postgres_fdw.html)
@@ -89,6 +89,9 @@ Allows you to work with heterogeneous data sources.
 || uuid-cb
 Enables the generation and validation of unique IDs in compliance with the Russian Central Bank requirements. For more information, see [{#T}](./uuid-cb.md).
 | 1.0 ||
+|| [{{ YZ }}](../../tutorials/yezzey.md). {{ yandex-cloud }} extension
+Exports [AO and AOCO tables](../../concepts/tables.md) from disks within the {{ mgp-name }} cluster to a cold storage in {{ objstorage-full-name }}. This way, the data will be stored in a service bucket in a compressed and encrypted form.
+| 1.8 ||
 |#
 
 {% include [greenplum-trademark](../../../_includes/mdb/mgp/trademark.md) %}

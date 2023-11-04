@@ -41,6 +41,8 @@
 
 {% endlist %}
 
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
+
 After running the command, enter the user password to complete the connection procedure.
 
 Once connected to the DBMS, run `SELECT @@version;`.
@@ -62,13 +64,15 @@ Once connected to the DBMS, run `SELECT @@version;`.
 * Connecting via SSL
 
    ```bash
-   curl --cacert {{ crt-local-dir }}{{ crt-local-file }} \
+   curl --cacert {{ crt-local-dir }}{{ crt-local-file-root }} \
         --header "X-ClickHouse-User: <DB username>" \
         --header "X-ClickHouse-Key: <DB user password>" \
-        'https://<Any {{ CH }} host FQDN>:8443/?database=<DB name>&query=SELECT%20version()'
+        'https://<FQDN of any {{ CH }} host>:8443/?database=<DB name>&query=SELECT%20version()'
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 ### Go {#go}
 
@@ -150,7 +154,7 @@ sudo apt update && sudo apt install --yes golang git
        const DB_USER = "<DB user name>"
        const DB_PASS = "<DB user password>"
 
-       const CACERT = "{{ crt-local-dir }}{{ crt-local-file }}"
+       const CACERT = "{{ crt-local-dir }}{{ crt-local-file-root }}"
 
        caCert, err := ioutil.ReadFile(CACERT)
        if err != nil {
@@ -189,6 +193,8 @@ sudo apt update && sudo apt install --yes golang git
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Connection:**
 
@@ -351,7 +357,7 @@ go run connect.go
        String DB_USER    = "<DB user name>";
        String DB_PASS    = "<DB user password>";
 
-       String CACERT     = "{{ crt-local-dir }}{{ crt-local-file }}";
+       String CACERT     = "{{ crt-local-dir }}{{ crt-local-file-root }}";
 
        String DB_URL = String.format("jdbc:clickhouse://%s:8443/%s?ssl=1&sslmode=strict&sslrootcert=%s", DB_HOST, DB_NAME, CACERT);
 
@@ -369,6 +375,8 @@ go run connect.go
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Connection:**
 
@@ -444,7 +452,7 @@ npm install querystring
    const DB_USER = "<DB user name>";
    const DB_PASS = "<DB user password>";
 
-   const CACERT = "{{ crt-local-dir }}{{ crt-local-file }}";
+   const CACERT = "{{ crt-local-dir }}{{ crt-local-file-root }}";
 
    const options = {
        'method': 'GET',
@@ -473,6 +481,8 @@ npm install querystring
 
 {% endlist %}
 
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
+
 **Connection:**
 
 ```bash
@@ -480,6 +490,10 @@ node app.js
 ```
 
 ### ODBC {#odbc}
+
+Setup methods for [Linux](#odbc-linux) and [Windows](#odbc-windows) are different.
+
+#### Linux {#odbc-linux}
 
 **Before connecting:**
 
@@ -563,10 +577,13 @@ node app.js
    Port = 8443
    Proto = https
    SSLMode = allow
-   CertificateFile = {{ crt-local-dir }}{{ crt-local-file }}
+   CertificateFile = {{ crt-local-dir }}{{ crt-local-file-root }}
+   CALocation = /etc/ssl/certs/ca-certificates.crt
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Connection:**
 
@@ -575,6 +592,40 @@ isql -v ClickHouse
 ```
 
 Once connected to the DBMS, run `SELECT @@version;`.
+
+#### Windows {#odbc-windows}
+
+1. [Install the clickhouse-odbc driver](https://github.com/ClickHouse/clickhouse-odbc#installation) with the appropriate bit depth. For example, if you are using a 32-bit application, install the driver with the same number of bits to connect through ODBC.
+1. [Run the <q>ODBC Data Source Administrator</q>](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/open-the-odbc-data-source-administrator?view=sql-server-ver16).
+1. In the **User DSN** tab, click **Add...**.
+1. Select the {{ CH }} driver with suitable encoding and click **Done**.
+1. Specify the parameters for connecting to the {{ CH }} cluster:
+
+   {% list tabs %}
+
+   * Connecting without using SSL
+
+      * **Name**: Name for the connection.
+      * **Host**: [FQDN of any {{ CH }} host](../../managed-clickhouse/operations/connect.md#fqdn).
+      * **Port**: `{{ port-mch-http }}`.
+      * **Database**: DB name.
+      * **User**: DB user name.
+      * **Password**: DB user password.
+
+   * Connecting via SSL
+
+      * **Name**: Name for the connection.
+      * **Host**: [FQDN of any {{ CH }} host](../../managed-clickhouse/operations/connect.md#fqdn).
+      * **Port**: `{{ port-mch-http }}`.
+      * **Database**: DB name.
+      * **SSLMode**: `Allow`.
+      * **User**: DB user name.
+      * **Password**: DB user password.
+
+   {% endlist %}
+
+1. Click **OK**.
+1. Connect to the {{ CH }} cluster through ODBC, for example, using Microsoft Excel.
 
 ### PHP {#php}
 
@@ -649,7 +700,7 @@ Once connected to the DBMS, run `SELECT @@version;`.
        ];
 
        $ssl = [
-           'cafile' => '{{ crt-local-dir }}{{ crt-local-file }}',
+           'cafile' => '{{ crt-local-dir }}{{ crt-local-file-root }}',
            'verify_peer' => true,
        ];
 
@@ -670,6 +721,8 @@ Once connected to the DBMS, run `SELECT @@version;`.
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Connection:**
 
@@ -702,6 +755,8 @@ php connect.php
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 ### Python (clickhouse-driver) {#python-clickhouse-driver}
 
@@ -744,12 +799,14 @@ pip3 install clickhouse-driver
                    port=9440,
                    secure=True,
                    verify=True,
-                   ca_certs='{{ crt-local-dir }}{{ crt-local-file }}')
+                   ca_certs='{{ crt-local-dir }}{{ crt-local-file-root }}')
 
    print(client.execute('SELECT version()'))
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Connection:**
 
@@ -803,7 +860,7 @@ pip3 install requests
        params={
            'query': 'SELECT version()',
        },
-       verify='/usr/local/share/ca-certificates/Yandex/YandexCA.crt',
+       verify='{{ crt-local-dir }}{{ crt-local-file-root }}',
        headers={
            'X-ClickHouse-User': '<DB user name>',
            'X-ClickHouse-Key': '<DB user password>',
@@ -814,6 +871,8 @@ pip3 install requests
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Connection:**
 
@@ -887,7 +946,7 @@ sudo apt update && sudo apt install --yes ruby
    req.add_field("X-ClickHouse-Key", DB_PASS)
 
    conn = Net::HTTP.new(uri.host, uri.port)
-   conn.ca_file = "{{ crt-local-dir }}{{ crt-local-file }}"
+   conn.ca_file = "{{ crt-local-dir }}{{ crt-local-file-root }}"
    conn.use_ssl = true
    conn.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
@@ -896,6 +955,8 @@ sudo apt update && sudo apt install --yes ruby
    ```
 
 {% endlist %}
+
+To learn how to get the FQDN of a host, see [this guide](../../managed-clickhouse/operations/connect.md#fqdn).
 
 **Connection:**
 

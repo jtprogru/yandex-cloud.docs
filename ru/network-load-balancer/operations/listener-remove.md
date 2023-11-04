@@ -1,3 +1,8 @@
+---
+title: "Удалить обработчик"
+description: "Следуя данной инструкции, вы сможете удалить обработчик."
+---
+
 # Удалить обработчик
 
 {% list tabs %}
@@ -6,10 +11,11 @@
   
   Чтобы удалить [обработчик](../concepts/listener.md) сетевого балансировщика:
   
-  1. Откройте раздел **Load Balancer** в каталоге, где требуется удалить обработчик.
+  1. В [консоли управления]({{ link-console-main }}) выберите каталог, где требуется удалить обработчик балансировщика.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
   1. Выберите сетевой балансировщик, у которого требуется удалить обработчик.
-  1. В блоке **Обработчики** нажмите на значок ![image](../../_assets/vertical-ellipsis.svg) в строке обработчика, который нужно удалить.
-  1. В открывшемся меню нажмите кнопку **Удалить обработчик**.
+  1. В блоке **{{ ui-key.yacloud.load-balancer.network-load-balancer.section_listeners }}** нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) в строке обработчика, который нужно удалить.
+  1. В открывшемся меню нажмите кнопку **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_delete-listener }}**.
   
 - CLI
   
@@ -30,7 +36,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы удалить обработчик сетевого балансировщика, созданного с помощью {{ TF }}:
   1. Откройте файл конфигурации {{ TF }} и удалите фрагмент с описанием обработчика.

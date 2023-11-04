@@ -7,7 +7,7 @@ description: "Atomic permissions in PostgreSQL are called privileges and permiss
 
 Atomic permissions in **{{ PG }}** are called _privileges_ and permission groups are called _roles_. For more information about access permissions, see the [{{ PG }} documentation](https://www.postgresql.org/docs/current/user-manag.html).
 
-The user created with a **{{ mpg-name }}** cluster is the owner of the first database in the cluster. You can [create other users](cluster-users.md#adduser) and configure their permissions as you wish:
+The user created with a **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}** cluster is the owner of the first database in the cluster. You can [create other users](cluster-users.md#adduser) and configure their permissions as you wish:
 
 - [Updating the list of user roles](#grant-role).
 - [Granting a privilege to a user](#grant-privilege).
@@ -17,17 +17,19 @@ The user created with a **{{ mpg-name }}** cluster is the owner of the first dat
 
 ## Updating the list of user roles {#grant-role}
 
-To assign a [role](../concepts/roles.md) to a user, use the {{ yandex-cloud }} interfaces: the roles assigned by the `GRANT` query are canceled during the next database operation.
+To assign a role to a user, use the {{ yandex-cloud }} interfaces: the roles assigned by the `GRANT` query are canceled during the next database operation.
+
+With {{ mpg-name }}, you cannot access [predefined](https://www.postgresql.org/docs/current/predefined-roles.html) roles, including the superuser role. The highest privileges for working with clusters are granted to users with the `mdb_admin` [role](../concepts/roles.md#mdb-admin). For more information, see [{#T}](../concepts/roles.md).
 
 {% list tabs %}
 
 - Management console
 
-   1. Go to the folder page and select **{{ mpg-name }}**.
-   1. Click on the name of the cluster you need and select the **Users** tab.
-   1. In the line with the name of the desired user, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Configure**.
-   1. Expand the **DBMS settings** list and select the roles you want to assign to the user in the **Grants** field.
-   1. Click **Save**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.postgresql.cluster.switch_users }}** tab.
+   1. In the appropriate user row, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.users.button_action-update }}**.
+   1. Expand the **{{ ui-key.yacloud.mdb.dialogs.button_advanced-settings }}** list and select the roles you want to assign to the user in the **Grants** field.
+   1. Click **{{ ui-key.yacloud.mdb.dialogs.popup_button_save }}**.
 
 - CLI
 
@@ -73,7 +75,7 @@ To assign a [role](../concepts/roles.md) to a user, use the {{ yandex-cloud }} i
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -95,13 +97,124 @@ To assign a [role](../concepts/roles.md) to a user, use the {{ yandex-cloud }} i
 
 ## Granting a privilege to a user {#grant-privilege}
 
-1. [Connect](connect.md) to the database under the database owner's account.
-2. Run the `GRANT` command. For a detailed description of the command syntax, see the [{{ PG }} documentation](https://www.postgresql.org/docs/current/sql-grant.html).
+{% list tabs %}
 
+- SQL
+
+   1. [Connect](connect.md) to the database under the database owner's account.
+   1. Run the `GRANT` command. For a detailed description of the command syntax, see the [{{ PG }} documentation](https://www.postgresql.org/docs/current/sql-grant.html).
+
+- {{ TF }}
+
+   You can grant user privileges via {{ TF }} only in a cluster with public hosts.
+
+   You can grant privileges to your users via {{ TF }} using the third-party [Terraform Provider for PostgreSQL](https://github.com/cyrilgdn/terraform-provider-postgresql).
+
+   {% include [pg-provider-disclaimer](../../_includes/mdb/mpg/terraform/pg-provider-disclaimer.md) %}
+
+   To grant a privilege to a cluster user:
+
+   1. Add a `postgresql` provider to the `required_providers` section in the provider configuration file:
+
+      ```hcl
+      terraform {
+        required_providers {
+          ...
+          postgresql = {
+            source = "cyrilgdn/postgresql"
+          }
+          ...
+        }
+      }
+      ```
+
+   1. Open the {{ TF }} configuration file with the infrastructure plan.
+
+      For more information about creating this file, see [{#T}](cluster-create.md).
+
+   1. Add the `postgresql` provider and configure its access to the database on behalf of its owner:
+
+      ```hcl
+      provider "postgresql" {
+        host            = <host_FQDN>
+        port            = 6432
+        database        = <database_name>
+        username        = <DB_owner_username>
+        password        = <user_password>
+      }
+      ```
+
+      For a full list of settings, see the [provider documentation](https://registry.terraform.io/providers/cyrilgdn/postgresql/latest/docs).
+
+   1. Add the `postgresql_grant` resource:
+
+      ```hcl
+      resource "postgresql_grant" "<resource_name>" {
+        database    = "<database_name>"
+        role        = "<username>"
+        object_type = "<object_type>"
+        privileges  = ["<list_of_priviledges>"]
+        schema      = "<schema>"
+        objects     = ["<object_list>"]
+        columns     = ["<column_list>"]
+        with_grant_option = <permission_to_grant_privileges>
+      }
+      ```
+
+      Where:
+
+      * `<Resource_name>`: Name of the {{ TF }} resource with privileges. It must be unique within the {{ TF }} manifest.
+      * `<database_name>`: Name of the database for which privileges are granted.
+      * `<username>`: Name of the user to whom privileges are granted.
+      * `<object_type>`: Type of {{ PG }} object for which privileges are granted. Possible values: `database`, `schema`, `table`, `sequence`, `function`, `procedure`, `routine`, `foreign_data_wrapper`, `foreign_server`, and `column`.
+      * `<privilege_list>`: Array of granted privileges. Possible values: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `TRUNCATE`, `REFERENCES`, `TRIGGER`, `CREATE`, `CONNECT`, `TEMPORARY`, `EXECUTE`, and `USAGE`. You can find the descriptions of privileges in the [{{ PG }} documentation](https://www.postgresql.org/docs/current/ddl-priv.html).
+      * `<schema>`: Schema for which you are granting privileges. You cannot specify it for the `database` object type.
+      * (Optional) `<object_list>`: Array of objects for which privileges are granted. If you omit this parameter, privileges will be granted for all objects of the specified type. You cannot specify it for the `database` or `schema` object types. If the object type is `column`, the array can contain only one value.
+      * `<column_list>`: Array of columns for which privileges are granted. This parameter is required for the `column` object type. You cannot specify it for any object type other than `column`.
+      * `(Optional)` <permission_to_grant_privileges>: If `true`, the user with privileges can grant these privileges to other users. By default, `false`.
+
+   1. Initialize {{ TF }} once again:
+
+      ```bash
+      terraform init
+      ```
+
+   1. Make sure the settings are correct.
+
+      {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
+
+   1. Confirm updating the resources.
+
+      {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
+
+{% endlist %}
 
 ## Revoking a privilege from a user {#revoke-privilege}
 
-1. [Connect](connect.md) to the database under the database owner's account.
-2. Run the `REVOKE` command. For a detailed description of the command syntax, see the [{{ PG }} documentation](https://www.postgresql.org/docs/current/sql-revoke.html).
+{% list tabs %}
+
+- SQL
+
+   1. [Connect](connect.md) to the database under the database owner's account.
+   1. Run the `REVOKE` command. For a detailed description of the command syntax, see the [{{ PG }} documentation](https://www.postgresql.org/docs/current/sql-revoke.html).
+
+- {{ TF }}
+
+   If you previously granted a privilege using {{ TF }}:
+
+   1. Open the {{ TF }} configuration file with the infrastructure plan.
+   1. In the `postgresql_grant` section, remove the privilege you want to revoke from the `privileges` parameter.
+
+      To revoke all privileges, leave the `privileges` array empty or completely remove the `postgresql_grant` resource.
+
+   1. Make sure the settings are correct.
+
+      {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
+
+   1. Confirm updating the resources.
+
+      {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
+
+{% endlist %}
 
 {% include [user-ro](../../_includes/mdb/mpg-user-examples.md) %}

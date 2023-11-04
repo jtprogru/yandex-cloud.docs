@@ -14,7 +14,7 @@
   1. Перейдите на вкладку **{{ ui-key.yacloud.compute.snapshots-schedules.label_title }}**.
   1. Напротив расписания, которое нужно изменить, нажмите ![image](../../../_assets/options.svg) и выберите **{{ ui-key.yacloud.common.edit }}**.
   1. Измените параметры расписания снимков:
-      * **{{ ui-key.yacloud.common.name }}**:
+      * **{{ ui-key.yacloud.common.name }}**. Требования к имени:
 
         {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -128,7 +128,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   1. Откройте файл конфигурации {{ TF }} и измените фрагмент с описанием расписания:
 

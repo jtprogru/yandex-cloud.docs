@@ -8,12 +8,23 @@
 [ERR.CHARTS.RUNTIME_TIMEOUT](ERR-CHARTS-RUNTIME_TIMEOUT.md) | Response processing timeout |
 [ERR.CHARTS.REQUEST_SIZE_LIMIT_EXCEEDED](ERR-CHARTS-REQUEST_SIZE_LIMIT_EXCEEDED.md) | Request size limit exceeded |
 [ERR.CK.TOO_MANY_LINES](ERR-CK_TOO_MANY_LINES.md) | Too many series on the chart |
+[ERR.DS_API](ERR-DS_API.md) | Internal server error |
 [ERR.DS_API.CONNECTION_CONFIG.SUBSELECT_NOT_ALLOWED](ERR-DS_API-CONNECTION_CONFIG-SUBSELECT_NOT_ALLOWED.md) | Subquery source is disallowed in the connection settings |
 [ERR.DS_API.DATABASE_UNAVAILABLE](ERR-DS_API-DATABASE_UNAVAILABLE.md) | Data source is unavailable |
+[ERR.DS_API.DB](ERR-DS_API-DB.md) | Ошибка выполнения запроса в источнике данных |
 [ERR.DS_API.DB.AUTHENTICATION_FAILED](ERR-DS_API-DB-AUTHENTICATION_FAILED.md) | Database authentication failed |
 [ERR.DS_API.DB.CANNOT_PARSE.DATETIME](ERR-DS_API-DB-CANNOT_PARSE-DATETIME.md) | Cannot parse datetime |
 [ERR.DS_API.DB.CANNOT_PARSE.NUMBER](ERR-DS_API-DB-CANNOT_PARSE-NUMBER.md) | Cannot parse number |
+[ERR.DS_API.DB.CHYT.AUTH_FAILED](ERR-DS_API-DB-CHYT-AUTH_FAILED.md) | Authentication failed |
+[ERR.DS_API.DB.CHYT.CLIQUE.INVALID_SPECIFICATION](ERR-DS_API-DB-CHYT-CLIQUE-INVALID_SPECIFICATION.md) | Invalid clique specification. Probably, clique does not exists |
+[ERR.DS_API.DB.CHYT.INVALID_SORTED_JOIN.MORE_THAN_ONE_TABLE](ERR-DS_API-DB-CHYT-INVALID_SORTED_JOIN-MORE_THAN_ONE_TABLE.md) | Cannot join a concatenation of tables with another table |
+[ERR.DS_API.DB.CHYT.INVALID_SORTED_JOIN.NOT_A_KEY_COLUMN](ERR-DS_API-DB-CHYT-INVALID_SORTED_JOIN-NOT_A_KEY_COLUMN.md) | Column used in join expression is not a key column |
+[ERR.DS_API.DB.CHYT.INVALID_SORTED_JOIN.NOT_KEY_PREFIX_COLUMN](ERR-DS_API-DB-CHYT-INVALID_SORTED_JOIN-NOT_KEY_PREFIX_COLUMN.md) | Joined columns should form prefix of joined table key columns |
+[ERR.DS_API.DB.CHYT.SUBQ_WEIGHT_LIMIT_EXCEEDED](ERR-DS_API-DB-CHYT-SUBQ_WEIGHT_LIMIT_EXCEEDED.md) | Subquery exceeds data weight limit |
+[ERR.DS_API.DB.CHYT.TABLE_ACCESS_DENIED](ERR-DS_API-DB-CHYT-TABLE_ACCESS_DENIED.md) | Access to table was denied |
+[ERR.DS_API.DB.CHYT.TABLE_HAS_NO_SCHEMA](ERR-DS_API-DB-CHYT-TABLE_HAS_NO_SCHEMA.md) | YT table has no schema. Only schematized tables are supported |
 [ERR.DS_API.DB.COLUMN_DOES_NOT_EXIST](ERR-DS_API-DB-COLUMN_DOES_NOT_EXIST.md) | Requested database column does not exist |
+[ERR.DS_API.DB.DB_OPERATIONAL_ERROR](ERR-DS_API-DB-DB_OPERATIONAL_ERROR.md) | Ошибка на стороне БД |
 [ERR.DS_API.DB.INVALID_FUNCTION.PG_DOUBLE_PRECISION_ROUND](ERR-DS_API-DB-INVALID_FUNCTION-PG_DOUBLE_PRECISION_ROUND.md) | ROUND with precision parameter is not supported for double precision data type in PostgreSQL
 [ERR.DS_API.DB.JOIN_COLUMN_TYPE_MISMATCH](ERR-DS_API-DB-JOIN_COLUMN_TYPE_MISMATCH.md) | Columns in JOIN have different types |
 [ERR.DS_API.DB.MEMORY_LIMIT_EXCEEDED](ERR-DS_API-DB-MEMORY_LIMIT_EXCEEDED.md) | Memory limit has been exceeded during query execution |
@@ -34,9 +45,12 @@
 [ERR.DS_API.FORMULA.VALIDATION.WIN_FUNC.NO_AGG](ERR-DS_API-FORMULA-VALIDATION-WIN_FUNC-NO_AGG.md) | Window function has no aggregated expressions among its arguments |
 [ERR.DS_API.INVALID_GROUP_BY_CONFIGURATION](ERR-DS_API-INVALID_GROUP_BY_CONFIGURATION.md) | Invalid grouping configuration |
 [ERR.DS_API.REFERENCED_ENTRY_ACCESS_DENIED](ERR-DS_API-REFERENCED_ENTRY_ACCESS_DENIED.md) | Referenced connection <идентификатор подключения> cannot be loaded: access denied |
+[ERR.DS_API.REFERENCED_ENTRY_NOT_FOUND](ERR-DS_API-REFERENCED_ENTRY_NOT_FOUND.md) | Обращение к несуществующему объекту |
 [ERR.DS_API.REQUEST_TIMEOUT](ERR-DS_API-REQUEST_TIMEOUT.md) | Backend app request timeout exceeded |
 [ERR.DS_API.ROW_COUNT_LIMIT](ERR-DS_API-ROW_COUNT_LIMIT.md) | Received too many result data rows |
 [ERR.DS_API.SOURCE_ACCESS_DENIED.INVALID_TOKEN](ERR-DS_API-SOURCE_ACCESS_DENIED-INVALID_TOKEN.md) | Invalid user token |
 [ERR.DS_API.SOURCE_CONFIG.TABLE_NOT_CONFIGURED](ERR-DS_API-SOURCE_CONFIG-TABLE_NOT_CONFIGURED.md) | Table is not ready yet |
 [ERR.DS_API.US.ACCESS_DENIED](ERR-DS_API-US-ACCESS_DENIED.md) | Access denied |
+[ERR.DS_API.TYPE_CAST.FAILED](ERR-DS_API-TYPE_CAST-FAILED.md) | Ошибка преобразования типа данных |
+[ERR.DS_API.US.BAD_REQUEST](ERR-DS_API-US-BAD_REQUEST.md) | Ошибка в запросе к объекту |
 [ERR.US.BAD_REQUEST.ALREADY_EXISTS](ERR-US-BAD_REQUEST-ALREADY_EXISTS.md) | Не удалось создать <тип объекта> |

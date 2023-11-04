@@ -1,6 +1,6 @@
 ---
 title: "How to configure a {{ MY }} target endpoint in {{ data-transfer-full-name }}"
-description: "In this tutorial, you'll learn how to set up a {{ MY }} target endpoint in {{ data-transfer-full-name }}."
+description: "In this tutorial, you will learn how to set up a {{ MY }} target endpoint in {{ data-transfer-full-name }}."
 ---
 
 # Configuring a {{ MY }} target endpoint
@@ -11,6 +11,14 @@ When [creating](../index.md#create) or [editing](../index.md#update) an endpoint
 * [Additional parameters](#additional-settings).
 
 ## {{ mmy-name }} cluster {#managed-service}
+
+
+{% note warning %}
+
+To create or edit an endpoint of a managed database, you need the [`{{ roles.mmy.viewer }}` role](../../../../managed-mysql/security/index.md#mmy-viewer) or the primitive [`viewer` role](../../../../iam/concepts/access-control/roles.md#viewer) issued for the folder hosting a cluster of this managed database.
+
+{% endnote %}
+
 
 Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. Available only for clusters deployed in [{{ mmy-full-name }}](../../../../managed-mysql/).
 
@@ -36,20 +44,20 @@ Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. 
 
    
    ```hcl
-   resource "yandex_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-     name = "<endpoint name>"
+   resource "yandex_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+     name = "<endpoint_name>"
      settings {
        mysql_target {
-         security_groups = [ "list of security group IDs" ]
+         security_groups = ["<list_of_security_group_IDs>"]
          connection {
-           mdb_cluster_id = "<{{ mmy-name }} cluster ID>"
+           mdb_cluster_id = "<cluster_ID>"
          }
-         database = "<name of database being transferred>"
-         user     = "<username for connection>"
+         database = "<migrated_database_name>"
+         user     = "<username_for_connection>"
          password {
-           raw = "<user password>"
+           raw = "<user_password>"
          }
-         <advanced endpoint settings>
+         <additional_endpoint_settings>
        }
      }
    }
@@ -90,23 +98,23 @@ For OnPremise, all fields are filled in manually.
 
    
    ```hcl
-   resource "yandex_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-     name = "<endpoint name>"
+   resource "yandex_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+     name = "<endpoint_name>"
      settings {
        mysql_target {
-         security_groups = [ "list of security group IDs" ]
+         security_groups = ["<list_of_security_group_IDs>"]
          connection {
            on_premise {
-             hosts = ["<host list>"]
-             port  = <connection port>
+             hosts = ["<list_of_hosts>"]
+             port  = <port_for_connection>
            }
          }
-         database = "<name of database being transferred>"
-         user     = "<username for connection>"
+         database = "<migrated_database_name>"
+         user     = "<username_for_connection>"
          password {
-           raw = "<user password>"
+           raw = "<user_password>"
          }
-         <advanced endpoint settings>
+         <additional_endpoint_settings>
        }
      }
    }
@@ -137,7 +145,7 @@ You can configure **{{ ui-key.yc-data-transfer.data-transfer.console.form.mysql.
 
       * `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.DISABLED.title }}`: Select this option if you are only going to do replication without copying data.
 
-      * `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.DROP.title }}`: Fully delete tables included in the transfer (used by default).
+      * `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.DROP.title }}`: Completely delete tables included in the transfer (used by default).
 
          Use this option so that the latest version of the table schema is always transferred to the target database from the source whenever the transfer is activated.
 

@@ -1,3 +1,8 @@
+---
+title: "Как создать кластер {{ CH }}"
+description: "Следуя данной инструкции, вы сможете создать кластер {{ CH }} с одним или несколькими хостами базы данных."
+---
+
 # Создание кластера {{ CH }}
 
 Кластер {{ CH }} — это один или несколько хостов базы данных, между которыми можно настроить репликацию.
@@ -35,14 +40,18 @@
 
 - Консоль управления
 
+  
+  @[youtube](https://www.youtube.com/watch?v=M_RXJfOoEFE&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=4&pp=iAQB)
+
+
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором нужно создать кластер БД.
-    1. Выберите сервис **{{ mch-name }}**.
-  1. Нажмите кнопку **Создать кластер**.
-  1. Введите имя кластера в поле **Имя кластера**. Имя кластера должно быть уникальным в рамках каталога.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
+  1. Введите имя кластера в поле **{{ ui-key.yacloud.mdb.forms.base_field_name }}**. Имя кластера должно быть уникальным в рамках каталога.
   1. Выберите окружение, в котором нужно создать кластер (после создания кластера окружение изменить невозможно):
       * `PRODUCTION` — для стабильных версий ваших приложений.
-      * `PRESTABLE` — для тестирования, в том числе самого сервиса {{ mch-short-name }}. В Prestable-окружении раньше появляются новая функциональность, улучшения и исправления ошибок. При этом не все обновления обеспечивают обратную совместимость.
-  1. Выберите версию {{ CH }}, которую будет использовать кластер {{ mch-name }}, из выпадающего списка **Версия**:
+      * `PRESTABLE` — для тестирования. Prestable-окружение аналогично Production-окружению и на него также распространяется SLA, но при этом на нем раньше появляются новые функциональные возможности, улучшения и исправления ошибок. В Prestable-окружении вы можете протестировать совместимость новых версий с вашим приложением.
+  1. Выберите версию {{ CH }}, которую будет использовать кластер {{ mch-name }}, из выпадающего списка **{{ ui-key.yacloud.mdb.forms.base_field_version }}**:
      * Для большинства кластеров рекомендуется выбрать самую новую LTS-версию.
      * Для кластеров, в которых планируется использовать гибридное хранилище, рекомендуется выбрать версию не ниже {{ mch-ck-version }}.
 
@@ -50,32 +59,35 @@
   1. Если вы планируете использовать данные из бакета {{ objstorage-name }} с [ограниченным доступом](../../storage/concepts/bucket#bucket-access), то выберите сервисный аккаунт из выпадающего списка или создайте новый. Подробнее о настройке сервисного аккаунта см. в разделе [Настройка доступа к {{ objstorage-name }}](s3-access.md).
 
 
-  1. В блоке **Ресурсы**:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.new_section_resource }}**:
 
       * Выберите платформу, тип виртуальной машины и класс хостов — он определяет технические характеристики виртуальных машин, на которых будут развернуты хосты БД. Все доступные варианты перечислены в разделе [Классы хостов](../concepts/instance-types.md). При изменении класса хостов для кластера меняются характеристики всех уже созданных экземпляров.
 
       
       * Выберите [тип диска](../concepts/storage.md).
 
+                
         {% include [storages-step-settings](../../_includes/mdb/settings-storages.md) %}
+
 
 
       * Выберите размер диска, который будет использоваться для данных и резервных копий. Подробнее о том, как занимают пространство резервные копии, см. раздел [{#T}](../concepts/backup.md).
 
-  1. В блоке **Хосты**:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_host }}**:
 
-      * Если вы хотите создать дополнительные хосты базы данных, нажмите **Добавить хост**. После добавления второго хоста появится кнопка **Настроить {{ ZK }}**. Измените настройки {{ ZK }} в блоках **Ресурсы {{ ZK }}** и **Хосты {{ ZK }}** при необходимости.
+      * Если вы хотите создать дополнительные хосты базы данных, нажмите **{{ ui-key.yacloud.mdb.forms.button_add-host }}**. После добавления второго хоста появится кнопка **{{ ui-key.yacloud.mdb.forms.button_expand-zookeeper-settings }}**. Измените настройки {{ ZK }} в блоках **{{ ui-key.yacloud.mdb.forms.section_zookeeper-resource }}**, **{{ ui-key.yacloud.mdb.forms.section_zookeeper-disk }}** и **{{ ui-key.yacloud.mdb.forms.section_zookeeper-hosts }}** при необходимости.
       * Укажите параметры хостов базы, создаваемых вместе с кластером. Чтобы изменить добавленный хост, наведите курсор на строку хоста и нажмите на значок ![image](../../_assets/pencil.svg).
+      * Чтобы к хосту можно было подключаться из интернета, включите настройку **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}**.
 
-  1. В блоке **Настройки СУБД**:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_settings }}**:
 
-      * Если вы хотите управлять пользователями кластера через SQL, в поле **Управление пользователями через SQL** выберите из выпадающего списка **Включено** и укажите пароль пользователя `admin`. Управление пользователями через другие интерфейсы при этом станет недоступно.
+      * Если вы хотите управлять пользователями кластера через SQL, в поле **{{ ui-key.yacloud.mdb.forms.database_field_sql-user-management }}** выберите из выпадающего списка **{{ ui-key.yacloud.common.enabled }}** и укажите пароль пользователя `admin`. Управление пользователями через другие интерфейсы при этом станет недоступно.
 
-        В противном случае выберите **Выключено**.
+        В противном случае выберите **{{ ui-key.yacloud.common.disabled }}**.
 
-      * Если вы хотите управлять базами данных через SQL, в поле **Управление базами данных через SQL** выберите из выпадающего списка **Включено**. Управление базами данных через другие интерфейсы при этом станет недоступно. Поле неактивно, если управление пользователями через SQL выключено.
+      * Если вы хотите управлять базами данных через SQL, в поле **{{ ui-key.yacloud.mdb.forms.database_field_sql-database-management }}** выберите из выпадающего списка **{{ ui-key.yacloud.common.enabled }}**. Управление базами данных через другие интерфейсы при этом станет недоступно. Поле неактивно, если управление пользователями через SQL выключено.
 
-        В противном случае выберите **Выключено**.
+        В противном случае выберите **{{ ui-key.yacloud.common.disabled }}**.
 
         {% include [SQL-management-can't-be-switched-off](../../_includes/mdb/mch/note-sql-db-and-users-create-cluster.md) %}
 
@@ -96,24 +108,22 @@
       * При необходимости задайте [настройки СУБД](../concepts/settings-list.md#dbms-cluster-settings).
 
   
-  1. В блоке **Сетевые настройки** выберите облачную сеть для размещения кластера и группы безопасности для сетевого трафика кластера. Может потребоваться дополнительная [настройка групп безопасности](connect.md#configuring-security-groups) для того, чтобы можно было подключаться к кластеру.
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_network-settings }}** выберите облачную сеть для размещения кластера и группы безопасности для сетевого трафика кластера. Может потребоваться дополнительная [настройка групп безопасности](connect.md#configuring-security-groups) для того, чтобы можно было подключаться к кластеру.
 
-      {% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-  
 
-  1. В блоке **Хосты** укажите параметры хостов БД, создаваемых вместе с кластером. Чтобы изменить настройки хоста, нажмите на значок ![pencil](../../_assets/pencil.svg) в строке с его номером:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_host }}** укажите параметры хостов БД, создаваемых вместе с кластером. Чтобы изменить настройки хоста, нажмите на значок ![pencil](../../_assets/pencil.svg) в строке с его номером:
 
-      * **Зона доступности** — выберите [зону доступности](../../overview/concepts/geo-scope.md).
-      * **Подсеть** — укажите [подсеть](../../vpc/concepts/network.md#subnet) в выбранной зоне доступности.
-      * **Публичный доступ** — разрешите [доступ](connect.md) к хосту из интернета.
+      * **{{ ui-key.yacloud.mdb.hosts.dialog.field_zones }}** — выберите [зону доступности](../../overview/concepts/geo-scope.md).
+      * **{{ ui-key.yacloud.mdb.hosts.dialog.field_subnetworks }}** — укажите [подсеть](../../vpc/concepts/network.md#subnet) в выбранной зоне доступности.
+      * **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}** — разрешите [доступ](connect.md) к хосту из интернета.
 
-      Чтобы добавить хосты в кластер, нажмите кнопку **Добавить хост**.
+      Чтобы добавить хосты в кластер, нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_add-host }}**.
 
   1. При необходимости задайте сервисные настройки кластера:
 
       {% include [mch-extra-settings](../../_includes/mdb/mch/extra-settings-web-console.md) %}
 
-  1. Нажмите кнопку **Создать кластер**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_create }}**.
 
 - CLI
 
@@ -144,21 +154,21 @@
      
      ```bash
      {{ yc-mdb-ch }} cluster create \
-       --name <имя кластера> \
-       --environment <окружение: prestable или production> \
-       --network-name <имя сети> \
-       --host type=<clickhouse или zookeeper>,`
-            `zone-id=<зона доступности>,`
-            `subnet-id=<идентификатор подсети>,`
-            `assign-public-ip=<публичный доступ к хосту: true или false> \
-       --clickhouse-resource-preset <класс хоста> \
-       --clickhouse-disk-type <network-hdd | network-ssd | local-ssd | network-ssd-nonreplicated> \
-       --clickhouse-disk-size <размер хранилища в гигабайтах> \
-       --user name=<имя пользователя>,password=<пароль пользователя> \
-       --database name=<имя базы данных> \
-       --security-group-ids <список идентификаторов групп безопасности> \
-       --yandexquery-access=<доступ через {{ yq-full-name }}: true или false> \
-       --deletion-protection=<защита от удаления кластера: true или false>
+       --name <имя_кластера> \
+       --environment <окружение:_prestable_или_production> \
+       --network-name <имя_сети> \
+       --host type=<clickhouse_или_zookeeper>,`
+            `zone-id=<зона_доступности>,`
+            `subnet-id=<идентификатор_подсети>,`
+            `assign-public-ip=<публичный_доступ_к_хосту:_true_или_false> \
+       --clickhouse-resource-preset <класс_хоста> \
+       --clickhouse-disk-type <тип_диска> \
+       --clickhouse-disk-size <размер_хранилища_в_ГБ> \
+       --user name=<имя_пользователя>,password=<пароль_пользователя> \
+       --database name=<имя_базы_данных> \
+       --security-group-ids <список_идентификаторов_групп_безопасности> \
+       --yandexquery-access=<доступ_через_Yandex_Query:_true_или_false> \
+       --deletion-protection=<защита_от_удаления_кластера:_true_или_false>
      ```
 
      Идентификатор подсети `subnet-id` необходимо указывать, если в выбранной зоне доступности создано 2 и больше подсетей.
@@ -179,7 +189,7 @@
          {{ yc-mdb-ch }} cluster create \
            ...
            --enable-sql-user-management true \
-           --admin-password "<пароль пользователя admin>"
+           --admin-password "<пароль_пользователя_admin>"
          ```
 
      1. Чтобы включить [режим управления базами данных через SQL](./databases.md#sql-database-management):
@@ -192,11 +202,13 @@
            ...
            --enable-sql-user-management true \
            --enable-sql-database-management true \
-           --admin-password "<пароль пользователя admin>"
+           --admin-password "<пароль_пользователя_admin>"
          ```
 
      
      1. Чтобы разрешить доступ к кластеру из сервиса [{{ sf-full-name }}](../../functions/concepts/index.md), передайте параметр `--serverless-access`. Подробнее о настройке доступа см. в документации [{{ sf-name }}](../../functions/operations/database-connection.md).
+
+     1. Чтобы разрешить доступ к кластеру из сервиса [{{ yq-full-name }}](../../query/concepts/index.md), передайте параметр `--yandexquery-access=true`. Функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md).
 
 
      1. {% include [datatransfer access](../../_includes/mdb/cli/datatransfer-access-create.md) %}
@@ -209,7 +221,7 @@
          ```bash
          {{ yc-mdb-ch }} cluster create \
            ...
-           --version "<версия {{ CH }}: не ниже {{ mch-ck-version }}>" \
+           --version "<версия_{{ CH }}:_не_ниже_{{ mch-ck-version }}>" \
            --embedded-keeper true
          ```
 
@@ -235,11 +247,18 @@
          {{ yc-mdb-ch }} cluster create \
             ...
             --cloud-storage=true \
-            --cloud-storage-data-cache=<true или false> \
-            --cloud-storage-data-cache-max-size=<объем памяти (в байтах)> \
-            --cloud-storage-move-factor=<доля свободного места>
+            --cloud-storage-data-cache=<true_или_false> \
+            --cloud-storage-data-cache-max-size=<объем_памяти_в_байтах> \
+            --cloud-storage-move-factor=<доля_свободного_места> \
+            --cloud-storage-prefer-not-to-merge=<true_или_false>
            ...
          ```
+
+  {% note info %}
+
+  По умолчанию при создании кластера устанавливается режим [технического обслуживания](../concepts/maintenance.md) `anytime` — в любое время. Вы можете установить конкретное время обслуживания при [изменении настроек кластера](update.md#change-additional-settings).
+
+  {% endnote %}
 
 - {{ TF }}
 
@@ -249,7 +268,7 @@
 
     1. В командной строке перейдите в каталог, в котором будут расположены конфигурационные файлы {{ TF }} с планом инфраструктуры. Если такой директории нет — создайте ее.
 
-        1. Если у вас еще нет {{ TF }}, [установите его и создайте конфигурационный файл с настройками провайдера](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+        1. {% include [terraform-install](../../_includes/terraform-install.md) %}
 
     1. Создайте конфигурационный файл с описанием [облачной сети](../../vpc/concepts/network.md#network) и [подсетей](../../vpc/concepts/network.md#subnet).
         * Сеть — описание [облачной сети](../../vpc/concepts/network.md#network), в которой будет расположен кластер. Если подходящая сеть у вас уже есть, описывать ее повторно не нужно.
@@ -258,12 +277,12 @@
        Пример структуры конфигурационного файла, в котором описывается облачная сеть с одной подсетью:
 
        ```hcl
-       resource "yandex_vpc_network" "<имя сети в {{ TF }}>" { name = "<имя сети>" }
+       resource "yandex_vpc_network" "<имя_сети_в_{{ TF }}>" { name = "<имя_сети>" }
 
-       resource "yandex_vpc_subnet" "<имя подсети в {{ TF }}>" {
-         name           = "<имя подсети>"
-         zone           = "<зона доступности>"
-         network_id     = yandex_vpc_network.<имя сети в {{ TF }}>.id
+       resource "yandex_vpc_subnet" "<имя_подсети_в_{{ TF }}>" {
+         name           = "<имя_подсети>"
+         zone           = "<зона_доступности>"
+         network_id     = yandex_vpc_network.<имя_сети_в_{{ TF }}>.id
          v4_cidr_blocks = ["<подсеть>"]
        }
        ```
@@ -280,38 +299,38 @@
 
        
        ```hcl
-       resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
-         name                = "<имя кластера>"
+       resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
+         name                = "<имя_кластера>"
          environment         = "<окружение>"
-         network_id          = yandex_vpc_network.<имя сети в {{ TF }}>.id
-         security_group_ids  = ["<список идентификаторов групп безопасности>"]
-         deletion_protection = <защита от удаления кластера: true или false>
+         network_id          = yandex_vpc_network.<имя_сети_в_{{ TF }}>.id
+         security_group_ids  = ["<список_идентификаторов_групп_безопасности>"]
+         deletion_protection = <защита_от_удаления_кластера:_true_или_false>
 
          clickhouse {
            resources {
-             resource_preset_id = "<класс хоста>"
-             disk_type_id       = "<тип диска>"
-             disk_size          = <размер хранилища, ГБ>
+             resource_preset_id = "<класс_хоста>"
+             disk_type_id       = "<тип_диска>"
+             disk_size          = <размер_хранилища,_ГБ>
            }
          }
 
          database {
-           name = "<имя базы данных>"
+           name = "<имя_базы_данных>"
          }
 
          user {
-           name     = "<имя пользователя БД>"
+           name     = "<имя_пользователя_БД>"
            password = "<пароль>"
            permission {
-             database_name = "<имя БД, в которой создается пользователь>"
+             database_name = "<имя_БД,_в_которой_создается_пользователь>"
            }
          }
 
          host {
            type             = "CLICKHOUSE"
-           zone             = "<зона доступности>"
-           subnet_id        = yandex_vpc_subnet.<имя подсети в {{ TF }}>.id
-           assign_public_ip = <публичный доступ к хосту: true или false>
+           zone             = "<зона_доступности>"
+           subnet_id        = yandex_vpc_subnet.<имя_подсети_в_{{ TF }}>.id
+           assign_public_ip = <публичный_доступ_к_хосту:_true_или_false>
          }
        }
        ```
@@ -325,13 +344,14 @@
        1. Чтобы разрешить доступ из других сервисов и [выполнение SQL-запросов из консоли управления](web-sql-query.md), добавьте блок `access` с нужными вам настройками:
 
           ```hcl
-          resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
+          resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
             ...
             access {
-              data_lens  = <доступ из DataLens: true или false>
-              metrika    = <доступ из Метрики и AppMetrika: true или false>
-              serverless = <доступ из Cloud Functions: true или false>
-              web_sql    = <выполнение SQL-запросов из консоли управления: true или false>
+              data_lens  = <доступ_из_:_true_или_false>
+              metrika    = <доступ_из_Метрики_и_AppMetrika:_true_или_false>
+              serverless = <доступ_из_Cloud_Functions:_true_или_false>
+              yandex_query = <доступ_из_Yandex_Query:_true_или_false>
+              web_sql    = <выполнение_SQL-запросов_из_консоли_управления:_true_или_false>
             }
             ...
           }
@@ -386,9 +406,9 @@
 
     Чтобы разрешить доступ к кластеру из сервиса [{{ sf-full-name }}](../../functions/concepts/index.md), передайте значение `true` для параметра `configSpec.access.serverless`. Подробнее о настройке доступа см. в документации [{{ sf-name }}](../../functions/operations/database-connection.md).
 
-  {% include [datatransfer access](../../_includes/mdb/api/datatransfer-access-create.md) %}
+  Чтобы разрешить доступ к кластеру из сервиса [{{ yq-full-name }}](../../query/concepts/index.md), передайте значение `true` для параметра `configSpec.access.yandexQuery`. Функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md).
 
-  Чтобы разрешить доступ к кластеру из сервиса {{ yq-full-name }}, передайте значение `true` для параметра `configSpec.access.yandexQuery`.
+  {% include [datatransfer access](../../_includes/mdb/api/datatransfer-access-create.md) %}
 
   Чтобы задать [настройки гибридного хранилища](../concepts/storage.md##hybrid-storage-settings):
 

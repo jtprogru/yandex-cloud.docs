@@ -2,5 +2,5 @@
 curl \
     --user admin:<пароль> \
     --cacert ~/.opensearch/root.crt \
-    --request GET 'https://<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }}/'
+    --request GET 'https://<FQDN_хоста_{{ OS }}_с_ролью_DATA>:{{ port-mos }}/'
 ```

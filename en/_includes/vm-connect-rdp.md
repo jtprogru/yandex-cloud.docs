@@ -4,8 +4,6 @@ You can connect to a virtual machine with the `RUNNING` status over RDP. Some ti
 
 Virtual machine [security groups](../vpc/concepts/security-groups.md) must allow incoming TCP traffic to port 3389.
 
-{% include [security-groups-note-vm](vpc/security-groups-note-vm.md) %}
-
 To connect using RDP, specify the public IP address or the FQDN of the VM. Access using FQDN is possible from another {{ yandex-cloud }} VM if it is connected to the same network. You can find out the IP address and FQDN in the management console. Go to the **{{ ui-key.yacloud.compute.instance.overview.section_network }}** section on the virtual machine's page.
 
 
@@ -18,10 +16,10 @@ To connect to the VM:
    1. Click **Start**.
    1. In the search box, type **Remote Desktop Connection** and select the appropriate item.
    1. In the **Remote Desktop Connection** window, enter the public IP address of the VM to connect to in the **Computer** field.
-   1. Click **Attach**.
+   1. Click **Connect**.
    1. Specify the account settings:
-      * **User name**: `Administrator`.
-      * **Password**.
+      * **User name**: `Administrator`
+      * **Password**
    1. Click **OK**.
 
    {% include [initialization-windows-vm](initialization-windows-vm.md) %}

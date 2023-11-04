@@ -25,6 +25,12 @@ items:
             href: operations/monitoring.md
           - name: Deleting a log group
             href: operations/delete-group.md
+      - name: Exporting logs
+        items:
+          - name: Creating a log sink
+            href: operations/create-sink.md
+          - name: Exporting logs
+            href: operations/export-logs.md
   - name: Tutorials
     items:
       - name: All tutorials
@@ -41,6 +47,10 @@ items:
         href: tutorials/replicate-logs-to-storage.md
       - name: Replicating logs to {{ objstorage-name }} using {{ yds-name }}
         href: tutorials/replicate-logs-to-storage-via-data-streams.md
+      - name: >-
+          Visualizing logs in {{ grafana-name }} using the {{
+          cloud-logging-full-name }} plugin
+        href: tutorials/grafana-logs-plugin.md
   - name: Concepts
     items:
       - name: Log group
@@ -61,6 +71,8 @@ items:
         items:
           - name: Overview
             href: api-ref/grpc/index.md
+          - name: ExportService
+            href: api-ref/grpc/export_service.md
           - name: LogGroupService
             href: api-ref/grpc/log_group_service.md
           - name: LogIngestionService
@@ -75,6 +87,30 @@ items:
         items:
           - name: Overview
             href: api-ref/index.md
+          - name: Export
+            items:
+              - name: Overview
+                href: api-ref/Export/index.md
+              - name: create
+                href: api-ref/Export/create.md
+              - name: delete
+                href: api-ref/Export/delete.md
+              - name: get
+                href: api-ref/Export/get.md
+              - name: list
+                href: api-ref/Export/list.md
+              - name: listAccessBindings
+                href: api-ref/Export/listAccessBindings.md
+              - name: listOperations
+                href: api-ref/Export/listOperations.md
+              - name: run
+                href: api-ref/Export/run.md
+              - name: setAccessBindings
+                href: api-ref/Export/setAccessBindings.md
+              - name: update
+                href: api-ref/Export/update.md
+              - name: updateAccessBindings
+                href: api-ref/Export/updateAccessBindings.md
           - name: LogGroup
             items:
               - name: Overview

@@ -8,11 +8,11 @@ Change the Docker container settings on the VM created from a [{{ coi }}](../con
 - Management console
 
   1. In the [management console]({{ link-console-main }}), select the folder where the VM was created.
-  1. In the list of services, select **{{ compute-name }}**.
-  1. Click the line with the VM you want to update.
-  1. Click **Edit VM** in the top panel.
-  1. Make your changes in the **Docker container settings** section.
-  1. Click **Save changes**.
+  1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
+  1. Click the row with the VM to update.
+  1. Click **{{ ui-key.yacloud.compute.instance.overview.button_action-edit }}** in the top panel.
+  1. Change the parameters in the **{{ ui-key.yacloud.compute.instances.create.section_coi }}** section.
+  1. Click **{{ ui-key.yacloud.compute.instance.edit.button_update }}**.
 
 
 - CLI
@@ -23,7 +23,7 @@ Change the Docker container settings on the VM created from a [{{ coi }}](../con
      yc compute instance update-container --help
      ```
 
-  1. Get the unique ID of the VM. To do this, click the line with the VM name under **{{ compute-name }}** in the [management console]({{ link-console-main }}) or use this CLI command:
+  1. Get the unique ID of the VM. To do this, click the row with the VM name under **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}** in the [management console]({{ link-console-main }}) or use this CLI command:
 
      ```bash
      yc compute instance list
@@ -35,7 +35,7 @@ Change the Docker container settings on the VM created from a [{{ coi }}](../con
      +----------------------+-------+-------------------+---------+----------------------------------+-------------+
      |          ID          | NAME  |      ZONE ID      | STATUS  |           EXTERNAL IP            | INTERNAL IP |
      +----------------------+-------+-------------------+---------+----------------------------------+-------------+
-     | epdbf646ge5qgutfvh43 | my-vm | {{ region-id }}-b | RUNNING | {{ cos-external-ip-examples.0 }} | 172.18.0.21 |
+     | epdbf646ge5qgutfvh43 | my-vm | {{ region-id }}-b | RUNNING | {{ external-ip-examples.0 }} | 172.18.0.21 |
      +----------------------+-------+-------------------+---------+----------------------------------+-------------+
      ```
 
@@ -43,10 +43,10 @@ Change the Docker container settings on the VM created from a [{{ coi }}](../con
 
      Depending on how the VM was created, there are several ways to update it:
 
-     Creation method | Update the VM using<br>`--container-image` | Update the VM using<br>`--docker-compose-file`
-     --- | --- | ---
-     Using the parameters `--container-*` | The old Docker container is deleted and a new one is created. | The old Docker container is deleted and new Docker containers are created (described in the docker-compose.yaml file).
-     Using the docker-compose.yaml file specification | The old Docker containers (described in the docker-compose.yaml file) are deleted and a new Docker container is created, which is described using the parameters `--container-*` | Only new Docker containers (those added to the docker-compose.yaml file) or modified Docker containers are created. The Docker containers missing from the new docker-compose.yaml file are deleted.
+     | Creation method | Update the VM using<br>`--container-image` | Update the VM using<br>`--docker-compose-file` |
+     | --- | --- | --- |
+     | Using the parameters `--container-*` | The old Docker container is deleted and a new one is created. | The old Docker container is deleted and new Docker containers are created (described in the docker-compose.yaml file). |
+     | Using the docker-compose.yaml file specification | The old Docker containers (described in the docker-compose.yaml file) are deleted and a new Docker container is created, which is described using the parameters `--container-*` | Only new Docker containers (those added to the docker-compose.yaml file) or modified Docker containers are created. The Docker containers missing from the new docker-compose.yaml file are deleted. |
 
      * Update the VM by setting new parameters:
 

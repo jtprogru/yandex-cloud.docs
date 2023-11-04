@@ -40,7 +40,7 @@
 * С помощью Terraform
 
     
-    1. Если у вас еще нет {{ TF }}, установите и настройте его согласно [инструкции](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
 
 
@@ -59,7 +59,7 @@
         * сервисный аккаунт со статическим ключом доступа;
         * кластер {{ mgp-name }};
         * бакет, в который будет помещен файл `example.csv`;
-        * виртуальная машина с Ubuntu 20.04.
+        * виртуальная машина с [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts).
 
     1. Укажите в файле `greenplum-s3-vm.tf`:
 
@@ -119,8 +119,8 @@
 
     ```config
     [default]
-    accessid = "<идентификатор статического ключа>"
-    secret = "<статический ключ>"
+    accessid = "<идентификатор_статического_ключа>"
+    secret = "<статический_ключ>"
     threadnum = 4
     chunksize = 67108864
     low_speed_limit = 10240
@@ -174,7 +174,7 @@
 
     ```sql
     CREATE READABLE EXTERNAL TABLE s3_ext_table(id int, year int)
-    LOCATION('s3://{{ s3-storage-host }}/<имя бакета>/example.csv config_server=http://<внутренний IP-адрес виртуальной машины>:8553/s3.config region={{ region-id }}-a')
+    LOCATION('s3://{{ s3-storage-host }}/<имя_бакета>/example.csv config_server=http://<внутренний_IP-адрес_виртуальной_машины>:8553/s3.config region={{ region-id }}-a')
     FORMAT 'csv';
     ```
 

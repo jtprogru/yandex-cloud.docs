@@ -2,7 +2,7 @@
 
 {{ objstorage-name }} allows you to limit the maximum size of a bucket.
 
-For example, if you provide the users of your service with the ability to upload objects to {{ objstorage-name }}, limiting the maximum volume allows you to better control user actions and avoid unnecessary costs.
+For example, if you provide the users of your service with the ability to upload objects to {{ objstorage-name }}, then, by limiting the maximum volume, you can better control user actions and avoid unnecessary costs.
 
 {% list tabs %}
 
@@ -11,7 +11,7 @@ For example, if you provide the users of your service with the ability to upload
    1. In the [management console]({{ link-console-main }}), select the appropriate folder.
    1. Select **{{ objstorage-name }}**.
    1. Click the name of the bucket you need.
-   1. Click the **{{ ui-key.yacloud.storage.bucket.switch_settings }}** tab.
+   1. Go to the **{{ ui-key.yacloud.storage.bucket.switch_settings }}** tab.
    1. Set the value of the **{{ ui-key.yacloud.storage.bucket.settings.field_size-limit }}** field.
 
       {% include [storage-no-max-limit](../../_includes_service/storage-no-max-limit.md) %}
@@ -41,7 +41,7 @@ For example, if you provide the users of your service with the ability to upload
       +------------------+----------------------+----------+-----------------------+---------------------+
       |       NAME       |      FOLDER ID       | MAX SIZE | DEFAULT STORAGE CLASS |     CREATED AT      |
       +------------------+----------------------+----------+-----------------------+---------------------+
-      | first-bucket     | b1gmit33ngp6cv2mhjmo | 0        | STANDARD              | 2022-12-16 13:58:18 |
+      | first-bucket     | b1gmit33ngp6******** | 0        | STANDARD              | 2022-12-16 13:58:18 |
       +------------------+----------------------+----------+-----------------------+---------------------+
       ```
 
@@ -62,7 +62,7 @@ For example, if you provide the users of your service with the ability to upload
 
       ```yaml
       name: first-bucket
-      older_id: b1gmit33ngp6cv2mhjmo
+      older_id: b1gmit33ngp6********
       default_storage_class: STANDARD
       versioning: VERSIONING_DISABLED
       max_size: "26843545600"
@@ -75,7 +75,7 @@ For example, if you provide the users of your service with the ability to upload
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
    
-   For more information about {{ TF }}, [see the documentation](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
    To limit the maximum bucket size:
@@ -118,7 +118,7 @@ For example, if you provide the users of your service with the ability to upload
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 

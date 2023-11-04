@@ -1,3 +1,8 @@
+---
+title: "Добавить обработчик к сетевому балансировщику"
+description: "Следуя данной инструкции, вы сможете добавить обработчик к сетевому балансировщику."
+---
+
 # Добавить обработчик к сетевому балансировщику
 
 {% list tabs %}
@@ -7,12 +12,12 @@
   Чтобы добавить [обработчик](../concepts/listener.md) к сетевому балансировщику:
   
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, где требуется добавить обработчик к балансировщику.
-  1. В списке сервисов выберите **{{ network-load-balancer-name }}**.
-  1. В строке балансировщика, к которому нужно добавить обработчик, нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Добавить обработчик**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
+  1. В строке балансировщика, к которому нужно добавить обработчик, нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.label_add-listener }}**.
   1. В открывшемся окне задайте параметры обработчика:
 
-     * **Имя**.
-     * **Протокол** — **TCP** или **UDP**.
+     * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-name }}**.
+     * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-protocol }}** — `{{ ui-key.yacloud.common.label_tcp }}` или `{{ ui-key.yacloud.common.label_udp }}`.
 
         {% note info %}
 
@@ -20,9 +25,9 @@
 
         {% endnote %}
 
-     * **Порт**, на котором обработчик будет принимать входящий трафик. Возможные значения: от `1` до `32767`.
-     * **Целевой порт**, куда балансировщик будет направлять трафик. Возможные значения: от `1` до `32767`.
-     * Нажмите кнопку **Добавить**.
+     * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-port }}**, на котором обработчик будет принимать входящий трафик. Возможные значения: от `1` до `32767`.
+     * **{{ ui-key.yacloud.load-balancer.network-load-balancer.form.field_listener-target-port }}**, куда балансировщик будет направлять трафик. Возможные значения: от `1` до `32767`.
+     * Нажмите кнопку **{{ ui-key.yacloud.common.add }}**.
   
 - CLI
   
@@ -52,7 +57,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Откройте файл конфигурации {{ TF }} и добавьте блок `listener` в описании сетевого балансировщика:
 
@@ -89,19 +94,6 @@
   1. Добавьте обработчик.
 
      {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
-
-- API
-
-  Воспользуйтесь методом API [addListener](../api-ref/NetworkLoadBalancer/addListener.md) и передайте в запросе:
-
-  * Идентификатор балансировщика в параметре `networkLoadBalancerId`.
-  * Имя обработчика в параметре `listenerSpec.name`.
-  * Порт обработчика в параметре `listenerSpec.port`.
-  * Протокол обработчика в параметре `listenerSpec.protocol`.
-  * Целевой порт обработчика в параметре `listenerSpec.targetPort`.
-  * Параметры внешнего адреса обработчика в параметре `listenerSpec.externalAddressSpec`.
-
-  Идентификатор балансировщика можно получить со [списком сетевых балансировщиков в каталоге](load-balancer-list.md#list).
 
 - API
 

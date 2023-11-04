@@ -10,11 +10,11 @@ description: "In this tutorial, you will learn how to delete a trigger in {{ sf-
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder containing your trigger.
-   1. Select **{{ sf-name }}**.
-   1. On the left-hand panel, select ![image](../../../_assets/functions/triggers.svg) **Triggers**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+   1. In the left-hand panel, select ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
    1. Select the trigger you want to update.
-   1. In the upper-right corner of the page, click **Delete**.
-   1. In the window that opens, click **Delete**.
+   1. In the top-right corner, click ![image](../../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.common.delete }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.serverless-functions.triggers.list.popup-confirm_button_delete }}**.
 
 - CLI
 
@@ -33,22 +33,23 @@ description: "In this tutorial, you will learn how to delete a trigger in {{ sf-
    Result:
 
    ```text
-   id: dd0gj5tsj2**********
-   folder_id: aoek49ghmk**********
-   created_at: "2019-08-28T12:26:25.675Z"
+   id: a1s9q2li6t**********
+   folder_id: b1g9hv2loa**********
+   created_at: "2023-08-01T12:36:14.321Z"
    name: my-trigger
-   description: My YMQ trigger.
+   description: Trigger for uploaded objects
    rule:
-     message_queue:
-       queue_id: yrn:yc:ymq:{{ region-id }}:aoek49ghmk**********:my-mq
-       service_account_id: bfbqqeo6jk**********
+     object_storage:
+       event_type:
+         - OBJECT_STORAGE_EVENT_TYPE_CREATE_OBJECT
+       bucket_id: **********
        batch_settings:
          size: "10"
          cutoff: 10s
        invoke_function:
-         function_id: b09e5lu91t**********
+         function_id: d4e5muirrt**********
          function_tag: $latest
-         service_account_id: bfbqqeo6jk**********
+         service_account_id: ajek0fou8e**********
    status: PAUSED
    ```
 
@@ -99,7 +100,7 @@ description: "In this tutorial, you will learn how to delete a trigger in {{ sf-
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 

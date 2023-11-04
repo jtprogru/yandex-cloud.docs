@@ -1,10 +1,10 @@
 # Getting started with {{ mos-name }}
 
 To get started with the service:
-1. [{#T}](#create-cluster).
-1. [{#T}](#configure-security-groups).
-1. [{#T}](#connect).
-1. [{#T}](#dashboards-connect).
+1. [{#T}](#create-cluster)
+1. [{#T}](#configure-security-groups)
+1. [{#T}](#connect)
+1. [{#T}](#dashboards-connect)
 
 
 ## Getting started {#before-you-begin}
@@ -31,23 +31,21 @@ These instructions assume that you're connecting to the cluster from the interne
 ## Create a cluster {#create-cluster}
 
 1. In the [management console]({{ link-console-main }}), select the folder where you want to create a cluster.
-1. Select **{{ mos-name }}**.
-1. Click **Create cluster**. This process is described in detail in [{#T}](operations/cluster-create.md).
+1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-opensearch }}**.
+1. Click **{{ ui-key.yacloud.mdb.clusters.button_create }}**. This process is described in detail in [{#T}](operations/cluster-create.md).
 1. Set the cluster parameters.
 
    
-   To use the {{ OS }} Dashboards web interface, request public access. To do this, go to **Resources** → **Dashboards** and select **Public access**.
+   To get access to the {{ OS }} Dashboards web interface, request public access. To do this, go to **{{ ui-key.yacloud.opensearch.cluster.node-groups.title_virtual-node-group }}** with the **{{ ui-key.yacloud.opensearch.title_dashboards }}** group type and select **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}**.
 
    {% include [mos-tip-public-dashboards](../_includes/mdb/mos/public-dashboards.md) %}
 
 
-1. Click **Create**.
+1. Click **{{ ui-key.yacloud.mdb.forms.button_create }}**.
 1. Wait until the cluster is ready: its status on the {{ mos-name }} dashboard changes to **Creating** and then to **Alive**. This may take some time.
 
 
 ## Configure security groups {#configure-security-groups}
-
-{% include [preview-pp.md](../_includes/preview-pp.md) %}
 
 {% include notitle [Configuring security groups](../_includes/mdb/mos/configuring-security-groups.md) %}
 
@@ -92,7 +90,7 @@ To connect to a cluster:
 
 
    1. Install the [SSL certificate]({{ crt-web-path }}) in the browser's trusted root certificate store ([instructions](https://wiki.mozilla.org/PSM:Changing_Trust_Settings#Trusting_an_Additional_Root_Certificate) for Mozilla Firefox).
-   1. On the cluster page, in the management console, click **OpenSearch Dashboards** and go to `https://c-<{{ OS }} cluster ID>.rw.{{ dns-zone }}>` in your browser.
+   1. On the cluster page, in the management console, click **{{ ui-key.yacloud.opensearch.title_opensearch-dashboards-section }}** or go to `https://c-<{{ OS }} cluster ID>.rw.{{ dns-zone }}>` in your browser.
    1. Enter the `admin` username and password that you set when [creating the cluster](#create-cluster).
 
 1. Explore a set of sample data:

@@ -22,6 +22,10 @@
 * [Изменить группы безопасности кластера](#change-sg-set).
 
 
+* [Изменить настройки гибридного хранилища](#change-hybrid-storage).
+
+Если вы хотите переместить кластер в другую зону доступности, см. [инструкцию](host-migration.md). В результате вы перенесете хосты кластера.
+
 
 ## Изменить настройки сервисного аккаунта {#change-service-account}
 
@@ -29,9 +33,9 @@
 
 - Консоль управления
 
-    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-    1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-    1. В разделе **Сервисные настройки** выберите нужный сервисный аккаунт из списка или [создайте новый](../../iam/operations/sa/create.md). Подробнее о настройке сервисного аккаунта см. в разделе [{#T}](s3-access.md).
+    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+    1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+    1. В разделе **{{ ui-key.yacloud.mdb.forms.section_service-settings }}** выберите нужный сервисный аккаунт из списка или [создайте новый](../../iam/operations/sa/create.md). Подробнее о настройке сервисного аккаунта см. в разделе [{#T}](s3-access.md).
 
        {% include [mdb-service-account-update](../../_includes/mdb/service-account-update.md) %}
 
@@ -54,11 +58,11 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. Чтобы изменить класс хостов {{ CH }}, в блоке **Ресурсы** выберите платформу, тип виртуальной машины и нужный класс хоста.
-  1. Чтобы изменить класс хостов {{ ZK }}, в блоке **Класс хоста {{ ZK }}** выберите платформу, тип виртуальной машины и нужный класс хоста {{ ZK }}.
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. Чтобы изменить класс хостов {{ CH }}, в блоке **{{ ui-key.yacloud.mdb.forms.new_section_resource }}** выберите платформу, тип виртуальной машины и нужный класс хоста.
+  1. Чтобы изменить класс хостов {{ ZK }}, в блоке **{{ ui-key.yacloud.mdb.forms.section_zookeeper-resource }}** выберите платформу, тип виртуальной машины и нужный класс хоста {{ ZK }}.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -93,8 +97,8 @@
   1. Укажите нужный класс в команде изменения кластера:
 
      ```bash
-     {{ yc-mdb-ch }} cluster update <имя кластера> \
-        --clickhouse-resource-preset=<ID класса>
+     {{ yc-mdb-ch }} cluster update <имя_или_ID_кластера> \
+        --clickhouse-resource-preset=<ID_класса>
      ```
 
      {{ mch-short-name }} запустит операцию изменения класса хостов для кластера.
@@ -110,17 +114,17 @@
     1. Измените в описании кластера {{ mch-name }} значение параметра `resource_preset_id` в блоках `clickhouse.resources` и `zookeeper.resources` для хостов {{ CH }} и {{ ZK }} соответственно:
 
         ```hcl
-        resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
+        resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
           ...
           clickhouse {
             resources {
-              resource_preset_id = "<класс хостов {{ CH }}>"
+              resource_preset_id = "<класс_хостов_{{ CH }}>"
               ...
             }
           }
           zookeeper {
             resources {
-              resource_preset_id = "<класс хостов {{ ZK }}>"
+              resource_preset_id = "<класс_хостов_{{ ZK }}>"
               ...
             }
           }
@@ -170,10 +174,10 @@
 
   Чтобы увеличить размер хранилища для кластера:
   
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. В блоке **Размер хранилища** укажите необходимое значение.
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_disk }}** укажите необходимое значение.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -209,17 +213,17 @@
     1. Измените в описании кластера {{ mch-name }} значение параметра `disk_size` в блоках `clickhouse.resources` и `zookeeper.resources` для хостов {{ CH }} и {{ ZK }} соответственно:
 
         ```hcl
-        resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
+        resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
           ...
           clickhouse {
             resources {
-              disk_size = <размер хранилища в гигабайтах>
+              disk_size = <размер_хранилища_в_ГБ>
               ...
             }
           }
           zookeeper {
             resources {
-              disk_size = <размер хранилища в гигабайтах>
+              disk_size = <размер_хранилища_в_ГБ>
               ...
             }
           }
@@ -267,11 +271,11 @@
 
 - Консоль управления
 
-  1. Перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. Для [управления пользователями через SQL](./cluster-users.md#sql-user-management), в блоке **Настройки СУБД** включите настройку **Управление пользователями через SQL** и укажите пароль пользователя `admin`.
-  1. Для [управления базами данных через SQL](./databases.md#sql-database-management), в блоке **Настройки СУБД** включите настройки **Управление пользователями через SQL** и **Управление базами данных через SQL**, укажите пароль пользователя `admin`.
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. Для [управления пользователями через SQL](./cluster-users.md#sql-user-management), в блоке **{{ ui-key.yacloud.mdb.forms.section_settings }}** включите настройку **{{ ui-key.yacloud.mdb.forms.database_field_sql-user-management }}** и укажите пароль пользователя `admin`.
+  1. Для [управления базами данных через SQL](./databases.md#sql-database-management), в блоке **{{ ui-key.yacloud.mdb.forms.section_settings }}** включите настройки **{{ ui-key.yacloud.mdb.forms.database_field_sql-user-management }}** и **{{ ui-key.yacloud.mdb.forms.database_field_sql-database-management }}**, укажите пароль пользователя `admin`.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -285,10 +289,10 @@
         * задайте пароль для пользователя `admin` в параметре `--admin-password`.
 
         ```bash
-        {{ yc-mdb-ch }} cluster update <идентификатор или имя кластера> \
+        {{ yc-mdb-ch }} cluster update <имя_или_ID_кластера> \
            ...
            --enable-sql-user-management true \
-           --admin-password "<пароль пользователя admin>"
+           --admin-password "<пароль_пользователя_admin>"
         ```
 
     1. Чтобы включить [режим управления базами данных через SQL](./databases.md#sql-database-management):
@@ -297,11 +301,11 @@
         * задайте пароль для пользователя `admin` в параметре `--admin-password`.
 
         ```bash
-        {{ yc-mdb-ch }} cluster update <идентификатор или имя кластера> \
+        {{ yc-mdb-ch }} cluster update <имя_или_ID_кластера> \
            ...
            --enable-sql-user-management true \
            --enable-sql-database-management true \
-           --admin-password "<пароль пользователя admin>"
+           --admin-password "<пароль_пользователя_admin>"
         ```
 
 - {{ TF }}
@@ -350,10 +354,10 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. Измените [настройки {{ CH }}](../concepts/settings-list.md#dbms-cluster-settings), нажав на кнопку **Настроить** в блоке **Настройки СУБД**.
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. Измените [настройки {{ CH }}](../concepts/settings-list.md#dbms-cluster-settings), нажав на кнопку **{{ ui-key.yacloud.mdb.forms.button_configure-settings }}** в блоке **{{ ui-key.yacloud.mdb.forms.section_settings }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -366,7 +370,7 @@
     1. Посмотрите полный список настроек, установленных для кластера:
 
         ```bash
-        {{ yc-mdb-ch }} cluster get <идентификатор или имя кластера> --full
+        {{ yc-mdb-ch }} cluster get <имя_или_ID_кластера> --full
         ```
 
     1. Посмотрите описание команды CLI для изменения конфигурации кластера:
@@ -378,8 +382,8 @@
     1. Установите нужные значения параметров:
 
         ```bash
-        {{ yc-mdb-ch }} cluster update-config <идентификатор или имя кластера> \
-           --set <имя параметра1>=<значение1>,...
+        {{ yc-mdb-ch }} cluster update-config <имя_или_ID_кластера> \
+           --set <имя_параметра1>=<значение1>,...
         ```
 
         {{ mch-short-name }} запустит операцию по изменению настроек кластера.
@@ -395,7 +399,7 @@
     1. Измените в описании кластера {{ mch-name }} значения параметров в блоке `clickhouse.config`:
 
         ```hcl
-        resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
+        resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
           ...
           clickhouse {
             ...
@@ -421,15 +425,15 @@
 
               rabbit_mq {
                 # Настройки получения данных из {{ RMQ }}
-                username = "<имя пользователя>"
+                username = "<имя_пользователя>"
                 password = "<пароль>"
               }
 
               compression {
                 # Настройки сжатия данных
-                method              = "<метод сжатия: LZ4 или ZSTD>"
-                min_part_size       = <минимальный размер куска данных таблицы в байтах>
-                min_part_size_ratio = <отношение размера наименьшего куска таблицы к полному размеру таблицы>
+                method              = "<метод_сжатия:_LZ4_или_ZSTD>"
+                min_part_size       = <минимальный_размер_куска_данных_таблицы_в_байтах>
+                min_part_size_ratio = <отношение_размера_наименьшего_куска_таблицы_к_полному_размеру_таблицы>
               }
 
               graphite_rollup {
@@ -477,13 +481,13 @@
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. В блоке **Сервисные настройки** измените дополнительные настройки кластера:
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_service-settings }}** измените дополнительные настройки кластера:
 
      {% include [mch-extra-settings](../../_includes/mdb/mch/extra-settings-web-console.md) %}
 
-  1. Нажмите кнопку **Сохранить изменения**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -503,17 +507,18 @@
 
         
         ```bash
-        {{ yc-mdb-ch }} cluster update <идентификатор или имя кластера> \
-           --backup-window-start <время начала резервного копирования> \
-           --datalens-access=<true или false> \
-           --datatransfer-access=<true или false> \
-           --deletion-protection=<защита от удаления кластера: true или false> \
-           --maintenance-window type=<тип технического обслуживания: anytime или weekly>,`
-                               `day=<день недели для типа weekly>,`
-                               `hour=<час дня для типа weekly> \
-           --metrika-access=<true или false> \
-           --serverless-access=<true или false> \
-           --websql-access=<true или false>
+        {{ yc-mdb-ch }} cluster update <имя_или_ID_кластера> \
+           --backup-window-start <время_начала_резервного_копирования> \
+           --datalens-access=<true_или_false> \
+           --datatransfer-access=<true_или_false> \
+           --deletion-protection=<защита_от_удаления_кластера:_true_или_false> \
+           --maintenance-window type=<тип_технического_обслуживания:_anytime_или_weekly>,`
+                               `day=<день_недели_для_типа_weekly>,`
+                               `hour=<час_дня_для_типа_weekly> \
+           --metrika-access=<true_или_false> \
+           --serverless-access=<true_или_false> \
+           --yandexquery-access=<доступ_через_Yandex_Query:_true_или_false> \
+           --websql-access=<true_или_false>
         ```
 
 
@@ -523,7 +528,7 @@
     {% include [backup-window-start](../../_includes/mdb/cli/backup-window-start.md) %}
 
     
-    * `--datalens-access` — разрешает доступ из DataLens. Значение по умолчанию — `false`. Подробнее о настройке подключения см. в разделе [Подключение из {{ datalens-name }}](datalens-connect.md).
+    * `--datalens-access` — разрешает доступ из {{ datalens-name }}. Значение по умолчанию — `false`. Подробнее о настройке подключения см. в разделе [Подключение из {{ datalens-name }}](datalens-connect.md).
 
     * {% include [datatransfer access](../../_includes/mdb/cli/datatransfer-access-update.md) %}
 
@@ -532,7 +537,7 @@
 
         {% include [Ограничения защиты от удаления](../../_includes/mdb/deletion-protection-limits-db.md) %}
 
-    * `--maintenance-window` — настройки времени [технического обслуживания](../concepts/maintenance.md) (в т. ч. для выключенных кластеров):
+    * `--maintenance-window` — настройки времени [технического обслуживания](../concepts/maintenance.md) (в т. ч. для выключенных кластеров), где `type` — тип технического обслуживания:
   
         {% include [maintenance-window](../../_includes/mdb/cli/maintenance-window-description.md) %}
 
@@ -543,6 +548,8 @@
     * `--websql-access` — разрешает [выполнять SQL запросы](web-sql-query.md) из консоли управления. Значение по умолчанию — `false`.
 
     * `--serverless-access` — разрешает доступ к кластеру из сервиса [{{ sf-full-name }}](../../functions/concepts/index.md). Значение по умолчанию — `false`. Подробнее о настройке доступа см. в документации [{{ sf-name }}](../../functions/operations/database-connection.md).
+
+    * `--yandexquery-access=true` — разрешает доступ к кластеру из сервиса [{{ yq-full-name }}](../../query/concepts/index.md). Функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md). Значение по умолчанию — `false`.
 
 
 
@@ -557,11 +564,11 @@
     1. Чтобы изменить время начала резервного копирования, добавьте к описанию кластера {{ mch-name }} блок `backup_window_start`.
 
         ```hcl
-        resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
+        resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
           ...
           backup_window_start {
-            hours   = <час начала резервного копирования>
-            minutes = <минута начала резервного копирования>
+            hours   = <час_начала_резервного_копирования>
+            minutes = <минута_начала_резервного_копирования>
           }
           ...
         }
@@ -571,13 +578,14 @@
     1. Чтобы разрешить доступ из других сервисов и [выполнение SQL-запросов из консоли управления](web-sql-query.md), измените значения соответствующих полей в блоке `access`:
 
         ```hcl
-        resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
+        resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
           ...
           access {
-            data_lens  = <доступ из DataLens: true или false>
-            metrika    = <доступ из Метрики и AppMetrika: true или false>
-            serverless = <доступ из Cloud Functions: true или false>
-            web_sql    = <выполнение SQL-запросов из консоли управления: true или false>
+            data_lens  = <доступ_из_{{ datalens-name }}:_true_или_false>
+            metrika    = <доступ_из_Метрики_и_AppMetrika:_true_или_false>
+            serverless = <доступ_из_Cloud_Functions:_true_или_false>
+            web_sql    = <выполнение_SQL-запросов_из_консоли_управления:_true_или_false>
+            yandex_query = <доступ_из_Yandex_Query:_true_или_false>
           }
           ...
         }
@@ -590,9 +598,9 @@
     1. Чтобы включить защиту кластера от непреднамеренного удаления пользователем вашего облака, добавьте к описанию кластера поле `deletion_protection` со значением `true`:
 
         ```hcl
-        resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
+        resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
           ...
-          deletion_protection = <защита от удаления кластера: true или false>
+          deletion_protection = <защита_от_удаления_кластера:_true_или_false>
         }
         ```
 
@@ -630,6 +638,8 @@
     
     Чтобы разрешить доступ к кластеру из сервиса [{{ sf-full-name }}](../../functions/concepts/index.md), передайте значение `true` для параметра `configSpec.access.serverless`. Подробнее о настройке доступа см. в документации [{{ sf-name }}](../../functions/operations/database-connection.md).
 
+    Чтобы разрешить доступ к кластеру из сервиса [{{ yq-full-name }}](../../query/concepts/index.md), передайте значение `true` для параметра `configSpec.access.yandexQuery`. Функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md).
+
 
 
     {% include [datatransfer access](../../_includes/mdb/api/datatransfer-access-create.md) %}
@@ -642,11 +652,11 @@
 
 - Консоль управления
 
-    1. Перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
+    1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
     1. Нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) справа в строке кластера, который вы хотите переместить.
-    1. Выберите пункт **Переместить**.
+    1. Выберите пункт **{{ ui-key.yacloud.common.move }}**.
     1. Выберите каталог, в который вы хотите переместить кластер.
-    1. Нажмите кнопку **Переместить**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.mdb.dialogs.popup_button_move-cluster }}**.
 
 - CLI
 
@@ -665,8 +675,8 @@
     1. Укажите каталог назначения в команде перемещения кластера:
 
         ```bash
-        {{ yc-mdb-ch }} cluster move <идентификатор кластера> \
-           --destination-folder-name=<имя каталога назначения>
+        {{ yc-mdb-ch }} cluster move <имя_или_ID_кластера> \
+           --destination-folder-name=<имя_каталога_назначения>
         ```
 
         Идентификатор кластера можно получить со [списком кластеров в каталоге](cluster-list.md#list-clusters).
@@ -683,15 +693,13 @@
 
 ## Изменить группы безопасности {#change-sg-set}
 
-{% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% list tabs %}
 
 - Консоль управления
 
-  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mch-name }}**.
-  1. Выберите кластер и нажмите кнопку **Изменить кластер** на панели сверху.
-  1. В блоке **Сетевые настройки** выберите группы безопасности для сетевого трафика кластера.
+  1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+  1. Выберите кластер и нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** на панели сверху.
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_network-settings }}** выберите группы безопасности для сетевого трафика кластера.
 
 - CLI
 
@@ -710,8 +718,8 @@
   1. Укажите нужные группы безопасности в команде изменения кластера:
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <имя кластера> \
-         --security-group-ids <список идентификаторов групп безопасности>
+      {{ yc-mdb-ch }} cluster update <имя_кластера> \
+         --security-group-ids <список_идентификаторов_групп_безопасности>
       ```
 
 - {{ TF }}
@@ -723,9 +731,9 @@
     1. Измените значение параметра `security_group_ids` в описании кластера:
 
         ```hcl
-        resource "yandex_mdb_clickhouse_cluster" "<имя кластера>" {
+        resource "yandex_mdb_clickhouse_cluster" "<имя_кластера>" {
           ...
-          security_group_ids = [ <список идентификаторов групп безопасности кластера> ]
+          security_group_ids = [ <список_идентификаторов_групп_безопасности_кластера> ]
         }
         ```
 
@@ -781,7 +789,7 @@
   1. Если гибридное хранилище в кластере выключено, включите его:
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <имя кластера> \
+      {{ yc-mdb-ch }} cluster update <имя_или_ID_кластера> \
           --cloud-storage=true
       ```
 
@@ -790,10 +798,11 @@
   1. Передайте список настроек, которые хотите изменить:
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <имя кластера> \
-          --cloud-storage-data-cache=<true или false> \
-          --cloud-storage-data-cache-max-size=<объем памяти (в байтах)> \
-          --cloud-storage-move-factor=<доля свободного места>
+      {{ yc-mdb-ch }} cluster update <имя_или_ID_кластера> \
+          --cloud-storage-data-cache=<true_или_false> \
+          --cloud-storage-data-cache-max-size=<объем_памяти _в_байтах> \
+          --cloud-storage-move-factor=<доля_свободного_места> \
+          --cloud-storage-prefer-not-to-merge=<true_или_false>
       ```
 
       Вы можете изменить следующие настройки:

@@ -1,13 +1,13 @@
 # Changing {{ KF }} cluster settings
 
-After creating an {{ mkf-name }} cluster, you can:
+After creating a {{ mkf-name }} cluster, you can:
 
-* [{#T}](#enable-api).
-* [{#T}](#change-brokers).
-* [{#T}](#change-zookeeper).
-* [{#T}](#change-disk-size) (unavailable for non-replicated SSD [storage](../concepts/storage.md)).
-* [{#T}](#change-additional-settings).
-* [{#T}](#change-kafka-settings).
+* [{#T}](#enable-api)
+* [{#T}](#change-brokers)
+* [{#T}](#change-zookeeper)
+* [{#T}](#change-disk-size) (unavailable for non-replicated SSD [storage](../concepts/storage.md)).
+* [{#T}](#change-additional-settings)
+* [{#T}](#change-kafka-settings)
 * [{#T}](#move-cluster) from the current folder to another one.
 * [{#T}](#change-sg-set).
 
@@ -15,7 +15,7 @@ After creating an {{ mkf-name }} cluster, you can:
 
 {% note info %}
 
-It is impossible to disable the enabled topic management via the {{ KF }} Admin API.
+It is not possible to disable the enabled topic management via the {{ KF }} Admin API.
 
 {% endnote %}
 
@@ -25,9 +25,8 @@ To [manage topics via the {{ KF }} Admin API](../concepts/topics.md#management):
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mkf-name }}**.
-   1. In the row next to the appropriate cluster, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Edit cluster**.
-   1. Enable **Manage topics via the API**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. In the appropriate cluster row, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. [Create an admin user](./cluster-accounts.md#create-user).
 
 - CLI
@@ -90,13 +89,13 @@ You cannot increase the number of {{ KF }} broker hosts unless a cluster include
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mkf-name }}**.
-   1. In the row next to the appropriate cluster, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Edit cluster**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. In the appropriate cluster row, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. Change the required settings:
-      * To edit the [broker host](../concepts/brokers.md) class, select a new [**Host class**](../concepts/instance-types.md).
-      * Edit the **Number of brokers in zone**.
+      * To edit the [broker host](../concepts/brokers.md) class, select a new [**{{ ui-key.yacloud.mdb.forms.section_resource }}**](../concepts/instance-types.md).
+      * Change **{{ ui-key.yacloud.kafka.label_brokers-per-az }}**.
 
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -167,7 +166,7 @@ You cannot increase the number of {{ KF }} broker hosts unless a cluster include
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -193,10 +192,10 @@ You cannot increase the number of {{ KF }} broker hosts unless a cluster include
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mkf-name }}**.
-   1. In the row next to the appropriate cluster, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Edit cluster**.
-   1. Select a new [**Zookeeper host class**](../concepts/instance-types.md).
-   1. Click **Save**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. In the appropriate cluster row, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. Select a new [**{{ ui-key.yacloud.kafka.section_zookeeper-resources }}**](../concepts/instance-types.md).
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -250,7 +249,7 @@ You cannot increase the number of {{ KF }} broker hosts unless a cluster include
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -274,7 +273,7 @@ You cannot increase the number of {{ KF }} broker hosts unless a cluster include
 
 {% note warning %}
 
-You can't change the disk type for {{ KF }} clusters after creation.
+You cannot change the disk type for an {{ KF }} cluster once you create it.
 
 {% endnote %}
 
@@ -286,10 +285,10 @@ You can't change the disk type for {{ KF }} clusters after creation.
 
    To increase the cluster storage size:
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mkf-name }}**.
-   1. In the row next to the appropriate cluster, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Edit cluster**.
-   1. Edit the settings in the **Storage** section.
-   1. Click **Save**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. In the appropriate cluster row, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. Edit the settings in the **{{ ui-key.yacloud.mdb.forms.section_storage }}** section.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -341,6 +340,7 @@ You can't change the disk type for {{ KF }} clusters after creation.
             disk_size = <storage size in GB>
             ...
           }
+          ...
         }
         zookeeper {
           resources {
@@ -355,7 +355,7 @@ You can't change the disk type for {{ KF }} clusters after creation.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -378,21 +378,15 @@ You can't change the disk type for {{ KF }} clusters after creation.
 
 ## Updating security group and public access settings {#change-sg-set}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 {% list tabs %}
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mkf-name }}**.
-   1. In the row next to the appropriate cluster, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Edit cluster**.
-   1. Under **Network settings**, select security groups for cluster network traffic.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. In the appropriate cluster row, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_network-settings }}**, select security groups for cluster network traffic.
    1. Enable or disable public access to a cluster via the **Public access** option.
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
    [Restart the cluster](./cluster-stop.md) for the new public access settings to take effect.
 
@@ -444,7 +438,7 @@ You can't change the disk type for {{ KF }} clusters after creation.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -478,13 +472,13 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mkf-name }}**.
-   1. In the row next to the appropriate cluster, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Edit cluster**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. In the appropriate cluster row, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
    1. Change additional cluster settings:
 
       {% include [extra-settings](../../_includes/mdb/mkf/extra-settings.md) %}
 
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -513,7 +507,7 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
 
    You can change the following settings:
 
-   * `--maintenance-window`: Settings for the [maintenance window](../concepts/maintenance.md) (including those for disabled clusters):
+   * `--maintenance-window`: Settings for the [maintenance window](../concepts/maintenance.md) (including those for disabled clusters), where `type` is the maintenance type:
 
       {% include [maintenance-window](../../_includes/mdb/cli/maintenance-window-description.md) %}
 
@@ -548,7 +542,7 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -584,13 +578,13 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mkf-name }}**.
-   1. In the row next to the appropriate cluster, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Edit cluster**.
-   1. Under **Kafka Settings**, click **Configure**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. In the appropriate cluster row, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_settings-kafka }}**, click **{{ ui-key.yacloud.mdb.forms.button_configure-settings }}**.
 
       For more information, see [{{ KF }} settings](../concepts/settings-list.md).
 
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -643,7 +637,7 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -706,15 +700,13 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
 
 ## Changing security groups {#change-sg-set}
 
-{% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% list tabs %}
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mkf-name }}**.
-   1. In the row next to the appropriate cluster, click ![image](../../_assets/horizontal-ellipsis.svg), then **Edit cluster**.
-   1. Under **Network settings**, select security groups for cluster network traffic.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kafka }}**.
+   1. In the appropriate cluster row, click ![image](../../_assets/horizontal-ellipsis.svg), then **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_network-settings }}**, select security groups for cluster network traffic.
 
 - CLI
 
@@ -756,7 +748,7 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

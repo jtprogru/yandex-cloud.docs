@@ -1,12 +1,45 @@
+---
+title: "Публичные материалы о {{ ml-platform-name }}"
+description: "Видеозаписи конференций и вебинаров, посвященных {{ ml-platform-name }}."
+---
+
 # Публичные материалы о {{ ml-platform-name }}
 
 ## Конференции и вебинары {#conf-and-webinars}
 
+### 2023: Yandex Scale {#yandex-scale-2023}
+
+* ML в {{ yandex-cloud }}: было, есть и будет.
+
+  * [Запись трансляции](https://www.youtube.com/watch?v=90jIHP2F-zA).
+
+* Инференс моделей и гибридный формат работы в {{ ml-platform-full-name }}.
+
+  * [Запись трансляции](https://www.youtube.com/watch?v=8asQwGQdr0w).
+
+### 2023: Practical ML Conf {#ml-conf-2023}
+
+* Удаленное исполнение кода в ML: подходы и инструменты.
+
+  * [Запись трансляции](https://youtu.be/iWnh2Da1RG4?si=R26ZdYqwqqQrv8rR).
+
 ### 2023: Webinar {#webinar-2023}
+
+* Вебинар о возможностях {{ ml-platform-full-name }} для образования.
+
+  * [Запись трансляции](https://www.youtube.com/watch?v=pRTKbG-kaUg).
 
 * {{ ml-platform-full-name }} Dedicated. Выделенный режим работы.
 
   * [Запись трансляции](https://www.youtube.com/watch?v=U4rxkHKqm2U).
+
+* Математическая оптимизация для бизнеса в {{ ml-platform-full-name }}.
+
+  * [Запись трансляции](https://www.youtube.com/watch?v=fOzDMNAGQXw).
+
+* Управление потреблением в {{ ml-platform-full-name }}.
+
+  * [Запись трансляции](https://www.youtube.com/watch?v=NmF2L3hF7Xk).
 
 ### 2022: Webinar {#webinar-2022}
 

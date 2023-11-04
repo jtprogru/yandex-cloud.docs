@@ -7,11 +7,11 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором создан балансировщик.
-  1. Выберите сервис **{{ alb-name }}**.
-  1. Напротив имени нужного балансировщика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **Удалить**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. Напротив имени нужного балансировщика нажмите значок ![image](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.common.delete }}**.
 
-     Чтобы выполнить это действие с несколькими балансировщиками, выделите нужные в списке и нажмите кнопку **Удалить** в нижней части экрана.
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+     Чтобы выполнить это действие с несколькими балансировщиками, выделите нужные в списке и нажмите кнопку **{{ ui-key.yacloud.common.delete }}** в нижней части экрана.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -28,7 +28,7 @@
   1. Выполните команду:
 
      ```bash
-     yc alb load-balancer delete <идентификатор или имя балансировщика>
+     yc alb load-balancer delete <идентификатор_или_имя_балансировщика>
      ```
 
      Результат:
@@ -39,7 +39,7 @@
 
 - {{ TF }}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы удалить L7-балансировщик, созданный с помощью {{ TF }}:
   1. Откройте файл конфигурации {{ TF }} и удалите фрагмент с описанием L7-балансировщика.
@@ -49,7 +49,7 @@
      ```hcl
      ...
      resource "yandex_alb_load_balancer" "test-balancer" {
-       name        = "my-load-balancer"
+       name        = "<имя_балансировщика>"
        network_id  = yandex_vpc_network.test-network.id
 
        allocation_policy {
@@ -60,7 +60,7 @@
        }
 
        listener {
-         name = "my-listener"
+         name = "<имя_обработчика>"
          endpoint {
            address {
              external_ipv4_address {

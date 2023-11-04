@@ -1,3 +1,8 @@
-# Поставка данных из {{ mkf-full-name }} в {{ mch-full-name }} с помощью {{ data-transfer-full-name }}
+---
+title: "Поставка данных из {{ mkf-full-name }} в {{ mmy-full-name }} с помощью {{ data-transfer-full-name }}"
+description: "В кластер {{ mmy-name }} можно в реальном времени поставлять данные из топиков {{ KF }}."
+---
 
-{% include notitle [MKF to MCH with Data Transfer](../../_tutorials/dataplatform/mkf-mch-migration.md) %}
+# Поставка данных из {{ mkf-full-name }} в {{ mmy-full-name }} с помощью {{ data-transfer-full-name }}
+
+{% include notitle [MKF to MMY with Data Transfer](../../_tutorials/dataplatform/data-transfer-mkf-mmy.md) %}

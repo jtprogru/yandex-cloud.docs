@@ -1,12 +1,12 @@
-# Аудитный лог
+# Аудитный лог событий уровня конфигурации
 
-Аудитный лог — это запись о событиях, которые произошли с ресурсами {{ yandex-cloud }}, в форме JSON-объекта.
+Аудитный лог событий уровня конфигурации (Control Plane) — это запись о событиях, которые произошли с ресурсами {{ yandex-cloud }}, в форме JSON-объекта.
 
 [Формат](#scheme) записей универсален для всех событий. Значения некоторых полей определяются ресурсом-источником и типом события.
 
 Объект события — ресурс сервиса, над которым производится операция. Субъект события — аккаунт, от имени которого производится операция.
 
-{% cut "Пример аудитного лога при создании ВМ" %}
+{% cut "Пример аудитного лога уровня конфигурации при создании ВМ" %}
 
 Если федеративный пользователь создаст в сервисе {{ compute-full-name }} ВМ, в аудитный лог попадет такая запись:
 
@@ -120,8 +120,15 @@
     "subject_name": string,
     "federation_id": string,
     "federation_name": string,
-    "federation_type": string
-
+    "federation_type": string,
+    "impersonator_info": {
+      "impersonator_id": string,
+      "type": string,
+      "name": string,
+      "federation_id": string,
+      "federation_name": string,
+      "federation_type": string
+    }
   },
   "authorization": {
     "authorized": boolean
@@ -166,6 +173,13 @@
 `authentication.federation_id`* | **string**<br>Идентификатор федерации, в которой состоит федеративный пользователь.
 `authentication.federation_name`* | **string**<br>Имя федерации, в которой состоит федеративный пользователь.
 `authentication.federation_type`* | **string**<br>Тип федерации. Возможное значение:<ul><li>`PRIVATE_FEDERATION` — федерация, управляемая клиентами {{ yandex-cloud }}.</li></ul>
+`authentication.impersonator_info` | **object**<br>Данные аутентификации субъекта события при использовании [имперсонации](../../iam/concepts/access-control/index.md#impersonation).
+`authentication.impersonator_info.impersonator_id` | **string**<br>Идентификатор субъекта-имперсонатора.
+`authentication.impersonator_info.type` | **string**<br>Тип субъекта-имперсонатора. Возможные значения:<ul><li>`YANDEX_PASSPORT_USER_ACCOUNT`— аккаунт на Яндексе;</li><li>`SERVICE_ACCOUNT` — сервисный аккаунт;</li><li>`FEDERATED_USER_ACCOUNT` — федеративный аккаунт.</li>
+`authentication.impersonator_info.name` | **string**<br>Имя субъекта-имперсонатора.
+`authentication.impersonator_info.federation_id`* | **string**<br>Идентификатор федерации, в которой состоит федеративный пользователь-имперсонатор.
+`authentication.impersonator_info.federation_name`* | **string**<br>Имя федерации, в которой состоит федеративный пользователь-имперсонатор.
+`authentication.impersonator_info.federation_type`* | **string**<br>Тип федерации. Возможное значение:<ul><li>`PRIVATE_FEDERATION` — федерация, управляемая клиентами {{ yandex-cloud }}.</li></ul>
 `authorization` | **object**<br>Данные авторизации субъекта события.
 `authorization.authorized` | **boolean**<br>Результат авторизации. Возможные значения:<ul><li>`true` — авторизация успешна;</li><li>`false` — авторизация неуспешна.</li>
 `resource_metadata` | **object**<br>Метаданные объекта события.
@@ -203,12 +217,12 @@
 ### Запись в лог-группе {#logging-group-name}
 
 Значения записей в лог-группе:
-* **Время** — значение поля `event_time` события.
+* **{{ ui-key.yacloud.logging.column_header-time }}** — значение поля `event_time` события.
 * **JSON** — JSON-объект события.
-* **Уровень** — вычисляется в зависимости от значения `event_status` события:
+* **{{ ui-key.yacloud.logging.column_header-level }}** — вычисляется в зависимости от значения `event_status` события:
   * `ERROR` — для значения `ERROR`;
   * `WARN` — для значения `CANCELLED`;
   * `INFO` — в остальных случаях.
-* **Сообщение** — содержит значения полей `event_status`, `event_type`, `subject_name`, `cloud_name`, `resource_name`.
+* **{{ ui-key.yacloud.logging.column_header-message }}** — содержит значения полей `event_status`, `event_type`, `subject_name`, `cloud_name`, `resource_name`.
 
 

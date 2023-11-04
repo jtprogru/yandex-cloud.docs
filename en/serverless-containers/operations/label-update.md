@@ -1,3 +1,8 @@
+---
+title: "Updating a container label"
+description: "Follow this guide to update a container label."
+---
+
 # Updating a container label
 
 {% list tabs %}
@@ -20,21 +25,21 @@
 
    ```
    id: flh7r96juaqq********
-   	folder_id: aoek6qrs8tjh********
-   	created_at: "2021-08-17T07:53:10.219Z"
-   	name: my-beta-container
-   	description: my beta container description
-   	labels:
-   	  new_label: new_test
-   	url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
-   	status: ACTIVE
+   folder_id: aoek6qrs8tjh********
+   created_at: "2021-08-17T07:53:10.219Z"
+   name: my-beta-container
+   description: my beta container description
+   labels:
+     new_label: new_test
+   url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
+   status: ACTIVE
    ```
 
 - {{ TF }}
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see the documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To modify the label of a container created with {{ TF }}:
 
@@ -73,7 +78,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
       ```

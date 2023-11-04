@@ -1,19 +1,27 @@
-To use [Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html) together with {{ mkf-name }}:
+
+{% note info %}
+
+In {{ mkf-name }}, you can use a built-in [{{ mkf-msr }}](../../managed-kafka/concepts/managed-schema-registry.md#msr) data format schema registry. For more information, see [{#T}](../../managed-kafka/tutorials/managed-schema-registry.md). If you need [Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html), use the information from this guide.
+
+{% endnote %}
+
+To use Confluent Schema Registry together with {{ mkf-name }}:
 
 1. [Create a topic for notifications about changes in data format schemas](#create-schemas-topic).
 1. [Install and configure Confluent Schema Registry on a VM](#configure-vm).
 1. [Create producer and consumer scripts](#create-scripts).
 1. [Make sure that Confluent Schema Registry is working correctly](#check-schema-registry).
-1. [Delete the resources you created](#clear-out).
+
+If you no longer need the resources you created, [delete them](#clear-out).
 
 ## Getting started {#before-you-begin}
 
 1. [Create a {{ mkf-name }} cluster](../../managed-kafka/operations/cluster-create.md) with any suitable configuration.
 
     1. [Create a topic](../../managed-kafka/operations/cluster-topics.md#create-topic) named `messages` for exchanging messages between the producer and the consumer.
-    1. [Create an account](../../managed-kafka/operations/cluster-accounts.md#create-account) with the name `user` and [grant to it the rights](../../managed-kafka/operations/cluster-accounts.md#grant-permission) for the `messages` topic:
-        * `ACCESS_ROLE_CONSUMER`,
-        * `ACCESS_ROLE_PRODUCER`.
+    1. [Create a user](../../managed-kafka/operations/cluster-accounts.md#create-account) named `user` and [grant it the rights](../../managed-kafka/operations/cluster-accounts.md#grant-permission) for the `messages` topic:
+        * `ACCESS_ROLE_CONSUMER`
+        * `ACCESS_ROLE_PRODUCER`
 
 
 1. In the network hosting the {{ mkf-name }} cluster, [create a VM](../../compute/operations/vm-create/create-linux-vm.md) with [Ubuntu 20.04 LTS](/marketplace/products/yc/ubuntu-20-04-lts) from {{ marketplace-name }} and with a public IP address.
@@ -22,34 +30,32 @@ To use [Confluent Schema Registry](https://docs.confluent.io/platform/current/sc
 
 1. If you are using security groups, [configure them](../../managed-kafka/operations/connect.md#configuring-security-groups) to allow all required traffic between the {{ mkf-name }} cluster and the VM.
 
-   {% include [preview-pp.md](../../_includes/preview-pp.md) %}
-
 1. In the VM security group, [add a rule](../../vpc/operations/security-group-add-rule.md) for incoming traffic that allows connections via port `8081` which is used by the producer and consumer to access the schema registry:
 
-    * **Port range**: `8081`.
-    * **Protocol**: `TCP`.
-    * **Source type**: `CIDR`.
-    * **CIDR blocks**: `0.0.0.0/0` or address ranges of the subnets where the producer and consumer run.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-port-range }}**: `8081`
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-protocol }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_tcp }}`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-destination }}**: `{{ ui-key.yacloud.vpc.network.security-groups.forms.value_sg-rule-destination-cidr }}`.
+    * **{{ ui-key.yacloud.vpc.network.security-groups.forms.field_sg-rule-cidr-blocks }}**: `0.0.0.0/0` or address ranges of the subnets where the producer and consumer run.
 
 
 ## Create a topic for notifications about changes in data format schemas {#create-schemas-topic}
 
 1. [Create a service topic](../../managed-kafka/operations/cluster-topics.md#create-topic) named `_schemas` with the following settings:
 
-    * **Number of partitions**: `1`.
-    * **Cleanup policy**: `Compact`.
+    * **{{ ui-key.yacloud.kafka.label_partitions }}**: `1`
+    * **{{ ui-key.yacloud.kafka.label_topic-cleanup-policy }}**: `Compact`
 
-    {% note warning %}
+   {% note warning %}
 
-    The specified settings of the **Number of partitions** and **Cleanup policy** values are necessary for Confluent Schema Registry to work.
+    The specified settings of the **{{ ui-key.yacloud.kafka.label_partitions }}** and **{{ ui-key.yacloud.kafka.label_topic-cleanup-policy }}** values are necessary for Confluent Schema Registry to work.
 
-    {% endnote %}
+   {% endnote %}
 
-1. [Create an account](../../managed-kafka/operations/cluster-accounts.md#create-account) with the name `registry` and [grant to it the rights](../../managed-kafka/operations/cluster-accounts.md#grant-permission) for the `_schemas` topic:
-    * `ACCESS_ROLE_CONSUMER`,
-    * `ACCESS_ROLE_PRODUCER`.
+1. [Create a user](../../managed-kafka/operations/cluster-accounts.md#create-account) named `registry` and [grant it the rights](../../managed-kafka/operations/cluster-accounts.md#grant-permission) for the `_schemas` topic:
+    * `ACCESS_ROLE_CONSUMER`
+    * `ACCESS_ROLE_PRODUCER`
 
-    With this account, Confluent Schema Registry interacts with the `_schemas` service topic.
+    Confluent Schema Registry will interact with the `_schemas` service topic on behalf of this user.
 
 ## Install and configure Confluent Schema Registry on a VM {#configure-vm}
 
@@ -91,7 +97,7 @@ To use [Confluent Schema Registry](https://docs.confluent.io/platform/current/sc
     KafkaClient {
       org.apache.kafka.common.security.scram.ScramLoginModule required
       username="registry"
-      password="<password for the registry account>";
+      password="<registry user password>";
     };
     ```
 
@@ -191,7 +197,7 @@ To use [Confluent Schema Registry](https://docs.confluent.io/platform/current/sc
             "ssl.ca.location": "{{ crt-local-dir }}{{ crt-local-file }}",
             "sasl.mechanism": "SCRAM-SHA-512",
             "sasl.username": "user",
-            "sasl.password": "<password for the user account>",
+            "sasl.password": "<password of the user named user>",
             "schema.registry.url": "http://<FQDN or IP address of the Confluent Schema Registry server>:8081",
         }
     )
@@ -285,7 +291,7 @@ To use [Confluent Schema Registry](https://docs.confluent.io/platform/current/sc
             "ssl.ca.location": "{{ crt-local-dir }}{{ crt-local-file }}",
             "sasl.mechanism": "SCRAM-SHA-512",
             "sasl.username": "user",
-            "sasl.password": "<password for the user account>",
+            "sasl.password": "<password of the user named user>",
             "on_delivery": delivery_report,
             "schema.registry.url": "http://<FQDN or IP address of the Schema Registry server>:8081",
         },
@@ -296,7 +302,6 @@ To use [Confluent Schema Registry](https://docs.confluent.io/platform/current/sc
     avroProducer.produce(topic="messages", key=key, value=value)
     avroProducer.flush()
     ```
-
 
 ## Make sure that Confluent Schema Registry is working correctly {#check-schema-registry}
 

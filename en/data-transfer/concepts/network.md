@@ -1,4 +1,4 @@
-# Network in {{ data-transfer-full-name }}
+# Networking in {{ data-transfer-full-name }}
 
 
 When creating endpoints of certain types, you can select a [cloud subnet](../../vpc/concepts/network.md). The transfer will use the above subnet to access source or target endpoint hosts.
@@ -55,12 +55,6 @@ If an **On-Premise** endpoint with a host specified as a domain name or an MDB e
 
 ## Security groups {#security-groups}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 You can assign [security groups](../../vpc/concepts/security-groups.md) to the subnet selected for the endpoint. In the event that network access to source or target hosts is restricted by security groups, you can disable network connectivity between {{ data-transfer-full-name }} and your DBMS without adding permissive rules for wide IP ranges to your security groups, and allow access from specific groups granularly. You can grant access to your DBMS hosts using one of the methods below:
 
 * Create a permissive rule called `self` in the security group that protects source or target hosts, and specify this security group in the endpoint settings.
@@ -74,10 +68,10 @@ Make sure to allow outgoing traffic to the port required by the security group s
 
 ## Transfering between a source on an external network and a target in {{ yandex-cloud }} {#source-external}
 
-You can provide access to a source on an outside network using one of the following methods:
+You can provide access to a source on an external network using one of the following methods:
 
 * By configuring a source to make it available from the internet.
-* Using [{{ interconnect-full-name }}](../../interconnect/).
+* Using [{{ interconnect-full-name }}](../../interconnect/index.yaml).
 * Using an intermediate VM configured to [route traffic to {{ vpc-name }}](../../vpc/concepts/static-routes.md).
 
 If you need to migrate data between {{ yandex-cloud }} and a third-party cloud, allow incoming connections to the third-party cloud database from the internet from [IP addresses used by {{ data-transfer-name }}](https://stat.ripe.net/widget/announced-prefixes#w.resource%3DAS200350%26w.min_peers_seeing%3D0).

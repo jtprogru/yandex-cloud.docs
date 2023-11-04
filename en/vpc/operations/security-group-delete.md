@@ -1,10 +1,13 @@
-# Delete a security group
+---
+title: "How to delete a security group"
+description: "Follow this guide to delete a security group."
+---
 
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
+# Delete a security group
 
 {% note warning %}
 
-You can't delete security group created by default in the network.
+You cannot delete security group created by default in the network.
 
 {% endnote %}
 
@@ -63,7 +66,7 @@ To delete a security group:
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see our documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To delete a security group created with {{ TF }}:
 
@@ -118,7 +121,7 @@ To delete a security group:
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -128,7 +131,7 @@ To delete a security group:
 
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-      You can verify the changes using the [management console]({{ link-console-main }}) or the [CLI](../../cli/quickstart.md) command below:
+      You can check the update using the [management console]({{ link-console-main }}) or this [CLI](../../cli/quickstart.md) command:
 
       ```
       yc vpc security-group list

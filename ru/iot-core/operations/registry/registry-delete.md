@@ -1,3 +1,8 @@
+---
+title: "Как удалить реестр"
+description: "Следуя данной инструкции, вы сможете удалить реестр."
+---
+
 # Удаление реестра
 
 {% note warning %}
@@ -15,9 +20,9 @@
    Чтобы удалить реестр:
 
    1. В [консоли управления]({{ link-console-main }}) выберите каталог, из которого вы хотите удалить реестр.
-   1. Выберите сервис **{{ iot-short-name }}**.
-   1. Справа от имени удаляемого реестра нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg), в выпадающем списке выберите **Удалить**.
-   1. В открывшемся окне нажмите кнопку **Удалить**.
+   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_iot-core }}**.
+   1. Справа от имени удаляемого реестра нажмите значок ![image](../../../_assets/horizontal-ellipsis.svg), в выпадающем списке выберите **{{ ui-key.yacloud.common.delete }}**.
+   1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -47,7 +52,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы удалить реестр, созданный с помощью {{ TF }}:
 

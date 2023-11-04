@@ -8,7 +8,7 @@ description: "Управление доступом сервиса для зап
 В этом разделе вы узнаете:
 
 * [на какие ресурсы можно назначить роль](#resources);
-* [какие роли действуют в сервисе](#roles).
+* [какие роли действуют в сервисе](#roles-list).
 
 {% include [about-access-management](../../_includes/iam/about-access-management.md) %}
 
@@ -30,7 +30,9 @@ description: "Управление доступом сервиса для зап
 
 {% include [functions-roles-editor](../../_includes/roles-functions-editor.md) %}
 
+
 {% include [functions-roles-mdbproxy](../../_includes/roles-functions-mdbproxy.md) %}
+
 
 {% include [functions-roles-admin](../../_includes/roles-functions-admin.md) %}
 

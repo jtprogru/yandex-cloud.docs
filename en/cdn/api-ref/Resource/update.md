@@ -179,6 +179,11 @@ resourceId | <p>Required. ID of updated resource.</p> <p>The maximum string leng
       "enabled": true,
       "body": "string",
       "flag": "string"
+    },
+    "secureKey": {
+      "enabled": true,
+      "key": "string",
+      "type": "string"
     }
   },
   "originProtocol": "string",
@@ -190,7 +195,8 @@ resourceId | <p>Required. ID of updated resource.</p> <p>The maximum string leng
         "id": "string"
       }
     }
-  }
+  },
+  "labels": "object"
 }
 ```
 
@@ -284,6 +290,10 @@ options.<br>rewrite | **object**<br><p>Changing or redirecting query paths.</p> 
 options.<br>rewrite.<br>enabled | **boolean** (boolean)<br><p>True - the option is enabled and its ``flag`` is applied to the resource. False - the option is disabled and its default value of the ``flag`` is used for the resource.</p> 
 options.<br>rewrite.<br>body | **string**<br><p>Pattern for rewrite.</p> <p>The value must have the following format: ``<source path> <destination path>``, where both paths are regular expressions which use at least one group. E.g., ``/foo/(.*) /bar/$1``.</p> 
 options.<br>rewrite.<br>flag | **string**<br><p>Break flag is applied to the option by default. It is not shown in the field.</p> <p>RewriteFlag defines flag for the Rewrite option.</p> <ul> <li>LAST: Stops processing of the current set of ngx_http_rewrite_module directives and starts a search for a new location matching changed URI.</li> <li>BREAK: Stops processing of the current set of the Rewrite option.</li> <li>REDIRECT: Returns a temporary redirect with the 302 code; It is used when a replacement string does not start with "http://", "https://", or "$scheme".</li> <li>PERMANENT: Returns a permanent redirect with the 301 code.</li> </ul> 
+options.<br>secureKey | **object**<br><p>Secure token to protect contect and limit access by IP addresses and time limits</p> 
+options.<br>secureKey.<br>enabled | **boolean** (boolean)<br><p>True - the option is enabled and its [flag] is applied to the resource. False - the option is disabled and its default value of the [flag] is used for the resource.</p> 
+options.<br>secureKey.<br>key | **string**<br><p>The key for the URL signing.</p> 
+options.<br>secureKey.<br>type | **string**<br><p>The type of the URL signing. The URL could be available for all IP addresses or for the only one IP.</p> <p>SecureKeyURLType defines type of the URL signing.</p> <ul> <li>ENABLE_IP_SIGNING: Use scpecific IP address in URL signing. URL will be availible only for this IP.</li> <li>DISABLE_IP_SIGNING: Sign URL without using IP address. URL will be available for all IP addresses.</li> </ul> 
 originProtocol | **string**<br><p>Specify the protocol schema to be used in communication with origin.</p> <p>This option defines the protocol that will be used by CDN servers to request content from an origin source. If not specified, we will use HTTP to connect to an origin server.</p> <ul> <li>HTTP: CDN servers will connect to your origin via HTTP.</li> <li>HTTPS: CDN servers will connect to your origin via HTTPS.</li> <li>MATCH: Connection protocol will be chosen automatically (content on the origin source should be available for the CDN both through HTTP and HTTPS).</li> </ul> 
 active | **boolean** (boolean)<br><p>Flag to create Resource either in active or disabled state. In active state Origins payload could be transmitted from CDN CNAME requests. Default value: true</p> 
 sslCertificate | **object**<br><p>SSL Certificate options.</p> <p>A set of the personal SSL certificate parameters.</p> 
@@ -291,6 +301,7 @@ sslCertificate.<br>type | **string**<br><p>Type of the certificate.</p> <p>A cer
 sslCertificate.<br>data | **object**<br><p>Certificate data.</p> <p>A certificate data parameters.</p> 
 sslCertificate.<br>data.<br>cm | **object**<br>Custom (add your SSL certificate by uploading the certificate in PEM format and your private key).
 sslCertificate.<br>data.<br>cm.<br>id | **string**<br><p>ID of the custom certificate.</p> 
+labels | **object**<br><p>Resource labels. At some point will be needed for granular detailing.</p> 
  
 ## Response {#responses}
 **HTTP Code: 200 - OK**

@@ -63,16 +63,27 @@ items:
           - name: Uploading audit logs to ArcSight SIEM
             href: tutorials/export-logs-to-arcsight.md
   - name: Concepts
-    expanded: true
     items:
       - name: Overview
         href: concepts/index.md
       - name: Trail
         href: concepts/trail.md
-      - name: Audit log of events
-        href: concepts/format.md
-      - name: Event reference
-        href: concepts/events.md
+      - name: Diagnostic logs
+        href: concepts/diagnostics.md
+      - name: Comparing management and data event logs
+        href: concepts/control-plane-vs-data-plane.md
+      - name: Management event logs
+        items:
+          - name: Audit event log
+            href: concepts/format.md
+          - name: Event reference
+            href: concepts/events.md
+      - name: Data event logs
+        items:
+          - name: Audit event log
+            href: concepts/format-data-plane.md
+          - name: Event reference
+            href: concepts/events-data-plane.md
       - name: Exporting to SIEM systems
         href: concepts/export-siem.md
       - name: Quotas and limits

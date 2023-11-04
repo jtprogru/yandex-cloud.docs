@@ -31,7 +31,7 @@ yc iam create-token
 
 Чтобы получить IAM-токен, создайте [JSON Web Token](https://tools.ietf.org/html/rfc7519) (JWT) и обменяйте его на IAM-токен.
 
-### Перед началом {#before-you-begin}
+### Перед началом работы {#before-you-begin}
 
 1. [Узнайте идентификатор сервисного аккаунта](../sa/get-id.md).
 1. [Создайте авторизованные ключи](../authorized-key/create.md), которые необходимы при создании JWT. Сохраните идентификатор открытого ключа.
@@ -92,7 +92,7 @@ yc iam create-token
 
   ```
   {
-    "iss": "ajepg0mjt06siua65usm",
+    "iss": "ajepg0mjt06s********",
     "aud": "https://iam.{{ api-host }}/iam/v1/tokens",
     "iat": 1516239022,
     "exp": 1516240822
@@ -312,9 +312,9 @@ yc iam create-token
   func signedToken() string {
     claims := jwt.RegisteredClaims{
             Issuer:    serviceAccountID,
-            ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
-            IssuedAt:  jwt.NewNumericDate(time.Now()),
-            NotBefore: jwt.NewNumericDate(time.Now()),
+            ExpiresAt: jwt.NewNumericDate(time.Now().UTC().Add(1 * time.Hour)),
+            IssuedAt:  jwt.NewNumericDate(time.Now().UTC()),
+            NotBefore: jwt.NewNumericDate(time.Now().UTC()),
             Audience:  []string{"https://iam.{{ api-host }}/iam/v1/tokens"},
     }
     token := jwt.NewWithClaims(jwt.SigningMethodPS256, claims)

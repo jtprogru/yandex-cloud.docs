@@ -1,6 +1,6 @@
 ---
 title: "Managing {{ MY }} cluster hosts"
-description: "In this tutorial, you'll learn how to manage {{ MY }} cluster hosts and their settings."
+description: "In this tutorial, you will learn how to manage {{ MY }} cluster hosts and their settings."
 ---
 
 # Managing {{ MY }} cluster hosts
@@ -13,8 +13,8 @@ You can add and remove cluster hosts and manage their settings.
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mmy-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.mysql.cluster.switch_hosts }}** tab.
 
 - CLI
 
@@ -54,15 +54,15 @@ You can add and remove cluster hosts and manage their settings.
 
 ## Adding a host {#add}
 
-The number of hosts in {{ mmy-name }} clusters is limited by the CPU and RAM quotas available to DB clusters in your cloud. To check the resources in use, open the [Quotas]({{ link-console-quotas }}) page and find **Managed Databases**.
+The number of hosts in {{ mmy-name }} clusters is limited by the CPU and RAM quotas available to DB clusters in your cloud. To check the resources in use, open the [Quotas]({{ link-console-quotas }}) page and find **{{ ui-key.yacloud.iam.folder.dashboard.label_mdb }}**.
 
 {% list tabs %}
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mmy-name }}**.
-   1. Click on the name of the cluster you need and go to the **Hosts** tab.
-   1. Click **Add host**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
+   1. Click the cluster name and go to the **{{ ui-key.yacloud.mysql.cluster.switch_hosts }}** tab.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.hosts.button_add-host }}**.
    1. Specify the host parameters:
 
       
@@ -70,7 +70,7 @@ The number of hosts in {{ mmy-name }} clusters is limited by the CPU and RAM quo
       * Subnet (if the required subnet is not on the list, [create it](../../vpc/operations/subnet-create.md)).
 
 
-      * Select **Public access** if the host must be accessible from outside {{ yandex-cloud }}.
+      * Select **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}** if the host must be accessible from outside {{ yandex-cloud }}.
       * Priority for assigning the host as a master.
       * Host priority as a {{ MY }} replica for creating backups.
 
@@ -110,27 +110,27 @@ The number of hosts in {{ mmy-name }} clusters is limited by the CPU and RAM quo
       {{ yc-mdb-my }} host add --help
       ```
 
-   1. Execute the add host command (the example does not provide an exhaustive parameter list):
+   1. Run the add host command (the example does not show all the available parameters):
 
       ```bash
       {{ yc-mdb-my }} host add \
-         --cluster-name=<cluster name> \
-         --host zone-id=<availability zone ID>,`
-               `subnet-id=<subnet ID>,`
-               `assign-public-ip=<public access to the subcluster host: true or false>,`
-               `replication-source=<source host name>,`
-               `backup-priority=<host priority for backups>,`
-               `priority=<priority for assigning the host as a master: from 0 to 100>
+        --cluster-name=<cluster name> \
+        --host zone-id=<availability zone ID>,`
+          `subnet-id=<subnet ID>,`
+          `assign-public-ip=<public access to the subcluster host: true or false>,`
+          `replication-source=<source host name>,`
+          `backup-priority=<host priority for backups: from 0 to 100>,`
+          `priority=<priority for assigning the host as master: from 0 to 100>
       ```
 
       Where:
-      * `--cluster-name`: Name of a {{ mmy-name }} cluster.
+      * `--cluster-name`: Name of {{ mmy-name }} cluster.
       * `--host`: Host parameters:
          * `zone-id`: [Availability zone](../../overview/concepts/geo-scope.md).
          * `subnet-id`: [Subnet ID](../../vpc/concepts/network.md#subnet). It must be specified if the selected availability zone includes two or more subnets.
-         * `assign-public-ip` indicates whether the host is reachable from the internet over a public IP address.
-         * `replication-source` is the [replication](../concepts/replication.md) source for the host.
-         * `backup-priority` is host priority for [backups](../concepts/backup.md#size).
+         * `assign-public-ip`: Host accessibility from the internet.
+         * `replication-source`: [Replication](../concepts/replication.md) source for the host.
+         * `backup-priority`: Host priority for [backups](../concepts/backup.md#size).
          * `priority`: Priority for selecting the host as a master if the [primary master fails](../concepts/replication.md#master-failover).
 
       The cluster name can be requested with a [list of clusters in the folder](cluster-list.md#list-clusters).
@@ -159,7 +159,7 @@ The number of hosts in {{ mmy-name }} clusters is limited by the CPU and RAM quo
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -179,7 +179,7 @@ The number of hosts in {{ mmy-name }} clusters is limited by the CPU and RAM quo
 
 {% note warning %}
 
-If you can't [connect](connect.md) to the added host, check that the cluster's [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host. The security groups feature is currently in the [Preview](../../overview/concepts/launch-stages.md) stage.
+If you can't [connect](connect.md) to the added host, check that the cluster's [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host.
 
 {% endnote %}
 
@@ -192,20 +192,26 @@ For each host in a {{ mmy-name }} cluster, you can:
 * Setting [priority](../concepts/backup.md#size) for backups.
 * Set a priority for assigning the host as a master if the [primary master fails](../concepts/replication.md#master-failover).
 
+{% note info %}
+
+You cannot restart a separate cluster host. To restart hosts, [stop and restart the cluster](cluster-stop.md).
+
+{% endnote %}
+
 {% list tabs %}
 
 - Management console
 
    To change the parameters of the cluster host:
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mmy-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon in the same row as the desired host and select **Edit**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mysql.cluster.switch_hosts }}** tab.
+   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon in the required host row and select **{{ ui-key.yacloud.common.edit }}**.
    1. Set new settings for the host:
       1. Select a replication source for the host to control replication threads manually.
-      1. Enable **Public access** if a host must be accessible from outside {{ yandex-cloud }}.
-      1. Enter a value in the **Master priority** field.
-      1. Enter a value in the **Backup priority** field.
-   1. Click **Save**.
+      1. Enable **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}** if a host must be accessible from outside {{ yandex-cloud }}.
+      1. Set the value of the **{{ ui-key.yacloud.mysql.field_priority }}** field.
+      1. Set the value of the **{{ ui-key.yacloud.mysql.field_backup_priority }}** field.
+   1. Click **{{ ui-key.yacloud.postgresql.hosts.dialog.button_choose }}**.
 
 - CLI
 
@@ -225,10 +231,10 @@ For each host in a {{ mmy-name }} cluster, you can:
    ```
 
    Where:
-   * `--cluster-name`: Name of a {{ mmy-name }} cluster.
-   * `--replication-source` is the [replication](../concepts/replication.md) source for the host.
-   * `--assign-public-ip` indicates whether the host is reachable from the internet over a public IP address.
-   * `--backup-priority` is host priority for [backups](../concepts/backup.md#size).
+   * `--cluster-name`: Name of {{ mmy-name }} cluster.
+   * `--replication-source`: [Replication](../concepts/replication.md) source for the host.
+   * `--assign-public-ip`: Host accessibility from the internet.
+   * `--backup-priority`: Host priority for [backups](../concepts/backup.md#size).
    * `--priority`: Priority for selecting the host as a master if the [primary master fails](../concepts/replication.md#master-failover).
 
    The host name can be requested with a [list of cluster hosts](#list), and the cluster name can be requested with a [list of clusters in the folder](cluster-list.md#list-clusters).
@@ -256,7 +262,7 @@ For each host in a {{ mmy-name }} cluster, you can:
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -282,7 +288,7 @@ For each host in a {{ mmy-name }} cluster, you can:
 
 {% note warning %}
 
-If you can't [connect](connect.md) to the changed host, check that the cluster's [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host. The security groups feature is currently in the [Preview](../../overview/concepts/launch-stages.md) stage.
+If you can't [connect](connect.md) to the changed host, check that the cluster's [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host.
 
 {% endnote %}
 
@@ -297,9 +303,9 @@ If the host is the master when deleted, {{ mmy-name }} automatically assigns the
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mmy-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon in the same row as the desired host and select **Delete**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mysql }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mysql.cluster.switch_hosts }}** tab.
+   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon in the required host row and select **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 

@@ -33,8 +33,6 @@ You can connect to {{ mrd-name }} cluster hosts:
 
 ## Configuring security groups {#configuring-security-groups}
 
-{% include [security-groups-note](../../../_includes/vpc/security-groups-note-services.md) %}
-
 {% include [Security groups notice](../../../_includes/mdb/sg-rules-connect.md) %}
 
 {% include [Security groups rules for VM](../../../_includes/mdb/mrd/connect/sg-rules-for-vm.md) %}
@@ -43,7 +41,7 @@ Security group settings for sharded and non-sharded clusters differ.
 
 {% list tabs %}
 
-* Clusters without sharding
+* Cluster without sharding
 
    [Configure all security groups](../../../vpc/operations/security-group-add-rule.md) in the cluster to allow incoming traffic from the security group where the VM is located on port `{{ port-mrd }}` for direct connections to the master host or `{{ port-mrd-sentinel }}` for connections via Sentinel. If you created your cluster with SSL encryption support, specify port `{{ port-mrd-tls }}` for direct encrypted connections to the master or `{{ port-mrd-sentinel }}` for unencrypted connections using Sentinel.
 
@@ -96,3 +94,5 @@ For more information about security groups, see [{#T}](../../concepts/network.md
 To use an encrypted SSL connection, get an SSL certificate:
 
 {% include [install-certificate](../../../_includes/mdb/mrd/install-certificate.md) %}
+
+{% include [ide-ssl-cert](../../../_includes/mdb/mdb-ide-ssl-cert.md) %}

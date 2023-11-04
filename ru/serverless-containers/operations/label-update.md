@@ -1,3 +1,8 @@
+---
+title: "Изменить метку контейнера"
+description: "Следуя данной инструкции, вы сможете изменить метку контейнера."
+---
+
 # Изменить метку контейнера
 
 {% list tabs %}
@@ -20,21 +25,21 @@
 
     ```
     id: flh7r96juaqq********
-	folder_id: aoek6qrs8tjh********
-	created_at: "2021-08-17T07:53:10.219Z"
-	name: my-beta-container
-	description: my beta container description
-	labels:
-	  new_label: new_test
-	url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
-	status: ACTIVE
+    folder_id: aoek6qrs8tjh********
+    created_at: "2021-08-17T07:53:10.219Z"
+    name: my-beta-container
+    description: my beta container description
+    labels:
+      new_label: new_test
+    url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
+    status: ACTIVE
     ```
 
 - {{ TF }}
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы изменить метку контейнера, созданного с помощью {{ TF }}:
 

@@ -1,4 +1,3 @@
-Чтобы создать виртуальную машину:
 1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создана виртуальная машина.
 1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
 1. Справа сверху нажмите **{{ ui-key.yacloud.compute.instances.button_create }}**.
@@ -23,6 +22,10 @@
 1. (Опционально) В блоке **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** настройте загрузочный диск:
     * Выберите [тип диска](../../../compute/concepts/disk.md#disks_types).
     * Укажите нужный размер диска.
+
+    
+    * {% include [encryption-section-boot](../../../_includes/compute/encryption-section-boot.md) %}
+
 
 
 1. (Опционально) В блоке **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** на вкладке **{{ ui-key.yacloud.compute.nfs.label_filesystems }}** подключите [файловое хранилище](../../../compute/concepts/filesystem.md):
@@ -53,7 +56,7 @@
     {% include [network-settings](../../../_includes/compute/network-settings.md) %}
 
 1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_access }}** укажите данные для доступа на виртуальную машину:
-    * (опционально) Выберите или создайте [сервисный аккаунт](../../../iam/concepts/index.md#sa). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
+    * (Опционально) Выберите или создайте [сервисный аккаунт](../../../iam/concepts/index.md#sa). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
 
         Для ВМ с операционной системой на базе Linux:
         * В поле **{{ ui-key.yacloud.compute.instances.create.field_user }}** введите имя пользователя.
@@ -66,7 +69,7 @@
 
         * В поле **{{ ui-key.yacloud.compute.instances.create.field_key }}** вставьте содержимое файла [открытого ключа](../../../compute/operations/vm-connect/ssh.md#creating-ssh-keys).
 
-        * (опционально) При необходимости разрешите доступ к [серийной консоли](../../../compute/operations/index.md#serial-console).
+        * (Опционально) При необходимости разрешите доступ к [серийной консоли](../../../compute/operations/index.md#serial-console).
 
         {% include [vm-connect-linux](../../../_includes/vm-connect-linux.md) %}
 

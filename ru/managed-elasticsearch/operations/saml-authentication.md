@@ -1,3 +1,8 @@
+---
+title: "Как настроить SAML-аутентификацию"
+description: "Следуя данной инструкции, вы сможете настроить SAML-аутентификацию."
+---
+
 # Настройка SAML-аутентификации
 
 {% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
@@ -29,7 +34,7 @@ SAML (Security Assertion Markup Language) — это язык разметки �
     Используйте URL со [специальным FQDN кластера](cluster-connect.md#automatic-host-selection):
 
     ```
-    https://c-<идентификатор кластера {{ ES }}>.rw.{{ dns-zone }}/api/security/saml/callback
+    https://c-<идентификатор_кластера_{{ ES }}>.rw.{{ dns-zone }}/api/security/saml/callback
     ```
 
     Идентификатор кластера можно запросить со [списком кластеров в каталоге](cluster-list.md#list-clusters).
@@ -41,7 +46,7 @@ SAML (Security Assertion Markup Language) — это язык разметки �
     Используйте URL со [специальным FQDN кластера](cluster-connect.md#automatic-host-selection):
 
     ```
-    https://c-<идентификатор кластера>rw.{{ dns-zone }}
+    https://c-<идентификатор_кластера>rw.{{ dns-zone }}
     ```
 
     **Пример:** `https://c-e4ut2....rw.{{ dns-zone }}`
@@ -65,43 +70,43 @@ SAML (Security Assertion Markup Language) — это язык разметки �
 
 - Консоль управления
 
-    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку **Контроль доступа**.
-    1. Нажмите кнопку **Создать**.
+    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.elasticsearch.auth.auth-providers }}**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
     1. Создайте провайдер аутентификации:
-        * **Тип провайдера** — `Saml`.
+        * **{{ ui-key.yacloud.elasticsearch.auth.provider-type }}** — `Saml`.
 
-        * **Имя** — имя провайдера.
+        * **{{ ui-key.yacloud.common.name }}** — имя провайдера.
 
-        * **Описание** — описание провайдера.
+        * **{{ ui-key.yacloud.common.description }}** — описание провайдера.
 
-        * **Подсказка** — подсказка для входа.
+        * **{{ ui-key.yacloud.elasticsearch.auth.provider-hint }}** — подсказка для входа.
 
-        * **Иконка** — иконка провайдера.
+        * **{{ ui-key.yacloud.elasticsearch.auth.provider-icon }}** — иконка провайдера.
 
-        * Выберите опцию **Активирован**.
+        * Выберите опцию **{{ ui-key.yacloud.elasticsearch.auth.provider-enabled }}**.
 
-        * **Настройки SAML**:
+        * **{{ ui-key.yacloud.elasticsearch.auth.saml_settings }}**:
         
-            * **idp_entity_id** — информация об эмитенте провайдера идентификации (Identity Provider Issuer), которая получена при [настройке провайдера идентификации](#configuration-idp).
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-idp_entity_id }}** — информация об эмитенте провайдера идентификации (Identity Provider Issuer), которая получена при [настройке провайдера идентификации](#configuration-idp).
 
-            * **idp_metadata_file** — файл с метаданными провайдера в формате XML, который получен при [настройке провайдера идентификации](#configuration-idp).
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-idp_metadata_file }}** — файл с метаданными провайдера в формате XML, который получен при [настройке провайдера идентификации](#configuration-idp).
 
-            * **sp_entity_id** — URI-идентификатор приложения SP Entity ID (Audience URI). Должен соответствовать указанному при [настройке провайдера идентификации](#configuration-idp).
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-sp_entity_id }}** — URI-идентификатор приложения SP Entity ID (Audience URI). Должен соответствовать указанному при [настройке провайдера идентификации](#configuration-idp).
 
-            * **kibana_url** — URL со [специальным FQDN кластера](cluster-connect.md#automatic-host-selection). Значение совпадает с **sp_entity_id**.
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-kibana_url }}** — URL со [специальным FQDN кластера](cluster-connect.md#automatic-host-selection). Значение совпадает с **{{ ui-key.yacloud.elasticsearch.auth.saml-sp_entity_id }}**.
 
-            * **attribute_principal** — формат параметра `nameid`, например, `nameid:persistent`. Значение совпадает с **Name ID Format** провайдера идентификации.
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-attribute_principal }}** — формат параметра `nameid`, например, `nameid:persistent`. Значение совпадает с **Name ID Format** провайдера идентификации.
 
-            * **attribute_groups** — группы привилегий пользователя (рекомендуется).
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-attribute_groups }}** — группы привилегий пользователя (рекомендуется).
 
-            * **attribute_name** — имя пользователя (опционально).
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-attribute_name }}** — имя пользователя (опционально).
 
-            * **attribute_email** — адрес электронной почты пользователя (опционально).
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-attribute_email }}** — адрес электронной почты пользователя (опционально).
 
-            * **attribute_dn** — идентификатор пользователя `X.500 Distinguished Name` (опционально).
+            * **{{ ui-key.yacloud.elasticsearch.auth.saml-attribute_dn }}** — идентификатор пользователя `X.500 Distinguished Name` (опционально).
 
-    1. Нажмите кнопку **Создать**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - API
 
@@ -146,7 +151,7 @@ SAML (Security Assertion Markup Language) — это язык разметки �
 
 ### Подключение SAML SSO с Okta {#example-okta}
 
-Чтобы настроить SSO Okta для кластера с идентификатором `c9qmc1lmo2k060fkj2nj`:
+Чтобы настроить SSO Okta для кластера с идентификатором `c9qmc1lmo2k0********`:
 1. [Настройте провайдера идентификации Okta](#example-configuration-okta).
 1. [Настройте SSO для кластера {{ mes-name }}](#example-configuration-sso).
 1. [Настройте роли для SSO с Okta](#example-roles-sso).
@@ -163,14 +168,14 @@ SAML (Security Assertion Markup Language) — это язык разметки �
     * Укажите **Single sign on URL**:
 
         ```
-        https://c-c9qmc1lmo2k060fkj2nj.rw.{{ dns-zone }}/api/security/saml/callback
+        https://c-c9qmc1lmo2k0********.rw.{{ dns-zone }}/api/security/saml/callback
         ```
 
     * Включите опцию **Use this for Recipient URL and Destination URL**.
     * Укажите **Audience URI (SP Entity ID)**:
 
         ```
-        https://c-c9qmc1lmo2k060fkj2nj.rw.{{ dns-zone }}
+        https://c-c9qmc1lmo2k0********.rw.{{ dns-zone }}
         ```
 
     * Укажите **Name ID Format** — `Persistent`.
@@ -182,7 +187,7 @@ SAML (Security Assertion Markup Language) — это язык разметки �
     * Скопируйте **Identity Provider Issuer**:
 
         ```
-        http://www.okta.com/exkv2pzpvigX4c0bK5d6
+        http://www.okta.com/exkv2pzpvigX********
         ```
 
     * Содержимое поля **Provide the following IDP metadata to your SP provider** скопируйте и сохраните, например, под именем `okta.xml`.
@@ -191,14 +196,14 @@ SAML (Security Assertion Markup Language) — это язык разметки �
 
 #### Настройте SSO для кластера {#example-configuration-sso}
 
-Пусть после настройки провайдера был предоставлен **idp_entity_id**: `http://www.okta.com/exkv2pzpvigX4c0bK5d6`. 
+Пусть после настройки провайдера был предоставлен **{{ ui-key.yacloud.elasticsearch.auth.saml-idp_entity_id }}**: `http://www.okta.com/exkv2pzpvigX********`. 
 
 [Настройте SSO для кластера](#configuration-sso). При настройке укажите:
-* **idp_entity_id**: `http://www.okta.com/exkv2pzpvigX4c0bK5d6`.
-* **idp_metadata_file**: файл метаданных, предоставленный Okta.
-* **sp_entity_id**: `https://c-c9qmc1lmo2k060fkj2nj.rw.{{ dns-zone }}`.
-* **kibana_url**: `https://c-c9qmc1lmo2k060fkj2nj.rw.{{ dns-zone }}`.
-* **attribute_principal**: `nameid:persistent`.
+* **{{ ui-key.yacloud.elasticsearch.auth.saml-idp_entity_id }}**: `http://www.okta.com/exkv2pzpvigX********`.
+* **{{ ui-key.yacloud.elasticsearch.auth.saml-idp_metadata_file }}**: файл метаданных, предоставленный Okta.
+* **{{ ui-key.yacloud.elasticsearch.auth.saml-sp_entity_id }}**: `https://c-c9qmc1lmo2k0********.rw.{{ dns-zone }}`.
+* **{{ ui-key.yacloud.elasticsearch.auth.saml-kibana_url }}**: `https://c-c9qmc1lmo2k0********.rw.{{ dns-zone }}`.
+* **{{ ui-key.yacloud.elasticsearch.auth.saml-attribute_principal }}**: `nameid:persistent`.
 
 #### Настройте роли для SSO с Okta {#example-roles-sso}
 
@@ -210,8 +215,8 @@ SAML (Security Assertion Markup Language) — это язык разметки �
 
 - Консоль управления
 
-    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку **Kibana**.
+    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.elasticsearch.label_kibana }}**.
     1. В окне авторизации укажите пользователя `admin` и пароль, заданный при настройке кластера.
     1. Перейдите в раздел **Management → Stack Management → Security → Role Mappings**.
         
@@ -258,9 +263,9 @@ SAML (Security Assertion Markup Language) — это язык разметки �
 
 - Консоль управления
 
-    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ mes-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку **Kibana**.
+    1. В [консоли управления]({{ link-console-main }}) перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.elasticsearch.label_kibana }}**.
     1. В окне авторизации выберите вариант, который был указан при [настройке SSO](#configuration-sso) в пункте **Описание провайдера**.
-    1. Укажите **Имя пользователя** и **Пароль**.
+    1. Укажите **{{ ui-key.yacloud.mdb.forms.database_field_user-login }}** и **{{ ui-key.yacloud.mdb.forms.database_field_user-password }}**.
 
 {% endlist %}

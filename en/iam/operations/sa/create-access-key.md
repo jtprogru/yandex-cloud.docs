@@ -11,11 +11,11 @@ To create a static access key:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder the service account belongs to.
-   1. At the top of the screen, go to the **Service accounts** tab.
-   1. Choose a service account and click the line with its name.
-   1. Click **Create new key** in the top panel.
-   1. Select **Create static access key**.
-   1. Specify the key description and click **Create**.
+   1. At the top of the screen, go to the **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}** tab.
+   1. Choose a service account and click the row with its name.
+   1. Click **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create-key-popup }}** in the top panel.
+   1. Select **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create_service-account-key }}**.
+   1. Specify the key description and click **{{ ui-key.yacloud.iam.folder.service-account.overview.popup-key_button_create }}**.
    1. Save the ID and private key.
 
       {% note alert %}
@@ -48,8 +48,8 @@ To create a static access key:
       +----------------------+------------------+-------------------------------+
       |          ID          |       NAME       |          DESCRIPTION          |
       +----------------------+------------------+-------------------------------+
-      | aje6o61dvog2h6g9a33s | my-robot         |                               |
-      | aje9sda1ufvqcmfksd3f | blabla           | bla bla bla is my description |
+      | aje6o61dvog2******** | my-robot         |                               |
+      | aje9sda1ufvq******** | account_name     | account_description           |
       +----------------------+------------------+-------------------------------+
       ```
    1. Create an access key for the `my-robot` service account:
@@ -62,11 +62,11 @@ To create a static access key:
 
       ```text
       access_key:
-        id: aje6t3vsbj8lp9r4vk2u
-        service_account_id: ajepg0mjt06siuj65usm
+        id: aje6t3vsbj8l********
+        service_account_id: ajepg0mjt06s********
         created_at: "2018-11-22T14:37:51Z"
-        key_id: 0n8X6WY6S24N7OjXQ0YQ
-      secret: JyTRFdqw8t1kh2-OJNz4JX5ZTz9Dj1rI9hxtzMP1
+        key_id: 0n8X6WY6S24N********
+      secret: JyTRFdqw8t1kh2-OJNz4JX5ZTz9Dj1rI********
       ```
 
    1. Save the ID `key_id` and `secret` key. You will not be able to get the key value again.
@@ -77,7 +77,7 @@ To create a static access key:
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    1. In the configuration file, describe the parameters of the resources you want to create:
 
@@ -91,7 +91,7 @@ To create a static access key:
 
       Where:
 
-      * `service_account_id`: Service account ID. This parameter is required.
+      * `service_account_id`: Service account ID. This is a required parameter.
       * `description`: Key description. This is an optional parameter.
       * `pgp_key`: Additional PGP key for encrypting a private key. This is an optional parameter. Specify the public part of the key in Base64 encoding or in the `keybase:keybaseusername` format.
 
@@ -100,7 +100,7 @@ To create a static access key:
    1. Make sure that the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```bash
          terraform plan
@@ -151,7 +151,7 @@ Add a description when creating an access key.
      -H 'Content-Type: application/json' \
      -H "Authorization: Bearer <IAM-TOKEN>" \
      -d '{
-         "serviceAccountId": "aje6o61dvog2h6g9a33s",
+         "serviceAccountId": "<service_account_ID>",
          "description": "this key is for my bucket"
      }' \
      https://iam.{{ api-host }}/iam/aws-compatibility/v1/accessKeys
@@ -161,7 +161,7 @@ Add a description when creating an access key.
 
    ```hcl
    resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
-   service_account_id = "aje6o61dvog2h6g9a33s"
+   service_account_id = "<service_account_ID>"
    description        = "this key is for my bucket"
    pgp_key            = "BIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+x....."
    }
@@ -172,4 +172,4 @@ Add a description when creating an access key.
 #### What's next {#what-is-next}
 
 * [Configuring tools to work with {{ objstorage-name }}](../../../storage/tools/)
-* [{#T}](assign-role-for-sa.md).
+* [{#T}](assign-role-for-sa.md)

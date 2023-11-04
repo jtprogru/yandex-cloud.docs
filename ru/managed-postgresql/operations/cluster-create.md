@@ -1,3 +1,8 @@
+---
+title: "Как создать {{ PG }}-кластер"
+description: "Следуя данной инструкции, вы сможете создать {{ PG }}-кластер с одним или несколькими хостами базы данных."
+---
+
 # Создание {{ PG }}-кластера
 
 {{ PG }}-кластер — это один или несколько [хостов базы данных](../concepts/index.md), между которыми можно настроить [репликацию](../concepts/replication.md). Репликация работает по умолчанию в любом кластере из более чем одного хоста: хост-мастер принимает запросы на запись и дублирует изменения в репликах. Транзакция подтверждается, если данные записаны на [диск](../concepts/storage.md) и на хосте-мастере, и на определенном числе реплик, достаточном для формирования кворума.
@@ -20,13 +25,17 @@
 
 - Консоль управления
 
+  
+  @[youtube](https://www.youtube.com/watch?v=UByUvah7lDU&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=6&pp=iAQB)
+
+
   1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../resource-manager/concepts/resources-hierarchy.md#folder), в котором нужно создать кластер БД.
-  1. Выберите сервис **{{ mpg-name }}**.
-  1. Нажмите кнопку **Создать кластер**.
-  1. Введите имя кластера в поле **Имя кластера**. Имя кластера должно быть уникальным в рамках каталога.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-postgresql }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
+  1. Введите имя кластера в поле **{{ ui-key.yacloud.mdb.forms.base_field_name }}**. Имя кластера должно быть уникальным в рамках каталога.
   1. Выберите окружение, в котором нужно создать кластер (после создания кластера окружение изменить невозможно):
      * `PRODUCTION` — для стабильных версий ваших приложений.
-     * `PRESTABLE` — для тестирования, в том числе самого сервиса {{ mpg-name }}. В prestable-окружении раньше появляются новая функциональность, улучшения и исправления ошибок. При этом не все обновления обеспечивают обратную совместимость.
+     * `PRESTABLE` — для тестирования. Prestable-окружение аналогично Production-окружению и на него также распространяется SLA, но при этом на нем раньше появляются новые функциональные возможности, улучшения и исправления ошибок. В Prestable-окружении вы можете протестировать совместимость новых версий с вашим приложением.
   1. Выберите версию СУБД.
 
      {% note info %}
@@ -38,17 +47,44 @@
      {% endnote %}
 
   1. Выберите класс хостов — он определяет технические характеристики [виртуальных машин](../../compute/concepts/vm.md), на которых будут развернуты хосты БД. Все доступные варианты перечислены в разделе [{#T}](../concepts/instance-types.md). При изменении класса хостов для кластера меняются характеристики всех уже созданных хостов.
-  1. В блоке **Размер хранилища**:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_disk }}**:
 
      
      * Выберите тип диска.
 
+       
        {% include [storages-step-settings](../../_includes/mdb/settings-storages.md) %}
 
 
+
      * Выберите размер хранилища, который будет использоваться для данных и резервных копий. Подробнее о том, как занимают пространство резервные копии, см. раздел [{#T}](../concepts/backup.md).
-  1. В блоке **База данных** укажите атрибуты БД:
-     * Имя БД. Это имя должно быть уникальным в рамках каталога и содержать только латинские буквы, цифры и подчеркивания.
+
+  1. (Опционально) В блоке **Автоматическое увеличение размера хранилища** укажите желаемые настройки:
+
+      * В поле **Увеличивать размер** задайте соответствующие условия, чтобы:
+
+          * Размер хранилища увеличился в следующее окно обслуживания, когда хранилище окажется заполнено более чем на указанную долю (%).
+          * Размер хранилища увеличился незамедлительно, когда хранилище окажется заполнено более чем на указанную долю (%).
+
+          Можно задать оба условия, но порог для незамедлительного увеличения должен быть выше порога для увеличения в окно обслуживания.
+
+      * В поле **Новый размер хранилища** укажите новый размер хранилища, который будет установлен при выполнении одного из заданных условий.
+
+      
+      {% include [warn-storage-resize](../../_includes/mdb/mpg/warn-storage-resize.md) %}
+
+
+      {% include [settings-dependence-on-storage](../../_includes/mdb/mpg/settings-dependence-on-storage.md) %}
+
+      {% include [storage-resize-maintenance](../../_includes/mdb/mpg/storage-resize-maintenance.md) %}
+
+      {% include [storage-resize-reset](../../_includes/mdb/mpg/storage-resize-reset.md) %}
+
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_database }}** укажите атрибуты БД:
+     * Имя БД. Это имя должно быть уникальным в рамках каталога.
+
+       {% include [database-name-limit](../../_includes/mdb/mpg/note-info-db-name-limits.md) %}
+
      * Имя пользователя — владельца БД и пароль. По умолчанию новому пользователю выделяется 50 подключений к каждому хосту кластера.
 
        {% include [username-and-password-limits](../../_includes/mdb/mpg/note-info-user-name-and-pass-limits.md) %}
@@ -58,19 +94,22 @@
        {% include [postgresql-locale](../../_includes/mdb/mpg-locale-settings.md) %}
 
   
-  1. В блоке **Сетевые настройки** выберите:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_network }}** выберите:
      * [Облачную сеть](../../vpc/concepts/network.md#network) для размещения кластера.
 
        {% include [network-cannot-be-changed](../../_includes/mdb/mpg/network-cannot-be-changed.md) %}
 
      * [Группы безопасности](../../vpc/concepts/security-groups.md) для сетевого трафика кластера. Может потребоваться дополнительная [настройка групп безопасности](connect.md#configuring-security-groups) для того, чтобы можно было подключаться к кластеру.
 
-       {% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
+
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_host }}** выберите параметры хостов БД, создаваемых вместе с кластером. По умолчанию каждый хост создается в отдельной подсети. Чтобы выбрать для хоста конкретную [подсеть](../../vpc/concepts/network.md#subnet), в строке этого хоста нажмите значок ![image](../../_assets/pencil.svg).
+
+         
+     При настройке параметров хостов обратите внимание, что если в блоке **{{ ui-key.yacloud.mdb.forms.section_disk }}** выбран `local-ssd` или `network-ssd-nonreplicated`, необходимо добавить не менее трех хостов в кластер.
 
 
-  1. В блоке **Хосты** выберите параметры хостов БД, создаваемых вместе с кластером. Открыв блок **Расширенные настройки**, вы можете выбрать конкретные [подсети](../../vpc/concepts/network.md#subnet) для каждого хоста — по умолчанию каждый хост создается в отдельной подсети.
+     Чтобы к хосту можно было подключаться из интернета, включите настройку **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}**.
 
-     При настройке параметров хостов обратите внимание, что если в блоке **Хранилище** выбран `local-ssd` или `network-ssd-nonreplicated`, необходимо добавить не менее трех хостов в кластер.
   1. При необходимости задайте дополнительные настройки кластера:
 
      {% include [Additional cluster settings](../../_includes/mdb/mpg/extra-settings-web-console.md) %}
@@ -83,7 +122,7 @@
 
      {% endnote %}
 
-  1. Нажмите кнопку **Создать кластер**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_create }}**.
 
 - CLI
 
@@ -114,26 +153,46 @@
      
      ```bash
      {{ yc-mdb-pg }} cluster create \
-       --name <имя кластера> \
-       --environment <окружение, prestable или production> \
-       --network-name <имя сети> \
-       --host zone-id=<зона доступности>,subnet-id=<идентификатор подсети> \
-       --resource-preset <класс хоста> \
-       --user name=<имя пользователя>,password=<пароль пользователя> \
-       --database name=<имя БД>,owner=<имя владельца БД> \
-       --disk-size <размер хранилища, ГБ> \
-       --disk-type <network-hdd | network-ssd | local-ssd | network-ssd-nonreplicated> \
-       --security-group-ids <список идентификаторов групп безопасности> \
-       --connection-pooling-mode=<режим работы менеджера соединений> \
-       --deletion-protection=<защита от удаления кластера: true или false>
+       --name <имя_кластера> \
+       --environment <окружение> \
+       --network-name <имя_сети> \
+       --host zone-id=<зона_доступности>,`
+                `subnet-id=<идентификатор_подсети>,`
+                `assign-public-ip=<доступ_к_хосту_из_интернета> \
+       --resource-preset <класс_хоста> \
+       --user name=<имя_пользователя>,password=<пароль_пользователя> \
+       --database name=<имя_БД>,owner=<имя_владельца_БД> \
+       --disk-size <размер_хранилища_ГБ> \
+       --disk-type <тип_диска> \
+       --security-group-ids <список_идентификаторов_групп_безопасности> \
+       --connection-pooling-mode=<режим_работы_менеджера_подключений> \
+       --deletion-protection=<защита_от_удаления>
      ```
 
+
+
+     Где:
+
+     * `environment` — окружение: `prestable` или `production`.
+
+     
+     * `assign-public-ip` — доступ к хосту из интернета: `true` или `false`.
+
+
+     * `deletion-protection` — защита от удаления кластера: `true` или `false`.
+
+     
      Идентификатор подсети `subnet-id` необходимо указывать, если в выбранной [зоне доступности](../../overview/concepts/geo-scope.md) создано две и больше подсетей.
 
      {% include [network-cannot-be-changed](../../_includes/mdb/mpg/network-cannot-be-changed.md) %}
 
 
-     Доступные [режимы работы менеджера соединений](../concepts/pooling.md): `SESSION`, `TRANSACTION` или `STATEMENT`.
+
+     Доступные [режимы работы менеджера подключений](../concepts/pooling.md): `SESSION`, `TRANSACTION` или `STATEMENT`.
+
+     {% include [database-name-limit](../../_includes/mdb/mpg/note-info-db-name-limits.md) %}
+
+     {% include [username-limit](../../_includes/mdb/mpg/note-info-password-limits.md) %}
 
      {% include [Ограничения защиты от удаления](../../_includes/mdb/deletion-protection-limits-db.md) %}
 
@@ -143,15 +202,21 @@
      
      Чтобы разрешить доступ к кластеру из сервиса [{{ sf-full-name }}](../../functions/), передайте параметр `--serverless-access`. Подробнее о настройке доступа см. в документации [{{ sf-name }}](../../functions/operations/database-connection.md).
 
+     Чтобы разрешить доступ к кластеру из сервиса [{{ yq-full-name }}](../../query/index.yaml), передайте параметр `--yandexquery-access=true`. Функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md) и предоставляется по запросу.
 
+
+
+     {% note info %}
+
+     По умолчанию при создании кластера устанавливается режим [технического обслуживания](../concepts/maintenance.md) `anytime` — в любое время. Вы можете установить конкретное время обслуживания при [изменении настроек кластера](update.md#change-additional-settings).
+
+     {% endnote %}
 
 - {{ TF }}
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы создать кластер:
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
@@ -170,61 +235,79 @@
      
      
      ```hcl
-     resource "yandex_mdb_postgresql_cluster" "<имя кластера>" {
-       name                = "<имя кластера>"
-       environment         = "<окружение, PRESTABLE или PRODUCTION>"
-       network_id          = "<идентификатор сети>"
-       security_group_ids  = [ "<список групп безопасности>" ]
-       deletion_protection = <защита от удаления кластера: true или false>
+     resource "yandex_mdb_postgresql_cluster" "<имя_кластера>" {
+       name                = "<имя_кластера>"
+       environment         = "<окружение>"
+       network_id          = "<идентификатор_сети>"
+       security_group_ids  = [ "<список_идентификаторов_групп_безопасности>" ]
+       deletion_protection = <защита_от_удаления>
 
        config {
-         version = "<версия {{ PG }}: {{ pg.versions.tf.str }}>"
+         version = "<версия_{{ PG }}>"
          resources {
-           resource_preset_id = "<класс хоста>"
-           disk_type_id       = "<тип диска>"
-           disk_size          = <размер хранилища, ГБ>
+           resource_preset_id = "<класс_хоста>"
+           disk_type_id       = "<тип_диска>"
+           disk_size          = <размер_хранилища_ГБ>
          }
          pooler_config {
-           pool_discard = <параметр Odyssey pool_discard: true или false>
-           pooling_mode = "<режим работы: SESSION, TRANSACTION или STATEMENT>"
+           pool_discard = <параметр_Odyssey>
+           pooling_mode = "<режим_работы>"
          }
          ...
        }
 
        host {
-         zone      = "<зона доступности>"
-         name      = "<имя хоста>"
-         subnet_id = "<идентификатор подсети>"
+         zone             = "<зона_доступности>"
+         name             = "<имя_хоста>"
+         subnet_id        = "<идентификатор_подсети>"
+         assign_public_ip = <доступ_к_хосту_из_интернета>
        }
      }
 
-     resource "yandex_mdb_postgresql_database" "<имя БД>" {
-       cluster_id = "<идентификатор кластера>"
-       name       = "<имя БД>"
-       owner      = "<имя владельца БД>"
+     resource "yandex_mdb_postgresql_database" "<имя_БД>" {
+       cluster_id = "<идентификатор_кластера>"
+       name       = "<имя_БД>"
+       owner      = "<имя_владельца_БД>"
        depends_on = [
-         yandex_mdb_postgresql_user.<имя пользователя>
+         yandex_mdb_postgresql_user.<имя_пользователя>
        ]
      }
 
-     resource "yandex_mdb_postgresql_user" "<имя пользователя>" {
-       cluster_id = "<идентификатор кластера>"
-       name       = "<имя пользователя>"
-       password   = "<пароль пользователя>"
+     resource "yandex_mdb_postgresql_user" "<имя_пользователя>" {
+       cluster_id = "<идентификатор_кластера>"
+       name       = "<имя_пользователя>"
+       password   = "<пароль_пользователя>"
      }
 
-     resource "yandex_vpc_network" "<имя сети>" { name = "<имя сети>" }
+     resource "yandex_vpc_network" "<имя_сети>" { name = "<имя_сети>" }
 
-     resource "yandex_vpc_subnet" "<имя подсети>" {
-       name           = "<имя подсети>"
-       zone           = "<зона доступности>"
-       network_id     = "<идентификатор сети>"
+     resource "yandex_vpc_subnet" "<имя_подсети>" {
+       name           = "<имя_подсети>"
+       zone           = "<зона_доступности>"
+       network_id     = "<идентификатор_сети>"
        v4_cidr_blocks = ["<диапазон>"]
      }
      ```
 
 
 
+
+     Где:
+
+     * `environment` — окружение: `PRESTABLE` или `PRODUCTION`.
+
+     
+     * `assign_public_ip` — доступ к хосту из интернета: `true` или `false`.
+
+
+     * `deletion_protection` — защита от удаления кластера: `true` или `false`.
+     * `version` — версия {{ PG }}: {{ pg.versions.tf.str }}.
+     * `pool_discard`  — параметр Odyssey `pool_discard`: `true` или `false`.
+     * `pooling_mode` — режим работы: `SESSION`, `TRANSACTION` или `STATEMENT`.
+
+     {% include [database-name-limit](../../_includes/mdb/mpg/note-info-db-name-limits.md) %}
+
+     {% include [username-limit](../../_includes/mdb/mpg/note-info-password-limits.md) %}
 
      {% include [Ограничения защиты от удаления](../../_includes/mdb/deletion-protection-limits-db.md) %}
 
@@ -261,7 +344,14 @@
 
 
   * Конфигурацию БД в одном или нескольких параметрах `databaseSpecs`.
+
+    {% include [database-name-limit](../../_includes/mdb/mpg/note-info-db-name-limits.md) %}
+
   * Настройки пользователей в одном или нескольких параметрах `userSpecs`.
+
+    {% include [username-limit](../../_includes/mdb/mpg/note-info-password-limits.md) %}
+
+  Чтобы разрешить [подключение](connect.md) к хостам кластера из интернета, передайте значение `true` в параметре `hostSpecs.assignPublicIp`.
 
   {% include [datatransfer access](../../_includes/mdb/api/datatransfer-access-create.md) %}
 
@@ -269,11 +359,23 @@
   
   Чтобы разрешить доступ к кластеру из сервиса [{{ sf-full-name }}](../../functions/), передайте значение `true` для параметра `configSpec.access.serverless`. Подробнее о настройке доступа см. в документации [{{ sf-name }}](../../functions/operations/database-connection.md).
 
+  Чтобы разрешить доступ к кластеру из сервиса [{{ yq-full-name }}](../../query/index.yaml), передайте значение `true` для параметра `configSpec.access.yandexQuery`. Функциональность находится на стадии [Preview](../../overview/concepts/launch-stages.md) и предоставляется по запросу.
+
 
 
   Чтобы активировать [сбор статистики](performance-diagnostics.md#activate-stats-collector):
 
   {% include [Performance diagnostic API](../../_includes/mdb/mpg/performance-diagnostics-api.md) %}
+
+  Чтобы разрешить автоматическое увеличение размера хранилища, передайте в запросе:
+
+  {% include [api-storage-resize](../../_includes/mdb/mpg/api-storage-resize.md) %}
+
+  
+  {% include [warn-storage-resize](../../_includes/mdb/mpg/warn-storage-resize.md) %}
+
+
+  {% include [settings-dependence-on-storage](../../_includes/mdb/mpg/settings-dependence-on-storage.md) %}
 
 {% endlist %}
 
@@ -302,7 +404,7 @@
   * В окружении `production`.
   * В сети `default`.
   * В группе безопасности `{{ security-group }}`.
-  * С одним хостом класса `{{ host-class }}` в подсети `b0rcctk2rvtr8efcch64`, в зоне доступности `{{ region-id }}-a`.
+  * С одним хостом класса `{{ host-class }}` в подсети `b0rcctk2rvtr********`, в зоне доступности `{{ region-id }}-a`.
   * С хранилищем на сетевых SSD-дисках (`{{ disk-type-example }}`) размером 20 ГБ.
   * С одним пользователем (`user1`), с паролем `user1user1`.
   * С одной БД `db1`, принадлежащей пользователю `user1`.
@@ -318,7 +420,7 @@
      --environment production \
      --network-name default \
      --resource-preset {{ host-class }} \
-     --host zone-id={{ region-id }}-a,subnet-id=b0rcctk2rvtr8efcch64 \
+     --host zone-id={{ region-id }}-a,subnet-id=b0rcctk2rvtr******** \
      --disk-type {{ disk-type-example }} \
      --disk-size 20 \
      --user name=user1,password=user1user1 \

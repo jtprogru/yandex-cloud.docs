@@ -2,134 +2,84 @@
 
 Set up your workspace in {{ tracker-name }} and create your first issues.
 
-## Step 1. Create a queue {#section_ebb_qlx_vhb}
+## Step 1. Create a workflow {#create-process}
 
-Create a queue so that your team has a shared space to manage your issues.
+To get started with {{ tracker-name }}, create a queue: this is a shared space where all your issues are brought together. To conveniently manage issues, use boards, a visual method to track the status of issues belonging to several queues. Issues on the board are distributed across columns corresponding to different statuses. Managing issue boards in {{ tracker-name }} is similar to working with regular sticker boards: just drag your issues between columns to change their status.
 
+In {{ tracker-name }}, you can [create](manager/create-queue.md) and [set up](manager/edit-queue-general.md) a queue manually, or use [automation tools](automation.md). To create a queue preconfigured for a specific workflow, we recommend using [workflow templates](manager/create-work-process.md).
 
 
-1. On the top panel in {{ tracker-name }}, select **Queues** → **+ Create queue**.
+1. On the  [**{{ ui-key.startrek.blocks-desktop_b-head.my-page }}**](https://tracker.yandex.ru/pages/my) home page, click **{{ ui-key.startrek.ui_components_dashboard_InfoPresetsWidget.choose-template-button }}** in the **{{ ui-key.startrek.ui_components_dashboard_InfoPresetsWidget.widget-title }}** widget.
+1. Select **{{ ui-key.startrek.ui_components_new-process_ProcessTypeStep.process-type-standard }}** and click **{{ ui-key.startrek.ui_components_new-process_ProcessTypeStep.next-button }}**.
+1. Specify the queue parameters:
+   * Issue queue name
+   * [Queue key](manager/create-queue.md#key)
+   * Permissions
+1. Click **{{ ui-key.startrek.ui_components_new-process_ProcessTypeStep.next-button }}**.
 
-1. Select the queue template. To make starting out easier, we've created several queue templates for you. Templates have everything you may need to start solving all kinds of issues:
+This will create a queue with a basic set of issue [types and statuses](manager/workflow.md) and a [simple issue board](manager/agile.md#sec_boards).
 
-    - **Development**: For issues related to software development and testing.
 
-    - **Working with people and documents**: For issues related to tech support, HR, and document approval.
+## Step 2. Create your first issues {#create-tasks}
 
-    - **Creating products and services**: For service projects and production issues.
+Issues are the foundation of {{ tracker-name }}. To make your work more efficient, try to break it down into individual issues with clear execution criteria.
 
-    If it's your first time creating a queue, we recommend picking the [Starting right now]({{ link-quick-start }}) template. This is a versatile template suitable for most issues.
+{{ tracker-name }} provides multiple ways to create issues. For instance, you can create a new issue right from the board in just a couple of clicks, or you can use the full issue creation form.
 
-1. Think up a name for your queue. Its name should reflect the kinds of issues making up the queue. Example of a good name: <q>Department of Witchcraft and Wizardry</q>. Example of a poor name: <q>Roflmao</q>.
+### Creating an issue on a board {#tasks-board}
 
-1. Set a unique queue key, such as <q>MAGIC</q>. The key should also be clear and easy to remember, so it's easy for you to find the queue in the list when you need it. Each issue in the queue is labeled with the queue key and issue number, such as <q>MAGIC-342</q>.
+The fastest way to create an issue is to do it from the board. You only need to enter the issue name. Everything else can be set up later.
 
-1. Click **Create**.
+1. To create an issue, click **{{ ui-key.startrek.blocks-desktop_guide.ticket--main--action_new--title }}**.
 
-Your queue is ready. You can access the queue page anytime from the **Queues** menu on the top panel in {{ tracker-name }}.
+1. In the dialog that opens, enter a name for the issue in the **{{ ui-key.startrek.ui_components_create-issue-popup_NewIssueForm.issue-name }}** field. Make sure the name is informative to be easy to find in the list, for example: <q>Find the answer to the ultimate question of life, the Universe, and everything else</q>.
 
-## Step 2. Set up your issue board {#section_uth_1mx_vhb}
+1. Click **{{ ui-key.startrek.ui_components_create-issue-popup_NewIssueForm.create }}** or press **Enter**.
 
-Boards are an easy way to keep track of your issues from one or more queues. Issues are sorted by columns that correspond to different issue statuses. Managing issue boards in {{ tracker-name }} is similar to working with regular sticker boards: just drag your issues between columns to change their status.
+The new issue will appear on the board, the queue page, and the [{{ tracker-name }} home page]({{ link-tracker }}) in your issue list.
 
+### Creating an issue using the full form {#tasks-form}
 
+Use the full form to set up all the issue attributes you need right from the start.
 
-Follow these steps to create a board for your new queue:
+1. Click ![](../_assets/tracker/svg/icon-add.svg) **{{ ui-key.startrek.blocks-desktop_b-head.new_issue }}** in the left panel.
 
-1. Select **Boards** → **Create board** on the top panel in {{ tracker-name }}.
+1. In the top-left corner of the page, choose the queue to create your issue in, such as <q>QUEUE</q>.
 
-1. Choose your board type. We recommend starting with a standard board, as it's more versatile and easy to set up.
+   {% note tip %}
 
-1. You can add issues to the board manually or set it up so that issues meeting certain requirements are placed on the board automatically.
+   If you create an issue from a queue page, the queue field is pre-populated.
 
-    For now, choose the manual mode, as we'll discuss the auto mode later.
+   {% endnote %}
 
-1. Think up a name for your board, such as <q>Magic Board</q>.
+1. You will be suggested to fill out a standard form with a pre-configured list of parameters.
 
-1. Enter your queue key in the **Queue** field: <q>MAGIC</q>. This will allow you to easily create issues for the queue right on the board page.
+   1. Enter a name for the issue in the **{{ ui-key.startrek.ui_components_create-issue-popup_NewIssueForm.issue-name }}** field. Make sure that the name is informative to be easy to find in the list, for example: <q>Find the answer to the ultimate question of life, the Universe, and everything else</q>.
 
-1. Click **Create**.
+   1. Enter a description of the issue if needed. To do so, click the `{{ ui-key.startrek.ui_components_PageCreateIssue.description-placeholder }}` placeholder and describe the issue in the text editor that opens.
 
-The new board appears in the **Boards** menu on the top panel. Add your board to Favorites to always have it at your fingertips: just click ![](../_assets/tracker/add-to-favorites.png) to the right of the board name.
+   1. If you need to upload files, click **{{ ui-key.startrek.ui_components_AttachmentsManager.attach }}**.
 
-## Step 3. Create your first issues {#section_cjc_5lx_vhb}
+   1. You can also add checkpoints to **{{ ui-key.startrek.components_Checklist.header-title }}**. To do so, click **{{ ui-key.startrek.ui_components_Checklist.new-item-button-caption }}**, then fill out the form that opens.
 
-Issues are the foundation of {{ tracker-name }}. To make your workflow more efficient, try decomposing each issue into smaller tasks with clear goals.
+   1. On the left-hand panel, enter the relevant issue details, for example:
+      * In the **{{ ui-key.startrek-backend.fields.issue.assignee-key-value }}** field, assign the issue to yourself by clicking **{{ ui-key.startrek.blocks-desktop_i-typed-field.assign-to-me }}**.
+      * In the **{{ ui-key.startrek-backend.fields.issue.dueDate-key-value }}** field, enter an arbitrary deadline.
 
-{{ tracker-name }} provides multiple ways to create issues. For instance, you can create a new issue right from the board in just a couple of clicks. Or you can use the full issue creation form.
+   1. Edit the list of the issue's displayed fields if needed. To do this, click **{{ ui-key.startrek.ui_components_PageCreateIssue.add-parameter }}** and set the relevant parameters.
 
-{% list tabs %}
+1. Click **{{ ui-key.startrek-backend.types.types.trigger.action.create.issue }}**.
 
-- Creating an issue on the board
+The new issue is ready-to-go. It will appear on the board, the queue page, and the [{{ tracker-name }} home page]({{ link-tracker }}) in your issue list.
 
-    Using the board is the fastest way to do this. You only need to enter the issue name. Everything else can be set up later.
+## Step 3. What's next {#whats-next}
 
+{{ tracker-name }} will help you effectively allocate team resources, assign issues, and track progress. Check the following sections to get started with {{ tracker-name }}:
 
-
-    1. Open the page of your new board.
-
-    1. Click **Add issue** in the lower-right corner.
-
-    1. Think up a name for your issue, such as <q>Find the answer to the ultimate question of life, the Universe, and everything</q>. It's better to keep the name concise so it's easier to find in the list.
-
-    1. Click **Create**.
-
-    {{ tracker-name }} creates the issue in the queue that you specified when creating your board (the <q>MAGIC</q> queue in this case). The new issue appears on the board, the queue page, and the [{{ tracker-name }} main page]({{ link-tracker }}) in your issue list.
-
-- Creating an issue using the full form
-
-    Use the full form to set up all the issue attributes you need right from the start.
-
-
-
-    1. Click **Create issue** on the top panel in {{ tracker-name }}.
-
-    1. Choose the queue to create your issue in, such as <q>MAGIC</q>.
-
-        {% note tip %}
-
-        If you create an issue from the queue page, the queue field will already be filled in.
-
-        {% endnote %}
-
-    1. Think up a name for your issue, such as <q>Find the answer to the ultimate question of life, the Universe, and everything</q>. It's better to keep the name concise so it's easier to find in the list.
-
-    1. You can also specify some details about your issue in the Description field. For instance, you can specify what he ultimate question of life, the Universe, and everything is.
-
-    1. Click **Select fields** and customize the list of issue fields, such as **Assignee**, **Deadline**, and **Boards**.
-
-    1. Make yourself the issue's assignee, specify a deadline, and choose <q>Magic Board</q> as your issue board.
-
-    1. Click **Create** at the bottom of the page.
-
-    Your issue is ready. It appears on the board, the queue page, and the [{{ tracker-name }} main page]({{ link-tracker }}) in your issue list.
-
-{% endlist %}
-
-## Step 4. What to do next {#section_ptb_ly4_h3b}
-
-Learn more about {{ tracker-name }} and its basic features.
-
-#### For team member
-
-{{ tracker-name }} will help team members plan their tasks, discuss them with colleagues, and record the progress of their work. If you're new to {{ tracker-name }}, start with these sections:
-
-| Section | Description |
-| ------ | -------- |
-| [{#T}](about-tracker.md) | Find out what's inside {{ tracker-name }} and how it works. |
-| [Change the interface language](user/personal.md#choose-language) | Choose English or Russian as your interface language. |
-| [Viewing my issues](user/my-tickets.md) | View the list of issues that are linked to you. |
-| [Working with issues](user/ticket-in-progress.md) | Find out how to start working on an issue, keep track of your progress and complete your issues. |
-| [Viewing issues in a queue](user/queue.md) | View all the issues related to a certain topic. |
-| [{#T}](user/subscribe.md) | Subscribe to important issues so that you can find them quickly and stay up to date with the latest changes. |
-
-#### For project managers
-
-Project managers can use {{ tracker-name }} to effectively allocate team resources, assign tasks, and track progress. If you're new to {{ tracker-name }}, start with these sections:
-
-| Section | Description |
-| ------ | -------- |
-| [{#T}](manager/queue-access.md) | Set up user access to issues in your queue. |
-| [{#T}](user/search-task.md) | Find out how to quickly find the issues you need. |
-| [{#T}](user/dashboard.md) | Create a dashboard page with statistics on issues that are important to you. |
-
+Section | Description
+------ | --------
+[{#T}](about-tracker.md) | Find out what is inside {{ tracker-name }} and how it works.
+[Change the interface language](user/personal.md#choose-language) | Choose English or Russian as your interface language.
+[{#T}](manager/queue-access.md) | Set up user access to issues in your queue.
+[{#T}](user/search-task.md) | Learn how to quickly find relevant issues.
+[{#T}](user/dashboard.md) | Create a dashboard, a page that provides statistics on your key issues.

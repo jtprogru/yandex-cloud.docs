@@ -47,6 +47,7 @@ origin_group_id | **int64**<br>ID of the origin group.
 origin_group_name | **string**<br>Name of the origin group. 
 origin_protocol | enum **OriginProtocol**<br>Specify the protocol schema to be used in communication with origin. <ul><li>`HTTP`: CDN servers will connect to your origin via HTTP.</li><li>`HTTPS`: CDN servers will connect to your origin via HTTPS.</li><li>`MATCH`: Connection protocol will be chosen automatically (content on the origin source should be available for the CDN both through HTTP and HTTPS).</li></ul>
 ssl_certificate | **[SSLCertificate](#SSLCertificate)**<br>SSL certificate options. 
+labels | **map<string,string>**<br>Labels of the resource. 
 
 
 ### ResourceOptions {#ResourceOptions}
@@ -72,6 +73,7 @@ static_request_headers | **[StringsMapOption](#StringsMapOption)**<br>Set up cus
 custom_server_name | **[StringOption](#StringOption)**<br>Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS. Read-only. 
 ignore_cookie | **[BoolOption](#BoolOption)**<br>Using [BoolOption](#BoolOption) for ignoring cookie. 
 rewrite | **[RewriteOption](#RewriteOption)**<br>Changing or redirecting query paths. 
+secure_key | **[SecureKeyOption](#SecureKeyOption)**<br>Secure token to protect contect and limit access by IP addresses and time limits 
 
 
 ### BoolOption {#BoolOption}
@@ -196,6 +198,15 @@ body | **string**<br>Pattern for rewrite. <br>The value must have the following 
 flag | enum **RewriteFlag**<br>Break flag is applied to the option by default. It is not shown in the field. <ul><li>`LAST`: Stops processing of the current set of ngx_http_rewrite_module directives and starts a search for a new location matching changed URI.</li><li>`BREAK`: Stops processing of the current set of the Rewrite option.</li><li>`REDIRECT`: Returns a temporary redirect with the 302 code; It is used when a replacement string does not start with "http://", "https://", or "$scheme".</li><li>`PERMANENT`: Returns a permanent redirect with the 301 code.</li></ul>
 
 
+### SecureKeyOption {#SecureKeyOption}
+
+Field | Description
+--- | ---
+enabled | **bool**<br>True - the option is enabled and its [flag] is applied to the resource. False - the option is disabled and its default value of the [flag] is used for the resource. 
+key | **string**<br>The key for the URL signing. 
+type | enum **SecureKeyURLType**<br>The type of the URL signing. The URL could be available for all IP addresses or for the only one IP. <ul><li>`ENABLE_IP_SIGNING`: Use scpecific IP address in URL signing. URL will be availible only for this IP.</li><li>`DISABLE_IP_SIGNING`: Sign URL without using IP address. URL will be available for all IP addresses.</li></ul>
+
+
 ### SSLCertificate {#SSLCertificate}
 
 Field | Description
@@ -259,6 +270,7 @@ origin_group_id | **int64**<br>ID of the origin group.
 origin_group_name | **string**<br>Name of the origin group. 
 origin_protocol | enum **OriginProtocol**<br>Specify the protocol schema to be used in communication with origin. <ul><li>`HTTP`: CDN servers will connect to your origin via HTTP.</li><li>`HTTPS`: CDN servers will connect to your origin via HTTPS.</li><li>`MATCH`: Connection protocol will be chosen automatically (content on the origin source should be available for the CDN both through HTTP and HTTPS).</li></ul>
 ssl_certificate | **[SSLCertificate](#SSLCertificate1)**<br>SSL certificate options. 
+labels | **map<string,string>**<br>Labels of the resource. 
 
 
 ### ResourceOptions {#ResourceOptions1}
@@ -284,6 +296,7 @@ static_request_headers | **[StringsMapOption](#StringsMapOption1)**<br>Set up cu
 custom_server_name | **[StringOption](#StringOption1)**<br>Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS. Read-only. 
 ignore_cookie | **[BoolOption](#BoolOption1)**<br>Using [BoolOption](#BoolOption1) for ignoring cookie. 
 rewrite | **[RewriteOption](#RewriteOption1)**<br>Changing or redirecting query paths. 
+secure_key | **[SecureKeyOption](#SecureKeyOption1)**<br>Secure token to protect contect and limit access by IP addresses and time limits 
 
 
 ### BoolOption {#BoolOption1}
@@ -408,6 +421,15 @@ body | **string**<br>Pattern for rewrite. <br>The value must have the following 
 flag | enum **RewriteFlag**<br>Break flag is applied to the option by default. It is not shown in the field. <ul><li>`LAST`: Stops processing of the current set of ngx_http_rewrite_module directives and starts a search for a new location matching changed URI.</li><li>`BREAK`: Stops processing of the current set of the Rewrite option.</li><li>`REDIRECT`: Returns a temporary redirect with the 302 code; It is used when a replacement string does not start with "http://", "https://", or "$scheme".</li><li>`PERMANENT`: Returns a permanent redirect with the 301 code.</li></ul>
 
 
+### SecureKeyOption {#SecureKeyOption1}
+
+Field | Description
+--- | ---
+enabled | **bool**<br>True - the option is enabled and its [flag] is applied to the resource. False - the option is disabled and its default value of the [flag] is used for the resource. 
+key | **string**<br>The key for the URL signing. 
+type | enum **SecureKeyURLType**<br>The type of the URL signing. The URL could be available for all IP addresses or for the only one IP. <ul><li>`ENABLE_IP_SIGNING`: Use scpecific IP address in URL signing. URL will be availible only for this IP.</li><li>`DISABLE_IP_SIGNING`: Sign URL without using IP address. URL will be available for all IP addresses.</li></ul>
+
+
 ### SSLCertificate {#SSLCertificate1}
 
 Field | Description
@@ -454,6 +476,7 @@ origin_protocol | enum **OriginProtocol**<br>Specify the protocol schema to be u
 active | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Flag to create Resource either in active or disabled state. In active state Origins payload could be transmitted from CDN CNAME requests. Default value: true 
 options | **[ResourceOptions](#ResourceOptions2)**<br>Resource settings and options to tune CDN edge behavior. Most is unset. 
 ssl_certificate | **[SSLTargetCertificate](#SSLTargetCertificate)**<br>SSL Certificate options. 
+labels | **map<string,string>**<br>Labels of the resource. 
 
 
 ### Origin {#Origin}
@@ -533,6 +556,7 @@ static_request_headers | **[StringsMapOption](#StringsMapOption2)**<br>Set up cu
 custom_server_name | **[StringOption](#StringOption2)**<br>Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS. Read-only. 
 ignore_cookie | **[BoolOption](#BoolOption2)**<br>Using [BoolOption](#BoolOption2) for ignoring cookie. 
 rewrite | **[RewriteOption](#RewriteOption2)**<br>Changing or redirecting query paths. 
+secure_key | **[SecureKeyOption](#SecureKeyOption2)**<br>Secure token to protect contect and limit access by IP addresses and time limits 
 
 
 ### BoolOption {#BoolOption2}
@@ -657,6 +681,15 @@ body | **string**<br>Pattern for rewrite. <br>The value must have the following 
 flag | enum **RewriteFlag**<br>Break flag is applied to the option by default. It is not shown in the field. <ul><li>`LAST`: Stops processing of the current set of ngx_http_rewrite_module directives and starts a search for a new location matching changed URI.</li><li>`BREAK`: Stops processing of the current set of the Rewrite option.</li><li>`REDIRECT`: Returns a temporary redirect with the 302 code; It is used when a replacement string does not start with "http://", "https://", or "$scheme".</li><li>`PERMANENT`: Returns a permanent redirect with the 301 code.</li></ul>
 
 
+### SecureKeyOption {#SecureKeyOption2}
+
+Field | Description
+--- | ---
+enabled | **bool**<br>True - the option is enabled and its [flag] is applied to the resource. False - the option is disabled and its default value of the [flag] is used for the resource. 
+key | **string**<br>The key for the URL signing. 
+type | enum **SecureKeyURLType**<br>The type of the URL signing. The URL could be available for all IP addresses or for the only one IP. <ul><li>`ENABLE_IP_SIGNING`: Use scpecific IP address in URL signing. URL will be availible only for this IP.</li><li>`DISABLE_IP_SIGNING`: Sign URL without using IP address. URL will be available for all IP addresses.</li></ul>
+
+
 ### SSLTargetCertificate {#SSLTargetCertificate}
 
 Field | Description
@@ -727,6 +760,7 @@ origin_group_id | **int64**<br>ID of the origin group.
 origin_group_name | **string**<br>Name of the origin group. 
 origin_protocol | enum **OriginProtocol**<br>Specify the protocol schema to be used in communication with origin. <ul><li>`HTTP`: CDN servers will connect to your origin via HTTP.</li><li>`HTTPS`: CDN servers will connect to your origin via HTTPS.</li><li>`MATCH`: Connection protocol will be chosen automatically (content on the origin source should be available for the CDN both through HTTP and HTTPS).</li></ul>
 ssl_certificate | **[SSLCertificate](#SSLCertificate2)**<br>SSL certificate options. 
+labels | **map<string,string>**<br>Labels of the resource. 
 
 
 ### SSLCertificate {#SSLCertificate2}
@@ -759,6 +793,7 @@ options | **[ResourceOptions](#ResourceOptions3)**<br>Resource settings and opti
 origin_protocol | enum **OriginProtocol**<br>Specify the protocol schema to be used in communication with origin. <ul><li>`HTTP`: CDN servers will connect to your origin via HTTP.</li><li>`HTTPS`: CDN servers will connect to your origin via HTTPS.</li><li>`MATCH`: Connection protocol will be chosen automatically (content on the origin source should be available for the CDN both through HTTP and HTTPS).</li></ul>
 active | **[google.protobuf.BoolValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/bool-value)**<br>Flag to create Resource either in active or disabled state. In active state Origins payload could be transmitted from CDN CNAME requests. Default value: true 
 ssl_certificate | **[SSLTargetCertificate](#SSLTargetCertificate1)**<br>SSL Certificate options. 
+labels | **map<string,string>**<br>Resource labels. At some point will be needed for granular detailing. 
 
 
 ### SecondaryHostnames {#SecondaryHostnames1}
@@ -791,6 +826,7 @@ static_request_headers | **[StringsMapOption](#StringsMapOption3)**<br>Set up cu
 custom_server_name | **[StringOption](#StringOption3)**<br>Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS. Read-only. 
 ignore_cookie | **[BoolOption](#BoolOption3)**<br>Using [BoolOption](#BoolOption3) for ignoring cookie. 
 rewrite | **[RewriteOption](#RewriteOption3)**<br>Changing or redirecting query paths. 
+secure_key | **[SecureKeyOption](#SecureKeyOption3)**<br>Secure token to protect contect and limit access by IP addresses and time limits 
 
 
 ### BoolOption {#BoolOption3}
@@ -915,6 +951,15 @@ body | **string**<br>Pattern for rewrite. <br>The value must have the following 
 flag | enum **RewriteFlag**<br>Break flag is applied to the option by default. It is not shown in the field. <ul><li>`LAST`: Stops processing of the current set of ngx_http_rewrite_module directives and starts a search for a new location matching changed URI.</li><li>`BREAK`: Stops processing of the current set of the Rewrite option.</li><li>`REDIRECT`: Returns a temporary redirect with the 302 code; It is used when a replacement string does not start with "http://", "https://", or "$scheme".</li><li>`PERMANENT`: Returns a permanent redirect with the 301 code.</li></ul>
 
 
+### SecureKeyOption {#SecureKeyOption3}
+
+Field | Description
+--- | ---
+enabled | **bool**<br>True - the option is enabled and its [flag] is applied to the resource. False - the option is disabled and its default value of the [flag] is used for the resource. 
+key | **string**<br>The key for the URL signing. 
+type | enum **SecureKeyURLType**<br>The type of the URL signing. The URL could be available for all IP addresses or for the only one IP. <ul><li>`ENABLE_IP_SIGNING`: Use scpecific IP address in URL signing. URL will be availible only for this IP.</li><li>`DISABLE_IP_SIGNING`: Sign URL without using IP address. URL will be available for all IP addresses.</li></ul>
+
+
 ### SSLTargetCertificate {#SSLTargetCertificate1}
 
 Field | Description
@@ -977,6 +1022,7 @@ origin_group_id | **int64**<br>ID of the origin group.
 origin_group_name | **string**<br>Name of the origin group. 
 origin_protocol | enum **OriginProtocol**<br>Specify the protocol schema to be used in communication with origin. <ul><li>`HTTP`: CDN servers will connect to your origin via HTTP.</li><li>`HTTPS`: CDN servers will connect to your origin via HTTPS.</li><li>`MATCH`: Connection protocol will be chosen automatically (content on the origin source should be available for the CDN both through HTTP and HTTPS).</li></ul>
 ssl_certificate | **[SSLCertificate](#SSLCertificate3)**<br>SSL certificate options. 
+labels | **map<string,string>**<br>Labels of the resource. 
 
 
 ### SSLCertificate {#SSLCertificate3}

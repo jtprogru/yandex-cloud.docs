@@ -1,16 +1,23 @@
+---
+title: "How to get started with {{ mes-name }}"
+description: "This guide describes how you can get started with {{ mes-name }}."
+---
+
 # Getting started with {{ mes-name }}
+
+{% include [Elasticsearch-end-of-service](../_includes/mdb/mes/note-end-of-service.md) %}
 
 To get started with the service:
 
-1. [{#T}](#cluster-create).
+1. [{#T}](#cluster-create)
 
 
-1. [{#T}](#configuring-security-groups).
+1. [{#T}](#configuring-security-groups)
 
 
-1. [{#T}](#connect).
+1. [{#T}](#connect)
 
-1. [{#T}](#connect-kibana).
+1. [{#T}](#connect-kibana)
 
 
 ## Getting started {#before-you-begin}
@@ -37,30 +44,24 @@ These instructions assume that you're connecting to the cluster from the interne
 ## Create a cluster {#cluster-create}
 
 1. In the [management console]({{ link-console-main }}), select the folder where you want to create a cluster.
-1. Select **{{ mes-name }}**.
-1. Click **Create cluster**. This process is described in detail in [{#T}](operations/cluster-create.md).
+1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+1. Click **{{ ui-key.yacloud.mdb.clusters.button_create }}**. This process is described in detail in [{#T}](operations/cluster-create.md).
 1. Set the cluster parameters.
 
    To access the Kibana web interface, request public access:
-   1. Under **Hosts**, change the settings of the host with the _Data node_ role by clicking ![image](../_assets/pencil.svg) for the host.
-   1. Select **Public access**.
-   1. Click **Save**.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_host }}**, change the settings of the host with the _Data node_ role by clicking ![image](../_assets/pencil.svg) for the host.
+   1. Select **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}**.
+   1. Click **{{ ui-key.yacloud.mdb.hosts.dialog.button_choose }}**.
 
    Public access can be requested for one or more hosts with the role _Data node_. After creating the cluster, you can [connect to Kibana](#connect-kibana) on these hosts. You may also need to [set up security groups](operations/cluster-connect.md#configuring-security-groups) to connect to the cluster. 
 
    {% include [mes-tip-public-kibana](../_includes/mdb/mes-tip-connecting-to-public-kibana.md) %}
 
-1. Click **Create**.
+1. Click **{{ ui-key.yacloud.common.create }}**.
 1. Wait until the cluster is ready: its status on the {{ mes-name }} dashboard changes to **Creating** and then to **Alive**. This may take some time.
 
 
 ## Configure security groups {#configuring-security-groups}
-
-{% note info %}
-
-{% include [security-groups-note](../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
 
 [Configure security groups](operations/cluster-connect.md#configuring-security-groups) for the cloud network to enable all the relevant traffic between the cluster and the connecting host.
 

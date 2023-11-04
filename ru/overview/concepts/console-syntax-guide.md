@@ -1,3 +1,8 @@
+---
+title: "Работа с {{ yandex-cloud }} CLI и API в Microsoft Windows"
+description: "Сервисы {{ yandex-cloud }} предоставляют различные интерфейсы для решения ваших задач."
+---
+
 # Работа с {{ yandex-cloud }} CLI и API в Microsoft Windows
 
 {% include [interface architecture](../../_includes/overview/console-syntax.md) %}
@@ -108,7 +113,7 @@
    | Удалить файл | `rm` | `del` | `del`, `Remove-Item` |
    | Сравнить содержимое файлов | `diff` | `fc` | `diff`, `Get-Content`, `Compare-Object` |
    | Найти строки в файле или свойства объекта | `grep` | `find` | `Select-String`, `Where-Object` |
-   | Вывести справка по команде | `man <команда>` | `<команда> /?` | `Get-Help <команда>` |
+   | Вывести справку по команде | `man <команда>` | `<команда> /?` | `Get-Help <команда>` |
    | Вывести имя текущей папки | `pwd` | `cd` | `$PWD` |
    | Создать папку | `mkdir` | `md` | `mkdir`, `New-Item` |
    | Вывести текущие дата и время | `date` | `time` | `Get-Date` |

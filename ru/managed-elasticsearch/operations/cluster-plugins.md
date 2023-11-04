@@ -1,3 +1,8 @@
+---
+title: "Как управлять плагинами {{ ES }}"
+description: "Следуя данной инструкции, вы научитесь управлять плагинами {{ ES }}."
+---
+
 # Управление плагинами {{ ES }}
 
 {% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
@@ -17,7 +22,7 @@
     Чтобы получить список плагинов кластера, выполните команду:
 
     ```bash
-    {{ yc-mdb-es }} cluster get <идентификатор или имя кластера>
+    {{ yc-mdb-es }} cluster get <имя_или_идентификатор_кластера>
     ```
 
     Включенные плагины будут перечислены в списке `plugins`.
@@ -47,8 +52,8 @@
     Чтобы изменить плагины кластера, передайте их список в параметре `--plugins` команды CLI. При этом плагины, не упомянутые в списке, будут выключены.
 
     ```bash
-    {{ yc-mdb-es }} cluster update <идентификатор или имя кластера> \
-       --plugins=<имя плагина 1>,...,<имя плагина N>
+    {{ yc-mdb-es }} cluster update <имя_или_идентификатор_кластера> \
+       --plugins=<имя_плагина_1>,...,<имя_плагина_N>
     ```
 
     Идентификатор и имя кластера можно [получить со списком кластеров в каталоге](cluster-list.md#list-clusters).
@@ -62,11 +67,11 @@
     1. Добавьте к описанию кластера {{ mes-name }} в блоке `config` поле `plugins` со списком плагинов:
 
         ```hcl
-        resource "yandex_mdb_elasticsearch_cluster" "<имя кластера>" {
+        resource "yandex_mdb_elasticsearch_cluster" "<имя_кластера>" {
           ...
           config {
             ...
-            plugins = [ "<список имен плагинов>" ]
+            plugins = [ "<список_имен_плагинов>" ]
             ...
           }
           ...
@@ -147,7 +152,7 @@
 
 * [repository-azure](https://www.elastic.co/guide/en/elasticsearch/plugins/current/repository-azure.html)
 
-    Добавляет поддержку хранилища Azure Blob в качестве репозитория [снапшотов](https://cloud.yandex.ru/docs/glossary/snapshot).
+    Добавляет поддержку хранилища Azure Blob в качестве репозитория [снапшотов](../../glossary/snapshot.md).
 
 * [repository-gcs](https://www.elastic.co/guide/en/elasticsearch/plugins/current/repository-gcs.html)
 

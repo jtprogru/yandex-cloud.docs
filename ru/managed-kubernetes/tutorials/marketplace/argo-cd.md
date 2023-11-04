@@ -52,7 +52,7 @@
 
 - С помощью {{ TF }}
 
-  1. Если у вас еще нет {{ TF }}, [установите его](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  1. {% include [terraform-install](../../../_includes/terraform-install.md) %}
   1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
   1. Скачайте в ту же рабочую директорию файл конфигурации кластера [k8s-argocd.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/managed-kubernetes/k8s-argocd.tf). В файле описаны:
      * [Сеть](../../../vpc/concepts/network.md#network).
@@ -260,6 +260,9 @@
 ### Установите Argo CD в кластер {{ k8s }} {#install}
 
 1. Установите Argo CD согласно [инструкции](../../operations/applications/argo-cd.md).
+
+   {% include [Install kubectl](../../../_includes/managed-kubernetes/note-node-group-internet-access.md) %}
+
 1. Настройте переадресацию порта сервиса `argocd-server` на локальный компьютер и подключитесь к кластеру {{ k8s }}:
 
    ```bash

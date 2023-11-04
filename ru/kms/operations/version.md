@@ -1,6 +1,6 @@
 # Управление версиями ключа
 
-Версии ключей можно делать основными (основная версия ключа по умолчанию используется для шифрования и расшифровки) и удалять. Чтобы создать новую версию ключа, [ротируйте](key.md#rotate) его.
+Версии ключей можно делать основными (основная версия ключа по умолчанию используется для шифрования и расшифрования) и удалять. Чтобы создать новую версию ключа, [ротируйте](key.md#rotate) его.
 
 ## Сделать версию основной {#make-primary}
 
@@ -11,9 +11,10 @@
 - Консоль управления
 
   1. Войдите в [консоль управления]({{ link-console-main }}).
-  1. Выберите сервис **{{ kms-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+  1. На панели слева выберите ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
   1. Нажмите на нужный ключ в списке, чтобы открыть страницу с его атрибутами.
-  1. Нажмите значок ![menu](../../_assets/horizontal-ellipsis.svg) в строке нужной версии и выберите пункт меню **Сделать основной**.
+  1. В строке нужной версии нажмите значок ![menu](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.kms.symmetric-key.overview.button_action-set-primary }}**.
 
 - CLI
 
@@ -29,10 +30,10 @@
      +----------------------+---------+--------+-----------+
      |          ID          | PRIMARY | STATUS | ALGORITHM |
      +----------------------+---------+--------+-----------+
-     | abjhduu82ao0r0tkjlp2 | true    | ACTIVE | AES_128   |
-     | abj8cvn99nam26f0f4a3 | false   | ACTIVE | AES_128   |
-     | abjed9ciau8eatb0pg93 | false   | ACTIVE | AES_256   |
-     | abjvejjvfktqc4hsqpss | false   | ACTIVE | AES_128   |
+     | abjhduu82ao0******** | true    | ACTIVE | AES_128   |
+     | abj8cvn99nam******** | false   | ACTIVE | AES_128   |
+     | abjed9ciau8e******** | false   | ACTIVE | AES_256   |
+     | abjvejjvfktq******** | false   | ACTIVE | AES_128   |
      +----------------------+---------+--------+-----------+
      ```
 
@@ -40,7 +41,7 @@
 
      ```
      yc kms symmetric-key set-primary-version example-key-1 \
-       --version-id abj8cvn99nam26f0f4a3
+       --version-id abj8cvn99nam********
      ```
 
 - API
@@ -49,7 +50,7 @@
 
 {% endlist %}
 
-При следующем запросе на шифрование или расшифровку, в котором не указана конкретная версия ключа, будет использована новая основная версия.
+При следующем запросе на шифрование или расшифрование, в котором не указана конкретная версия ключа, будет использована новая основная версия.
 
 ## Удалить версию ключа {#delete}
 
@@ -68,11 +69,12 @@
   Чтобы удалить версию:
 
   1. Войдите в [консоль управления]({{ link-console-main }}).
-  1. Выберите сервис **{{ kms-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+  1. На панели слева выберите ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
   1. Нажмите на нужный ключ в списке, чтобы открыть страницу с его атрибутами.
-  1. Нажмите значок ![menu](../../_assets/horizontal-ellipsis.svg) в строке нужной версии и выберите пункт меню **Запланировать удаление**.
+  1. В строке нужной версии нажмите значок ![menu](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.kms.symmetric-key.overview.button_action-schedule-destruction }}**.
 
-  Версия перейдет в статус `Scheduled for destruction`, а в столбце **Дата удаления** будет указан срок, на который запланировано удаление.
+  Версия перейдет в статус `Scheduled for destruction`, а в столбце **{{ ui-key.yacloud.kms.symmetric-key.overview.column_version-destroy }}** будет указан срок, на который запланировано удаление.
 
 - CLI
 
@@ -90,10 +92,10 @@
      +----------------------+---------+--------+-----------+
      |          ID          | PRIMARY | STATUS | ALGORITHM |
      +----------------------+---------+--------+-----------+
-     | abj8cvn99nam26f0f4a3 | true    | ACTIVE | AES_128   |
-     | abjed9ciau8eatb0pg93 | false   | ACTIVE | AES_256   |
-     | abjhduu82ao0r0tkjlp2 | false   | ACTIVE | AES_128   |
-     | abjvejjvfktqc4hsqpss | false   | ACTIVE | AES_128   |
+     | abj8cvn99nam******** | true    | ACTIVE | AES_128   |
+     | abjed9ciau8e******** | false   | ACTIVE | AES_256   |
+     | abjhduu82ao0******** | false   | ACTIVE | AES_128   |
+     | abjvejjvfktq******** | false   | ACTIVE | AES_128   |
      +----------------------+---------+--------+-----------+
      ```
 
@@ -101,7 +103,7 @@
 
      ```
      yc kms symmetric-key schedule-version-destruction example-key \
-       --version-id abjed9ciau8eatb0pg93
+       --version-id abjed9ciau8e********
      ```
 
      Версия перейдет в статус `SCHEDULED_FOR_DESTRUCTION`, а в поле `destroy_at` будет указано время, на которое запланировано удаление.
@@ -121,9 +123,10 @@
 - Консоль управления
 
   1. Войдите в [консоль управления]({{ link-console-main }}).
-  1. Выберите сервис **{{ kms-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_kms }}**.
+  1. На панели слева выберите ![image](../../_assets/kms/symmetric-key.svg) **{{ ui-key.yacloud.kms.switch_symmetric-keys }}**.
   1. Нажмите на нужный ключ в списке, чтобы открыть страницу с его атрибутами.
-  1. Нажмите значок ![menu](../../_assets/horizontal-ellipsis.svg) в строке нужной версии и выберите пункт меню **Отменить удаление**.
+  1. В строке нужной версии нажмите значок ![menu](../../_assets/horizontal-ellipsis.svg) и выберите **{{ ui-key.yacloud.kms.symmetric-key.overview.button_action-cancel-destruction }}**.
   
   Версия вернется в статус `Active`.
 
@@ -141,10 +144,10 @@
      +----------------------+---------+---------------------------+-----------+
      |          ID          | PRIMARY |          STATUS           | ALGORITHM |
      +----------------------+---------+---------------------------+-----------+
-     | abj8cvn99nam26f0f4a3 | true    | ACTIVE                    | AES_128   |
-     | abjed9ciau8eatb0pg93 | false   | SCHEDULED_FOR_DESTRUCTION | AES_256   |
-     | abjhduu82ao0r0tkjlp2 | false   | ACTIVE                    | AES_128   |
-     | abjvejjvfktqc4hsqpss | false   | ACTIVE                    | AES_128   |
+     | abj8cvn99nam******** | true    | ACTIVE                    | AES_128   |
+     | abjed9ciau8e******** | false   | SCHEDULED_FOR_DESTRUCTION | AES_256   |
+     | abjhduu82ao0******** | false   | ACTIVE                    | AES_128   |
+     | abjvejjvfktq******** | false   | ACTIVE                    | AES_128   |
      +----------------------+---------+---------------------------+-----------+
      ```
 
@@ -152,7 +155,7 @@
 
      ```
      yc kms symmetric-key cancel-version-destruction example-key \
-       --version-id abjed9ciau8eatb0pg93
+       --version-id abjed9ciau8e********
      ```
 
      Версия вернется в статус `ACTIVE`.

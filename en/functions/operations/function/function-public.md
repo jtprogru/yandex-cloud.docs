@@ -7,9 +7,9 @@ To allow any user to invoke a function without passing an authorization header, 
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder containing your function.
-   1. Select **{{ sf-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
    1. Select the function you want to make public.
-   1. On the **Overview** page, under **General information,** switch the **Public function** option to on.
+   1. On the **{{ ui-key.yacloud.serverless-functions.item.overview.label_title }}** page, enable **{{ ui-key.yacloud.serverless-functions.item.overview.label_all-users-invoke }}**.
 
 - CLI
 
@@ -33,7 +33,7 @@ To allow any user to invoke a function without passing an authorization header, 
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To make a function public:
 
@@ -42,7 +42,7 @@ To allow any user to invoke a function without passing an authorization header, 
       ```
       resource "yandex_function_iam_binding" "function-iam" {
         function_id = "<function_ID>"
-        role        = "{{ roles-functions-ivoker }}"
+        role        = "{{ roles-functions-invoker }}"
         members = [
           "system:allUsers",
         ]
@@ -55,7 +55,7 @@ To allow any user to invoke a function without passing an authorization header, 
       * `role`: Role to assign.
       * `members`: List of users to assign the role to.
 
-         To make a function public, assign the `{{ roles-functions-ivoker }}` role to all unauthorized users (`allUsers` [system group](../../../iam/concepts/access-control/system-group.md)).
+         To make a function public, assign the `{{ roles-functions-invoker }}` role to all unauthorized users (`allUsers` [system group](../../../iam/concepts/access-control/system-group.md)).
 
       For more information about the parameters of the `yandex_function_iam_binding` resource, see the [provider documentation]({{ tf-provider-resources-link }}/function_iam_binding).
 
@@ -77,7 +77,7 @@ To allow any user to invoke a function without passing an authorization header, 
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -87,7 +87,7 @@ To allow any user to invoke a function without passing an authorization header, 
 
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-      You can check that the function role has been assigned using the [management console]({{ link-console-main }}) or the [CLI command](../../../cli/quickstart.md):
+      You can check that the function role has been assigned using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
 
       ```bash
       yc serverless function list-access-bindings <function_name>

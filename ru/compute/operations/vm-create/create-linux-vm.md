@@ -1,6 +1,6 @@
 ---
 title: "Как создать виртуальную машину Linux на базе публичного образа"
-description: "Следуя данной инструкции вы сможете создать виртуальную машину с операционной системой Linux."
+description: "Следуя данной инструкции, вы сможете создать виртуальную машину с операционной системой Linux."
 ---
 
 # Создать виртуальную машину из публичного образа Linux
@@ -9,6 +9,10 @@ description: "Следуя данной инструкции вы сможете
 {% list tabs %}
 
 - Консоль управления
+
+  
+  @[youtube](https://www.youtube.com/watch?v=PN3b26KXb78)
+
 
   {% include [create-instance-via-console-linux](../../_includes_service/create-instance-via-console-linux.md) %}
 
@@ -135,7 +139,7 @@ description: "Следуя данной инструкции вы сможете
          "cores": "2"
        },
        "metadata": {
-         "user-data": "#cloud-config\nusers:\n  - name: user\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAB3N... user@example.com"
+         "user-data": "#cloud-config\nusers:\n  - name: user\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAB3N... user@example.com"
        },
        "bootDiskSpec": {
          "diskSpec": {
@@ -196,7 +200,8 @@ description: "Следуя данной инструкции вы сможете
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 
      ```hcl

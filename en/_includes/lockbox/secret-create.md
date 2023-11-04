@@ -4,13 +4,13 @@ To create a secret:
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), select the folder where you will be creating your [secret](../../lockbox/concepts/secret.md).
-   1. In the list of services, select **{{ lockbox-short-name }}**.
-   1. Click **Create secret**.
-   1. In the **Name** field, enter a name for the secret.
-   1. (optional) In the **{{ kms-short-name }} Key** field, specify an existing key or [create a new one](../../kms/operations/key.md#create).
+   1. In the [management console]({{ link-console-main }}), select the folder to create the [secret](../../lockbox/concepts/secret.md).
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
+   1. Click **{{ ui-key.yacloud.lockbox.button_create-secret }}**.
+   1. In the **{{ ui-key.yacloud.common.name }}** field, enter a name for the secret.
+   1. (Optional) In the **{{ ui-key.yacloud.lockbox.forms.field_kms-key }}** field, specify an existing key or [create a new one](../../kms/operations/key.md#create).
 
-      The specified {{ kms-short-name }} key is used to encrypt your secret. If you do not specify the key, the secret will be encrypted with a special system key.
+      The specified {{ kms-short-name }} key is used to encrypt your secret. If you do not specify a key, the secret will be encrypted with a special system key.
 
       {% note tip %}
 
@@ -18,13 +18,14 @@ To create a secret:
 
       {% endnote %}
 
-   1. Under **Version**:
+   1. (optional) Enable **{{ ui-key.yacloud.lockbox.forms.field_deletion-protection }}**. You cannot delete a secret with this option enabled. This does not protect the secret's contents.
+   1. Under **{{ ui-key.yacloud.lockbox.forms.section_version }}**:
 
-      * In the **Key** field, enter a non-secret ID.
-      * In the **Value** field, enter the confidential data you want to store.
+      * In the **{{ ui-key.yacloud.lockbox.forms.label_key }}** field, enter a non-secret ID.
+      * In the **{{ ui-key.yacloud.lockbox.forms.label_value }}** field, enter the confidential data you want to store.
 
-      To add more data, click **Add pair** and repeat the steps.
-   1. Click **Create**.
+      To add more data, click **{{ ui-key.yacloud.lockbox.forms.button_add-pair }}** and repeat the steps.
+   1. Click **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -38,37 +39,71 @@ To create a secret:
       yc lockbox secret create --help
       ```
 
-   1. Run the command, specifying the folder name and [cloud ID](../../resource-manager/operations/cloud/get-id.md) in the parameters. You can pass one or more `key` keys. If a secret will contain several values, enter them in a comma-separated list. The example shows two keys:
+   1. Run this command:
+
       ```bash
-      yc lockbox secret create --name <secret name> \
-        --description <secret description> \
-        --payload "[{'key': '<key>', 'text_value': '<text value>'},{'key': '<key>', 'text_value': '<text value>'}]" \
-        --cloud-id <cloud ID> --folder-name <folder name>
+      yc lockbox secret create \
+        --name <secret_name> \
+        --description <secret_description> \
+        --payload "<array_with_secret_contents>" \
+        --cloud-id <cloud_ID> \
+        --folder-id <folder_ID> \
+        --deletion-protection
       ```
+
+      Where:
+
+      * `--name`: Secret name. This is a required parameter.
+      * `--description`: Secret description. This is an optional parameter.
+      * `--payload`: Contents of the secret as a YAML or JSON array.
+
+         You can provide one or more `key` keys at a time. If your secret is going to contain several values, list them separated by commas. If the keys contain binary values, provide them in the `base64` encoding.
+
+         For instance, to save the `username` key with the `myusername` text value or the `avatar` key with a binary value loaded from the `avatar.jpg` file, you can specify:
+         `[{'key': 'username', 'text_value': 'myusername'},{'key': 'avatar', 'binary_value': $(base64 -w 0 ./avatar.jpg)}]`.
+      * `--cloud-id`: [ID of the cloud](../../resource-manager/operations/cloud/get-id.md) where you want to create your secret.
+      * `--folder-id`: [ID of the folder](../../resource-manager/operations/folder/get-id.md) where your secret will be created.
+      * `--deletion-protection`: Secret deletion protection. You cannot delete a secret with this option enabled. This does not protect the secret's contents. This is an optional parameter.
+
+      Sample command for creating a secret:
+
+      ```bash
+      yc lockbox secret create \
+        --name sample-secret \
+        --description sample_secret \
+        --payload "[{'key': 'username', 'text_value': 'myusername'},{'key': 'avatar', 'binary_value': $(base64 -w 0 ./avatar.jpg)}]" \
+        --cloud-id b1gwa87mbaom******** \
+        --folder-id b1qt6g8ht345******** \
+        --deletion-protection
+      ```
+
+      In this example, a secret is created with two keys: one with a text value and one with a binary value.
 
       Result:
 
       ```
-      id: e6q2ad0j9b55tk3d781j
-      folder_id: b1gktjk2rg494evcsd2a
-      created_at: "2021-11-08T19:23:00.383Z"
-      name: <secret name>
-      description: <secret description>
+      id: e6q6nbjfu9m2********
+      folder_id: b1qt6g8ht345********
+      created_at: "2023-10-09T16:29:11.402Z"
+      name: sample-secret
+      description: sample_secret
       status: ACTIVE
       current_version:
-        id: g6q4fn3b6okjkckanaib
-        secret_id: e6e2ei4u9b55gh2d561j
-        created_at: "2021-11-08T19:23:00.383Z"
+        id: e6q0s9airqca********
+        secret_id: e6q6nbjfu9m2********
+        created_at: "2023-10-09T16:29:11.402Z"
         status: ACTIVE
         payload_entry_keys:
-        - <key>
+          - username
+          - avatar
+      deletion_protection: true
       ```
 
 - {{ TF }}
 
    A [secret](../../lockbox/concepts/secret.md) only contains its own metadata, including its name, description, and unique ID. To start using the secret, you need to [create a secret version](../../lockbox/operations/secret-version-manage.md).
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    1. In the configuration file, describe the parameters of the resources you want to create:
 
@@ -103,20 +138,20 @@ To create a secret:
 
       Where:
 
-      * `name`: Secret name. This parameter is required.
+      * `name`: Secret name. This is a required parameter.
       * `description`: Secret description. This is an optional parameter.
-      * `folder_id`: [ID](../../resource-manager/operations/folder/get-id.md) of the folder to create a secret in. This is an optional parameter.
-      * `kms_key_id`: ID of the [{{ kms-short-name }} encryption key](../../kms/concepts/). The specified KMS key is used to encrypt your secret. If you do not specify the key, the secret will be encrypted with a special system key. This is an optional parameter.
+      * `folder_id`: [ID](../../resource-manager/operations/folder/get-id.md) of the folder where you want to create your secret. This is an optional parameter.
+      * `kms_key_id`: ID of the [{{ kms-short-name }} encryption key](../../kms/concepts/). The specified KMS key is used to encrypt your secret. If you do not specify a key, the secret will be encrypted with a special system key. This is an optional parameter.
       * `deletion_protection`: Deletion protection flag. To enable protection, set `true`. To disable protection, set `false`. The default value is `false`. This is an optional parameter.
       * `labels`: Resource [label](../../overview/concepts/services.md#labels) in `<key>:"<value>"` format. This is an optional parameter.
 
-      For more information about the parameters of the `yandex_lockbox_secret` resource in Terraform, see the [provider documentation]({{ tf-provider-resources-link }}/lockbox_secret).
+      For more information about the parameters of the `yandex_lockbox_secret` resource in {{ TF }}, see the [provider documentation]({{ tf-provider-link }}/lockbox_secret).
 
    1. Create resources:
 
       {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
 
-   This will create a secret in the specified folder. You can verify that the secret is there and its configuration is correct using the [management console]({{ link-console-main }}) or the following [CLI](../../cli/quickstart.md) command:
+   This will create a secret in the specified folder. You can check the new secret and its configuration using the [management console]({{ link-console-main }}) or this [CLI](../../cli/quickstart.md) command:
 
    ```bash
    yc lockbox secret get <secret_name>

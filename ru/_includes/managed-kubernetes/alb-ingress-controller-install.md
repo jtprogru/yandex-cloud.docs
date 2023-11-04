@@ -24,33 +24,30 @@
 
 ## Установка с помощью {{ marketplace-full-name }} {#marketplace-install}
 
-1. Перейдите на страницу каталога и выберите сервис **{{ managed-k8s-name }}**.
-1. Нажмите на имя нужного кластера и выберите вкладку ![Marketplace](../../_assets/marketplace.svg) **{{ marketplace-short-name }}**.
-1. В разделе **Доступные для установки приложения** выберите [ALB Ingress Controller](/marketplace/products/yc/alb-ingress-controller) и нажмите кнопку **Использовать**.
+1. Перейдите на страницу каталога и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kubernetes }}**.
+1. Нажмите на имя нужного кластера и выберите вкладку ![Marketplace](../../_assets/marketplace.svg) **{{ ui-key.yacloud.k8s.cluster.switch_marketplace }}**.
+1. В разделе **Доступные для установки приложения** выберите [ALB Ingress Controller](/marketplace/products/yc/alb-ingress-controller) и нажмите кнопку **{{ ui-key.yacloud.marketplace-v2.button_use }}**.
 1. Задайте настройки приложения:
    * **Пространство имен** — выберите [пространство имен](../../managed-kubernetes/concepts/index.md#namespace) или создайте новое.
    * **Название приложения** — укажите название приложения.
    * **Идентификатор каталога** — укажите [идентификатор каталога](../../resource-manager/operations/folder/get-id.md).
    * **Идентификатор кластера** — укажите [идентификатор кластера](../../managed-kubernetes/operations/kubernetes-cluster/kubernetes-cluster-list.md).
-   * **Secret Key** — вставьте содержимое файла `sa-key.json`.
-1. Нажмите кнопку **Установить**.
+   * **Ключ сервисного аккаунта** — вставьте содержимое файла `sa-key.json`.
+1. Нажмите кнопку **{{ ui-key.yacloud.k8s.cluster.marketplace.button_install }}**.
+1. Дождитесь перехода приложения в статус `Deployed`.
 
 
 ## Установка с помощью Helm-чарта {#install-alb-helm}
 
-### Перед началом работы {#before-helm}
+1. {% include [helm-install](helm-install.md) %}
 
-1. {% include [Установка Helm](helm-install.md) %}
-
-1. {% include [Настройка kubectl](kubectl-install.md) %}
+1. {% include [kubectl-install](kubectl-install.md) %}
 
 1. Установите [утилиту `jq`](https://stedolan.github.io/jq/) для потоковой обработки JSON-файлов:
 
    ```bash
    sudo apt update && sudo apt install jq
    ```
-
-### Установка с помощью Helm-чарта {#helm-install}
 
 1. Для установки [Helm-чарта](https://helm.sh/docs/topics/charts/) с Ingress-контроллером выполните команды:
 
@@ -77,6 +74,7 @@
 
 
 * [Практическое руководство по настройке Ingress-контроллера {{ alb-name }}](../../managed-kubernetes/tutorials/alb-ingress-controller.md).
+* [Практическое руководство по настройке логирования для Ingress-контроллеров {{ alb-name }}](../../managed-kubernetes/tutorials/alb-ingress-controller-log-options.md).
 
 
 * [Справочник Ingress-контроллера {{ alb-name }}](../../application-load-balancer/k8s-ref/index.md).

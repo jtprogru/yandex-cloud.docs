@@ -6,20 +6,21 @@ In this scenario, Packer will create and launch a virtual machine with [Debian 1
 
 To create an image:
 
-1. [Install Packer](#install-packer).
-1. [Prepare the image configuration](#prepare-image-config).
-1. [Create an image](#create-image).
-1. [Check the image](#check-image).
+1. [Prepare your cloud](#before-you-begin)
+1. [Install Packer](#install-packer)
+1. [Prepare the image configuration](#prepare-image-config)
+1. [Create an image](#create-image)
+1. [Check the image](#check-image)
 
-If you no longer need a created image, [delete it](#clear-out).
+If you no longer need the image you created, [delete it](#clear-out).
 
 ## Prepare your cloud {#before-you-begin}
 
 {% include [before-you-begin](../_tutorials_includes/before-you-begin.md) %}
 
-* Install the {{ yandex-cloud }} [command-line interface](../../cli/quickstart.md#install).
+* Install the {{ yandex-cloud }} [command line interface](../../cli/quickstart.md#install).
 * [Create](../../vpc/quickstart.md) a cloud network with a single subnet in your folder.
-* [Get](../../iam/concepts/authorization/oauth-token.md) an OAuth token. 
+* Get an [OAuth token]({{ link-cloud-oauth }}) for a [Yandex account](../../iam/concepts/#passport) or an [IAM token](../../iam/operations/iam-token/create-for-federation.md) for a [federated account](../../iam/concepts/federations.md).
 
 
 ### Required paid resources {#paid-resources}
@@ -39,9 +40,38 @@ Download a Packer distribution and install it by following the [instructions on 
 
 You can also download a Packer distribution for your platform from a [mirror](https://hashicorp-releases.yandexcloud.net/packer/). When the download is complete, add the path to the folder with the executable to the `PATH` variable:
 
-```
+```bash
 export PATH=$PATH:/path/to/packer
 ```
+
+### Configure the Yandex Compute Builder plugin {#configure-plugin}
+
+To configure the [plugin](https://developer.hashicorp.com/packer/plugins/builders/yandex):
+
+1. Create a `config.pkr.hcl` file with the following contents:
+
+   ```hcl
+   packer {
+     required_plugins {
+       yandex = {
+         version = ">= 1.1.2"
+         source  = "{{ packer-source-link }}"
+       }
+     }
+   }
+   ```
+
+1. Install the plugin:
+
+   ```bash
+   packer init <config.pkr.hcl_file_path>
+   ```
+
+   Result:
+
+   ```text
+   Installed plugin github.com/hashicorp/yandex v1.1.2 in ...
+   ```
 
 ## Prepare the image configuration {#prepare-image-config}
 
@@ -55,8 +85,8 @@ export PATH=$PATH:/path/to/packer
   "builders": [
     {
       "type":      "yandex",
-      "token":     "<OAuth token>",
-      "folder_id": "<folder ID>",
+      "token":     "<OAuth_or_IAM-token>",
+      "folder_id": "<folder_ID>",
       "zone":      "{{ region-id }}-a",
 
       "image_name":        "debian-11-nginx-not_var{{isotime | clean_resource_name}}",
@@ -64,7 +94,7 @@ export PATH=$PATH:/path/to/packer
       "image_description": "my custom debian with nginx",
 
       "source_image_family": "debian-11",
-      "subnet_id":           "<subnet ID>",
+      "subnet_id":           "<subnet_ID>",
       "use_ipv4_nat":        true,
       "disk_type":           "network-ssd",
       "ssh_username":        "debian"
@@ -85,6 +115,13 @@ export PATH=$PATH:/path/to/packer
   ]
 }
 ```
+
+Where:
+  * `token`: OAuth token for a Yandex account or an IAM token for a federated account.
+  * `folder_id`: [ID of the folder](../../resource-manager/operations/folder/get-id) to create a VM and its image in.
+  * `subnet_ID`: ID of the subnet to create a VM and its image in.
+
+Learn more about image configuration parameters in the [Yandex Compute Builder documentation](https://www.packer.io/docs/builders/yandex).
 
 
 

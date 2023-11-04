@@ -1,8 +1,13 @@
+---
+title: "Как настроить доступ к {{ objstorage-name }} из {{ ES }}-кластера"
+description: "Следуя данной инструкции, вы сможете настроить доступ к {{ objstorage-name }} из {{ ES }}-кластера."
+---
+
 # Настройка доступа к {{ objstorage-name }} из {{ ES }}-кластера
 
 {% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
 
-{{ mes-name }} поддерживает работу с {{ objstorage-full-name }} в качестве репозитория [снапшотов](https://cloud.yandex.ru/docs/glossary/snapshot) {{ ES }}. Это позволяет использовать {{ objstorage-name }}:
+{{ mes-name }} поддерживает работу с {{ objstorage-full-name }} в качестве репозитория [снапшотов](../../glossary/snapshot.md) {{ ES }}. Это позволяет использовать {{ objstorage-name }}:
 
 * для [переноса данных из стороннего кластера {{ ES }} в {{ mes-name }}](../tutorials/migration-via-snapshots.md);
 
@@ -31,13 +36,13 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором хранится нужный бакет. Если бакета не существует — [создайте](../../storage/operations/buckets/create.md) его.
-    1. Выберите сервис **{{ objstorage-name }}**.
-    1. Выберите вкладку **Бакеты**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_storage }}**.
+    1. Выберите вкладку **{{ ui-key.yacloud.storage.switch_buckets }}**.
     1. Настройте [ACL бакета](../../storage/operations/buckets/edit-acl.md):
-        1. В выпадающем списке **Выберите пользователя** укажите сервисный аккаунт, [подключенный к кластеру](#connect-service-account).
+        1. В выпадающем списке **{{ ui-key.yacloud.component.acl-dialog.label_select-placeholder }}** укажите сервисный аккаунт, [подключенный к кластеру](#connect-service-account).
         1. Задайте разрешения `READ и WRITE` для выбранного сервисного аккаунта.
-        1. Нажмите кнопку **Добавить**.
-        1. Нажмите кнопку **Сохранить**.
+        1. Нажмите кнопку **{{ ui-key.yacloud.common.add }}**.
+        1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 {% endlist %}
 
@@ -55,22 +60,22 @@
 1. Зарегистрируйте бакет как репозиторий снапшотов, используя публичный [API {{ ES }}](https://www.elastic.co/guide/en/elasticsearch/reference/current/put-snapshot-repo-api.html):
 
     ```http
-    PUT --cacert ~/.elasticsearch/root.crt https://admin:<пароль>@<FQDN или IP-адрес хоста>:9200/_snapshot/<репозиторий>
+    PUT --cacert ~/.elasticsearch/root.crt https://admin:<пароль>@<FQDN_хоста>:9200/_snapshot/<репозиторий>
     ```
 
     В параметрах запроса укажите бакет, связанный с сервисным аккаунтом кластера:
 
     ```bash
     curl --request PUT \
-         "https://admin:<пароль>@<FQDN или IP-адрес хоста>:9200/_snapshot/<репозиторий>" \
+         "https://admin:<пароль>@<FQDN_хоста>:9200/_snapshot/<репозиторий>" \
          --cacert ~/.elasticsearch/root.crt \
          --header "Content-Type: application/json" \
          --data '{
            "type": "s3",
            "settings": {
              "endpoint": "{{ s3-storage-host }}",
-             "bucket": "<имя бакета>",
-             "base_path": "<путь к каталогу для снапшотов>",
+             "bucket": "<имя_бакета>",
+             "base_path": "<путь_к_каталогу_для_снапшотов>",
              "canned_acl": "bucket-owner-full-control"
            }
          }'

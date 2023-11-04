@@ -1,3 +1,8 @@
+---
+title: "Системные требования к серверам на базе CPU"
+description: "В этой статье описаны системные и программные требования к серверам на базе CPU."
+---
+
 # Системные требования к серверам на базе CPU
 
 {% include [system-requirements](../_includes/speechkit/system-requirements.md) %}

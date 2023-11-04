@@ -18,36 +18,36 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
         * Введите имя и описание триггера.
-        * В поле **Тип** выберите **{{ objstorage-name }}**.
-        * В поле **Запускаемый ресурс** выберите **Функция**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_storage }}**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-    1. В блоке **Настройки {{ objstorage-name }}**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_storage }}**:
 
-        * В поле **Бакет** выберите бакет, для событий с объектами которого хотите создать триггер.
-        * В поле **Типы событий** выберите [события](../../concepts/trigger/os-trigger.md#event), после наступления которых триггер будет запускаться.
-        * (опционально) В поле **Префикс ключа объекта** введите [префикс](../../concepts/trigger/os-trigger.md#filter) для фильтрации.
-        * (опционально) В поле **Суффикс ключа объекта** введите [суффикс](../../concepts/trigger/os-trigger.md#filter) для фильтрации.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_bucket }}** выберите бакет, для событий с объектами которого хотите создать триггер.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_event-types }}** выберите [события](../../concepts/trigger/os-trigger.md#event), после наступления которых триггер будет запускаться.
+        * (Опционально) В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_prefix }}** введите [префикс](../../concepts/trigger/os-trigger.md#filter) для фильтрации.
+        * (Опционально) В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_suffix }}** введите [суффикс](../../concepts/trigger/os-trigger.md#filter) для фильтрации.
 
-    1. В блоке **Настройки функции** выберите функцию и укажите:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}** выберите функцию и укажите:
 
         {% include [function-settings](../../../_includes/functions/function-settings.md) %}
 
-    1. (Опционально) В блоке **Настройки повторных запросов**:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
         {% include [repeat-request.md](../../../_includes/functions/repeat-request.md) %}
 
-    1. (Опционально) В блоке **Настройки Dead Letter Queue** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -57,20 +57,24 @@
 
     Чтобы создать триггер, который вызывает функцию, выполните команду:
 
+    
     ```bash
     yc serverless trigger create object-storage \
-      --name <имя триггера> \
-      --bucket-id <идентификатор бакета> \
-      --prefix '<префикс ключа объекта>' \
-      --suffix '<суффикс ключа объекта>' \
+      --name <имя_триггера> \
+      --bucket-id <идентификатор_бакета> \
+      --prefix '<префикс_ключа_объекта>' \
+      --suffix '<суффикс_ключа_объекта>' \
       --events 'create-object','delete-object','update-object' \
-      --invoke-function-id <идентификатор функции> \
-      --invoke-function-service-account-id <идентификатор сервисного аккаунта> \
+      --batch-size <размер_группы> \
+      --batch-cutoff <максимальное_время_ожидания> \
+      --invoke-function-id <идентификатор_функции> \
+      --invoke-function-service-account-id <идентификатор_сервисного_аккаунта> \
       --retry-attempts 1 \
       --retry-interval 10s \
-      --dlq-queue-id <идентификатор очереди Dead Letter Queue> \
-      --dlq-service-account-id <идентификатор сервисного аккаунта>
+      --dlq-queue-id <идентификатор_очереди_Dead_Letter_Queue> \
+      --dlq-service-account-id <идентификатор_сервисного_аккаунта>
     ```
+  
 
     Где:
 
@@ -79,7 +83,9 @@
     * `--prefix` — [префикс](../../concepts/trigger/os-trigger.md#filter) ключа объекта в бакете. Необязательный параметр. Используется для фильтрации.
     * `--suffix` — [суффикс](../../concepts/trigger/os-trigger.md#filter) ключа объекта в бакете. Необязательный параметр. Используется для фильтрации.
     * `--events` — [события](../../concepts/trigger/os-trigger.md#event), после наступления которых триггер запускается.
-    
+
+    {% include [batch-settings-events](../../../_includes/functions/batch-settings-events.md) %}
+
     {% include [trigger-cli-param](../../../_includes/functions/trigger-cli-param.md) %}
 
     Результат:
@@ -98,6 +104,9 @@
         bucket_id: s3-for-trigger
         prefix: dev
         suffix: 12.jpg
+        batch_settings:
+          size: "3"
+          cutoff: 20s
         invoke_function:
           function_id: d4eofc7n0m03********
           function_tag: $latest
@@ -115,7 +124,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы создать триггер для {{ objstorage-name }}:
 

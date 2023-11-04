@@ -22,12 +22,6 @@ Regardless of the connection method, {{ mos-name }} only supports cluster host c
 
 ## Configuring security groups {#security-groups}
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
-
 {% include notitle [Configuring security groups](../../_includes/mdb/mos/configuring-security-groups.md) %}
 
 
@@ -35,38 +29,22 @@ Regardless of the connection method, {{ mos-name }} only supports cluster host c
 
 To use an encrypted connection, get an SSL certificate:
 
-{% list tabs %}
-
-- Linux (Bash)
-
-   {% include [install-certificate](../../_includes/mdb/mos/install-certificate.md) %}
-
-   The certificate will be saved in the `$HOME/.opensearch/root.crt` directory.
-
-- Windows (PowerShell)
-
-   ```powershell
-   mkdir $HOME\.opensearch; curl -o $HOME\.opensearch\root.crt {{ crt-web-path }}
-   ```
-
-   The certificate will be saved in the `$HOME\.opensearch\root.crt` directory.
-
-{% endlist %}
+{% include [install-certificate](../../_includes/mdb/mos/install-certificate.md) %}
 
 ## Connecting to {{ OS }} Dashboards {#dashboards}
 
 
 You can connect to {{ OS }} Dashboards:
 
-* Over the internet, if a host with the `DASHBOARDS` role is assigned a public IP address.
-* Using a VM instance in {{ yandex-cloud }}, if no host with the `DASHBOARDS` role is assigned a public IP address.
+* Over the internet, if public access is enabled for a host with the `DASHBOARDS` role.
+* Using a VM instance in {{ yandex-cloud }}, if public access is not enabled for any hosts with the `DASHBOARDS` role.
 
 {% list tabs %}
 
 - Over the internet
 
    1. Install the [SSL certificate](#ssl-certificate) in the browser's trusted root certificate store ([instructions](https://wiki.mozilla.org/PSM:Changing_Trust_Settings#Trusting_an_Additional_Root_Certificate) for Mozilla Firefox).
-   1. On the cluster page, in the management console, click **OpenSearch Dashboards** or go to `https://c-< cluster ID>.rw.{{ dns-zone }}>` in your browser.
+   1. On the cluster page, in the management console, click **{{ ui-key.yacloud.opensearch.title_opensearch-dashboards-section }}** or go to `https://c-< cluster ID>.rw.{{ dns-zone }}>` in your browser.
 
       You can get the cluster ID with a [list of clusters in the folder](./cluster-list.md#list-clusters).
 
@@ -148,6 +126,34 @@ When using the {{ OS }} Dashboards API:
 
 {% endnote %}
 
+## Before you connect from a Docker container {#connection-docker}
+
+To connect to a {{ mos-name }} cluster from a Docker container, add the following lines to the Dockerfile:
+
+{% list tabs %}
+
+
+- Connecting without using SSL
+
+   ```bash
+   RUN apt-get update && \
+       apt-get install curl --yes
+   ```
+
+
+- Connecting via SSL
+
+   ```bash
+   RUN apt-get update && \
+       apt-get install wget curl --yes && \
+       mkdir --parents ~/.opensearch && \
+       wget "{{ crt-web-path }}" \
+            --output-document ~/.opensearch/root.crt && \
+       chmod 0600 ~/.opensearch/root.crt
+   ```
+
+{% endlist %}
+
 ## Sample connection strings {#code-examples}
 
 Before connecting, [prepare a certificate](#ssl-cetificate).
@@ -164,4 +170,4 @@ Just like usual FQDNs, which can be requested with a [list of cluster hosts](hos
 
 ### Available Dashboards host {#fqdn-dashboards}
 
-A FQDN like `c-<cluster ID>.rw.{{ dns-zone }}` always points to the available {{ OS }} host with the `DASHBOARDS` role in the cluster. You can get the cluster ID with a [list of clusters in the folder](./cluster-list.md#list-clusters).
+Such FQDN as `c-<cluster ID>.rw.{{ dns-zone }}` always points to the available {{ OS }} host with the `DASHBOARDS` role in the cluster. You can get the cluster ID with a [list of clusters in the folder](./cluster-list.md#list-clusters).

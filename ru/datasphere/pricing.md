@@ -22,6 +22,10 @@ editable: false
 
 Также отдельно оплачивается [хранение данных](#storage) в датасетах и расширение хранилища проекта.
 
+### Запуск заданий {{ ml-platform-name }} Jobs {#jobs}
+
+При удаленном запуске вычислений с помощью [{{ ml-platform-name }} Jobs](concepts/jobs.md) вы платите за время вычислений на выбранной конфигурации вычислительных ресурсов. Дополнительно оплачивается [хранение данных](#prices-jobs), необходимых для запуска заданий: кеш, логи, входные данные и результаты выполнения задания.
+
 ### Эксплуатация моделей {#node}
 
 {% include [pricing nodes](../_includes/datasphere/nodes-pricing-warn.md) %}
@@ -45,32 +49,18 @@ editable: false
 
 Если вам требуется хранить большие объемы данных, вы можете использовать сервис {{ objstorage-full-name }}. В этом случае хранение данных будет тарифицироваться по [правилам тарификации {{ objstorage-name }}](../storage/pricing.md).
 
+[Хранение моделей](#prices-models) оплачивается отдельно. Тарификация зависит от размера модели, размер рассчитывается в ГБ и округляется до целого значения в большую сторону. 
+
 {% include [pricing-gb-size](../_includes/pricing-gb-size.md) %}
 
 Цены за месяц использования формируются из расчета 720 часов в месяц.
 
 ## Цены {#prices}
 
-Цены использования конфигураций действуют для [{{ ml-platform-name }} {{ ds }}](concepts/project.md#serverless), [{{ ml-platform-name }} {{ dd }}](concepts/project.md#dedicated) и при [эксплуатации моделей](../datasphere/concepts/deploy/index.md#node).
+Цены использования конфигураций действуют для [{{ ml-platform-name }} {{ ds }}](concepts/project.md#serverless), [фоновых операций](../datasphere/concepts/async.md), [{{ ml-platform-name }} {{ dd }}](concepts/project.md#dedicated) и при [эксплуатации моделей](../datasphere/concepts/deploy/index.md#node).
 
 
 {% include [rub-unit-and-resource.md](../_pricing/datasphere/rub-unit-and-resource.md) %}
-
-
-
-
-### Выполнение фоновых операций {#async}
-
-Подробнее про [фоновые операции](../datasphere/concepts/async.md).
-
-{% note alert %}
-
-С 10 июля 2023 года выполнение фоновых операций будет тарифицироваться по правилам [использования вычислительных ресурсов](#paug).
-
-{% endnote %}
-
-
-{% include [rub-async.md](../_pricing/datasphere/rub-async-new.md) %}
 
 
 
@@ -89,6 +79,22 @@ editable: false
 
 
 {% include [rub-data-storage.md](../_pricing/datasphere/rub-dataset.md) %}
+
+
+
+
+#### Модели {#prices-models}
+
+
+{% include [rub-model.md](../_pricing/datasphere/rub-model.md) %}
+
+
+
+
+#### {{ ml-platform-name }} Jobs {#prices-jobs}
+
+
+{% include [rub-jobs.md](../_pricing/datasphere/rub-jobs.md) %}
 
 
 

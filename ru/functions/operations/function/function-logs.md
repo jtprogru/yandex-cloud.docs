@@ -12,9 +12,9 @@ description: "Вы можете посмотреть график монитор
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится функция.
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Нажмите на функцию, журнал выполнения которой хотите посмотреть.
-    1. В открывшемся окне перейдите в раздел **Логи** и укажите период, за который хотите посмотреть логи. По умолчанию задан период 1 час.
+    1. В открывшемся окне перейдите в раздел **{{ ui-key.yacloud.serverless-functions.item.switch_logs }}** и укажите период, за который хотите посмотреть логи. По умолчанию задан период 1 час.
     
 - CLI
     
@@ -48,9 +48,11 @@ description: "Вы можете посмотреть график монитор
     
     {% endnote %}
 
-- Yandex Cloud Toolkit
 
-    Посмотреть журнал выполнения функции можно с помощью [плагина Yandex Cloud Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+- {{ yandex-cloud }} Toolkit
+
+    Посмотреть журнал выполнения функции можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 {% endlist %}
 

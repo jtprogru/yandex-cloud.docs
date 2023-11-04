@@ -6,7 +6,7 @@ Create a [trigger for {{ objstorage-name }}](../concepts/trigger/os-trigger.md) 
 
 {% include [trigger-before-you-begin](../../_includes/serverless-containers/trigger-before-you-begin.md) %}
 
-* [Bucket](../../storage/concepts/bucket.md) whose object events will fire the trigger. If you don't have a bucket, [create one](../../storage/operations/buckets/create.md).
+* [Bucket](../../storage/concepts/bucket.md) whose object events will fire the trigger. If you do not have a bucket, [create one](../../storage/operations/buckets/create.md) with restricted access.
 
 ## Creating a trigger {#trigger-create}
 
@@ -18,34 +18,34 @@ Create a [trigger for {{ objstorage-name }}](../concepts/trigger/os-trigger.md) 
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create your trigger.
 
-   1. Open **{{ serverless-containers-name }}**.
+   1. Open **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
 
-   1. On the left-hand panel, select ![image](../../_assets/functions/triggers.svg) **Triggers**.
+   1. In the left-hand panel, select ![image](../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-   1. Under **Basic parameters**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
       * Enter a name and description for the trigger.
-      * In the **Type** field, select **{{ objstorage-name }}**.
-      * In the **Launched resource** field, select **Container**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** field, select `{{ ui-key.yacloud.serverless-functions.triggers.form.label_storage }}`.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** field, select `{{ ui-key.yacloud.serverless-functions.triggers.form.label_container }}`.
 
-   1. Under **{{ objstorage-name }} settings**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_storage }}**:
 
-      * In the **Bucket** field, select the bucket whose object events you want to create a trigger for.
-      * In the **Event types** field, select the events that will fire the trigger.
-      * (optional) In the **Object key prefix** field, enter a prefix for filtering.
-      * (optional) In the **Object key suffix** field, enter a suffix for filtering.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_bucket }}** field, select the bucket whose object events you want to create a trigger for.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_event-types }}** field, select the events that will fire the trigger.
+      * (Optional) In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_prefix }}** field, enter a prefix for filtering.
+      * (Optional) In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_suffix }}** field, enter a suffix for filtering.
 
    1. {% include [container-settings](../../_includes/serverless-containers/container-settings.md) %}
 
-   1. (optional) Under **Repeat request settings**:
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
       {% include [repeat-request](../../_includes/serverless-containers/repeat-request.md) %}
 
-   1. (optional) **Under Dead Letter Queue settings**, select the Dead Letter Queue and the service account with write privileges for this queue.
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}**, select the Dead Letter Queue and the service account with write privileges for this queue.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -55,6 +55,7 @@ Create a [trigger for {{ objstorage-name }}](../concepts/trigger/os-trigger.md) 
 
    To create a trigger that invokes a container, run this command:
 
+   
    ```bash
    yc serverless trigger create object-storage \
      --name <trigger_name> \
@@ -62,6 +63,8 @@ Create a [trigger for {{ objstorage-name }}](../concepts/trigger/os-trigger.md) 
      --prefix '<object_key_prefix>' \
      --suffix '<object_key_suffix>' \
      --events 'create-object','delete-object','update-object' \
+     --batch-size <batch_size> \
+     --batch-cutoff <maximum_wait_time> \
      --invoke-container-id <container_ID> \
      --invoke-container-service-account-id <service_account_ID> \
      --retry-attempts 1 \
@@ -70,18 +73,22 @@ Create a [trigger for {{ objstorage-name }}](../concepts/trigger/os-trigger.md) 
      --dlq-service-account-id <service_account_ID>
    ```
 
+
    Where:
 
    * `--name`: Trigger name.
    * `--bucket-id`: Bucket ID.
-   * `--prefix`: Bucket object key [prefix](../concepts/trigger/os-trigger.md#filter). This is an optional parameter. Used for filtering.
-   * `--suffix`: Bucket object key [suffix](../concepts/trigger/os-trigger.md#filter). This is an optional parameter. Used for filtering.
-   * `--events`: [Events](../concepts/trigger/os-trigger.md#event) after which the trigger activates.
+   * `--prefix`: Bucket object key [prefix](../concepts/trigger/os-trigger.md#filter). This is an optional parameter. It is used for filtering.
+   * `--suffix`: Bucket object key [suffix](../concepts/trigger/os-trigger.md#filter). This is an optional parameter. It is used for filtering.
+   * `--events`: [Events](../concepts/trigger/os-trigger.md#event) activating the trigger.
+
+   {% include [batch-settings-events](../../_includes/serverless-containers/batch-settings-events.md) %}
 
    {% include [trigger-cli-param](../../_includes/serverless-containers/trigger-cli-param.md) %}
 
    Result:
 
+   
    ```text
    id: a1s5msktij**********
    folder_id: b1gmit33hg**********
@@ -96,6 +103,9 @@ Create a [trigger for {{ objstorage-name }}](../concepts/trigger/os-trigger.md) 
        bucket_id: s3-for-trigger
        prefix: dev
        suffix: 12.jpg
+       batch_settings:
+         size: "3"
+         cutoff: 20s
        invoke_container:
          container_id: bba5jb38o8**********
          service_account_id: aje3932acd**********
@@ -107,6 +117,7 @@ Create a [trigger for {{ objstorage-name }}](../concepts/trigger/os-trigger.md) 
            service-account-id: aje3932acd**********
    status: ACTIVE
    ```
+
 
 - API
 

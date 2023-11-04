@@ -1,10 +1,9 @@
-# Set up the test target security group
+---
+title: "How to configure test target security groups"
+description: "This guide describes how you can configure test target security groups."
+---
 
-{% note info %}
-
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-{% endnote %}
+# Configuring test target security groups
 
 {% include [security-groups-target](../../_includes/load-testing/security-groups-target.md) %}
 

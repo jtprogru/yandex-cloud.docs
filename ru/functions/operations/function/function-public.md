@@ -7,9 +7,9 @@
 - Консоль управления
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится функция.
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
     1. Выберите функцию, которую хотите сделать публичной.
-    1. На странице **Обзор**, в разделе **Общая информация**, переведите переключатель **Публичная функция** в активное состояние.
+    1. На странице **{{ ui-key.yacloud.serverless-functions.item.overview.label_title }}** включите опцию **{{ ui-key.yacloud.serverless-functions.item.overview.label_all-users-invoke }}**.
     
 - CLI 
 
@@ -33,7 +33,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы сделать функцию публичной:
 
@@ -42,7 +42,7 @@
      ```
      resource "yandex_function_iam_binding" "function-iam" {
        function_id = "<идентификатор_функции>"
-       role        = "{{ roles-functions-ivoker }}"
+       role        = "{{ roles-functions-invoker }}"
        members = [
          "system:allUsers",
        ]
@@ -55,7 +55,7 @@
      * `role` — роль, которую нужно назначить.
      * `members` — список пользователей, которым нужно назначить роль.
 
-        Чтобы функция стала публичной, назначьте роль `{{ roles-functions-ivoker }}` всем неавторизованным пользователям ([системной группе](../../../iam/concepts/access-control/system-group.md) `allUsers`).
+        Чтобы функция стала публичной, назначьте роль `{{ roles-functions-invoker }}` всем неавторизованным пользователям ([системной группе](../../../iam/concepts/access-control/system-group.md) `allUsers`).
 
      Более подробную информацию о параметрах ресурса `yandex_function_iam_binding` см. в [документации провайдера]({{ tf-provider-resources-link }}/function_iam_binding).
 

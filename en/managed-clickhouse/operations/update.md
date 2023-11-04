@@ -2,7 +2,9 @@
 
 After creating a cluster, you can:
 
+
 * [Change service account settings](#change-service-account).
+
 
 * [{#T}](#change-resource-preset).
 
@@ -20,21 +22,23 @@ After creating a cluster, you can:
 * [Change cluster security groups](#change-sg-set).
 
 
+* [Changing hybrid storage settings](#change-hybrid-storage).
+
+
 ## Change service account settings {#change-service-account}
 
 {% list tabs %}
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Select the cluster and click **Edit cluster** in the top panel.
-   
-   1. Under **Service settings**, select the desired service account from the list or [create a new one](../../iam/operations/sa/create.md). For more information about setting up service accounts, see [{#T}](s3-access.md).
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Select the cluster and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** in the top panel.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_service-settings }}**, select the service account you need from the list, or [create a new one](../../iam/operations/sa/create.md). For more information about setting up service accounts, see [{#T}](s3-access.md).
 
-
-        {% include [mdb-service-account-update](../../_includes/mdb/service-account-update.md) %}
+      {% include [mdb-service-account-update](../../_includes/mdb/service-account-update.md) %}
 
 {% endlist %}
+
 
 ## Changing the host class {#change-resource-preset}
 
@@ -52,11 +56,11 @@ The minimum number of cores per {{ ZK }} host depends on the total number of c
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Select the cluster and click **Edit cluster** in the top panel.
-   1. To change the {{ CH }} host class, select the platform, VM type, and the desired host class under **Resources**.
-   1. To change the {{ ZK }} host class, select the platform, VM type, and the desired {{ ZK }} host class under **{{ ZK }} host class**.
-   1. Click **Save changes**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Select the cluster and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** in the top panel.
+   1. To change the {{ CH }} host class, select the platform, VM type, and required host class under **{{ ui-key.yacloud.mdb.forms.new_section_resource }}**.
+   1. To change the {{ ZK }} host class, select the platform, VM type, and required {{ ZK }} host class under **{{ ui-key.yacloud.mdb.forms.section_zookeeper-resource }}**.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -91,8 +95,8 @@ The minimum number of cores per {{ ZK }} host depends on the total number of c
    1. Specify the class in the update cluster command:
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <cluster name> \
-         --clickhouse-resource-preset <class ID>
+      {{ yc-mdb-ch }} cluster update <cluster_name_or_ID> \
+         --clickhouse-resource-preset=<class_ID>
       ```
 
       {{ mch-short-name }} will run the update host class command for the cluster.
@@ -108,17 +112,17 @@ The minimum number of cores per {{ ZK }} host depends on the total number of c
    1. In the {{ mch-name }} cluster description, change the value of the `resource_preset_id` parameter in the `clickhouse.resources` and `zookeeper.resources` blocks for {{ CH }} and {{ ZK }} hosts, respectively:
 
       ```hcl
-      resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
+      resource "yandex_mdb_clickhouse_cluster" "<cluster_name>" {
         ...
         clickhouse {
           resources {
-            resource_preset_id = "<{{ CH }} host class>"
+            resource_preset_id = "<{{ CH }}_host_class>"
             ...
           }
         }
         zookeeper {
           resources {
-            resource_preset_id = "<{{ ZK }} host class>"
+            resource_preset_id = "<{{ ZK }}_class_host>"
             ...
           }
         }
@@ -129,7 +133,7 @@ The minimum number of cores per {{ ZK }} host depends on the total number of c
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -168,10 +172,10 @@ In clusters with {{ CK }}, {{ ZK }} hosts cannot be used. To learn more, see [Re
 
    To increase the cluster storage size:
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Select the cluster and click **Edit cluster** in the top panel.
-   1. Under **Storage size**, specify the required value.
-   1. Click **Save changes**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Select the cluster and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** in the top panel.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_disk }}**, specify the required value.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -207,17 +211,17 @@ In clusters with {{ CK }}, {{ ZK }} hosts cannot be used. To learn more, see [Re
    1. In the {{ mch-name }} cluster description, change the value of the `disk_size` parameter in the `clickhouse.resources` and `zookeeper.resources` blocks for {{ CH }} and {{ ZK }}, respectively:
 
       ```hcl
-      resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
+      resource "yandex_mdb_clickhouse_cluster" "<cluster_name>" {
         ...
         clickhouse {
           resources {
-            disk_size = <storage size in gigabytes>
+            disk_size = <storage_size_in_GB>
             ...
           }
         }
         zookeeper {
           resources {
-            disk_size = <storage size in gigabytes>
+            disk_size = <storage_size_in_GB>
             ...
           }
         }
@@ -228,7 +232,7 @@ In clusters with {{ CK }}, {{ ZK }} hosts cannot be used. To learn more, see [Re
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -265,11 +269,11 @@ Once enabled, user and database management settings for SQL cannot be disabled.
 
 - Management console
 
-   1. Go to the folder page and select **{{ mch-name }}**.
-   1. Select the cluster and click **Edit cluster** in the top panel.
-   1. To [manage users via SQL](./cluster-users.md#sql-user-management), enable the **User management via SQL** setting under **DBMS settings** and specify the password of the `admin` user.
-   1. To [manage databases via SQL](./databases.md#sql-database-management), enable the **User management via SQL** and **Database management via SQL** settings under **DBMS settings** and specify the password of the `admin` user.
-   1. Click **Save changes**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Select the cluster and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** in the top panel.
+   1. To [manage users via SQL](./cluster-users.md#sql-user-management), enable the **{{ ui-key.yacloud.mdb.forms.database_field_sql-user-management }}** setting under **{{ ui-key.yacloud.mdb.forms.section_settings }}** and specify the `admin` user password.
+   1. To [manage databases via SQL](./databases.md#sql-database-management), enable the **{{ ui-key.yacloud.mdb.forms.database_field_sql-user-management }}** and **{{ ui-key.yacloud.mdb.forms.database_field_sql-database-management }}** settings under **{{ ui-key.yacloud.mdb.forms.section_settings }}** and specify the `admin` user password.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -283,10 +287,10 @@ Once enabled, user and database management settings for SQL cannot be disabled.
       * Set a password for the `admin` user in the `--admin-password` parameter.
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <cluster name or ID>\
+      {{ yc-mdb-ch }} cluster update <cluster_name_or_ID> \
          ...
          --enable-sql-user-management true \
-         --admin-password "<admin password>"
+         --admin-password "<admin_password>"
       ```
 
    1. To enable [SQL database management](./databases.md#sql-database-management):
@@ -295,11 +299,11 @@ Once enabled, user and database management settings for SQL cannot be disabled.
       * Set a password for the `admin` user in the `--admin-password` parameter.
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <cluster name or ID>\
+      {{ yc-mdb-ch }} cluster update <cluster_name_or_ID> \
          ...
          --enable-sql-user-management true \
          --enable-sql-database-management true \
-         --admin-password "<admin password>"
+         --admin-password "<admin_password>"
       ```
 
 - {{ TF }}
@@ -316,7 +320,7 @@ Once enabled, user and database management settings for SQL cannot be disabled.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -348,10 +352,10 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Select the cluster and click **Edit cluster** in the top panel.
-   1. Change the [{{ CH }} settings](../concepts/settings-list.md#dbms-cluster-settings) by clicking **Configure** under **DBMS settings**:
-   1. Click **Save changes**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Select the cluster and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** in the top panel.
+   1. Configure the [{{ CH }} settings](../concepts/settings-list.md#dbms-cluster-settings) by clicking **{{ ui-key.yacloud.mdb.forms.button_configure-settings }}** under **{{ ui-key.yacloud.mdb.forms.section_settings }}**.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -364,7 +368,7 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. View the full list of settings specified for the cluster:
 
       ```bash
-      {{ yc-mdb-ch }} cluster get <cluster ID or name> --full
+      {{ yc-mdb-ch }} cluster get <cluster_name_or_ID> --full
       ```
 
    1. View a description of the update cluster configuration CLI command:
@@ -376,8 +380,8 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. Set the required parameter values:
 
       ```bash
-      {{ yc-mdb-ch }} cluster update-config <cluster ID or name> \
-           --set <parameter1 name>=<value1>,...
+      {{ yc-mdb-ch }} cluster update-config <cluster_name_or_ID> \
+           --set <parameter1_name>=<value1>,...
       ```
 
       {{ mch-short-name }} runs the update cluster settings operation.
@@ -393,7 +397,7 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. In the {{ mch-name }} cluster description, change the values of the parameters in the `clickhouse.config` block:
 
       ```hcl
-      resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
+      resource "yandex_mdb_clickhouse_cluster" "<cluster_name>" {
         ...
         clickhouse {
           ...
@@ -425,9 +429,9 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
             compression {
               # Data compression settings
-              method              = "<compression algorithm: LZ4 or ZSTD>"
-              min_part_size       = <minimum table data chunk size in bytes>
-              min_part_size_ratio = <ratio of smallest data chunk size to full table size>
+              method              = "<compession_method:_LZ4_or_ZSTD>"
+              min_part_size       = <minimum_size_of_a_table_data_chunk_in_a_table_in_bytes>
+              min_part_size_ratio = <size_ratio_between_the_smallest_data_chunk_size_and_the_full_table_size>
             }
 
             graphite_rollup {
@@ -446,7 +450,7 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -475,13 +479,13 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Select the cluster and click **Edit cluster** in the top panel.
-   1. Under **Service settings**, change the additional cluster settings:
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Select the cluster and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** in the top panel.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_service-settings }}**, change the additional cluster settings:
 
       {% include [mch-extra-settings](../../_includes/mdb/mch/extra-settings-web-console.md) %}
 
-   1. Click **Save changes**.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
 - CLI
 
@@ -501,17 +505,18 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
       
       ```bash
-      {{ yc-mdb-ch }} cluster update <cluster ID or name> \
-         --backup-window-start <backup start time> \
-         --datalens-access=<true or false> \
-         --datatransfer-access=<true or false> \
-         --deletion-protection=<cluster deletion protection: true or false> \
-         --maintenance-window type=<maintenance type: anytime or weekly>,`
-                             `day=<day of week for weekly>,`
-                             `hour=<hour for weekly> \
-         --metrika-access=<true or false> \
-         --serverless-access=<true or false> \
-         --websql-access=<true or false>
+      {{ yc-mdb-ch }} cluster update <cluster_name_or_ID> \
+         --backup-window-start <backup_start_time> \
+         --datalens-access=<true_or_false> \
+         --datatransfer-access=<true_or_false> \
+         --deletion-protection=<cluster_deletion_protection:_true_or_false> \
+         --maintenance-window type=<maintenance_type:_anytime_or_weekly>,`
+                             `day=<day_of_the_week_for_weekly_type>,`
+                             `hour=<hour_of_the_day_for_weekly_type> \
+         --metrika-access=<true_or_false> \
+         --serverless-access=<true_or_false> \
+         --yandexquery-access=<access_via_Yandex_Query:_true_or_false> \
+         --websql-access=<true_or_false>
       ```
 
 
@@ -521,7 +526,7 @@ For more information, see [Memory management](../concepts/memory-management.md).
    {% include [backup-window-start](../../_includes/mdb/cli/backup-window-start.md) %}
 
    
-   * `--datalens-access`: Enables DataLens access. The default value is `false`. For more information about setting up a connection, see [Connecting from {{ datalens-name }}](datalens-connect.md).
+   * `--datalens-access`: Enables access from {{ datalens-name }}. The default value is `false`. For more information about setting up a connection, see [Connecting from {{ datalens-name }}](datalens-connect.md).
 
    * {% include [datatransfer access](../../_includes/mdb/cli/datatransfer-access-update.md) %}
 
@@ -529,17 +534,20 @@ For more information, see [Memory management](../concepts/memory-management.md).
    * {% include [deletion-protection](../../_includes/mdb/cli/deletion-protection.md) %}
 
       {% include [deletion-protection-limits-db](../../_includes/mdb/deletion-protection-limits-db.md) %}
-   * `--maintenance-window`: Settings for the [maintenance window](../concepts/maintenance.md) (including disabled clusters):
+
+   * `--maintenance-window`: Settings for the [maintenance window](../concepts/maintenance.md) (including those for disabled clusters), where `type` is the maintenance type:
 
       {% include [maintenance-window](../../_includes/mdb/cli/maintenance-window-description.md) %}
 
    
    
-   * `--metrika-access`: Enables [data import from AppMetrika to your cluster](https://appmetrica.yandex.com/docs/common/cloud/about.html). Default value: `false`.
+   * `--metrika-access`: Enables [data import from AppMetrica to your cluster](https://appmetrica.yandex.com/docs/common/cloud/about.html). The default value is `false`.
 
-   * `--websql-access`: Enables [SQL queries to be run](web-sql-query.md) from the management console. Default value: `false`.
+   * `--websql-access`: Enables [SQL queries to be run](web-sql-query.md) from the management console. The default value is `false`.
 
-   * `--serverless-access`: Enables cluster access from [{{ sf-full-name }}](../../functions/concepts/index.md). Default value: `false`. For more information on setting up access, see the [{{ sf-name }}](../../functions/operations/database-connection.md) documentation.
+   * `--serverless-access`: Enables cluster access from [{{ sf-full-name }}](../../functions/concepts/index.md). The default value is `false`. For more information about setting up access, see the [{{ sf-name }}](../../functions/operations/database-connection.md) documentation.
+
+   * `--yandexquery-access=true`: Enables cluster access from [{{ yq-full-name }}](../../query/concepts/index.md). This feature is in the [Preview](../../overview/concepts/launch-stages.md) stage. The default value is `false`.
 
 
 
@@ -554,11 +562,11 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. To change the backup start time, add a `backup_window_start` block to the {{ mch-name }} cluster description:
 
       ```hcl
-      resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
+      resource "yandex_mdb_clickhouse_cluster" "<cluster_name>" {
         ...
         backup_window_start {
-          hours   = <backup start hour>
-          minutes = <backup start minute>
+          hours   = <hour_of_backup_start_time>
+          minutes = <minute_of_backup_start_time>
         }
         ...
       }
@@ -568,13 +576,14 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. To allow access from other services and [execution of SQL queries from the management console](web-sql-query.md), change the values of the appropriate fields in the `access` block:
 
       ```hcl
-      resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
+      resource "yandex_mdb_clickhouse_cluster" "<cluster_name>" {
         ...
         access {
-          data_lens  = <access from DataLens: true or false>
-          metrika    = <access from Yandex Metrica and AppMetrika: true or false>
-          serverless = <access from Cloud Functions: true or false>
-          web_sql    = <executing SQL queries from the management console: true or false>
+          data_lens    = <access from DataLens: true or false>
+          metrika      = <access from Yandex Metrica and AppMetrika: true or false>
+          serverless   = <access from Cloud Functions: true or false>
+          web_sql      = <executing SQL queries from the management console: true or false>
+          yandex_query = <access from Yandex Query: true or false>
         }
         ...
       }
@@ -587,9 +596,9 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. To enable cluster protection against accidental deletion by a user of your cloud, add the `deletion_protection` field set to `true` to your cluster description:
 
       ```hcl
-      resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
+      resource "yandex_mdb_clickhouse_cluster" "<cluster_name>" {
         ...
-        deletion_protection = <protect cluster from deletion: true or false>
+        deletion_protection = <cluster_deletion_protection:_true_or_false>
       }
       ```
 
@@ -599,7 +608,7 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -614,7 +623,7 @@ For more information, see [Memory management](../concepts/memory-management.md).
    * Cluster ID in the `clusterId` parameter. To retrieve the ID, [get a list of clusters in the folder](./cluster-list.md#list-clusters).
       * Settings for access from other  services and access to SQL queries from the  management console in the `configSpec.access` parameter.
    * Backup window settings in the `configSpec.backupWindowStart` parameter.
-   * Settings for the [maintenance window](../concepts/maintenance.md) (including for disabled clusters) in the `maintenanceWindow` parameter.
+   * Settings for the [maintenance window](../concepts/maintenance.md) (including those for disabled clusters) in the `maintenanceWindow` parameter.
    * Cluster deletion protection settings in the `deletionProtection` parameter.
 
       {% include [deletion-protection-limits-db](../../_includes/mdb/deletion-protection-limits-db.md) %}
@@ -625,7 +634,9 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
    
    
-   To allow cluster access from [{{ sf-full-name }}](../../functions/concepts/index.md), set `true` for the `configSpec.access.serverless` parameter. For more information on setting up access, see the [{{ sf-name }}](../../functions/operations/database-connection.md) documentation.
+   To allow cluster access from [{{ sf-full-name }}](../../functions/concepts/index.md), set `true` for the `configSpec.access.serverless` parameter. For more information about setting up access, see the [{{ sf-name }}](../../functions/operations/database-connection.md) documentation.
+
+   To allow cluster access from [{{ yq-full-name }}](../../query/concepts/index.md), set `true` for the `configSpec.access.yandexQuery` parameter. This feature is at the [Preview](../../overview/concepts/launch-stages.md) stage.
 
 
 
@@ -639,11 +650,11 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
 - Management console
 
-   1. Go to the folder page and select **{{ mch-name }}**.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon to the right of the cluster you wish to move.
-   1. Click **Move**.
-   1. Select the folder you want to move the cluster to.
-   1. Click **Move**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) to the right of the cluster you want to move.
+   1. Select **{{ ui-key.yacloud.common.move }}**.
+   1. Select a folder you want to move the cluster to.
+   1. Click **{{ ui-key.yacloud.mdb.dialogs.popup_button_move-cluster }}**.
 
 - CLI
 
@@ -662,8 +673,8 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. Specify the destination folder in the move cluster command:
 
       ```bash
-      {{ yc-mdb-ch }} cluster move <cluster ID> \
-         --destination-folder-name=<destination folder name>
+      {{ yc-mdb-ch }} cluster move <cluster_name_or_ID> \
+         --destination-folder-name=<destination_folder_name>
       ```
 
       You can get the cluster ID with a [list of clusters in the folder](cluster-list.md#list-clusters).
@@ -680,15 +691,13 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
 ## Changing security groups {#change-sg-set}
 
-{% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
-
 {% list tabs %}
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Select the cluster and click **Edit cluster** in the top panel.
-   1. Under **Network settings**, select security groups for cluster network traffic.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Select the cluster and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** in the top panel.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_network-settings }}**, select security groups for cluster network traffic.
 
 - CLI
 
@@ -707,8 +716,8 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. Specify the security groups in the update cluster command:
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <cluster name> \
-         --security-group-ids <security group ID list>
+      {{ yc-mdb-ch }} cluster update <cluster_name> \
+         --security-group-ids <list_of_security_group_IDs>
       ```
 
 - {{ TF }}
@@ -720,9 +729,9 @@ For more information, see [Memory management](../concepts/memory-management.md).
    1. Change the value of the `security_group_ids` parameter in the cluster description:
 
       ```hcl
-      resource "yandex_mdb_clickhouse_cluster" "<cluster name>" {
+      resource "yandex_mdb_clickhouse_cluster" "<cluster_name>" {
         ...
-        security_group_ids = ["<list of cluster security group IDs>"]
+        security_group_ids = [ <list_of_cluster_security_group_IDs> ]
       }
       ```
 
@@ -730,7 +739,7 @@ For more information, see [Memory management](../concepts/memory-management.md).
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -778,7 +787,7 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
    1. If hybrid storage is disabled in the cluster, enable it:
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <cluster name> \
+      {{ yc-mdb-ch }} cluster update <cluster_name_or_ID> \
           --cloud-storage=true
       ```
 
@@ -787,10 +796,11 @@ You may need to additionally [set up security groups](connect.md#configuring-sec
    1. Provide a list of settings to update:
 
       ```bash
-      {{ yc-mdb-ch }} cluster update <cluster name> \
-          --cloud-storage-data-cache=<true or false> \
-          --cloud-storage-data-cache-max-size=<amount of memory (in bytes)> \
-          --cloud-storage-move-factor=<share of free space>
+      {{ yc-mdb-ch }} cluster update <cluster_name_or_ID> \
+         --cloud-storage-data-cache=<true_or_false> \
+         --cloud-storage-data-cache-max-size=<storage_size_in_bytes> \
+         --cloud-storage-move-factor=<free_space_share> \
+         --cloud-storage-prefer-not-to-merge=<true_or_false>
       ```
 
       You can change the following settings:

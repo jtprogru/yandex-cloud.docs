@@ -1,3 +1,8 @@
+---
+title: "Как создать подключение к Битрикс24"
+description: "Следуя данной инструкции, вы сможете создать подключение к Битрикс24."
+---
+
 # Создание подключения к Битрикс24
 
 {% note info %}
@@ -7,6 +12,10 @@
 {% endnote %}
 
 Чтобы создать подключение к Битрикс24:
+
+
+{% include [datalens-workbooks-collections-note](../../../_includes/datalens/operations/datalens-workbooks-collections-note.md) %}
+
 
 
 1. Перейдите на [страницу подключений]({{ link-datalens-main }}/connections).

@@ -1,33 +1,50 @@
 # Создать HTTP-роутер для gRPC-трафика
 
-Чтобы создать HTTP-роутер и добавить в него маршрут:
+Чтобы создать [HTTP-роутер](../concepts/http-router.md) и добавить в него [маршрут](../concepts/http-router.md#routes):
 
 {% list tabs %}
 
 - Консоль управления
 
-  1. В меню слева выберите **HTTP-роутеры**.
-  1. Нажмите кнопку **Создать HTTP-роутер**.
-  1. Введите имя роутера: `test-grpc-router`.
-  1. В блоке **Виртуальные хосты** нажмите кнопку **Добавить виртуальный хост**.
-  1. Введите **Имя**: `test-virtual-host`.
-  1. В поле **Authority** введите: `*` или IP-адрес балансировщика.
-  1. Нажмите кнопку **Добавить маршрут** и выберите **Тип**: `gRPC`.
-     1. Введите **Имя**: `grpc-route`.
-     1. В блоке **FQMN** выберите `Начинается с` и в поле ввода укажите `/<первое_слово_названия_сервиса>`, например: `/helloworld`.
+  1. В меню слева выберите **{{ ui-key.yacloud.alb.label_http-routers }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.alb.button_http-router-create }}**.
+  1. Введите имя роутера.
+  1. В блоке **{{ ui-key.yacloud.alb.label_virtual-hosts }}** нажмите кнопку **{{ ui-key.yacloud.alb.button_virtual-host-add }}**.
+  1. Введите **{{ ui-key.yacloud.common.name }}**.
+  1. В поле **{{ ui-key.yacloud.alb.label_authority }}** введите: `*` или IP-адрес балансировщика.
+  1. Нажмите кнопку **{{ ui-key.yacloud.alb.button_add-route }}** и выберите **{{ ui-key.yacloud.alb.label_route-type }}**: `{{ ui-key.yacloud.alb.label_proto-grpc }}`.
+     1. Введите **{{ ui-key.yacloud.common.name }}**.
+     1. В блоке **{{ ui-key.yacloud.alb.label_fqmn }}** выберите одну из опций:
 
-         Также чтобы указать FQMN, вы можете использовать опции:
-         * `Совпадает с` — для маршрутизации всех запросов, совпадающих с указанным FQMN.
-         * `Регулярное выражение` — для маршрутизации всех запросов, удовлетворяющих [регулярному выражению](https://ru.wikipedia.org/wiki/Регулярные_выражения) стандарта [RE2](https://github.com/google/re2/wiki/Syntax).
-     {% note warning %}
+         * `{{ ui-key.yacloud.alb.label_match-prefix }}` — для маршрутизации всех запросов, начинающихся с определенного FQMN. В поле ввода укажите `/<первое_слово_названия_сервиса>`, например: `/helloworld`.
+         * `{{ ui-key.yacloud.alb.label_match-exact }}` — для маршрутизации всех запросов, совпадающих с указанным FQMN.
+         * `{{ ui-key.yacloud.alb.label_match-regex }}` — для маршрутизации всех запросов, удовлетворяющих [регулярному выражению](https://ru.wikipedia.org/wiki/Регулярные_выражения) стандарта [RE2](https://github.com/google/re2/wiki/Syntax).
+      
+         {% note warning %}
 
-     FQMN должно начинаться с косой черты `/` и содержать часть полного названия сервиса, на который перенаправляется вызов процедуры.
+         FQMN должно начинаться с косой черты `/` и содержать часть полного названия сервиса, на который перенаправляется вызов процедуры.
 
-     {% endnote %}
+         {% endnote %}
+     
+     1. В поле **{{ ui-key.yacloud.alb.label_route-action }}** выберите одну из опций: `{{ ui-key.yacloud.alb.label_route-action-route }}` или `{{ ui-key.yacloud.alb.label_route-action-statusResponse }}`. В зависимости от выбранной опции:
 
-     1. В поле **Действие** оставьте `Маршрутизация`.
-     1. В списке **Группа бэкендов** выберите имя группы бэкендов из того же каталога, в котором создаете роутер. 
-     1. Остальные настройки оставьте без изменений и нажмите кнопку **Создать**.
+        * `{{ ui-key.yacloud.alb.label_route-action-route }}`:
+
+          * В списке **{{ ui-key.yacloud.alb.label_backend-group }}** выберите имя группы бэкендов из того же каталога, в котором создаете роутер.
+          * (опционально) В поле **{{ ui-key.yacloud.alb.label_host-rewrite }}** выберите одну из опций:
+
+             * `none` — замена не происходит.
+             * `rewrite` — происходит замена на указанное значение.
+             * `auto` — происходит автоматическая замена на адрес целевой ВМ.
+
+          * (опционально) В поле **{{ ui-key.yacloud.alb.label_timeout }}** укажите максимальное время, на которое может быть установлено соединение.
+          * (опционально) В поле **{{ ui-key.yacloud.alb.label_idle-timeout }}** укажите максимальное время, в течение которого соединение может простаивать без передачи данных.
+
+        * `{{ ui-key.yacloud.alb.label_route-action-statusResponse }}`:
+
+          * В поле **{{ ui-key.yacloud.alb.label_grpc-status-code }}** выберите код, по которому будет осуществляться ответ.
+
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -50,9 +67,9 @@
      Результат:
 
      ```text
-     id: a5dcsselagj4o2v4a6e7
+     id: a5dcsselagj4********
      name: <имя_HTTP-роутера>
-     folder_id: aoerb349v3h4bupphtaf
+     folder_id: aoerb349v3h4********
      created_at: "2022-06-16T21:04:59.438292069Z"
      ```
 
@@ -110,6 +127,8 @@
      * `--backend-group-name` — имя группы бэкендов.
      * `--request-max-timeout` — максимальный тайм-аут ожидания запроса, в секундах.
 
+     Подробную информацию о параметрах команды `yc alb virtual-host append-grpc-route` см. в [справочнике CLI](../../cli/cli-ref/managed-services/application-load-balancer/virtual-host/append-grpc-route.md).
+
      Результат:
 
      ```text
@@ -124,7 +143,7 @@
           fqmn:
            prefix_match: /helloworld
         route:
-          backend_group_id: ds7snban2dvnedokp6kc
+          backend_group_id: ds7snban2dvn********
           max_timeout: 60s
      ```
 
@@ -132,7 +151,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле параметры HTTP-роутера и виртуального хоста:
 

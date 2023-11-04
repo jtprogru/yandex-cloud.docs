@@ -134,8 +134,11 @@ A set of methods for managing Instance resources.
           "string"
         ]
       }
-    ]
-  }
+    ],
+    "placementGroupPartition": "string"
+  },
+  "hostGroupId": "string",
+  "hostId": "string"
 }
 ```
  
@@ -227,6 +230,9 @@ placementPolicy.<br>hostAffinityRules[] | **object**<br><p>List of affinity rule
 placementPolicy.<br>hostAffinityRules[].<br>key | **string**<br><p>Affinity label or one of reserved values - 'yc.hostId', 'yc.hostGroupId'</p> 
 placementPolicy.<br>hostAffinityRules[].<br>op | **string**<br><p>Include or exclude action</p> 
 placementPolicy.<br>hostAffinityRules[].<br>values[] | **string**<br><p>Affinity value or host ID or host group ID</p> 
+placementPolicy.<br>placementGroupPartition | **string** (int64)<br><p>Placement group partition</p> 
+hostGroupId | **string**<br><p>ID of the dedicated host group that the instance belongs to.</p> 
+hostId | **string**<br><p>ID of the dedicated host that the instance belongs to.</p> 
 
 ## Methods {#methods}
 Method | Description
@@ -241,13 +247,16 @@ Method | Description
 [get](get.md) | Returns the specified Instance resource.
 [getSerialPortOutput](getSerialPortOutput.md) | Returns the serial port output of the specified Instance resource.
 [list](list.md) | Retrieves the list of Instance resources in the specified folder.
+[listAccessBindings](listAccessBindings.md) | Lists access bindings for the instance.
 [listOperations](listOperations.md) | Lists operations for the specified instance.
 [move](move.md) | Moves the specified instance to another folder of the same cloud.
 [relocate](relocate.md) | Moves the specified instance to another availability zone
 [removeOneToOneNat](removeOneToOneNat.md) | Removes One-to-one NAT from the network interface.
 [restart](restart.md) | Restarts the running instance.
+[setAccessBindings](setAccessBindings.md) | Sets access bindings for the instance.
 [start](start.md) | Starts the stopped instance.
 [stop](stop.md) | Stops the running instance.
 [update](update.md) | Updates the specified instance.
+[updateAccessBindings](updateAccessBindings.md) | Updates access bindings for the instance.
 [updateMetadata](updateMetadata.md) | Updates the metadata of the specified instance.
 [updateNetworkInterface](updateNetworkInterface.md) | Updates the specified instance network interface.

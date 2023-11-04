@@ -3,13 +3,13 @@
 - Консоль управления
 
 	1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать контейнер.
-	1. Выберите сервис **{{ serverless-containers-name }}**.
-	1. Нажмите кнопку **Создать контейнер**.
+	1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
+	1. Нажмите кнопку **{{ ui-key.yacloud.serverless-containers.button_create-container }}**.
 	1. Введите имя и описание контейнера. Формат имени:
 
 		{% include [name-format](../../_includes/name-format.md) %}
 
-    1. Нажмите кнопку **Создать**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 
 - CLI
@@ -31,7 +31,7 @@
 	folder_id: b1gqvft7kjk3********
 	created_at: "2021-07-09T14:49:00.891Z"
 	name: my-beta-container
-	url: https://bba3fva6ka5g********.containers.yandexcloud.net/
+	url: https://bba3fva6ka5g********.{{ serverless-containers-host }}/
 	status: ACTIVE
 	```
 
@@ -39,7 +39,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы создать контейнер и его [ревизию](../../serverless-containers/operations/manage-revision.md):
 

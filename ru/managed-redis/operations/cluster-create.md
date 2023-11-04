@@ -1,3 +1,8 @@
+---
+title: "Как создать {{ RD }}-кластер"
+description: "Следуя данной инструкции, вы сможете создать {{ RD }}-кластер с одним или несколькими хостами базы данных."
+---
+
 # Создание {{ RD }}-кластера
 
 {{ RD }}-кластер — это один или несколько хостов базы данных, между которыми можно настроить репликацию. Репликация работает по умолчанию в любом кластере из более чем 1 хоста: хост-мастер принимает запросы на запись, асинхронно дублируя изменения в репликах.
@@ -17,6 +22,10 @@
 
 - Консоль управления
 
+  
+  @[youtube](https://www.youtube.com/watch?v=ZFTa9O-NR_U&list=PL1x4ET76A10bW1KU3twrdm7hH376z8G5R&index=7&pp=iAQB)
+
+
   1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором нужно создать кластер БД.
   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
   1. Нажмите кнопку **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
@@ -26,7 +35,7 @@
      * (Опционально) Добавьте описание кластера.
      * Выберите окружение, в котором нужно создать кластер (после создания кластера окружение изменить невозможно):
        * `PRODUCTION` — для стабильных версий ваших приложений.
-       * `PRESTABLE` — для тестирования, в том числе самого сервиса {{ mrd-short-name }}. В Prestable-окружении раньше появляются новая функциональность, улучшения и исправления ошибок. При этом не все обновления обеспечивают обратную совместимость.
+       * `PRESTABLE` — для тестирования. Prestable-окружение аналогично Production-окружению и на него также распространяется SLA, но при этом на нем раньше появляются новые функциональные возможности, улучшения и исправления ошибок. В Prestable-окружении вы можете протестировать совместимость новых версий с вашим приложением.
      * Выберите версию СУБД.
      * Если требуется, включите [шардирование кластера](../concepts/sharding.md).
 
@@ -60,6 +69,8 @@
            {% include [storages-step-settings-no-hdd](../../_includes/mdb/settings-storages-no-hdd.md) %}
 
 
+       
+
        * Выберите размер хранилища. Доступный размер хранилища ограничен [квотами и лимитами](../concepts/limits.md#mrd-limits).
 
    1. В блоке **{{ ui-key.yacloud.mdb.forms.section_config }}** в поле **{{ ui-key.yacloud.mdb.forms.config_field_password }}** укажите пароль пользователя.
@@ -70,8 +81,6 @@
    1. В блоке **{{ ui-key.yacloud.mdb.forms.section_network }}** выберите:
        * Облачную сеть для размещения кластера.
        * Группы безопасности для сетевого трафика кластера. Может потребоваться дополнительная [настройка групп безопасности](connect/index.md#configuring-security-groups) для того, чтобы можно было подключаться к кластеру.
-
-           {% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
 
 
   1. В блоке **{{ ui-key.yacloud.mdb.forms.section_host }}**:
@@ -129,22 +138,36 @@
       
       ```bash
       {{ yc-mdb-rd }} cluster create \
-        --name <имя кластера> \
-        --environment <окружение, prestable или production> \
-        --network-name <имя сети> \
-        --host zone-id=<зона доступности>,`
-              `subnet-id=<идентификатор подсети>,`
-              `assign-public-ip=<публичный доступ к хосту: true или false>,`
-              `replica-priority=<приоритет хоста> \
-        --security-group-ids <список идентификаторов групп безопасности> \
+        --name <имя_кластера> \
+        --environment <окружение> \
+        --network-name <имя_сети> \
+        --host zone-id=<зона_доступности>,`
+              `subnet-id=<идентификатор_подсети>,`
+              `assign-public-ip=<публичный_доступ>,`
+              `replica-priority=<приоритет_хоста> \
+        --security-group-ids <список_идентификаторов_групп_безопасности> \
         --enable-tls \
-        --resource-preset <класс хоста> \
-        --disk-size <размер хранилища в гигабайтах> \
-        --password=<пароль пользователя> \
-        --backup-window-start <время начала резервного копирования в формате ЧЧ:ММ:СС> \
-        --deletion-protection=<защита от удаления кластера: true или false>
+        --resource-preset <класс_хоста> \
+        --disk-size <размер_хранилища_ГБ> \
+        --password=<пароль_пользователя> \
+        --backup-window-start <время> \
+        --deletion-protection=<защита_от_удаления>
       ```
 
+
+      Где:
+      * `--environment` — окружение: `prestable` или `production`.
+
+      
+      * `--host` — параметры хоста:
+         * `zone-id` — [зона доступности](../../overview/concepts/geo-scope.md).
+         * `subnet-id` — [идентификатор подсети](../../vpc/concepts/network.md#subnet). Необходимо указывать, если в выбранной зоне доступности создано две или больше подсетей.
+         * `assign-public-ip` — доступность хоста из интернета по публичному IP-адресу: `true` или `false`.
+         * `replica-priority` — приоритет назначения хоста мастером при [выходе из строя основного мастера](../concepts/replication.md#master-failover). 
+
+      
+      * `--backup-window-start` — время начала резервного копирования в формате `ЧЧ:ММ:СС`.
+      * `--deletion-protection` — защита от удаления кластера: `true` или `false`.
 
       Идентификатор подсети `subnet-id` необходимо указывать, если в выбранной зоне доступности создано 2 и больше подсетей.
 
@@ -152,13 +175,17 @@
 
       {% include [deletion-protection-limits-db](../../_includes/mdb/deletion-protection-limits-db.md) %}
 
+      {% note info %}
+
+      По умолчанию при создании кластера устанавливается режим [технического обслуживания](../concepts/maintenance.md) `anytime` — в любое время. Вы можете установить конкретное время обслуживания при [изменении настроек кластера](update.md#change-additional-settings).
+
+      {% endnote %}
+
 - {{ TF }}
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы создать кластер:
 
@@ -176,45 +203,55 @@
        
        
        ```hcl
-       resource "yandex_mdb_redis_cluster" "<имя кластера>" {
-         name                = "<имя кластера>"
-         environment         = "<окружение: PRESTABLE или PRODUCTION>"
-         network_id          = "<идентификатор сети>"
-         security_group_ids  = [ "<идентификаторы групп безопасности>" ]
+       resource "yandex_mdb_redis_cluster" "<имя_кластера>" {
+         name                = "<имя_кластера>"
+         environment         = "<окружение>"
+         network_id          = "<идентификатор_сети>"
+         security_group_ids  = [ "<список_идентификаторов_групп_безопасности>" ]
          tls_enabled         = true
-         deletion_protection = <защита от удаления кластера: true или false>
+         deletion_protection = <защита_от_удаления>
 
          config {
            password = "<пароль>"
-           version  = "<версия {{ RD }}: {{ versions.tf.str }}>"
+           version  = "<версия_{{ RD }}>"
          }
 
          resources {
-           resource_preset_id = "<класс хоста>"
-           disk_type_id       = "<тип диска>"
-           disk_size          = <размер хранилища в гигабайтах>
+           resource_preset_id = "<класс_хоста>"
+           disk_type_id       = "<тип_диска>"
+           disk_size          = <размер_хранилища_ГБ>
          }
 
          host {
-           zone             = "<зона доступности>"
-           subnet_id        = "<идентификатор подсети>"
-           assign_public_ip = <публичный доступ к хосту: true или false>
-           replica_priority = <приоритет хоста>
+           zone             = "<зона_доступности>"
+           subnet_id        = "<идентификатор_подсети>"
+           assign_public_ip = <публичный_доступ>
+           replica_priority = <приоритет_хоста>
          }
        }
 
-       resource "yandex_vpc_network" "<имя сети>" { name = "<имя сети>" }
+       resource "yandex_vpc_network" "<имя_сети>" { name = "<имя_сети>" }
 
-       resource "yandex_vpc_subnet" "<имя подсети>" {
-         name           = "<имя подсети>"
-         zone           = "<зона доступности>"
-         network_id     = "<идентификатор сети>"
+       resource "yandex_vpc_subnet" "<имя_подсети>" {
+         name           = "<имя_подсети>"
+         zone           = "<зона_доступности>"
+         network_id     = "<идентификатор_сети>"
          v4_cidr_blocks = ["<диапазон>"]
        }
        ```
 
 
 
+
+       Где:
+       * `environment` — окружение: `PRESTABLE` или `PRODUCTION`.
+       * `deletion_protection` — защита от удаления кластера: `true` или `false`.
+       * `version` — версия {{ RD }}: {{ versions.tf.str }}.
+       * `host` — параметры хоста:
+         * `zone_id` — зона доступности.
+         * `subnet_id` — идентификатор подсети в выбранной зоне доступности.
+         * `assign_public_ip` — публичный доступ к хосту: `true` или `false`.
+         * `replica_priority` — приоритет хоста.
 
        {% include [requirements-to-password](../../_includes/mdb/mrd/requirements-to-password.md) %}
 
@@ -232,7 +269,7 @@
 
         {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
-       После этого в указанном каталоге будут созданы все требуемые ресурсы, а в терминале отобразятся IP-адреса виртуальных машин. Проверить появление ресурсов и их настройки можно в [консоли управления]({{ link-console-main }}).
+       После этого в указанном каталоге будут созданы все требуемые ресурсы, а в терминале отобразятся [FQDN хостов кластера](../concepts/network.md#hostname). Проверить появление ресурсов и их настройки можно в [консоли управления]({{ link-console-main }}).
 
        {% include [Terraform timeouts](../../_includes/mdb/mrd/terraform/timeouts.md) %}
 
@@ -241,8 +278,9 @@
   Чтобы создать кластер {{ RD }}, воспользуйтесь методом REST API [create](../api-ref/Cluster/create.md) для ресурса [Cluster](../api-ref/Cluster/index.md) или вызовом gRPC API [ClusterService/Create](../api-ref/grpc/cluster_service.md#Create) и передайте в запросе:
   * Идентификатор каталога, в котором должен быть размещен кластер, в параметре `folderId`.
   * Имя кластера в параметре `name`.
-    * Идентификаторы групп безопасности в параметре `securityGroupIds`.
+  * Идентификаторы групп безопасности в параметре `securityGroupIds`.
   * Флаг `tlsEnabled=true` для создания кластера с поддержкой шифрованных SSL-соединений.
+  * Настройки публичного доступа к хостам в параметре `hostSpecs[].assignPublicIp`.
 
 {% endlist %}
 
@@ -270,7 +308,7 @@
   * Версия `{{ versions.cli.latest }}`.
   * Окружение — `production`.
   * Сеть `default`.
-  * Один хост класса `hm1.nano` в подсети `b0rcctk2rvtr8efcch64`, в зоне доступности `{{ region-id }}-a` и группе безопасности с идентификатором `{{ security-group }}`, с публичным доступом и [приоритетом хоста](../concepts/replication.md#master-failover) `50`.
+  * Один хост класса `hm1.nano` в подсети `b0rcctk2rvtr********`, в зоне доступности `{{ region-id }}-a` и группе безопасности с идентификатором `{{ security-group }}`, с публичным доступом и [приоритетом хоста](../concepts/replication.md#master-failover) `50`.
   * С поддержкой SSL-соединений.
   * Хранилище на сетевых SSD-дисках (`{{ disk-type-example }}`) размером 16 ГБ.
   * Пароль `user1user1`.
@@ -286,7 +324,7 @@
     --environment production \
     --network-name default \
     --resource-preset hm1.nano \
-    --host zone-id={{ region-id }}-a,subnet-id=b0rcctk2rvtr8efcch64,assign-public-ip=true,replica-priority=50 \
+    --host zone-id={{ region-id }}-a,subnet-id=b0rcctk2rvtr********,assign-public-ip=true,replica-priority=50 \
     --security-group-ids {{ security-group }} \
     --enable-tls \
     --disk-type-id {{ disk-type-example }} \

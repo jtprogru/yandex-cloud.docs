@@ -28,13 +28,13 @@
     1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором хранится нужный бакет. Если бакета не существует — [создайте](../../storage/operations/buckets/create.md) его.
 
 
-    1. Выберите сервис **{{ objstorage-name }}**.
-    1. Выберите вкладку **Бакеты**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_storage }}**.
+    1. Выберите вкладку **{{ ui-key.yacloud.storage.buckets.label_title }}**.
     1. Настройте [ACL бакета](../../storage/operations/buckets/edit-acl.md):
-        1. В выпадающем списке **Выберите пользователя** укажите сервисный аккаунт, [подключенный к кластеру](#connect-service-account).
+        1. В выпадающем списке **{{ ui-key.yacloud.component.acl-dialog.label_select-placeholder }}** укажите сервисный аккаунт, [подключенный к кластеру](#connect-service-account).
         1. Задайте разрешения `READ и WRITE` для выбранного сервисного аккаунта.
-        1. Нажмите кнопку **Добавить**.
-        1. Нажмите кнопку **Сохранить**.
+        1. Нажмите кнопку **{{ ui-key.yacloud.common.add }}**.
+        1. Нажмите кнопку **{{ ui-key.yacloud.common.save }}**.
 
 {% endlist %}
 
@@ -51,21 +51,21 @@
 1. Зарегистрируйте бакет как репозиторий снапшотов, используя публичный [API {{ OS }}]({{ os.docs }}/opensearch/snapshot-restore/#register-repository):
 
     ```http
-    PUT --cacert ~/.opensearch/root.crt https://admin:<пароль>@<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/<имя репозитория>
+    PUT --cacert ~/.opensearch/root.crt https://admin:<пароль>@<идентификатор_хоста_{{ OS }}_с_ролью_DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/<имя_репозитория>
     ```
 
     В параметрах запроса укажите бакет, связанный с сервисным аккаунтом кластера:
 
     ```bash
     curl --request PUT \
-         "https://admin:<пароль>@<идентификатор хоста {{ OS }} с ролью DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/<имя репозитория>" \
+         "https://admin:<пароль>@<идентификатор_хоста_{{ OS }}_с_ролью_DATA>.{{ dns-zone }}:{{ port-mos }}/_snapshot/<имя_репозитория>" \
          --cacert ~/.opensearch/root.crt \
          --header "Content-Type: application/json" \
          --data '{
            "type": "s3",
            "settings": {
              "endpoint": "{{ s3-storage-host }}",
-             "bucket": "<имя бакета>"
+             "bucket": "<имя_бакета>"
            }
          }'
     ```

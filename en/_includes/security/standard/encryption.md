@@ -1,8 +1,8 @@
-# 4. Data encryption and key management
+# 4. Data encryption and key and secret management
 
 ### Introduction {#intro}
 
-{{ yandex-cloud }} provides built-in encryption features for a number of services. It's the customer's responsibility to enable encryption in these services and implement encryption in other components for processing critical data. Data encryption and encryption key management is done by [{{ kms-name }}](../../../kms/) ({{ kms-short-name }}).
+{{ yandex-cloud }} provides built-in encryption features for a number of services. It is the customer's responsibility to enable encryption in these services and implement encryption in other components for processing critical data. Data encryption and encryption key management are performed by [{{ kms-name }}](../../../kms/) ({{ kms-short-name }}).
 
 {{ yandex-cloud }} APIs support cipher suites in specific TLS versions that are compliant with PCI DSS and other standards.
 
@@ -18,7 +18,7 @@ If your corporate information security policy sets specific key size and rotatio
 
 #### 4.1 In {{ objstorage-full-name }}, encryption of data at rest using {{ kms-short-name }} keys is enabled {#storage-kms}
 
-To protect critical data in {{ objstorage-full-name }}, we recommend using bucket server-side encryption with {{ kms-full-name }} keys. This encryption method protects against the accidental or intentional publication of bucket contents on the internet. For more information, see  [Encryption](../../../storage/concepts/encryption.md) in the {{ objstorage-name }} documentation.
+To protect critical data in {{ objstorage-full-name }}, we recommend using bucket server-side encryption with {{ kms-full-name }} keys. This encryption method protects against accidental or intentional publication of the bucket content on the web. For more information, see [Encryption](../../../storage/concepts/encryption.md) in the {{ objstorage-name }} documentation.
 
 {% list tabs %}
 
@@ -34,7 +34,7 @@ To protect critical data in {{ objstorage-full-name }}, we recommend using bucke
 - Performing a check via the CLI
 
    1. [Configure](../../../storage/tools/aws-cli.md) the AWS CLI to work with a cloud.
-   1. Run the command below to check if encryption is enabled:
+   1. Run the command below to check whether encryption is enabled:
 
       ```bash
       aws --endpoint-url=https://{{ s3-storage-host }}/ \
@@ -46,9 +46,9 @@ To protect critical data in {{ objstorage-full-name }}, we recommend using bucke
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
-Configure bucket encryption using the [instructions](../../../storage/operations/buckets/encrypt.md).
+Configure bucket encryption using the [guide](../../../storage/operations/buckets/encrypt.md).
 
 ### Encryption in transit {#in-transit}
 
@@ -64,7 +64,7 @@ Support for legacy TLS protocols in {{ yandex-cloud }} services will [gradually 
 
 {% endnote %}
 
-{{ yandex-cloud }} lets you use your own TLS certificates for the following services:
+{{ yandex-cloud }} allows you to use your own TLS certificates for the following services:
 * {{ objstorage-name }}.
 * {{ alb-name }}.
 * {{ api-gw-name }}.
@@ -72,7 +72,7 @@ Support for legacy TLS protocols in {{ yandex-cloud }} services will [gradually 
 
 #### 4.2 HTTPS is enabled for hosting static websites in {{ objstorage-full-name }} {#storage-https}
 
-[{{ objstorage-name }}](../../../storage/) supports secure connections over HTTPS. You can upload your own security certificate if a connection to your {{ objstorage-name }} website requires HTTPS access. Integration with [{{ certificate-manager-name }}](../../../certificate-manager/) is also supported. See instructions in the {{ objstorage-name }} documentation:
+[{{ objstorage-name }}](../../../storage/) supports secure connections over HTTPS. You can upload your own security certificate if a connection to your {{ objstorage-name }} website requires HTTPS access. Integration with [{{ certificate-manager-name }}](../../../certificate-manager/) is also supported. See the instructions in the {{ objstorage-name }} documentation:
 * [Configuring HTTPS](../../../storage/operations/hosting/certificate.md)
 * [Bucket](../../../storage/concepts/bucket.md)
 
@@ -133,7 +133,7 @@ Enable access over HTTPS if a bucket is used for hosting a static website.
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 Enable an HTTPS listener using the instructions.
 
@@ -175,7 +175,7 @@ Enable an HTTPS listener using the instructions.
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 1. In the management console, select the cloud or folder to enable domains and certificates in.
 1. In the list of services, select **{{ api-gw-name }} → Gateway settings → Domains**.
@@ -221,7 +221,7 @@ Enable an HTTPS listener using the instructions.
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 [Enable](../../../cdn/operations/resources/configure-basics.md) a certificate and HTTPS using the instructions.
 
@@ -233,10 +233,6 @@ Enable an HTTPS listener using the instructions.
 
 If disk encryption is required, place your application files on a VM's secondary disk (not the boot disk) and configure full disk encryption for it.
 
-**Instructions and solutions to use:**
-
-[VM disk encryption using {{ kms-short-name }}](https://github.com/yandex-cloud/yc-solution-library-for-security/tree/master/encrypt_and_keys/encrypt_disk_VM).
-
 {% list tabs %}
 
 - Manual check
@@ -245,23 +241,41 @@ If disk encryption is required, place your application files on a VM's secondary
 
 {% endlist %}
 
-#### 4.7 For critical data, encryption with {{ kms-short-name }} is used {#self-data-kms}
+**Guides and solutions to use:**
 
-If data encryption is required, make sure to encrypt data at the application level prior to writing it to a database, for example, using [{{ kms-short-name }}](../../../kms/operations/encryption.md).
+[VM disk encryption using {{ kms-short-name }}](https://github.com/yandex-cloud/yc-solution-library-for-security/tree/master/encrypt_and_keys/encrypt_disk_VM).
+
+#### 4.7 For critical data, MDB encryption with {{ kms-short-name }} is used {#self-data-kms}
+
+If data encryption is required, make sure to encrypt data at the application level prior to writing it to a database, for example, using [{{ kms-short-name }}](../../../kms/operations/symmetric-encryption.md) and add-on, such as `pgcrypto`.
 
 {% list tabs %}
 
 - Manual check
 
-   Make sure that data is stored in an encrypted form.
+   Make sure that the stored data is encrypted.
+
+- Performing a check via the CLI
+
+   To get a list of all extensions set in a database, run this command:
+
+     ```bash
+     yc managed-postgresql database get <database_name> --cluster-id <managed_postgre_cluster_id> --format=json | jq -r '.extensions | .[].name'
+     ```
+
+   If the command output contains the `pgcrypto` line, it means that the database has an extension for application-level data encryption enabled.
 
 {% endlist %}
+
+**Guides and solutions to use:**
+
+You can learn how to encrypt data in {{ mpg-full-name }} and {{ mgp-full-name }} using `pgcrypto` in [{#T}](../../../managed-greenplum/operations/extensions/pgcrypto.md).
 
 #### 4.8 Data encryption at the application level is used {#self-data-app}
 
 For client-side encryption before uploading data to a {{ objstorage-full-name }} bucket, you can use the following approaches:
 * Integrating {{ objstorage-name }} with the {{ kms-name }} service for client-side encryption. For more information, see "Recommended cryptographic libraries".
-* Using third-party client-side encryption libraries prior to sending data to {{ objstorage-name }}. If you use third-party data encryption libraries and your own key management methods, be sure that your operation model, algorithms, and key sizes comply with regulatory requirements.
+* Using third-party client-side encryption libraries prior to sending data to {{ objstorage-name }}. If you use third-party data encryption libraries and your own key management methods, make sure that your operation model, algorithms, and key sizes comply with regulatory requirements.
 
 For client-side encryption, we recommend that you use the following libraries:
 * AWS Encryption SDK and its [{{ kms-short-name }} integration](../../../kms/tutorials/encrypt/aws-encryption-sdk.md).
@@ -284,9 +298,9 @@ We recommend that you use [{{ kms-name }}](../../../kms/tutorials/encrypt/sdk.md
 
 {{ kms-short-name }} uses AES-GCM encryption mode. You can select the key length (128, 192, or 256 bits) and set up the preferred key rotation period.
 
-#### 4.9 KMS uses a Hardware Security Module (HSM) {#keys-hsm}
+#### 4.9 {{ kms-name }} keys are stored in a hardware security module (HSM) {#keys-hsm}
 
-You can also create a key whose every cryptographic operation will only be handled inside a hardware security module (HSM). For more information, see [Hardware Security Module (HSM)](../../../kms/concepts/hsm.md).
+In production environments, we recommend using separate keys whose every cryptographic operation will only be handled inside a HSM. For more information, see [Hardware security module (HSM)](../../../kms/concepts/hsm.md).
 
 To use the HSM, when creating a key, select AES-256 HSM as the algorithm type. The HSM will handle all operations with this key internally, and no additional actions are required.
 
@@ -325,9 +339,9 @@ We recommend using HSMs for {{ kms-short-name }} keys to enhance the security le
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
-[Set](../../../kms/operations/encryption.md) the encryption algorithm for {{ kms-short-name }} keys to AES-256 HSM.
+[Set](../../../kms/operations/symmetric-encryption.md) the encryption algorithm for {{ kms-short-name }} keys to AES-256 HSM.
 
 #### 4.10 Permissions to manage keys in {{ kms-short-name }} are granted to users under control {#keys-controlled-users}
 
@@ -408,17 +422,17 @@ To verify the {{ kms-short-name }} key access rights, check out who is granted a
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 Check out who is granted access to {{ kms-short-name }} keys.
 
 #### 4.11 For {{ kms-short-name }} keys, rotation is enabled {#keys-rotation}
 
 To improve the security of your infrastructure, we recommend that you categorize your encryption keys into two groups:
-* Keys for services that process critical data, but don't store it. For example, {{ message-queue-name }} and {{ sf-name }}.
-* Keys for services that store critical data. For example, Managed Services for Databases.
+* Keys for services that process critical data, but do not store it, e.g., {{ message-queue-name }} and {{ sf-name }}.
+* Keys for services that store critical data, e.g., Managed Services for Databases.
 
-For the first group, we recommend that you set up automatic key rotation with a rotation period longer than the data processing period in these services. When the rotation period expires, the old key versions must be deleted. In the case of automatic rotation and the deletion of old key versions, previously processed data can't be restored and decrypted.
+For the first group, we recommend that you set up automatic key rotation with a rotation period longer than the data processing period in these services. When the rotation period expires, the old key versions must be deleted. In the case of automatic rotation and the deletion of old key versions, previously processed data cannot be restored and decrypted.
 
 For data storage services, we recommend that you either manually rotate keys or use automatic key rotation, depending on your internal procedures for processing critical data.
 
@@ -465,7 +479,7 @@ For more information about key rotation, see the {{ kms-short-name }} documentat
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 Set the key rotation period.
 
@@ -506,25 +520,31 @@ Deleting a {{ kms-short-name }} key always means destroying data. Therefore, be 
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 Enable deletion protection.
 
 ### Managing secrets {#secrets}
 
-Don't use critical data and access secrets (such as authentication tokens, API keys, and encryption keys) explicitly in the code, cloud object names and descriptions, VM metadata, and so on. Instead, use secret storage services like {{ lockbox-short-name }} or HashiCorp Vault.
+Do not use critical data and access secrets, such as authentication tokens, API keys, and encryption keys, explicitly in the code, cloud object names and descriptions, VM metadata, etc. Instead, use secret storage services, such as {{ lockbox-short-name }} or HashiCorp Vault.
 
-#### 4.13 The organization uses {{ lockbox-full-name }} as a secret management service {#secrets-lockbox}
+#### 4.13 The organization uses {{ lockbox-full-name }} for secure secret storage {#secrets-lockbox}
 
-Don't use critical data and access secrets (such as authentication tokens, API keys, and encryption keys) explicitly in the code, cloud object names and descriptions, VM metadata, and so on. Instead, use secret storage services like {{ lockbox-short-name }} or HashiCorp Vault (from {{ marketplace-name }}).
+Do not use critical data and access secrets, such as authentication tokens, API keys, and encryption keys, explicitly in the code, cloud object names and descriptions, VM metadata, etc. Instead, use secret storage services, such as {{ lockbox-short-name }} or [HashiCorp Vault](/marketplace/products/yc/vault-yckms) (from {{ marketplace-name }}).
 
 {{ lockbox-short-name }} securely stores secrets in an encrypted form only. Encryption is performed using {{ kms-short-name }}. For secret access control, use service roles.
 
 For instructions on how to use the service, see the [{{ lockbox-short-name }} documentation](../../../lockbox/).
 
-[Vault](https://www.vaultproject.io/) lets you use {{ kms-short-name }} as a trusted service for encrypting secrets. This is implemented through the [Auto Unseal](https://www.vaultproject.io/docs/concepts/seal) mechanism.
+[Vault](https://www.vaultproject.io/) allows you to use {{ kms-short-name }} as a trusted service for encrypting secrets. This is implemented through the [Auto Unseal](https://www.vaultproject.io/docs/concepts/seal) mechanism.
 
-To store secrets with Vault, you can use a VM based on an [image](/marketplace/products/yc/vault-yckms) from {{ marketplace-name }} with a pre-installed HashiCorp Vault build and Auto Unseal support. Instructions for setting up Auto Unseal are provided in the {{ kms-short-name }} documentation, [Auto Unseal in Hashicorp Vault](../../../kms/tutorials/vault-secret.md).
+To store secrets with Vault, you can use a VM based on an [image](/marketplace/products/yc/vault-yckms) from {{ marketplace-name }} with a pre-installed HashiCorp Vault build and Auto Unseal support. You can find the guide on setting up Auto Unseal in the {{ kms-short-name }} documentation, [Auto Unseal in Hashicorp Vault](../../../kms/tutorials/vault-secret.md).
+
+{% note info %}
+
+When working in {{ TF }}, we recommend using a script to [fill in](https://terraform-provider.yandexcloud.net/Resources/lockbox_secret_version) the contents of a secret. This ensures that its contents do not remain in the `.tfstate` file.
+
+{% endnote %}
 
 {% list tabs %}
 
@@ -559,9 +579,9 @@ To store secrets with Vault, you can use a VM based on an [image](/marketplace/p
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
-Store secrets in {{ lockbox-short-name }} or Hashicorp Vault from {{ marketplace-short-name }}.
+Store secrets in {{ lockbox-short-name }} or [Hashicorp Vault](/marketplace/products/yc/vault-yckms) from {{ marketplace-short-name }}.
 
 #### 4.14 For {{ serverless-containers-name }} and {{ sf-name }}, {{ lockbox-short-name }} secrets are used {#secrets-serverless-functions}
 
@@ -602,16 +622,48 @@ Make sure that the secrets are used as described above.
 
 {% endlist %}
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 Delete the secret data from env and [use](../../../functions/operations/function/version-manage.md) the {{ lockbox-short-name }} integration functionality.
 
 #### 4.15 When working with {{ coi }}, secret encryption is used {#secrets-coi}
 
-{{ kms-short-name }} supports the encryption of secrets used in a {{ TF }} configuration, such as to transfer secrets to a VM in encrypted form. See the instructions in the {{ kms-short-name }} documentation, [Encrypting secrets in  {{ TF-full }}](../../../kms/tutorials/terraform-secret.md)  It's not safe to explicitly pass secrets through environment variables, because they are displayed in the VM properties.
+{{ kms-short-name }} supports the encryption of secrets used in a {{ TF }} configuration, such as to transfer secrets to a VM in encrypted form. For details, see the [Encrypting secrets in {{ TF-full }}](../../../kms/tutorials/terraform-secret.md) section of the {{ kms-short-name }} documentation. It is not safe to explicitly pass secrets through environment variables, because they are displayed in the VM properties.
 
-**Instructions and solutions to use:**
+**Guides and solutions to use:**
 
 [Encrypting secrets in {{ TF }} to transfer them to a VM from a {{ coi }}](https://github.com/yandex-cloud/yc-solution-library-for-security/tree/master/encrypt_and_keys/terraform%2BKMS%2BCOI).
 
 For other recommendations on how to use {{ TF }} safely, see [Secure configuration: {{ TF }}](../../../security/domains/secure-config.md).
+
+#### 4.16 There is a guide for cloud administrators on what to do if their cloud secrets are compromised {#secrets-scanning}
+
+In {{ yandex-cloud }}, the [Secret Scanning Service](../../../security/operations/search-secrets.md) is enabled for everyone by default.
+It detects structured cloud secrets that are available in the public domain in the following sources:
+
+* Public GitHub repositories
+* Yandex search index
+* Helm charts in the {{ k8s }} marketplace
+
+The following cloud secrets are detected:
+
+* {{ yandex-cloud }} Session Cookie
+* {{ yandex-cloud }} {{ iam-short-name }} token
+* {{ yandex-cloud }} API Key
+* Yandex Passport OAuth token
+* {{ yandex-cloud }} AWS API compatible Access Secret
+* (NEW) {{ yandex-cloud }} {{ captcha-name }} Server Key
+* (NEW) {{ lockbox-short-name }} structured secrets
+
+The service automatically notifies a customer of any found secrets belonging to their infrastructure:
+
+* By email
+* Using {{ at-full-name }} [events](../../../audit-trails/concepts/events.md)
+
+**Guides and solutions to use:**
+
+Make sure that:
+
+* [Contact information of the person in charge of an organization is valid](../../../security/standard/authentication.md#org-contacts).
+* [{{ at-full-name }} is enabled at the organization level](../../../security/standard/audit-logs.md#audit-trails).
+* The administrator has read the [guide](../../../security/operations/search-secrets.md#secret-is-leaked) to follow if secrets are compromised.

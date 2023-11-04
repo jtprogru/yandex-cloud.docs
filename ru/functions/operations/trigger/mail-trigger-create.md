@@ -16,29 +16,29 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
-        * (опционально) Введите имя и описание триггера.
-        * В поле **Тип** выберите **Почта**.
-        * В поле **Запускаемый ресурс** выберите **Функция**.
+        * (Опционально) Введите имя и описание триггера.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_mail }}**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-    1. В блоке **Настройки функции** выберите функцию и укажите:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}** выберите функцию и укажите:
 
         {% include [function-settings](../../../_includes/functions/function-settings.md) %}
 
-    1. (Опционально) В блоке **Настройки повторных запросов**:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
         {% include [repeat-request.md](../../../_includes/functions/repeat-request.md) %}
 
-    1. (Опционально) В блоке **Настройки Dead Letter Queue** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -48,25 +48,36 @@
 
     Чтобы создать триггер, который вызывает функцию, выполните команду:
 
+    
     ```bash
     yc serverless trigger create mail \
-      --name <имя триггера> \
-      --invoke-function-id <идентификатор функции> \
-      --invoke-function-service-account-id <идентификатор сервисного аккаунта> \
+      --name <имя_триггера> \
+      --batch-size <размер_группы> \
+      --batch-cutoff <максимальное_время_ожидания> \
+      --attachements-bucket <имя_бакета> \
+      --attachements-service-account-id <идентификатор_сервисного_аккаунта> \
+      --invoke-function-id <идентификатор_функции> \
+      --invoke-function-service-account-id <идентификатор_сервисного_аккаунта> \
       --retry-attempts 1 \
       --retry-interval 10s \
-      --dlq-queue-id <идентификатор очереди Dead Letter Queue> \
-      --dlq-service-account-id <идентификатор сервисного аккаунта>
+      --dlq-queue-id <идентификатор_очереди_Dead_Letter_Queue> \
+      --dlq-service-account-id <идентификатор_сервисного_аккаунта>
     ```
+  
 
     Где:
 
     * `--name` — имя триггера.
+
+    {% include [batch-settings-messages](../../../_includes/functions/batch-settings-messages.md) %}
+
+    {% include [attachments-params](../../../_includes/functions/attachments-params.md) %}
     
     {% include [trigger-cli-param](../../../_includes/functions/trigger-cli-param.md) %}
 
     Результат:
 
+    
     ```text
     id: a1sfe084v4**********
     folder_id: b1g88tflru**********
@@ -75,6 +86,12 @@
     rule:
       mail:
         email: a1s8h8avgl**********-cho1****@serverless.yandexcloud.net
+        batch_settings:
+          size: "3"
+          cutoff: 20s
+        attachments_bucket:
+          bucket_id: bucket-for-attachments
+          service_account_id: ajejeis235ma********
         invoke_function:
           function_id: d4eofc7n0m**********
           function_tag: $latest
@@ -87,6 +104,7 @@
             service-account-id: aje3932acd**********
     status: ACTIVE
     ```
+  
 
 - API
 

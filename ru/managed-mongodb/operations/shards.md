@@ -24,7 +24,7 @@
 
 {% note info %}
 
-Шардирование [не поддерживается](../concepts/sharding.md#shard-management) для хостов с классами **b1.medium** и **b2.medium**. Если у вас нет вкладки **Шарды**, [повысьте класс хостов кластера](update.md#change-resource-preset) до поддерживаемого.
+Шардирование [не поддерживается](../concepts/sharding.md#shard-management) для хостов с классами **b1.medium** и **b2.medium**. Если у вас нет вкладки **{{ ui-key.yacloud.mongodb.cluster.switch_shards }}**, [повысьте класс хостов кластера](update.md#change-resource-preset) до поддерживаемого.
 
 {% endnote %}
 
@@ -32,12 +32,12 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Шарды**.
-  1. Нажмите кнопку **Включить**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mongodb.cluster.switch_shards }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.shards.button_sharding-enable }}**.
   1. Выберите один из типов шардирования:
-     * **Стандартный** — с использованием хостов `MONGOINFRA`.
-     * **Расширенный** — с использованием хостов `MONGOS` и `MONGOCFG`.
+     * **{{ ui-key.yacloud.mongodb.cluster.shards.label_standard }}** — с использованием хостов `MONGOINFRA`.
+     * **{{ ui-key.yacloud.mongodb.cluster.shards.label_custom }}** — с использованием хостов `MONGOS` и `MONGOCFG`.
 
        Подробнее см. в разделе [{#T}](../concepts/sharding.md).
 
@@ -48,7 +48,7 @@
      {% endnote %}
 
   1. Задайте параметры хостов, которые будут обеспечивать доступ к шардированным данным.
-  1. Нажмите кнопку **Включить шардирование**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mongodb.cluster.shards.button_enable_sharding }}**.
 
   Кластер начнет обновляться, при этом будут созданы запрошенные хосты, а также первый шард кластера.
 
@@ -62,19 +62,19 @@
 
     ```bash
     {{ yc-mdb-mg }} cluster enable-sharding \
-      --cluster-name=<имя кластера> \
+      --cluster-name=<имя_кластера> \
       --host type=mongoinfra,`
-        `zone-id=<зона доступности>,`
-        `subnet-name=<имя подсети> \
+        `zone-id=<зона_доступности>,`
+        `subnet-name=<имя_подсети> \
       --host type=mongoinfra,`
-        `zone-id=<зона доступности>,`
-        `subnet-name=<имя подсети> \
+        `zone-id=<зона_доступности>,`
+        `subnet-name=<имя_подсети> \
       --host type=mongoinfra,`
-        `zone-id=<зона доступности>,`
-        `subnet-name=<имя подсети> \
-      --mongoinfra resource-preset=<класс хоста>,`
-        `disk-size=<размер хранилища в ГБ>,`
-        `disk-type=<тип диска>
+        `zone-id=<зона_доступности>,`
+        `subnet-name=<имя_подсети> \
+      --mongoinfra resource-preset=<класс_хоста>,`
+        `disk-size=<размер_хранилища_ГБ>,`
+        `disk-type=<тип_диска>
     ```
 
     Где:
@@ -92,28 +92,28 @@
 
     ```bash
     {{ yc-mdb-mg }} cluster enable-sharding \
-      --cluster-name=<имя кластера> \
+      --cluster-name=<имя_кластера> \
       --host type=mongos,`
-        `zone-id=<зона доступности>,`
-        `subnet-name=<имя подсети> \
+        `zone-id=<зона_доступности>,`
+        `subnet-name=<имя_подсети> \
       --host type=mongos,`
-        `zone-id=<зона доступности>,`
-        `subnet-name=<имя подсети> \
-      --mongos resource-preset=<класс хоста>,`
-        `disk-size=<размер хранилища в ГБ>,`
-        `disk-type=<тип диска> \
+        `zone-id=<зона_доступности>,`
+        `subnet-name=<имя_подсети> \
+      --mongos resource-preset=<класс_хоста>,`
+        `disk-size=<размер_хранилища_ГБ>,`
+        `disk-type=<тип_диска> \
       --host type=mongocfg,`
-        `zone-id=<зона доступности>,`
-        `subnet-name=<имя подсети> \
+        `zone-id=<зона_доступности>,`
+        `subnet-name=<имя_подсети> \
       --host type=mongocfg,`
-        `zone-id=<зона доступности>,`
-        `subnet-name=<имя подсети> \
+        `zone-id=<зона_доступности>,`
+        `subnet-name=<имя_подсети> \
       --host type=mongocfg,`
-        `zone-id=<зона доступности>,`
-        `subnet-name=<имя подсети> \
-      --mongocfg resource-preset=<класс хоста>,`
-        `disk-size=<размер хранилища в ГБ>,`
-        `disk-type=<тип диска>
+        `zone-id=<зона_доступности>,`
+        `subnet-name=<имя_подсети> \
+      --mongocfg resource-preset=<класс_хоста>,`
+        `disk-size=<размер_хранилища_ГБ>,`
+        `disk-type=<тип_диска>
     ```
 
     Где:
@@ -145,26 +145,26 @@
 
         ```hcl
         resources_mongoinfra {
-          resource_preset_id = "<класс хоста>"
-          disk_type_id       = "<тип диска>"
-          disk_size          = <размер хранилища в ГБ>
+          resource_preset_id = "<класс_хоста>"
+          disk_type_id       = "<тип_диска>"
+          disk_size          = <размер_хранилища_ГБ>
         }
 
         host {
-          zone_id   = "<зона доступности>"
-          subnet_id = "<идентификатор подсети>"
+          zone_id   = "<зона_доступности>"
+          subnet_id = "<идентификатор_подсети>"
           type      = "mongoinfra"
         }
 
         host {
-          zone_id   = "<зона доступности>"
-          subnet_id = "<идентификатор подсети>"
+          zone_id   = "<зона_доступности>"
+          subnet_id = "<идентификатор_подсети>"
           type      = "mongoinfra"
         }
 
         host {
-          zone_id   = "<зона доступности>"
-          subnet_id = "<идентификатор подсети>"
+          zone_id   = "<зона_доступности>"
+          subnet_id = "<идентификатор_подсети>"
           type      = "mongoinfra"
         }
         ```
@@ -175,44 +175,44 @@
 
         ```hcl
         resources_mongos {
-          resource_preset_id = "<класс хоста>"
-          disk_type_id       = "<тип диска>"
-          disk_size          = <размер хранилища в ГБ>
+          resource_preset_id = "<класс_хоста>"
+          disk_type_id       = "<тип_диска>"
+          disk_size          = <размер_хранилища_ГБ>
         }
 
         resources_mongocfg {
-          resource_preset_id = "<класс хоста>"
-          disk_type_id       = "<тип диска>"
-          disk_size          = <размер хранилища в ГБ>
+          resource_preset_id = "<класс_хоста>"
+          disk_type_id       = "<тип_диска>"
+          disk_size          = <размер_хранилища_ГБ>
         }
 
         host {
-          zone_id   = "<зона доступности>"
-          subnet_id = "<идентификатор подсети>"
+          zone_id   = "<зона_доступности>"
+          subnet_id = "<идентификатор_подсети>"
           type      = "mongos"
         }
 
         host {
-          zone_id   = "<зона доступности>"
-          subnet_id = "<идентификатор подсети>"
+          zone_id   = "<зона_доступности>"
+          subnet_id = "<идентификатор_подсети>"
           type      = "mongos"
         }
 
         host {
-          zone_id   = "<зона доступности>"
-          subnet_id = "<идентификатор подсети>"
+          zone_id   = "<зона_доступности>"
+          subnet_id = "<идентификатор_подсети>"
           type      = "mongocfg"
         }
 
         host {
-          zone_id   = "<зона доступности>"
-          subnet_id = "<идентификатор подсети>"
+          zone_id   = "<зона_доступности>"
+          subnet_id = "<идентификатор_подсети>"
           type      = "mongocfg"
         }
 
         host {
-          zone_id   = "<зона доступности>"
-          subnet_id = "<идентификатор подсети>"
+          zone_id   = "<зона_доступности>"
+          subnet_id = "<идентификатор_подсети>"
           type      = "mongocfg"
         }
         ```
@@ -243,8 +243,8 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Шарды**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mongodb.cluster.switch_shards }}**.
 
 - CLI
 
@@ -255,7 +255,7 @@
   Чтобы получить список шардов в кластере, выполните команду:
 
   ```bash
-  {{ yc-mdb-mg }} shards list --cluster-name <имя кластера>
+  {{ yc-mdb-mg }} shards list --cluster-name <имя_кластера>
   ```
 
   Результат:
@@ -287,11 +287,11 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Шарды**.
-  1. Нажмите кнопку **Добавить шард**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mongodb.cluster.switch_shards }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.shards.button_add }}**.
   1. Укажите имя шарда и добавьте нужное количество хостов.
-  1. Нажмите кнопку **Создать шард**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_create-shard }}**.
 
 - CLI
 
@@ -302,10 +302,10 @@
   Чтобы добавить шард в кластер, выполните команду (в примере приведены не все доступные параметры):
 
   ```bash
-  {{ yc-mdb-mg }} shards add <имя нового шарда> \
-    --cluster-name=<имя кластера> \
-    --host zone-id=<зона доступности>,`
-      `subnet-name=<имя подсети>
+  {{ yc-mdb-mg }} shards add <имя_нового_шарда> \
+    --cluster-name=<имя_кластера> \
+    --host zone-id=<зона_доступности>,`
+      `subnet-name=<имя_подсети>
   ```
 
   Где:
@@ -325,13 +325,13 @@
   1. Добавьте к описанию кластера {{ mmg-name }} нужное количество блоков `host` с типом `MONGOD` в параметре `type` и именем шарда в параметре `shard_name`:
 
      ```hcl
-     resource "yandex_mdb_mongodb_cluster" "<имя кластера>" {
+     resource "yandex_mdb_mongodb_cluster" "<имя_кластера>" {
        ...
        host {
-         zone_id    = "<зона доступности>"
-         subnet_id  = "<идентификатор подсети>"
+         zone_id    = "<зона_доступности>"
+         subnet_id  = "<идентификатор_подсети>"
          type       = "mongod"
-         shard_name = "<имя шарда>"
+         shard_name = "<имя_шарда>"
        }
      }
      ```
@@ -372,10 +372,10 @@
 
 - Консоль управления
 
-  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-  1. Нажмите на имя нужного кластера и выберите вкладку **Шарды**.
-  1. Нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) в строке нужного шарда и выберите пункт **Удалить**.
-  1. В открывшемся окне нажмите кнопку **Удалить**.
+  1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+  1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mongodb.cluster.switch_shards }}**.
+  1. Нажмите на значок ![image](../../_assets/horizontal-ellipsis.svg) в строке нужного шарда и выберите пункт **{{ ui-key.yacloud.mdb.cluster.shards.button_action-remove }}**.
+  1. В открывшемся окне нажмите кнопку **{{ ui-key.yacloud.mdb.cluster.shards.popup-confirm_button_delete }}**.
 
 - CLI
 
@@ -386,8 +386,8 @@
   Чтобы удалить шард из кластера, выполните команду:
 
   ```bash
-  {{ yc-mdb-mg }} shards delete <имя шарда> \
-    --cluster-name=<имя кластера>
+  {{ yc-mdb-mg }} shards delete <имя_шарда> \
+    --cluster-name=<имя_кластера>
   ```
 
   Имя шарда можно запросить со [списком шардов в кластере](#list-shards), имя кластера — со [списком кластеров в каталоге](cluster-list.md#list-clusters).

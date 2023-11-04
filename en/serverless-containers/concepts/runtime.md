@@ -18,7 +18,7 @@ You can write your application in any programming language and have it use any i
 
 {% include [port-variable-note.md](../../_includes/serverless-containers/port-variable-note.md) %}
 
-After receiving a request, a container instance must send a response within the timeout specified in the **Timeout** field of the container revision settings. It includes the container instance launch time. Otherwise, the request terminates returning a 504 error.
+After receiving a request, a container instance must send a response within the timeout specified in the **{{ ui-key.yacloud.serverless-containers.label_timeout }}** field of the container revision settings. It includes the container instance launch time. Otherwise, the request terminates returning a 504 error.
 
 ## Environment variables {#environment-variables}
 
@@ -44,17 +44,26 @@ The file system is stored in RAM. Data written to the file system is not saved w
 
 ### CPU {#cpu}
 
-A CPU resource is allocated whenever a container instance is processing at least one request. Currently, no more than 1 vCPU is available.
+A CPU resource is allocated whenever a container instance is processing at least one request. Currently, no more than 2 vCPUs may be allocated.
 
 ### RAM {#ram}
 
-Each container instance is allocated RAM. The default is 128 MB.
+Each container instance is allocated RAM. The default value is 128 MB.
 
 For example, RAM is consumed for:
 
 * File system writes.
-* Container process launches.
-* Request processing.
+* Container process launches
+* Request processing
+
+### Ratio between RAM and vCPU {#ratio}
+
+The number of available cores depends on the specified RAM size.
+
+| RAM | CPU |
+--- | ---
+| 128 MB to less than 4 GB | 1 vCPU with a guaranteed vCPU share up to 100% |
+| 4 GB | 2 vCPUs with a guaranteed vCPU share of 100% |
 
 ## Metadata service {#metadata}
 

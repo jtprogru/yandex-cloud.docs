@@ -22,13 +22,13 @@ To add your own geobase to a {{ CH }} cluster:
    * Population (UInt32): Optional.
 1. To add an alternative hierarchy of regions, create `regions_hierarchy_<suffix>.txt` files with the same structure. To use an alternative geobase, pass this suffix when invoking the function, e.g.:
 
-   * `regionToCountry(RegionID)` — Uses the default dictionary: `regions_hierarchy.txt`.
+   * `regionToCountry(RegionID)`: Uses the default dictionary: `regions_hierarchy.txt`.
    * `regionToCountry(RegionID, 'alt')`: Uses the dictionary with the `alt` suffix: `regions_hierarchy_alt.txt`.
 
-1. Create the file `regions_names.txt` with the region names. The file must be in [TSV tabular format](https://ru.wikipedia.org/wiki/TSV) without headers and with the following columns:
+1. Create the `regions_names.txt` file with the region names. The file must be in [TSV tabular format](https://ru.wikipedia.org/wiki/TSV) without headers and with the following columns:
 
    * Region ID (UInt32)
-   * Region name (String): Can't contain tab or newline characters, even escaped ones.
+   * Region name (String): Cannot contain tab or newline characters, even escaped ones.
 
 1. To add region names in other languages to your geobase, create `regions_names_<language code>.txt` files with the same structure. For example, you may create `regions_names_en.txt` for English and `regions_names_tr.txt` for Turkish.
 1. Create a `tar`, `tar.gz`, or `zip` archive from the geobase files.
@@ -40,15 +40,11 @@ To add your own geobase to a {{ CH }} cluster:
 
 1. [Upload](../../storage/operations/objects/upload.md) the geobase archive to {{ objstorage-full-name }}.
 
-1. Configure access to the geobase archive using one of the following methods:
+1. Configure access to the geobase archive using a [service account](../../iam/concepts/users/service-accounts.md):
 
-   * Use a [service account](../../iam/concepts/users/service-accounts.md) (recommended). This method enables you to access the file without entering account information.
-
-      1\. [Connect a service account to a cluster](s3-access.md#connect-service-account).
-      2\. [Assign the account the role](s3-access.md#configure-acl) of `storage.viewer`.
-      3\. In the bucket ACL, [grant the account](../../storage/operations/buckets/edit-acl.md) `READ` permission.
-
-   * [Enable public access](../../storage/operations/objects/edit-acl.md) to the bucket containing the file.
+   1. [Connect a service account to a cluster](s3-access.md#connect-service-account).
+   1. [Assign the account the role](s3-access.md#configure-acl) of `storage.viewer`.
+   1. In the bucket ACL, [grant](../../storage/operations/buckets/edit-acl.md) the `READ` permission to the account.
 
 1. [Get a link](s3-access.md#get-link-to-object) to the geobase archive.
 
@@ -59,10 +55,10 @@ To add your own geobase to a {{ CH }} cluster:
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Select the cluster and click **Edit cluster** in the top panel.
-   1. Under **DBMS settings**, click **Settings**.
-   1. In the **Geobase uri** field, provide a link to the geobase archive in {{ objstorage-full-name }}.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Select the cluster and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}** in the top panel.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_settings }}**, click **{{ ui-key.yacloud.mdb.forms.button_configure-settings }}**.
+   1. In the **Geobase uri** field, enter a link to the geobase archive in {{ objstorage-full-name }}.
 
 - CLI
 
@@ -113,7 +109,7 @@ To add your own geobase to a {{ CH }} cluster:
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated.
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -127,7 +123,7 @@ To add your own geobase to a {{ CH }} cluster:
 
    {% note warning %}
 
-   This API method resets any cluster settings that aren't passed explicitly in the request to their defaults. To avoid this, be sure to pass the names of the fields to be changed in the `updateMask` parameter.
+   This API method resets any cluster settings that are not provided explicitly in the request to their defaults. To avoid this, be sure to provide the names of the fields to be changed in the `updateMask` parameter.
 
    {% endnote %}
 

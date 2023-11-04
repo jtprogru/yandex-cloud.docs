@@ -1,6 +1,8 @@
 # Dynamic blocks
 
-Using a dynamic block, you can insert a fragment into a page created in the [old editor](pages-types.md#page) with content generated automatically based on the page data or information from an external source.
+{% include [actions-alert](../_includes/wiki/actions-alert.md) %}
+
+Using a dynamic block, you can insert a fragment with content generated automatically based on the page info data or information from an external source.
 
 You can use dynamic blocks to:
 

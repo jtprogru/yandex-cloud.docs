@@ -1,8 +1,8 @@
 # Updating a disk
 
 After you create a [disk](../../concepts/disk.md), you can:
-* [Changing the name and description of a disk](#change-disk-name).
-* [Increase disk size](#change-disk-size) (available only on a [stopped](../../concepts/vm-statuses.md#list-of-statuses) [virtual machine](../../concepts/vm.md)).
+* [Change the name and description of a disk](#change-disk-name).
+* [Increase the disk size](#change-disk-size), including that of a disk attached to a [running](../../concepts/vm-statuses.md#list-of-statuses) VM.
 
 ## Changing the name and description of a disk {#change-disk-name}
 
@@ -64,7 +64,7 @@ You can only change the size of a disk by increasing it. You cannot reduce the s
 
 {% endnote %}
 
-You can only increase the size of a disk that is not attached to a running VM. To increase the disk size, make sure that the VM is stopped.
+You can increase the disk size even on a [running](../../concepts/vm-statuses.md#list-of-statuses) VM.
 
 {% list tabs %}
 
@@ -72,15 +72,12 @@ You can only increase the size of a disk that is not attached to a running VM. T
 
    1. In the [management console]({{ link-console-main }}), select the folder where the disk is located.
    1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
-   1. On the **{{ ui-key.yacloud.compute.switch_instances }}** page, stop the VM (see [{#T}](../vm-control/vm-stop-and-start.md#stop)).
-   1. Wait until the VM status changes to `STOPPED`.
    1. In the left-hand panel, select ![image](../../../_assets/compute/disks-pic.svg) **{{ ui-key.yacloud.compute.switch_disks }}**.
-   1. Click ![image](../../../_assets/horizontal-ellipsis.svg) next to the desired disk and select **{{ ui-key.yacloud.compute.disks.button_action-edit }}**.
+   1. Click ![image](../../../_assets/horizontal-ellipsis.svg) next to the required disk and select **{{ ui-key.yacloud.compute.disks.button_action-edit }}**.
    1. Increase the disk size.
    1. Click **{{ ui-key.yacloud.compute.disks.edit.button_update }}**.
 
       {{ compute-name }} will launch the operation to change the disk size.
-   1. When the operation finishes, go back to the **{{ ui-key.yacloud.compute.switch_instances }}** page and restart the VM.
 
 - CLI
 
@@ -98,12 +95,6 @@ You can only increase the size of a disk that is not attached to a running VM. T
 
       {% include [compute-disk-list](../../../_includes/compute/disk-list.md) %}
 
-   1. Stop the VM with the disk you want to update. To do this, select the `ID` of the VM:
-
-      ```bash
-      {{ yc-compute }} instance stop --id a7lcvu28njbhnkcteb5n
-      ```
-
    1. Select the `ID` or `NAME` of the required disk (for example, `first-disk`).
    1. Specify the size (for example, 32 GB) in the disk change command:
 
@@ -113,11 +104,6 @@ You can only increase the size of a disk that is not attached to a running VM. T
       ```
 
       {{ compute-name }} will launch the operation to change the disk size.
-   1. Run the VM:
-
-      ```bash
-      {{ yc-compute }} instance start --id a7lcvu28njbhnkcteb5n
-      ```
 
 - API
 
@@ -125,24 +111,22 @@ You can only increase the size of a disk that is not attached to a running VM. T
 
   To request the list of available disks, use the [list](../../api-ref/Disk/list.md) REST API method or the [DiskService/List](../../api-ref/grpc/disk_service.md#List) gRPC API call.
 
-  To stop or start a VM, use the [stop](../../api-ref/Instance/stop.md) and [start](../../api-ref/Instance/start.md) methods for the [Instance](../../api-ref/Instance/) resource or the [InstanceService/Stop](../../api-ref/grpc/instance_service.md#Stop) and [InstanceService/Start](../../api-ref/grpc/instance_service.md#Start) gRPC API calls, respectively.
-
 {% endlist %}
 
-## Increasing a partition {#change-part-size}
+## Increasing the size of a Linux disk partition {#change-part-size-linux}
 
-After increasing the disk size, you also need to increase its partition and file system. For boot disks, this should be done automatically.
+After increasing the disk size, you also need to increase its partition and file system. For boot disks, this happens automatically after you restart the VM.
 
-If the disk partition doesn't increase or you're increasing the size of a non-boot disk, do this manually:
+If the disk partition has not increased, or if you mean to increase the size of a non-boot disk, do it manually. The procedure depends on the file system:
 
 {% list tabs %}
 
-- Linux
+- ext4
 
    1. [Connect](../../operations/vm-connect/ssh.md) to the VM over SSH:
 
       ```bash
-      ssh <username>@<VM public IP>
+      ssh <username>@<VM_public_IP_address>
       ```
 
    1. See the disks attached to the VM:
@@ -153,7 +137,7 @@ If the disk partition doesn't increase or you're increasing the size of a non-bo
 
       Result:
 
-      ```bash
+      ```text
       NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
       vda    252:0    0  25G  0 disk
       ├─vda1 252:1    0   1M  0 part
@@ -178,7 +162,7 @@ If the disk partition doesn't increase or you're increasing the size of a non-bo
 
       Result:
 
-      ```bash
+      ```text
       e2fsck 1.44.1 (24-Mar-2018)
       Pass 1: Checking inodes, blocks, and sizes
       Pass 2: Checking directory structure
@@ -196,11 +180,11 @@ If the disk partition doesn't increase or you're increasing the size of a non-bo
 
       Where:
       * `/dev/vdb` is the name of the device.
-      * `1` is the partition number, so it's separated by a space.
+      * `1` is the partition number, so it is separated by a space.
 
       Result:
 
-      ```bash
+      ```text
       CHANGED: partition=1 start=2048 old: size=67106816 end=67108864 new: size=134215647,end=134217695
       ```
 
@@ -214,7 +198,7 @@ If the disk partition doesn't increase or you're increasing the size of a non-bo
 
       Result:
 
-      ```bash
+      ```text
       Resizing the filesystem on /dev/vdb1 to 16776955 (4k) blocks.
       The filesystem on /dev/vdb1 is now 16776955 (4k) blocks long.
       ```
@@ -233,7 +217,7 @@ If the disk partition doesn't increase or you're increasing the size of a non-bo
 
       Result:
 
-      ```bash
+      ```text
       NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
       vda    252:0    0  25G  0 disk
       ├─vda1 252:1    0   1M  0 part
@@ -242,5 +226,89 @@ If the disk partition doesn't increase or you're increasing the size of a non-bo
       └─vdb1 252:17   0  64G  0 part /data
       ```
 
+- xfs
+
+   1. [Connect](../../operations/vm-connect/ssh.md) to the VM over SSH:
+
+      ```bash
+      ssh <username>@<VM_public_IP_address>
+      ```
+
+   1. See the disks attached to the VM:
+
+      ```bash
+      lsblk
+      ```
+
+      Result:
+
+      ```text
+      NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+      vda    252:0    0  25G  0 disk
+      ├─vda1 252:1    0   1M  0 part
+      └─vda2 252:2    0  25G  0 part /
+      vdb    252:16   0  64G  0 disk
+      └─vdb1 252:17   0  32G  0 part /data
+      ```
+
+      Disk partitions are listed in the `NAME` column. Partition mount points are shown in the `MOUNTPOINT` column.
+
+   1. Run this command:
+
+      ```bash
+      sudo growpart /dev/vdb 1
+      ```
+
+      Where:
+      * `/dev/vdb` is the name of the device.
+      * `1` is the partition number, so it is separated by a space.
+
+      Result:
+
+      ```text
+      CHANGED: partition=1 start=2048 old: size=67106816 end=67108864 new: size=134215647,end=134217695
+      ```
+
+   1. Change the file system size:
+
+      ```bash
+      sudo xfs_growfs /data -d
+      ```
+
+      Where:
+
+      * `/data`: Mount point of the partition you need to increase.
+      * `-d`: Partition extension parameter.
+
+      Result:
+
+      ```text
+      meta-data=/dev/vdb1              isize=512    agcount=4, agsize=655360 blks
+               =                       sectsz=4096  attr=2, projid32bit=1
+               =                       crc=1        finobt=1, sparse=1, rmapbt=0
+               =                       reflink=1    bigtime=0 inobtcount=0
+      data     =                       bsize=4096   blocks=2621440, imaxpct=25
+               =                       sunit=0      swidth=0 blks
+      naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+      log      =internal log           bsize=4096   blocks=2560, version=2
+               =                       sectsz=4096  sunit=1 blks, lazy-count=1
+      realtime =none                   extsz=4096   blocks=0, rtextents=0
+      data blocks changed from 2621440 to 11796219
+      ```
+
+   1. Make sure that the partition increased:
+
+      ```bash
+      lsblk /dev/vdb
+      ```
+
+      Result:
+
+      ```text
+      NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+      vdb    252:16   0  64G  0 disk
+      └─vdb1 252:17   0  64G  0 part /data
+      ```
 
 {% endlist %}
+

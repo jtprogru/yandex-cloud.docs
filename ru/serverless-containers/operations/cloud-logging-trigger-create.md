@@ -18,28 +18,28 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Откройте сервис **{{ serverless-containers-name }}**.
+    1. Откройте сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
 
-    1. На панели слева выберите ![image](../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
    
         * Введите имя и описание триггера.
-        * В поле **Тип** выберите **{{ cloud-logging-name }}**.
-        * В поле **Запускаемый ресурс** выберите **Контейнер**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите `{{ ui-key.yacloud.serverless-functions.triggers.form.label_logging }}`.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите `{{ ui-key.yacloud.serverless-functions.triggers.form.label_container }}`.
 
-    1. В блоке **Настройки {{ cloud-logging-name }}** укажите:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_logging }}** укажите:
 
         * лог-группу;
-        * (опционально) типы ресурсов — ваши сервисы или сервисы {{ yandex-cloud }}, например `serverless.function`;
+        * (опционально) типы ресурсов, например функции {{ sf-name }} `serverless.function`;
         * (опционально) идентификаторы ваших ресурсов или ресурсов {{ yandex-cloud }}, например контейнеров {{ serverless-containers-name }};
         * (опционально) уровни логирования.
 
        Триггер срабатывает, когда в указанную лог-группу добавляют записи, которые соответствуют всем опциональным настройкам. Если опциональная настройка не задана, триггер срабатывает при любом ее значении.
 
-    1. (Опционально) В блоке **Настройки группирования сообщений** укажите:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_batch-settings }}** укажите:
 
         * размер группы сообщений. Допустимые значения от 1 до 100, значение по умолчанию — 1.
         * максимальное время ожидания. Допустимые значения от 1 до 60 секунд, значение по умолчанию — 1 секунда.
@@ -48,13 +48,13 @@
 
     1. {% include [container-settings](../../_includes/serverless-containers/container-settings.md) %}
 
-    1. (Опционально) В блоке **Настройки повторных запросов**:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
         {% include [repeat-request](../../_includes/serverless-containers/repeat-request.md) %}
 
-    1. (Опционально) В блоке **Настройки Dead Letter Queue** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}** выберите очередь Dead Letter Queue и сервисный аккаунт с правами на запись в нее.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -64,12 +64,17 @@
 
     Чтобы создать триггер, который вызывает контейнер, выполните команду:
 
+    
     ```bash
     yc serverless trigger create logging \
       --name <имя_триггера> \
       --log-group-name <имя_лог-группы> \
       --batch-size 1 \
       --batch-cutoff 1s \
+      --resource-ids <идентификатор_ресурса> \
+      --resource-types <тип_ресурса> \
+      --stream-names <поток_логирования> \
+      --log-levels <уровень_логирования> \
       --invoke-container-id <идентификатор_контейнера> \
       --invoke-container-service-account-id <идентификатор_сервисного_аккаунта> \
       --retry-attempts 1 \
@@ -77,18 +82,22 @@
       --dlq-queue-id <идентификатор_очереди_Dead_Letter_Queue> \
       --dlq-service-account-id <идентификатор_сервисного_аккаунта>
     ```
+  
 
     Где:
 
     * `--name` — имя триггера.
     * `--log-group-name` — имя лог-группы, при добавлении записей в которую будет вызываться контейнер.
-    * `--batch-size` — размер группы сообщений. Необязательный параметр. Допустимые значения от 1 до 100, значение по умолчанию — 1.
-    * `--batch-cutoff` — максимальное время ожидания. Необязательный параметр. Допустимые значения от 0 до 60 секунд, значение по умолчанию — 1 секунда. Триггер группирует сообщения не дольше `batch-cutoff` и отправляет их в контейнер. Число сообщений при этом не превышает `batch-size`.
+
+    {% include [batch-settings-messages](../../_includes/serverless-containers/batch-settings-messages.md) %}
+
+    {% include [logging-cli-param](../../_includes/functions/logging-cli-param.md) %}
 
     {% include [trigger-cli-param](../../_includes/serverless-containers/trigger-cli-param.md) %}
 
     Результат:
 
+    
     ```text
     id: a1s5msktij**********
     folder_id: b1gmit33hg**********
@@ -97,6 +106,14 @@
     rule:
       logging:
         log_group_id: e23bidnftl**********
+        resource_type:
+          - serverless.functions
+        resource_id:
+          - d4e1gpsgam78********
+        stream_name:
+          - test
+        levels:
+          - INFO
         batch_settings:
           size: "1"
           cutoff: 1s
@@ -111,6 +128,7 @@
             service-account-id: aje3lebfem**********
     status: ACTIVE
     ```
+  
 
 - API
 

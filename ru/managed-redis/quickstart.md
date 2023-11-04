@@ -12,9 +12,9 @@
 
    {% include [create-folder](../_includes/create-folder.md) %}
 
-1. Есл для кластера не настроен публичный доступ, подключиться к нему можно только изнутри {{ yandex-cloud }}. Для подключения создайте виртуальную машину в той же облачной сети, что и кластер {{ RD }} (на основе [Linux](../compute/quickstart/quick-create-linux.md)).
+1. Если для кластера не настроен публичный доступ, подключиться к нему можно только изнутри {{ yandex-cloud }}. Для подключения создайте виртуальную машину в той же облачной сети, что и кластер {{ RD }} (на основе [Linux](../compute/quickstart/quick-create-linux.md)).
 1. [Подключитесь](../compute/operations/vm-connect/ssh.md) к ВМ по [SSH](../glossary/ssh-keygen.md).
-1. Установите на ВМ утилиту [redis-cli](https://redis.io/topics/rediscli), например, так (для Ubuntu 20.04 LTS):
+1. Установите на ВМ утилиту [redis-cli](https://redis.io/topics/rediscli), например, так (для [Ubuntu 20.04 LTS](/marketplace/products/yc/ubuntu-20-04-lts)):
 
    ```bash
    sudo apt install redis-tools
@@ -38,8 +38,6 @@
 
 1. Если вы используете группы безопасности для облачной сети, [настройте их](operations/connect/index.md#configuring-security-groups) так, чтобы был разрешен весь необходимый трафик между кластером и хостом, с которого выполняется подключение.
 
-   {% include [preview-pp.md](../_includes/preview-pp.md) %}
-
 
 1. Подключитесь к кластеру, используя `redis-cli`.
 
@@ -60,9 +58,9 @@
      1. Получите адрес хоста-мастера, используя Sentinel и любой хост {{ RD }}:
 
         ```bash
-        redis-cli -h <FQDN любого хоста {{ RD }}> \
+        redis-cli -h <FQDN_любого_хоста_{{ RD }}> \
           -p {{ port-mrd-sentinel }} \
-          sentinel get-master-addr-by-name <имя кластера {{ RD }}> | head -n 1
+          sentinel get-master-addr-by-name <имя_кластера_{{ RD }}> | head -n 1
         ```
 
      1. Подключитесь к хосту с этим адресом:
@@ -72,17 +70,17 @@
      **Чтобы подключиться напрямую к мастеру (без SSL):**
 
      ```bash
-     redis-cli -h c-<идентификатор кластера>.rw.{{ dns-zone }} \
+     redis-cli -h c-<идентификатор_кластера>.rw.{{ dns-zone }} \
        -p {{ port-mrd }} \
-       -a <пароль {{ RD }}>
+       -a <пароль_{{ RD }}>
      ```
 
      **Чтобы подключиться напрямую к мастеру (с SSL):**
 
      ```bash
-     redis-cli -h c-<идентификатор кластера>.rw.{{ dns-zone }} \
+     redis-cli -h c-<идентификатор_кластера>.rw.{{ dns-zone }} \
        -p {{ port-mrd-tls }} \
-       -a <пароль {{ RD }}> \
+       -a <пароль_{{ RD }}> \
        --tls \
        --cacert ~/.redis/{{ crt-local-file }}
      ```
@@ -92,17 +90,17 @@
      **Чтобы подключиться без SSL:**
 
      ```bash
-     redis-cli -h <FQDN хоста-мастера в любом шарде> \
+     redis-cli -h <FQDN_хоста-мастера_в_любом_шарде> \
        -p {{ port-mrd }} \
-       -a <пароль {{ RD }}>
+       -a <пароль_{{ RD }}>
      ```
 
      **Чтобы подключиться с SSL:**
 
      ```bash
-     redis-cli -h <FQDN хоста-мастера в любом шарде> \
+     redis-cli -h <FQDN_хоста-мастера_в_любом_шарде> \
        -p {{ port-mrd-tls }} \
-       -a <пароль {{ RD }}> \
+       -a <пароль_{{ RD }}> \
        --tls \
        --cacert ~/.redis/{{ crt-local-file }}
      ```

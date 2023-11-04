@@ -193,27 +193,9 @@
 
 ## Посмотреть список датасетов, доступных в проекте {#list}
 
-{% list tabs %}
-
-- Интерфейс {{ ml-platform-name }}
-
-  На странице проекта в блоке **{{ ui-key.yc-ui-datasphere.project-page.project-resources }}** выберите ![dataset](../../../_assets/datasphere/dataset.svg) **{{ ui-key.yc-ui-datasphere.resources.dataset}}**. Затем перейдите на вкладку **{{ ui-key.yc-ui-datasphere.common.shared-with-project-resources }}**.
-
-- Код в ноутбуке
-
-  Выполните ячейку с кодом:
-
-  ```bash
-  #pragma datasets list
-  ```
-
-{% endlist %}
+На странице проекта в блоке **{{ ui-key.yc-ui-datasphere.project-page.project-resources }}** выберите ![dataset](../../../_assets/datasphere/dataset.svg) **{{ ui-key.yc-ui-datasphere.resources.dataset}}**. Затем перейдите на вкладку **{{ ui-key.yc-ui-datasphere.common.shared-with-project-resources }}**.
 
 ## Поделиться датасетом {#share}
-
-Поделиться датасетом в сообществе может только администратор сообщества.
-
-Подробнее о ролях, действующих в {{ ml-platform-name }}, см. в разделе [{#T}](../../security/index.md).
 
 1. {% include [find project](../../../_includes/datasphere/ui-find-project.md) %}
 1. В блоке **{{ ui-key.yc-ui-datasphere.project-page.project-resources }}** нажмите ![dataset](../../../_assets/datasphere/dataset.svg) **{{ ui-key.yc-ui-datasphere.resources.dataset }}**.
@@ -231,19 +213,5 @@
 
 Чтобы удалить датасет:
 
-{% list tabs %}
-
-- Интерфейс {{ ml-platform-name }}
-
-  1. На странице проекта в блоке **{{ ui-key.yc-ui-datasphere.project-page.project-resources }}** нажмите ![dataset](../../../_assets/datasphere/dataset.svg) **{{ ui-key.yc-ui-datasphere.resources.dataset }}**.
-  1. В строке с нужным датасетом нажмите значок ![options](../../../_assets/options.svg) и выберите **{{ ui-key.yc-ui-datasphere.common.delete }}**.
-
-- Код в ноутбуке
-
-  Чтобы удалить датасет `<имя_датасета>`, выполните ячейку с кодом:
-
-  ```bash
-  #pragma dataset delete <имя_датасета>
-  ```
-
-{% endlist %}
+1. На странице проекта в блоке **{{ ui-key.yc-ui-datasphere.project-page.project-resources }}** нажмите ![dataset](../../../_assets/datasphere/dataset.svg) **{{ ui-key.yc-ui-datasphere.resources.dataset }}**.
+1. В строке с нужным датасетом нажмите значок ![options](../../../_assets/options.svg) и выберите **{{ ui-key.yc-ui-datasphere.common.delete }}**.

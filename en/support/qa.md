@@ -43,7 +43,7 @@ There is no limit to the number of times you can contact technical support.
 
 #### How can I get help with architecture-related tasks? {#help-with-arch-tasks}
 
-To get help with architecture-related tasks, use the feedback form on the management console support page.
+To get help with architecture-related tasks, use the feedback form on the technical support page in the [support center]({{ link-console-support }}).
 
 #### What third-party software is covered by {{ yandex-cloud }} technical support? {#supported-third-party-sw}
 
@@ -55,20 +55,20 @@ Technical support includes troubleshooting third-party software that is used in 
    - [{{ mch-full-name }}](../managed-clickhouse/index.yaml)
    - [{{ mes-full-name }}](../managed-elasticsearch/index.yaml)
    - [{{ mgp-full-name }}](../managed-greenplum/index.yaml)
-   - [{{ managed-k8s-full-name }}](../managed-kubernetes)
-   - [{{ mmg-full-name }}](../managed-mongodb)
-   - [{{ mmy-full-name }}](../managed-mysql)
-   - [{{ mos-full-name }}](../managed-opensearch)
-   - [{{ mrd-full-name }}](../managed-redis)
-   - [{{ mpg-full-name }}](../managed-postgresql/)
+   - [{{ managed-k8s-full-name }}](../managed-kubernetes/index.yaml)
+   - [{{ mmg-full-name }}](../managed-mongodb/index.yaml)
+   - [{{ mmy-full-name }}](../managed-mysql/index.yaml)
+   - [{{ mos-full-name }}](../managed-opensearch/index.yaml)
+   - [{{ mrd-full-name }}](../managed-redis/index.yaml)
+   - [{{ mpg-full-name }}](../managed-postgresql/index.yaml)
 
 #### What happens if you cannot solve my third-party software problems? {#unresolved-third-party-issues}
 
-If the technical support team can't resolve your third-party software issue, you need to contact the support service of the software vendor. In some cases, contacting a vendor's support service requires a valid contract for technical support with the vendor or their partners.
+If the technical support team cannot resolve your third-party software issue, you need to contact the support service of the software vendor. In some cases, contacting a vendor's support service requires a valid contract for technical support with the vendor or their partners.
 
 
 #### How do I change my technical support service plan? {#change-pricing-plan}
 
-Only the service account owner can change the technical support plan. You can check this in the {{ yandex-cloud }} management console under [Support]({{ link-console-support }}?section=plan).
+Only the organization owner or administrator can change the technical support service plan. See [Changing your service plan](support-center.md#change-pricing) for details.
 
-See [Requesting technical support](overview.md). Service plan upgrades are activated immediately, while downgrades are applied on the first day of the following month.
+See [Requesting technical support](overview.md). Service plan upgrades are effective immediately; downgrades take effect on the first day of the following month.

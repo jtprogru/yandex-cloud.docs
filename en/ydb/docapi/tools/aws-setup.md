@@ -26,7 +26,7 @@ To use the AWS tools, follow these steps:
 
       {% include [default-catalogue](../../../_includes/default-catalogue.md) %}
 
-      1. See the description of the command for creating a service account:
+      1. Check the description of the command for creating a service account:
 
          ```bash
          yc iam service-account create --help
@@ -37,6 +37,8 @@ To use the AWS tools, follow these steps:
          ```bash
          yc iam service-account create --name my-robot
          ```
+
+         Naming requirements for service accounts:
 
          {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -57,10 +59,10 @@ To use the AWS tools, follow these steps:
    - Management console
 
       1. Go to the folder that the service account belongs to.
-      1. At the top of the screen, go to the **Service accounts** tab.
-      1. Choose a service account and click the line with its name.
-      1. Click **Create new key** in the top panel.
-      1. Click **Create static access key**.
+      1. At the top of the screen, go to the **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}** tab.
+      1. Choose a service account and click the row with its name.
+      1. Click **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create-key-popup }}** in the top panel.
+      1. Select **{{ ui-key.yacloud.iam.folder.service-account.overview.button_create_service-account-key }}**.
       1. Enter a description of the key so that you can easily find it in the management console.
       1. Save the ID and private key.
 
@@ -87,7 +89,7 @@ To use the AWS tools, follow these steps:
          +----------------------+------------------+-------------------------------+
          |          ID          |       NAME       |          DESCRIPTION          |
          +----------------------+------------------+-------------------------------+
-         | aje6o61dvog2h6g9a33s | my-robot         |                               |
+         | aje6o61dvog2******** | my-robot         |                               |
          ...
          ```
 
@@ -97,11 +99,11 @@ To use the AWS tools, follow these steps:
          yc iam access-key create --service-account-name my-robot
 
          access_key:
-           id: aje6t3vsbj8lp9r4vk2u
-           service_account_id: ajepg0mjt06siuj65usm
+           id: aje6t3vsbj8l********
+           service_account_id: ajepg0mjt06s********
            created_at: "2018-11-22T14:37:51Z"
-           key_id: 0n8X6WY6S24N7OjXQ0YQ
-         secret: JyTRFdqw8t1kh2-OJNz4JX5ZTz9Dj1rI9hxtzMP1
+           key_id: 0n8X6WY6S24N********
+         secret: JyTRFdqw8t1kh2-OJNz4JX5ZTz9Dj1rI********
          ```
 
       1. Save the ID `key_id` and `secret` key. You will not be able to get the key value again.
@@ -124,7 +126,7 @@ To use the AWS tools, follow these steps:
    ```
 
    As a result, the files `~/.aws/credentials` and `~/.aws/config` will be created (`C:\Users\USERNAME\.aws\credentials` and `C:\Users\USERNAME\.aws\config` on Windows).
-1. Check that the settings are correct by running the table listing command against the [created](../../operations/manage-databases.md) DB. As the `--endpoint` value, specify the Document API endpoint available on the **Overview** tab of your database in the [management console]({{ link-console-main }}).
+1. Check that the settings are correct by running the table listing command against the [created](../../operations/manage-databases.md) DB. As the `--endpoint` value, specify the Document API endpoint available in the **{{ ui-key.yacloud.ydb.database.switch_overview }}** tab of your database in the [management console]({{ link-console-main }}).
 
    ```bash
    aws dynamodb list-tables \

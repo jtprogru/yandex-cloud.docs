@@ -1,3 +1,8 @@
+---
+title: "Как создать подключение к {{ ydb-name }}"
+description: "Следуя данной инструкции, вы сможете создать подключение к {{ ydb-name }}."
+---
+
 # Создание подключения к {{ ydb-name }}
 
 {% note info %}
@@ -11,6 +16,10 @@
 {% endnote %}
 
 Чтобы создать подключение к {{ ydb-name }}:
+
+
+{% include [datalens-workbooks-collections-note](../../../_includes/datalens/operations/datalens-workbooks-collections-note.md) %}
+
 
 
 1. Перейдите на [страницу подключений]({{ link-datalens-main }}/connections).

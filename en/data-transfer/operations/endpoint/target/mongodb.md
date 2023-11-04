@@ -1,6 +1,6 @@
 ---
 title: "How to configure a {{ MG }} target endpoint in {{ data-transfer-full-name }}"
-description: "In this tutorial, you'll learn how to set up a {{ MG }} target endpoint in {{ data-transfer-full-name }}."
+description: "In this tutorial, you will learn how to set up a {{ MG }} target endpoint in {{ data-transfer-full-name }}."
 ---
 
 # Configuring a {{ MG }} target endpoint
@@ -12,6 +12,14 @@ When [creating](../index.md#create) or [editing](../index.md#update) an endpoint
 
 
 ## {{ mmg-name }} cluster {#managed-service}
+
+
+{% note warning %}
+
+To create or edit an endpoint of a managed database, you need the [`{{ roles.mmg.viewer }}` role](../../../../managed-mongodb/security/index.md#mmg-viewer) or the primitive [`viewer` role](../../../../iam/concepts/access-control/roles.md#viewer) issued for the folder hosting a cluster of this managed database.
+
+{% endnote %}
+
 
 {% list tabs %}
 
@@ -37,23 +45,23 @@ When [creating](../index.md#create) or [editing](../index.md#update) an endpoint
 
    
    ```hcl
-   resource "yandex_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-     name = "<endpoint name>"
+   resource "yandex_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+     name = "<endpoint_name>"
      settings {
        mongo_target {
-         security_groups = [ "list of security group IDs" ]
-         subnet_id       = "<subnet ID>"
+         security_groups = ["<list_of_security_group_IDs>"]
+         subnet_id       = "<subnet_ID>"
          connection {
            connection_options {
-             mdb_cluster_id = "<{{ mmg-name }} cluster ID>"
-             database       = "<database name>"
+             mdb_cluster_id = "<cluster_ID>"
+             database       = "<database_name>"
              user           = "<username>"
              password {
-               raw = "<user password>"
+               raw = "<user_password>"
              }
            }
          }
-         <advanced endpoint settings>
+         <additional_endpoint_settings>
        }
      }
    }
@@ -95,32 +103,32 @@ Connecting to the database with explicitly specified network addresses and ports
 
    
    ```hcl
-   resource "yandex_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-     name = "<endpoint name>"
+   resource "yandex_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+     name = "<endpoint_name>"
      settings {
        mongo_target {
-         security_groups = [ "list of security group IDs" ]
-         subnet_id       = "<subnet ID>"
+         security_groups = ["<list_of_security_group_IDs>"]
+         subnet_id       = "<subnet_ID>"
          connection {
            connection_options {
              on_premise {
                hosts       = [ "list of replica set hosts" ]
-               port        = "<connection port>"
-               replica_set = "<replica set name>"
+               port        = "<port_for_connection>"
+               replica_set = "<replica_set_name>"
                tls_mode {
                  enabled {
-                   ca_certificate = "<certificate in PEM format>"
+                   ca_certificate = "<PEM_certificate>"
                  }
                }
              }
-             auth_source = "<database name>"
+             auth_source = "<database_name>"
              user        = "<username>"
              password {
-               raw = "<user password>"
+               raw = "<user_password>"
              }
            }
          }
-         <advanced endpoint settings>
+         <additional_endpoint_settings>
        }
      }
    }
@@ -147,7 +155,7 @@ Connecting to the database with explicitly specified network addresses and ports
 
       * `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.DISABLED.title }}`: Select this option if you are only going to do replication without copying data.
 
-      * `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.DROP.title }}`: Fully delete tables included in the transfer (used by default).
+      * `{{ ui-key.yc-data-transfer.data-transfer.console.form.common.console.form.common.CleanupPolicy.DROP.title }}`: Completely delete tables included in the transfer (used by default).
 
          Use this option so that the latest version of the table schema is always transferred to the target database from the source whenever the transfer is activated.
 
@@ -165,7 +173,7 @@ Connecting to the database with explicitly specified network addresses and ports
 
          Select this option if only replication without copying data is performed.
 
-      * `DROP`: Fully delete collections included in the transfer (default).
+      * `DROP`: Completely delete collections included in the transfer (default).
 
          Use this option so that the latest collection version is always transferred to the target database from the source whenever the transfer is activated.
 

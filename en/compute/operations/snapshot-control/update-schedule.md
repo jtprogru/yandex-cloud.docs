@@ -11,10 +11,10 @@ To change basic settings of a snapshot schedule:
    1. In the [management console]({{ link-console-main }}), select the folder where the schedule is located.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
    1. In the left-hand panel, select ![image](../../../_assets/compute/snapshots.svg) **{{ ui-key.yacloud.compute.switch_snapshots }}**.
-   1. Click the **{{ ui-key.yacloud.compute.snapshots-schedules.label_title }}** tab.
-   1. Next to the schedule you wish to change, click ![image](../../../_assets/options.svg) and select **{{ ui-key.yacloud.common.edit }}**.
+   1. Go to the **{{ ui-key.yacloud.compute.snapshots-schedules.label_title }}** tab.
+   1. Next to the schedule you want to change, click ![image](../../../_assets/options.svg) and select **{{ ui-key.yacloud.common.edit }}**.
    1. Configure snapshot schedule parameters:
-      * **{{ ui-key.yacloud.common.name }}**:
+      * **{{ ui-key.yacloud.common.name }}**. The requirements are as follows:
 
          {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -126,6 +126,47 @@ To change basic settings of a snapshot schedule:
       snapshot_spec: {}
       ```
 
+- {{ TF }}
+
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
+   1. Open the {{ TF }} configuration file and edit the fragment with the schedule description:
+
+      {% cut "Sample schedule description in the {{ TF }} configuration" %}
+
+      ```hcl
+      resource "yandex_compute_snapshot_schedule" "default" {
+        name = "my-name"
+
+        schedule_policy {
+          expression = "0 0 * * *"
+        }
+
+        snapshot_count = 1
+
+        snapshot_spec {
+            description = "snapshot-description"
+            labels = {
+              snapshot-label = "my-snapshot-label-value"
+            }
+        }
+
+        disk_ids = ["test_disk_id", "another_test_disk_id"]
+      }
+      ```
+
+      {% endcut %}
+
+   1. Apply the changes:
+
+      {% include [terraform-validate-plan-apply](../../../_tutorials/terraform-validate-plan-apply.md) %}
+
+   You can verify that the schedule has been updated and its configuration is correct using the [management console]({{ link-console-main }}) or the following [CLI](../../../cli/quickstart.md) command:
+
+   ```bash
+   yc compute snapshot-schedule get <schedule_name>
+   ```
+
 - API
 
    1. Get the list of schedules using the [list](../../api-ref/SnapshotSchedule/list.md) REST API method for the [SnapshotSchedule](../../api-ref/SnapshotSchedule/index.md) resource or the [SnapshotScheduleService/List](../../api-ref/grpc/snapshot_schedule_service.md#List) gRPC API call.
@@ -153,7 +194,7 @@ To change a list of disks for which snapshots are scheduled:
 
          {% include [snapshot-disk-types](../../../_includes/compute/snapshot-disk-types.md) %}
 
-      * To delete a disk, under **{{ ui-key.yacloud.compute.snapshots-schedules.title_snapshot-schedule-disks }}**, next to the disk you wish to delete from the schedule, click ![image](../../../_assets/options.svg) and select **{{ ui-key.yacloud.compute.snapshots-schedules.action_detach-disk }}**.
+      * To delete a disk, under **{{ ui-key.yacloud.compute.snapshots-schedules.title_snapshot-schedule-disks }}**, next to the disk you want to delete from the schedule, click ![image](../../../_assets/options.svg) and select **{{ ui-key.yacloud.compute.snapshots-schedules.action_detach-disk }}**.
 
 - CLI
 

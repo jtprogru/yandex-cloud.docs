@@ -18,6 +18,12 @@
 * [{#T}](connect-interfaces.md)
 * [{#T}](sqoop-usage.md)
 
+### Delta Lake
+
+* [{#T}](./deltalake/one-cluster-mode.md)
+* [{#T}](./deltalake/multi-cluster-mode.md)
+* [{#T}](./deltalake/tips.md)
+
 ## Задания (jobs)
 
 * [{#T}](jobs.md)
@@ -38,3 +44,7 @@
 * [{#T}](monitoring.md)
 * [{#T}](spark-monitoring.md)
 * [{#T}](spark-diagnostics.md)
+
+## Другие возможности
+
+* [{#T}](python-env.md)

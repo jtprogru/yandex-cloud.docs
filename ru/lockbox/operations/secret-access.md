@@ -1,3 +1,8 @@
+---
+title: "Настроить права доступа к секрету"
+description: "Следуя данной инструкции, вы сможете настроить права доступа к секрету."
+---
+
 # Настроить права доступа к секрету
 
 {% list tabs %}
@@ -5,13 +10,13 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, которому принадлежит секрет.
-  1. В списке сервисов выберите **{{ lockbox-short-name }}**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_lockbox }}**.
   1. Нажмите на имя нужного секрета.
-  1. На панели слева выберите раздел ![image](../../_assets/organization/icon-groups.svg) **Права доступа** и нажмите кнопку **Назначить роли**.
-  1. В открывшемся окне нажмите ![image](../../_assets/plus-sign.svg) **Выбрать пользователя**.
+  1. На панели слева выберите раздел ![image](../../_assets/organization/icon-groups.svg) **{{ ui-key.yacloud.common.resource-acl.label_access-bindings }}** и нажмите кнопку **{{ ui-key.yacloud.common.resource-acl.button_new-bindings }}**.
+  1. В открывшемся окне нажмите ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud_components.acl.action.select-subject }}**.
   1. Выберите группу, пользователя или [сервисный аккаунт](../../iam/concepts/users/service-accounts.md), которым нужно предоставить доступ к секрету.
-  1. Нажмите кнопку ![image](../../_assets/plus-sign.svg) **Добавить роль** и выберите необходимые [роли](../security/index.md#roles-list).
-  1. Нажмите **Сохранить**.
+  1. Нажмите кнопку ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud_components.acl.button.add-role }}** и выберите необходимые [роли](../security/index.md#roles-list).
+  1. Нажмите **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -31,7 +36,7 @@
       +----------------------+-------------+------------+---------------------+----------------------+--------+
       |          ID          |    NAME     | KMS KEY ID |     CREATED AT      |  CURRENT VERSION ID  | STATUS |
       +----------------------+-------------+------------+---------------------+----------------------+--------+
-      | e6qtoqv06f1bbjs38sqc | test-secret |            | 2022-09-12 08:10:11 | e6qtpq6a9k7qskiruuq4 | ACTIVE |
+      | e6qtoqv06f1b******** | test-secret |            | 2022-09-12 08:10:11 | e6qtpq6a9k7q******** | ACTIVE |
       +----------------------+-------------+------------+---------------------+----------------------+--------+
       ```
 
@@ -64,6 +69,42 @@
         * `id` — идентификатор секрета.
         * `service-account-id` — [идентификатор сервисного аккаунта](../../iam/operations/sa/get-id.md).
         * `role` — назначаемая [роль](../security/index.md#roles-list).
+
+- {{ TF }}
+
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
+
+  1. Опишите в конфигурационном файле параметры прав доступа к секрету:
+
+      ```hcl
+      resource "yandex_lockbox_secret_iam_binding" "secret-viewer" {
+        secret_id = "<идентификатор_секрета>"
+        role      = "<роль>"
+
+        members = [
+          "serviceAccount:<идентификатор_сервисного_аккаунта_1>",
+          "serviceAccount:<идентификатор_сервисного_аккаунта_2>"
+        ]
+      }
+      ```
+
+      Где:
+
+      * `secret_id` — идентификатор секрета.
+      * `role` — назначаемая [роль](../security/index.md#roles-list).
+      * `members` — идентификаторы [пользователей](../../iam/operations/users/get), групп или [сервисных аккаунтов](../../iam/operations/sa/get-id.md), которым будет присвоена роль.
+
+      Более подробную информацию о параметрах ресурса `yandex_lockbox_secret_iam_binding` в {{ TF }}, см. в [документации провайдера]({{ tf-provider-resources-link }}/lockbox_secret_iam_binding).
+
+  1. Создайте ресурсы
+
+      {% include [terraform-validate-plan-apply](../../_tutorials/terraform-validate-plan-apply.md) %}
+      
+      {{ TF }} создаст все требуемые ресурсы. Проверить появление ресурсов и их настройки можно в [консоли управления]({{ link-console-main }}) или с помощью команды [CLI](../../cli/quickstart.md):
+
+      ```bash
+      yc lockbox secret list-access-binding <идентификатор_секрета>
+      ```
 
 - API
 

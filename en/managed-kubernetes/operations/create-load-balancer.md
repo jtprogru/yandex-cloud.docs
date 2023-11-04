@@ -8,11 +8,11 @@ To grant access to an app running in a {{ k8s }} cluster, you can use [various t
 
 To publish an app, use a `LoadBalancer` service. The following options are supported:
 * Public access by IP address with a [network load balancer](../../network-load-balancer/concepts/index.md).
-* Access from internal networks by IP address with an [internal network load balancer](../../network-load-balancer/concepts/internal-load-balancer.md).
+* Access from internal networks by IP address with an [internal network load balancer](../../network-load-balancer/concepts/nlb-types.md).
 
   The application will be available:
   * From {{ vpc-full-name }} [subnets](../../vpc/concepts/network.md#subnet).
-  * From the company's internal subnets connected to {{ yandex-cloud }} through [{{ interconnect-full-name }}](../../interconnect/).
+    * From the company's internal subnets connected to {{ yandex-cloud }} via [{{ interconnect-full-name }}](../../interconnect/index.yaml).
   * Via VPN.
 
 
@@ -241,12 +241,6 @@ When you create a service with the `LoadBalancer` type, {{ yandex-cloud }} contr
 
 ## Create a LoadBalancer service with an internal IP address {#lb-int-create}
 
-{% note info %}
-
-The [Internal network load balancer](../../network-load-balancer/concepts/internal-load-balancer.md) is at the [Preview](../../overview/concepts/launch-stages.md) stage.
-
-{% endnote %}
-
 To create an internal network load balancer, specify the `yandex.cloud/load-balancer-type` and `yandex.cloud/subnet-id` parameters in the YAML specification for the service under `annotations`:
 
 ```yaml
@@ -257,20 +251,17 @@ metadata:
   annotations:
     # Load balancer type: Internal.
     yandex.cloud/load-balancer-type: internal
-    # ID of the subnet where an IP address for the
-    # internal network load balancer should be allocated.
+    # ID of the subnet where an IP address for the internal network load balancer should be allocated.
     yandex.cloud/subnet-id: e1b23q26ab1c0dce8te9
 spec:
   type: LoadBalancer
   ports:
-  # The internal network load balancer port to
-  # handle user requests.
+  # The internal network load balancer port to handle user requests.
   - port: 80
     name: plaintext
     # Container port the application listens on.
     targetPort: 8080
-  # Selector labels used in a pod template when creating
-  # a Deployment object.
+  # Selector labels used in a pod template when creating a Deployment object.
   selector:
     app: hello
 ```
@@ -285,7 +276,7 @@ In {{ managed-k8s-name }}, the following advanced settings are available for a s
 
 
 * Manage traffic using the [externalTrafficPolicy](https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/#ServiceSpec) parameter:
-  * `Cluster`: Traffic goes to any of the {{ k8s }} cluster nodes. In this case:
+  * `Cluster`: Traffic goes to any of the {{ k8s }} cluster nodes. In which case:
     * If pods are missing from the node, [kube-proxy](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy) forwards traffic to another node.
   * `Local`: Traffic goes directly to the nodes where the application containers are running. In this case:
     * The originating IP address of the user query is saved.

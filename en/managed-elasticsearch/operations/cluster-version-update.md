@@ -1,4 +1,11 @@
+---
+title: "How to update {{ ES }} versions and editions"
+description: "This guide describes how you can update {{ ES }} versions and editions."
+---
+
 # Updating the {{ ES }} version and edition
+
+{% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
 
 In the {{ mes-name }} cluster, you can [update the version](#version-update) and [update the edition](#start-edition-update) of {{ ES }}.
 
@@ -14,19 +21,19 @@ You can update a {{ mes-name }} cluster to a later [{{ ES }} version](../concept
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
-   1. Select a cluster and click **Edit**.
-   1. Open the list in the **Version** field.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Select a cluster and click ![image](../../_assets/edit.svg) **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. Open the list in the **{{ ui-key.yacloud.mdb.forms.base_field_version }}** field.
 
 {% endlist %}
 
 ### Before updating the version {#before-version-update}
 
-Before updating the {{ ES }} version, make sure this does not affect your apps:
+Make sure this does not affect your applications:
 
 1. See the {{ ES }} [changelog](https://www.elastic.co/downloads/past-releases#elasticsearch) to check how updates might affect your applications.
 1. Try updating the version on a test cluster. You can deploy it from a backup of the main cluster.
-1. [Make a backup](cluster-backups.md) of the main cluster before updating the version.
+1. [Create a backup](cluster-backups.md) of the main cluster before updating the version.
 
 ### Updating the {{ ES }} version {#start-version-update}
 
@@ -34,10 +41,10 @@ Before updating the {{ ES }} version, make sure this does not affect your apps:
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
-   1. Select a cluster and click **Edit**.
-   1. In the **Version** field, select the version {{ ES }}.
-   1. Click **Save**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Select a cluster and click ![image](../../_assets/edit.svg) **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. In the **{{ ui-key.yacloud.mdb.forms.base_field_version }}** field, select the appropriate {{ ES }} version.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -86,7 +93,7 @@ Before updating the {{ ES }} version, make sure this does not affect your apps:
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -121,10 +128,10 @@ You can update the [{{ ES }} edition](../concepts/es-editions.md) run in the clu
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
-   1. Select a cluster and click **Edit**.
-   1. In the **Edition** field, select the required {{ ES }} edition: `Basic` or `Platinum`.
-   1. Click **Save**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Select a cluster and click ![image](../../_assets/edit.svg) **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. In the **{{ ui-key.yacloud.elasticsearch.base_field_edition }}** field, select the required {{ ES }} edition: `Basic` or `Platinum`.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -174,7 +181,7 @@ You can update the [{{ ES }} edition](../concepts/es-editions.md) run in the clu
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 

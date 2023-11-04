@@ -4,7 +4,7 @@ You can invoke a function:
 * [Using an HTTPS request](#http).
 * [Using the CLI](#cli).
 * [Using a trigger](#trigger).
-* [Using a {{ api-gw-full-name }} extension](#extension).
+* [Using the {{ api-gw-full-name }} extension](#extension).
 
 Each method has a specific data structure for function requests and responses. Learn more about how to [invoke a function](../operations/function/function-invoke.md).
 
@@ -16,8 +16,8 @@ The result returned by the function should also be a JSON document. It should co
 
 {% note info %}
 
-You can run functions by specifying the `integration=raw` request string parameter. When invoked this way, a function can't parse or set HTTP headers:
-* The contents of the HTTPS request body are passed as the first argument (without converting to a JSON structure).
+You can run functions by specifying the `?integration=raw` request string parameter. When invoked this way, a function cannot parse or set HTTP headers:
+* The contents of the HTTPS request body are provided as the first argument (without converting to a JSON structure).
 * The contents of the HTTPS response body is identical to the function response (without converting or checking the structure) and the HTTP response status is 200.
 
 {% endnote %}
@@ -117,7 +117,7 @@ module.exports.handler = async (event) => {
 For example, for the request:
 
 ```
-curl -XPOST -d "hello, world!" "https://functions.yandexcloud.net/<function ID>?a=1&a=2&b=1"
+curl -XPOST -d "hello, world!" "https://{{ sf-url }}/<function ID>?a=1&a=2&b=1"
 ```
 
 The result looks like this:
@@ -326,9 +326,9 @@ Your function receives and passes the contents of HTTP headers as JSON fields (s
 
 If a request contains the [X-Forwarded-For](https://en.wikipedia.org/wiki/X-Forwarded-For) header, the specified IP addresses and the IP address of the client that invoked the function are passed in this header. If not, it only passes the IP address of the client that invoked the function.
 
-## Invoking a function using the YC CLI {#cli}
+## Invoking a function using the {{ yandex-cloud }} CLI {#cli}
 
-Function calls from the CLI are HTTPS requests using the POST method and the `integration=raw` parameter (without converting the request to a JSON structure or checking the response).
+Function calls from the CLI are HTTPS requests using the POST method and the `?integration=raw` parameter (without converting the request to a JSON structure or checking the response).
 
 View the help for the function call command:
 
@@ -382,6 +382,9 @@ Detailed description of how to transfer data using different flags and arguments
 
 When invoking a function using a trigger, the JSON description of a trigger event is passed in the body of an HTTP request to the function. The request source IP is passed in the same way as when [invoking a function using HTTPS](#ip). Learn more about [triggers](trigger/index.md).
 
+
+
 ## Invoking a function using a {{ api-gw-full-name }} extension {#extension}
 
 When invoking a function using the {{ api-gw-name }} extension, the function receives an HTTP request addressed to the API gateway. In this case, the `Host` header specifies the host on which the user accessed the API gateway rather than the function's host. The request source IP is passed in the same way as when [invoking a function using HTTPS](#ip). Learn more about the extension in the [{{ api-gw-full-name }} documentation](../../api-gateway/concepts/extensions/cloud-functions.md).
+

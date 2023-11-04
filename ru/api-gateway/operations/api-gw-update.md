@@ -1,50 +1,51 @@
+---
+title: "Изменить API-шлюз"
+description: "Следуя данной инструкции, вы сможете изменить API-шлюз."
+---
+
 # Изменить API-шлюз
+
+После создания API-шлюза вы можете изменить любые его параметры и спецификацию OpenAPI.
 
 {% list tabs %}
 
 - Консоль управления
 
-    Чтобы обновить спецификацию API-шлюза:
     1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором необходимо изменить API-шлюз.
-    1. В списке сервисов выберите **{{ api-gw-name }}**.
-    1. В строке с API-шлюзом нажмите кнопку ![image](../../_assets/options.svg) и выберите **Редактировать**.
-    1. Отредактируйте имя, описание или спецификацию API-шлюза.
-    1. Нажмите кнопку **Сохранить**.
-    
+    1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_api-gateway }}**.
+    1. В строке с API-шлюзом нажмите кнопку ![image](../../_assets/options.svg) и выберите **{{ ui-key.yacloud.serverless-functions.gateways.list.button_action-edit }}**.
+    1. Отредактируйте параметры API-шлюза или спецификацию OpenAPI при необходимости.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.gateways.form.button_update-gateway }}**.
+
 - CLI
 
-    Чтобы изменить спецификацию API-шлюза:
-    1. Внесите необходимые изменения в файл со спецификацией `hello-world.yaml`.
-    1. Выполните команду: 
+    {% include [cli-install](../../_includes/cli-install.md) %}
 
+    {% include [default-catalogue](../../_includes/default-catalogue.md) %}
+
+    Чтобы изменить API-шлюз:
+
+    1. При необходимости внесите изменения в файл спецификации OpenAPI или подготовьте новый файл.
+    1. Посмотрите описание команды CLI для изменения API-шлюза:
+
+        ```bash
+        {{ yc-serverless }} api-gateway update --help
         ```
-        yc serverless api-gateway update --id d5dug9gkmu187iojcrtr --spec=hello_world.yaml
-        ```
 
-        Где:
-    
-        - `id` — идентификатор API-шлюза.
-        - `spec` — файл с обновленной спецификацией.
+    1. Укажите в команде изменения идентификатор или имя API-шлюза, а также параметры, которые необходимо изменить (в примере приведены не все доступные параметры):
 
-        Результат:
-
-        ```
-        done (6s)
-        id: d5dug9gkmu187iojcrtr
-        folder_id: b1g55tflru0ek7omtfu0
-        created_at: "2020-06-17T09:20:22.929Z"
-        name: hello-world
-        description: hello world
-        status: ACTIVE
-        domain: d5dug9gkmu187iojcpvp.apigw.yandexcloud.net
-        log_group_id: ckghq1hm19q7ek5sjnh5
+        ```bash
+        {{ yc-serverless }} api-gateway update \
+          --id <идентификатор_шлюза> \
+          --new-name <новое_имя_шлюза>
+          --spec=<путь_к_новому_файлу_спецификации> \
         ```
 
 - {{ TF }}
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы изменить имя, описание или спецификацию API-шлюза:
 
@@ -134,9 +135,11 @@
      yc serverless api-gateway get <имя API-шлюза>
      ```
 
+
 - {{ yandex-cloud }} Toolkit
 
   Изменить имя, описание или спецификацию API-шлюза можно с помощью [плагина {{ yandex-cloud }} Toolkit](https://github.com/yandex-cloud/ide-plugin-jetbrains) для семейства IDE на [платформе IntelliJ](https://www.jetbrains.com/ru-ru/opensource/idea/) от [JetBrains](https://www.jetbrains.com/).
+
 
 - API
 

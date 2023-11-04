@@ -32,7 +32,7 @@
       yc storage bucket update --help
       ```
 
-   1. Create a hosting configuration file in JSON format, for example:
+   1. Create a hosting configuration file in JSON format, e.g.:
 
       ```json
       {
@@ -42,8 +42,9 @@
       ```
 
       Where:
+
       * `index`: Absolute path to the file of the website home page.
-      * `error`: Absolute path to the file to display to the user in the event of 4xx errors.
+      * `error`: Absolute path to the file displayed to the user upon a 4xx error.
 
    1. Run the following command:
 
@@ -60,7 +61,7 @@
 
       ```text
       name: my-bucket
-      folder_id: b1gjs8dck8bvb10chmjf
+      folder_id: b1gjs8dck8bv********
       default_storage_class: STANDARD
       versioning: VERSIONING_SUSPENDED
       max_size: "10737418240"
@@ -85,7 +86,7 @@
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    Before you start, retrieve the [static access keys](../../../iam/operations/sa/create-access-key.md): a secret key and a key ID used for authentication in {{ objstorage-short-name }}.
 
@@ -123,13 +124,13 @@
       * `bucket`: Bucket name.
       * `acl`: Parameters for [ACL](../../concepts/acl.md#predefined-acls).
       * `website`: Website parameters:
-         * `index_document`: Absolute path to the file of the website home page. This parameter is required.
-         * `error_document`: Absolute path to the file to be displayed to the user in the event of `4xx` errors. This is an optional parameter.
+         * `index_document`: Absolute path to the file of the website home page. This is a required parameter.
+         * `error_document`: Absolute path to the file displayed to the user upon a `4xx` error. This is an optional parameter.
 
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```
          terraform plan
@@ -147,7 +148,7 @@
 
       1. Confirm that you want to create the resources.
 
-      All the resources you need will then be created in the specified folder. You can check that the resources are there and their settings are correct using the [management console]({{ link-console-main }}).
+      All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}).
 
 - API
 
@@ -181,7 +182,7 @@
       yc storage bucket update --help
       ```
 
-   1. Create a file with redirect settings in JSON format, for example:
+   1. Create a file with redirect settings in JSON format, e.g.:
 
       ```json
       {
@@ -211,7 +212,7 @@
 
       ```text
       name: my-bucket
-      folder_id: b1gjs8dck8bvb10chmjf
+      folder_id: b1gjs8dck8bv********
       default_storage_class: STANDARD
       versioning: VERSIONING_SUSPENDED
       max_size: "10737418240"
@@ -224,7 +225,7 @@
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
    
-   For more information about {{ TF }}, [see the documentation](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
    To set up a redirect for all requests:
@@ -254,11 +255,11 @@
       * `bucket`: Bucket name.
       * `acl`: Parameters for [ACL](../../concepts/acl.md#predefined-acls).
       * `website`: Website parameters:
-         * `index_document`: Absolute path to the file of the website home page. This parameter is required.
-         * `error_document`: Absolute path to the file to be displayed to the user in the event of `4xx` errors. This is an optional parameter.
+         * `index_document`: Absolute path to the file of the website home page. This is a required parameter.
+         * `error_document`: Absolute path to the file displayed to the user upon a `4xx` error. This is an optional parameter.
          * `redirect_all_requests_to`: Domain name of the host to act as the redirect target for all requests to the current bucket. You can set a protocol prefix (`http://` or `https://`). By default, the original request's protocol is used.
 
-      For more information about the `yandex_storage_bucket` resource parameters in {{ TF }}, see the [provider documentation]({{ tf-provider-link }}//storage_bucket#static-website-hosting).
+      For more information about the `yandex_storage_bucket` resource parameters in {{ TF }}, see the [provider documentation]({{ tf-provider-resources-link }}//storage_bucket#static-website-hosting).
 
    1. Check the configuration using this command:
 
@@ -278,7 +279,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -330,7 +331,7 @@
       yc storage bucket update --help
       ```
 
-   1. Create a file with conditional redirect settings in JSON format, for example:
+   1. Create a file with conditional redirect settings in JSON format, e.g.:
 
       ```json
       {
@@ -381,7 +382,7 @@
 
       ```text
       name: my-bucket
-      folder_id: b1gjs8dck8bvb10chmjf
+      folder_id: b1gjs8dck8bv********
       default_storage_class: STANDARD
       versioning: VERSIONING_SUSPENDED
       max_size: "10737418240"
@@ -394,7 +395,7 @@
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
    
-   For more information about {{ TF }}, [see the documentation](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
    To set up a conditional redirect of requests:
@@ -441,11 +442,11 @@
       * `bucket`: Bucket name.
       * `acl`: Parameters for [ACL](../../concepts/acl.md#predefined-acls).
       * `website`: Website parameters:
-         * `index_document`: Absolute path to the file of the website home page. This parameter is required.
-         * `error_document`: Absolute path to the file to be displayed to the user in the event of `4xx` errors. This is an optional parameter.
+         * `index_document`: Absolute path to the file of the website home page. This is a required parameter.
+         * `error_document`: Absolute path to the file displayed to the user upon a `4xx` error. This is an optional parameter.
          * `routing_rules`: Rules for redirecting requests in JSON format. Each rule's `Condition` and `Redirect` fields must contain at least one <q>key-value</q> pair. For more information about the supported fields, see the [data schema](../../s3/api-ref/hosting/upload.md#request-scheme) of the respective API method (the **For conditionally redirecting requests** tab).
 
-      For more information about the `yandex_storage_bucket` resource parameters in {{ TF }}, see the [provider documentation]({{ tf-provider-link }}//storage_bucket#static-website-hosting).
+      For more information about the `yandex_storage_bucket` resource parameters in {{ TF }}, see the [provider documentation]({{ tf-provider-resources-link }}//storage_bucket#static-website-hosting).
 
    1. Check the configuration using this command:
 
@@ -465,7 +466,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 

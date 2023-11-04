@@ -29,12 +29,18 @@ items:
             href: operations/applications/marketplace.md
           - name: Установка Argo CD
             href: operations/applications/argo-cd.md
+          - name: Установка Chaos Mesh
+            href: operations/applications/chaos-mesh.md
+          - name: Установка cert-manager c плагином {{ dns-name }} ACME webhook
+            href: operations/applications/cert-manager-cloud-dns.md
           - name: Установка Container Storage Interface для S3
             href: operations/applications/csi-s3.md
           - name: Установка Crossplane
             href: operations/applications/crossplane.md
           - name: Установка External Secrets Operator
             href: operations/applications/external-secrets-operator.md
+          - name: Установка ExternalDNS c плагином для {{ dns-name }}
+            href: operations/applications/externaldns.md
           - name: Установка Falco
             href: operations/applications/falco.md
           - name: Установка Filebeat
@@ -51,6 +57,8 @@ items:
             href: operations/applications/hashicorp-vault.md
           - name: Установка Ingress-контроллера {{ alb-name }}
             href: operations/applications/alb-ingress-controller.md
+          - name: Установка Istio
+            href: operations/applications/istio.md
           - name: Установка Jaeger
             href: operations/applications/jaeger.md
           - name: Установка Kyverno & Kyverno Policies
@@ -65,6 +73,8 @@ items:
             href: operations/applications/policy-reporter.md
           - name: Установка Thumbor
             href: operations/applications/thumbor.md
+          - name: Установка Velero
+            href: operations/applications/velero-yc-csi.md
       - name: Сетевые сценарии
         items:
           - name: Обеспечение доступа к приложению, запущенному в кластере {{ k8s }}
@@ -132,56 +142,70 @@ items:
         href: tutorials/index.md
       - name: Создание нового {{ k8s }}-проекта в {{ yandex-cloud }}
         href: tutorials/new-kubernetes-project.md
-      - name: Интеграция с {{ container-registry-name }}
-        href: tutorials/container-registry.md
-      - name: Подпись и проверка Docker-образов {{ container-registry-name }}
-        href: tutorials/sign-cr-with-cosign.md
-      - name: >-
-          Сканирование уязвимостей {{ container-registry-name }} при непрерывном
-          развертывании приложений с помощью {{ GL }}
-        href: tutorials/cr-scanner-with-k8s-and-gitlab.md
       - name: Запуск рабочих нагрузок с GPU
         href: tutorials/running-pod-gpu.md
-      - name: Установка Ingress-контроллера NGINX с Let's Encrypt®
-        href: tutorials/ingress-cert-manager.md
-      - name: >-
-          Установка Ingress-контроллера NGINX с сертификатом из {{
-          certificate-manager-name }}
-        href: tutorials/nginx-ingress-certificate-manager.md
-      - name: Резервное копирование в {{ objstorage-name }}
-        href: tutorials/backup.md
-      - name: Горизонтальное масштабирование приложения в кластере
-        href: tutorials/autoscaling.md
-      - name: Вертикальное масштабирование приложения в кластере
-        href: tutorials/vpa-autoscaling.md
-      - name: >-
-          Развертывание и нагрузочное тестирование gRPC-сервиса с
-          масштабированием
-        href: tutorials/load-testing-grpc-autoscaling.md
-      - name: Работа со снапшотами
-        href: tutorials/pvc-snapshot-restore.md
-      - name: Интеграция с корпоративной зоной DNS
-        href: tutorials/custom-dns.md
-      - name: Автоматическое масштабирование DNS по размеру кластера
-        href: tutorials/dns-autoscaler.md
-      - name: Настройка локального кеширования DNS
-        href: tutorials/node-local-dns.md
-      - name: Проверка DNS Challenge для сертификатов Let's Encrypt®
-        href: tutorials/dnschallenge.md
-      - name: >-
-          Мониторинг кластера с помощью {{ prometheus-name }} и {{ grafana-name
-          }}
-        href: tutorials/prometheus-grafana-monitoring.md
-      - name: >-
-          Непрерывное развертывание контейнеризованных приложений с помощью {{
-          GL }}
-        href: tutorials/gitlab-containers.md
-      - name: Изменение параметров сервера метрик (Metrics Server)
-        href: tutorials/metrics-server.md
-      - name: >-
-          Построение пайплайна CI/CD в {{ GL }} с использованием
-          serverless-продуктов
-        href: tutorials/ci-cd-serverless.md
+      - name: Использование групп узлов c GPU без предустановленных драйверов
+        href: tutorials/driverless-gpu.md
+      - name: Установка Time-Slicing GPUs
+        href: tutorials/time-slicing-gpu.md
+      - name: Настройка и тестирование масштабирования
+        items:
+          - name: Горизонтальное масштабирование приложения в кластере
+            href: tutorials/autoscaling.md
+          - name: Вертикальное масштабирование приложения в кластере
+            href: tutorials/vpa-autoscaling.md
+          - name: Изменение параметров сервера метрик (Metrics Server)
+            href: tutorials/metrics-server.md
+          - name: >-
+              Развертывание и нагрузочное тестирование gRPC-сервиса с
+              масштабированием
+            href: tutorials/load-testing-grpc-autoscaling.md
+      - name: Установка NGINX
+        items:
+          - name: Установка Ingress-контроллера NGINX с Let's Encrypt®
+            href: tutorials/ingress-cert-manager.md
+          - name: >-
+              Установка Ingress-контроллера NGINX с сертификатом из {{
+              certificate-manager-name }}
+            href: tutorials/nginx-ingress-certificate-manager.md
+      - name: Использование {{ container-registry-name }}
+        items:
+          - name: Интеграция с {{ container-registry-name }}
+            href: tutorials/container-registry.md
+          - name: Подпись и проверка Docker-образов {{ container-registry-name }}
+            href: tutorials/sign-cr-with-cosign.md
+      - name: Непрерывная интеграция с {{ GL }}
+        items:
+          - name: >-
+              Непрерывное развертывание контейнеризованных приложений с помощью
+              {{ GL }}
+            href: tutorials/gitlab-containers.md
+          - name: >-
+              Сканирование уязвимостей {{ container-registry-name }} при
+              непрерывном развертывании приложений с помощью {{ GL }}
+            href: tutorials/cr-scanner-with-k8s-and-gitlab.md
+      - name: Работа с DNS
+        items:
+          - name: Интеграция с корпоративной зоной DNS
+            href: tutorials/custom-dns.md
+          - name: Автоматическое масштабирование DNS по размеру кластера
+            href: tutorials/dns-autoscaler.md
+          - name: Настройка NodeLocal DNS Cache
+            href: tutorials/node-local-dns.md
+          - name: Проверка DNS Challenge для сертификатов Let's Encrypt®
+            href: tutorials/dnschallenge.md
+      - name: Резервное копирование
+        items:
+          - name: Резервное копирование в {{ objstorage-name }}
+            href: tutorials/backup.md
+          - name: Работа со снапшотами
+            href: tutorials/pvc-snapshot-restore.md
+      - name: Мониторинг
+        items:
+          - name: >-
+              Мониторинг кластера с помощью {{ prometheus-name }} и {{
+              grafana-name }}
+            href: tutorials/prometheus-grafana-monitoring.md
       - name: Использование продуктов {{ marketplace-name }}
         items:
           - name: Интеграция с Argo CD
@@ -196,12 +220,16 @@ items:
             href: tutorials/marketplace/gateway-api.md
           - name: Настройка {{ alb-name }} Ingress-контроллера
             href: tutorials/alb-ingress-controller.md
+          - name: Настройки логирования для Ingress-контроллеров {{ alb-name }}
+            href: tutorials/alb-ingress-controller-log-options.md
           - name: Использование Jaeger для трассировки запросов в {{ ydb-name }}
             href: tutorials/marketplace/jaeger-over-ydb.md
           - name: Настройка Kyverno & Kyverno Policies
             href: tutorials/marketplace/kyverno.md
           - name: Использование {{ MP }} для трансляции метрик
             href: tutorials/marketplace/metrics-provider.md
+          - name: Редактирование изображений для сайтов с помощью Thumbor
+            href: tutorials/marketplace/thumbor.md
   - name: Концепции
     items:
       - name: Взаимосвязь ресурсов сервиса
@@ -228,12 +256,14 @@ items:
             href: concepts/node-group/node-group-gpu.md
       - name: Сеть в {{ managed-k8s-name }}
         href: concepts/network.md
-      - name: Внешние узлы кластера
-        href: concepts/external-nodes.md
       - name: Сетевые настройки и политики кластера
         href: concepts/network-policy.md
       - name: Автоматическое масштабирование
         href: concepts/autoscale.md
+      - name: Политика аудита
+        href: concepts/audit-policy.md
+      - name: Внешние узлы кластера
+        href: concepts/external-nodes.md
       - name: Квоты и лимиты
         href: concepts/limits.md
       - name: Рекомендации по использованию {{ managed-k8s-name }}
@@ -324,8 +354,12 @@ items:
         href: qa/resources.md
       - name: Логи
         href: qa/logs.md
+      - name: Решение проблем
+        href: qa/troubleshooting.md
       - name: Все вопросы на одной странице
         href: qa/all.md
+  - name: История изменений
+    href: changelog.md
   - name: Обучающие курсы
     href: training.md
 base: ru/managed-kubernetes

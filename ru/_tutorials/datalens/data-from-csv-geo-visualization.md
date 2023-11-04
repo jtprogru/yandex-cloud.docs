@@ -36,10 +36,8 @@
 
 1. Скачайте [файл с данными статистики ДТП](https://storage.yandexcloud.net/doc-files/dtp201804-1.csv) за апрель-декабрь 2018 года в формате CSV.
 
-1. Откройте главную страницу [{{ datalens-short-name }}]({{ link-datalens-main }}) и нажмите **Создать подключение**.
-
-   ![image](../../_assets/datalens/solution-07/02-create-connection.png)
-
+1. Откройте главную страницу [{{ datalens-short-name }}]({{ link-datalens-main }}).
+1. На панели слева выберите ![image](../../_assets/datalens/connections.svg) **Подключения** и нажмите кнопку **Создать подключение**.
 1. Выберите тип подключения **Файлы**.
 
    ![image](../../_assets/datalens/solution-07/select-file-connection.png)
@@ -69,7 +67,7 @@
 
    ![image](../../_assets/datalens/solution-07/08-dataset.png)
 
-   Здесь есть возможность добавить [поля данных](https://cloud.yandex.ru/docs/datalens/concepts/dataset/data-model#field) и [вычисляемые поля](https://cloud.yandex.ru/docs/datalens/concepts/calculations), изменить тип данных поля, правила агрегации, переименовать поле.
+   Здесь есть возможность добавить [поля данных](../../datalens/concepts/dataset/data-model.md#field) и [вычисляемые поля](../../datalens/concepts/calculations/index.md), изменить тип данных поля, правила агрегации, переименовать поле.
 
    ![image](../../_assets/datalens/solution-07/09-rename.png)
 
@@ -218,7 +216,7 @@
 
 ## Шаг 3. Создайте первый чарт — Тепловую карту {#step3}
 
-Приступайте к созданию первого [чарта](https://cloud.yandex.ru/docs/datalens/concepts/chart).
+Приступайте к созданию первого [чарта](../../datalens/concepts/chart/index.md).
 
 1. Нажмите **Создать чарт**.
 
@@ -390,7 +388,7 @@
 
 ## Шаг 8. Добавьте селекторы и сформируйте дашборд {#step8}
 
-[Селекторы](https://cloud.yandex.ru/docs/datalens/concepts/dashboard#selector) позволяют фильтровать данные по значениям.
+[Селекторы](../../datalens/concepts/dashboard.md#selector) позволяют фильтровать данные по значениям.
 
 1. Добавьте селектор для отбора по названию региона.
 

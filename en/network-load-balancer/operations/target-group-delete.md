@@ -17,11 +17,11 @@ Before deleting a target group, detach it from the network load balancer. You ca
 
    To delete a [target group](../concepts/target-resources.md):
    1. In the [management console]({{ link-console-main }}), select the folder to delete a target group from.
-   1. In the list of services, select **{{ network-load-balancer-name }}**.
-   1. On the left-hand panel, select ![image](../../_assets/trgroups.svg) **Target groups**.
+   1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
+   1. In the left-hand panel, select ![image](../../_assets/trgroups.svg) **{{ ui-key.yacloud.load-balancer.target-group.label_list }}**.
    1. Click ![image](../../_assets/horizontal-ellipsis.svg) in the line of the target group to delete.
-   1. In the menu that opens, select **Delete**.
-   1. In the window that opens, click **Delete**.
+   1. In the menu that opens, select **{{ ui-key.yacloud.common.delete }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -47,7 +47,7 @@ Before deleting a target group, detach it from the network load balancer. You ca
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see the documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To delete a target group created with {{ TF }}:
    1. Open the {{ TF }} configuration file and delete the fragment with the target group description.
@@ -76,7 +76,7 @@ Before deleting a target group, detach it from the network load balancer. You ca
 
 - API
 
-   Use the [delete](../api-ref/TargetGroup/delete.md) API method and provide the target group ID in the `targetGroupId` request parameter.
+   To delete a target group, use the [delete](../api-ref/TargetGroup/delete.md) REST API method for the [TargetGroup](../api-ref/TargetGroup/index.md) resource or the [TargetGroupService/Delete](../api-ref/grpc/target_group_service.md#Delete) gRPC API call.
 
    You can get the target group ID with a [list of target groups in the folder](target-group-list.md#list).
 

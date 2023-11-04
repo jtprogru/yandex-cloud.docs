@@ -2,7 +2,7 @@
 editable: false
 ---
 
-# Pricing for {{ compute-name }}
+# {{ compute-name }} pricing
 
 
 To calculate the cost of using {{ compute-name }}, use [our calculator]({{ link-cloud-calculator }}) or see the prices in this section.
@@ -41,7 +41,6 @@ The cost is calculated for the time of using the VM, from the moment it is start
 The VM starts automatically once it is created.
 
 When creating a VM, you can specify a public IP address for it.
-
 
 For information about external IP address usage pricing, see [{#T}](../vpc/pricing.md) in the {{ vpc-full-name }} documentation.
 
@@ -85,14 +84,14 @@ Where:
 > 720 × (2 × $0.008960 + 2 × $0.003120) = $17.395200
 > 
 >
-> Total: $17.395200 is the cost of using a VM with 2 × 100% vCPUs and 2 GB of RAM during 30 days.
+> $17.395200 is the cost of using a VM with 2 × 100% vCPUs and 2 GB of RAM during 30 days.
 
 Where:
-* 720: Number of hours in 30 days.
-* 2 is the number of 100% vCPUs.
-* $0.008960 is the cost of using 100% vCPU per hour.
-* 2 is the amount of RAM (in GB).
-* $0.003120 is the cost of using 1 GB of RAM per hour.
+* 720: Number of hours in 30 days
+* 2: Number of 100% vCPUs.
+* $0.008960: Cost of using 100% vCPU per hour.
+* 2: Amount of RAM (in GB).
+* $0.003120: Cost of using 1 GB of RAM per hour.
 
 As you can see, the cost of the VM using 5% vCPU is half as much as that of the VM using 100% vCPU.
 
@@ -116,7 +115,7 @@ The rules for using Microsoft licenses are described in [{#T}](../microsoft/lice
 
 When creating a disk, you specify its size, meaning the amount of block storage that the disk occupies. The cost of the service depends on the amount of time between when the disk is created and deleted, the amount of disk space, and the disk type selected during creation.
 
-You are charged for disks regardless of whether the VM is running.
+You are charged for using disks whether the VM is running or not.
 
 If you created an image or snapshot, you pay for the storage of this object separately depending on its size.
 
@@ -157,9 +156,9 @@ An `intel-6338-c108-m704-n3200x6` dedicated host running for an hour is charged 
 
 | Resource | Cost per hour | Available | Total |
 | --- | --- | --- | ---: |
-| vCPU | $0.009462/vCPU | 108 vCPU | $1,021896 |
-| RAM | $0.002506/GB | 704 GB | $1,764224 |
-| Disk | $0.000098/GB | 19200 GB | $1,881600 |
+| vCPU | $0.009462/vCPU | 108 vCPU | $1.021896 |
+| RAM | $0.002506/GB | 704 GB | $1.764224 |
+| Disk | $0.000098/GB | 19,200 GB | $1.881600 |
 | | | **Total** | **$4.667720** |
 
 
@@ -175,7 +174,7 @@ An `intel-6338-c108-m704-n3200x6` dedicated host running for an hour is charged 
 
 {% note info %}
 
-You can use a CVoS to order certain types of resources. For non-supported resources, CVoS columns contain dashes under [Prices](#prices). You currently can't order storage or web traffic this way.
+You can use a CVoS to order certain types of resources. For non-supported resources, CVoS columns contain dashes under [Prices](#prices). Currently, you cannot order storage or web traffic this way.
 
 {% endnote %}
 
@@ -199,11 +198,21 @@ The price with a CVoS is only available for regular VMs.
 
 
 
+
+### GPU clusters {#prices-gpu-clusters}
+
 {% note info %}
 
-[Intel Ice Lake (Compute Optimized)](concepts/vm-platforms.md#compute-optimized-platforms) will be available and you will be charged for it starting July 1, 2023.
+GPU clusters will be [publicly available](../overview/concepts/launch-stages.md) and chargeable starting September 1, 2023.
 
 {% endnote %}
+
+
+
+
+{% include [usd-gpu-clusters.md](../_pricing/compute/usd-gpu-clusters.md) %}
+
+
 
 ### Operating systems {#prices-os}
 
@@ -212,8 +221,6 @@ The price with a CVoS is only available for regular VMs.
 
 
 {% include [usd-os.md](../_pricing/compute/usd-os.md) %}
-
-
 
 
 
@@ -227,13 +234,25 @@ The price with a CVoS is only available for regular VMs.
 {% include [usd-storage.md](../_pricing/compute/usd-storage.md) %}
 
 
+^1^ Users will be charged for high-performance disk drives (SSDs) starting September 1, 2023.
+
+
+
+
+
+### File storage {#prices-nfs}
+
+
+
+
+{% include [usd-nfs.md](../_pricing/compute/usd-nfs.md) %}
 
 
 
 
 ### Computing resources of dedicated hosts {#prices-dedicated-host}
 
-The prices are specified for 1 vCPU, 1 GB of RAM, and 1 GB of local SSD storage. You pay for all the resources available on the dedicated host, regardless of whether you use them or not. For example, a host of the `intel-6338-c108-m704-n3200x6` [type](concepts/dedicated-host.md#host-types) has the following resources available: 108 vCPUs, 704 GB of RAM, and 19200 GB of storage on local SSDs. For details, see the example of cost calculation [above](#dedicated-hosts).
+The prices are specified for 1 vCPU, 1 GB of RAM, and 1 GB of local SSD storage. You pay for all the resources available on the dedicated host, regardless of whether you use them or not. For example, a host of the `intel-6338-c108-m704-n3200x6` [type](concepts/dedicated-host.md#host-types) has the following resources available: 108 vCPUs, 704 GB of RAM, and 19,200 GB of storage on local SSDs. See the example of cost calculation [above](#dedicated-hosts).
 
 
 

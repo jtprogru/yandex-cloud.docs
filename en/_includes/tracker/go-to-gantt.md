@@ -1,4 +1,4 @@
-Go to the **Gantt chart** tab.
+Go to the **{{ ui-key.startrek.blocks-desktop_guide.queue--tabs--gantt--title }}** tab.
 
 * The [list of issues](#tasks-view) in the left part of the chart displays the priority, type, and name for each issue.
 

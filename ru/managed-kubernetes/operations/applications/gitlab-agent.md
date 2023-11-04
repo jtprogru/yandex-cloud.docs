@@ -1,11 +1,11 @@
 # Установка {{ GL }} Agent
 
-Приложение [{{ GL }} Agent](/marketplace/products/yc/gitlab-agent) используется для подключения [кластера {{ managed-k8s-name }}](../../concepts/index.md#kubernetes-cluster) к {{ GL }}. Вы можете развернуть приложение как в инстансе [{{ mgl-full-name }}](../../../managed-gitlab/), так и в standalone-инстансе {{ GL }}.
+Приложение [{{ GL }} Agent](/marketplace/products/yc/gitlab-agent) используется для подключения [кластера {{ managed-k8s-name }}](../../concepts/index.md#kubernetes-cluster) к {{ GL }}. Вы можете развернуть приложение как в [инстансе](../../../managed-gitlab/concepts/index.md#instance) [{{ mgl-full-name }}](../../../managed-gitlab/), так и в standalone-инстансе {{ GL }}.
 
 {{ GL }} Agent позволяет:
-* Работать с кластерами {{ k8s }}, находящимися за NAT.
-* Получать доступ к API кластера {{ k8s }} в реальном времени.
-* Получать информацию о событиях в кластере {{ k8s }}.
+* Работать с кластерами {{ managed-k8s-name }}, находящимися за NAT.
+* Получать доступ к API кластера {{ managed-k8s-name }} в реальном времени.
+* Получать информацию о событиях в кластере {{ managed-k8s-name }}.
 * Включить кеш объектов {{ k8s }}, которые обновляются с очень низкой задержкой.
 
 {% note info %}
@@ -20,8 +20,6 @@
 
    {% include [default-catalogue](../../../_includes/default-catalogue.md) %}
 
-1. {% include [Настройка kubectl](../../../_includes/managed-kubernetes/kubectl-install.md) %}
-
 1. [Создайте инстанс {{ mgl-name }}](../../../managed-gitlab/operations/instance/instance-create.md) или standalone-инстанс.
 1. Создайте файл конфигурации агента в репозитории:
    1. Откройте ваш [инстанс {{ GL }}](../../../managed-gitlab/concepts/index.md#instance) и перейдите в ваш проект.
@@ -31,7 +29,7 @@
    1. Откройте ваш инстанс {{ GL }} и перейдите в ваш проект.
    1. Нажмите кнопку **Infrastructure** и выберите пункт **{{ k8s }} clusters**.
    1. Нажмите кнопку **Connect a cluster** и выберите имя агента `<имя_агента_{{ GL }}>`.
-   1. Нажмите кнопку **Register an agent**.
+   1. Нажмите кнопку **Register**.
    1. {{ GL }} создаст токен, который потребуется для установки приложения. Сохраните токен в безопасном месте.
 
 {% note info %}
@@ -42,22 +40,22 @@
 
 ## Установка с помощью {{ marketplace-full-name }} {#marketplace-install}
 
-1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ managed-k8s-name }}**.
-1. Нажмите на имя нужного кластера {{ k8s }} и выберите вкладку ![image](../../../_assets/marketplace.svg) **{{ marketplace-short-name }}**.
-1. В разделе **Доступные для установки приложения** выберите [{{ GL }} Agent](/marketplace/products/yc/gitlab-agent) и нажмите кнопку **Использовать**.
+1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-kubernetes }}**.
+1. Нажмите на имя нужного кластера {{ managed-k8s-name }} и выберите вкладку ![image](../../../_assets/marketplace.svg) **{{ ui-key.yacloud.k8s.cluster.switch_marketplace }}**.
+1. В разделе **Доступные для установки приложения** выберите [{{ GL }} Agent](/marketplace/products/yc/gitlab-agent) и нажмите кнопку **{{ ui-key.yacloud.marketplace-v2.button_use }}**.
 1. Задайте настройки приложения:
    * **Пространство имен** — выберите [пространство имен](../../concepts/index.md#namespace) или создайте новое.
    * **Название приложения** — укажите название приложения, например `gitlab-agent`.
    * **Имя домена {{ GL }}** — укажите имя вашего домена {{ GL }}, например `gitlab-test.gitlab.yandexcloud.net`.
    * **Токен доступа агента** — скопируйте в это поле токен доступа {{ GL }}, [полученный ранее](#before-you-begin).
-1. Нажмите кнопку **Установить**.
+1. Нажмите кнопку **{{ ui-key.yacloud.k8s.cluster.marketplace.button_install }}**.
 1. Дождитесь, пока статус приложения изменится на `Deployed`.
 1. Откройте ваш инстанс {{ GL }} и перейдите на страницу **Infrastucture → {{ k8s }} clusters**. Убедитесь, что агент перешел в состояние `Connected`.
 
 ## Установка с помощью Helm-чарта {#helm-install}
 
 1. {% include [Установка Helm](../../../_includes/managed-kubernetes/helm-install.md) %}
-
+1. {% include [Install and configure kubectl](../../../_includes/managed-kubernetes/kubectl-install.md) %}
 1. Для установки [Helm-чарта](https://helm.sh/docs/topics/charts/) с {{ GL }} Agent выполните команду:
 
    ```bash
@@ -82,7 +80,11 @@
 
 1. Откройте ваш инстанс {{ GL }} и перейдите на страницу **Infrastucture → {{ k8s }} clusters**. Убедитесь, что агент перешел в состояние `Connected`.
 
+## Примеры использования {#examples}
+
+* [{#T}](../../tutorials/gitlab-containers.md).
+
 ## См. также {#see-also}
 
-* [Документация {{ mgl-name }}](../../../managed-gitlab/).
 * [Документация {{ GL }} Agent](https://docs.gitlab.com/ee/user/clusters/agent/).
+* [Документация {{ mgl-name }}](../../../managed-gitlab/).

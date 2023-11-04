@@ -1,10 +1,16 @@
 ---
+title: "Правила тарификации для Managed Service for Elasticsearch"
+description: "В этом разделе описаны правила, по которым тарифицируется использование сервиса {{ mes-name }}, и представлены актуальные цены на предоставляемые им ресурсы."
 editable: false
 ---
 
 # Правила тарификации для Managed Service for Elasticsearch
 
 {% include [Elasticsearch-end-of-service](../_includes/mdb/mes/note-end-of-service.md) %}
+
+В этом разделе описаны [правила](#rules), по которым тарифицируется использование сервиса {{ mes-name }}, и представлены [актуальные цены](#prices) на предоставляемые им ресурсы.
+
+Чтобы рассчитать стоимость пользования сервисом, воспользуйтесь [калькулятором]({{ link-calc }}) на сайте {{ yandex-cloud }}.
 
 {% include [currency-choice](../_includes/pricing/currency-choice.md) %}
 

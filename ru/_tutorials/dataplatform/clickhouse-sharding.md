@@ -1,6 +1,6 @@
 # Шардирование таблиц в {{ CH }}
 
-Шардирование обеспечивает [ряд преимуществ](../../managed-clickhouse/concepts/sharding.md#advantages) при высокой частоте запросов и работе с большими наборами данных. При этом создается распределенная таблица, которая маршрутизирует запросы к нижележащим таблицам. Обращаться к данным в шардированных таблицах можно как через распределенную таблицу, так и напрямую.
+[Шардирование](../../glossary/sharding.md) обеспечивает [ряд преимуществ](../../managed-clickhouse/concepts/sharding.md#advantages) при высокой частоте запросов и работе с большими наборами данных. При этом создается распределенная таблица, которая маршрутизирует запросы к нижележащим таблицам. Обращаться к данным в шардированных таблицах можно как через распределенную таблицу, так и напрямую.
 
 Существует три подхода к шардированию:
 
@@ -29,8 +29,8 @@
 
     1. [Создайте кластер](../../managed-clickhouse/operations/cluster-create.md) {{ mch-name }}:
 
-        * **Имя кластера** — `chcluster`.
-        * **Тип диска** — выберите нужный тип дисков.
+        * **{{ ui-key.yacloud.mdb.forms.base_field_name }}** — `chcluster`.
+        * **{{ ui-key.yacloud.mdb.forms.label_diskTypeId }}** — выберите нужный тип дисков.
 
             От выбранного типа дисков зависит минимальное количество хостов в каждом шарде:
 
@@ -41,7 +41,7 @@
 
             Подробнее см. в разделе [{#T}](../../managed-clickhouse/concepts/storage.md).
 
-        * **Имя БД** — `tutorial`.
+        * **{{ ui-key.yacloud.mdb.forms.database_field_name }}** — `tutorial`.
 
         Хосты кластера должны быть доступны из интернета.
 
@@ -59,13 +59,11 @@
     
     1. Если вы используете группы безопасности, [настройте их](../../managed-clickhouse/operations/connect.md#configuring-security-groups) так, чтобы к кластеру можно было подключаться из интернета.
 
-        {% include [preview-pp.md](../../_includes/preview-pp.md) %}
-
 
 - С помощью {{ TF }}
 
     
-    1. Если у вас еще нет {{ TF }}, установите и настройте его согласно [инструкции](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
   
 
@@ -262,7 +260,7 @@
 
 ## Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 {% list tabs %}
 

@@ -6,11 +6,13 @@
 
 О том, как создать триггер для {{ cloud-logging-name }}, читайте в инструкции [{#T}](../../operations/trigger/cloud-logging-trigger-create.md).
 
+{% include [batching-messages](../../../_includes/functions/batching-messages.md) %}
+
 ## Роли, необходимые для корректной работы триггера для {{ cloud-logging-name }} {#roles}
 
 * Для создания триггера вам необходимо разрешение на сервисный аккаунт, от имени которого триггер выполняет операцию. Это разрешение входит в роли [iam.serviceAccounts.user](../../../iam/concepts/access-control/roles#sa-user), [editor](../../../iam/concepts/access-control/roles#editor) и выше.
 * Для работы триггера сервисному аккаунту необходимы роли:
-    * `serverless.functions.invoker` на функцию, которую вызывает триггер.
+    * `{{ roles-functions-invoker }}` на функцию, которую вызывает триггер.
     * `logging.reader` на лог-группу, при добавлении записей в которую вызывается триггер.
 
 ## Формат сообщения от триггера для {{ cloud-logging-name }} {#format}

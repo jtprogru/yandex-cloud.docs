@@ -20,7 +20,7 @@ With {{ mpg-short-name }}, you can:
 * Provides fault tolerance through automatic failover to backup replicas.
 * Keeps database software updated.
 
-You interact with database clusters in {{ mpg-short-name }} the same way you interact with regular databases in your local infrastructure. This allows you to manage internal database settings to meet your app's requirements.
+You interact with database clusters in {{ mpg-short-name }} the same way you interact with regular databases in your local infrastructure. This allows you to manage internal database settings to meet your app requirements.
 
 #### What part of database management and maintenance is {{ mpg-short-name }} responsible for? {#services}
 
@@ -58,7 +58,9 @@ For detailed instructions, see [{#T}](../../managed-postgresql/quickstart.md).
 
 The minimum number of hosts depends on the selected type of [storage](../../managed-postgresql/concepts/storage.md):
 * If you use non-replicated SSD (`network-ssd-nonreplicated`) or local SSD storage (`local-ssd`), the minimum number of hosts is 3.
-* If you use SSD network (`network-ssd`) or HDD network storage (`network-hdd`), you can create single-host clusters.
+* If you use SSD network (`network-ssd`) or HDD network (`network-hdd`) storage, you can create single-host clusters.
+
+
 
 The maximum number of hosts in a cluster is only limited by the requested computing resources and the size of the storage for the cluster.
 
@@ -119,6 +121,10 @@ You can change computing resources and storage size in the management console. A
 
 The cluster characteristics change within 30 minutes. During this period, other maintenance activities may also be enabled for the cluster, such as installing updates.
 
+#### Can I set up auto increase of the cluster storage size? {#storage-autoscale}
+
+Yes, you can set up automatic increase of the storage size when [creating](../../managed-postgresql/operations/cluster-create.md) or [updating](../../managed-postgresql/operations/update.md) a cluster.
+
 #### Is DB host backup enabled by default? {#default-backup}
 
 Yes, backup is enabled by default. For {{ PG }}, a full backup is performed once a day, saving all the database cluster transaction logs. This allows you to restore the cluster state to any point in time during the backup storage period, except for the last 30 seconds.
@@ -174,9 +180,21 @@ Cluster backups are stored and available in all three data centers.
 
 No, you cannot. Superuser privileges are not available to {{ mpg-name }} users. The highest privileges for working with clusters are granted to users with the [`mdb_admin` role](../../managed-postgresql/concepts/roles#mdb-admin).
 
+#### Can I copy data from a {{ mpg-name }} table to a local file? Can I populate a table with data from a local file? {#copy-write-data}
+
+Yes, you can both copy data from a table to a local file and populate a table with data from a local file. For more information, see [{#T}](../../managed-postgresql/operations/copy-write-data.md).
+
 #### Are there any specifics of or restrictions for using the garbage collector in {{ mpg-name }} clusters? {#vacuum}
 
 {{ mpg-name }} clusters support all parameters of the [VACUUM command](https://www.postgresql.org/docs/current/sql-vacuum.html). However, you should consider the following specifics when using them:
 
 * To run `VACUUM FULL`, the user must have the [`mdb_admin` role](../../managed-postgresql/concepts/roles#mdb-admin). The VACUUM FULL command does not affect system views.
 * In {{ PG }} version 14, the functionality of the `INDEX_CLEANUP` parameter is enhanced: it now has the `AUTO` value by default. This means that the `VACUUM` command skips index cleanup if it is considered unfeasible. To ensure backward compatibility with the previous {{ PG }} versions, set `INDEX_CLEANUP` to `ON`.
+
+#### Why is a cluster working slowly even though it still has free computing resources? {#throttling}
+
+{% include [throttling](../throttling.md) %}
+
+To increase the maximum IOPS and bandwidth values and make throttling less likely, increase the storage size when you [update your cluster](../../managed-postgresql/operations/update.md#change-disk-size).
+
+If you are using the `network-hdd` storage type, consider switching to `network-ssd` or `network-ssd-nonreplicated` by [restoring the cluster](../../managed-postgresql/operations/cluster-backups.md#restore) from a backup.

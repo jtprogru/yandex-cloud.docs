@@ -4,6 +4,10 @@ editable: false
 
 # Pricing for {{ mrd-name }}
 
+In this section, you can find {{ mrd-name }} pricing [rules](#rules) and [effective prices](#prices) for the service's resources.
+
+To calculate the service cost, use the [calculator]({{ link-calc }}) on the {{ yandex-cloud }} website.
+
 
 {% include [currency-choice](../_includes/pricing/currency-choice.md) %}
 
@@ -30,11 +34,13 @@ The following is charged:
 
 * Storage allocated for DB clusters.
 
-   * Storage on non-replicated SSDs (`network-ssd-nonreplicated`) can only be ordered for clusters with three or more hosts running Intel Cascade Lake and Intel Ice Lake, in increments of 93 GB.
+   
+   * Non-replicated SSD (`network-ssd-nonreplicated`) storage can only be ordered for clusters with three or more hosts running Intel Cascade Lake and Intel Ice Lake, in increments of 93 GB.
 
-   * Storage on local SSDs (`local-ssd`) can only be ordered for clusters running Intel Broadwell and Intel Cascade Lake with three or more hosts, in increments of 100 GB.
+   * Local SSD (`local-ssd`) storage can only be ordered for clusters running Intel Broadwell and Intel Cascade Lake with three or more hosts, in increments of 100 GB.
 
    For more information about platform-specific storage limitations, see [{#T}](./concepts/storage.md).
+
 
 * Space used by DB backups in excess of the storage requested for the cluster.
 

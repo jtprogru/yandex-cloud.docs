@@ -8,7 +8,7 @@
 
 Параметр | Тип | Описание 
 ----|----|----
-`url`|`string`| URL, по которому необходимо перенаправить вызов (должен быть доступен из интернета). <br>В `url` осуществляется подстановка параметров.
+`url`|`string`| URL, по которому необходимо перенаправить вызов. <br>В `url` осуществляется подстановка параметров.
 `method`|`enum`| Необязательный параметр. HTTP-метод, используемый для вызова. Если параметр не указан, используется метод запроса к {{ api-gw-short-name }}.
 `headers`|`map[string](string \| string[])`| HTTP-заголовки, которые передаются. По умолчанию заголовки исходного запроса не передаются. <br>В `headers` осуществляется подстановка параметров.
 `query`|`map[string](string \| string[])`| Query-параметры, которые передаются. По умолчанию query-параметры исходного запроса не передаются. <br>В `query` осуществляется подстановка параметров.
@@ -89,10 +89,17 @@ paths:
           bar_param: [ "one", "two" ]
           single_param: three
         headers:
+          Host: example.com
           '*': '*'
           Foo-Header: ""
           Bar-Header: [ "one", "two" ]
           Single-header: three
         omitEmptyHeaders: true
         omitEmptyQueryParameters: true  
+      parameters:
+      - name: path
+        in: path
+        required: false
+        schema:
+          type: string
 ```

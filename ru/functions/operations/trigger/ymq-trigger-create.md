@@ -2,13 +2,7 @@
 
 Создайте [триггер](../../concepts/trigger/ymq-trigger.md) для очереди сообщений сервиса {{ message-queue-short-name }} и обрабатывайте их с помощью [функции](../../concepts/function.md) {{ sf-name }}.
 
-{% note warning %}
-
-* Триггер можно создать только для стандартной очереди сообщений.
-* Триггер должен находиться в одном облаке с очередью, из которой он читает сообщения.
-* Для одной очереди сообщений можно создать только один триггер.
- 
-{% endnote %}
+{% include [ymq-trigger-note.md](../../../_includes/functions/ymq-trigger-note.md) %}
 
 ## Перед началом работы {#before-begin}
 
@@ -39,32 +33,32 @@
 
     1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором хотите создать триггер.
 
-    1. Выберите сервис **{{ sf-name }}**.
+    1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **Триггеры**.
+    1. На панели слева выберите ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-    1. В блоке **Базовые параметры**:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
         * Введите имя и описание триггера.
-        * В поле **Тип** выберите **{{ message-queue-short-name }}**.
-        * В поле **Запускаемый ресурс** выберите **Функция**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_ymq }}**.
+        * В поле **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** выберите **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-    1. В блоке **Настройки {{ message-queue-short-name }}** выберите очередь сообщений и сервисный аккаунт с правами на чтение из нее.
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_ymq }}** выберите очередь сообщений и сервисный аккаунт с правами на чтение из нее.
 
-    1. (Опционально) В блоке **Настройки группирования сообщений** укажите:
+    1. (Опционально) В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_batch-settings }}** укажите:
 
-        * размер группы сообщений. Допустимые значения от 1 до 10, значение по умолчанию — 1.
-        * максимальное время ожидания. Допустимые значения от 0 до 20 секунд, значение по умолчанию — 10 секунд.
+        * **{{ ui-key.yacloud.serverless-functions.triggers.form.field_ymq-cutoff }}**. Допустимые значения от 0 до 20 секунд, значение по умолчанию — 10 секунд.
+        * **{{ ui-key.yacloud.serverless-functions.triggers.form.field_size }}**. Допустимые значения от 1 до 10, значение по умолчанию — 1.
 
         Триггер группирует сообщения не дольше указанного времени ожидания и отправляет их в функцию. Число сообщений при этом не превышает указанный размер группы.
 
-    1. В блоке **Настройки функции** выберите функцию и укажите:
+    1. В блоке **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}** выберите функцию и укажите:
 
         {% include [function-settings](../../../_includes/functions/function-settings.md) %}
 
-    1. Нажмите кнопку **Создать триггер**.
+    1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -93,9 +87,9 @@
         Чтобы узнать идентификатор очереди:
 
         1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится очередь.
-        1. Выберите сервис **{{ message-queue-name }}**.
+        1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
         1. Выберите очередь.
-        1. Идентификатор очереди будет в блоке **Общая информация**, в поле **ARN**.
+        1. Идентификатор очереди будет в блоке **{{ ui-key.yacloud.ymq.queue.overview.section_base }}**, в поле **{{ ui-key.yacloud.ymq.queue.overview.label_queue-arn }}**.
 
     * `--invoke-function-id` — идентификатор функции.
     * `--queue-service-account-name` — сервисный аккаунт с правами на чтение из очереди сообщений.
@@ -127,7 +121,7 @@
 
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
   Чтобы создать триггер для очереди сообщений:
 
@@ -144,9 +138,9 @@
            Чтобы узнать идентификатор очереди:
 
            1. В [консоли управления]({{ link-console-main }}) перейдите в каталог, в котором находится очередь.
-           1. Выберите сервис **{{ message-queue-name }}**.
+           1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
            1. Выберите очередь.
-           1. Идентификатор очереди будет в блоке **Общая информация**, в поле **ARN**.
+           1. Идентификатор очереди будет в блоке **{{ ui-key.yacloud.ymq.queue.overview.section_base }}**, в поле **{{ ui-key.yacloud.ymq.queue.overview.label_queue-arn }}**.
 
        * `service_account_id` — идентификатор сервисного аккаунта с правами на вызов функции.
        * `batch_size` — размер группы сообщений. Необязательный параметр. Допустимые значения от 1 до 10, значение по умолчанию — 1.
@@ -219,9 +213,9 @@
 
     Проверьте, что количество сообщений в очереди уменьшается. Для этого посмотрите статистику очереди:
 
-    1. В [консоли управления]({{ link-console-main }}) выберите сервис **{{ message-queue-name }}**.
+    1. В [консоли управления]({{ link-console-main }}) выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
     1. Выберите очередь, для которой создали триггер.
-    1. Перейдите в раздел **Мониторинг**. Посмотрите график **Сообщений в очереди**.
+    1. Перейдите в раздел **{{ ui-key.yacloud.common.monitoring }}**. Посмотрите график **{{ ui-key.yacloud.ymq.queue.overview.label_msg-count }}**.
 
 {% endlist %}
 

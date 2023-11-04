@@ -9,6 +9,8 @@ keywords:
 
 # Managing backups in {{ mes-name }}
 
+{% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
+
 
 {{ mes-short-name }} enables you to create [index](../concepts/indexing.md) backups using both {{ yandex-cloud }} tools and the {{ ES }} snapshot mechanism. For more information about snapshots, see the [{{ ES }} documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-restore.html).
 
@@ -28,12 +30,12 @@ You can create [backups](../concepts/backup.md) and restore clusters from existi
 - Management console
 
    To get a list of cluster backups:
-   1. Go to the folder page and select **{{ mes-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}** tab.
 
    To get a list of all backups in a folder:
-   1. Go to the folder page and select **{{ mes-name }}**.
-   1. Click the **Backups** tab.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Select the **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}** tab.
 
 - CLI
 
@@ -50,12 +52,12 @@ You can create [backups](../concepts/backup.md) and restore clusters from existi
    Result:
 
    ```text
-   +----------+----------------------+----------------------+----------------------+
-   |    ID    |      CREATED AT      |  SOURCE CLUSTER ID   |      STARTED AT      |
-   +----------+----------------------+----------------------+----------------------+
-   | c9qlk... | 2020-08-10T12:00:00Z | c9qlk4v13uq79r9cgcku | 2020-08-10T11:55:17Z |
-   | c9qpm... | 2020-08-09T22:01:04Z | c9qpm90p3pcg71jm7tqf | 2020-08-09T21:30:00Z |
-   +----------+----------------------+----------------------+----------------------+
+   +----------------------+----------------------+----------------------+----------------------+
+   |          ID          |      CREATED AT      |  SOURCE CLUSTER ID   |      STARTED AT      |
+   +----------------------+----------------------+----------------------+----------------------+
+   | c9qlk4v13uq7******** | 2020-08-10T12:00:00Z | c9qlk4v13uq7******** | 2020-08-10T11:55:17Z |
+   | c9qpm90p3pcg******** | 2020-08-09T22:01:04Z | c9qpm90p3pcg******** | 2020-08-09T21:30:00Z |
+   +----------------------+----------------------+----------------------+----------------------+
    ```
 
 - API
@@ -77,12 +79,12 @@ You can create [backups](../concepts/backup.md) and restore clusters from existi
 - Management console
 
    To get information about the backup of an existing cluster:
-   1. Go to the folder page and select **{{ mes-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}** tab.
 
    To get information about the backup of a previously deleted cluster:
-   1. Go to the folder page and select **{{ mes-name }}**.
-   1. Click the **Backups** tab.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Select the **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}** tab.
 
 - CLI
 
@@ -114,9 +116,9 @@ You can create [backups](../concepts/backup.md) and restore clusters from existi
 
 - Management console
 
-   1. Go to the folder page and select **{{ mes-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
-   1. Click **Create backup**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}** tab.
+   1. Click ![image](../../_assets/plus-sign.svg) **{{ ui-key.yacloud.mdb.cluster.backups.button_create }}**.
 
    {% include [no-prompt](../../_includes/mdb/backups/no-prompt.md) %}
 
@@ -156,7 +158,7 @@ You can create [backups](../concepts/backup.md) and restore clusters from existi
 ### Restoring clusters from backups {#restore}
 
 
-When you restore a cluster from a backup, you create a new cluster with data from the backup. If the folder has insufficient [resources](../concepts/limits.md) to create such a cluster, you will not be able to restore from the backup. You can manage the restore speed using [{{ ES }} tools](https://www.elastic.co/guide/en/elasticsearch/reference/current/recovery.html).
+When you restore a cluster from a backup, you create a new cluster with the backup data. If the folder has insufficient [resources](../concepts/limits.md) to create such a cluster, you will not be able to restore from the backup. You can manage the restore speed using [{{ ES }} tools](https://www.elastic.co/guide/en/elasticsearch/reference/current/recovery.html).
 
 When creating a new cluster, set all required parameters.
 
@@ -165,21 +167,21 @@ When creating a new cluster, set all required parameters.
 - Management console
 
    To restore an existing cluster from a backup:
-   1. Go to the folder page and select **{{ mes-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon for the desired backup and click **Restore cluster**.
-   1. Set up the new cluster. You can select a folder for the new cluster from the **Folder** list.
-   1. Click **Restore cluster**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}** tab.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the backup you need and click **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
+   1. Set up the new cluster. You can select a folder for the new cluster from the **{{ ui-key.yacloud.common.folder }}** list.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_restore }}**.
 
    To restore a previously deleted cluster from a backup:
-   1. Go to the folder page and select **{{ mes-name }}**.
-   1. Click the **Backups** tab.
-   1. Find the desired backup using the backup creation time and cluster ID. The **Name** column contains the IDs in `<cluster ID>:<backup ID>` format.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) icon for the desired backup and click **Restore cluster**.
-   1. Set up the new cluster. You can select a folder for the new cluster from the **Folder** list.
-   1. Click **Restore cluster**.
+   1. Go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Select the **{{ ui-key.yacloud.mdb.cluster.backups.label_title }}** tab.
+   1. Find the backup you need using the backup creation time and cluster ID. The **{{ ui-key.yacloud.common.name }}** column contains IDs in `<cluster ID>:<backup ID>` format.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the backup you need and click **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
+   1. Set up the new cluster. You can select a folder for the new cluster from the **{{ ui-key.yacloud.common.folder }}** list.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_restore }}**.
 
-   {{ mes-name }} launches the operation to create a cluster from the backup.
+   {{ mes-name }} will launch the operation to create a cluster from the backup.
 
 - CLI
 
@@ -207,7 +209,7 @@ When creating a new cluster, set all required parameters.
       +--------------------------+----------------------+----------------------+----------------------+
       |            ID            |      CREATED AT      |  SOURCE CLUSTER ID   |      STARTED AT      |
       +--------------------------+----------------------+----------------------+----------------------+
-      | c9qlk4v13uq79r9cgcku...  | 2020-08-10T12:00:00Z | c9qlk4v13uq79r9cgcku | 2020-08-10T11:55:17Z |
+      | c9qlk4v13uq79r9********  | 2020-08-10T12:00:00Z | c9qlk4v13uq7******** | 2020-08-10T11:55:17Z |
       | ...                                                                                           |
       +--------------------------+----------------------+----------------------+----------------------+
       ```
@@ -225,13 +227,13 @@ When creating a new cluster, set all required parameters.
          --network-name=<network name> \
          --host zone-id=<availability zone>,`
                `subnet-id=<subnet name>,`
-               `assign-public-ip=<access to host via a public IP address: true or false>,`
+               `assign-public-ip=<public access to the host: true or false>,`
                `type=<host role: datanode or masternode> \
          --datanode-resource-preset=<class of hosts with the Data node role> \
-         --datanode-disk-size=<size of storage in GB for hosts with the Data node role> \
+         --datanode-disk-size=<size of storage in GB for hosts with the Data node role> \
          --datanode-disk-type=<disk type for hosts with the Data node role> \
          --masternode-resource-preset=<class of hosts with the Master node role> \
-         --masternode-disk-size=<size of storage in GB for hosts with the Master node role> \
+         --masternode-disk-size=<size of storage in GB for hosts with the Master node role> \
          --masternode-disk-type=<disk type for hosts with the Master node role: network-ssd> \
          --admin-password=<admin password>
       ```
@@ -239,11 +241,11 @@ When creating a new cluster, set all required parameters.
 
       Where:
 
-      * `--backup-id`: [Backup](../concepts/backup.md) ID
+      * `--backup-id`: [Backup](../concepts/backup.md) ID.
       * `--name`: Cluster name.
       * `--environment`: Environment:
 
-         * `PRESTABLE`: For testing, including the {{ ES }} service itself. The Prestable environment is first updated with new features, improvements, and bug fixes. However, not every update ensures backward compatibility.
+         * `PRESTABLE`: For testing purposes. The prestable environment is similar to the production environment and is also covered by the SLA. However, it is the first to receive new functionalities, improvements, and bug fixes. In the prestable environment, you can test compatibility of new versions with your application.
          * `PRODUCTION`: For stable versions of your apps.
 
       * `--network-name`: [Network name](../../vpc/concepts/network.md#network).
@@ -253,7 +255,7 @@ When creating a new cluster, set all required parameters.
 
          
          * `subnet-name`: [Name of the subnet](../../vpc/concepts/network.md#subnet). It must be specified if the selected availability zone includes two or more subnets.
-         * `assign-public-ip`: Flag to specify if a host requires a [public IP address](../../vpc/concepts/address.md#public-addresses).
+         * `assign-public-ip`: Flag to be set if [public access](../concepts/network.md#public-access-to-a-host) to the host is required.
 
 
          * `type`: [Host role](../concepts/hosts-roles.md).
@@ -282,7 +284,7 @@ When creating a new cluster, set all required parameters.
 
    To restore a cluster from a backup, use the [restore](../api-ref/Cluster/restore.md) REST API method for the [Cluster](../api-ref/Cluster/index.md) resource or the [ClusterService/Restore](../api-ref/grpc/cluster_service.md#Restore) gRPC API call and provide the following in the request:
 
-   * ID of the desired backup, in the `backupId` parameter. To find out the ID, [retrieve a list of cluster backups](#list-backups).
+   * ID of the backup, in the `backupId` parameter. To find out the ID, [retrieve a list of cluster backups](#list-backups).
    * Name of the new cluster that will contain the data recovered from the backup, in the `name` parameter. It must be unique within the folder.
    * Cluster environment in the `environment` parameter.
    * Cluster configuration in the `configSpec` parameter.
@@ -302,15 +304,15 @@ To work with snapshots, use the [{{ ES }} public API](https://www.elastic.co/gui
 1. Find the repository containing snapshot backups in the {{ ES }} repository list:
 
    ```http
-   GET https://admin:<password>@<host_FQDN_or_IP-address>:9200/_snapshot/_all
+   GET https://admin:<password>@<host_FQDN>:9200/_snapshot/_all
    ```
 
-   If the desired repository is not on the list, [connect it](./s3-access.md).
+   If the required repository is not on the list, [connect it](./s3-access.md).
 
 1. Get a list of snapshots in the repository:
 
    ```http
-   GET https://admin:<password>@<host_FQDN_or_IP_address>:9200/_snapshot/<repository>/_all
+   GET https://admin:<password>@<host_FQDN>:9200/_snapshot/<repository>/_all
    ```
 
    Each snapshot is a single backup.
@@ -321,15 +323,15 @@ To work with snapshots, use the [{{ ES }} public API](https://www.elastic.co/gui
 1. In the {{ ES }} repository list, find the repository where you want to create the snapshot:
 
    ```http
-   GET https://admin:<password>@<host FQDN_or_IP-address>:9200/_snapshot/_all
+   GET https://admin:<password>@<host_FQDN>:9200/_snapshot/_all
    ```
 
-   If the desired repository is not on the list, [connect it](./s3-access.md).
+   If the required repository is not on the list, [connect it](./s3-access.md).
 
-1. [Create a snapshot](https://www.elastic.co/guide/en/elasticsearch/reference/current/create-snapshot-api.html) of the desired data or cluster in the selected repository:
+1. [Create a snapshot](https://www.elastic.co/guide/en/elasticsearch/reference/current/create-snapshot-api.html) of the required data or cluster in the selected repository:
 
    ```http
-   PUT https://admin:<password>@<host FQDN_or_IP-address>:9200/_snapshot/<repository>/<snapshot>
+   PUT https://admin:<password>@<host_FQDN>:9200/_snapshot/<repository>/<snapshot>
    ```
 
 ### Restoring a cluster from a snapshot {#restore-from-snapshot}
@@ -343,7 +345,7 @@ When restoring from snapshots, the following restrictions apply:
 
 {% endnote %}
 
-1. [Create a new {{ ES }} cluster](./cluster-create.md) in the desired configuration, but don't populate it with data.
+1. [Create a new {{ ES }} cluster](./cluster-create.md) in the required configuration, but do not populate it with data.
 
    When creating a cluster, select:
 
@@ -354,13 +356,13 @@ When restoring from snapshots, the following restrictions apply:
 1. Close the open indexes using the [{{ ES }} API](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-close.html):
 
    ```http
-   POST: https://admin:<password>@<host FQDN_or_IP-address>:9200/<index>/_close
+   POST: https://admin:<password>@<host_FQDN>:9200/<index>/_close
    ```
 
-   To restore an entire cluster, close all open indices. To restore individual indices, close only those indices.
+   To restore an entire cluster, close all open indexes. To restore individual indexes, close only those indexes.
 
-1. [Retrieve a list of backups](#list-snapshots) and find the desired snapshot.
-1. [Start restoring](https://www.elastic.co/guide/en/elasticsearch/reference/current/restore-snapshot-api.html) an entire cluster or individual data indexes and streams from the desired snapshot.
+1. [Retrieve a list of backups](#list-snapshots) and find the required snapshot.
+1. [Start restoring](https://www.elastic.co/guide/en/elasticsearch/reference/current/restore-snapshot-api.html) an entire cluster or individual data indexes and streams from the required snapshot.
 
 For more information about restoring from snapshots, see the [{{ ES }} documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-restore-snapshot.html).
 

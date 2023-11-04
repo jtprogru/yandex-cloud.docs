@@ -7,12 +7,14 @@ Any users and [service accounts](../../../iam/concepts/users/service-accounts.md
 - Management console
 
   1. In the [management console]({{ link-console-main }}), select the folder to create a registry in.
-  1. In the list of services, select **{{ container-registry-name }}**.
-  1. Specify a name for the registry.
+  1. In the list of services, select **{{ ui-key.yacloud.iam.folder.dashboard.label_container-registry }}**.
+  1. Click **{{ ui-key.yacloud.cr.overview.button_create }}**.
+  1. Specify a name for the registry. The naming requirements are as follows:
 
      {% include [name-format](../../../_includes/name-format.md) %}
 
-  1. Click **Create registry**.
+  1. (Optional) Add labels.
+  1. Click **{{ ui-key.yacloud.cr.overview.popup-create_button_create }}**.
 
 - CLI
 
@@ -53,25 +55,26 @@ Any users and [service accounts](../../../iam/concepts/users/service-accounts.md
      created_at: "2019-01-09T14:34:06.601Z"
      ```
 
-     {% include [name-format](../../../_includes/name-format.md) %}
+      The registry naming requirements are as follows:
 
-     * The `--name` flag is optional. You can create a registry without a name and access it by its ID.
-     * The `name` field is user-defined: it is used for listing in the YC CLI and is **not used** in the Docker CLI.
-  1. Make sure the registry was created:
+      {% include [name-format](../../../_includes/name-format.md) %}
 
-     ```bash
-     yc container registry list
-     ```
+      The `--name` flag is optional: you can create a registry without any name and access it using the ID. The `name` field is user-defined: it is used for listing in the YC CLI and is **not used** in the Docker CLI.
+   1. Make sure the registry was created:
 
-     Command result:
+      ```bash
+      yc container registry list
+      ```
 
-     ```text
-     +----------------------+--------+----------------------+
-     |          ID          |  NAME  |      FOLDER ID       |
-     +----------------------+--------+----------------------+
-     | crpd50616s9a2t7gr8mi | my-reg | b1g88tflru0ek1omtsu0 |
-     +----------------------+--------+----------------------+
-     ```
+      Command result:
+
+      ```text
+      +----------------------+--------+----------------------+
+      |          ID          |  NAME  |      FOLDER ID       |
+      +----------------------+--------+----------------------+
+      | crpd50616s9a2t7gr8mi | my-reg | b1g88tflru0ek1omtsu0 |
+      +----------------------+--------+----------------------+
+      ```
 
 - API
 
@@ -79,7 +82,7 @@ Any users and [service accounts](../../../iam/concepts/users/service-accounts.md
 
 - {{ TF }}
 
-  If you do not have {{ TF }} yet, [install it and configure the provider {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
   1. To a configuration file, add the parameters of the registry that you want to create. Use `example.tf` in `~/cloud-terraform`:
 
      ```hcl
@@ -93,9 +96,9 @@ Any users and [service accounts](../../../iam/concepts/users/service-accounts.md
      ```
 
      Where:
-     * `name`: Registry name.
-     * `folder_id`: ID of the folder.
-     * `labels`: Set of [labels](../../../resource-manager/concepts/labels.md).
+     * `name`: Registry name
+     * `folder_id`: Folder ID
+     * `labels`: Set of [labels](../../../resource-manager/concepts/labels.md)
 
      For more information about resources you can create with {{ TF }}, see the [provider documentation]({{ tf-provider-link }}/).
   1. Check that the configuration file is correct.
@@ -105,7 +108,7 @@ Any users and [service accounts](../../../iam/concepts/users/service-accounts.md
         cd /Users/<username>/cloud-terraform
         ```
 
-     1. Run the check using this command:
+     1. Run a check using this command:
 
         ```bash
         terraform plan
@@ -118,8 +121,8 @@ Any users and [service accounts](../../../iam/concepts/users/service-accounts.md
         The refreshed state will be used to calculate this plan, but will not be
         persisted to local or remote state storage.
         ...
-        Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-        can't guarantee that exactly these actions will be performed if
+        Note: You did not specify an "-out" parameter to save this plan, so Terraform
+        cannot guarantee that exactly these actions will be performed if
         "terraform apply" is subsequently run.
         ```
 

@@ -35,7 +35,7 @@
 
     1. (Опционально) [Создайте промежуточную виртуальную машину Linux](../../compute/operations/vm-create/create-linux-vm.md) в {{ compute-full-name }} в той же сети, что и кластер {{ mrd-name }} в следующей конфигурации:
 
-        * В блоке **{{ ui-key.yacloud.compute.instances.create.section_image }}** выберите **{{ ui-key.yacloud.compute.instances.create.image_value_os-products }}** → `Ubuntu 20.04`.
+        * В блоке **{{ ui-key.yacloud.compute.instances.create.section_image }}** выберите **{{ ui-key.yacloud.compute.instances.create.image_value_os-products }}** → [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts).
         * В блоке **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
 
             * **{{ ui-key.yacloud.component.compute.network-select.field_external }}** — `{{ ui-key.yacloud.component.compute.network-select.switch_auto }}`.
@@ -45,12 +45,10 @@
     
     1. Если вы используете группы безопасности {{ vpc-name }}, [настройте их](../../managed-redis/operations/connect/index.md#configuring-security-groups).
 
-        {% include [preview-pp.md](../../_includes/preview-pp.md) %}
-
 
 - С помощью {{ TF }}
 
-    1. Если у вас еще нет {{ TF }}, [установите его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
         1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
         1. Скачайте в ту же рабочую директорию файл конфигурации для подходящего типа кластера:
 
@@ -130,7 +128,7 @@
 1. Если для подключения к кластеру {{ RD }} нужен пароль, укажите его в значении переменной окружения `REDISDUMPGO_AUTH`:
 
     ```bash
-    export REDISDUMPGO_AUTH="<пароль {{ RD }}>"
+    export REDISDUMPGO_AUTH="<пароль_{{ RD }}>"
     ```
 
 1. Запустите интерактивную сессию `screen`:
@@ -143,8 +141,8 @@
 
     ```bash
     ./redis-dump-go \
-        -host <IP-адрес или FQDN хоста-мастера в кластере {{ RD }}> \
-        -port <порт {{ RD }}> > <файл дампа>
+        -host <IP-адрес_или_FQDN_хоста-мастера_в_кластере_{{ RD }}> \
+        -port <порт_{{ RD }}> > <файл_дампа>
     ```
 
     {% note tip %}
@@ -189,7 +187,7 @@
 
         ```bash
         host=$(redis-cli \
-          -h <FQDN любого хоста {{ RD }}> \
+          -h <FQDN_любого_хоста_{{ RD }}> \
           -p {{ port-mrd-sentinel }} \
           sentinel \
           get-master-addr-by-name \
@@ -197,18 +195,18 @@
         redis-cli \
           -h ${host} \
           -p {{ port-mrd }} \
-          -a <пароль кластера-приемника> \
-          --pipe < <файл дампа>
+          -a <пароль_кластера-приемника> \
+          --pipe < <файл_дампа>
         ```
 
         **Подключение напрямую к мастеру**
 
         ```bash
         redis-cli \
-          -h <FQDN хоста-мастера> \
+          -h <FQDN_хоста-мастера> \
           -p {{ port-mrd }} \
-          -a <пароль кластера-приемника> \
-          --pipe < <файл дампа>
+          -a <пароль_кластера-приемника> \
+          --pipe < <файл_дампа>
         ```
 
         {% include [use-special-fqdn](../../_includes/mdb/mrd/conn-strings-fqdn.md) %}
@@ -220,15 +218,15 @@
             `load-dump.sh`
 
             ```bash
-            shards=('<FQDN хоста-мастера в шарде 1>' \
+            shards=('<FQDN_хоста-мастера_в_шарде_1>' \
                     ...
-                    '<FQDN хоста-мастера в шарде N>')
+                    '<FQDN_хоста-мастера_в_шарде_N>')
 
             for shard in "${shards[@]}" ; do
               redis-cli -h "${shard}" \
                         -p {{ port-mrd }} \
-                        -a "<пароль кластера-приемника>" \
-                        --pipe < <файл дампа>
+                        -a "<пароль_кластера-приемника>" \
+                        --pipe < <файл_дампа>
             done
             ```
 
@@ -248,7 +246,7 @@
 
         ```bash
         host=$(redis-cli \
-               -h <FQDN любого хоста {{ RD }}> \
+               -h <FQDN_любого_хоста_{{ RD }}> \
                -p {{ port-mrd-sentinel }} \
                sentinel \
                get-master-addr-by-name \
@@ -256,22 +254,22 @@
         redis-cli \
             -h ${host} \
             -p {{ port-mrd-tls }} \
-            -a <пароль кластера-приемника> \
+            -a <пароль_кластера-приемника> \
             --tls \
             --cacert ~/.redis/{{ crt-local-file }} \
-            --pipe < <файл дампа>
+            --pipe < <файл_дампа>
         ```
 
         **Подключение напрямую к мастеру**
 
         ```bash
         redis-cli \
-            -h c-<идентификатор кластера>.rw.{{ dns-zone }} \
+            -h c-<идентификатор_кластера>.rw.{{ dns-zone }} \
             -p {{ port-mrd-tls }} \
-            -a <пароль кластера-приемника> \
+            -a <пароль_кластера-приемника> \
             --tls \
             --cacert ~/.redis/{{ crt-local-file }} \
-            --pipe < <файл дампа>
+            --pipe < <файл_дампа>
         ```
 
         {% include [use-special-fqdn](../../_includes/mdb/mrd/conn-strings-fqdn.md) %}
@@ -283,17 +281,17 @@
             `load-dump.sh`
 
             ```bash
-            shards=('<FQDN хоста-мастера в шарде 1>' \
+            shards=('<FQDN_хоста-мастера_в_шарде_1>' \
                     ...
-                    '<FQDN хоста-мастера в шарде N>')
+                    '<FQDN_хоста-мастера_в_шарде_N>')
 
             for shard in "${shards[@]}" ; do
               redis-cli -h "${shard}" \
                         -p {{ port-mrd-tls }} \
-                        -a "<пароль кластера-приемника>" \
+                        -a "<пароль_кластера-приемника>" \
                         --tls \
                         --cacert ~/.redis/{{ crt-local-file }} \
-                        --pipe < <файл дампа>
+                        --pipe < <файл_дампа>
             done
             ```
 
@@ -327,7 +325,7 @@
 
 ## Удалите созданные ресурсы {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 {% list tabs %}
 

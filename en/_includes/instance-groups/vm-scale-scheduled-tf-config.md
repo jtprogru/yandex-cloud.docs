@@ -40,7 +40,7 @@ resource "yandex_resourcemanager_folder_iam_member" "vm-scale-scheduled-sa-role-
 
 resource "yandex_resourcemanager_folder_iam_member" "vm-scale-scheduled-sa-role-functions" {
   folder_id = "<folder_ID>"
-  role      = "serverless.functions.invoker"
+  role      = "{{ roles-functions-invoker }}"
   member    = "serviceAccount:${yandex_iam_service_account.vm-scale-scheduled-sa.id}"
 }
 
@@ -102,7 +102,7 @@ resource "yandex_compute_instance_group" "vm-scale-scheduled-ig" {
     }
 
     metadata = {
-      user-data = "#cloud-config\nusers:\n  - name: ${local.username}\n    groups: sudo\n    shell: /bin/bash\n    sudo: ['ALL=(ALL) NOPASSWD:ALL']\n    ssh-authorized-keys:\n      - ${file("${local.ssh_key_path}")}"
+      user-data = "#cloud-config\nusers:\n  - name: ${local.username}\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ${file("${local.ssh_key_path}")}"
     }
   }
 

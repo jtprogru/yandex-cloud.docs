@@ -1,35 +1,34 @@
-# Configuring issue types and statuses
+# Overview
 
-{% note warning %}
+A workflow in a queue is a set of statuses that change at different stages of issue progress and rules for making transitions between the statuses.
 
-By default, [only the queue owner](queue-access.md) can configure a queue.
+![](../../_assets/tracker/workflow-editor-new-ui.png)
 
-{% endnote %}
+## Workflow components {#inside-the-workflow}
 
-Issues are generally completed in multiple stages. In {{ tracker-name }}, each issue stage corresponds to a certain status. A set of possible issue statuses and status transition rules is called a _workflow_.
+A workflow is characterized by the following {{ tracker-name }} entities:
 
-You can add different issue types to a single queue, such as <q>New feature</q>, <q>Improvement</q>, or <q>Bug</q>. A unique workflow can be configured for each issue type.
+* [Issue types](add-ticket-type.md): A queue may contain multiple issue types, such as <q>New feature</q>, <q>Improvement</q>, or <q>Bug</q>. Workflows are set up for specific issue types in the queue. This allows considering the specifics of issue types and creating a convenient workflow for each type.
+* Issue [statuses](workflow-status-edit.md) and [resolutions](create-resolution.md): A workflow defines the statuses for the selected type of issues and the resolutions to close them with.
+* [Transitions](workflow-action-edit.md) between statuses: Using transitions, you can set up both elementary rules for issue status updates and auto actions to be performed at status update, as well as transition screens for users to fill in some issue fields.
 
-To configure a workflow for a particular issue type:
+In the workflow visual editor's diagram, statuses are represented as blocks of a larger size filled in color matching the [status types](./workflow-status-edit.md#status-types), while small transparent blocks indicate transitions between the statuses.
 
-1. Go to the queue page and select ![](../../_assets/tracker/icon-settings.png) → **Configure**.
 
-1. [Add a new issue type to the queue](add-ticket-type.md) and choose the workflow and resolution set.
+## Where are queue workflows located? {#where-workflows}
 
-   You can select an existing [workflow from the queue template](workflows.md) or [create a new workflow](add-workflow.md). The same workflow can be used for multiple types of issues.
+Workflows are stored in queue settings, so they can only be accessed by the queue owner and users granted [permission to access the queue settings](queue-access.md).
 
-1. Once you've created a workflow, [set possible issue statuses](workflow-status-edit.md).
+To view the queue workflows:
 
-1. [Set status transitions](workflow-action-edit.md) for each available status:
-    - The order and conditions for status transitions.
-    - Additional actions to trigger during a status transition. For example, you can set up your issue fields to change their values automatically.
-    - Transition screens are pop-up windows with preset fields displayed during status changes.
+1. In the {{ tracker-name }} panel on the left, click {{ ui-key.startrek.blocks-desktop_m-head.menu-queues }} and go to the queue page.
 
-[{#T}](add-ticket-type.md)
+1. In the top-right corner, click ![](../../_assets/tracker/svg/settings-old.svg) **{{ ui-key.startrek.ui_components_PageQueue_header.settings }}**.
 
-[{#T}](add-workflow.md)
+1. Go to the **{{ ui-key.startrek.ui_components_page-queue-admin_QueueAdminPageContent.menu-item-workflows }}** tab.
 
-[{#T}](workflow-status-edit.md)
+It shows the list of all the queue workflows.
 
-[{#T}](workflow-action-edit.md)
+## Do I need to create a workflow immediately when creating a queue? {#first-process}
 
+No, when [a queue is being created](create-queue.md), a [template with a standard workflow](workflows.md) is used. This workflow immediately applies to the queue issues. The queue owner can use the workflow editor's diagram to see the workflow components, adjust it, or create new workflows for new issue types.

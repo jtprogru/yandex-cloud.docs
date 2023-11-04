@@ -5,8 +5,10 @@
 
 {% note info %}
 
+
 * Количество хостов, которые можно создать вместе с {{ MG }}-кластером, зависит от выбранного [типа диска](../concepts/storage.md#storage-type-selection) и [класса хостов](../concepts/instance-types.md#available-flavors).
 * Доступные типы диска [зависят](../concepts/storage.md) от выбранного [класса хостов](../concepts/instance-types.md).
+
 
 {% endnote %}
 
@@ -20,60 +22,61 @@
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором нужно создать кластер БД.
 
-  1. Выберите сервис **{{ mmg-name }}**.
+  1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
 
-  1. Нажмите кнопку **Создать кластер**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
 
-  1. В блоке **Базовые параметры**:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_base }}**:
 
-      * Введите название в поле **Имя кластера**. Имя кластера должно быть уникальным в рамках каталога.
-      * (опционально) Введите **Описание** кластера.
+      * Введите название в поле **{{ ui-key.yacloud.mdb.forms.base_field_name }}**. Имя кластера должно быть уникальным в рамках каталога.
+      * (Опционально) Введите **{{ ui-key.yacloud.mdb.forms.base_field_description }}** кластера.
       * Выберите окружение, в котором нужно создать кластер (после создания кластера окружение изменить невозможно):
 
           * `PRODUCTION` — для стабильных версий ваших приложений.
-          * `PRESTABLE` — для тестирования, в том числе самого сервиса {{ mmg-short-name }}. В Prestable-окружении раньше появляются новая функциональность, улучшения и исправления ошибок. При этом не все обновления обеспечивают обратную совместимость.
+          * `PRESTABLE` — для тестирования. Prestable-окружение аналогично Production-окружению и на него также распространяется SLA, но при этом на нем раньше появляются новые функциональные возможности, улучшения и исправления ошибок. В Prestable-окружении вы можете протестировать совместимость новых версий с вашим приложением.
 
       * Укажите версию СУБД.
 
   1. {% include [mmg-settings-host-class](../../_includes/mdb/mmg/settings-host-class.md) %}
 
-  1. В блоке **Размер хранилища**:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_disk }}**:
 
       * Выберите [тип диска](../concepts/storage.md).
 
+        
         {% include [storages-step-settings](../../_includes/mdb/settings-storages.md) %}
 
+
       * Выберите размер хранилища, который будет использоваться для данных и резервных копий. Подробнее о том, как занимают пространство резервные копии, см. раздел [{#T}](../concepts/backup.md).
-      
-  1. В блоке **База данных** укажите атрибуты БД:
+
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_database }}** укажите атрибуты БД:
 
       * Имя БД.
+
+        {% include [db-name-limits](../../_includes/mdb/mmg/note-info-db-name-limits.md) %}
+
       * Имя пользователя.
       * Пароль пользователя. Минимум 8 символов.
 
   
-  1. В блоке **Сетевые настройки** выберите:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_network }}** выберите:
 
       * Облачную сеть для размещения кластера.
       * Группы безопасности для сетевого трафика кластера. Может потребоваться дополнительная [настройка групп безопасности](connect/index.md#configuring-security-groups) для того, чтобы можно было подключаться к кластеру.
 
-          {% note info %}
 
-          {% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-          {% endnote %}
-
-
-  1. В блоке **Хосты** добавьте хосты БД, создаваемые вместе с кластером:
+  1. В блоке **{{ ui-key.yacloud.mdb.forms.section_host }}** добавьте хосты БД, создаваемые вместе с кластером:
 
      
-     * Нажмите кнопку **Добавить хост**.
+     * Нажмите кнопку **{{ ui-key.yacloud.mdb.forms.button_add-host }}**.
      * Выберите [зону доступности](../../overview/concepts/geo-scope.md).
      * Выберите [подсеть](../../vpc/concepts/network.md#subnet) в указанной зоне доступности. Если подсети нет, создайте ее.
-     * Если хост должен быть доступен снаружи {{ yandex-cloud }}, включите опцию **Публичный доступ**.
+     * Если хост должен быть доступен снаружи {{ yandex-cloud }}, включите опцию **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}**. Эту настройку нельзя изменить после создания хоста.
 
 
+          
      Чтобы обеспечить отказоустойчивость, для типов диска `local-ssd` и `network-ssd-nonreplicated` необходимо как минимум 3 хоста. Подробнее см. в разделе [Хранилище](../concepts/storage.md).
+
 
      По умолчанию хосты создаются в разных зонах доступности. См. подробнее об [управлении хостами](hosts.md).
   
@@ -85,7 +88,7 @@
 
       {% include [mmg-settings-dependence](../../_includes/mdb/mmg/note-info-settings-dependence.md) %}
 
-  1. Нажмите кнопку **Создать кластер**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
 
 - CLI
 
@@ -116,30 +119,53 @@
       
       ```bash
       {{ yc-mdb-mg }} cluster create \
-        --name <имя кластера> \
-        --environment=<окружение, prestable или production> \
-        --network-name <имя сети> \
-        --host zone-id=<зона доступности>,subnet-id=<идентификатор подсети> \
-        --mongod-resource-preset <класс хоста> \
-        --user name=<имя пользователя>,password=<пароль пользователя> \
-        --database name=<имя базы данных> \
-        --mongod-disk-type <network-hdd | network-ssd | local-ssd | network-ssd-nonreplicated> \
-        --mongod-disk-size <размер хранилища в гигабайтах> \
-        --deletion-protection=<защита от удаления кластера: true или false>
+        --name <имя_кластера> \
+        --environment=<окружение> \
+        --network-name <имя_сети> \
+        --host zone-id=<зона_доступности>,`
+              `subnet-id=<идентификатор_подсети>,`
+              `assign-public-ip=<публичный_доступ> \
+        --mongod-resource-preset <класс_хоста> \
+        --user name=<имя_пользователя>,password=<пароль_пользователя> \
+        --database name=<имя_БД> \
+        --mongod-disk-type <тип_диска> \
+        --mongod-disk-size <размер_хранилища_ГБ> \
+        --performance-diagnostics=<включить_диагностику> \
+        --deletion-protection=<защита_от_удаления>
       ```
 
       Идентификатор подсети `subnet-id` необходимо указывать, если в выбранной зоне доступности создано 2 и больше подсетей.
 
 
+      Где:
+
+      * `--environment` — окружение: `prestable` или `production`.
+
+      
+      * `--host` — параметры хоста:
+         * `zone-id` — [зона доступности](../../overview/concepts/geo-scope.md).
+         * `subnet-id` — [идентификатор подсети](../../vpc/concepts/network.md#subnet). Необходимо указывать, если в выбранной зоне доступности создано две или больше подсетей.
+         * `assign-public-ip` — доступность хоста из интернета по публичному IP-адресу: `true` или `false`.
+
+
+      * `--performance-diagnostics` — включить диагностику производительности кластера: `true` или `false`.
+      * `--deletion-protection` — защита от удаления кластера: `true` или `false`.
+
+      {% include [db-name-limits](../../_includes/mdb/mmg/note-info-db-name-limits.md) %}
+
       {% include [deletion-protection-limits-db](../../_includes/mdb/deletion-protection-limits-db.md) %}
+
+      {% note info %}
+
+      По умолчанию при создании кластера устанавливается режим [технического обслуживания](../concepts/maintenance.md) `anytime` — в любое время. Вы можете установить конкретное время обслуживания при [изменении настроек кластера](update.md#change-additional-settings).
+
+      {% endnote %}
 
 - {{ TF }}
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы создать кластер:
 
@@ -156,54 +182,71 @@
      
      
      ```hcl
-     resource "yandex_mdb_mongodb_cluster" "<имя кластера>" {
-       name                = "<имя кластера>"
-       environment         = "<окружение: PRESTABLE или PRODUCTION>"
-       network_id          = "<идентификатор сети>"
-       security_group_ids  = [ "<список групп безопасности>" ]
-       deletion_protection = <защита от удаления кластера: true или false>
+     resource "yandex_mdb_mongodb_cluster" "<имя_кластера>" {
+       name                = "<имя_кластера>"
+       environment         = "<окружение>"
+       network_id          = "<идентификатор_сети>"
+       security_group_ids  = [ "<список_идентификаторов_групп_безопасности>" ]
+       deletion_protection = <защита_от_удаления_кластера>
 
        cluster_config {
-         version = "<версия {{ MG }}: {{ versions.tf.str }}>"
+         version = "<версия_{{ MG }}>"
        }
 
        database {
-         name = "<имя базы данных>"
+         name = "<имя_БД>"
        }
 
        user {
-         name     = "<имя пользователя>"
-         password = "<пароль пользователя>"
+         name     = "<имя_пользователя>"
+         password = "<пароль_пользователя>"
          permission {
-           database_name = "<имя базы данных>"
-           roles         = [ "<список ролей пользователя>" ]
+           database_name = "<имя_БД>"
+           roles         = [ "<список_ролей_пользователя>" ]
          }
        }
 
        resources_mongod {
-         resource_preset_id = "<класс хоста>"
-         disk_type_id       = "<тип диска>"
-         disk_size          = <размер хранилища, ГБ>
+         resource_preset_id = "<класс_хоста>"
+         disk_type_id       = "<тип_диска>"
+         disk_size          = <размер_хранилища_ГБ>
        }
 
        host {
-         zone_id   = "<зона доступности>"
-         subnet_id = "<идентификатор подсети>"
+         zone_id          = "<зона_доступности>"
+         subnet_id        = "<идентификатор_подсети>"
+         assign_public_ip = <публичный_доступ>
        }
      }
 
-     resource "yandex_vpc_network" "<имя сети>" { name = "<имя сети>" }
+     resource "yandex_vpc_network" "<имя_сети>" { name = "<имя_сети>" }
 
-     resource "yandex_vpc_subnet" "<имя подсети>" {
-       name           = "<имя подсети>"
-       zone           = "<зона доступности>"
-       network_id     = "<идентификатор сети>"
+     resource "yandex_vpc_subnet" "<имя_подсети>" {
+       name           = "<имя_подсети>"
+       zone           = "<зона_доступности>"
+       network_id     = "<идентификатор_сети>"
        v4_cidr_blocks = ["<диапазон>"]
      }
      ```
 
 
 
+
+     Где:
+
+     * `environment` — окружение: `PRESTABLE` или `PRODUCTION`.
+
+     
+     * `host` — параметры хоста:
+       * `zone_id` — зона доступности.
+       * `subnet_id` — идентификатор подсети в выбранной зоне доступности.
+       * `assign_public_ip` — публичный доступ к хосту: `true` или `false`.
+
+
+     * `deletion_protection` — защита от удаления кластера: `true` или `false`.
+     * `version` — версия {{ MG }}: {{ versions.tf.str }}.
+
+     {% include [db-name-limits](../../_includes/mdb/mmg/note-info-db-name-limits.md) %}
 
      {% include [deletion-protection-limits-db](../../_includes/mdb/deletion-protection-limits-db.md) %}
 
@@ -219,7 +262,7 @@
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
-      После этого в указанном каталоге будут созданы все требуемые ресурсы, а в терминале отобразятся IP-адреса виртуальных машин. Проверить появление ресурсов и их настройки можно в [консоли управления]({{ link-console-main }}).
+      После этого в указанном каталоге будут созданы все требуемые ресурсы, а в терминале отобразятся [FQDN хостов](../concepts/network.md#hostname). Проверить появление ресурсов и их настройки можно в [консоли управления]({{ link-console-main }}).
 
       {% include [Terraform timeouts](../../_includes/mdb/mmg/terraform/timeouts.md) %}
 
@@ -239,6 +282,9 @@
 
 
     * Конфигурацию баз данных в одном или нескольких параметрах `databaseSpecs`.
+
+      {% include [db-name-limits](../../_includes/mdb/mmg/note-info-db-name-limits.md) %}
+
     * Настройки пользователей в одном или нескольких параметрах `userSpecs`.
     * Настройки защиты от удаления кластера в параметре `deletionProtection`.
 
@@ -271,7 +317,7 @@
   * В окружении `production`.
   * В сети `{{ network-name }}`.
   * В группе безопасности с идентификатором `{{ security-group }}`.
-  * С одним хостом класса `{{ host-class }}` в подсети `b0rcctk2rvtr8efcch64`, в зоне доступности `{{ region-id }}-a`.
+  * С одним хостом класса `{{ host-class }}` в подсети `b0rcctk2rvtr********`, в зоне доступности `{{ region-id }}-a`.
   * С хранилищем на сетевых SSD-дисках (`{{ disk-type-example }}`) размером 20 ГБ.
   * С одним пользователем, `user1`, с паролем `user1user1`.
   * С одной базой данных, `db1`.
@@ -288,7 +334,7 @@
     --network-name {{ network-name }} \
     --security-group-ids {{ security-group }} \
     --mongod-resource-preset {{ host-class }} \
-    --host zone-id={{ region-id }}-a,subnet-id=b0rcctk2rvtr8efcch64 \
+    --host zone-id={{ region-id }}-a,subnet-id=b0rcctk2rvtr******** \
     --mongod-disk-size 20 \
     --mongod-disk-type {{ disk-type-example }} \
     --user name=user1,password=user1user1 \
@@ -418,17 +464,51 @@
 * Класс хостов `MONGOINFRA` — `c3-c2-m4`.
 * Хранилище на сетевых SSD-дисках — `{{ disk-type-example }}`.
 * Размер хранилища — 10 ГБ.
-* Количество блоков `host` — четыре. Для каждого из них задается тип хоста: `mongod` или `mongoinfra`.
 
 Сетевые характеристики:
 
 * Сеть — `mynet`.
-* Группа безопасности — `mymg-sg`. Правила группы разрешают TCP-подключения к кластеру из интернета через порт `{{ port-mmg }}`.
+* Группа безопасности — `mymg-sg` с идентификатором `{{ security-group }}`. В {{ TF }} группа создается с правилом, которое разрешает TCP-подключения к кластеру из интернета через порт `{{ port-mmg }}`.
+
 * Подсеть — `mysubnet`. 
 * Зона доступности — `{{ region-id }}-a`.
-* Диапазон — `10.5.0.0/24`.
+* Диапазон — `10.5.0.0/24` (только для {{ TF }}).
 
 {% list tabs %}
+
+- CLI
+
+  Выполните команду, чтобы создать кластер {{ mmg-name }} со стандартным шардированием:
+
+  ```bash
+  {{ yc-mdb-mg }} cluster create \
+     --name mymg \
+     --environment production \
+     --deletion-protection=true \
+     --mongodb-version {{ versions.cli.latest }} \
+     --database name=db1 \
+     --user name=user1,password=user1user1 \
+     --mongod-resource-preset {{ host-class }} \
+     --mongod-disk-type {{ disk-type-example }} \
+     --mongod-disk-size 10 \
+     --host type=mongod,`
+       `zone-id={{ region-id }}-a,`
+       `subnet-name=mysubnet \
+     --mongoinfra-resource-preset c3-c2-m4 \
+     --mongoinfra-disk-type {{ disk-type-example }} \
+     --mongoinfra-disk-size 10 \
+     --host type=mongoinfra,`
+       `zone-id={{ region-id }}-a,`
+       `subnet-name=mysubnet \
+     --host type=mongoinfra,`
+       `zone-id={{ region-id }}-a,`
+       `subnet-name=mysubnet \
+     --host type=mongoinfra,`
+       `zone-id={{ region-id }}-a,`
+       `subnet-name=mysubnet \
+     --network-name mynet \
+     --security-group-ids {{ security-group }}
+  ```
 
 - {{ TF }}
 
@@ -540,17 +620,59 @@
 * Класс хостов — `{{ host-class }}`.
 * Хранилище на сетевых SSD-дисках — `{{ disk-type-example }}`.
 * Размер хранилища — 10 ГБ.
-* Количество блоков `host` — шесть. Для каждого из них задается тип хоста: `mongod`, `mongos` или `mongocfg`.
 
 Сетевые характеристики:
 
 * Сеть — `mynet`.
-* Группа безопасности — `mymg-sg`. Правила группы разрешают TCP-подключения к кластеру из интернета через порт `{{ port-mmg }}`.
+* Группа безопасности — `mymg-sg` с идентификатором `{{ security-group }}`. В {{ TF }} группа создается с правилом, которое разрешает TCP-подключения к кластеру из интернета через порт `{{ port-mmg }}`.
 * Подсеть — `mysubnet`. 
 * Зона доступности — `{{ region-id }}-a`.
-* Диапазон — `10.5.0.0/24`.
+* Диапазон — `10.5.0.0/24` (только для {{ TF }}).
 
 {% list tabs %}
+
+- CLI
+
+  Выполните команду, чтобы создать кластер {{ mmg-name }} с расширенным шардированием:
+
+  ```bash
+  {{ yc-mdb-mg }} cluster create \
+    --name mymg \
+    --environment production \
+    --deletion-protection=true \
+    --mongodb-version {{ versions.cli.latest }} \
+    --database name=db1 \
+    --user name=user1,password=user1user1 \
+    --mongod-resource-preset {{ host-class }} \
+    --mongod-disk-type {{ disk-type-example }} \
+    --mongod-disk-size 10 \
+    --host type=mongod,`
+      `zone-id={{ region-id }}-a,`
+      `subnet-name=mysubnet \
+    --mongos-resource-preset {{ host-class }} \
+    --mongos-disk-type {{ disk-type-example }} \
+    --mongos-disk-size 10 \
+    --host type=mongos,`
+      `zone-id={{ region-id }}-a,`
+      `subnet-name=mysubnet \
+    --host type=mongos,`
+      `zone-id={{ region-id }}-a,`
+      `subnet-name=mysubnet \
+    --mongocfg-resource-preset {{ host-class }} \
+    --mongocfg-disk-type {{ disk-type-example }} \
+    --mongocfg-disk-size 10 \
+    --host type=mongocfg,`
+      `zone-id={{ region-id }}-a,`
+      `subnet-name=mysubnet \
+    --host type=mongocfg,`
+      `zone-id={{ region-id }}-a,`
+      `subnet-name=mysubnet \
+    --host type=mongocfg,`
+      `zone-id={{ region-id }}-a,`
+      `subnet-name=mysubnet \
+    --network-name mynet \
+    --security-group-ids {{ security-group }}
+  ```
 
 - {{ TF }}
 

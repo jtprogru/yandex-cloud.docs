@@ -28,6 +28,8 @@ To clear a bucket and not [pay](../../pricing.md) for storage:
             --max-items 1000)"
       ```
 
+      You can also use `--max-keys` instead of `--max-items`.
+
       Result:
 
       ```json
@@ -35,11 +37,11 @@ To clear a bucket and not [pay](../../pricing.md) for storage:
           "Deleted": [
               {
                   "Key": "object_000",
-                  "VersionId": "0005CDD3521954A6"
+                  "VersionId": "0005CDD3********"
               },
               {
                   "Key": "object_001",
-                  "VersionId": "0005CDD3523B6ADB"
+                  "VersionId": "0005CDD3********"
               },
               ...
           ]
@@ -62,6 +64,8 @@ To clear a bucket and not [pay](../../pricing.md) for storage:
             --max-items 1000)"
       ```
 
+      You can also use `--max-keys` instead of `--max-items`.
+
       Result:
 
       ```json
@@ -70,12 +74,12 @@ To clear a bucket and not [pay](../../pricing.md) for storage:
               {
                   "Key": "object_034",
                   "DeleteMarker": true,
-                  "DeleteMarkerVersionId": "0005CDD35274A467"
+                  "DeleteMarkerVersionId": "0005CDD3********"
               },
               {
                   "Key": "object_057",
                   "DeleteMarker": true,
-                  "DeleteMarkerVersionId": "0005CDD3528B1BC3"
+                  "DeleteMarkerVersionId": "0005CDD3********"
               },
               ...
           ]

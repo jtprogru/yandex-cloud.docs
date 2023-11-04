@@ -10,9 +10,9 @@
 
 - Консоль управления
 
-    1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ mmg-name }}**.
-    1. Нажмите на имя нужного кластера и выберите вкладку **Хосты**.
-    1. Нажмите на значок ![options](../../_assets/horizontal-ellipsis.svg) в строке `PRIMARY` хоста и выберите пункт **Сменить мастер**.
+    1. Перейдите на [страницу каталога]({{ link-console-main }}) и выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+    1. Нажмите на имя нужного кластера и выберите вкладку **{{ ui-key.yacloud.mongodb.cluster.switch_hosts }}**.
+    1. Нажмите на значок ![options](../../_assets/horizontal-ellipsis.svg) в строке `PRIMARY` хоста и выберите пункт **{{ ui-key.yacloud.mongodb.hosts.action_stepdown-host }}**.
 
 - CLI
 
@@ -23,8 +23,8 @@
     Чтобы переключить первичную реплику в кластере, выполните команду:
 
     ```bash
-    {{ yc-mdb-mg }} hosts stepdown <имя текущей первичной реплики> \
-       --name=<имя кластера>
+    {{ yc-mdb-mg }} hosts stepdown <имя_текущей_первичной_реплики> \
+       --name=<имя_кластера>
     ```
 
     Имя первичной реплики для нужного шарда можно получить со [списком хостов в кластере](hosts.md#list), имя кластера — со [списком кластеров в каталоге](cluster-list.md#list-clusters).

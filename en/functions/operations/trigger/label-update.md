@@ -1,3 +1,8 @@
+---
+title: "Updating a trigger label in {{ sf-name }}"
+description: "Follow this guide to update a trigger label in {{ sf-name }}."
+---
+
 # Updating a trigger label in {{ sf-name }}
 
 {% list tabs %}
@@ -23,24 +28,25 @@
    Result:
 
    ```text
-   id: dd0gj5tsj2**********
-   folder_id: aoek49ghmk**********
-   created_at: "2019-08-28T12:26:25.675Z"
+   id: a1s9q2li6t**********
+   folder_id: b1g9hv2loa**********
+   created_at: "2023-08-01T12:36:14.321Z"
    name: my-trigger
-   description: My YMQ trigger.
-   labels:
-     new_labels: my-beta-trigger
+   description: Trigger for uploaded objects
+   labels
+     new_label: my-beta-trigger
    rule:
-     message_queue:
-       queue_id: yrn:yc:ymq:{{ region-id }}:aoek49ghmk**********:my-mq
-       service_account_id: bfbqqeo6jk**********
+     object_storage:
+       event_type:
+         - OBJECT_STORAGE_EVENT_TYPE_CREATE_OBJECT
+       bucket_id: **********
        batch_settings:
          size: "10"
          cutoff: 10s
        invoke_function:
-         function_id: b09e5lu91t**********
+         function_id: d4e5muirrt**********
          function_tag: $latest
-         service_account_id: bfbqqeo6jk**********
+         service_account_id: ajek0fou8e**********
    status: ACTIVE
    ```
 
@@ -93,7 +99,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 

@@ -1,3 +1,8 @@
+---
+title: "Updating a container name"
+description: "Follow this guide to update a container name."
+---
+
 # Updating a container name
 
 {% list tabs %}
@@ -5,14 +10,14 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder with your container.
-   1. Select **{{ serverless-containers-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
    1. Select the container.
-   1. Click **Edit**.
-   1. Rename the container The name format is as follows:
+   1. Click **{{ ui-key.yacloud.common.edit }}**.
+   1. Rename the container. The name format is as follows:
 
       {% include [name-format](../../_includes/name-format.md) %}
 
-   1. Click **Save**.
+   1. Click **{{ ui-key.yacloud.common.save }}**.
 
 - CLI
 
@@ -38,7 +43,7 @@
    created_at: "2021-08-17T07:53:10.219Z"
    name: my-beta-container
    description: my beta container description
-   url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
+   url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
    status: ACTIVE
    ```
 
@@ -46,7 +51,7 @@
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see the documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To update the name of a container created using {{ TF }}:
 
@@ -84,7 +89,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
       ```
@@ -93,7 +98,7 @@
 
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-   You can verify the change to the container using the [management console]({{ link-console-main }}) or the following [CLI](../../cli/) command:
+   You can check the container update using the [management console]({{ link-console-main }}) or this [CLI](../../cli/) command:
 
    ```
    yc serverless container get <container_ID>|<container_name>

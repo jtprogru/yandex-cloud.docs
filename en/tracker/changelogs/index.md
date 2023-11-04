@@ -1,69 +1,81 @@
-# {{ tracker-full-name }} revision history for April 2023
+# {{ tracker-full-name }} revision history for September 2023
 
 * [Updates](#top-news)
 * [Fixes and improvements](#fixes)
 
 ## Updates {#top-news}
 
+### New settings for queue access {#new-queue-access}
 
-### Choosing a color for issues on a project's Gantt chart {#issues-colors}
+The new access rights allow you to flexibly manage your team's queue permissions: from viewing, editing, or creating tasks, to editing queue settings. Moreover, you can now restrict access to the queue. You can configure these permissions both for individual users and groups of users.
 
-A [Gantt chart for projects](../gantt/project.md) now allows you to set a color for issues depending on the selected parameter (queue, status, etc.). To do this, click **Chart settings** on the Gantt chart page and select **by issue parameters** under **Issue color**.
+You still can override access rights in tasks using components and assign rights depending on roles in the task. Now these settings can be accessed from the new interface and are easier to use.
 
-You can edit the list of values by adding and deleting values and choosing their color.
+To manage access, go to the **{{ ui-key.startrek.ui_components_page-queue-admin_QueueAdminPageContent.menu-item-permissions }}** tab in queue settings. On this page, you can also view queue access rights for any user or user group.
 
-If an issue has two or more color components, the resulting color will be selected from the list of values by priority.
+For more details on setting up access rights, see [{#T}](../manager/queue-access.md).
 
-### Retaining settings for a Gantt chart created based on a filter {#save-the-columns}
+### Advanced time tracking {#extended-spent-time}
 
-The settings of a [Gantt chart created based on a filter](../gantt/search.md) and issue parameters in the list to the left of the chart persist and are not reset when you refresh a page.
+Now you can easier track spent time thanks to [advanced time tracking](../user/time-spent.md#extended-spent-time). This feature allows you to:
 
-### Creating an issue from a comment {#task-from-comment}
+* Specify the spent time directly in the task right-hand panel.
+* Edit and delete spent time records without using the API.
+* Track how much time is left to complete a task.
+* Use a convenient time presentation form.
+* Specify the spent time without measurement units.
 
-The ![](../../_assets/tracker/svg/actions.svg) **Comment actions** menu now contains an item named **Create issue from comment**. This item will create a linked issue with the comment text in its description. You can edit the description, if required.
+Advanced time tracking can be enabled and configured separately for each queue. For more information, see [{#T}](../manager/queue-spent-time.md).
 
-### Limiting the number of issues per column {#column-limits}
+### Integrations with forms within {{ tracker-name }} {#forms-integrations}
 
-On [new boards](../manager/agile-new.md), you can set a limit on the number of issues per column. The number of issues and the set limit are displayed next to the column name. If the number of issues exceeds the limit, the column color turns yellow; this will still allow you to continue adding issues.
+In the queue integration settings, you can now create and integrate [{{ forms-full-name }}](../../forms/index.yaml) forms. To do this:
 
-You can set a limit in the column settings by selecting ![](../../_assets/tracker/svg/actions.svg) → **Edit** → **Maximum number of issues**.
+1. In the settings for the queue for which you want to create or integrate the form, select **{{ ui-key.startrek.blocks-desktop_b-page-queue-admin.tab-title--integrations }}**.
 
-![](../../_assets/tracker/changelogs/column-limits.png)
+1. Under **{{ ui-key.startrek.ui_components_queue-admin-tab-integrations_IntegrationForms.title }}**, click **{{ ui-key.startrek.ui_components_queue-admin-tab-integrations_IntegrationForms.settings-button-text }}**. On this page, you can work with forms:
 
-### Setting up a transition from _Any status_ {#meta-transition}
+   * Create new forms and add existing ones. To do this, click **{{ ui-key.startrek.ui_components_page-queue-admin_queue-admin-tab-integrations-forms_components_FormsMenu.add-form }}** in the upper-right corner and select **{{ ui-key.startrek.ui_components_page-queue-admin_queue-admin-tab-integrations-forms_components_FormsMenu.add-form }}** or **{{ ui-key.startrek.ui_components_page-queue-admin_queue-admin-tab-integrations-forms_components_FormsMenu.create-new }}**.
 
-The new workflow editor has the **Allow transitions from any status** setting for statuses. In this case, a diagram gets a status called **Any status**. Previously, you could not edit a transition from **Any status**. Now, you can set up its automation, criteria, and transition screens similarly to any other transition on a diagram.
+   * Edit and delete previously added forms. To do this, in the list of forms, click ![](../../_assets/tracker/svg/actions.svg) to the right of the record of interest and select an action.
 
-### Canceling the last action in the workflow editor {#hot-keys}
+### Portfolios {#portfolios}
 
-The workflow editor allows you to use keyboard shortcuts to cancel and restore the last action.
-* Windows: **Ctrl** + **Z** to cancel an action and **Ctrl** + **Shift** + **Z** to restore the canceled action.
-* Mac OS: **⌘** + **Z** to cancel an action and **⌘** + **Shift** + **Z** to restore the canceled action.
+{{ tracker-name }} now provides portfolios where you can combine [projects](../manager/project-new.md) and other portfolios. Portfolios help you structure and manage your project activities.
+
+Portfolios are available in the [section]({{ link-tracker }}pages/projects/list) ![](../../_assets/tracker/svg/project.svg)&nbsp;**{{ ui-key.startrek.blocks-desktop_b-queues-info.projects }}**. There you can create portfolios, populate them with projects and other portfolios, update statuses, and track progress. With portfolios, you can also use Gantt charts to easily track and adjust your project schedule.
+
+For more information on portfolios, see [{#T}](../manager/portfolio.md).
+
+### Project milestones {#milestones}
+
+Added a new [issue type](../manager/add-ticket-type.md): ![](../../_assets/tracker/svg/milestone.svg) **{{ ui-key.startrek.ui_components_issues_create-issue-popup_NewIssueForm.milestone-type }}**. You can use it to track important project development stages. Note that milestones have no **{{ ui-key.startrek.ui_components_Project.sidebar-param-title--startDate }}** and **{{ ui-key.startrek.ui_components_Project.sidebar-param-title--endDate }}** fields. They only have the **{{ ui-key.startrek.components_FormCreateIssue.field--dueDate }}** field.
+
+Project milestones in {{ tracker-name }} are displayed in the **{{ ui-key.startrek.ui_components_projects_HeaderTabs.description-tab }}** tab under the project description. On the [project Gantt chart](../gantt/project.md), milestones are shown as a diamond. Now you can add milestones to your project on these pages.
+
+To use milestones in a queue, add them to the [queue workflow](../manager/add-workflow.md).
+
+For more information on milestones, see [{#T}](../manager/milestones.md).
+
+### Visual workflow editor leaves beta {#new-default-workflow-page}
+
+The new [queue workflow](../manager/add-workflow.md) editor has left beta and is now available by default. Because of this, we have now removed the **Task Types** section from queue settings: all these options are now available under **Workflows**. To open workflows:
+
+1. Navigate to the required queue's settings.
+1. Select the **{{ ui-key.startrek.ui_components_page-queue-admin_QueueAdminPageContent.menu-item-workflows }}** tab.
+
+### Copying workflows from other queues {#copy-workflow}
+
+In the workflow editor, you can now copy workflows from one queue and use them in another queue. To do this:
+
+1. Navigate to the settings of the queue for which you want to set up a workflow.
+1. Select the **{{ ui-key.startrek.ui_components_page-queue-admin_QueueAdminPageContent.menu-item-workflows }}** tab.
+1. In the top-right corner, tap ![](../../_assets/tracker/svg/copy-workflow.svg).
+1. In the pop-up window, select the queue and its workflow you want to copy, and enter the name for the new workflow.
+1. Click **{{ ui-key.startrek.ui_components_queue-admin-tab-workflows_CopyWorkflowDialog.action-copy }}**.
 
 ## Fixes and improvements {#fixes}
 
-### Issue filter for a Gantt chart created based on a list of projects
+### Fixed transition display on the workflow page {#fix-workflow-transition}
 
-On a [Gantt chart for a list of projects](../gantt/list-of-projects.md), you can set up an additional filter by issue.
-
-![](../../_assets/tracker/changelogs/tasks-filter.png =690x112)
-
-### Invitations to comments in projects {#bell-summons}
-
-You can invite users to comment on projects. Notifications of invitations are sent to a user's email address.
-
-### Choosing a color for an issue status {#statuses-color}
-
-An issue status is additionally highlighted with a color, depending on the status type:
-* ![](../../_assets/tracker/changelogs/status-1-open.png)
-* ![](../../_assets/tracker/changelogs/status-2-in-progress.png)
-* ![](../../_assets/tracker/changelogs/status-3-needs-info.png)
-* ![](../../_assets/tracker/changelogs/status-4-solved.png)
-* ![](../../_assets/tracker/changelogs/status-5-closed.png)
-
-### Updating planning poker on boards {#new-poker-ui}
-
-On [new boards](../manager/agile-new.md), **planning poker** opens to the full height of a board and you can drag an issue to any part of the opened tab.
-It is now more convenient to estimate issues: the drop-down list is replaced with buttons that show estimates, a counter of users who voted for issues, and a button to view the estimates.
-
-![](../../_assets/tracker/changelogs/poker-estimate-buttons.png)
+If you set a status transition into itself in the workflow editor, the transition line now does not cross the status block and displays correctly.

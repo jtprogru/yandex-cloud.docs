@@ -1,3 +1,8 @@
+---
+title: "How to create a {{ RD }} cluster"
+description: "Use this tutorial to create a {{ RD }} cluster with a single or multiple DB hosts."
+---
+
 # Creating {{ RD }} clusters
 
 A {{ RD }} cluster consists of one or more database hosts you can configure replication between. Replication is enabled by default in any cluster consisting of more than one host: the master host accepts write requests and asynchronously duplicates changes on replicas.
@@ -17,32 +22,33 @@ For more about {{ mrd-name }} cluster structure, see [{#T}](../concepts/index.md
 
 - Management console
 
+
    1. In the [management console]({{ link-console-main }}), go to the folder to create a DB cluster in.
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-redis }}**.
    1. Click **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
    1. Under **{{ ui-key.yacloud.mdb.forms.section_base }}**:
 
-      * Enter a name for the cluster in the **{{ ui-key.yacloud.mdb.forms.base_field_name }}** field. It must be unique within the folder.
+      * Enter a name for the cluster in the **{{ ui-key.yacloud.mdb.forms.base_field_name }}** field. The cluster name must be unique within the folder.
       * (Optional) Add a cluster description.
       * Select the environment where you want to create the cluster (you cannot change the environment once the cluster is created):
          * `PRODUCTION`: For stable versions of your apps.
-         * `PRESTABLE`: For testing, including the {{ mrd-short-name }} service itself. The prestable environment is updated first with new features, improvements, and bug fixes. However, not every update ensures backward compatibility.
+         * `PRESTABLE`: For testing purposes. The prestable environment is similar to the production environment and is also covered by the SLA. However, it is the first to receive new functionalities, improvements, and bug fixes. In the prestable environment, you can test compatibility of new versions with your application.
       * Select the DBMS version.
       * If necessary, enable [cluster sharding](../concepts/sharding.md).
 
-           {% note warning %}
+         {% note warning %}
 
-           You can only enable sharding when you create a new cluster. You can't shard an existing non-sharded cluster or disable sharding for a cluster that it's enabled for.
+         You can only enable sharding when you create a new cluster. You cannot shard an existing non-sharded cluster or disable sharding for a cluster that it is enabled for.
 
-           {% endnote %}
+         {% endnote %}
 
-       * If required, enable support for encrypted SSL connections to the cluster.
+      * If required, enable support for encrypted SSL connections to the cluster.
 
-           {% note warning %}
+         {% note warning %}
 
-           You can only enable connection encryption when creating a new cluster. You can't disable encryption for a cluster that it's enabled for.
+         You can only enable connection encryption when creating a new cluster. You cannot disable encryption for a cluster that it is enabled for.
 
-           {% endnote %}
+         {% endnote %}
 
    1. Under **{{ ui-key.yacloud.mdb.forms.section_resource }}**:
 
@@ -60,6 +66,8 @@ For more about {{ mrd-name }} cluster structure, see [{#T}](../concepts/index.md
          {% include [storages-step-settings-no-hdd](../../_includes/mdb/settings-storages-no-hdd.md) %}
 
 
+
+
       * Select the storage size. The available storage size is limited by [quotas and limits](../concepts/limits.md#mrd-limits).
 
    1. Under **{{ ui-key.yacloud.mdb.forms.section_config }}**, in the **{{ ui-key.yacloud.mdb.forms.config_field_password }}** field, set the user password.
@@ -68,10 +76,8 @@ For more about {{ mrd-name }} cluster structure, see [{#T}](../concepts/index.md
 
    
    1. Under **{{ ui-key.yacloud.mdb.forms.section_network }}**, select:
-       * Cloud network for the cluster.
-       * Security groups for the cluster's network traffic. You may also need to [set up security groups](connect/index.md#configuring-security-groups) to connect to the cluster.
-
-           {% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
+      * Cloud network for the cluster.
+      * Security groups for the cluster network traffic. You may also need to [set up security groups](connect/index.md#configuring-security-groups) to connect to the cluster.
 
 
    1. Under **{{ ui-key.yacloud.mdb.forms.section_host }}**:
@@ -117,7 +123,7 @@ For more about {{ mrd-name }} cluster structure, see [{#T}](../concepts/index.md
       {{ yc-mdb-rd }} cluster create --help
       ```
 
-   1. When you create a cluster from the CLI, you can't explicitly specify the host type and amount of RAM. Choose the applicable [host class](../concepts/instance-types.md) instead. To see what host classes are available, run the command:
+   1. When you create a cluster from the CLI, you cannot explicitly specify the host type and amount of RAM. Choose the applicable [host class](../concepts/instance-types.md) instead. To see what host classes are available, run the command:
 
       ```bash
       {{ yc-mdb-rd }} resource-preset list
@@ -151,13 +157,17 @@ For more about {{ mrd-name }} cluster structure, see [{#T}](../concepts/index.md
 
       {% include [deletion-protection-limits-db](../../_includes/mdb/deletion-protection-limits-db.md) %}
 
+      {% note info %}
+
+      When creating a cluster, the `anytime` [maintenance](../concepts/maintenance.md) mode is set by default. You can set a specific maintenance period when [updating the cluster settings](update.md#change-additional-settings).
+
+      {% endnote %}
+
 - {{ TF }}
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   
-   If you do not have {{ TF }} yet, [install it and configure the provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To create a cluster:
 
@@ -231,7 +241,7 @@ For more about {{ mrd-name }} cluster structure, see [{#T}](../concepts/index.md
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
-      After this, all required resources will be created in the specified folder and the IP addresses of the VMs will be displayed in the terminal. You can check that the resources are there and their settings are correct using the [management console]({{ link-console-main }}).
+      After this, all required resources will be created in the specified folder, and the [FQDNs of the cluster hosts](../concepts/network.md#hostname) will be displayed in the terminal. You can check the new resources and their configuration using the [management console]({{ link-console-main }}).
 
       {% include [Terraform timeouts](../../_includes/mdb/mrd/terraform/timeouts.md) %}
 
@@ -263,10 +273,10 @@ If you specified security group IDs when creating a cluster, you may also need t
 
    To create a cluster with a single host, provide a single `--host` parameter.
 
-   Create a {{ mrd-name }} cluster with test characteristics:
+   Create a {{ mrd-name }} cluster with the following test characteristics:
 
-   * Named `myredis`.
-   * Version `{{ versions.cli.latest }}`.
+   * Name: `myredis`.
+   * Version: `{{ versions.cli.latest }}`.
    * Environment `production`.
    * Network `default`.
    * A single `hm1.nano`-class host in the `b0rcctk2rvtr8efcch64` subnet in the `{{ region-id }}-a` availability zone and security group with ID `{{ security-group }}` with public access and a [host priority](../concepts/replication.md#master-failover) of `50`.
@@ -307,12 +317,12 @@ If you specified security group IDs when creating a cluster, you may also need t
    * New network `mynet`.
    * A single `{{ host-class }}`-class host in a new subnet called `mysubnet` in the `{{ region-id }}-a` availability zone with public access and a [host priority](../concepts/replication.md#master-failover) of `50`. The `mysubnet` subnet will have the `10.5.0.0/24` range.
    * In the new `redis-sg` security group allowing connections through port `{{ port-mrd-tls }}` from any addresses in the `mysubnet` subnet.
-   * With SSL support.
-   * With 16 GB of SSD network storage (`{{ disk-type-example }}`).
-   * With the `user1user1` password.
-   * With protection against accidental cluster deletion.
+   * SSL support: Enabled
+   * Network SSD storage (`{{ disk-type-example }}`): 16 GB
+   * Password: `user1user1`
+   * Protection against accidental cluster deletion: Enabled
 
-   The configuration file for the cluster looks like this:
+   The configuration file for this cluster is as follows:
 
    
    
@@ -386,23 +396,23 @@ If you specified security group IDs when creating a cluster, you may also need t
 
    Create a [sharded](../concepts/sharding.md) {{ mgp-name }} cluster with test characteristics:
 
-   * Named `myredis`.
-   * Version `{{ versions.tf.latest }}`.
-   * Environment `PRODUCTION`.
-   * Cloud with the `{{ tf-cloud-id }}` ID.
-   * Folder with the `{{ tf-folder-id }}` ID.
-   * New network `mynet`.
-   * With three subnets in the `mynet` network, one in each availability zone:
+   * Name: `myredis`
+   * Version: `{{ versions.tf.latest }}`
+   * Environment: `PRODUCTION`
+   * Cloud ID: `{{ tf-cloud-id }}`.
+   * Folder ID: `{{ tf-folder-id }}`.
+   * New network: `mynet`.
+   * Three subnets in the `mynet` network, one in each availability zone:
       * `subnet-a` with the `10.1.0.0/24` range.
       * `subnet-b` with the `10.2.0.0/24` range.
       * `subnet-c` with the `10.3.0.0/24` range.
-   * With three hosts of the `{{ host-class }}` class, one in each subnet.
-   * In the new `redis-sg` security group allowing connections through ports `{{ port-mrd }}` and `{{ port-mrd-sentinel }}` ([Redis Sentinel](./connect/index.md)) from any subnet address.
-   * With 16 GB of SSD network storage (`{{ disk-type-example }}`).
-   * With the `user1user1` password.
-   * With protection against accidental cluster deletion.
+   * Three `{{ host-class }}` hosts, one in each subnet.
+  * In the new `redis-sg` security group allowing connections through ports `{{ port-mrd }}` and `{{ port-mrd-sentinel }}` ([Redis Sentinel](./connect/index.md)) from any subnet address.
+   * Network SSD storage (`{{ disk-type-example }}`): 16 GB.
+   * Password: `user1user1`.
+   * Protection against accidental cluster deletion: Enabled
 
-   The configuration file for the cluster looks like this:
+   The configuration file for this cluster is as follows:
 
    
    

@@ -1,9 +1,9 @@
 ---
 title: "How to configure a {{ MY }} source endpoint in {{ data-transfer-full-name }}"
-description: "In this tutorial, you'll learn how to set up a {{ MY }} source endpoint in {{ data-transfer-full-name }}."
+description: "In this tutorial, you will learn how to set up a {{ MY }} source endpoint in {{ data-transfer-full-name }}."
 ---
 
-# Configuring a {{ MY }} source endpoint
+# Configuring {{ MY }} source endpoints
 
 When [creating](../index.md#create) or [editing](../index.md#update) an endpoint, you can define:
 
@@ -11,6 +11,14 @@ When [creating](../index.md#create) or [editing](../index.md#update) an endpoint
 * [Additional parameters](#additional-settings).
 
 ## {{ mmy-name }} cluster {#managed-service}
+
+
+{% note warning %}
+
+To create or edit an endpoint of a managed database, you need the [`{{ roles.mmy.viewer }}` role](../../../../managed-mysql/security/index.md#mmy-viewer) or the primitive [`viewer` role](../../../../iam/concepts/access-control/roles.md#viewer) issued for the folder hosting a cluster of this managed database.
+
+{% endnote %}
+
 
 Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. Available only for clusters deployed in [{{ mmy-full-name }}](../../../../managed-mysql/).
 
@@ -36,20 +44,20 @@ Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. 
 
    
    ```hcl
-   resource "yandex_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-     name = "<endpoint name>"
+   resource "yandex_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+     name = "<endpoint_name>"
      settings {
        mysql_source {
-         security_groups = [ "list of security group IDs" ]
+         security_groups = ["<list_of_security_group_IDs>"]
          connection {
-           mdb_cluster_id = "<{{ mmy-name }} cluster ID>"
+           mdb_cluster_id = "<cluster_ID>"
          }
-         database = "<name of database being transferred>"
-         user     = "<username for connection>"
+         database = "<migrated_database_name>"
+         user     = "<username_for_connection>"
          password {
-           raw = "<user password>"
+           raw = "<user_password>"
          }
-         <advanced endpoint settings>
+         <additional_endpoint_settings>
        }
      }
    }
@@ -90,23 +98,23 @@ For OnPremise, all fields are filled in manually.
 
    
    ```hcl
-   resource "yandex_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-     name = "<endpoint name>"
+   resource "yandex_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+     name = "<endpoint_name>"
      settings {
        mysql_source {
-         security_groups = [ "list of security group IDs" ]
+         security_groups = ["<list_of_security_group_IDs>"]
          connection {
            on_premise {
-             hosts = ["<host list>"]
-             port  = <connection port>
+             hosts = ["<list_of_hosts>"]
+             port  = <port_for_connection>
            }
          }
-         database = "<name of database being transferred>"
-         user     = "<username for connection>"
+         database = "<migrated_database_name>"
+         user     = "<username_for_connection>"
          password {
-           raw = "<user password>"
+           raw = "<user_password>"
          }
-         <advanced endpoint settings>
+         <additional_endpoint_settings>
        }
      }
    }
@@ -145,7 +153,7 @@ For OnPremise, all fields are filled in manually.
 
       {% include [Description for Included tables](../../../../_includes/data-transfer/fields/description-included-tables.md) %}
 
-   * `--exclude-table-regex`: Blacklist of tables. Data from tables on this list will not be transferred. This option is specified using regular expressions.
+   * `--exclude-table-regex`: List of excluded tables. Data from the listed tables will not be transferred. This option is specified using regular expressions.
 
    * `--timezone`: DB time zone, specified as an [IANA Time Zone Database](https://www.iana.org/time-zones) identifier. Defaults to UTC+0.
 
@@ -181,7 +189,7 @@ For OnPremise, all fields are filled in manually.
 
       {% include [Description for Included tables](../../../../_includes/data-transfer/fields/description-included-tables.md) %}
 
-   * `excludeTablesRegex`: Blacklist of tables. Data from tables on this list will not be transferred. This option is specified using regular expressions.
+   * `excludeTablesRegex`: List of excluded tables. Data from the listed tables will not be transferred. This option is specified using regular expressions.
 
    * `timezone`: DB time zone, specified as an [IANA Time Zone Database](https://www.iana.org/time-zones) identifier. Defaults to UTC+0.
 
@@ -205,4 +213,10 @@ During a transfer, the database schema is transferred from the source to the tar
 
 ## Known limitations {#known-limitations}
 
-If you are setting up a transfer from a {{ MY }} cluster, use the cluster master server. During its operation, the transfer creates service tables in the source database. Therefore, you can't use a {{ MY }} replica as a source, because it is read-only.
+If you are setting up a transfer from a {{ MY }} cluster, use the cluster master server. During its operation, the transfer creates service tables in the source database. Therefore, you cannot use a {{ MY }} replica as a source, because it is read-only.
+
+If you are setting up a transfer from a {{ MY }} cluster to a {{ CH }} cluster, consider the way the data of [date and time types]({{ my.docs }}/refman/8.0/en/date-and-time-types.html) gets transferred:
+
+* Data of the `TIME` type is transferred as strings with the source and target time zones ignored.
+* When transferring data of the `TIMESTAMP` type, the time zone set in the {{ MY }} source settings or [advanced endpoint settings](#additional-settings) is used. For more information, see the [{{ MY }} documentation]({{ my.docs }}/refman/8.0/en/datetime.html).
+* The source endpoint assigns the UTC+0 time zone to data of the `DATETIME` type.

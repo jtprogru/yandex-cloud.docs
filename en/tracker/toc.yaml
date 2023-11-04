@@ -7,6 +7,8 @@ items:
         href: enable-tracker.md
       - name: Logging in to Yandex Tracker
         href: user/login.md
+      - name: User types
+        href: user-types.md
       - name: Managing users
         href: add-users.md
       - name: Configuring access to Yandex Tracker
@@ -27,7 +29,7 @@ items:
             href: user/personal.md
       - name: Migrating to Yandex Tracker
         href: import.md
-      - name: Disabling paid services
+      - name: Disabling Yandex Tracker
         href: disable-tracker.md
   - name: Tutorials
     items:
@@ -69,8 +71,28 @@ items:
             href: support-process-dashboards.md
           - name: Configuring integration with third-party platforms
             href: support-process-integration.md
+      - name: Setting up Yandex Tracker for HR
+        items:
+          - name: Overview
+            href: hr-process.md
+          - name: Creating an HR queue
+            href: hr-process-basic-queue.md
+          - name: Setting up a form for creating standard issues
+            href: hr-process-vacancy-queue.md
+          - name: Enabling notifications by email
+            href: hr-process-candidate-queue.md
+          - name: Setting up automatic issue creation
+            href: hr-process-employment-queue.md
+          - name: Automating routine actions in issues
+            href: hr-process-probation-queue.md
+          - name: Setting up regular reminders
+            href: hr-process-vacations-queue.md
+          - name: Adding a feedback form
+            href: hr-process-general-queue.md
       - name: Visualizing data with {{ datalens-name }}
         href: tutorials/visualisation-in-datalens.md
+      - name: Integrating {{ tracker-name }} with {{ sf-short-name }}
+        href: tutorials/tracker-cloud-function.md
   - name: Concepts
     items:
       - name: Service overview
@@ -85,7 +107,7 @@ items:
     items:
       - name: Overview
         href: queue-intro.md
-      - name: Create a queue
+      - name: Creating a queue
         href: manager/create-queue.md
       - name: Queue templates
         href: manager/workflows.md
@@ -93,35 +115,39 @@ items:
         href: user/queue.md
       - name: Changing basic queue settings
         href: manager/edit-queue-general.md
-      - name: Changing basic queue settings
+      - name: Workflows in queues
         items:
           - name: Overview
             href: manager/workflow.md
-          - name: Configuring issue types
+          - name: Issue types
             href: manager/add-ticket-type.md
-          - name: Creating a workflow
-            href: manager/add-workflow.md
-          - name: Setting up statuses
-            href: manager/workflow-status-edit.md
-          - name: Configuring transitions
-            href: manager/workflow-action-edit.md
-          - name: Setting up resolutions
+          - name: Resolutions
             href: manager/create-resolution.md
+          - name: Statuses
+            href: manager/workflow-status-edit.md
+          - name: Transitions between statuses
+            href: manager/workflow-action-edit.md
+          - name: Managing workflows
+            href: manager/add-workflow.md
+          - name: Backward compatibility
+            href: manager/backward-compatibility.md
       - name: Local issue fields
         href: local-fields.md
       - name: Adding a queue team
         href: manager/queue-team.md
-      - name: Setting access rights for queues
+      - name: Setting up access for a queue
         href: manager/queue-access.md
+      - name: Setting up time tracking
+        href: manager/queue-spent-time.md
       - name: Advanced queue features
         href: manager/queue-advanced.md
       - name: Viewing the history of queue changes
         href: manager/queue-history.md
-      - name: Delete a queue
+      - name: Deleting a queue
         href: manager/delete-queue.md
   - name: Working with issues
     items:
-      - name: Create an issue
+      - name: Creating an issue
         items:
           - name: Overview
             href: user/create-ticket.md
@@ -131,7 +157,7 @@ items:
             href: user/create-ticket-with-forms.md
           - name: Cloning an issue
             href: user/clone.md
-      - name: Edit an issue
+      - name: Editing an issue
         items:
           - name: Overview
             href: user/edit-ticket.md
@@ -147,7 +173,7 @@ items:
             href: user/markup.md
           - name: Voting for an issue
             href: user/votes.md
-          - name: Move an issue to another queue
+          - name: Moving an issue to another queue
             href: user/move-ticket.md
           - name: Changing multiple issues
             href: manager/bulk-change.md
@@ -173,51 +199,71 @@ items:
         href: manager/components.md
       - name: Versions
         href: manager/versions.md
-  - name: Projects
+  - name: Portfolios and projects
     items:
-      - name: Overview
-        href: manager/project-new.md
-      - name: My projects
-        href: manager/my-projects.md
-      - name: Creating a project
-        href: manager/create-project.md
-      - name: List of project issues
-        href: manager/project-list.md
-      - name: Issue board
-        href: manager/boards-project.md
-  - name: Agile development tools
-    items:
-      - name: Overview
-        href: manager/agile.md
-      - name: Create a board
-        href: manager/create-agile-board.md
-      - name: Working with an agile board
-        href: user/agile.md
-      - name: Editing or deleting a board
-        href: manager/edit-agile-board.md
-      - name: Backlog
-        href: manager/backlog.md
-      - name: Sprints
-        href: manager/create-agile-sprint.md
-      - name: Epics
-        href: manager/epic.md
-      - name: Collaborative workload estimation
-        href: manager/planning-poker.md
-      - name: Burn down charts
-        href: manager/burndown.md
-      - name: Switching to new technology
-        href: manager/boards-convertor.md
-  - name: Issue boards (beta)
+      - name: Working with projects
+        items:
+          - name: Projects
+            href: manager/project-new.md
+          - name: My projects
+            href: manager/my-projects.md
+          - name: Creating a project
+            href: manager/create-project.md
+          - name: List of project issues
+            href: manager/project-list.md
+          - name: Issue board
+            href: manager/boards-project.md
+          - name: Project milestones
+            href: manager/milestones.md
+      - name: Working with portfolios
+        items:
+          - name: Project portfolios
+            href: manager/portfolio.md
+          - name: Creating a portfolio
+            href: manager/create-portfolio.md
+  - name: Issue boards
     items:
       - name: Overview
         href: manager/agile-new.md
-      - name: Create a board
+      - name: How to create a board
         href: manager/agile-new-create.md
-      - name: Working with an agile board
-        href: manager/agile-new-use.md
-      - name: Setting up a board
-        href: manager/agile-new-set.md
-  - name: Find issues
+      - name: Configuring a board
+        href: manager/agile-new-set-board.md
+      - name: Working with issues on a board
+        href: manager/agile-new-issues.md
+      - name: Configuring columns
+        href: manager/agile-new-columns.md
+      - name: Tools available on boards with a backlog and sprints
+        items:
+          - name: Overview
+            href: manager/boards-instruments.md
+          - name: Backlog
+            href: manager/backlog.md
+          - name: Sprints
+            href: manager/create-agile-sprint.md
+          - name: Planning Poker
+            href: manager/poker.md
+          - name: Burndown charts
+            href: manager/burndown-diagram.md
+      - name: Old boards
+        items:
+          - name: Overview
+            href: manager/agile.md
+          - name: Switching to new technology
+            href: manager/boards-convertor.md
+          - name: Creating a board
+            href: manager/create-agile-board.md
+          - name: Working with an agile board
+            href: user/agile.md
+          - name: Editing or deleting a board
+            href: manager/edit-agile-board.md
+          - name: Epics
+            href: manager/epic.md
+          - name: Collaborative workload estimation
+            href: manager/planning-poker.md
+          - name: Burndown charts
+            href: manager/burndown.md
+  - name: Finding issues
     items:
       - name: Finding issues by key or name
         href: user/search-task.md
@@ -255,7 +301,7 @@ items:
         items:
           - name: Overview
             href: user/dashboard.md
-          - name: Creating a dashboard
+          - name: How to create a dashboard
             href: user/create-dashboard.md
           - name: Widgets
             href: user/widgets.md
@@ -279,6 +325,8 @@ items:
         href: gantt/project.md
       - name: Gantt chart for a list of projects
         href: gantt/list-of-projects.md
+      - name: Gantt chart for project portfolios
+        href: gantt/portfolio.md
   - name: Automation and templates
     items:
       - name: Overview
@@ -353,6 +401,16 @@ items:
             href: slack.md
           - name: Telegram
             href: telegram.md
+      - name: Repositories
+        items:
+          - name: Overview
+            href: user/add-repository.md
+          - name: Bitbucket
+            href: user/bitbucket.md
+          - name: Github
+            href: user/github.md
+          - name: GitLab
+            href: user/gitlab.md
       - name: Setting up links to external applications
         items:
           - name: Overview
@@ -367,8 +425,6 @@ items:
         href: user/API.md
       - name: Python client
         href: user/python.md
-      - name: Connecting repositories
-        href: manager/add-repository.md
   - name: Yandex Tracker mobile app
     items:
       - name: Overview of features
@@ -421,131 +477,135 @@ items:
         href: common-format.md
       - name: Issues
         items:
-          - name: Get issue parameters
+          - name: Getting issue parameters
             href: concepts/issues/get-issue.md
-          - name: Edit an issue
+          - name: Editing an issue
             href: concepts/issues/patch-issue.md
-          - name: Create an issue
+          - name: Creating an issue
             href: concepts/issues/create-issue.md
-          - name: Move an issue to another queue
+          - name: Moving an issue to another queue
             href: concepts/issues/move-issue.md
-          - name: Find out the number of issues
+          - name: Finding out the number of issues
             href: concepts/issues/count-issues.md
-          - name: Find issues
+          - name: Finding issues
             href: concepts/issues/search-issues.md
-          - name: Release scroll view resources
+          - name: Releasing scroll view resources
             href: concepts/issues/search-release.md
-          - name: Get priorities
+          - name: Getting priorities
             href: concepts/issues/get-priorities.md
-          - name: Get transitions
+          - name: Getting transitions
             href: concepts/issues/get-transitions.md
-          - name: Make a status transition
+          - name: Making a status transition
             href: concepts/issues/new-transition.md
-          - name: Get the history of issue changes
+          - name: Getting the history of issue changes
             href: concepts/issues/get-changelog.md
           - name: Issue links
             items:
-              - name: Link issues
+              - name: Linking issues
                 href: concepts/issues/link-issue.md
-              - name: Get issue links
+              - name: Getting issue links
                 href: concepts/issues/get-links.md
               - name: Deleting a link with an issue
                 href: concepts/issues/delete-link-issue.md
       - name: Checklists
         items:
-          - name: Create a checklist or add items to it
+          - name: Creating a checklist or adding items to it
             href: concepts/issues/add-checklist-item.md
-          - name: Get checklist parameters
+          - name: Getting checklist parameters
             href: concepts/issues/get-checklist.md
-          - name: Edit a checklist
+          - name: Editing a checklist
             href: concepts/issues/edit-checklist.md
-          - name: Delete a checklist
+          - name: Deleting a checklist
             href: concepts/issues/delete-checklist.md
           - name: Deleting a checklist item
             href: concepts/issues/delete-checklist-item.md
       - name: Projects
         items:
-          - name: Create a project
+          - name: Creating a project
             href: concepts/projects/create-project.md
-          - name: Get project parameters
+          - name: Getting project parameters
             href: concepts/projects/get-project.md
-          - name: Get a list of all projects
+          - name: Getting a list of all projects
             href: concepts/projects/get-projects.md
-          - name: Get a list of project queues
+          - name: Getting a list of project queues
             href: concepts/projects/get-project-queues.md
-          - name: Edit a project
+          - name: Editing a project
             href: concepts/projects/update-project.md
-          - name: Delete a project
+          - name: Deleting a project
             href: concepts/projects/delete-project.md
       - name: Comments
         items:
-          - name: Add a comment
+          - name: Adding a comment
             href: concepts/issues/add-comment.md
-          - name: Get issue comments
+          - name: Getting issue comments
             href: concepts/issues/get-comments.md
-          - name: Edit a comment
+          - name: Editing a comment
             href: concepts/issues/edit-comment.md
-          - name: Delete a comment
+          - name: Deleting a comment
             href: concepts/issues/delete-comment.md
       - name: Macros
         items:
-          - name: Get queue macros
+          - name: Getting queue macros
             href: get-macroses.md
-          - name: Get a macro
+          - name: Getting a macro
             href: get-macros.md
-          - name: Create a macro
+          - name: Creating a macro
             href: post-macros.md
-          - name: Edit a macro
+          - name: Editing a macro
             href: patch-macros.md
-          - name: Delete a macro
+          - name: Deleting a macro
             href: delete-macros.md
       - name: External links
         items:
-          - name: Get a list of external applications
+          - name: Getting a list of external applications
             href: concepts/issues/get-applications.md
-          - name: Get a list of issue external links
+          - name: Getting a list of issue external links
             href: concepts/issues/get-external-links.md
-          - name: Add an external link
+          - name: Adding an external link
             href: concepts/issues/add-external-link.md
-          - name: Delete an external link
+          - name: Deleting an external link
             href: concepts/issues/delete-external-link.md
       - name: Attached files
         items:
-          - name: Get a list of attached files
+          - name: Getting a list of attached files
             href: concepts/issues/get-attachments-list.md
-          - name: Download a file
+          - name: Downloading a file
             href: concepts/issues/get-attachment.md
-          - name: Download a thumbnail
+          - name: Downloading a thumbnail
             href: concepts/issues/get-attachment-preview.md
           - name: Attaching files
             href: concepts/issues/post-attachment.md
-          - name: Upload a temporary file
+          - name: Uploading a temporary file
             href: concepts/issues/temp-attachment.md
-          - name: Delete a file
+          - name: Deleting a file
             href: concepts/issues/delete-attachment.md
       - name: Queues
         items:
-          - name: Create a queue
+          - name: Creating a queue
             href: concepts/queues/create-queue.md
-          - name: Get queue parameters
+          - name: Getting queue parameters
             href: concepts/queues/get-queue.md
-          - name: Get a list of queues
+          - name: Getting a list of queues
             href: concepts/queues/get-queues.md
-          - name: Get queue versions
+          - name: Creating a queue version
+            href: concepts/queues/create-version.md
+          - name: Getting queue versions
             href: concepts/queues/get-versions.md
-          - name: Get required queue fields
+          - name: Getting required queue fields
             href: concepts/queues/get-fields.md
-          - name: Delete a queue
+          - name: Deleting a queue
             href: concepts/queues/delete-queue.md
-          - name: Restore a queue
+          - name: Restoring a queue
             href: concepts/queues/restore-queue.md
-          - name: Remove a tag from a queue
+          - name: Removing a tag from a queue
             href: concepts/queues/delete-tag.md
+          - name: Granting queue access rights
+            href: concepts/queues/manage-access.md
           - name: Automation
             items:
               - name: Auto actions
                 items:
-                  - name: Create auto action
+                  - name: Creating an auto action
                     href: concepts/queues/create-autoaction.md
                   - name: Getting auto action parameters
                     href: concepts/queues/get-autoaction.md
@@ -553,39 +613,39 @@ items:
                 items:
                   - name: Creating triggers
                     href: concepts/queues/create-trigger.md
-                  - name: Get trigger parameters
+                  - name: Getting trigger parameters
                     href: concepts/queues/get-trigger.md
       - name: Issue boards
         items:
-          - name: Get parameters of all boards
+          - name: Getting parameters of all boards
             href: get-boards.md
-          - name: Get board parameters
+          - name: Getting board parameters
             href: get-board.md
-          - name: Create a board
+          - name: Creating a board
             href: post-board.md
-          - name: Edit a board
+          - name: Editing a board
             href: patch-board.md
-          - name: Delete a board
+          - name: Deleting a board
             href: delete-board.md
           - name: Columns
             items:
-              - name: Get parameters of all columns
+              - name: Getting parameters of all columns
                 href: get-columns.md
-              - name: Get column parameters
+              - name: Getting column parameters
                 href: get-column.md
-              - name: Create a column
+              - name: Creating a column
                 href: post-column.md
-              - name: Edit a column
+              - name: Editing a column
                 href: patch-column.md
-              - name: Delete a column
+              - name: Deleting a column
                 href: delete-column.md
           - name: Sprints
             items:
-              - name: Get all sprints of a board
+              - name: Getting all sprints of a board
                 href: get-sprints.md
-              - name: Get a sprint
+              - name: Getting a sprint
                 href: get-sprint.md
-              - name: Create a sprint
+              - name: Creating a sprint
                 href: post-sprint.md
       - name: Components
         items:
@@ -593,64 +653,68 @@ items:
             href: get-components.md
       - name: Import
         items:
-          - name: Import an issue
+          - name: Importing an issue
             href: concepts/import/import-ticket.md
-          - name: Import files
+          - name: Importing files
             href: concepts/import/import-attachments.md
-          - name: Import comments
+          - name: Importing comments
             href: concepts/import/import-comments.md
-          - name: Import links
+          - name: Importing links
             href: concepts/import/import-links.md
       - name: Bulk operations
         items:
-          - name: Perform a bulk move of issues to a different queue
+          - name: Bulk move of issues to a different queue
             href: concepts/bulkchange/bulk-move-issues.md
-          - name: Make bulk changes to issues
+          - name: Bulk changes to issues
             href: concepts/bulkchange/bulk-update-issues.md
-          - name: Make bulk changes to issue statuses
+          - name: Bulk changes to issue statuses
             href: concepts/bulkchange/bulk-transition.md
       - name: Time tracking
         items:
-          - name: Add a record of time spent
+          - name: Adding a record of time spent
             href: concepts/issues/new-worklog.md
-          - name: Edit a record of time spent
+          - name: Editing a record of time spent
             href: concepts/issues/patch-worklog.md
-          - name: Delete a record of time spent
+          - name: Deleting a record of time spent
             href: concepts/issues/delete-worklog.md
-          - name: Get records of time spent
+          - name: Getting records of time spent
             items:
-              - name: Get all records for an issue
+              - name: Getting all records for an issue
                 href: concepts/issues/issue-worklog.md
-              - name: Select records by parameters
+              - name: Selecting records by parameters
                 href: concepts/issues/get-worklog.md
       - name: Issue fields
         items:
           - name: Getting global fields
             href: concepts/issues/get-global-fields.md
-          - name: Create an issue field
+          - name: Creating an issue field
             href: concepts/issues/create-field.md
-          - name: Get issue field parameters
+          - name: Getting issue field parameters
             href: concepts/issues/get-issue-fields.md
-          - name: Edit issue field names
+          - name: Editing issue field names
             href: concepts/issues/patch-issue-field-name.md
-          - name: Edit possible values of issue fields
+          - name: Editing possible values of issue fields
             href: concepts/issues/patch-issue-field-value.md
-          - name: Create an issue field category
+          - name: Creating an issue field category
             href: concepts/issues/create-issue-field-category.md
           - name: Local fields
             items:
-              - name: Create a local queue field
+              - name: Creating a local queue field
                 href: concepts/queues/create-local-field.md
-              - name: Get local queue fields
+              - name: Getting local queue fields
                 href: concepts/queues/get-local-fields.md
-              - name: Get information about a local queue field
+              - name: Getting information about a local queue field
                 href: concepts/queues/get-info-local-field.md
-              - name: Edit a local queue field
+              - name: Editing a local queue field
                 href: concepts/queues/edit-local-field.md
       - name: Users
         items:
-          - name: Get information about the current user
+          - name: Getting information about the current user
             href: get-user-info.md
+          - name: Getting information about users
+            href: get-users.md
+          - name: Getting information about the user
+            href: get-user.md
       - name: Possible response codes
         href: error-codes.md
   - name: Questions and answers
@@ -663,24 +727,36 @@ items:
         href: organizations.md
   - name: Releases
     items:
-      - name: April 2023
+      - name: September 2023
         href: changelogs/index.md
-      - name: March 2023
-        href: changelogs/2303.md
-      - name: February 2023
-        href: changelogs/2302.md
-      - name: January 2023
-        href: changelogs/2301.md
-      - name: December 2022
-        href: changelogs/2212.md
-      - name: November 2022
-        href: changelogs/2211.md
-      - name: October 2022
-        href: changelogs/2210.md
-      - name: September 2022
-        href: changelogs/2209.md
-      - name: August 2022
-        href: changelogs/2208.md
+      - name: August 2023
+        href: changelogs/2308.md
+      - name: July 2023
+        href: changelogs/2307.md
+      - name: June 2023
+        href: changelogs/2306.md
+      - name: May 2023
+        href: changelogs/2305.md
+      - name: Archive
+        items:
+          - name: April 2023
+            href: changelogs/2304.md
+          - name: March 2023
+            href: changelogs/2303.md
+          - name: February 2023
+            href: changelogs/2302.md
+          - name: January 2023
+            href: changelogs/2301.md
+          - name: December 2022
+            href: changelogs/2212.md
+          - name: November 2022
+            href: changelogs/2211.md
+          - name: October 2022
+            href: changelogs/2210.md
+          - name: September 2022
+            href: changelogs/2209.md
+          - name: August 2022
+            href: changelogs/2208.md
   - name: Support
     href: troubleshooting.md
 base: en/tracker

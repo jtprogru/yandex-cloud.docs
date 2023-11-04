@@ -1,3 +1,8 @@
+---
+title: "How to send notifications to mailboxes in your domain"
+description: "Use this guide to send notifications to mailboxes in your domain"
+---
+
 # Sending notifications to mailboxes in your domain
 
 {% note warning %}
@@ -10,7 +15,7 @@ By default, {{ tracker-name }} sends notifications to the mailbox from which the
 
 {% note info %}
 
-You can [set up federation](../../organization/add-federation.md) in {{ org-full-name }}. In this case, your employees will also be able to log into {{ tracker-name }} using their email addresses on your domain, as well as get notifications from {{ tracker-name }} at these addresses.
+You can [set up federation](../../organization/concepts/add-federation.md) in {{ org-full-name }}. In this case, your employees will also be able to log in to {{ tracker-name }} using their email addresses on your domain, as well as get notifications from {{ tracker-name }} at these addresses.
 
 {% endnote %}
 
@@ -40,7 +45,7 @@ To set up email forwarding to mailboxes on your domain, add the domain to the or
 
     {% note alert %}
 
-    You pay for using {{ ya-360 }} according to the [pricing]({{ link-ya-360-tariffs }}).
+    You pay for using {{ ya-360 }} according to the [pricing policy]({{ link-ya-360-tariffs }}).
 
     {% endnote %}
 

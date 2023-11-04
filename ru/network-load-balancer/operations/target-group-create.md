@@ -1,3 +1,8 @@
+---
+title: "Создать целевую группу {{ network-load-balancer-name }}"
+description: "Следуя данной инструкции, вы сможете создать целевую группу {{ network-load-balancer-name }}."
+---
+
 # Создать целевую группу {{ network-load-balancer-name }}
 
 {% list tabs %}
@@ -7,15 +12,15 @@
   Чтобы создать новую [целевую группу](../concepts/target-resources.md):
   
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, где требуется создать целевую группу.
-  1. В списке сервисов выберите **{{ network-load-balancer-name }}**.
-  1. На панели слева выберите ![image](../../_assets/trgroups.svg) **Целевые группы**.
-  1. Нажмите кнопку **Создать целевую группу**.
-  1. Введите имя целевой группы.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_load-balancer }}**.
+  1. На панели слева выберите ![image](../../_assets/trgroups.svg) **{{ ui-key.yacloud.load-balancer.target-group.label_list }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.load-balancer.target-group.button_create }}**.
+  1. Введите имя целевой группы. Требования к имени:
   
       {% include [name-format](../../_includes/name-format.md) %}
   
   1. Выберите [виртуальные машины](../../glossary/vm.md), которые нужно добавить в целевую группу.
-  1. Нажмите кнопку **Создать**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
   
@@ -39,7 +44,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле параметры ресурса целевой группы.
 
@@ -73,16 +78,6 @@
   1. Создайте целевую группу.
 
      {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
-
-- API
-
-  Воспользуйтесь методом API [create](../api-ref/TargetGroup/create.md) и передайте в запросе:
-
-  * Идентификатор каталога, в котором должен быть размещена целевая группа, в параметре `folderId`.
-  * Имя целевой группы в параметре `name`.
-  * Идентификатор подсети и внутренний IP-адрес целевых ресурсов в параметре `targets`.
-
-  Целевые ресурсы можно добавить после создания целевой группы с помощью метода API [addTargets](../api-ref/TargetGroup/addTargets).
 
 - API
 

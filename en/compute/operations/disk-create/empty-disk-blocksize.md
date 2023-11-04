@@ -1,3 +1,8 @@
+---
+title: "How to create an empty disk with a large block"
+description: "Use this guide to create an empty disk with a large block."
+---
+
 # Creating an empty disk with a large block
 
 {% include [default-catalogue](../../../_includes/compute/disk-blocksize.md) %}
@@ -29,6 +34,8 @@
       ```
 
       This command will create a 40 GB disk with an 8 KB block size, named `big-disk` and described as `my 8k blocksize disk via yc`.
+
+      The disk naming requirements are as follows:
 
       {% include [name-format](../../../_includes/name-format.md) %}
 
@@ -63,7 +70,7 @@
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    {% include [terraform-empty-disk-create](../../../_includes/compute/terraform-empty-disk-create.md) %}
 

@@ -1,30 +1,68 @@
 # Создать HTTP-роутер для HTTP-трафика
 
-Чтобы создать HTTP-роутер и добавить в него маршрут:
+Чтобы создать [HTTP-роутер](../concepts/http-router.md) и добавить в него [маршрут](../concepts/http-router.md#routes):
 
 {% list tabs %}
 
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором будет создаваться HTTP-роутер.
-  1. В списке сервисов выберите **{{ alb-name }}**.
-  1. На панели слева выберите ![image](../../_assets/router.svg) **HTTP-роутеры**.
-  1. Нажмите кнопку **Создать HTTP-роутер**.
-  1. Введите имя роутера: `test-router`.
-  1. В блоке **Виртуальные хосты** нажмите кнопку **Добавить виртуальный хост**.
-  1. Введите имя хоста: `test-host-1`.
-  1. Нажмите кнопку **Добавить маршрут**.
-  1. Введите **Имя**: `test-route`.
-  1. В поле **Путь** выберите `Совпадает с` и укажите путь `/`. 
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+  1. На панели слева выберите ![image](../../_assets/router.svg) **{{ ui-key.yacloud.alb.label_http-routers }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.alb.button_http-router-create }}**.
+  1. Введите имя роутера.
+  1. В блоке **{{ ui-key.yacloud.alb.label_virtual-hosts }}** нажмите кнопку **{{ ui-key.yacloud.alb.button_virtual-host-add }}**.
+  1. Введите имя хоста.
 
-      Также чтобы указать путь, вы можете использовать опции:
-      * `Начинается с` —  для маршрутизации всех запросов с определенным началом.
-      * `Регулярное выражение` — для маршрутизации всех запросов, удовлетворяющих [регулярному выражению](https://ru.wikipedia.org/wiki/Регулярные_выражения) стандарта [RE2](https://github.com/google/re2/wiki/Syntax).
+  
+  1. (опционально) В поле **Профиль безопасности {{ sws-name }}** выберите [профиль безопасности](../../smartwebsecurity/concepts/profiles.md) {{ sws-full-name }}.
 
-  1. В списке **Методы HTTP** выберите `GET`.
-  1. В поле **Действие** оставьте `Маршрутизация`.
-  1. В списке **Группа бэкендов** выберите имя группы бэкендов из того же каталога, в котором создаете роутер.
-  1. Остальные настройки оставьте без изменений и нажмите кнопку **Создать**.
+      Сервис {{ sws-name }} находится на [стадии Preview](../../overview/concepts/launch-stages.md).
+
+
+  1. Нажмите кнопку **{{ ui-key.yacloud.alb.button_add-route }}**.
+  1. Введите **{{ ui-key.yacloud.common.name }}** маршрута.
+  1. В поле **{{ ui-key.yacloud.alb.label_path }}** выберите одну из опций:
+
+      * `{{ ui-key.yacloud.alb.label_match-exact }}` и укажите путь `/` — для маршрутизации всех запросов совпадающих с указанным путем.
+      * `{{ ui-key.yacloud.alb.label_match-prefix }}` —  для маршрутизации всех запросов с определенным началом.
+      * `{{ ui-key.yacloud.alb.label_match-regex }}` — для маршрутизации всех запросов, удовлетворяющих [регулярному выражению](https://ru.wikipedia.org/wiki/Регулярные_выражения) стандарта [RE2](https://github.com/google/re2/wiki/Syntax).
+
+  1. В списке **{{ ui-key.yacloud.alb.label_http-methods }}** выберите нужные методы.
+  1. В поле **{{ ui-key.yacloud.alb.label_route-action }}** выберите одну из опций: `{{ ui-key.yacloud.alb.label_route-action-route }}`, `{{ ui-key.yacloud.alb.label_route-action-redirect }}` или `{{ ui-key.yacloud.alb.label_route-action-statusResponse }}`. В зависимости от выбранной опции:
+
+      * `{{ ui-key.yacloud.alb.label_route-action-route }}`:
+
+        * В поле **{{ ui-key.yacloud.alb.label_backend-group }}** выберите имя группы бэкендов из того же каталога, в котором создаете роутер.
+        * (опционально) В поле **{{ ui-key.yacloud.alb.label_prefix-rewrite }}** укажите, куда роутер должен перенаправлять трафик. Если в поле **{{ ui-key.yacloud.alb.label_path }}** вы выбрали опцию `{{ ui-key.yacloud.alb.label_match-exact }}`, путь будет полностью заменен. Если была выбрана опция `{{ ui-key.yacloud.alb.label_match-prefix }}`, будет заменено только начало.
+        * (опционально) В поле **{{ ui-key.yacloud.alb.label_host-rewrite }}** выберите одну из опций:
+
+            * `none` — замена не происходит.
+            * `rewrite` — происходит замена на указанное значение.
+            * `auto` — происходит автоматическая замена на адрес целевой ВМ.
+        * (опционально) В поле **{{ ui-key.yacloud.alb.label_timeout }}** укажите максимальное время, на которое может быть установлено соединение.
+        * (опционально) В поле **{{ ui-key.yacloud.alb.label_idle-timeout }}** укажите максимальное время, в течение которого соединение может простаивать без передачи данных.
+        * (опционально) В поле **{{ ui-key.yacloud.alb.label_upgrade-types }}** укажите список протоколов, на которые группа бэкендов может перейти в рамках TCP-соединения по запросу клиента.
+        * (опционально) Выберите опцию **{{ ui-key.yacloud.alb.label_web-socket }}**, если вы хотите использовать протокол WebSocket. 
+
+      * `{{ ui-key.yacloud.alb.label_route-action-redirect }}`:
+
+        * В поле **{{ ui-key.yacloud.alb.label_http-status-code }}** выберите код, по которому будет осуществляться перенаправление.
+        * (опционально) В поле **{{ ui-key.yacloud.alb.label_replace }}** укажите, куда роутер должен перенаправлять трафик. Если в поле **{{ ui-key.yacloud.alb.label_path }}** вы выбрали опцию `{{ ui-key.yacloud.alb.label_match-exact }}`, путь будет полностью заменен. Если была выбрана опция `{{ ui-key.yacloud.alb.label_match-prefix }}`, будет заменено только начало.
+        * (опционально) Выберите опцию **{{ ui-key.yacloud.alb.label_strict-query }}**. 
+        * (опционально) Выберите опцию **{{ ui-key.yacloud.alb.label_replace-scheme }}**.
+        * (опционально) Выберите опцию **{{ ui-key.yacloud.alb.label_replace-host }}** и укажите новый хост.
+        * (опционально) Выберите опцию **{{ ui-key.yacloud.alb.label_replace-port }}** и укажите новый порт.
+      
+      * `{{ ui-key.yacloud.alb.label_route-action-statusResponse }}`:
+
+        * В поле **{{ ui-key.yacloud.alb.label_http-status-code }}** выберите код, по которому будет осуществляться ответ.
+        * В поле **{{ ui-key.yacloud.alb.label_body }}** нажмите кнопку **{{ ui-key.yacloud.alb.button_select }}** и в открывшемся окне:
+
+            * Выберите **{{ ui-key.yacloud.component.file-content-dialog.field_method }}** указания ответа: **{{ ui-key.yacloud.component.file-content-dialog.value_manual }}** или **{{ ui-key.yacloud.component.file-content-dialog.value_upload }}**.
+            * В зависимости от выбранного способа прикрепите файл или укажите текст ответа.
+
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
 
 - CLI
 
@@ -47,9 +85,9 @@
       Результат:
 
       ```text
-      id: a5dcsselagj4o2v4a6e7
+      id: a5dcsselagj4********
       name: test-http-router
-      folder_id: aoerb349v3h4bupphtaf
+      folder_id: aoerb349v3h4********
       created_at: "2021-02-11T21:04:59.438292069Z"
       ```
 
@@ -123,6 +161,8 @@
       * `--request-timeout` — тайм-аут запроса, в секундах.
       * `--request-max-timeout` — максимальный тайм-аут ожидания запроса, в секундах.
 
+      Подробную информацию о параметрах команды `yc alb virtual-host append-http-route` см. в [справочнике CLI](../../cli/cli-ref/managed-services/application-load-balancer/virtual-host/append-http-route.md).
+
       Результат:
 
       ```text
@@ -137,7 +177,7 @@
             path:
               prefix_match: /
           route:
-            backend_group_id: a5d4db973944t2fh8gor
+            backend_group_id: a5d4db973944********
             timeout: 2s
             idle_timeout: 3s
       modify_request_headers:
@@ -149,7 +189,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   1. Опишите в конфигурационном файле параметры HTTP-роутера и виртуального хоста:
 

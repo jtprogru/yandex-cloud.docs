@@ -1,3 +1,8 @@
+---
+title: "How to create a Bitrix24 connection"
+description: "This guide describes how you can create a Bitrix24 connection."
+---
+
 # Creating a Bitrix24 connection
 
 {% note info %}
@@ -7,6 +12,10 @@
 {% endnote %}
 
 To create a Bitrix24 connection:
+
+
+{% include [datalens-workbooks-collections-note](../../../_includes/datalens/operations/datalens-workbooks-collections-note.md) %}
+
 
 
 1. Go to the [connections page]({{ link-datalens-main }}/connections).
@@ -21,6 +30,6 @@ To create a Bitrix24 connection:
    * Leave the option **Automatically create a dashboard, charts, and a dataset on the connection** enabled if you need a folder with a standard set of datasets and charts and a ready-made dashboard.
 
 1. Click **Create connection**.
-1. Enter the name for the connection and click **Create**.
+1. Enter a name for the connection and click **Create**.
 
 {% include [datalens-check-host](../../../_includes/datalens/operations/datalens-check-host.md) %}

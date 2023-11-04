@@ -1,20 +1,14 @@
 # Create a trigger for {{ message-queue-name }} that sends messages to the {{ sf-name }} function
 
-Create a [trigger](../../concepts/trigger/ymq-trigger.md) for a {{ message-queue-short-name }} message queue and process the messages using the {{ sf-name }} [function](../../concepts/function.md).
+Create a [trigger](../../concepts/trigger/ymq-trigger.md) for a message queue in {{ message-queue-short-name }} and process the messages using the {{ sf-name }} [function](../../concepts/function.md).
 
-{% note warning %}
-
-* You can only create a trigger for a standard message queue.
-* The trigger must be in the same cloud as the queue that messages are read from.
-* Only one trigger can be created for each message queue.
-
-{% endnote %}
+{% include [ymq-trigger-note.md](../../../_includes/functions/ymq-trigger-note.md) %}
 
 ## Getting started {#before-begin}
 
 To create a trigger, you need:
 
-* A function that the trigger will invoke. If you don't have a function:
+* A function that the trigger will invoke. If you do not have a function:
 
    * [Create a function](../function/function-create.md).
    * [Create a function version](../function/version-manage.md).
@@ -23,11 +17,11 @@ To create a trigger, you need:
 
    * To invoke a function.
    * To read from the queue the trigger receives messages from.
-   * (optional) To write to the [Dead Letter Queue](../../concepts/dlq.md).
+   * (Optional) To write to a [Dead Letter Queue](../../concepts/dlq.md).
 
-   You can use the same service account or different ones. If you don't have a service account, [create one](../../../iam/operations/sa/create.md).
+   You can use the same service account or different ones. If you do not have a service account, [create one](../../../iam/operations/sa/create.md).
 
-* A message queue that the trigger receives messages from. If you don't have a queue, [create one](../../../message-queue/operations/message-queue-new-queue.md).
+* A message queue that the trigger receives messages from. If you do not have a queue, [create one](../../../message-queue/operations/message-queue-new-queue.md).
 
 ## Creating a trigger {#trigger-create}
 
@@ -39,32 +33,32 @@ To create a trigger, you need:
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create your trigger.
 
-   1. Select **{{ sf-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-   1. On the left-hand panel, select ![image](../../../_assets/functions/triggers.svg) **Triggers**.
+   1. In the left-hand panel, select ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-   1. Under **Basic parameters**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
       * Enter a name and description for the trigger.
-      * In the **Type** field, select **{{ message-queue-short-name }}**.
-      * In the **Launched resource** field, select **Function**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** field, select **{{ ui-key.yacloud.serverless-functions.triggers.form.label_ymq }}**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** field, select **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-   1. Under **{{ message-queue-short-name }} settings**, select a message queue and a service account with rights to read messages from this message queue.
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_ymq }}**, select a message queue and a service account with rights to read messages from this message queue.
 
-   1. (optional) Under **Batch message settings**, specify:
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_batch-settings }}**, specify:
 
-      * Batch size. Values can be from 1 to 10. The default is 1.
-      * Maximum wait time. Values can be from 0 to 20 seconds. The default is 10 seconds.
+      * **{{ ui-key.yacloud.serverless-functions.triggers.form.field_ymq-cutoff }}**. The values may range from 0 to 20 seconds. The default value is 10 seconds.
+      * **{{ ui-key.yacloud.serverless-functions.triggers.form.field_size }}**. The values may range from 1 to 10. The default value is 1.
 
       The trigger groups messages for a period of time not exceeding the specified timeout and sends them to a function. However, the number of messages does not exceed the specified group size.
 
-   1. Under **Function settings**, select a function and specify:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}**, select a function and specify:
 
       {% include [function-settings](../../../_includes/functions/function-settings.md) %}
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -93,15 +87,15 @@ To create a trigger, you need:
       To find out the queue ID:
 
       1. In the [management console]({{ link-console-main }}), select the folder containing the queue.
-      1. Select **{{ message-queue-name }}**.
+      1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
       1. Select the desired queue.
-      1. You can see the queue ID under **General information** in the **ARN** field.
+      1. You can see the queue ID under **{{ ui-key.yacloud.ymq.queue.overview.section_base }}** in the **{{ ui-key.yacloud.ymq.queue.overview.label_queue-arn }}** field.
 
    * `--invoke-function-id`: Function ID.
    * `--queue-service-account-name`: Service account with rights to read messages from the queue.
    * `--invoke-function-service-account-id`: Service account with rights to invoke the function.
-   * `--batch-size`: Message batch size. This is an optional parameter. Values can be from 1 to 10. The default is 1.
-   * `--batch-cutoff`: Maximum waiting time. This is an optional parameter. Values can be from 0 to 20 seconds. The default is 10 seconds. The trigger groups messages for a period not exceeding `batch-cutoff` and sends them to a function. At the same time, the number of messages does not exceed `batch-size`.
+   * `--batch-size`: Message batch size. This is an optional parameter. The values may range from 1 to 10. The default value is 1.
+   * `--batch-cutoff`: Maximum wait time. This is an optional parameter. The values may range from 0 to 20 seconds. The default value is 10 seconds. The trigger groups messages for a period not exceeding `batch-cutoff` and sends them to a function. The number of messages cannot exceed `batch-size`.
 
    Result:
    ```text
@@ -127,7 +121,7 @@ To create a trigger, you need:
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To create a trigger for the message queue:
 
@@ -144,17 +138,17 @@ To create a trigger, you need:
             To find out the queue ID:
 
             1. In the [management console]({{ link-console-main }}), select the folder containing the queue.
-            1. Select **{{ message-queue-name }}**.
+            1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
             1. Select the desired queue.
-            1. You can see the queue ID under **General information** in the **ARN** field.
+            1. You can see the queue ID under **{{ ui-key.yacloud.ymq.queue.overview.section_base }}** in the **{{ ui-key.yacloud.ymq.queue.overview.label_queue-arn }}** field.
 
          * `service_account_id`: ID of the service account with rights to invoke a function.
-         * `batch_size`: Message batch size. This is an optional parameter. Values can be from 1 to 10. The default is 1.
-         * `batch_cutoff`: Maximum waiting time. This is an optional parameter. Values can be from 0 to 20 seconds. The default is 10 seconds. The timer groups messages for a period not exceeding `batch-cutoff` and sends them to a function or container. At the same time, the number of messages does not exceed `batch-size`.
+         * `batch_size`: Message batch size. This is an optional parameter. The values may range from 1 to 10. The default value is 1.
+         * `batch_cutoff`: Maximum wait time. This is an optional parameter. The values may range from 0 to 20 seconds. The default value is 10 seconds. The timer groups messages for a period not exceeding `batch-cutoff` and sends them to a function or container. The number of messages cannot exceed `batch-size`.
       * `function`: Settings for the function, which will be activated by the trigger:
          * `id`: Function ID.
 
-      Example of the configuration file structure:
+      Here is an example of the configuration file structure:
 
       ```hcl
       resource "yandex_function_trigger" "my_trigger" {
@@ -177,7 +171,7 @@ To create a trigger, you need:
    1. Make sure the configuration files are valid.
 
       1. In the command line, go to the directory where you created the configuration file.
-      1. Run the check using this command:
+      1. Run a check using this command:
 
          ```
          terraform plan
@@ -193,9 +187,9 @@ To create a trigger, you need:
          terraform apply
          ```
 
-      1. Confirm the resource creation: type `yes` in the terminal and press **Enter**.
+      1. Confirm creating the resources: type `yes` in the terminal and press **Enter**.
 
-         Once you are done, all the resources you need will be created in the specified folder. You can verify that the resources are there and their configuration is correct using the [management console]({{ link-console-main }}) or the following [CLI](../../../cli/quickstart.md) command:
+         All the resources you need will then be created in the specified folder. You can check the new resources and their configuration using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
 
          ```
          yc serverless trigger get <trigger ID>
@@ -219,9 +213,9 @@ To create a trigger, you need:
 
    Check that the number of enqueued messages is decreasing. To do this, view the queue statistics:
 
-   1. In the [management console]({{ link-console-main }}), select **{{ message-queue-name }}**.
+   1. In the [management console]({{ link-console-main }}), select **{{ ui-key.yacloud.iam.folder.dashboard.label_message-queue }}**.
    1. Select the queue that you created the trigger for.
-   1. Go to **Monitoring**. View the **Messages in queue** chart.
+   1. Go to **{{ ui-key.yacloud.common.monitoring }}**. Check the **{{ ui-key.yacloud.ymq.queue.overview.label_msg-count }}** chart.
 
 {% endlist %}
 

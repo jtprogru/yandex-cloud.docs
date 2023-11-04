@@ -21,7 +21,7 @@ Users are granted access to data on the **Heat Maps** dashboard if:
 * They have a Yandex Direct account.
 * They have permissions to the **Heat Maps** dashboard.
 
-To grant a user access to the **Heat Maps** dashboard, a manager should submit an activation request by filling out this [form](https://forms.yandex-team.ru/surveys/147089/).
+User access to the **Heat Maps** dashboard is arranged by a manager who should submit an internal activation request.
 
 {% endnote %}
 
@@ -45,10 +45,10 @@ We recommend that you review the [Questions and answers](#qa) section to see ans
 
 {{ datalens-full-name }} is deployed on the {{ yandex-cloud }} platform.
 
-Set up {{ datalens-short-name }} based on your experience:
+Set up {{ datalens-short-name }} depending on your experience:
 
-* You're a new user (you only want to use {{ datalens-full-name }} for podcast analysis).
-* You're already using {{ datalens-full-name }} (for other purposes).
+* You are a new user (you want to use {{ datalens-full-name }} only for podcast analysis).
+* You are already using {{ datalens-full-name }} (for other purposes).
 
 {% include [before-you-begin](../includes/before-you-begin-datalens.md) %}
 
@@ -124,7 +124,7 @@ Pay attention to the supply and demand scale in the top-right corner. The greene
 
 To allow another user to open your dashboard, configure access to {{ datalens-full-name }}:
 
-1. [Invite a user](../../organization/add-account.md#add-or-invite-user-account) with a Yandex account or [add a federated user](../../organization/add-account.md#add-user-sso).
+1. [Invite a user](../../organization/operations/add-account.md#add-or-invite-user-account) with a Yandex account or [add a federated user](../../organization/operations/add-account.md#add-user-sso).
 1. Make sure that the user has access to the dashboard:
 
    1. Open the dashboard.
@@ -139,7 +139,7 @@ To allow another user to open your dashboard, configure access to {{ datalens-fu
 
 The user is granted access to your {{ datalens-short-name }} and objects with **All** permissions. You can assign this user individual permissions to objects.
 
-You can send the link to the dashboard from the browser. For more information about permissions for {{ datalens-short-name }} objects, see the [documentation](https://cloud.yandex.com/en-ru/docs/datalens/security/#permissions).
+You can send the link to the dashboard from the browser. For more information about permissions to {{ datalens-short-name }} objects, see the [documentation](../../datalens/security/index.md#permissions).
 
 ## 4. Make a dashboard or chart public {#publish-dashboard-chart}
 

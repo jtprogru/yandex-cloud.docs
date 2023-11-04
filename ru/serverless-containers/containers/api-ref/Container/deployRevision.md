@@ -77,8 +77,8 @@ POST https://serverless-containers.{{ api-host }}/containers/v1/revisions:deploy
     {
       "bucketId": "string",
       "prefix": "string",
-      "mountPointName": "string",
-      "readOnly": true
+      "readOnly": true,
+      "mountPointPath": "string"
     }
   ]
 }
@@ -90,9 +90,9 @@ Field | Description
 containerId | **string**<br><p>Required. ID of the container to create a revision for.</p> <p>To get a container ID, make a <a href="/docs/serverless/containers/api-ref/Container/list">list</a> request.</p> 
 description | **string**<br><p>Description of the revision.</p> 
 resources | **object**<br><p>Required. Resources allocated to the revision.</p> <p>Resources allocated to a revision.</p> 
-resources.<br>memory | **string** (int64)<br><p>Amount of memory available to the revision, specified in bytes.</p> <p>Acceptable values are 134217728 to 4294967296, inclusive.</p> 
-resources.<br>cores | **string** (int64)<br><p>Number of cores available to the revision.</p> <p>Acceptable values are 0 to 1, inclusive.</p> 
-resources.<br>coreFraction | **string** (int64)<br><p>Specifies baseline performance for a core in percent.</p> <p>Acceptable values are 0 to 100, inclusive.</p> 
+resources.<br>memory | **string** (int64)<br><p>Amount of memory available to the revision, specified in bytes, multiple of 128MB.</p> <p>Acceptable values are 134217728 to 4294967296, inclusive.</p> 
+resources.<br>cores | **string** (int64)<br><p>Number of cores available to the revision.</p> <p>Acceptable values are 0 to 2, inclusive.</p> 
+resources.<br>coreFraction | **string** (int64)<br><p>Specifies baseline performance for a core in percent, multiple of 5%. Should be 100% for cores &gt; 1.</p> <p>Acceptable values are 0 to 100, inclusive.</p> 
 executionTimeout | **string**<br><p>Timeout for the execution of the revision.</p> <p>If the timeout is exceeded, Serverless Containers responds with a 504 HTTP code.</p> <p>The maximum value is 600 seconds.</p> 
 serviceAccountId | **string**<br><p>ID of the service account to associate with the revision.</p> 
 imageSpec | **object**<br><p>Required. Image configuration for the revision.</p> <p>Revision image specification.</p> 
@@ -125,8 +125,8 @@ logOptions.<br>folderId | **string** <br>`logOptions` includes only one of the f
 storageMounts[] | **object**<br><p>S3 mounts to be used by the version.</p> 
 storageMounts[].<br>bucketId | **string**<br><p>Required. S3 bucket name for mounting.</p> <p>The string length in characters must be 3-63. Value must match the regular expression ``[-.0-9a-zA-Z]*``.</p> 
 storageMounts[].<br>prefix | **string**<br><p>S3 bucket prefix for mounting.</p> 
-storageMounts[].<br>mountPointName | **string**<br><p>Required. Mount point directory name (not path) for mounting.</p> <p>The string length in characters must be 1-100. Value must match the regular expression ``[-_0-9a-zA-Z]*``.</p> 
 storageMounts[].<br>readOnly | **boolean** (boolean)<br><p>Is mount read only.</p> 
+storageMounts[].<br>mountPointPath | **string**<br><p>Required. Mount point path inside the container for mounting.</p> <p>The string length in characters must be 1-300. Value must match the regular expression ``[-_0-9a-zA-Z/]*``.</p> 
  
 ## Response {#responses}
 **HTTP Code: 200 - OK**

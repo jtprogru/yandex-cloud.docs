@@ -1,17 +1,17 @@
 ---
 title: "How to stop, start, or restart a VM"
-description: "The Stop command shuts down the VM. After the VM is shut down, its status changes to STOPPED. You can enable the VM at any time to continue working with it. The Start command starts a previously stopped VM. After the VM is started, its status changes to RUNNING, and the operating system starts loading."
+description: "The Stop command shuts down the VM. After the VM is shut down, its status changes to STOPPED. You can enable the VM at any time to continue working with it. The Start command starts a previously stopped VM. After the VM is started, its status changes to RUNNING and the operating system starts loading."
 ---
 
 # Stopping, starting, or restarting a VM
 
 ## Stop {#stop}
 
-This **{{ ui-key.yacloud.compute.instances.button_action-stop }}** command shuts down the VM. Once shut down, the VM status changes to `Stopped`. While the VM is stopped, no fee is charged for it.
+This **{{ ui-key.yacloud.compute.instances.button_action-stop }}** command shuts down the VM. Once shut down, the VM status changes to `Stopped`. While the VM is stopped, no fee is charged for its use. You are [charged](../../pricing.md#disk) for using disks whether the VM is running or not.
 
-You can restart a VM at any time to continue using it. All data and changes you've made are saved.
+You can restart a VM at any time to continue using it. All data and changes you have made are saved.
 
-Some VM parameters (such as its boot disk) can only be modified when the VM is stopped.
+Certain VM parameters can only be modified when the VM is stopped.
 
 To stop a VM:
 

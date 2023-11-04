@@ -9,7 +9,7 @@
 
 ## Перед началом работы {#before-you-begin}
 
-В примерах этого сценария DNS-сервер имеет адрес `10.129.0.3`, имя `ns.example.com` и обслуживает зону `example.com`. Ваши DNS-серверы могут находиться в [{{ vpc-full-name }}](../../vpc/) или быть доступны через [VPN](../../glossary/vpn.md) или [{{ interconnect-full-name }}](../../interconnect/). Необходимое условие — IP-связность между [узлами](../concepts/index.md#node-group) кластера {{ managed-k8s-name }} и DNS-серверами.
+В примерах этого сценария DNS-сервер имеет адрес `10.129.0.3`, имя `ns.example.com` и обслуживает зону `example.com`. Ваши DNS-серверы могут находиться в [{{ vpc-full-name }}](../../vpc/) или быть доступны через [VPN](../../glossary/vpn.md) или [{{ interconnect-full-name }}](../../interconnect/index.yaml). Необходимое условие — IP-связность между [узлами](../concepts/index.md#node-group) кластера {{ managed-k8s-name }} и DNS-серверами.
 1. Создайте ресурсы {{ managed-k8s-name }}:
 
    {% list tabs %}
@@ -24,7 +24,7 @@
 
    - С помощью {{ TF }}
 
-     1. Если у вас еще нет {{ TF }}, [установите его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+     1. {% include [terraform-install](../../_includes/terraform-install.md) %}
      1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
      1. Скачайте в ту же рабочую директорию файл конфигурации кластера {{ managed-k8s-name }} [k8s-cluster.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/managed-kubernetes/k8s-cluster.tf). В файле описаны:
         * [Сеть](../../vpc/concepts/network.md#network).

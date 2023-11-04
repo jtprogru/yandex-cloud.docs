@@ -61,24 +61,22 @@
 
     1. (Опционально) [Создайте виртуальную машину](../../compute/operations/vm-create/create-linux-vm.md) на базе [Ubuntu 20.04 LTS](/marketplace/products/yc/ubuntu-20-04-lts) со следующими параметрами:
 
-        * **Диски и файловые хранилища** → **Размер** — достаточный для хранения распакованного и нераспакованного дампов.
+        * **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** → **{{ ui-key.yacloud.compute.disk-form.field_size }}** — достаточный для хранения распакованного и нераспакованного дампов.
 
             Рекомендуется использовать объем в два или более раза превышающий суммарный объем дампа и архива с ним.
 
-        * **Сетевые настройки**:
+        * **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
 
-            * **Подсеть** — выберите подсеть в той же облачной сети, в которой размещен кластер-приемник.
-            * **Публичный адрес** — выберите `Автоматически` или один адрес из списка зарезервированных IP-адресов.
+            * **{{ ui-key.yacloud.component.compute.network-select.field_subnetwork }}** — выберите подсеть в той же облачной сети, в которой размещен кластер-приемник.
+            * **{{ ui-key.yacloud.component.compute.network-select.field_external }}** — выберите `{{ ui-key.yacloud.component.compute.network-select.switch_auto }}` или один адрес из списка зарезервированных IP-адресов.
 
     
     1. Если вы используете группы безопасности для промежуточной виртуальной машины и кластера {{ mmy-name }}, [настройте их](../../managed-mysql/operations/connect.md#configure-security-groups).
 
-        {% include [preview-pp.md](../../_includes/preview-pp.md) %}
-
 
 * С помощью Terraform
 
-    1. Если у вас еще нет {{ TF }}, [установите и настройте его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
     1. Скачайте в ту же рабочую директорию файл конфигурации [data-migration-mysql-mmy.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/data-migration-mysql-mmy/data-migration-mysql-mmy.tf).
 
@@ -139,15 +137,17 @@
 
         ```bash
         mysqldump \
-            --host=<FQDN или IP-адрес хоста-мастера в кластере-источнике> \
-            --user=<имя пользователя> \
+            --host=<FQDN_или_IP-адрес> \
+            --user=<имя_пользователя> \
             --password \
             --port=<порт> \
             --set-gtid-purged=OFF \
             --quick \
             --single-transaction \
-            <имя базы данных> > ~/db_dump.sql
+            <имя_БД> > ~/db_dump.sql
         ```
+
+        Где `--host` — FQDN или IP-адрес хоста-мастера в кластере-источнике.
 
         При необходимости передайте в команде создания дампа дополнительные параметры:
 
@@ -195,10 +195,10 @@
             --rows=10000000 \
             --threads=8 \
             --compress \
-            --database=<имя базы данных> \
-            --user=<имя пользователя> \
+            --database=<имя_БД> \
+            --user=<имя_пользователя> \
             --ask-password \
-            --host=<FDQN или IP-адрес хоста-мастера в кластере-источнике>
+            --host=<FQDN_или_IP-адрес>
         ```
 
         Где:
@@ -210,6 +210,7 @@
         * `--rows` — количество строк во фрагментах, на которые будут разбиты таблицы. Чем меньше значение, тем больше будет файлов в дампе.
         * `--threads` — количество используемых потоков. Рекомендуется использовать значение, равное половине свободных ядер на сервере.
         * `--compress` — сжатие выходных файлов.
+        * `--host` — FQDN или IP-адрес хоста-мастера в кластере-источнике.
 
     1. В файлах дампа исправьте имена движков таблиц на `InnoDB`:
 
@@ -232,7 +233,7 @@
 1. Скопируйте архив с дампом базы данных на промежуточную виртуальную машину, например, используя утилиту `scp`:
 
     ```bash
-    scp ~/db_dump.tar.gz <имя пользователя ВМ>@<публичный IP-адрес ВМ>:~/db_dump.tar.gz
+    scp ~/db_dump.tar.gz <имя_пользователя_ВМ>@<публичный_IP-адрес_ВМ>:~/db_dump.tar.gz
     ```
 
 1. Извлеките дамп из архива:
@@ -267,22 +268,22 @@
 
             ```bash
             mysql \
-                --host=c-<идентификатор кластера-приемника>.rw.{{ dns-zone }} \
-                --user=<имя пользователя> \
+                --host=c-<идентификатор_кластера-приемника>.rw.{{ dns-zone }} \
+                --user=<имя_пользователя> \
                 --port={{ port-mmy }} \
-                <имя базы данных> < ~/db_dump.sql
+                <имя_БД> < ~/db_dump.sql
             ```
 
         * Если вы восстанавливаете дамп с хоста, подключающегося к {{ yandex-cloud }} из интернета, [получите SSL-сертификат](../../managed-mysql/operations/connect.md#get-ssl-cert) и передайте параметры `--ssl-ca` и `--ssl-mode` в команде восстановления:
 
             ```bash
             mysql \
-                --host=c-<идентификатор кластера-приемника>.rw.{{ dns-zone }} \
-                --user=<имя пользователя> \
+                --host=c-<идентификатор_кластера-приемника>.rw.{{ dns-zone }} \
+                --user=<имя_пользователя> \
                 --port={{ port-mmy }} \
                 --ssl-ca=~/.mysql/root.crt \
                 --ssl-mode=VERIFY_IDENTITY \
-                <имя базы данных> < ~/db_dump.sql
+                <имя_БД> < ~/db_dump.sql
             ```
 
 * С использованием утилиты myloader
@@ -299,12 +300,12 @@
 
         ```bash
         myloader \
-            --host=c-<идентификатор кластера-приемника>.rw.{{ dns-zone }} \
+            --host=c-<идентификатор_кластера-приемника>.rw.{{ dns-zone }} \
             --directory=db_dump/ \
             --overwrite-tables \
             --threads=8 \
             --compress-protocol \
-            --user=<имя пользователя> \
+            --user=<имя_пользователя> \
             --ask-password
         ```
 
@@ -314,7 +315,7 @@
 
 ### Удаление созданных ресурсов {#clear-out}
 
-Удалите ресурсы, которые вы больше не будете использовать, во избежание списания средств за них:
+Удалите ресурсы, которые вы больше не будете использовать, чтобы за них не списывалась плата:
 
 {% list tabs %}
 

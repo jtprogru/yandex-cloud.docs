@@ -1,8 +1,13 @@
+---
+title: "How to delete a service account"
+description: "Follow this guide to delete a service account."
+---
+
 # Deleting a service account
 
 {% note warning %}
 
-Deleting a [service account](../../concepts/users/service-accounts.md) is permanent. You can't restore a deleted service account; you can only [re-create it](create.md).
+Deleting a [service account](../../concepts/users/service-accounts.md) is permanent. You cannot restore a deleted service account; you can only [re-create it](create.md).
 
 {% endnote %}
 
@@ -36,8 +41,8 @@ Deleting a [service account](../../concepts/users/service-accounts.md) is perman
       +----------------------+------------------+-------------------------------+
       |          ID          |       NAME       |          DESCRIPTION          |
       +----------------------+------------------+-------------------------------+
-      | aje6o61dvog2h6g9a33s | my-robot         |                               |
-      | aje9sda1ufvqcmfksd3f | blabla           | bla bla bla is my description |
+      | aje6o61dvog2******** | my-robot         |                               |
+      | aje9sda1ufvq******** | account_name     | account_description           |
       +----------------------+------------------+-------------------------------+
       ```
    1. Delete the service account:
@@ -52,7 +57,7 @@ Deleting a [service account](../../concepts/users/service-accounts.md) is perman
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To delete a service account:
 
@@ -86,7 +91,7 @@ Deleting a [service account](../../concepts/users/service-accounts.md) is perman
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
       ```bash
@@ -102,3 +107,9 @@ Deleting a [service account](../../concepts/users/service-accounts.md) is perman
       ```
 
 {% endlist %}
+
+{% note info %}
+
+You cannot delete a service account while it is linked to some cloud resources, such as instance groups. First, update the service account in the resource settings or delete the resource and then delete the service account.
+
+{% endnote %}

@@ -104,7 +104,7 @@
  
    - Terraform
 
-     1. Если у вас еще нет {{ TF }}, [установите и настройте](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform) его.
+     1. {% include [terraform-install](../../_includes/terraform-install.md) %}
 
 
      1. Задайте параметры для Terraform-провайдера {{ yandex-cloud }}:
@@ -342,7 +342,7 @@
         terraform apply
         ```
 
-        1. Подтвердите изменение ресурсов и дождитесь завершения операции.
+     1. Подтвердите изменение ресурсов и дождитесь завершения операции.
 
    - API
 
@@ -397,7 +397,7 @@
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_base }}**:
      * Введите имя `net-vm`. 
      * Выберите зону доступности `{{ region-id }}-a`.
-  1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_image }}** выберите Ubuntu 22.04.   
+  1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_image }}** выберите [Ubuntu 22.04 LTS](/marketplace/products/yc/ubuntu-22-04-lts).   
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_network }}** выберите подсеть `subnet-a`.
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_access }}** укажите данные для доступа на ВМ:
      * В поле **{{ ui-key.yacloud.compute.instances.create.field_user }}** введите имя пользователя `ycuser`.
@@ -654,7 +654,7 @@
 1. Проверьте IP-связность с ВМ `dev-vm` внутри VPC:
 
    ```bash
-   ping -с3 <внутренний_IP-адрес_ВМ_dev-vm>
+   ping -c3 <внутренний_IP-адрес_ВМ_dev-vm>
    ```
 
    Результат:

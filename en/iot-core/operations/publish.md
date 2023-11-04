@@ -14,6 +14,8 @@ When using registries and devices, you can send messages of the following types:
 
 To receive messages, you need to subscribe to the sender. For information about how to do this, see [{#T}](subscribe.md).
 
+To learn how to make sure a message has been sent and delivered, see [{#T}](../tutorials/message-delivery-check.md).
+
 {% include [registry-and-device-topic-note](../../_includes/iot-core/registry-and-device-topic-note.md) %}
 
 {% include [iot-before-you-begin](../../_includes/iot-core/iot-before-you-begin.md) %}
@@ -314,7 +316,7 @@ A registry can send messages with commands to one, multiple, or all devices adde
 
 {% endlist %}
 
-## Sending a message in a broker
+## Sending a message in a broker {#broker}
 
 When using a broker, you can send a message to a random topic using your username and password or any certificate assigned to the broker for authorization.
 
@@ -354,7 +356,7 @@ When using a broker, you can send a message to a random topic using your usernam
       Where:
 
       - `--cert` and `--key`: Parameters for authorization using a certificate.
-      - `--topic`: A random topic name that conforms to the MQTT specification and doesn't start with `$`.
+      - `--topic`: Random topic name that conforms to the MQTT specification and does not start with `$`.
       - `--message`: Message text.
       - `--qos`: [Quality of service (QoS)](../concepts/index.md#qos).
 

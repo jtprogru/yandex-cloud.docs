@@ -1,7 +1,10 @@
 ---
+title: "How to restore a queue"
+description: "This article describes how to restore queues."
 sourcePath: en/tracker/api-ref/concepts/queues/restore-queue.md
 ---
-# Restore a queue
+
+# Restoring a queue
 
 {% note warning %}
 
@@ -38,7 +41,7 @@ Authorization: OAuth <token>
 
 {% list tabs %}
 
-- Successful execution of the request
+- The request is executed successfully
 
     {% include [answer-200](../../../_includes/tracker/api/answer-200.md) %}
 

@@ -31,13 +31,22 @@
      * Выберите [тип диска](../../concepts/disk.md#disks_types).
      * Укажите нужный размер диска.
 
+     
+     * {% include [encryption-section-boot](../../../_includes/compute/encryption-section-boot.md) %}
+
+
        Если вы хотите создать ВМ из существующего диска, в блоке **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** [добавьте диск](create-from-disks.md):
        * Нажмите **{{ ui-key.yacloud.compute.instances.create.label_add-disk }}**.
        * Введите имя диска.
        * Выберите [тип диска](../../concepts/disk.md#disks_types).
        * Укажите нужный размер блока.
        * Укажите нужный размер диска.
-       * (опционально) Включите опцию **{{ ui-key.yacloud.compute.instances.create-disk.field_auto-delete }}**, если нужно автоматически удалять диск при удалении ВМ, к которой он будет подключен.
+
+       
+       * {% include [encryption-section-secondary](../../../_includes/compute/encryption-section-secondary.md) %}
+
+
+       * (Опционально) Включите опцию **{{ ui-key.yacloud.compute.instances.create-disk.field_auto-delete }}**, если нужно автоматически удалять диск при удалении ВМ, к которой он будет подключен.
        * Выберите наполнение `{{ ui-key.yacloud.compute.instances.create-disk.value_source-disk }}`.
        * Нажмите **{{ ui-key.yacloud.compute.instances.create-disk.button_create }}**.
 
@@ -55,7 +64,7 @@
      * Выберите [платформу](../../concepts/vm-platforms.md).
      * Укажите [гарантированную долю](../../../compute/concepts/performance-levels.md) и необходимое количество vCPU, а также объем RAM.
      * Включите опцию **{{ ui-key.yacloud.component.compute.resources.field_preemptible }}**.
-     * (опционально) Включите [программно-ускоренную сеть](../../concepts/software-accelerated-network.md).
+     * (Опционально) Включите [программно-ускоренную сеть](../../concepts/software-accelerated-network.md).
 
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
 
@@ -66,7 +75,7 @@
 
 
   1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_access }}** укажите данные для доступа на ВМ:
-     * (опционально) Выберите или создайте [сервисный аккаунт](../../../iam/concepts/users/service-accounts.md). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
+     * (Опционально) Выберите или создайте [сервисный аккаунт](../../../iam/concepts/users/service-accounts.md). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
      * В поле **{{ ui-key.yacloud.compute.instances.create.field_user }}** введите имя пользователя.
 
        {% note alert %}
@@ -135,7 +144,8 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 
       ```hcl
@@ -304,7 +314,8 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
   1. Найдите в конфигурационном файле описание политики планирования ВМ, которую нужно сделать непрерываемой:
 
      ```hcl

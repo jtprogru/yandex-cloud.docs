@@ -1,6 +1,9 @@
-# Удалить группу безопасности
+---
+title: "Как удалить группу безопасности"
+description: "Следуя данной инструкции, вы сможете удалить группу безопасности."
+---
 
-{% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
+# Удалить группу безопасности
 
 {% note warning %}
 
@@ -63,7 +66,7 @@
 
   {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-  Подробнее о {{ TF }} [читайте в документации](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../_includes/terraform-install.md) %}
 
   Чтобы удалить группу безопасности, созданную с помощью {{ TF }}:
 

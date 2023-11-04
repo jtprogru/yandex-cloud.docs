@@ -1,6 +1,6 @@
 ---
 title: "How to configure a source {{ PG }} endpoint in {{ data-transfer-full-name }}"
-description: "In this tutorial, you'll learn how to set up a source {{ PG }} endpoint in {{ data-transfer-full-name }}."
+description: "In this tutorial, you will learn how to set up a source {{ PG }} endpoint in {{ data-transfer-full-name }}."
 ---
 
 # Configuring {{ PG }} source endpoints
@@ -10,7 +10,17 @@ When [creating](../index.md#create) or [editing](../index.md#update) an endpoint
 * [{{ mpg-full-name }} cluster](#managed-service) connection or [custom installation](#on-premise) settings, including those based on {{ compute-full-name }} VMs. These are required parameters.
 * [Additional parameters](#additional-settings).
 
+Before you get started, check the [Service specifics for {{ PG }} sources and targets](../../../concepts/work-with-endpoints.md#postgresql).
+
 ## {{ mpg-name }} cluster {#managed-service}
+
+
+{% note warning %}
+
+To create or edit an endpoint of a managed database, you need the [`{{ roles.mpg.viewer }}` role](../../../../managed-postgresql/security/index.md#mpg-viewer) or the primitive [`viewer` role](../../../../iam/concepts/access-control/roles.md#viewer) issued for the folder hosting a cluster of this managed database.
+
+{% endnote %}
+
 
 Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. Available only for clusters deployed in [{{ mpg-name }}](../../../../managed-postgresql/).
 
@@ -36,20 +46,20 @@ Connecting to the database with the cluster ID specified in {{ yandex-cloud }}. 
 
    
    ```hcl
-   resource "yandex_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-     name = "<endpoint name>"
+   resource "yandex_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+     name = "<endpoint_name>"
      settings {
        postgres_source {
-         security_groups = [ "list of security group IDs" ]
+         security_groups = ["<list_of_security_group_IDs>"]
          connection {
-           mdb_cluster_id = "<{{ mpg-name }} cluster ID>"
+           mdb_cluster_id = "<cluster_ID>"
          }
-         database = "<name of database being transferred>"
-         user     = "<username for connection>"
+         database = "<migrated_database_name>"
+         user     = "<username_for_connection>"
          password {
-           raw = "<user password>"
+           raw = "<user_password>"
          }
-         <advanced endpoint settings>
+         <additional_endpoint_settings>
        }
      }
    }
@@ -90,23 +100,23 @@ For OnPremise, all fields are filled in manually.
 
    
    ```hcl
-   resource "yandex_datatransfer_endpoint" "<endpoint name in {{ TF }}>" {
-     name = "<endpoint name>"
+   resource "yandex_datatransfer_endpoint" "<endpoint_name_in_{{ TF }}>" {
+     name = "<endpoint_name>"
      settings {
        postgres_source {
-         security_groups = [ "list of security group IDs" ]
+         security_groups = ["<list_of_security_group_IDs>"]
          connection {
            on_premise {
-             hosts = ["<host list>"]
-             port  = <connection port>
+             hosts = ["<list_of_hosts>"]
+             port  = <port_for_connection>
            }
          }
-         database = "<name of database being transferred>"
-         user     = "<username for connection>"
+         database = "<migrated_database_name>"
+         user     = "<username_for_connection>"
          password {
-           raw = "<user password>"
+           raw = "<user_password>"
          }
-         <advanced endpoint settings>
+         <additional_endpoint_settings>
        }
      }
    }
@@ -133,16 +143,16 @@ For OnPremise, all fields are filled in manually.
 
    * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresTableFilter.exclude_tables.title }}**: Data from the listed tables is not transferred.
 
-      Both lists support expressions in the following format:
+      The lists include the name of the [schema]({{pg-docs}}/ddl-schemas.html) (description of DB contents, structure, and integrity constraints) and the table name. Both lists support expressions in the following format:
 
-      * `<schema name>.<table name>`: Fully qualified table name.
-      * `<schema name>.*`: All tables in the schema.
+      * `<schema_name>.<table_name>`: Fully qualified table name.
+      * `<schema_name>.*`: All tables in the specified schema.
 
       {% include [transfer custom types PGSQL](../../../../_includes/data-transfer/custom-types-pgsql.md) %}
 
    * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresSource.object_transfer_settings.title }}**: If required, select the DB schema elements to transfer when activating or deactivating a transfer.
 
-   * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresSourceAdvancedSettings.slot_byte_lag_limit.title }}**: Maximum size of Write-Ahead Log kept in replication slot. If exceeded, the replication process is stopped and the replication slot is deleted. The default value is 50 GB.
+   * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresSourceAdvancedSettings.slot_byte_lag_limit.title }}**: Maximum size of Write-Ahead Log kept in replication slot. If exceeded, the replication process is stopped and the replication slot is deleted. The default value is 50 GB. This setting does not prevent disk overflow in the source database. You can only use it for {{ PG }} version below 13, and we recommend [monitoring the WAL slot value](../../prepare.md#source-pg) in the source database.
 
    * **{{ ui-key.yc-data-transfer.data-transfer.console.form.postgres.console.form.postgres.PostgresSourceAdvancedSettings.service_schema.title }}**: Specify the name of the schema to store service tables (`__consumer_keeper` and `__data_transfer_mole_finder`).
 
@@ -156,16 +166,16 @@ For OnPremise, all fields are filled in manually.
 
       {% include [Description for Included tables](../../../../_includes/data-transfer/fields/description-included-tables.md) %}
 
-   * `--exclude-table`: List of excluded tables. Data from tables on this list will not be transferred.
+   * `--exclude-table`: List of excluded tables. Data from the listed tables will not be transferred.
 
-      Both lists support expressions in the following format:
+      The lists include the name of the schema (description of DB contents, structure, and integrity constraints) and the table name. Both lists support expressions in the following format:
 
-      * `<schema name>.<table name>`: Fully qualified table name.
-      * `<schema name>.*`: All tables in the schema.
+      * `<schema_name>.<table_name>`: Fully qualified table name.
+      * `<schema_name>.*`: All tables in the specified schema.
 
       {% include [transfer custom types PGSQL](../../../../_includes/data-transfer/custom-types-pgsql.md) %}
 
-   * `--slot-lag-limit`: Maximum size of the write-ahead log kept in the replication slot. If exceeded, the replication process is stopped and the replication slot is deleted. Default value: 50 GB.
+   * `--slot-lag-limit`: Maximum size of the write-ahead log kept in the replication slot. If exceeded, the replication process is stopped and the replication slot is deleted. The default value is 50 GB.
 
    * `--service-schema`: Name of the DB schema for service tables.
 
@@ -180,16 +190,16 @@ For OnPremise, all fields are filled in manually.
 
       {% include [Description for Included tables](../../../../_includes/data-transfer/fields/description-included-tables.md) %}
 
-   * `exclude_tables`: List of excluded tables. Data from tables on this list will not be transferred.
+   * `exclude_tables`: List of excluded tables. Data from the listed tables will not be transferred.
 
-      Both lists support expressions in the following format:
+      The lists include the name of the schema (description of DB contents, structure, and integrity constraints) and the table name. Both lists support expressions in the following format:
 
-      * `<schema name>.<table name>`: Fully qualified table name.
-      * `<schema name>.*`: All tables in the schema.
+      * `<schema_name>.<table_name>`: Fully qualified table name.
+      * `<schema_name>.*`: All tables in the specified schema.
 
       {% include [transfer custom types PGSQL](../../../../_includes/data-transfer/custom-types-pgsql.md) %}
 
-   * `slot_gigabyte_lag_limit`: Maximum size of Write-Ahead Log kept in replication slot. If exceeded, the replication process is stopped and the replication slot is deleted. Default value: 50 GB.
+   * `slot_gigabyte_lag_limit`: Maximum size of Write-Ahead Log kept in replication slot. If exceeded, the replication process is stopped and the replication slot is deleted. The default value is 50 GB.
 
    * `service_schema`: DB schema name for housekeeping tables.
 
@@ -226,16 +236,16 @@ For OnPremise, all fields are filled in manually.
 
       {% include [Description for Included tables](../../../../_includes/data-transfer/fields/description-included-tables.md) %}
 
-   * `excludeTables`: Blacklist of tables. Data from tables on this list will not be transferred.
+   * `excludeTables`: List of excluded tables. Data from the listed tables will not be transferred.
 
-      Both lists support expressions in the following format:
+      The lists include the name of the schema (description of DB contents, structure, and integrity constraints) and the table name. Both lists support expressions in the following format:
 
-      * `<schema name>.<table name>`: Fully qualified table name.
-      * `<schema name>.*`: All tables in the schema.
+      * `<schema_name>.<table_name>`: Fully qualified table name.
+      * `<schema_name>.*`: All tables in the specified schema.
 
       {% include [transfer custom types PGSQL](../../../../_includes/data-transfer/custom-types-pgsql.md) %}
 
-   * `slotByteLagLimit`: Maximum size of the write-ahead log kept in the replication slot. If exceeded, the replication process is stopped and the replication slot is deleted. Default value: 50 GB.
+   * `slotByteLagLimit`: Maximum size of the write-ahead log kept in the replication slot. If exceeded, the replication process is stopped and the replication slot is deleted. The default value is 50 GB.
 
    * `serviceSchema`: Name of the DB schema for service tables.
 
@@ -247,11 +257,9 @@ For OnPremise, all fields are filled in manually.
 
 {% note info %}
 
-The default settings of the source endpoint let you successfully perform a transfer for most databases. Change the settings of the initial and final stages of the transfer only if it is necessary.
+The default settings of the source endpoint allow you to successfully perform a transfer for most databases. Change the settings of the initial and final stages of the transfer only if it is necessary.
 
 {% endnote %}
-
-The service does not transfer `MATERIALIZED VIEWS`. For more detail, please review [Service specifics for sources and targets](../../../concepts/index.md#postgresql).
 
 During a transfer, the database schema is transferred from the source to the target. The transfer is performed in two stages:
 
@@ -271,8 +279,8 @@ The transfer of the schema at both the initial and final stages is performed usi
 
 {% note info %}
 
-When the transfer is restarted at the replication stage, the table schemas on the target are preserved. In this case, only the schemas of the tables that are missing on the target at the time of restart are transferred to the target.
+When editing the settings of an endpoint of the transfer in the {{ dt-status-repl }} status, the table schemas on the target are preserved. In this case, only the schemas of the tables that are missing on the target at the time of restart are transferred to the target.
 
 {% endnote %}
 
-Replication can't guarantee that sequence values are preserved, so we recommend updating the `sequences` on the target.
+Replication cannot guarantee that sequence values are preserved, so we recommend updating the `sequences` on the target.

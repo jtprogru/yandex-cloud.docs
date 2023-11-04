@@ -1,4 +1,11 @@
+---
+title: "Managing access to {{ mes-name }}"
+description: "This section describes which resources you can assign roles to, which roles exist in the service, and which roles are required for particular actions."
+---
+
 # Managing access to {{ mes-name }}
+
+{% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
 
 
 In this section, you will learn:
@@ -25,7 +32,7 @@ The chart below shows which roles are available in the service and how they inhe
 
 ![image](../../_assets/mdb/roles-managed-elasticsearch.svg)
 
-{% include [mes-auditor](../../_includes/iam/roles/mes-auditor.md) %}
+### Service roles {#service-roles}
 
 {% include [mes-viewer](../../_includes/iam/roles/mes-viewer.md) %}
 
@@ -33,6 +40,7 @@ The chart below shows which roles are available in the service and how they inhe
 
 {% include [mes-admin](../../_includes/iam/roles/mes-admin.md) %}
 
+{% include [mdb.auditor](../../_includes/iam/roles/mdb.auditor.md) %}
 
 {% include [mdb.viewer](../../_includes/iam/roles/mdb.viewer.md) %}
 
@@ -40,25 +48,17 @@ The chart below shows which roles are available in the service and how they inhe
 
 {% include [roles-vpc-public-admin](../../_includes/roles-vpc-public-admin.md) %}
 
-### {{ roles-viewer }} {#viewer}
-
-{% include [roles-viewer](../../_includes/roles-viewer.md) %}
-
-### {{ roles-editor }} {#editor}
-
-{% include [roles-editor](../../_includes/roles-editor.md) %}
-
-### {{ roles-admin }} {#admin}
-
-{% include [roles-admin](../../_includes/roles-admin.md) %}
-
-### {{ roles-cloud-member }} {#member}
+#### {{ roles-cloud-member }} {#member}
 
 {% include [roles-cloud-member](../../_includes/roles-cloud-member.md) %}
 
-### {{ roles-cloud-owner }} {#owner}
+#### {{ roles-cloud-owner }} {#owner}
 
 {% include [roles-cloud-owner](../../_includes/roles-cloud-owner.md) %}
+
+### Primitive roles {#primitive-roles}
+
+{% include [roles-primitive](../../_includes/roles-primitive.md) %}
 
 ## Roles required {#required-roles}
 

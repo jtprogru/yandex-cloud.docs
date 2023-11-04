@@ -6,19 +6,17 @@ To use [{{ mkf-msr }}](../../managed-kafka/concepts/managed-schema-registry.md#m
 
 ## Getting started {#before-you-begin}
 
-1. [Create a {{ mkf-name }} cluster](../../managed-kafka/operations/cluster-create.md) with any suitable configuration. When creating a cluster, enable **Schema registry** and **Public access**.
+1. [Create a {{ mkf-name }} cluster](../../managed-kafka/operations/cluster-create.md) with any suitable configuration. When creating a cluster, enable **{{ ui-key.yacloud.kafka.field_schema-registry }}** and **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}**.
 
    1. [Create a topic](../../managed-kafka/operations/cluster-topics.md#create-topic) named `messages` for exchanging messages between the producer and the consumer.
-   1. [Create a user](../../managed-kafka/operations/cluster-accounts.md#create-account) named `user` and [grant it the rights](../../managed-kafka/operations/cluster-accounts.md#grant-permission) for the `messages` topic:
-      * `ACCESS_ROLE_CONSUMER`,
-      * `ACCESS_ROLE_PRODUCER`.
+   1. [Create a user](../../managed-kafka/operations/cluster-accounts.md#create-account) named `user` and [grant them the rights](../../managed-kafka/operations/cluster-accounts.md#grant-permission) for the `messages` topic:
+      * `ACCESS_ROLE_CONSUMER`
+      * `ACCESS_ROLE_PRODUCER`
 
-1. In the network hosting the {{ mkf-name }} cluster, [create a VM](../../compute/operations/vm-create/create-linux-vm.md) with Ubuntu 20.04 and a public IP address.
+1. In the network hosting the {{ mkf-name }} cluster, [create a VM](../../compute/operations/vm-create/create-linux-vm.md) with [Ubuntu 20.04](/marketplace/products/yc/ubuntu-20-04-lts) and a public IP address.
 
 
 1. If you are using security groups, [configure them](../../managed-kafka/operations/connect.md#configuring-security-groups) to allow all required traffic between the {{ mkf-name }} cluster and the VM.
-
-   {% include [preview-pp.md](../../_includes/preview-pp.md) %}
 
 
 ## Create producer and consumer scripts {#create-scripts}

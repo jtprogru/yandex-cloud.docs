@@ -83,7 +83,7 @@
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
   
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
   Чтобы открыть публичный доступ к операциям с бакетом:
@@ -139,3 +139,9 @@
   Чтобы открыть публичный доступ к операциям с бакетом, воспользуйтесь методом REST API [update](../../api-ref/Bucket/update.md) для ресурса [Bucket](../../api-ref/Bucket/index.md) или вызовом gRPC API [BucketService/Update](../../api-ref/grpc/bucket_service.md#Update).
 
 {% endlist %}
+
+{% note info %}
+
+Если в бакете созданы политики доступа, то для корректной работы публичного доступа их также нужно [настроить](./policy.md#apply-policy).
+
+{% endnote %}

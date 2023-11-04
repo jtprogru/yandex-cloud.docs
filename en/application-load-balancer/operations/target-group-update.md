@@ -11,21 +11,21 @@ To add a VM to a target group:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder where the target group was created.
-   1. Select **{{ alb-name }}**.
-   1. On the left-hand panel, select ![image](../../_assets/trgroups.svg) **Target groups**.
-   1. Click on the name of the group you need.
-   1. Click **Add targets**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+   1. In the left-hand panel, select ![image](../../_assets/trgroups.svg) **{{ ui-key.yacloud.alb.label_target-groups }}**.
+   1. Click the name of the group.
+   1. Click **{{ ui-key.yacloud.alb.button_add-targets }}**.
    1. Select a VM from the list or add the target manually:
-      1. In the **IP address** field, specify the target's IP and select the [subnet](../../vpc/concepts/network.md#subnet).
+      1. In the **{{ ui-key.yacloud.alb.column_target }}** field, specify the target's IP and select the [subnet](../../vpc/concepts/network.md#subnet).
 
       
-      1. (optional) If the target's IP does not belong to {{ vpc-name }}, select **{{ ui-key.yacloud.alb.label_target-private-ip }}**.
+      1. (Optional) If the target's IP does not belong to {{ vpc-name }}, select **{{ ui-key.yacloud.alb.label_target-private-ip }}**.
 
-         For example, specify the IP belonging to your data center connected to {{ yandex-cloud }} via [{{ interconnect-name }}](../../interconnect/). The IP address must be within the [RFC 1918 private ranges](https://datatracker.ietf.org/doc/html/rfc1918#section-3).
+         For example, specify a private IPv4 address belonging to your data center connected to {{ yandex-cloud }} through [{{ interconnect-name }}](../../interconnect/index.yaml). The IP address must be within the [RFC 1918 private ranges](https://datatracker.ietf.org/doc/html/rfc1918#section-3). For more information, see [Subnets](../../vpc/concepts/network.md#subnet).
 
 
-      1. Click **Add target resource**.
-   1. Click **Save**.
+      1. Click **{{ ui-key.yacloud.alb.button_add-target }}**.
+   1. Click **{{ ui-key.yacloud.common.add }}**.
 
 - CLI
 
@@ -39,7 +39,7 @@ To add a VM to a target group:
       yc alb target-group add-targets --help
       ```
 
-   1. Run the command, specifying the target group name, subnet name, and internal IP address of the VM:
+   1. Run the command, specifying the target group name, [subnet](../../vpc/concepts/network.md#subnet) name, and internal IP address of the VM:
 
       ```bash
       yc alb target-group add-targets \
@@ -53,17 +53,43 @@ To add a VM to a target group:
       done (1s)
       id: a5d751meibht4ev26...
       name: <target_group_name>
+      folder_id: aoerb349v3h4bupph...
+      targets:
       ...
-      - ip_address: <VM_internal_IP_address>
-        subnet_id: fo2tgfikh3hergif2...
+        - ip_address: <VM_internal_IP_address>
+          subnet_id: fo2tgfikh3hergif2...
       created_at: "2021-02-11T11:16:27.770674538Z"
+      ```
+
+      You can also add to a target group targets residing outside {{ vpc-name }}, e.g., those in your data center connected to {{ yandex-cloud }} through [{{ interconnect-name }}](../../interconnect/index.yaml). The IP addresses of targets must be within the [RFC 1918 private ranges](https://datatracker.ietf.org/doc/html/rfc1918#section-3). For more information, see [Subnets](../../vpc/concepts/network.md#subnet).
+
+      Run the following command, specifying the target group name and private IPv4 address of the target as parameters:
+
+      ```bash
+      yc alb target-group add-targets \
+        --name <target_group_name> \
+        --target private-ip-address=true,ip-address=<target_private_IPv4_address>
+      ```
+
+      Result:
+
+      ```yaml
+      done (1s)
+      id: a5d751meibht4ev26...
+      name: <target_group_name>
+      folder_id: aoerb349v3h4bupph...
+      targets:
+      ...
+        - ip_address: <target_private_IPv4_address>
+          private_ipv4_address: true
+      created_at: "2023-07-25T08:55:14.172526884Z"
       ```
 
 - {{ TF }}
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see our documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
    1. Open the {{ TF }} configuration file and add the target section with `target` parameters to the fragment describing the target group:
 
       ```hcl
@@ -96,7 +122,36 @@ To add a VM to a target group:
       * `name`: Target group name.
       * `target`: Target parameters:
          * `subnet_id`: ID of the subnet hosting the VM. You can get a list of available subnets using the [CLI](../../cli/quickstart.md) command: `yc vpc subnet list`.
-         * `ip_address`: VM's internal IP. You can get a list of internal IP addresses using the [CLI](../../cli/quickstart.md) command: `yc vpc subnet list-used-addresses --id <subnet ID>`.
+         * `ip_address`: VM internal IP. You can get a list of internal IP addresses using the [CLI](../../cli/quickstart.md) command: `yc vpc subnet list-used-addresses --id <subnet ID>`.
+
+      You can also add to a target group targets residing outside {{ vpc-name }}, e.g., those in your data center connected to {{ yandex-cloud }} through [{{ interconnect-name }}](../../interconnect/index.yaml):
+
+      ```hcl
+      resource "yandex_alb_target_group" "foo" {
+        name                   = "<target_group_name>"
+
+        target {
+          private_ipv4_address = true
+          ip_address           = "<private_IPv4_address_of_target_1>"
+        }
+
+        target {
+          private_ipv4_address = true
+          ip_address           = "<private_IPv4_address_of_target_2>"
+        }
+
+        target {
+          private_ipv4_address = true
+          ip_address           = "<private_IPv4_address_of_target_3>"
+        }
+      }
+      ```
+
+      Where `yandex_alb_target_group` specifies the target group parameters:
+      * `name`: Target group name.
+      * `target`: Target parameters:
+         * `private_ipv4_address`: Parameter indicating that the IP is outside {{ vpc-name }}.
+         * `ip_address`: Private IPv4 address of the target. The IP addresses must be within the [RFC 1918 private ranges](https://datatracker.ietf.org/doc/html/rfc1918#section-3). For more information, see [Subnets](../../vpc/concepts/network.md#subnet).
 
       For more information about the `yandex_alb_target_group` resource parameters, see the [{{ TF }} provider documentation]({{ tf-provider-alb-targetgroup }}).
    1. Apply the changes:
@@ -124,11 +179,11 @@ To remove a VM from a target group:
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder where the target group was created.
-   1. Select **{{ alb-name }}**.
-   1. On the left-hand panel, select ![image](../../_assets/trgroups.svg) **Target groups**.
-   1. Click on the name of the group you need.
-   1. To the right of the VM, click ![image](../../_assets/horizontal-ellipsis.svg) and select **Delete target**.
-   1. In the window that opens, click **Delete**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_application-load-balancer }}**.
+   1. In the left-hand panel, select ![image](../../_assets/trgroups.svg) **{{ ui-key.yacloud.alb.label_target-groups }}**.
+   1. Click the name of the group.
+   1. To the right of the VM, click ![image](../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.common.delete }}**.
+   1. In the window that opens, click **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 
@@ -159,11 +214,28 @@ To remove a VM from a target group:
       created_at: "2023-06-10T13:14:55.239094324Z"
       ```
 
+      To remove from your target group a target residing outside {{ vpc-name }}, e.g., in your data center connected to {{ yandex-cloud }} through [{{ interconnect-name }}](../../interconnect/index.yaml), run the following command, specifying the target group name and private IPv4 address of the target:
+
+      ```bash
+      yc alb target-group remove-targets \
+        --name <target_group_name> \
+        --target private-ip-address=true,ip-address=<target_private_IPv4_address>
+      ```
+
+      Result:
+
+      ```yaml
+      id: ds7urm6dn6cm48ba7...
+      name: <target_group_name>
+      folder_id: aoerb349v3h4bupph...
+      created_at: "2023-06-10T13:14:55.239094324Z"
+      ```
+
 - {{ TF }}
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   For more information about {{ TF }}, [see our documentation](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
    1. Open the {{ TF }} configuration file and delete the `target` section with the IP address of the VM to be removed in the fragment describing the target group:
 
       Sample target group description in the {{ TF }} configuration:

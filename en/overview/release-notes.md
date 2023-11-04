@@ -22,6 +22,7 @@ You can track changes in the {{ yandex-cloud }} services and tools using our doc
 * [{{ ml-platform-full-name }}](../datasphere/release-notes.md)
 * {{ speechkit-full-name }}: [Speech recognition](../{{ speechkit-slug }}/release-notes-stt.md) and [synthesis](../{{ speechkit-slug }}/release-notes-tts.md)
 * [{{ vision-full-name }}](../vision/release-notes.md)
+* [{{ yagpt-full-name }}](../yandexgpt/release-notes.md)
 
 ## Business tools {#business-tools}
 
@@ -32,3 +33,7 @@ You can track changes in the {{ yandex-cloud }} services and tools using our doc
 ## {{ yandex-cloud }} tools {#working-tools}
 
 * [CLI](../cli/release-notes.md)
+
+## Container-based development {#containerization}
+
+* [{{ managed-k8s-full-name }}](../managed-kubernetes/changelog.md)

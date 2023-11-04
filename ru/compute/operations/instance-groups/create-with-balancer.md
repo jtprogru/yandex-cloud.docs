@@ -6,6 +6,10 @@
 
 {% include [sa.md](../../../_includes/instance-groups/sa.md) %}
 
+{% include [password-reset-note](../../../_includes/compute/password-reset-note.md) %}
+
+Чтобы создать группу ВМ с сетевым балансировщиком нагрузки:
+
 {% list tabs %}
 
 - Консоль управления
@@ -48,7 +52,6 @@
       * В блоке **{{ ui-key.yacloud.compute.instances.create.section_access }}** укажите данные для доступа на ВМ:
         * Выберите сервисный аккаунт, который следует привязать к ВМ.
         * Если выбран [образ](../../concepts/image.md) на основе Linux, заполните поля **{{ ui-key.yacloud.compute.instances.create.field_user }}** и **{{ ui-key.yacloud.compute.instances.create.field_key }}**. В качестве ключа укажите содержимое файла [открытого ключа](../../../compute/operations/vm-connect/ssh.md#creating-ssh-keys).
-        * Если выбран образ на основе Windows, укажите пароль пользователя `Administrator`.
         * При необходимости выберите опцию `{{ ui-key.yacloud.compute.instances.create.field_serial-port-enable }}`.
       * Нажмите кнопку **{{ ui-key.yacloud.compute.groups.create.button_edit }}**.
   1. В блоке **{{ ui-key.yacloud.compute.groups.create.section_deploy }}**:
@@ -66,7 +69,7 @@
   1. В блоке **{{ ui-key.yacloud.compute.groups.create.section_ylb }}** включите опцию **{{ ui-key.yacloud.compute.groups.create.field_target-group-attached }}**.
   1. Укажите настройки целевой группы. Подробнее см. в разделе [{#T}](../../concepts/instance-groups/balancers.md#settings-nlb).
   1. При необходимости активируйте опцию **{{ ui-key.yacloud.compute.groups.create.section_health-check }}** для получения сведений о состоянии ВМ и их автоматического восстановления в случае сбоя.
-      * В поле **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-protocol }}** выберите протокол проверок состояния: `{{ ui-key.yacloud.ylb.health-check.label_http }}` или `{{ ui-key.yacloud.ylb.health-check.label_tcp }}`.
+      * В поле **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-protocol }}** выберите протокол проверок состояния: `{{ ui-key.yacloud.common.label_http }}` или `{{ ui-key.yacloud.common.label_tcp }}`.
       * В поле **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-path }}** (для типа HTTP) укажите URL‐путь запроса, на который {{ ig-name }} будет отправлять запросы проверки для HTTP.
       * В поле **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-port }}** укажите номер порта от 1 до 32767, на который {{ ig-name }} будет отправлять запросы проверки.
       * В поле **{{ ui-key.yacloud.load-balancer.network-load-balancer.label_health-check-timeout }}** укажите время ожидания ответа от 1 до 60 секунд.
@@ -169,6 +172,10 @@
        allocation_policy:
          zones:
            - zone_id: {{ region-id }}-a
+             instance_tags_pool:
+             - first
+             - second
+             - third
        ```
 
        Где:
@@ -190,39 +197,43 @@
  
        Подробнее о настройках целевой группы см. в разделе [{#T}](../../concepts/instance-groups/balancers.md#settings-nlb).
 
-  Полный код файла `specification.yaml`:
+     Полный код файла `specification.yaml`:
 
-  ```yaml
-  name: first-fixed-group-with-balancer
-  service_account_id: <ID>
-  description: "This instance group was created from YAML config."
-  instance_template:
-    platform_id: standard-v3
-    resources_spec:
-      memory: 2g
-      cores: 2
-    boot_disk_spec:
-      mode: READ_WRITE
-      disk_spec:
-        image_id: fdvk34al8k5n********
-        type_id: network-hdd
-        size: 32g
-    network_interface_specs:
-      - network_id: c64mknqgnd8a********
-        primary_v4_address_spec: {}
-    deploy_policy:
-      max_unavailable: 1
-      max_expansion: 0
-    scale_policy:
-      fixed_scale:
-        size: 3
-    allocation_policy:
-      zones:
-        - zone_id: {{ region-id }}-a
-    load_balancer_spec:
-      target_group_spec:
-        name: first-target-group
-    ```
+     ```yaml
+     name: first-fixed-group-with-balancer
+     service_account_id: <ID>
+     description: "This instance group was created from YAML config."
+     instance_template:
+       platform_id: standard-v3
+       resources_spec:
+         memory: 2g
+         cores: 2
+       boot_disk_spec:
+         mode: READ_WRITE
+         disk_spec:
+           image_id: fdvk34al8k5n********
+           type_id: network-hdd
+           size: 32g
+       network_interface_specs:
+         - network_id: c64mknqgnd8a********
+           primary_v4_address_spec: {}
+       deploy_policy:
+         max_unavailable: 1
+         max_expansion: 0
+       scale_policy:
+         fixed_scale:
+           size: 3
+       allocation_policy:
+         zones:
+           - zone_id: {{ region-id }}-a
+             instance_tags_pool:
+             - first
+             - second
+             - third
+       load_balancer_spec:
+         target_group_spec:
+           name: first-target-group
+       ``` 
 
   1. Создайте группу ВМ в каталоге по умолчанию:
 
@@ -243,7 +254,8 @@
 
 - {{ TF }}
 
-  Если у вас еще нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
+
   1. Опишите в конфигурационном файле параметры ресурсов, которые необходимо создать:
 
      ```hcl
@@ -255,13 +267,13 @@
      resource "yandex_resourcemanager_folder_iam_member" "editor" {
        folder_id = "<идентификатор_каталога>"
        role      = "editor"
-       member   = "serviceAccount:${yandex_iam_service_account.ig-sa.id}"
+       member    = "serviceAccount:${yandex_iam_service_account.ig-sa.id}"
      }
 
      resource "yandex_compute_instance_group" "ig-1" {
-       name               = "fixed-ig-with-balancer"
-       folder_id          = "<идентификатор_каталога>"
-       service_account_id = "${yandex_iam_service_account.ig-sa.id}"
+       name                = "fixed-ig-with-balancer"
+       folder_id           = "<идентификатор_каталога>"
+       service_account_id  = "${yandex_iam_service_account.ig-sa.id}"
        deletion_protection = "<защита_от_удаления:_true_или_false>"
        instance_template {
          platform_id = "standard-v3"

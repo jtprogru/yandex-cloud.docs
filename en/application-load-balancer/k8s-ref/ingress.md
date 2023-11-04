@@ -50,11 +50,16 @@ metadata:
     ingress.alb.yc.io/internal-ipv4-address: <string>
     ingress.alb.yc.io/internal-alb-subnet: <string>
     ingress.alb.yc.io/protocol: <string>
+    ingress.alb.yc.io/group-settings-name: <string>
     ingress.alb.yc.io/transport-security: <string>
     ingress.alb.yc.io/prefix-rewrite: <string>
     ingress.alb.yc.io/upgrade-types: <string>
     ingress.alb.yc.io/request-timeout: <string>
     ingress.alb.yc.io/idle-timeout: <string>
+    ingress.alb.yc.io/modify-header-response-append: <string>
+    ingress.alb.yc.io/modify-header-response-replace: <string>
+    ingress.alb.yc.io/modify-header-response-rename: <string>
+    ingress.alb.yc.io/modify-header-response-remove: <string>
 ```
 
 Where:
@@ -78,8 +83,6 @@ Where:
    All the subnets of a single load balancer must belong to the same network with no more than one network specified in each [availability zone](../../overview/concepts/geo-scope.md).
 
 * `ingress.alb.yc.io/security-groups` (`string`)
-
-   {% include [security-groups-note-services](../../_includes/vpc/security-groups-note-services.md) %}
 
    List of {{ vpc-name }} [security groups](../../vpc/concepts/security-groups.md) for a load balancer. Group IDs are provided in a comma-separated list, such as:
 
@@ -119,9 +122,44 @@ Where:
 
    Connection protocol for load balancer and backends described in `Ingress`:
 
-   * `http`: HTTP/1.1. Default value.
-   * `http2`: HTTP/2.
-   * `grpc`: gRPC.
+   * `http`: HTTP/1.1. Default value
+   * `http2`: HTTP/2
+   * `grpc`: gRPC
+
+* `ingress.alb.yc.io/group-settings-name` (`string`)
+
+   Name for the Ingress group settings combined in a single load balancer.
+
+   To specify the settings, create an additional resource named `IngressGroupSettings`, such as:
+
+   ```yaml
+   apiVersion: alb.yc.io/v1alpha1
+   kind: IngressGroupSettings
+   metadata:
+     name: non-default-settings
+   logOptions:
+     logGroupID: <log_group_ID>
+     discardRules:
+       - discardPercent: 50
+         grpcCodes:
+           - OK
+           - CANCELLED
+           - UNKNOWN
+       - discardPercent: 67
+         httpCodeIntervals:
+           - HTTP_1XX
+       - discardPercent: 20
+         httpCodes:
+           - 200
+           - 404
+   ```
+
+   Specify the log group ID and parameters of the [rules for discarding logs](../concepts/application-load-balancer.md#discard-logs-rules):
+
+   * `httpCodes`: HTTP status codes.
+   * `httpCodeIntervals`: Classes of HTTP status codes.
+   * `grpcCodes`: gRPC codes.
+   * `discardPercent`: Percentage of logs to discard.
 
 * `ingress.alb.yc.io/transport-security` (`string`)
 
@@ -186,6 +224,55 @@ Where:
    Unless an annotation is specified, a connection can remain idle for any length of time until the overall timeout expires (`ingress.alb.yc.io/request-timeout` annotation).
 
    In {{ alb-name }}, the timeout will be configured on all HTTP routers created for the `Ingress` resource.
+
+* `ingress.alb.yc.io/modify-header-response-append` (`string`)
+
+   Adds a string to the response header value. The header and string should be specified in the following format:
+
+   ```yaml
+   ingress.alb.yc.io/modify-header-response-append: <key>=<value>
+   ```
+
+   Where:
+
+   * `<key>`: Name of the header to be modified.
+   * `value`: String to be added to the header value.
+
+* `ingress.alb.yc.io/modify-header-response-replace` (`string`)
+
+   It replaces the response header value. The header and its new value should be specified in the following format:
+
+   ```yaml
+   ingress.alb.yc.io/modify-header-response-replace: <key>=<value>
+   ```
+
+   Where:
+
+   * `<key>`: Name of the header to be modified.
+   * `<value>`: New header value.
+
+* `ingress.alb.yc.io/modify-header-response-rename` (`string`)
+
+   It renames the response header. The header and its new name should be specified in the following format:
+
+   ```yaml
+   ingress.alb.yc.io/modify-header-response-rename: <key>=<value>
+   ```
+
+   Where:
+
+   * `<key>`: Name of the header to be modified.
+   * `<value>`: New header name.
+
+* `ingress.alb.yc.io/modify-header-response-remove` (`string`)
+
+   It removes the response header. The header to remove should be specified in the following format:
+
+   ```yaml
+   ingress.alb.yc.io/modify-header-response-remove: <key>=true
+   ```
+
+   Where `<key>` is the name of the header to remove.
 
 ## IngressSpec {#spec}
 

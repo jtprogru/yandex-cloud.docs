@@ -22,6 +22,7 @@ _Снимок диска_ в {{ yandex-cloud }} — это копия файло
 
 {% include [snapshot-disk-types](../../_includes/compute/snapshot-disk-types.md) %}
 
+{% include [boot-disk-recover](../../_includes/compute/boot-disk-recover.md) %}
 
 ## Снимок диска как ресурс {{ yandex-cloud }} {#snapshot-as-resource}
 
@@ -39,6 +40,14 @@ _Снимок диска_ в {{ yandex-cloud }} — это копия файло
 Для блоков, из которых состоит снимок, хранится контрольная сумма. Она проверяется при создании диска из снимка.
 
 Для проверки восстановления диска из снимка [создайте виртуальную машину с диском из снимка](../operations/vm-create/create-from-snapshots.md) и проверьте целостность ваших данных.
+
+
+## Шифрование снимков {#encryption}
+
+Для защиты критичных данных в {{ compute-name }} рекомендуется использовать шифрование снимков с помощью ключей [{{ kms-full-name }}](../../kms/).
+
+Подробнее см. в разделе [{#T}](encryption.md).
+
 
 #### См. также {#see-also}
 

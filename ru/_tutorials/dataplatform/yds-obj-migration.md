@@ -20,7 +20,7 @@
 
 * С помощью {{ TF }}
 
-    1. Если у вас еще нет {{ TF }}, [установите и настройте его](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+    1. {% include [terraform-install](../../_includes/terraform-install.md) %}
     1. Скачайте [файл с настройками провайдера](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/provider.tf). Поместите его в отдельную рабочую директорию и [укажите значения параметров](../../tutorials/infrastructure-management/terraform-quickstart.md#configure-provider).
     1. Скачайте в ту же рабочую директорию файл конфигурации [data-transfer-yds-obj.tf](https://github.com/yandex-cloud/examples/tree/master/tutorials/terraform/data-transfer/data-transfer-yds-obj.tf).
 
@@ -195,9 +195,9 @@
 1. Убедитесь, что данные из потока {{ yds-name }} перенеслись в бакет {{ objstorage-name }}:
 
     1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором находится бакет.
-    1. В списке сервисов выберите **{{ objstorage-name }}**.
+    1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_storage }}**.
     1. Выберите бакет из списка.
-    1. Проверьте, что бакет содержит файл `<имя потока>_0.raw` (`.json` или `.csv`, в зависимости от выбранного выходного формата) с тестовыми данными.
+    1. Проверьте, что бакет содержит файл `<имя_потока>_0.raw` (`.json` или `.csv`, в зависимости от выбранного выходного формата) с тестовыми данными.
 
 1. [Отправьте в поток {{ yds-name }}](../../data-streams/operations/aws-cli/send.md) новое сообщение:
 
@@ -218,9 +218,9 @@
 1. Убедитесь, что в бакете {{ objstorage-name }} появились добавленные данные:
 
     1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором находится бакет.
-    1. В списке сервисов выберите **{{ objstorage-name }}**.
+    1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_storage }}**.
     1. Выберите бакет из списка.
-    1. Проверьте, что в бакет добавился файл `<имя потока>_0-1_1.raw` (`.json` или `.csv`, в зависимости от выбранного выходного формата) с новыми данными.
+    1. Проверьте, что в бакет добавился файл `<имя_потока>_0-1_1.raw` (`.json` или `.csv`, в зависимости от выбранного выходного формата) с новыми данными.
 
 ## Удалите созданные ресурсы {#clear-out}
 

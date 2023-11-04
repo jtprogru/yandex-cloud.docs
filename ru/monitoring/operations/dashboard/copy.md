@@ -1,3 +1,8 @@
+---
+title: "Как скопировать дашборд"
+description: "Следуя данной инструкции, вы сможете скопировать дашборд."
+---
+
 # Копирование дашборда
 
 {% note info %}
@@ -8,7 +13,7 @@
 
 Для копирования существующего дашборда выполните следующее:
 
-1. Откройте существующий дашборд.
-1. Нажмите ![image](../../../_assets/monitoring/ellipsis.svg) и выберите пункт **Скопировать**.
-1. Введите имя нового дашборда и нажмите **Сохранить**.
+1. В левой части окна выберите раздел **{{ ui-key.yacloud_monitoring.aside-navigation.menu-item.dashboards.title }}**.
+1. Напротив нужного дашборда нажмите ![image](../../../_assets/monitoring/ellipsis.svg) и выберите пункт **{{ ui-key.yacloud_monitoring.actions.common.copy }}**.
+1. Введите имя нового дашборда и нажмите **{{ ui-key.yacloud_monitoring.actions.common.copy }}**.
 

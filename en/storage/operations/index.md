@@ -20,6 +20,7 @@ description: "In this article, you will learn how to work with {{ objstorage-ful
 * [{#T}](buckets/enable-logging.md)
 * [{#T}](buckets/configure-object-lock.md)
 * [{#T}](buckets/tagging.md)
+* [{#T}](buckets/get-info.md)
 
 ## Objects {#objects}
 
@@ -27,6 +28,7 @@ description: "In this article, you will learn how to work with {{ objstorage-ful
 * [{#T}](objects/info.md)
 * [{#T}](objects/download.md)
 * [{#T}](objects/restore-object-version.md)
+* [{#T}](objects/rename-move.md)
 * [{#T}](objects/link-for-download.md)
 * [{#T}](objects/edit-object-lock.md)
 * [{#T}](objects/delete.md)

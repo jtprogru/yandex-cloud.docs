@@ -1,4 +1,15 @@
+---
+title: "Как создать кластер GPU"
+description: "Следуя данной инструкции, вы сможете создать кластер GPU."
+---
+
 # Создать кластер GPU
+
+{% note info %}
+
+Кластеры GPU переходят в [общий доступ](../../../overview/concepts/launch-stages.md) и начнут тарифицироваться 1 сентября 2023 года.
+
+{% endnote %}
 
 {% note info %}
 
@@ -34,7 +45,7 @@
 
 - {{ TF }}
 
-  Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
   
   1. Опишите в конфигурационном файле {{ TF }} параметры ресурса, который необходимо создать:
 

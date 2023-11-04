@@ -7,11 +7,11 @@ When you add environment variables, a new version of the function is created. Yo
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder containing your function.
-   1. Select **{{ sf-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
    1. Select the function whose version you want to add an environment variable for.
-   1. Go to the **Editor** tab.
-   1. Under **Parameters**, specify the environment variable and click **Add**. You can add multiple environment variables.
-   1. Click **Create version**. This will create a new version of the function with the specified environment variables.
+   1. Go to the **{{ ui-key.yacloud.serverless-functions.item.switch_editor }}** tab.
+   1. Under **{{ ui-key.yacloud.serverless-functions.item.editor.label_title-params }}**, specify the environment variable and click **{{ ui-key.yacloud.serverless-functions.item.editor.button_add-environment-variable }}**. You can add multiple environment variables.
+   1. Click **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**. This will create a new version of the function with the specified environment variables.
 
 - CLI
 
@@ -42,7 +42,7 @@ When you add environment variables, a new version of the function is created. Yo
 
    * `--function-name`: Function name.
    * `--runtime`: Runtime environment.
-   * `entrypoint`: Entry point specified in the `<function_file_name>.\<handler_name>` format.
+   * `--entrypoint`: Entry point specified in the `<function_file_name>.<handler_name>` format.
    * `--memory`: Amount of RAM.
    * `--execution-timeout`: Maximum function execution time before the timeout is reached.
    * `--source-version-id`: ID of the function version to copy the code of.
@@ -52,7 +52,7 @@ When you add environment variables, a new version of the function is created. Yo
 
    {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To add environment variables:
 
@@ -100,7 +100,7 @@ When you add environment variables, a new version of the function is created. Yo
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
 
    1. Apply the configuration changes:
 
@@ -116,9 +116,11 @@ When you add environment variables, a new version of the function is created. Yo
 
    To add environment variables, use the [createVersion](../../functions/api-ref/Function/createVersion.md) REST API method for the [Function](../../functions/api-ref/Function/index.md) resource or the [FunctionService/CreateVersion](../../functions/api-ref/grpc/function_service.md#CreateVersion) gRPC API call.
 
+
 - {{ yandex-cloud }} Toolkit
 
    You can add environment variables using the [{{ yandex-cloud }} Toolkit plugin](https://github.com/yandex-cloud/ide-plugin-jetbrains/blob/master/README.en.md) for the IDE family on the [JetBrains](https://www.jetbrains.com/) [IntelliJ platform](https://www.jetbrains.com/opensource/idea/).
+
 
 {% endlist %}
 

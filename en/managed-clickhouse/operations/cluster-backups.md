@@ -1,6 +1,6 @@
 ---
 title: "Managing ClickHouse backups"
-description: "You can create backups and restore clusters from existing ClickHouse backups. When you restore a cluster from a backup, you create a new cluster with data from the backup. If the cloud does not have sufficient resources to create such a cluster, you will not be able to restore your data from a backup."
+description: "You can create backups and restore clusters from existing ClickHouse backups. When you restore a cluster from a backup, you create a new cluster with the backup data. If the cloud does not have sufficient resources to create such a cluster, you will not be able to restore your data from a backup."
 ---
 
 # Managing backups in {{ mch-name }}
@@ -13,7 +13,7 @@ You can create [backups](../concepts/backup.md) and restore clusters from existi
 
 {% note warning %}
 
-A random replica host is used to create a backup. If there is no cluster host data consistency, restoring clusters from backups does not guarantee complete data recovery. For more information, see [Backups](../concepts/backup.md).
+Backups are created based on a random replica host. If there is no cluster host data consistency, restoring clusters from backups does not guarantee complete data recovery. For more information, see [Backups](../concepts/backup.md).
 
 {% endnote %}
 
@@ -21,9 +21,9 @@ A random replica host is used to create a backup. If there is no cluster host da
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
-   1. Click **Create backup**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.clickhouse.cluster.switch_backups }}** tab.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.backups.button_create }}**.
 
    {% include [no-prompt](../../_includes/mdb/backups/no-prompt.md) %}
 
@@ -61,7 +61,7 @@ A random replica host is used to create a backup. If there is no cluster host da
 
 ## Restoring clusters from backups {#restore}
 
-When you restore a cluster from a backup, you create a new cluster with data from the backup. If the cloud has insufficient [resources](../concepts/limits.md) to create such a cluster, you will not be able to restore from the backup. The average backup recovery speed is 10 MBps per database core.
+When you restore a cluster from a backup, you create a new cluster with the backup data. If the cloud has insufficient [resources](../concepts/limits.md) to create such a cluster, you will not be able to restore from the backup. The average backup recovery speed is 10 MBps per database core.
 
 You can restore an individual [shard](../concepts/sharding.md) or the whole cluster. You can restore the whole cluster only by using the CLI or API.
 
@@ -72,21 +72,21 @@ You can restore an individual [shard](../concepts/sharding.md) or the whole clus
 - Management console
 
    To restore an existing cluster from a backup:
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) for the desired backup and click **Restore cluster**.
-   1. Change the settings of the new cluster if required. You can select a folder for the new cluster from the **Folder** list.
-   1. Click **Restore cluster**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.clickhouse.cluster.switch_backups }}** tab.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the backup you need and click **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
+   1. Change the settings of the new cluster if required. You can select a folder for the new cluster from the **{{ ui-key.yacloud.mdb.forms.base_field_folder }}** list.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_restore }}**.
 
    To restore a previously deleted cluster from a backup:
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. On the left-hand panel, select ![image](../../_assets/mdb/backup.svg) **Backups**.
-   1. Find the desired backup using the backup creation time and cluster ID. The **Name** column contains the IDs in `<cluster ID>:<backup ID>` format.
-   1. Click the ![image](../../_assets/horizontal-ellipsis.svg) for the desired backup and click **Restore cluster**.
-   1. Change the settings of the new cluster if required. You can select a folder for the new cluster from the **Folder** list.
-   1. Click **Restore cluster**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. In the left-hand panel, select ![image](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.clickhouse.switch_backups }}**.
+   1. Find the backup you need using the backup creation time and cluster ID. The **{{ ui-key.yacloud.mdb.cluster.backups.column_name }}** column contains IDs in `<cluster ID>:<backup ID>` format.
+   1. Click ![image](../../_assets/horizontal-ellipsis.svg) for the backup you need and click **{{ ui-key.yacloud.mdb.cluster.backups.button_restore }}**.
+   1. Change the settings of the new cluster if required. You can select a folder for the new cluster from the **{{ ui-key.yacloud.mdb.forms.base_field_folder }}** list.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_restore }}**.
 
-   {{ mch-name }} launches the operation to create a cluster from the backup.
+   {{ mch-name }} will launch the operation to create a cluster from the backup.
 
 - CLI
 
@@ -138,12 +138,12 @@ You can restore an individual [shard](../concepts/sharding.md) or the whole clus
 
       Where:
 
-      * `--backup-id`: [Backup](../concepts/backup.md) ID
+      * `--backup-id`: [Backup](../concepts/backup.md) ID.
       * `--name`: Cluster name.
       * `--environment`: Environment:
 
          * `PRODUCTION`: For stable versions of your apps.
-         * `PRESTABLE`: For testing, including the {{ MS}} service itself. The prestable environment is updated first with new features, improvements, and bug fixes. However, not every update ensures backward compatibility.
+         * `PRESTABLE`: For testing purposes. The prestable environment is similar to the production environment and is also covered by the SLA. However, it is the first to receive new functionalities, improvements, and bug fixes. In the prestable environment, you can test compatibility of new versions with your application.
 
       * `--network-name`: [Network name](../../vpc/concepts/network.md#network).
       * `--host`: Host parameters:
@@ -158,7 +158,7 @@ You can restore an individual [shard](../concepts/sharding.md) or the whole clus
          
          * `network-hdd`
          * `network-ssd`
-         * `local-ssd`
+                  * `local-ssd`
          * `network-ssd-nonreplicated`
 
 
@@ -192,12 +192,12 @@ You can restore an individual [shard](../concepts/sharding.md) or the whole clus
 - Management console
 
    To get a list of cluster backups:
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.clickhouse.cluster.switch_backups }}** tab.
 
    To get a list of all backups in a folder:
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. On the left-hand panel, select ![image](../../_assets/mdb/backup.svg) **Backups**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. In the left-hand panel, select ![image](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.clickhouse.switch_backups }}**.
 
 - CLI
 
@@ -239,12 +239,12 @@ You can restore an individual [shard](../concepts/sharding.md) or the whole clus
 - Management console
 
    To get information about the backup of an existing cluster:
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. Click the name of the cluster you need and select the **Backup copies** tab.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and open the **{{ ui-key.yacloud.clickhouse.cluster.switch_backups }}** tab.
 
    To get information about the backup of a previously deleted cluster:
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mch-name }}**.
-   1. On the left-hand panel, select ![image](../../_assets/mdb/backup.svg) **Backups**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. In the left-hand panel, select ![image](../../_assets/mdb/backup.svg) **{{ ui-key.yacloud.clickhouse.switch_backups }}**.
 
 - CLI
 
@@ -282,7 +282,7 @@ You can restore an individual [shard](../concepts/sharding.md) or the whole clus
 
    {% include [default-catalogue](../../_includes/default-catalogue.md) %}
 
-   To set a backup start time, provide the value you need in `HH:MM:SS` format in the `--backup-window-start` argument to the cluster update command:
+   To set a backup start time, provide the value you need in `HH:MM:SS` format in the `--backup-window-start` argument of the cluster update command:
 
    ```bash
    {{ yc-mdb-ch }} cluster update <cluster ID or name> \

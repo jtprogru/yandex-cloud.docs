@@ -9,15 +9,11 @@
 
 1. [Upload](../../storage/operations/objects/upload.md) the trained model file to {{ objstorage-full-name }}.
 
-1. Configure access to the model file using one of the following methods:
+1. Configure access to the model file using a [service account](../../iam/concepts/users/service-accounts.md):
 
-   * Use a [service account](../../iam/concepts/users/service-accounts.md) (recommended). This method enables you to access the file without entering account information.
-
-      1\. [Connect a service account to a cluster](s3-access.md#connect-service-account).
-      2\. [Assign the account the role](s3-access.md#configure-acl) of `storage.viewer`.
-      3\. In the bucket ACL, [grant the account](../../storage/operations/buckets/edit-acl.md) `READ` permission.
-
-   * [Enable public access](../../storage/operations/objects/edit-acl.md) to the bucket containing the file.
+   1. [Connect a service account to a cluster](s3-access.md#connect-service-account).
+   1. [Assign the account the role](s3-access.md#configure-acl) of `storage.viewer`.
+   1. In the bucket ACL, [grant](../../storage/operations/buckets/edit-acl.md) the `READ` permission to the account.
 
 1. [Get a link](s3-access.md#get-link-to-object) to the model file.
 
@@ -28,8 +24,8 @@
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click the name of the cluster and select the **Machine learning** tab from the left-hand panel.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.clickhouse.cluster.switch_ml-models }}** tab in the left-hand panel.
 
 - CLI
 
@@ -59,8 +55,8 @@
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click the name of the cluster and select the **Machine learning** tab from the left-hand panel.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.clickhouse.cluster.switch_ml-models }}** tab in the left-hand panel.
 
 - CLI
 
@@ -102,17 +98,17 @@ The only supported model type is CatBoost: `ML_MODEL_TYPE_CATBOOST`.
 
    1. Select the cluster:
 
-      1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-      1. Click the name of the cluster and select the **Machine learning** tab from the left-hand panel.
-      1. Click **Add model**.
+      1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+      1. Click the cluster name and select the **{{ ui-key.yacloud.clickhouse.cluster.switch_ml-models }}** tab in the left-hand panel.
+      1. Click **{{ ui-key.yacloud.clickhouse.cluster.ml-models.button-action_add-ml-model }}**.
 
    1. Configure the model parameters:
 
-      * **Type**: `ML_MODEL_TYPE_CATBOOST`.
-      * **Name**: Model name. Model name is one of the arguments of the `modelEvaluate()` function, which is used to call the model in {{ CH }}.
-      * **URL**: Model address in {{ objstorage-full-name }}.
+      * **{{ ui-key.yacloud.clickhouse.cluster.ml-models.field_ml-model-type }}**: `ML_MODEL_TYPE_CATBOOST`.
+      * **{{ ui-key.yacloud.clickhouse.cluster.ml-models.field_ml-model-name }}**: Model name. Model name is one of the arguments of the `modelEvaluate()` function, which is used to call the model in {{ CH }}.
+      * **{{ ui-key.yacloud.clickhouse.cluster.ml-models.field_ml-model-uri }}**: Model address in {{ objstorage-full-name }}.
 
-   1. Click **Add** and wait for the model to be added.
+   1. Click **{{ ui-key.yacloud.clickhouse.cluster.ml-models.label_add-ml-model }}** and wait for the model to be added.
 
 - CLI
 
@@ -154,7 +150,7 @@ The only supported model type is CatBoost: `ML_MODEL_TYPE_CATBOOST`.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -210,9 +206,9 @@ To update the contents of a model that is already connected to the cluster:
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click the name of the cluster and select the **Machine learning** tab from the left-hand panel.
-   1. Select the appropriate model, click ![image](../../_assets/dots.svg), and select **Edit**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.clickhouse.cluster.switch_ml-models }}** tab in the left-hand panel.
+   1. Select the appropriate model, click ![image](../../_assets/dots.svg), and select **{{ ui-key.yacloud.clickhouse.cluster.ml-models.button_action-edit-ml-model }}**.
 
 - CLI
 
@@ -253,7 +249,7 @@ To update the contents of a model that is already connected to the cluster:
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -288,9 +284,9 @@ After disabling a model, the corresponding object is kept in the {{ objstorage-f
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mch-name }}**.
-   1. Click the name of the cluster and select the **Machine learning** tab from the left-hand panel.
-   1. Select the appropriate model, click ![image](../../_assets/dots.svg), and select **Delete**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-clickhouse }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.clickhouse.cluster.switch_ml-models }}** tab in the left-hand panel.
+   1. Select the appropriate model, click ![image](../../_assets/dots.svg), and select **{{ ui-key.yacloud.clickhouse.cluster.ml-models.button_action-delete-ml-model }}**.
 
 - CLI
 
@@ -319,7 +315,7 @@ After disabling a model, the corresponding object is kept in the {{ objstorage-f
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -372,6 +368,8 @@ To upload data to {{ CH }} and test the model:
                      -q 'CREATE TABLE ml_test_table (date Date MATERIALIZED today(), ACTION UInt8, RESOURCE UInt32, MGR_ID UInt32, ROLE_ROLLUP_1 UInt32, ROLE_ROLLUP_2 UInt32, ROLE_DEPTNAME UInt32, ROLE_TITLE UInt32, ROLE_FAMILY_DESC UInt32, ROLE_FAMILY UInt32, ROLE_CODE UInt32) ENGINE = MergeTree() PARTITION BY date ORDER BY date'
    ```
 
+   To learn how to get the FQDN of a host, see [this guide](connect.md#fqdn).
+
 1. Upload the data to the table:
 
    ```bash
@@ -386,9 +384,9 @@ To upload data to {{ CH }} and test the model:
    ```
 
 1. In the [management console]({{ link-console-main }}), add the test model:
-   * **Type**: `ML_MODEL_TYPE_CATBOOST`.
-   * **Name**: `ml_test`.
-   * **URL**: `https://{{ s3-storage-host }}/managed-clickhouse/catboost_model.bin`.
+   * **{{ ui-key.yacloud.clickhouse.cluster.ml-models.field_ml-model-type }}**: `ML_MODEL_TYPE_CATBOOST`
+   * **{{ ui-key.yacloud.clickhouse.cluster.ml-models.field_ml-model-name }}**: `ml_test`
+   * **{{ ui-key.yacloud.clickhouse.cluster.ml-models.field_ml-model-uri }}**: `https://{{ s3-storage-host }}/managed-clickhouse/catboost_model.bin`
 
 1. Test the model:
    1. Connect to the cluster [using the client](../../managed-clickhouse/operations/connect.md#cli) {{ CH }} CLI or go to the [SQL](../../managed-clickhouse/operations/web-sql-query.md) tab in the cluster management console.

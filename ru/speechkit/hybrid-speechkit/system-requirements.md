@@ -1,3 +1,8 @@
+---
+title: "Системные требования"
+description: "В этой статье описаны системные и программные требования к серверам."
+---
+
 # Системные требования
 
 {% include [system-requirements](../../_includes/speechkit/system-requirements.md) %}

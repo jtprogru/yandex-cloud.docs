@@ -1,3 +1,8 @@
+---
+title: "Deleting a resource"
+description: "Follow this guide to delete a resource."
+---
+
 # Deleting a resource
 
 {% list tabs %}
@@ -5,9 +10,9 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder where your resource is located.
-   1. Select **{{ cdn-name }}**.
-   1. Click the name of the desired resource.
-   1. In the upper-right corner, click ![image](../../../_assets/basket.svg) **Delete**, then, in the window that opens, click **Delete**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_cdn }}**.
+   1. Click the resource name.
+   1. In the top-right corner, click ![image](../../../_assets/basket.svg) **{{ ui-key.yacloud.common.delete }}** and then click **{{ ui-key.yacloud.common.delete }}** in the window that opens.
 
 - CLI
 
@@ -54,7 +59,7 @@
 
 - {{ TF }}
 
-   If you do not have {{ TF }} yet, [install it and configure the {{ yandex-cloud }} provider](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+   {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
    To delete a CDN resource created with {{ TF }}:
    1. Open the {{ TF }} configuration file and delete the section with the resource description.
@@ -98,7 +103,7 @@
       terraform plan
       ```
 
-      The terminal will display a list of resources with parameters. No changes are made at this step. If the configuration contains any errors, {{ TF }} will point them out.
+      The terminal will display a list of resources with parameters. No changes will be made at this step. If the configuration contains any errors, {{ TF }} will point them out.
    1. Apply the configuration changes:
 
       ```bash
@@ -107,7 +112,7 @@
 
    1. Confirm the changes: type `yes` into the terminal and press **Enter**.
 
-      You can make sure than a CDN resource has been deleted in the [management console]({{ link-console-main }}) or via the [CLI](../../../cli/quickstart.md) command below:
+      You can check the deletion of the CDN resource using the [management console]({{ link-console-main }}) or this [CLI](../../../cli/quickstart.md) command:
 
       ```bash
       yc cdn resource list

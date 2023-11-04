@@ -9,6 +9,8 @@ keywords:
 
 # Managing hosts
 
+{% include [Elasticsearch-end-of-service](../../_includes/mdb/mes/note-end-of-service.md) %}
+
 You can get a list of {{ ES }} cluster hosts and add or delete them.
 
 {% note info %}
@@ -23,8 +25,8 @@ You can only add or delete hosts with the [_Data node_](../concepts/index.md) ro
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
 
 - CLI
 
@@ -52,7 +54,7 @@ You can only add or delete hosts with the [_Data node_](../concepts/index.md) ro
 
 {% note warning %}
 
-You can't assign a public IP address to it after it's been created.
+You cannot enable public access to a host once it is created.
 
 {% endnote %}
 
@@ -60,14 +62,14 @@ You can't assign a public IP address to it after it's been created.
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Click **Add host**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
+   1. Click **{{ ui-key.yacloud.mdb.cluster.hosts.button_add-host }}**.
    1. Specify the host parameters:
 
       * Availability zone.
       * Subnet (if the necessary subnet is not in the list, [create it](../../vpc/operations/subnet-create.md)).
-      * Select **Public access** if the host must be accessible from outside {{ yandex-cloud }}.
+      * Select **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}** if the host must be accessible from outside {{ yandex-cloud }}.
 
 - CLI
 
@@ -114,7 +116,7 @@ You can't assign a public IP address to it after it's been created.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   1. Confirm the resources have been updated:
+   1. Confirm updating the resources.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
@@ -136,7 +138,7 @@ You can't assign a public IP address to it after it's been created.
 
 {% note warning %}
 
-If you can't [connect](cluster-connect.md) to the added host, check that the cluster's [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host. The security groups feature is currently in the [Preview](../../overview/concepts/launch-stages.md) stage.
+If you cannot [connect](cluster-connect.md) to the added host, check that the cluster [security group](../concepts/network.md#security-groups) is configured correctly for the subnet where you placed the host.
 
 {% endnote %}
 
@@ -145,16 +147,16 @@ If you can't [connect](cluster-connect.md) to the added host, check that the clu
 
 The following restrictions apply when deleting hosts:
 
-* You can't delete a single host with the _Data node_ role.
-* If a cluster consists of multiple hosts with the _Data node_ role, you can't delete the last two hosts.
+* You cannot delete a single host with the _Data node_ role.
+* If a cluster consists of multiple hosts with the _Data node_ role, you cannot delete the last two hosts.
 
 {% list tabs %}
 
 - Management console
 
-   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ mes-name }}**.
-   1. Click the name of the cluster you need and select the **Hosts** tab.
-   1. Click the ![image](../../_assets/options.svg) icon in the same row as the desired host and select **Delete**.
+   1. In the [management console]({{ link-console-main }}), go to the folder page and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-elasticsearch }}**.
+   1. Click the cluster name and select the **{{ ui-key.yacloud.mdb.cluster.hosts.label_title }}** tab.
+   1. Click ![image](../../_assets/options.svg) in the required host row and select **{{ ui-key.yacloud.common.delete }}**.
 
 - CLI
 

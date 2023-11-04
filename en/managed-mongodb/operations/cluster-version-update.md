@@ -14,11 +14,11 @@ You can only upgrade to a version that immediately follows the current one, such
 
 ## Before updating the version {#before-update}
 
-Prior to upgrading a cluster, make sure this does not affect your applications:
+Make sure this does not affect your applications:
 
 1. See the {{ MG }} [changelog](https://docs.mongodb.com/manual/release-notes/) to check how updates might affect your applications.
 1. Try updating the version on a test cluster. You can deploy it from a backup of the main cluster.
-1. [Make a backup](cluster-backups.md) of the main cluster before updating the version.
+1. [Create a backup](cluster-backups.md) of the main cluster before updating the version.
 
 ## Upgrading a cluster {#start-update}
 
@@ -26,10 +26,10 @@ Prior to upgrading a cluster, make sure this does not affect your applications:
 
 - Management console
 
-   1. Go to the [folder page]({{ link-console-main }}) and select **{{ mmg-name }}**.
-   1. Select the cluster from the list and click **Edit cluster**.
-   1. In the **Version** field, select a new version number.
-   1. Click **Save changes**.
+   1. Go to the [folder page]({{ link-console-main }}) and select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
+   1. Select the desired cluster from the list and click **{{ ui-key.yacloud.mdb.cluster.overview.button_action-edit }}**.
+   1. In the **{{ ui-key.yacloud.mdb.forms.base_field_version }}** field, select a new version number.
+   1. Click **{{ ui-key.yacloud.mdb.forms.button_edit }}**.
 
    Once the upgrade is launched, the cluster status will change to **UPDATING**. Wait for the operation to complete and then check the cluster version.
 

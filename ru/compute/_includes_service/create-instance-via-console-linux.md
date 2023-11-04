@@ -1,4 +1,3 @@
-Чтобы создать [виртуальную машину](../concepts/vm.md):
 1. В [консоли управления]({{ link-console-main }}) выберите [каталог](../../resource-manager/concepts/resources-hierarchy.md#folder), в котором будет создана ВМ.
 1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
 1. Нажмите кнопку **{{ ui-key.yacloud.compute.instances.button_create }}**.
@@ -15,13 +14,22 @@
    * Выберите [тип диска](../concepts/disk.md#disks_types).
    * Укажите нужный размер диска.
 
+   
+   * {% include [encryption-section-boot](../../_includes/compute/encryption-section-boot.md) %}
+
+
      Если вы хотите создать ВМ из существующего диска, в блоке **{{ ui-key.yacloud.compute.instances.create.section_storages_ru }}** [добавьте диск](../operations/vm-create/create-from-disks.md):
      * Нажмите кнопку **{{ ui-key.yacloud.compute.instances.create.label_add-disk }}**.
      * Введите имя диска.
      * Выберите [тип диска](../concepts/disk.md#disks_types).
      * Укажите нужный размер блока.
      * Укажите нужный размер диска.
-     * (опционально) В поле **{{ ui-key.yacloud.compute.instances.create-disk.field_additional }}** включите опцию **{{ ui-key.yacloud.compute.instances.create-disk.field_auto-delete }}**, если нужно автоматически удалять диск при удалении ВМ, к которой он будет подключен.
+
+     
+     * {% include [encryption-section-secondary](../../_includes/compute/encryption-section-secondary.md) %}
+
+
+     * (Опционально) В поле **{{ ui-key.yacloud.compute.instances.create-disk.field_additional }}** включите опцию **{{ ui-key.yacloud.compute.instances.create-disk.field_auto-delete }}**, если нужно автоматически удалять диск при удалении ВМ, к которой он будет подключен.
      * В поле **{{ ui-key.yacloud.compute.instances.create-disk.field_source }}** выберите `{{ ui-key.yacloud.compute.instances.create-disk.value_source-disk }}`.
      * Нажмите кнопку **{{ ui-key.yacloud.compute.instances.create-disk.button_create }}**.
 
@@ -37,7 +45,7 @@
    * Выберите [платформу](../concepts/vm-platforms.md).
    * Укажите [гарантированную долю](../../compute/concepts/performance-levels.md) и необходимое количество vCPU, а также объем RAM.
    * При необходимости сделайте ВМ [прерываемой](../concepts/preemptible-vm.md).
-   * (опционально) Включите [программно-ускоренную сеть](../concepts/software-accelerated-network.md).
+   * (Опционально) Включите [программно-ускоренную сеть](../concepts/software-accelerated-network.md).
   
 1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_network }}**:
 
@@ -48,7 +56,7 @@
 
 
 1. В блоке **{{ ui-key.yacloud.compute.instances.create.section_access }}** укажите данные для доступа на ВМ:
-   * (опционально) Выберите или создайте [сервисный аккаунт](../../iam/concepts/users/service-accounts.md). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
+   * (Опционально) Выберите или создайте [сервисный аккаунт](../../iam/concepts/users/service-accounts.md). Использование сервисного аккаунта позволяет гибко настраивать права доступа к ресурсам.
    * В поле **{{ ui-key.yacloud.compute.instances.create.field_user }}** введите имя пользователя.
 
      {% note alert %}

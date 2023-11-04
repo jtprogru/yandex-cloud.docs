@@ -40,7 +40,7 @@ items:
         href: domains/physical-security.md
       - name: Kubernetes security
         href: domains/kubernetes.md
-  - name: Standard for securing Yandex Cloud infrastructure 1.0
+  - name: Standard for securing Yandex Cloud infrastructure 1.1
     items:
       - name: All sections on one page
         href: standard/all.md
@@ -62,12 +62,16 @@ items:
         href: standard/backup.md
       - name: Physical security
         href: standard/physical-security.md
+      - name: Application security
+        href: standard/app-security.md
   - name: Tutorials
     items:
       - name: ViPNet Coordinator in {{ yandex-cloud }}
         href: tutorials/vipnet-to-yc.md
       - name: Setting up and testing PT Application Firewall
         href: tutorials/pt-application-firewall.md
+      - name: Secure user access to cloud resources based on WireGuard VPN
+        href: tutorials/remote-wireguard-vpn.md
   - name: Guides
     items:
       - name: Deleting a passport account from {{ org-full-name }}

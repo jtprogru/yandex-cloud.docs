@@ -1,4 +1,15 @@
+---
+title: "Восстановить диск с помощью снимка"
+description: "Следуя данной инструкции, вы сможете восстановить диск с помощью снимка."
+---
+
 # Восстановить диск с помощью снимка
+
+{% note info %}
+
+{% include [boot-disk-recover](../../../_includes/compute/boot-disk-recover.md) %}
+
+{% endnote %}
 
 Чтобы создать диск из [снимка](../../concepts/snapshot.md):
 
@@ -10,20 +21,20 @@
   1. Выберите сервис **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
   1. На панели слева выберите ![image](../../../_assets/compute/disks-pic.svg) **{{ ui-key.yacloud.compute.switch_disks }}**.
   1. Нажмите кнопку **{{ ui-key.yacloud.compute.disks.button_create }}**.
-  1. Введите имя диска.
+  1. Введите имя диска. Требования к имени:
 
       {% include [name-format](../../../_includes/name-format.md) %}
 
   1. Если требуется, укажите произвольное текстовое описание диска.
   1. Выберите [зону доступности](../../../overview/concepts/geo-scope.md), в которой будет находиться диск.
   1. Задайте параметры диска: [тип диска](../../concepts/disk.md#disks_types), а также [размер блока](../../concepts/disk.md#maximum-disk-size) и [размер диска](../../concepts/disk.md#maximum-disk-size).
+  1. В поле **{{ ui-key.yacloud.compute.instances.create-disk.field_source }}** выберите `{{ ui-key.yacloud.compute.instances.create-disk.value_source-snapshot }}` и в списке ниже отметьте нужный снимок. Для поиска снимка воспользуйтесь фильтром.
   1. Если требуется, выберите [расписание](../../concepts/snapshot-schedule.md), по которому для диска будут автоматически создаваться снимки, или создайте его. Подробнее о настройках расписания см. в [инструкции](../snapshot-control/create-schedule.md).
 
      {% include [snapshot-disk-types](../../../_includes/compute/snapshot-disk-types.md) %}
 
      При создании диска для него можно выбрать только одно расписание снимков. После создания диска вы сможете добавить к нему еще несколько расписаний по [инструкции](../disk-control/configure-schedule.md#add-schedule).
 
-  1. В поле **{{ ui-key.yacloud.compute.instances.create-disk.field_source }}** выберите `{{ ui-key.yacloud.compute.instances.create-disk.value_source-snapshot }}` и в списке ниже отметьте нужный снимок. Для поиска снимка воспользуйтесь фильтром.
   1. Нажмите кнопку **{{ ui-key.yacloud.compute.disks.button_create }}**.
 
 - CLI

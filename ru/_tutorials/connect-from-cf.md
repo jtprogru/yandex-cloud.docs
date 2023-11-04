@@ -32,14 +32,14 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором хотите создать сервисный аккаунт.
-  1. В верхней части экрана перейдите на вкладку **Сервисные аккаунты**.
-  1. Нажмите кнопку **Создать сервисный аккаунт**.
+  1. В верхней части экрана перейдите на вкладку **{{ ui-key.yacloud.iam.folder.switch_service-accounts }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-accounts.button_add }}**.
   1. Введите имя сервисного аккаунта, например `sa-function`. Требования к имени:
 
      {% include [name-format](../_includes/name-format.md) %}
 
-  1. Нажмите **Добавить роль** и выберите `editor`.
-  1. Нажмите кнопку **Создать**.
+  1. Нажмите **{{ ui-key.yacloud.iam.folder.service-account.label_add-role }}** и выберите `{{ roles-editor }}`.
+  1. Нажмите кнопку **{{ ui-key.yacloud.iam.folder.service-account.popup-robot_button_add }}**.
 
 {% endlist %}
 
@@ -50,18 +50,18 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором хотите создать базу данных.
-  1. В списке сервисов выберите **{{ ydb-name }}**.
-  1. Нажмите кнопку **Создать базу данных**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_ydb }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.ydb.databases.button_create }}**.
   1. Введите имя базы. Требования к имени:
 
      {% include [name-format](../_includes/name-format.md) %}
 
-  1. В блоке **Тип базы данных** выберите опцию **Serverless**.
-  1. Нажмите кнопку **Создать базу данных**.
+  1. В блоке **{{ ui-key.yacloud.ydb.forms.label_field_database-type }}** выберите опцию `{{ ui-key.yacloud.ydb.forms.label_serverless-type }}`.
+  1. Нажмите кнопку **{{ ui-key.yacloud.ydb.forms.button_create-database }}**.
 
      Дождитесь запуска базы данных. В процессе создания база будет иметь статус `Provisioning`. Когда база станет готова к использованию, статус сменится на `Running`.
   1. Нажмите на имя созданной БД.
-  1. В блоке **Соединение** найдите поля **Эндпоинт** и **Размещение базы данных** и сохраните их значения. Они понадобятся на следующем шаге.
+  1. В блоке **{{ ui-key.yacloud.ydb.overview.section_connection }}** найдите поле **{{ ui-key.yacloud.ydb.overview.label_endpoint }}** и сохраните его значение. Оно понадобится на следующем шаге.
 
 {% endlist %}
 
@@ -72,53 +72,53 @@
 - Консоль управления
 
   1. В [консоли управления]({{ link-console-main }}) выберите каталог, в котором хотите создать функцию.
-  1. В списке сервисов выберите **{{ sf-name }}**.
-  1. Нажмите кнопку **Создать функцию**.
+  1. В списке сервисов выберите **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.list.button_create }}**.
   1. Введите имя и описание функции. Требования к имени:
 
      {% include [name-format](../_includes/name-format.md) %}
 
-  1. Нажмите кнопку **Создать**.
-  1. В блоке **Редактор** выберите среду выполнения **Python** и нажмите **Продолжить**.
-  1. В блоке **Код функции** очистите содержимое файла `index.py` и вставьте в него следующий код:
+  1. Нажмите кнопку **{{ ui-key.yacloud.common.create }}**.
+  1. В блоке **{{ ui-key.yacloud.serverless-functions.item.editor.label_title }}** выберите среду выполнения `Python`, отключите опцию **{{ ui-key.yacloud.serverless-functions.item.editor.label_with-template }}** и нажмите **{{ ui-key.yacloud.serverless-functions.item.editor.button_action-continue }}**.
+  1. В блоке **{{ ui-key.yacloud.serverless-functions.item.editor.label_title-source }}** создайте файл `index.py` и вставьте в него следующий код:
 
-     ```python
-     import os
-     import ydb
-     import ydb.iam
+       ```python
+       import os
+       import ydb
+       import ydb.iam
 
-     # Create driver in global space.
-     driver = ydb.Driver(
-       endpoint=os.getenv('YDB_ENDPOINT'),
-       database=os.getenv('YDB_DATABASE'),
-       credentials=ydb.iam.MetadataUrlCredentials(),
-     )
-
-     # Wait for the driver to become active for requests.
-
-     driver.wait(fail_fast=True, timeout=5)
-
-     # Create the session pool instance to manage YDB sessions.
-     pool = ydb.SessionPool(driver)
-
-     def execute_query(session):
-       # Create the transaction and execute query.
-       return session.transaction().execute(
-         'select 1 as cnt;',
-         commit_tx=True,
-         settings=ydb.BaseRequestSettings().with_timeout(3).with_operation_timeout(2)
+       # Create driver in global space.
+       driver = ydb.Driver(
+         endpoint=os.getenv('YDB_ENDPOINT'),
+         database=os.getenv('YDB_DATABASE'),
+         credentials=ydb.iam.MetadataUrlCredentials(),
        )
 
-     def handler(event, context):
-       # Execute query with the retry_operation helper.
-       result = pool.retry_operation_sync(execute_query)
-       return {
-         'statusCode': 200,
-         'body': str(result[0].rows[0].cnt == 1),
-       }
-     ```
+       # Wait for the driver to become active for requests.
 
-  1. В блоке **Код функции** создайте файл `requirements.txt` и вставьте в него следующий текст:
+       driver.wait(fail_fast=True, timeout=5)
+
+       # Create the session pool instance to manage YDB sessions.
+       pool = ydb.SessionPool(driver)
+
+       def execute_query(session):
+         # Create the transaction and execute query.
+         return session.transaction().execute(
+           'select 1 as cnt;',
+           commit_tx=True,
+           settings=ydb.BaseRequestSettings().with_timeout(3).with_operation_timeout(2)
+         )
+
+       def handler(event, context):
+         # Execute query with the retry_operation helper.
+         result = pool.retry_operation_sync(execute_query)
+         return {
+           'statusCode': 200,
+           'body': str(result[0].rows[0].cnt == 1),
+         }
+       ```
+
+  1. В блоке **{{ ui-key.yacloud.serverless-functions.item.editor.label_title-source }}** создайте файл `requirements.txt` и вставьте в него следующий текст:
 
      ```txt
      ydb
@@ -127,9 +127,9 @@
   1. В качестве точки входа укажите `index.handler`.
   1. Выберите сервисный аккаунт, например `sa-function`.
   1. Настройте переменные окружения:
-     * `YDB_ENDPOINT` — введите сохраненное ранее значение поля **Эндпоинт**, например `grpcs://ydb.serverless.yandexcloud.net:2135`.
-     * `YDB_DATABASE` — введите сохраненное ранее значение поля **Размещение базы данных**, например `/{{ region-id }}/b1gia87mbaomkfvsleds/etn02j1mlm4vgjhij03e`.
-  1. В верхнем правом углу блока **Редактор** нажмите кнопку **Создать версию**.
+     * `YDB_ENDPOINT` — введите первую часть сохраненного ранее поля **{{ ui-key.yacloud.ydb.overview.label_endpoint }}** (часть до вхождения `/?database=`). Например, `{{ ydb.ep-serverless }}`.
+     * `YDB_DATABASE` — введите вторую часть сохраненного ранее поля **{{ ui-key.yacloud.ydb.overview.label_endpoint }}** (часть после вхождения `/?database=`). Например, `/{{ region-id }}/r1gra875baom********/g5n22e7ejfr1********`.
+  1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.editor.button_deploy-version }}**.
 
 {% endlist %}
 
@@ -139,8 +139,8 @@
 
 - Консоль управления
 
-  1. Перейдите на вкладку **Тестирование**.
-  1. Нажмите кнопку **Запустить тест** и посмотрите результат тестирования.
+  1. Перейдите на вкладку **{{ ui-key.yacloud.serverless-functions.item.switch_testing }}**.
+  1. Нажмите кнопку **{{ ui-key.yacloud.serverless-functions.item.testing.button_run-test }}** и посмотрите результат тестирования.
 
      При успешном подключении к БД и выполнении запроса состояние функции изменится на `Выполнена`, а ответ функции будет содержать следующий текст:
 

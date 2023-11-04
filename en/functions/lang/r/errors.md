@@ -2,7 +2,7 @@
 
 If a [handler](handler.md) reports a R function runtime or loading error, the [runtime environment](../../concepts/runtime/index.md) automatically captures the error and returns a JSON document with the error type in the response. For more information about the JSON document format, see [Calling a function](../../concepts/function-invoke.md#error).
 
-The error data is also written to the [execution log](logging.md). You can [view](../../operations/function/function-logs.md) it using the [YC CLI](../../../cli/) or the [management console]({{ link-console-main }}).
+The error data is also written to the [execution log](logging.md). You can [view](../../operations/function/function-logs.md) it using the [{{ yandex-cloud }} CLI](../../../cli/index.yaml) or the [management console]({{ link-console-main }}).
 
 #### Examples of error handling {#examples}
 
@@ -25,7 +25,7 @@ JSON document returned:
 }
 ```
 
-Case 2: user code indicates an error by [stopping](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/stop) function execution.
+Case 2: user code indicates an error by [throwing](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/stop) an exception from the function.
 
 Function code:
 

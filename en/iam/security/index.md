@@ -12,13 +12,13 @@ In this section, you will learn:
 
 {% include [about-access-management](../../_includes/iam/about-access-management.md) %}
 
-## Which resources you can assign roles to {#resources}
+## Which resources can be assigned a role {#resources}
 
 {% include [basic-resources](../../_includes/iam/basic-resources-for-access-control.md) %}
 
 ## Which roles exist in the service {#roles-list}
 
-The chart below shows which roles are available in the service and how they inherit each other's permissions. For example, the `editor` role includes all `viewer` role permissions. You can find the description of each role under the chart.
+{% include [roles-intro](../../_includes/roles-intro.md) %}
 
 ![image](../../_assets/iam/security/service-roles-hierarchy.svg)
 
@@ -26,7 +26,9 @@ The chart below shows which roles are available in the service and how they inhe
 
 {% include [roles-sa-user](../../_includes/roles-sa-user.md) %}
 
-For some services, you need a service account to perform operations, such as in [{{ ig-name }}](../../compute/concepts/instance-groups/index.md) or [{{ managed-k8s-name }}]({{ link-cloud-services }}/managed-kubernetes). If you specified a service account in the request, {{ iam-short-name }} will check you have permissions to use this account.
+{% include [roles-sa-admin](../../_includes/roles-sa-admin.md) %}
+
+For some services, you need a service account to perform operations, such as in [{{ ig-name }}](../../compute/concepts/instance-groups/index.md) or [{{ managed-k8s-name }}]({{ link-cloud-services }}/managed-kubernetes). If you specified a service account in the request, {{ iam-short-name }} will check whether you have permissions to use this account.
 
 {% include [roles-sa-accessKeyAdmin](../../_includes/roles-sa-accessKeyAdmin.md) %}
 
@@ -38,6 +40,14 @@ For some services, you need a service account to perform operations, such as in 
 
 {% include [roles-sa-tokenCreator](../../_includes/roles-sa-tokenCreator.md) %}
 
+{% include [roles-iam-auditor](../../_includes/roles-iam-auditor.md) %}
+
+{% include [roles-iam-viewer](../../_includes/roles-iam-viewer.md) %}
+
+{% include [roles-iam-editor](../../_includes/roles-iam-editor.md) %}
+
+{% include [roles-iam-admin](../../_includes/roles-iam-admin.md) %}
+
 #### {{ roles-cloud-owner }} {#cloud-owner}
 
 {% include [roles-cloud-owner](../../_includes/roles-cloud-owner.md) %}
@@ -46,21 +56,9 @@ For some services, you need a service account to perform operations, such as in 
 
 {% include [roles-cloud-member](../../_includes/roles-cloud-member.md) %}
 
-{% include [roles-iam-auditor](../../_includes/roles-iam-auditor.md) %}
-
 ### Primitive roles {#primitive-roles}
 
-#### {{ roles-viewer }} {#viewer}
-
-{% include [roles-viewer](../../_includes/roles-viewer.md) %}
-
-#### {{ roles-editor }} {#editor}
-
-{% include [roles-editor](../../_includes/roles-editor.md) %}
-
-#### {{ roles-admin }} {#admin}
-
-{% include [roles-admin](../../_includes/roles-admin.md) %}
+{% include [roles-primitive](../../_includes/roles-primitive.md) %}
 
 ## What roles do I need {#choosing-roles}
 
@@ -78,7 +76,7 @@ The table below lists the roles needed to perform a particular action. You can a
 | [Create](../operations/sa/create.md) service accounts in the folder | `create` | `iam.serviceAccounts.keyAdmin` for the folder |
 | [Update](../operations/sa/update.md) and [delete](../operations/sa/delete.md) service accounts | `update`, `delete` | `editor` for the service account |
 | Create and delete keys for a service account | `create`, `delete` | `iam.serviceAccounts.accessKeyAdmin`, `iam.serviceAccounts.apiKeyAdmin`, `iam.serviceAccounts.authorizedKeyAdmin`, and `iam.serviceAccounts.keyAdmin`<br/> for the service account |
-| **Manage resource access** | |
+| **Managing resource access** | |
 | [Add a new user to the cloud](../operations/users/create.md) | `setAccessBindings` | `admin` for the cloud |
 | [Make a new user the owner of the cloud](../operations/roles/grant.md) | `setAccessBindings`, `updateAccessBindings` | `resource-manager.clouds.owner` for the cloud |
 | [Grant a role](../operations/roles/grant.md), [revoke a role](../operations/roles/revoke.md), and view roles granted for the resource | `setAccessBindings`, `updateAccessBindings`, `listAccessBindings` | `admin` for the resource |

@@ -5,8 +5,10 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
 
 {% note info %}
 
+
 * The number of hosts you can create together with a {{ MG }} cluster depends on the selected [disk type](../concepts/storage.md#storage-type-selection) and [host class](../concepts/instance-types.md#available-flavors).
 * Available disk types [depend](../concepts/storage.md) on the selected [host class](../concepts/instance-types.md).
+
 
 {% endnote %}
 
@@ -20,62 +22,63 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create a DB cluster.
 
-   1. Select **{{ mmg-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_managed-mongodb }}**.
 
-   1. Click **Create cluster**.
+   1. Click **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
 
-   1. Under **Basic parameters**:
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_base }}**:
 
-      * Name the cluster in the **Cluster name** field. It must be unique within the folder.
-      * (optional) Enter a cluster **description**.
+      * Enter a name in the **{{ ui-key.yacloud.mdb.forms.base_field_name }}** field. The cluster name must be unique within the folder.
+      * (Optional) Enter a cluster **{{ ui-key.yacloud.mdb.forms.base_field_description }}**.
       * Select the environment where you want to create the cluster (you cannot change the environment once the cluster is created):
 
          * `PRODUCTION`: For stable versions of your apps.
-         * `PRESTABLE`: For testing, including the {{ mmg-short-name }} service itself. The prestable environment is updated first with new features, improvements, and bug fixes. However, not every update ensures backward compatibility.
+         * `PRESTABLE`: For testing purposes. The prestable environment is similar to the production environment and is also covered by the SLA. However, it is the first to receive new functionalities, improvements, and bug fixes. In the prestable environment, you can test compatibility of new versions with your application.
 
       * Specify the DBMS version.
 
    1. {% include [mmg-settings-host-class](../../_includes/mdb/mmg/settings-host-class.md) %}
 
-   1. Under **Storage size**:
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_disk }}**:
 
       * Select the [disk type](../concepts/storage.md).
 
+         
          {% include [storages-step-settings](../../_includes/mdb/settings-storages.md) %}
 
-      * Select the size of storage to be used for data and backups. For more information about how backups take up storage space, see [{#T}](../concepts/backup.md).
 
-   1. Under **Database**, specify the DB attributes:
+      * Select the storage size to be used for data and backups. For more information about how backups take up storage space, see [{#T}](../concepts/backup.md).
 
-      * DB name.
-      * Username.
-      * User password. Minimum of 8 characters.
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_database }}**, specify the DB attributes:
+
+      * DB name
+
+         {% include [db-name-limits](../../_includes/mdb/mmg/note-info-db-name-limits.md) %}
+
+      * Username
+      * User password; minimum 8 characters long
 
    
-   1. Under **Network settings**, select:
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_network }}**, select:
 
       * Cloud network for the cluster.
-      * Security groups for the cluster's network traffic. You may also need to [set up security groups](connect/index.md#configuring-security-groups) to connect to the cluster.
-
-         {% note info %}
-
-         {% include [security-groups-note](../../_includes/vpc/security-groups-note-services.md) %}
-
-         {% endnote %}
+      * Security groups for the cluster network traffic. You may also need to [set up security groups](connect/index.md#configuring-security-groups) to connect to the cluster.
 
 
-   1. Under **Hosts**, add the DB hosts created with the cluster:
+   1. Under **{{ ui-key.yacloud.mdb.forms.section_host }}**, add the DB hosts created with the cluster:
 
       
-      * Click **Add host**.
-      * Select an [availability zone](../../overview/concepts/geo-scope.md).
+      * Click **{{ ui-key.yacloud.mdb.forms.button_add-host }}**.
+      * Select the [availability zone](../../overview/concepts/geo-scope.md).
       * Select the [subnet](../../vpc/concepts/network.md#subnet) in the specified availability zone. If there is no subnet, create one.
-      * If the host must be available outside {{ yandex-cloud }}, enable **Public access**.
+      * If the host must be available outside {{ yandex-cloud }}, enable **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}**.
 
 
+      
       To ensure fault tolerance, you need at least 3 hosts for `local-ssd` and `network-ssd-nonreplicated` disk types. For more information, see [Storage](../concepts/storage.md).
 
-      By default, hosts are created in different availability zones. For details, see about [host management](hosts.md).
+
+      By default, hosts are created in different availability zones. For details, see the [host management](hosts.md).
 
    1. Configure additional cluster settings, if required:
 
@@ -85,7 +88,7 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
 
       {% include [mmg-settings-dependence](../../_includes/mdb/mmg/note-info-settings-dependence.md) %}
 
-   1. Click **Create cluster**.
+   1. Click **{{ ui-key.yacloud.mdb.clusters.button_create }}**.
 
 - CLI
 
@@ -98,7 +101,7 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
    
    1. Check whether the folder has any subnets for the cluster hosts:
 
-      ```
+      ```bash
       yc vpc subnet list
       ```
 
@@ -107,11 +110,11 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
 
    1. View a description of the create cluster CLI command:
 
-      ```
+      ```bash
       {{ yc-mdb-mg }} cluster create --help
       ```
 
-   1. Specify the cluster parameters in the create command (only some of the supported parameters are given in the example):
+   1. Specify the cluster parameters in the create command (the example shows only some of the parameters):
 
       
       ```bash
@@ -123,7 +126,7 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
          --mongod-resource-preset <host class> \
          --user name=<username>,password=<user password> \
          --database name=<database name> \
-         --mongod-disk-type <network-hdd | network-ssd | local-ssd | network-ssd-nonreplicated> \
+         --mongod-disk-type <disk type> \
          --mongod-disk-size <storage size in GB> \
          --deletion-protection=<deletion protection for the cluster: true or false>
       ```
@@ -131,15 +134,21 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
       You need to specify `subnet-id` if the selected availability zone has two or more subnets.
 
 
+      {% include [db-name-limits](../../_includes/mdb/mmg/note-info-db-name-limits.md) %}
+
       {% include [deletion-protection-limits-db](../../_includes/mdb/deletion-protection-limits-db.md) %}
+
+      {% note info %}
+
+      When creating a cluster, the `anytime` [maintenance](../concepts/maintenance.md) mode is set by default. You can set a specific maintenance period when [updating the cluster settings](update.md#change-additional-settings).
+
+      {% endnote %}
 
 - {{ TF }}
 
    {% include [terraform-definition](../../_tutorials/terraform-definition.md) %}
 
-   
-   If you do not have {{ TF }} yet, [install it and configure the provider](../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
-
+   {% include [terraform-install](../../_includes/terraform-install.md) %}
 
    To create a cluster:
 
@@ -205,21 +214,23 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
 
 
 
+      {% include [db-name-limits](../../_includes/mdb/mmg/note-info-db-name-limits.md) %}
+
       {% include [deletion-protection-limits-db](../../_includes/mdb/deletion-protection-limits-db.md) %}
 
       {% include [Maintenance window](../../_includes/mdb/mmg/terraform/maintenance-window.md) %}
 
       For more information on resources that you can create with {{ TF }}, see the [provider documentation]({{ tf-provider-mmg }}).
 
-   2. Make sure the settings are correct.
+   1. Make sure the settings are correct.
 
       {% include [terraform-validate](../../_includes/mdb/terraform/validate.md) %}
 
-   3. Create a cluster.
+   1. Create a cluster.
 
       {% include [terraform-apply](../../_includes/mdb/terraform/apply.md) %}
 
-      After this, all required resources will be created in the specified folder and the IP addresses of the VMs will be displayed in the terminal. You can check that the resources are there and their settings are correct using the [management console]({{ link-console-main }}).
+      After this, all required resources will be created in the specified folder, and the [host FQDNs](../concepts/network.md#hostname) will be displayed in the terminal. You can check the new resources and their configuration using the [management console]({{ link-console-main }}).
 
       {% include [Terraform timeouts](../../_includes/mdb/mmg/terraform/timeouts.md) %}
 
@@ -239,6 +250,9 @@ A {{ MG }} cluster consists of one or more database hosts you can configure repl
 
 
    * Database configuration in one or more `databaseSpecs` parameters.
+
+      {% include [db-name-limits](../../_includes/mdb/mmg/note-info-db-name-limits.md) %}
+
    * User settings in one or more `userSpecs` parameters.
    * Cluster deletion protection settings in the `deletionProtection` parameter.
 
@@ -267,15 +281,15 @@ If you specified security group IDs when creating a cluster, you may also need t
    Create a {{ mmg-name }} cluster with test characteristics:
 
    
-   * Named `mymg`.
-   * In the `production` environment.
-   * In the `{{ network-name }}` network.
-   * In the security group with the ID `{{ security-group }}`.
-   * With one `{{ host-class }}` host in the `b0rcctk2rvtr8efcch64` subnet in the `{{ region-id }}-a` availability zone.
-   * With 20 GB of network SSD storage (`{{ disk-type-example }}`).
-   * With one user, `user1`, with the password `user1user1`.
-   * With one database, `db1`.
-   * With protection against accidental cluster deletion.
+   * Name: `mymg`.
+   * Environment: `production`.
+   * Network: `{{ network-name }}`.
+   * Security group ID: `{{ security-group }}`.
+   * `{{ host-class }}` host in the `b0rcctk2rvtr8efcch64` subnet in the `{{ region-id }}-a` availability zone: 1.
+   * Network SSD storage (`{{ disk-type-example }}`): 20 GB.
+   * User: `user1`, with the `user1user1` password.
+   * Database: `db1`.
+   * Protection against accidental cluster deletion: Enabled.
 
 
    Run the following command:
@@ -303,7 +317,7 @@ If you specified security group IDs when creating a cluster, you may also need t
 
    * Name: `mymg`.
    * Version: `{{ versions.tf.latest }}`.
-   * Environment `PRODUCTION`.
+   * Environment: `PRODUCTION`.
    * Cloud ID: `{{ tf-cloud-id }}`.
    * Folder ID: `{{ tf-folder-id }}`.
    * Network: `mynet`.
@@ -314,7 +328,10 @@ If you specified security group IDs when creating a cluster, you may also need t
       * Availability zone: `{{ region-id }}-a`.
       * Range: `10.5.0.0/24`.
 
-      * Security group: `mymg-sg`. The group rules allow TCP connections to the cluster from the internet via port `{{ port-mmg }}`.
+   
+   * Security group: `mymg-sg`. The group rules allow TCP connections to the cluster from the internet via port `{{ port-mmg }}`.
+
+
    * SSD network storage: `{{ disk-type-example }}`.
    * Storage size: 20 GB.
    * User: `user1`.
@@ -429,7 +446,7 @@ Network specifications:
 
 - {{ TF }}
 
-   Configuration file for a cluster with standard sharding:
+   The configuration file for a cluster with standard sharding is as follows:
 
    ```hcl
    resource "yandex_mdb_mongodb_cluster" "mymg" {
@@ -537,9 +554,8 @@ Cluster test characteristics:
 * Host class: `{{ host-class }}`.
 * SSD network storage: `{{ disk-type-example }}`.
 * Storage size: 10 GB.
-* Number of `host` blocks: 6. For each of them, set the host type: `mongod`, `mongos`, or `mongocfg`.
 
-Network specifications:
+Network characteristics:
 
 * Network: `mynet`.
 * Security group: `mymg-sg`. The group rules allow TCP connections to the cluster from the internet via port `{{ port-mmg }}`.
@@ -551,7 +567,7 @@ Network specifications:
 
 - {{ TF }}
 
-   Configuration file for a cluster with advanced sharding:
+   The configuration file for a cluster with advanced sharding is as follows:
 
    ```hcl
    resource "yandex_mdb_mongodb_cluster" "mymg" {

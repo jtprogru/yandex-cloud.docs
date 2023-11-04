@@ -3,7 +3,7 @@ title: "Управление доступом в {{ iam-full-name }} ({{ iam-sho
 description: "Управление доступом в сервисе идентификации и контроля доступа {{ iam-full-name }} ({{ iam-short-name }}). В разделе описано, на какие ресурсы можно назначить роль, какие роли действуют в сервисе, какие роли необходимы для того или иного действия."
 ---
 
-# Управление доступом в {{ iam-name }}
+# Управление доступом в сервисе {{ iam-name }}
 
 В этом разделе вы узнаете:
 * [на какие ресурсы можно назначить роль](#resources);
@@ -18,13 +18,15 @@ description: "Управление доступом в сервисе идент
 
 ## Какие роли действуют в сервисе {#roles-list}
 
-На диаграмме показано, какие роли есть в сервисе и как они наследуют разрешения друг друга. Например, в `editor` входят все разрешения `viewer`. После диаграммы дано описание каждой роли.
+{% include [roles-intro](../../_includes/roles-intro.md) %}
 
 ![image](../../_assets/iam/security/service-roles-hierarchy.svg)
 
 ### Сервисные роли {#service-roles}
 
 {% include [roles-sa-user](../../_includes/roles-sa-user.md) %}
+
+{% include [roles-sa-admin](../../_includes/roles-sa-admin.md) %}
 
 В некоторых сервисах для выполнения операций необходим сервисный аккаунт, например в [{{ ig-name }}](../../compute/concepts/instance-groups/index.md) или [{{ managed-k8s-name }}]({{ link-cloud-services }}/managed-kubernetes). Если вы указали сервисный аккаунт в запросе, то {{ iam-short-name }} проверит, что у вас есть права на использование этого аккаунта.
 
@@ -38,7 +40,15 @@ description: "Управление доступом в сервисе идент
 
 {% include [roles-sa-tokenCreator](../../_includes/roles-sa-tokenCreator.md) %}
 
-####  {{ roles-cloud-owner }} {#cloud-owner}
+{% include [roles-iam-auditor](../../_includes/roles-iam-auditor.md) %}
+
+{% include [roles-iam-viewer](../../_includes/roles-iam-viewer.md) %}
+
+{% include [roles-iam-editor](../../_includes/roles-iam-editor.md) %}
+
+{% include [roles-iam-admin](../../_includes/roles-iam-admin.md) %}
+
+#### {{ roles-cloud-owner }} {#cloud-owner}
 
 {% include [roles-cloud-owner](../../_includes/roles-cloud-owner.md) %}
 
@@ -46,21 +56,9 @@ description: "Управление доступом в сервисе идент
 
 {% include [roles-cloud-member](../../_includes/roles-cloud-member.md) %}
 
-{% include [roles-iam-auditor](../../_includes/roles-iam-auditor.md) %}
-
 ### Примитивные роли {#primitive-roles}
 
-#### {{ roles-viewer }} {#viewer}
-
-{% include [roles-viewer](../../_includes/roles-viewer.md) %}
-
-#### {{ roles-editor }} {#editor}
-
-{% include [roles-editor](../../_includes/roles-editor.md) %}
-
-#### {{ roles-admin }} {#admin}
-
-{% include [roles-admin](../../_includes/roles-admin.md) %}
+{% include [roles-primitive](../../_includes/roles-primitive.md) %}
 
 ## Какие роли мне необходимы {#choosing-roles}
 

@@ -1,3 +1,8 @@
+---
+title: "Getting an invocation link"
+description: "This guide describes how you can get an invocation link."
+---
+
 # Getting an invocation link
 
 {% list tabs %}
@@ -5,8 +10,8 @@
 - Management console
 
    1. In the [management console]({{ link-console-main }}), select the folder with your container.
-   1. Select **{{ serverless-containers-name }}**.
-   1. Select the container. The invocation link is in the **Link to invoke** field.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-containers }}**.
+   1. Select the container. You will find the invocation link in the **{{ ui-key.yacloud.serverless-containers.label_url }}** field.
 
 - CLI
 
@@ -24,7 +29,7 @@
     created_at: "2021-08-17T07:53:10.219Z"
     name: my-beta-container
     description: my beta container description
-    url: https://flh7r96juaqq********.containers.cloud-preprod.yandex.net/
+    url: https://flh7r96juaqq********.{{ serverless-containers-host }}/
     status: ACTIVE
     ```
 

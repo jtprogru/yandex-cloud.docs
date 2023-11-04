@@ -1,14 +1,14 @@
-# Event reference
+# Management event reference
 
-The value of the `event_type` field (_event type_) in the audit log is determined by a service that is the event source.
+The value of the `event_type` (_event type_) field in a management (control plane) audit log is determined by the event source service.
 
-General value format:
+The general value format is as follows:
 
 ```text
-{{ at-event-prefix }}.audit.<service name>.<event name>
+{{ at-event-prefix }}.audit.<service_name>.<event_name>
 ```
 
-Below are events for services:
+On this page, you will find events for the following services:
 
 * [{{ api-gw-name }}](#api-gateway)
 * [{{ alb-name }}](#alb)
@@ -16,15 +16,18 @@ Below are events for services:
 * [{{ certificate-manager-name }}](#certificate-manager)
 * [{{ dns-name }}](#dns)
 * [{{ sf-name }}](#functions)
+* [{{ backup-name }}](#backup)
 * [{{ cdn-name }}](#cdn)
 * [{{ cloud-logging-name }}](#cloud-logging)
 * [{{ compute-name }}](#compute)
 * [{{ container-registry-name }}](#container-registry)
 * [{{ dataproc-name }}](#dataproc)
+* [{{ data-transfer-name }}](#datatransfer)
 * [{{ iam-name }}](#iam)
 * [{{ iot-name }}](#iot)
 * [{{ kms-name }}](#kms)
 * [{{ lockbox-name }}](#lockbox)
+* [{{ mkf-short-name }}](#managed-service-for-kafka)
 * [{{ mch-short-name }}](#managed-service-for-clickhouse)
 * [{{ mgl-full-name }}](#managed-service-for-gitlab)
 * [{{ mgp-short-name }}](#managed-service-for-greenplum)
@@ -108,19 +111,44 @@ Service name: `audittrails`.
 Service name: `serverless`.
 
 | Event name | Description |
-| --- | --- |
+--- | ---
 | `functions.CreateFunction` | Creating a function |
 | `functions.CreateFunctionVersion` | Creating a function version |
 | `functions.DeleteFunction` | Deleting a function |
+| `functions.DeleteFunctionVersion` | Destroying a function version |
 | `functions.RemoveFunctionTag` | Removing a function tag |
+| `functions.RemoveScalingPolicy` | Deleting a function scaling policy |
 | `functions.SetFunctionTag` | Assigning a function tag |
+| `functions.SetFunctionAccessBindings` | Setting access bindings for a function |
+| `functions.SetScalingPolicy` | Assigning a function scaling policy |
 | `functions.UpdateFunction` | Updating a function |
+| `functions.UpdateFunctionAccessBindings` | Updating access bindings for a function |
 | `mdbproxy.CreateProxy` | Creating a proxy |
 | `mdbproxy.DeleteProxy` | Deleting a proxy |
 | `mdbproxy.UpdateProxy` | Updating a proxy |
 | `triggers.CreateTrigger` | Creating a trigger |
 | `triggers.DeleteTrigger` | Deleting a trigger |
 | `triggers.UpdateTrigger` | Updating a trigger |
+
+
+## {{ backup-name }} {#backup}
+
+Service name: `backup`.
+
+| Event name | Description |
+--- | ---
+| `ApplyPolicy` | Applying backup policies |
+| `CreateDirectory` | Creating a new directory inside a VM |
+| `CreatePolicy` | Creating backup policies |
+| `DeleteBackup` | Deleting backups |
+| `DeletePolicy` | Deleting backup policies |
+| `DeleteResource` | Deleting a VM from {{ backup-name }} |
+| `ExecutePolicy` | Executing backup policies |
+| `RegisterResource` | Connecting a VM to {{ backup-name }} |
+| `RevokePolicy` | Revoking backup policies |
+| `StartRecoverBackup` | Starting VM recovery |
+| `UpdatePolicy` | Updating backup policies |
+
 
 ## {{ cdn-name }} {#cdn}
 
@@ -133,8 +161,8 @@ Service name: `cdn`.
 | `gcore.OriginCreate` | Creating an origin |
 | `gcore.OriginDelete` | Deleting an origin |
 | `gcore.OriginGroupCreate` | Creating an origin group |
-| `gcore.OriginGroupDelete` | Deleting origin groups |
-| `gcore.OriginGroupUpdate` | Editing origin groups |
+| `gcore.OriginGroupDelete` | Deleting an origin group |
+| `gcore.OriginGroupUpdate` | Editing an origin group |
 | `gcore.OriginUpdate` | Changing an origin |
 | `gcore.ProviderActivate` | Activating a provider |
 | `gcore.ResourceCreate` | Creating a resource |
@@ -146,12 +174,12 @@ Service name: `certificatemanager`.
 
 | Event name | Description |
 --- | ---
-| `CreateCertificate` | Create a certificate |
-| `CreateDomain` | Create a domain |
-| `UpdateCertificate` | Edit a certificate |
-| `UpdateDomain` | Update a domain |
-| `DeleteCertificate` | Delete a certificate |
-| `DeleteDomain` | Delete a domain |
+| `CreateCertificate` | Adding a certificate |
+| `CreateDomain` | Creating a domain |
+| `UpdateCertificate` | Editing a certificate |
+| `UpdateDomain` | Updating a domain |
+| `DeleteCertificate` | Deleting a certificate |
+| `DeleteDomain` | Deleting a domain |
 | `UpdateCertificateAccessBindings` | Updating access bindings for a certificate |
 | `SetCertificateAccessBindings` | Setting access bindings for a certificate |
 | `SetDomainPrimaryCertificate` | Assigning a primary certificate to a domain |
@@ -188,18 +216,20 @@ Service name: `compute`.
 | Event name | Description |
 --- | ---
 | `AddInstanceOneToOneNat` | Adding a public IP address for a VM instance |
-| `AttachInstanceDisk` | Attaching a disk to a VM instance |
+| `AttachInstanceDisk` | Connecting a disk to a VM |
 | `AttachInstanceFilesystem` | Connecting a file system to a VM |
 | `ChangeDiskStatus` | Changing a non-replicated disk status |
 | `CrashInstance` | Emergency VM shutdown |
 | `CreateDisk` | Creating a disk |
 | `CreateFilesystem` | Creating a file system |
+| `CreateGpuCluster` | Creating a GPU cluster |
 | `CreateImage` | Creating a disk image |
 | `CreateInstance` | Creating a VM instance |
 | `CreateSnapshot` | Creating a disk snapshot |
 | `CreateSnapshotSchedule` | Creating a disk snapshot schedule |
 | `DeleteDisk` | Deleting a disk |
 | `DeleteFilesystem` | Deleting a file system |
+| `DeleteGpuCluster` | Deleting a GPU cluster |
 | `DeleteImage` | Deleting a disk image |
 | `DeleteInstance` | Deleting a VM |
 | `DeleteSnapshot` | Deleting a disk snapshot |
@@ -216,6 +246,7 @@ Service name: `compute`.
 | `StopInstance` | Stopping a VM |
 | `UpdateDisk` | Changing a disk |
 | `UpdateFilesystem` | Modifying a file system |
+| `UpdateGpuCluster` | Editing a GPU cluster |
 | `UpdateImage` | Updating a disk image |
 | `UpdateInstance` | Updating a VM instance |
 | `UpdateInstanceMetadata` | Updating VM instance metadata |
@@ -228,6 +259,7 @@ Service name: `compute`.
 | `instancegroup.DeleteInstanceGroupInstances` | Deleting an instance from a group |
 | `instancegroup.PauseInstanceGroup` | Pausing instance group management processes |
 | `instancegroup.ResumeInstanceGroup` | Resuming instance group management processes |
+| `instancegroup.RollingRestartInstanceGroupInstances` | Restarting instances in a group one by one |
 | `instancegroup.SetInstanceGroupAccessBindings` | Assigning roles for an instance group |
 | `instancegroup.StartInstanceGroup` | Starting an instance group |
 | `instancegroup.StopInstanceGroup` | Stopping an instance group |
@@ -243,15 +275,20 @@ Service name: `containerregistry`.
 --- | ---
 | `CreateImage` | Creating an image |
 | `CreateImageTag` | Creating an image tag |
+| `CreateLifecyclePolicy` | Creating a lifecycle policy |
 | `CreateRegistry` | Creating a registry |
 | `CreateRepository` | Creating a repository |
+| `CreateScanPolicy` | Creating a scan policy |
 | `DeleteImage` | Deleting an image |
 | `DeleteImageTag` | Deleting an image tag |
+| `DeleteLifecyclePolicy` | Deleting a lifecycle policy |
 | `DeleteRegistry` | Deleting a registry |
 | `DeleteRepository` | Deleting a repository |
 | `ScanImage` | Scanning an image |
 | `UpdateIpPermission` | Updating policies for accessing a registry from IP addresses |
+| `UpdateLifecyclePolicy` | Updating a lifecycle policy |
 | `UpdateRegistry` | Updating a registry |
+| `UpdateScanPolicy` | Updating a scan policy |
 | `UpdateRegistryAccessBindings` | Updating access bindings for a registry |
 | `UpdateRepositoryAccessBindings` | Updating access bindings for a repository |
 | `SetRegistryAccessBindings` | Setting access bindings for a registry |
@@ -271,6 +308,25 @@ Service name: `dataproc`.
 | `StopCluster` | Stopping cluster |
 | `UpdateCluster` | Updating clusters |
 | `UpdateSubcluster` | Updating subclusters |
+
+## {{ data-transfer-name }} {#datatransfer}
+
+Service name: `datatransfer`.
+
+| Event name | Description |
+--- | ---
+| `ActivateTransfer` | Activating a transfer |
+| `CreateEndpoint` | Creating an endpoint |
+| `CreateTransfer` | Creating a transfer |
+| `DeactivateTransfer` | Deactivating a transfer |
+| `DeleteEndpoint` | Deleting an endpoint |
+| `DeleteTransfer` | Deleting a transfer |
+| `FreezeTransferVersion` | Committing a certain data plane version for a transfer |
+| `RestartTransfer` | Restarting a transfer |
+| `UnfreezeTransferVersion` | Allowing a transfer update to the latest data planе version |
+| `UpdateEndpoint` | Editing an endpoint |
+| `UpdateTransfer` | Updating a transfer |
+| `UpdateTransferVersion` | Updating the version of a data plane transfer |
 
 ## {{ iam-name }} {#iam}
 
@@ -325,18 +381,26 @@ Service name: `kms`.
 --- | ---
 | `CancelDeleteSymmetricKey` | Canceling a previously scheduled key destruction |
 | `CancelSymmetricKeyVersionDestruction` | Canceling a previously planned destruction of a symmetric key version |
+| `CreateAsymmetricEncryptionKey` | Creating an asymmetric encryption key pair |
+| `CreateAsymmetricSignatureKey` | Creating a digital signature key pair |
 | `CreateSymmetricKey` | Creating a symmetric key |
+| `DeleteAsymmetricEncryptionKey` | Updating an asymmetric encryption key pair |
+| `DeleteAsymmetricSignatureKey` | Updating a digital signature key pair |
 | `DeleteSymmetricKey` | Deleting a symmetric key |
 | `RotateSymmetricKey` | Rotating a symmetric key |
-| `ScheduleSymmetricKeyVersionDestruction` | Scheduling the destruction of a key version |
+| `ScheduleSymmetricKeyVersionDestruction` | Scheduling the destruction of a symmetric key version |
+| `SetAsymmetricEncryptionKeyAccessBindings` | Selecting access bindings for an asymmetric encryption key pair |
+| `SetAsymmetricSignatureKeyAccessBindings` | Selecting access bindings for a digital signature key pair |
 | `SetPrimarySymmetricKeyVersion` | Selecting the primary version of a symmetric key |
 | `SetSymmetricKeyAccessBindings` | Selecting access bindings for a symmetric key |
+| `UpdateAsymmetricEncryptionKey` | Updating an asymmetric encryption key pair |
+| `UpdateAsymmetricSignatureKey` | Updating a digital signature key pair |
 | `UpdateSymmetricKey` | Changing a symmetric key |
 | `UpdateSymmetricKeyAccessBindings` | Updating access bindings for a symmetric key |
 
 ## {{ lockbox-name }} {#lockbox}
 
-Service Name: `lockbox`.
+Service name: `lockbox`.
 
 | Event name | Description |
 --- | ---
@@ -352,8 +416,19 @@ Service Name: `lockbox`.
 | `UpdateSecret` | Updating a secret |
 | `UpdateSecretAccessBindings` | Updating access bindings for a secret |
 
-\* By default, this event is not included in the audit log. To have this event added to the audit log, please contact [technical support]({{ link-console-support }}). Message template:
-"Please include data plane Lockbox events in audit trail `<trail ID>`."
+\* By default, this event is not included in the audit log. To find out whether this event can be added to the audit log, contact [support]({{ link-console-support }}).
+
+## {{ mkf-short-name }} {#managed-service-for-kafka}
+
+Service name: `mdb.kafka`.
+
+| Event name | Description |
+--- | ---
+| `CreateCluster` | Creating clusters |
+| `DeleteCluster` | Deleting clusters |
+| `StartCluster` | Starting cluster |
+| `StopCluster` | Stopping cluster |
+| `UpdateCluster` | Updating clusters |
 
 ## {{ mch-short-name }} {#managed-service-for-clickhouse}
 
@@ -487,6 +562,7 @@ Service name: `mdb.mysql`.
 | `CreateCluster` | Creating clusters |
 | `CreateDatabase` | Creating a database |
 | `CreateUser` | Creating a database user |
+| `DeleteBackup` | Deleting backups |
 | `DeleteCluster` | Deleting clusters |
 | `DeleteClusterHosts` | Deleting hosts from a cluster |
 | `DeleteDatabase` | Deleting a database |
@@ -514,6 +590,7 @@ Service name: `mdb.postgresql`.
 | `CreateCluster` | Creating clusters |
 | `CreateDatabase` | Creating a database |
 | `CreateUser` | Creating a database user |
+| `DeleteBackup` | Deleting backups |
 | `DeleteCluster` | Deleting clusters |
 | `DeleteClusterHosts` | Deleting hosts from a cluster |
 | `DeleteDatabase` | Deleting a database |
@@ -587,15 +664,17 @@ Service name: `storage`.
 | `BucketHttpsUpdate` | Updating the HTTPS configuration for a bucket |
 | `BucketLifecycleUpdate` | Changing the lifecycle of an object in a bucket |
 | `BucketPolicyUpdate` | Updating the access policies for a bucket |
+| `BucketTagsUpdate` | Updating bucket tags |
 | `BucketUpdate` | Updating a bucket |
 | `BucketWebsiteUpdate` | Updating a website configuration |
 | `ObjectAclUpdate` | Updating an object's ACL in a bucket ^*^ |
 | `ObjectCreate` | Creating an object in a bucket ^*^ |
 | `ObjectDelete` | Deleting an object from a bucket ^*^ |
 | `ObjectUpdate` | Updating an object in a bucket ^*^ |
+| `ObjectTagsDelete` | Deleting object tags |
+| `ObjectTagsUpdate` | Updating object tags |
 
-\* The audit log does not include the above events by default. To have these events added to the audit log, please contact [technical support]({{ link-console-support }}). Message template:
-"Please enable the recording of data plane object storage events in audit trail `<trail id>`."
+\* The audit log does not include the above events by default. To find out whether these events can be added to the audit log, contact [support]({{ link-console-support }}).
 
 ## {{ serverless-containers-name }} {#serverless-containers}
 
@@ -676,6 +755,8 @@ Service name: `network`.
 
 | Event name | Description |
 --- | ---
+| `AddressAttached` | Linking an address to a cloud resource |
+| `AddressDetached` | Unlinking an address from a cloud resource |
 | `CreateAddress` | Creating a cloud resource address |
 | `CreateGateway` | Creating a gateway |
 | `CreateNetwork` | Creating a cloud network |

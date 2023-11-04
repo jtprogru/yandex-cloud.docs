@@ -16,6 +16,8 @@
 
    {% endcut %}
 
+{% include [target-backet-note](../../../_includes/storage/target-bucket-note.md) %}
+
 1. Включите механизм логирования в исходном бакете, который вы хотите отслеживать.
 
    {% list tabs %}
@@ -59,7 +61,7 @@
      {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
      
-     Если у вас ещё нет {{ TF }}, [установите его и настройте провайдер {{ yandex-cloud }}](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+     {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
      Чтобы включить механизм логирования в бакете, который вы хотите отслеживать:
@@ -198,7 +200,7 @@
   {% include [terraform-definition](../../../_tutorials/terraform-definition.md) %}
 
   
-  Подробнее о {{ TF }} [читайте в документации](../../../tutorials/infrastructure-management/terraform-quickstart.md#install-terraform).
+  {% include [terraform-install](../../../_includes/terraform-install.md) %}
 
 
   Чтобы выключить механизм логирования:

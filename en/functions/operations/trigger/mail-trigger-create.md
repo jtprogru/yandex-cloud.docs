@@ -1,6 +1,6 @@
 # Creating an email trigger that invokes a {{ sf-name }} function
 
-Create a [mail trigger](../../concepts/trigger/mail-trigger.md) to call a {{ sf-name }} [function](../../concepts/function.md) when an email arrives. The service automatically generates an email address when creating the trigger.
+Create an [email trigger](../../concepts/trigger/mail-trigger.md) to call a {{ sf-name }} [function](../../concepts/function.md) when an email arrives. The service automatically generates an email address when creating the trigger.
 
 ## Getting started {#before-you-begin}
 
@@ -16,29 +16,29 @@ Create a [mail trigger](../../concepts/trigger/mail-trigger.md) to call a {{ sf-
 
    1. In the [management console]({{ link-console-main }}), select the folder where you want to create your trigger.
 
-   1. Select **{{ sf-name }}**.
+   1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_serverless-functions }}**.
 
-   1. On the left-hand panel, select ![image](../../../_assets/functions/triggers.svg) **Triggers**.
+   1. In the left-hand panel, select ![image](../../../_assets/functions/triggers.svg) **{{ ui-key.yacloud.serverless-functions.switch_list-triggers }}**.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.list.button_create }}**.
 
-   1. Under **Basic parameters**:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_base }}**:
 
-      * (optional) Enter a trigger name and description.
-      * In the **Type** field, select **Email**.
-      * In the **Launched resource** field, select **Function**.
+      * (Optional) Enter a trigger name and description.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_type }}** field, select **{{ ui-key.yacloud.serverless-functions.triggers.form.label_mail }}**.
+      * In the **{{ ui-key.yacloud.serverless-functions.triggers.form.field_invoke }}** field, select **{{ ui-key.yacloud.serverless-functions.triggers.form.label_function }}**.
 
-   1. Under **Function settings**, select a function and specify:
+   1. Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function }}**, select a function and specify:
 
       {% include [function-settings](../../../_includes/functions/function-settings.md) %}
 
-   1. (optional) Under **Repeat request settings**:
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_function-retry }}**:
 
       {% include [repeat-request.md](../../../_includes/functions/repeat-request.md) %}
 
-   1. (optional) Under **Dead Letter Queue settings**, select the Dead Letter Queue and the service account with write privileges for this queue.
+   1. (Optional) Under **{{ ui-key.yacloud.serverless-functions.triggers.form.section_dlq }}**, select the Dead Letter Queue and the service account with write privileges for this queue.
 
-   1. Click **Create trigger**.
+   1. Click **{{ ui-key.yacloud.serverless-functions.triggers.form.button_create-trigger }}**.
 
 - CLI
 
@@ -48,25 +48,36 @@ Create a [mail trigger](../../concepts/trigger/mail-trigger.md) to call a {{ sf-
 
    To create a trigger that invokes a function, run this command:
 
+   
    ```bash
    yc serverless trigger create mail \
-     --name <trigger name> \
-     --invoke-function-id <function ID> \
-     --invoke-function-service-account-id <service account ID> \
+     --name <trigger_name> \
+     --batch-size <batch_size> \
+     --batch-cutoff <maximum_wait_time> \
+     --attachements-bucket <bucket_name> \
+     --attachements-service-account-id <service_account_ID> \
+     --invoke-function-id <function_ID> \
+     --invoke-function-service-account-id <service_account_ID> \
      --retry-attempts 1 \
      --retry-interval 10s \
-     --dlq-queue-id <Dead Letter Queue ID> \
-     --dlq-service-account-id <service account ID>
+     --dlq-queue-id <Dead_Letter_Queue_ID> \
+     --dlq-service-account-id <service_account_ID>
    ```
+
 
    Where:
 
-   * `--name`: Trigger name.
+   * `--name`: Trigger name
+
+   {% include [batch-settings-messages](../../../_includes/functions/batch-settings-messages.md) %}
+
+   {% include [attachments-params](../../../_includes/functions/attachments-params.md) %}
 
    {% include [trigger-cli-param](../../../_includes/functions/trigger-cli-param.md) %}
 
    Result:
 
+   
    ```text
    id: a1sfe084v4**********
    folder_id: b1g88tflru**********
@@ -75,6 +86,12 @@ Create a [mail trigger](../../concepts/trigger/mail-trigger.md) to call a {{ sf-
    rule:
      mail:
        email: a1s8h8avgl**********-cho1****@serverless.yandexcloud.net
+       batch_settings:
+         size: "3"
+         cutoff: 20s
+       attachments_bucket:
+         bucket_id: bucket-for-attachments
+         service_account_id: ajejeis235ma********
        invoke_function:
          function_id: d4eofc7n0m**********
          function_tag: $latest
@@ -87,6 +104,7 @@ Create a [mail trigger](../../concepts/trigger/mail-trigger.md) to call a {{ sf-
            service-account-id: aje3932acd**********
    status: ACTIVE
    ```
+
 
 - API
 

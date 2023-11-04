@@ -4,7 +4,7 @@ editable: false
 
 # {{ yandex-cloud }} pricing policy
 
-In {{ yandex-cloud }}, you can use resources of both billable and non-billable services.
+In {{ yandex-cloud }}, you can use resources of both billable and non-billable services. The fee for using {{ billing-name }} is included in the service price and is not charged separately.
 
 ## Non-billable services {#free}
 
@@ -12,7 +12,6 @@ The following services are always free of charge:
 
 * {{ preview-stage }} [{{ at-full-name }}](../audit-trails/pricing.md)
 * [{{ certificate-manager-full-name }}](../certificate-manager/pricing.md)
-* {{ preview-stage }} [{{ backup-full-name }}](../backup/pricing.md)
 * [Yandex Cloud Console](../console/pricing.md)
 * {{ preview-stage }} [{{ cloud-desktop-full-name }}](../cloud-desktop/pricing.md)
 * [{{ org-full-name }}](../organization/pricing.md)

@@ -10,10 +10,12 @@ description: "The page contains all instructions on how to work with {{ ml-platf
 * [{#T}](community/create.md)
 * [{#T}](community/add-user.md)
 * [{#T}](community/manage-community-labels.md)
+* [{#T}](community/manage-community-config.md)
 * [{#T}](community/link-channel.md)
 * [{#T}](community/link-ba.md)
 * [{#T}](community/billing-details.md)
 * [{#T}](community/delete.md)
+* [{#T}](community/delete-user.md)
 
 ## Project management {#project}
 
@@ -25,6 +27,8 @@ description: "The page contains all instructions on how to work with {{ ml-platf
 * [{#T}](projects/update.md)
 * [{#T}](projects/restrictions.md)
 * [{#T}](projects/delete.md)
+* [{#T}](projects/delete-user.md)
+* [{#T}](projects/remote-connect.md)
 
 ## Working in a notebook {#notebook}
 
@@ -34,7 +38,9 @@ description: "The page contains all instructions on how to work with {{ ml-platf
 * [{#T}](projects/install-dependencies.md)
 * [{#T}](projects/clear-kernel-state.md)
 * [{#T}](projects/snippets.md)
+* [{#T}](projects/clear-outputs.md)
 * [{#T}](projects/work-with-git.md)
+* [{#T}](projects/work-with-jobs.md)
 * [{#T}](user-images-cell.md)
 
 ## Working with resources {#resources}
@@ -47,6 +53,7 @@ description: "The page contains all instructions on how to work with {{ ml-platf
 
 ## Connecting to data sources {#connections-to-data-sources}
 
+* [{#T}](data/s3-connectors.md)
 * [{#T}](data/connect-to-s3.md)
 * [{#T}](data/connect-to-clickhouse.md)
 * [{#T}](data/connect-to-postgresql.md)
@@ -75,3 +82,4 @@ description: "The page contains all instructions on how to work with {{ ml-platf
 ## Additional {{ ml-platform-name }} features {#additional-feature}
 
 * [{#T}](migration.md)
+

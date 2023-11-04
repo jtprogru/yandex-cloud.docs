@@ -25,17 +25,17 @@ For security reasons, {{ mgp-name }} does not support creating [external web tab
 
 ## Connecting to external DBMS {#pxf}
 
-The [{{ GP }} Platform Extension Framework (PXF)]({{ gp.docs.pivotal }}/6-4/pxf/overview_pxf.html) is a software platform that provides access to data from external DBMS's. Tables from the following external sources are available to connect to:
+The [{{ GP }} Platform Extension Framework (PXF)]({{ gp.docs.pivotal }}/6-4/pxf/overview_pxf.html) is a software platform that provides access to data from external DBMS's. You can connect tables from the following external sources:
 
-* Apache Hive.
-* {{ CH }}.
-* HBase.
-* HDFS.
-* {{ MY }}.
-* Oracle.
-* {{ PG }}.
-* {{ MS }}.
-* {{ objstorage-full-name }} buckets.
+* Apache Hive
+* {{ CH }}
+* HBase
+* HDFS
+* {{ MY }}
+* Oracle
+* {{ PG }}
+* {{ MS }}
+* {{ objstorage-full-name }} buckets
 
 ### Creating an external table using PXF {#create-pxf-table}
 
@@ -44,8 +44,7 @@ SQL query syntax to create an external table:
 ```sql
 CREATE [WRITABLE] EXTERNAL TABLE <table name>
        (<column name> <data type> [, ...])
-       LOCATION('pxf://<data path or table name>?PROFILE=<profile name>&JDBC_DRIVER=<JDBC driver name>&DB_URL=<connection string>&USER=<username>&PASS=<user password>')
-       FORMAT '[TEXT|CSV|CUSTOM]';
+       LOCATION('pxf://<data path or table name>?PROFILE=<profile name>&JDBC_DRIVER=<JDBC driver name>&DB_URL=<connection string>&USER=<username>')
 ```
 
 Where:
@@ -58,9 +57,14 @@ Where:
 * (optional) `JDBC driver name`: JDBC driver to be used to connect to an external DBMS.
 * (optional) `connection string`: External DBMS connection URL.
 * (optional) `username`: Username to connect to the external DBMS.
-* (optional) `user password`: User password to connect to an external DBMS.
 
 The `WRITABLE` option enables you to write data to an external object. To be able to read data from an external object, create a table with the `READABLE` option.
+
+{% note warning %}
+
+When creating external tables, do not set up the user password explicitly. Use other methods of password setup.
+
+{% endnote %}
 
 This SQL query does not contain an exhaustive list of available parameters. For more information, see the [{{ GP }} documentation]({{ gp.docs.pivotal }}/6-4/pxf/intro_pxf.html) and examples for creating external tables.
 
@@ -73,8 +77,6 @@ This SQL query does not contain an exhaustive list of available parameters. For 
    1. [Create a {{ mch-full-name }} cluster](../../managed-clickhouse/operations/cluster-create.md) with the following settings:
 
       * User name: `chuser`.
-      * Password: `chpassword`.
-      * Make sure the **Public access** option is disabled in the host settings.
 
    1. [Connect to a {{ CH }} database](../../managed-clickhouse/operations/connect#connection-string) using `clickhouse-client`.
    1. Create a test table and populate it with data:
@@ -92,7 +94,15 @@ This SQL query does not contain an exhaustive list of available parameters. For 
 
       ```sql
       CREATE READABLE EXTERNAL TABLE pxf_ch(id int)
-      LOCATION ('pxf://test?PROFILE=JDBC&JDBC_DRIVER=ru.yandex.clickhouse.ClickHouseDriver&DB_URL=jdbc:clickhouse://c-<cluster ID>.rw.{{ dns-zone }}:8123/db1&USER=chuser&PASS=chpassword')
+      LOCATION ('pxf://test?PROFILE=JDBC&JDBC_DRIVER=com.clickhouse.jdbc.ClickHouseDriver&DB_URL=jdbc:clickhouse:http://c-<cluster ID>.rw.{{ dns-zone }}:8123/db1&USER=chuser')
+      FORMAT 'CUSTOM' (FORMATTER='pxfwritable_import');
+      ```
+
+      If public access is enabled for {{ CH }} hosts, use an encrypted connection when creating an external table. To do this, specify SSL parameters and `{{ port-mch-http }}` port in your request:
+
+      ```sql
+      CREATE READABLE EXTERNAL TABLE pxf_ch(id int)
+      LOCATION ('pxf://test?PROFILE=JDBC&JDBC_DRIVER=com.clickhouse.jdbc.ClickHouseDriver&DB_URL=jdbc:clickhouse:https://c-<cluster ID>.rw.mdb.yandexcloud.net:{{ port-mch-http }}/db1&USER=chuser&ssl=true&sslmode=strict&sslrootcert=/etc/greenplum/ssl/allCAs.pem')
       FORMAT 'CUSTOM' (FORMATTER='pxfwritable_import');
       ```
 
@@ -119,8 +129,7 @@ This SQL query does not contain an exhaustive list of available parameters. For 
    1. [Create a {{ mmy-full-name }} cluster](../../managed-mysql/operations/cluster-create.md) with the following settings:
 
       * User name: `mysqluser`.
-      * Password: `mysqlpassword`.
-      * In the host settings, select the **Public access** option.
+      * In the host settings, select the **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}** option.
 
    1. [Connect to a {{ MY }} database](../../managed-mysql/operations/connect#connection-string) using `mysql`.
    1. Create a test table and populate it with data:
@@ -138,7 +147,7 @@ This SQL query does not contain an exhaustive list of available parameters. For 
 
       ```sql
       CREATE READABLE EXTERNAL TABLE pxf_mysql(a int, b int)
-      LOCATION ('pxf://test?PROFILE=JDBC&JDBC_DRIVER=com.mysql.jdbc.Driver&DB_URL=jdbc:mysql://c-<cluster ID>.rw.{{ dns-zone }}:3306/db1&USER=mysqluser&PASS=mysqlpassword')
+      LOCATION ('pxf://test?PROFILE=JDBC&JDBC_DRIVER=com.mysql.jdbc.Driver&DB_URL=jdbc:mysql://c-<cluster ID>.rw.{{ dns-zone }}:3306/db1&USER=mysqluser')
       FORMAT 'CUSTOM' (FORMATTER='pxfwritable_import');
       ```
 
@@ -166,8 +175,7 @@ This SQL query does not contain an exhaustive list of available parameters. For 
    1. [Create a {{ mpg-full-name }} cluster](../../managed-postgresql/operations/cluster-create.md) with the following settings:
 
       * User name: `pguser`.
-      * Password: `pgpassword`.
-      * In the host settings, select the **Public access** option.
+      * In the host settings, select the **{{ ui-key.yacloud.mdb.hosts.dialog.field_public_ip }}** option.
 
    1. [Connect to a {{ PG }} database](../../managed-postgresql/operations/connect.md#bash) using `psql`.
    1. Create a test table and populate it with data:
@@ -185,7 +193,7 @@ This SQL query does not contain an exhaustive list of available parameters. For 
 
       ```sql
       CREATE READABLE EXTERNAL TABLE pxf_pg(a int, b int)
-      LOCATION ('pxf://public.test?PROFILE=JDBC&JDBC_DRIVER=org.postgresql.Driver&DB_URL=jdbc:postgresql://c-<cluster ID>.rw.{{ dns-zone }}:6432/db1&USER=pguser&PASS=pgpassword')
+      LOCATION ('pxf://public.test?PROFILE=JDBC&JDBC_DRIVER=org.postgresql.Driver&DB_URL=jdbc:postgresql://c-<cluster ID>.rw.{{ dns-zone }}:6432/db1&USER=pguser')
       FORMAT 'CUSTOM' (FORMATTER='pxfwritable_import');
       ```
 
@@ -210,7 +218,7 @@ This SQL query does not contain an exhaustive list of available parameters. For 
 
 - {{ objstorage-name }}
 
-   1. [Create a {{ objstorage-name }} bucket](../../storage/operations/buckets/create.md) named `test-bucket`.
+   1. [Create a {{ objstorage-name }} bucket](../../storage/operations/buckets/create.md) with restricted access.
 
    1. [Create a static access key](../../iam/operations/sa/create-access-key.md).
 
@@ -227,11 +235,11 @@ This SQL query does not contain an exhaustive list of available parameters. For 
 
    1. To read data from the {{ objstorage-name }} bucket:
 
-      1. Create an external table named `pxf_s3_read` to reference `test-bucket`:
+      1. Create an external table named `pxf_s3_read` to reference a bucket:
 
          ```sql
          CREATE READABLE EXTERNAL TABLE pxf_s3_read(a int, b int)
-         LOCATION ('pxf://test-bucket/test.csv?PROFILE=s3:text&accesskey=<key ID>&secretkey=<secret key>&endpoint={{ s3-storage-host }}')
+         LOCATION ('pxf://<bucket name>/test.csv?PROFILE=s3:text&accesskey=<key ID>&secretkey=<secret key>&endpoint={{ s3-storage-host }}')
          FORMAT 'CSV';
          ```
 
@@ -258,7 +266,7 @@ This SQL query does not contain an exhaustive list of available parameters. For 
 
          ```sql
          CREATE WRITABLE EXTERNAL TABLE pxf_s3_write(a int, b int)
-         LOCATION ('pxf://test-bucket/?PROFILE=s3:text&accesskey=<key ID>&secretkey=<secret key>&endpoint={{ s3-storage-host }}')
+         LOCATION ('pxf://<bucket name>/?PROFILE=s3:text&accesskey=<key ID>&secretkey=<secret key>&endpoint={{ s3-storage-host }}')
          FORMAT 'CSV';
          ```
 
@@ -289,7 +297,7 @@ This SQL query does not contain an exhaustive list of available parameters. For 
 GPFDIST works with any delimited text files and compressed gzip and bzip2 files.
 
 To read or write files on an external server:
-1. [Install and run GPFDIST](#run-gpfdist) as part of the Greenplum Loader package on the remote server where your target files are located.
+1. [Install and run GPFDIST](#run-gpfdist) as part of the Greenplum Loader or Greenplum Database package on the remote server where your target files are located.
 1. [Create an external table](#create-gpfdist-table) in the {{ GP }} database to reference these files.
 
 ### Running GPFDIST {#run-gpfdist}
@@ -302,7 +310,7 @@ Downloading and using software from the VMware website is not part of the [{{ mg
 {% endnote %}
 
 
-1. [Download and install](https://greenplum.docs.pivotal.io/6-19/client_tool_guides/installing.html) the Greenplum Loader package.
+1. Download and install the Greenplum Loader package from the [VMware website](https://greenplum.docs.pivotal.io/6-19/client_tool_guides/installing.html) or the Greenplum Database package from a {{ objstorage-full-name }} bucket by following [this guide](./greenplum-db.md).
 
 1. Run the GPFDIST utility:
 
@@ -313,7 +321,7 @@ Downloading and using software from the VMware website is not part of the [{{ mg
    Where:
 
    * `data file directory` is the local path to the directory with files to read or write data from/to using the external table.
-   * `connection port` is the port the utility will run on. By default: `8080`.
+   * `connection port` is the port the utility will run on. The default value is `8080`.
    * `log file path` (optional) is the path to the file that GPFDIST will write its operation logs to.
 
    You can run multiple GPFDIST instances on the same server, specifying different directories and connection ports to distribute network load. For example:

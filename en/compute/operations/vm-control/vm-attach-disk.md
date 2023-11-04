@@ -26,9 +26,14 @@ To attach a network disk to a VM:
    1. Select **{{ ui-key.yacloud.iam.folder.dashboard.label_compute }}**.
    1. In the left-hand panel, select ![image](../../../_assets/compute/disks-pic.svg) **{{ ui-key.yacloud.compute.switch_disks }}**.
    1. Select an unattached disk or [create](../disk-create/empty.md) a new one.
-   1. Click ![image](../../../_assets/horizontal-ellipsis.svg) next to the disk in question and select **{{ ui-key.yacloud.compute.disks.button_action-attach }}**.
+   1. Next to the disk you want to attach, click ![image](../../../_assets/horizontal-ellipsis.svg) and select **{{ ui-key.yacloud.compute.disks.button_action-attach }}**.
    1. In the window that opens:
       * In the **{{ ui-key.yacloud.compute.attach-disk.field_instance }}** field, select the virtual machine you want to mount your disk to.
+
+      
+      * To attach an [encrypted](../../concepts/encryption.md) disk, select a [service account](../../../iam/concepts/users/service-accounts.md) with the `kms.keys.encrypterDecrypter` [role](../../../iam/concepts/access-control/roles.md#kms-keys-encrypterdecrypter) for the [{{ kms-short-name }} key](../../../kms/concepts/key.md) that was used to encrypt the disk.
+
+
       * Enter a device name.
       * Enable the **{{ ui-key.yacloud.compute.attach-disk.field_auto-delete }}** option if needed.
    1. Click **{{ ui-key.yacloud.compute.attach-disk.button_attach }}**.
@@ -150,6 +155,21 @@ To use the attached disk:
 
    1. Run the `df` command to check the state of the file system.
 
+- Windows
+
+   1. Connect to the VM [via RDP](../vm-connect/rdp.md).
+   1. Run **Computer Management** (the `compmgmt.msc` snap-in) as an administrator.
+   1. Under **Storage**, select **Disk Management**.
+
+      {% note info %}
+
+      When you attach a disk to a running VM, it might not appear in the list. In that case, restart the OS and repeat steps 1 and 2 of this guide.
+
+      {% endnote %}
+
+   1. If the attached disk is **Offline**, right-click it and select **Online**.
+   1. Assign a letter to the attached disk if needed. For information about how to do this, see the [Microsoft documentation]({{ ms.docs }}/windows-server/storage/disk-management/change-a-drive-letter).
+   1. Open **Explorer** to make sure the attached disk is mounted and available.
 
 {% endlist %}
 
@@ -183,7 +203,7 @@ To partition and mount an empty disk yourself:
 
       Where:
       * Network disk links look like `virtio-<disk ID>`. For example, `virtio-fhm1dn62tm5dnaspeh8n -> ../../vdc` means that the unpartitioned disk with the `fhm1dn62tm5dnaspeh8n` ID is labeled as `/dev/vdc`.
-      * Local disks on [dedicated hosts](../../concepts/dedicated-host.md) have links like `virtio-nvme-disk-<disk_number>` (you will have local disks only in case you attached those to your VM while creating it). Disk numbering starts from zero. For example, `virtio-nvme-disk-0 -> ../../vda` means that the first local disk (numbered zero) is labeled as `/dev/vda`.
+      * Local disks on [dedicated hosts](../../concepts/dedicated-host.md) have links, such as `virtio-nvme-disk-<disk_number>` (you will only have local disks if you attached them to your VM while creating it). Disk numbering starts from zero. For example, `virtio-nvme-disk-0 -> ../../vda` means that the first local disk (numbered zero) is labeled as `/dev/vda`.
    1. Partition your disk. To do this, create [partitions](https://help.ubuntu.com/stable/ubuntu-help/disk-partitions.html.en) using the `cfdisk` [utility](https://manpages.ubuntu.com/manpages/xenial/en/man8/cfdisk.8.html), the `fdisk` [utility](https://manpages.ubuntu.com/manpages/xenial/en/man8/fdisk.8.html), or the `parted` [utility](https://manpages.ubuntu.com/manpages/xenial/en/man8/parted.8.html).
 
       For example, here is how to create partitions using the `fdisk` command. Use the `sudo` command or run commands on behalf of the `root` user: to do this, run `sudo su -`.
@@ -271,5 +291,23 @@ To partition and mount an empty disk yourself:
       /dev/vdc1         523260    3080    520180   1% /mnt/vdc1
       ```
 
+- Windows
+
+   1. Connect to the VM [via RDP](../vm-connect/rdp.md).
+   1. Run **Computer Management** (the `compmgmt.msc` snap-in) as an administrator.
+   1. Under **Storage**, select **Disk Management**.
+
+      {% note info %}
+
+      When you attach a disk to a running VM, it might not appear in the list. In that case, restart the OS and repeat steps 1 and 2 of this guide.
+
+      {% endnote %}
+
+   1. If the attached disk is **Offline**, right-click it and select **Online**.
+   1. Initialize the disk. To do this, right-click it and select **Initialize Disk**. This opens the **Initialize Disk** dialog.
+   1. Select a [partition style]({{ ms.docs }}/windows-server/storage/disk-management/initialize-new-disks#about-partition-styles---gpt-and-mbr) and click **OK**.
+   1. Create partitions on the disk. To do this, right-click the empty disk and select **New Simple Volume**.
+   1. Use the **New Simple Volume Wizard** to set the required partition size, [assign a drive letter]({{ ms.docs }}/windows-server/storage/disk-management/change-a-drive-letter), and specify the file system type.
+   1. Open **Explorer** to make sure the attached disk is mounted and available.
 
 {% endlist %}
